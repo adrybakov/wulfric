@@ -16,9 +16,8 @@ Crystal, Lattice, Atoms, K-path.
 .. image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=505050
   :target: https://pycqa.github.io/isort/
 
-.. |GPLv3 license| image:: https://img.shields.io/badge/License-GPLv3-blue.svg
+.. image:: https://img.shields.io/badge/License-GPLv3-blue.svg
   :target: https://www.gnu.org/licenses/gpl-3.0
-  :alt: GitHub
 
 
 For the detailed description check
