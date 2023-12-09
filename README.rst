@@ -6,14 +6,14 @@ Crystal, Lattice, Atoms, K-path.
 .. image:: https://badge.fury.io/py/wulfric.svg
   :target: https://badge.fury.io/py/wulfric
 
-.. image:: https://readthedocs.org/projects/wulfric/badge/?version=stable
-  :target: https://wulfric.org/en/stable/?badge=stable
+.. image:: https://readthedocs.org/projects/wulfric/badge/?version=main
+  :target: https://wulfric.org/en/stable/?badge=main
   :alt: Documentation Status
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
   :target: https://github.com/psf/black
 
-.. image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=505050
+.. image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=000000
   :target: https://pycqa.github.io/isort/
 
 .. image:: https://img.shields.io/badge/License-GPLv3-blue.svg
