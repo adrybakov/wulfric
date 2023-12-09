@@ -1,0 +1,26 @@
+# MacOS specific
+.DS_Store
+
+# Python cache
+__pycache__
+
+# Virtual environment
+.venv
+.env*
+
+# Unit tests
+.hypothesis
+
+# Build
+build
+dist
+*.egg-info
+
+# Docs
+docs/make.bat
+docs/build
+docs/source/api/generated
+*generated
+
+# vscode settings
+.vscode
