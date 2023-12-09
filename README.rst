@@ -10,16 +10,13 @@ Crystal, Lattice, Atoms, K-path.
   :target: https://wulfric.org/en/stable/?badge=stable
   :alt: Documentation Status
 
-.. image:: https://static.pepy.tech/personalized-badge/wulfric?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads
-  :target: https://pepy.tech/project/wulfric
-
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
   :target: https://github.com/psf/black
 
 .. image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=505050
   :target: https://pycqa.github.io/isort/
 
-.. image:: https://img.shields.io/github/license/adrybakov/wulfric
+.. image:: [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
   :alt: GitHub
 
 
