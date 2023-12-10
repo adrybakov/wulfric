@@ -83,8 +83,8 @@ def only_githash_in_init(repo: git.Repo):
     if (
         len(a_files) == 1
         and len(b_files) == 1
-        and b_files[0] == "wulfric/__init__.py"
-        and a_files[0] == "wulfric/__init__.py"
+        and b_files[0] == "src/wulfric/__init__.py"
+        and a_files[0] == "src/wulfric/__init__.py"
         and len(minus_lines) == 1
         and len(plus_lines) == 1
         and minus_lines[0].startswith("__git_hash__")
@@ -176,7 +176,7 @@ def update_init(repo: git.Repo, version, root_dir: str):
     good_message = {False: "not updated", True: "updated"}
 
     # Read __init__.py
-    init_file_path = os.path.join(root_dir, "wulfric", "__init__.py")
+    init_file_path = os.path.join(root_dir, "src", "wulfric", "__init__.py")
     init_file = open(init_file_path, "r")
     init_file_content = init_file.readlines()
     init_file.close()
