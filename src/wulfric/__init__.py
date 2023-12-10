@@ -22,7 +22,7 @@ __git_hash__ = "undefined"
 __release_date__ = "undefined"
 
 
-from . import atom, bravais_lattice
+from . import bravais_lattice
 from . import cell as Cell
 from . import (
     constants,
@@ -30,6 +30,7 @@ from . import (
     decorate,
     geometry,
     identify,
+    io,
     kpoints,
     lattice,
     lattice_plotter,
@@ -42,16 +43,16 @@ from .crystal import *
 from .decorate import *
 from .geometry import *
 from .identify import *
+from .io import *
 from .kpoints import *
 from .lattice import *
 from .lattice_plotter import *
 from .numerical import *
 
-# from .io import *
-
 __all__ = ["__version__", "__doclink__", "__git_hash__", "__release_date__", "Cell"]
 __all__.extend(bravais_lattice.__all__)
 __all__.extend(decorate.__all__)
+__all__.extend(io.__all__)
 __all__.extend(atom.__all__)
 __all__.extend(constants.__all__)
 __all__.extend(crystal.__all__)
@@ -61,4 +62,3 @@ __all__.extend(kpoints.__all__)
 __all__.extend(lattice_plotter.__all__)
 __all__.extend(lattice.__all__)
 __all__.extend(numerical.__all__)
-# __all__.extend(io.__all__)

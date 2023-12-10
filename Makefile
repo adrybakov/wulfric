@@ -54,7 +54,7 @@ clean:
 	-@rm -r build
 	-@rm -r dist
 	-@rm -r .env*/lib/python3.11/site-packages/wulfric*
-	-@rm -r .env*/bin/wulfricshort*
+	-@rm -r .env*/bin/wulfric*
 
 install:
 	@python3 -m pip install .

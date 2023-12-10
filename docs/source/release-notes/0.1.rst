@@ -1,0 +1,10 @@
+.. _release-notes_0.1:
+
+***********
+Version 0.1
+***********
+
+Whats new?
+----------
+First release of the project. The historical development up to this moment was happening
+inside the RAD-tools project.
