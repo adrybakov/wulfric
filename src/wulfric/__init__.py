@@ -22,20 +22,43 @@ __git_hash__ = "undefined"
 __release_date__ = "undefined"
 
 
-from . import decorate  # # constants,; # crystal,; # geometry,; # io,; # numerical,
-
-# from .constants import *
-# from .crystal import *
+from . import atom, bravais_lattice
+from . import cell as Cell
+from . import (
+    constants,
+    crystal,
+    decorate,
+    geometry,
+    identify,
+    kpoints,
+    lattice,
+    lattice_plotter,
+    numerical,
+)
+from .atom import *
+from .bravais_lattice import *
+from .constants import *
+from .crystal import *
 from .decorate import *
+from .geometry import *
+from .identify import *
+from .kpoints import *
+from .lattice import *
+from .lattice_plotter import *
+from .numerical import *
 
-# from .geometry import *
 # from .io import *
-# from .numerical import *
 
-__all__ = ["__version__", "__doclink__", "__git_hash__", "__release_date__"]
-# __all__.extend(constants.__all__)
-# __all__.extend(crystal.__all__)
+__all__ = ["__version__", "__doclink__", "__git_hash__", "__release_date__", "Cell"]
+__all__.extend(bravais_lattice.__all__)
 __all__.extend(decorate.__all__)
-# __all__.extend(geometry.__all__)
+__all__.extend(atom.__all__)
+__all__.extend(constants.__all__)
+__all__.extend(crystal.__all__)
+__all__.extend(geometry.__all__)
+__all__.extend(identify.__all__)
+__all__.extend(kpoints.__all__)
+__all__.extend(lattice_plotter.__all__)
+__all__.extend(lattice.__all__)
+__all__.extend(numerical.__all__)
 # __all__.extend(io.__all__)
-# __all__.extend(numerical.__all__)

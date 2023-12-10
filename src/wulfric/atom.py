@@ -16,13 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-r"""Atom class"""
-
 from typing import Iterable
 
 import numpy as np
 
 from wulfric.constants import ATOM_TYPES
+
+__all__ = ["Atom"]
 
 
 class Atom:
