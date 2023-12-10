@@ -258,7 +258,7 @@ def check_release_notes(version: str, root_dir: str):
         if re.fullmatch(f":maxdepth:1", line):
             lines.append(untouched_line + "\n")
             skip_empty = True
-            lines.extend([f"    {major}.{i}\n" for i in range(minor, -1, -1)])
+            lines.extend([f"    {major}.{i}\n" for i in range(minor, 0, -1)])
         elif not re.match(f"{major}\.", line) and (not skip_empty or line != ""):
             lines.append(untouched_line)
     index_file.close()
