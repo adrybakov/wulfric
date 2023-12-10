@@ -4,8 +4,6 @@
 constants
 *********
 
-.. versionadded:: 0.8
-
 .. currentmodule:: wulfric
 
 

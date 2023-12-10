@@ -50,8 +50,8 @@ def class_structure():
         ax.text(x + 21, y, text, ha="left", va="center", fontsize=15)
 
     parent_color = "#EBAE29"
-    build_with_color = "#728EFC"
-    build_from_color = "#BD2A7B"
+    used_in_color = "#728EFC"
+    base_for_color = "#BD2A7B"
     ax.text(30, 15, "Lattice", **text_style)
     ax.text(30, 75, "Kpoints", **text_style)
     ax.text(90, 15, "Crystal", **text_style)
@@ -68,15 +68,15 @@ def class_structure():
     )
 
     ax.quiver(48, 15, 24, 0, color=parent_color, **arrow_style)
-    ax.quiver(90, 25, 0, 40, color=build_with_color, **arrow_style)
-    ax.quiver(30, 65, 0, -40, color=build_from_color, **arrow_style)
+    ax.quiver(90, 65, 0, -40, color=used_in_color, **arrow_style)
+    ax.quiver(30, 25, 0, 40, color=base_for_color, **arrow_style)
     ax.set_xlim(0, 170)
     ax.set_ylim(-10, 87)
     ax.axis("off")
     legend(5, -5, "is a parent of", parent_color)
-    legend(65, -5, "is build with", build_with_color)
-    legend(125, -5, "is build from", build_from_color)
-    filename = os.path.join(ROOT_DIR, "docs", "source", "img", "class-relation.png")
+    legend(65, -5, "is used in", used_in_color)
+    legend(125, -5, "is a base for", base_for_color)
+    filename = os.path.join(ROOT_DIR, "docs", "source", "img", "package-scheme.png")
     plt.savefig(filename, dpi=600, bbox_inches="tight")
     print(f"File is save in {os.path.abspath(filename)}")
 

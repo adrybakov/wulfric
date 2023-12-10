@@ -1,7 +1,6 @@
 # Package dependencies
 numpy
 scipy
-tqdm
 termcolor
 
 # Optional package dependencies

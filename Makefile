@@ -85,4 +85,4 @@ prepare-release:
 	@python3 -u tools/prepare-release.py -v $(VERSION) -rd $(ROOT_DIR) -r
 
 docs-pictures:
-	@python3 tools/plot-data-structure.py
+	@python3 tools/plot-package-scheme.py

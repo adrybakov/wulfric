@@ -4,22 +4,13 @@
 io
 **
 
-.. automodule:: wulfric.io
-
 .. currentmodule:: wulfric
 
-External inputs
-===========================
+VASP
+====
 
 .. autosummary::
     :toctree: generated/
 
     load_poscar
-
-External outputs
-================
-
-.. autosummary::
-    :toctree: generated/
-
     dump_poscar

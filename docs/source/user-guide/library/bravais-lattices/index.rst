@@ -8,7 +8,9 @@ Bravais lattices
 
 For the full reference see :ref:`api_crystal`
 
-For the module guide on Bravais lattices see :ref:`guide_crystal_bravais-lattices`
+For the module guide on Bravais lattices see :ref:`user-guide_module_bravais-lattices`
+
+Bravais lattice notation and standardization follows Setyawan and Curtarolo [1]_.
 
 Cubic lattice system
 --------------------
@@ -151,3 +153,9 @@ Name               Examples    Parameters       Constructor
                                :math:`\beta`,
                                :math:`\gamma`
 =================  ==========  ===============  ================
+
+References
+==========
+.. [1] Setyawan, W. and Curtarolo, S., 2010.
+    High-throughput electronic band structure calculations: Challenges and tools.
+    Computational materials science, 49(2), pp.299-312.

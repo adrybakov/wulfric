@@ -20,8 +20,8 @@ Class
 
     .. doctest::
 
-        >>> import wulfric as rad
-        >>> c = rad.Crystal()
+        >>> import wulfric as wulf
+        >>> c = wulf.Crystal()
         >>> c.a
         1.0
         >>> c.b

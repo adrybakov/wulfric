@@ -1,8 +1,8 @@
 .. _user-guide:
 
-********************
-wulfric user guide
-********************
+******************
+WULFRIC user guide
+******************
 
 Getting started
 ===============
@@ -15,22 +15,21 @@ Getting started
     start/quickstart
 
 
-Python library
-==============
+Module guide
+============
 .. toctree::
-    :maxdepth: 3
+    :maxdepth: 2
 
     module/index
+    module/detailed
 
-Library
-=======
+.. _user-guide_library:
+
+Methods and algorithms
+======================
 
 .. toctree::
     :maxdepth: 1
 
     library/lepage
     library/bravais-lattices/index
-
-.. div:: logo-custom-text
-
-   There are no more guides. You are now guideless. Good luck.

@@ -1,8 +1,8 @@
 .. _api_cell:
 
-*****
-Cell*
-*****
+****
+Cell
+****
 
 .. currentmodule:: wulfric
 
@@ -22,7 +22,7 @@ Cell*
 
     .. doctest::
 
-        >>> from wulfric.crystal.cell import params
+        >>> from wulfric.cell import params
         >>> params([[1,0,0],[0,1,0],[0,0,1]])
         (1.0, 1.0, 1.0, 90.0, 90.0, 90.0)
 

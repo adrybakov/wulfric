@@ -1,4 +1,4 @@
-.. _guide_crystal_lattice:
+.. _user-guide_module_lattice:
 
 .. currentmodule:: wulfric
 
@@ -9,16 +9,14 @@ Lattice
 For the full reference see :ref:`api_lattice`
 
 Every Bravais lattice is an instance of the :py:class:`.Lattice` class.
-For the guide about Bravais lattices see :ref:`guide_crystal_bravais-lattices`.
+For the guide about Bravais lattices see :ref:`user-guide_module_bravais-lattices`.
 This page describes the :py:class:`.Lattice` class and its methods.
 
 Import
 ======
 
     >>> # Exact import
-    >>> from wulfric.crystal.lattice import Lattice
-    >>> # Explicit import
-    >>> from wulfric.crystal import Lattice
+    >>> from wulfric.lattice import Lattice
     >>> # Recommended import
     >>> from wulfric import Lattice
 
@@ -46,7 +44,7 @@ Lattice can be created in three different ways:
 
 When a lattice created from the cell orientation of the cell is respected,
 however the lattice vectors may be renamed.
-:ref:`docs for each Bravais lattice <library_bravais-lattices>`.
+:ref:`Documentation on each Bravais lattice type <library_bravais-lattices>`.
 
 Creation may change the angles and the lengths of the cell vectors.
 It preserve the volume, right- or left- handedness, lattice type and variation
@@ -96,7 +94,7 @@ Bravais lattice type is lazily identified when it is needed:
         'CUB'
 
 Identification procedure is implemented in the :py:func:`.lepage` function.
-For the algorithm description and reference see :ref:`library_lepage`.
+For the brief algorithm description see :ref:`library_lepage`.
 
 .. note::
 
@@ -250,4 +248,4 @@ time and stored internally for the future:
     kpoints in reciprocal space. See :ref:`library_bravais-lattices` for more details.
     The unit cell has to be standardized to use the predefined paths and kpoints.
 
-For the full guide on how to use :py:class:`.Kpoints` class see :ref:`guide_crystal_kpoints`.
+For the full guide on how to use :py:class:`.Kpoints` class see :ref:`user-guide_module_kpoints`.

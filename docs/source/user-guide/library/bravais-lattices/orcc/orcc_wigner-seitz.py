@@ -1,7 +1,7 @@
-import wulfricshorttools as wulfricshort
+import wulfric as wulf
 
-l = wulfricshort.lattice_example("ORCC")
-backend = wulfricshort.PlotlyBackend()
+l = wulf.lattice_example("ORCC")
+backend = wulf.PlotlyBackend()
 backend.plot(l, kind="wigner-seitz")
 # Save an image:
 backend.save("orcc_wigner-seitz.png")

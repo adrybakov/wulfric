@@ -1,4 +1,4 @@
-.. _guide_crystal_kpoints:
+.. _user-guide_module_kpoints:
 
 .. currentmodule:: wulfric
 
@@ -20,9 +20,7 @@ Import
 .. doctest::
 
     >>> # Exact import
-    >>> from wulfric.crystal.kpoints import Kpoints
-    >>> # Explicit import
-    >>> from wulfric.crystal import Kpoints
+    >>> from wulfric.kpoints import Kpoints
     >>> # Recommended import
     >>> from wulfric import Kpoints
 
@@ -35,7 +33,7 @@ For the examples in this page we need additional import and some predefined vari
 Creation
 ========
 
-Usually it is created from some :py:class`.Lattice` (or :py:class`.Crystal`):
+Usually it is created from some :py:class:`.Lattice` (or :py:class:`.Crystal`):
 
 .. doctest::
 
@@ -44,7 +42,7 @@ Usually it is created from some :py:class`.Lattice` (or :py:class`.Crystal`):
     >>> kp.hs_names
     ['G', 'M', 'R', 'X']
 
-However, it could be created explicitly:
+However, it could be created explicitly as well:
 
 .. doctest::
 
@@ -56,7 +54,7 @@ However, it could be created explicitly:
     >>> kp.hs_names
     ['G', 'X']
 
-For the full list of constructor parameters see
+For the full list of constructor's parameters see
 :py:class:`.Kpoints` documentation.
 
 High-symmetry points
@@ -91,6 +89,9 @@ Dictionary of labels of high symmetry points. Usually used for plotting.
     >>> kp.hs_labels
     {'G': '$\\Gamma$', 'X': 'X'}
 
+.. note::
+    Names of high symmetry points have to be unique.
+
 Adding a point
 ==============
 
@@ -104,29 +105,35 @@ Adding a point
     >>> kp.hs_labels
     {'G': '$\\Gamma$', 'X': 'X', 'M': 'M'}
 
-.. _guide_crystal_kpoints-path:
+.. _user-guide_module_kpoints-path:
 
 Path
 ====
 
 The path is the route in the reciprocal space, defined by the high symmetry points.
 
-We use a specific format in the package: "G-K-X|R-S".
-"-" separates high symmetry points in each subpath, "|" separates sections of the path.
-In the example n points are generated between "G" and "K", between "K" ans "X",
+We use a specific format in the package: "G-K-X|R-S":
+
+* ``-`` separates high symmetry points in each subpath.
+* ``|`` separates subpaths.
+* K-points are identified by their names (elements of :py:attr:`.Kpoints.hs_names`).
+
+In the example below n points are generated between "G" and "K", between "K" ans "X",
 between "R" and "S", but not between "X" and "R".
-By default path is constructed from the list of high symmetry points.
 
 .. doctest::
 
+    >>> # Create a Kpoints instance
     >>> b1, b2, b3 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
     >>> names = ["G", "K", "X", "R"]
     >>> coordinates = [[0, 0, 0], [0.5, 0.5, 0], [0.5, 0, 0], [0.5, 0.5, 0.5]]
     >>> labels = ["$\Gamma$", "K", "X", "R"]
     >>> kp = Kpoints(b1, b2, b3, names=names, coordinates=coordinates, labels=labels)
+    >>> # Default path is constructed from the list of high symmetry points
     >>> kp.path
     [['G', 'K', 'X', 'R']]
-    >>> # It cause an Error, because high symmetry point "S" is not defined
+    >>> # Only the names from Kpoints.hs_names are allowed to be used in the path
+    >>> # Next line causes an ValueError, because high symmetry point "S" is not defined
     >>> kp.path = "G-K-X|R-S"
     Traceback (most recent call last):
     ...
@@ -135,20 +142,25 @@ By default path is constructed from the list of high symmetry points.
       K : [0.5 0.5 0. ]
       X : [0.5 0.  0. ]
       R : [0.5 0.5 0.5]
+    >>> # Now we split path into two subpaths
     >>> kp.path = "G-K-X|R-G"
     >>> kp.path
     [['G', 'K', 'X'], ['R', 'G']]
+    >>> # We can add a point to de used in the path
     >>> kp.add_hs_point(name="S", coordinates=[0.5, 0.5, 0.5], label="S")
+    >>> # Now it is possible to use "S" it in the path
     >>> kp.path = "G-K-X|R-S"
     >>> kp.path
     [['G', 'K', 'X'], ['R', 'S']]
+    >>> # The path_string property returns the path in the string format
     >>> kp.path_string
     'G-K-X|R-S'
 
 .. note::
 
-    Internally wulfric stores the path as a list of subpaths, where each subpath
-    is a list of high symmetry points. This format is also correct for assigning the path attribute.
+    Internally WULFRIC stores the path as a list of subpaths, where each subpath
+    is a list of high symmetry point's names. This format is also correct for assigning
+    the :py:attr:`.Kpoints.path`` attribute.
 
 Configuration
 =============
@@ -165,17 +177,16 @@ is controlled by the :py:attr:`.Kpoints.n` property.
     >>> kp.n
     10
 
-Usage
-=====
 
 Once the configuration of the Kpoints are done, it can be used for calculation or plotting.
 
 Calculation
------------
+===========
 
 There is one property suitable for calculation: :py:attr:`Kpoints.points`. which is an array
-of all generated kpoints. For each pair of high symmetry points it generates :py:attr:`Kpoints.n`
-between them. The first and the last points are always the high symmetry points of this section of the path.
+of all generated kpoints. For each pair of high symmetry points it generates
+:py:attr:`Kpoints.n` points between them. The first and the last points are always
+the high symmetry points of this section of the path.
 
 .. doctest::
 

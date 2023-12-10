@@ -1,4 +1,4 @@
-.. _guide_geometry:
+.. _user-guide_module_geometry:
 
 ********
 Geometry
@@ -92,7 +92,7 @@ Basis is defined by three vectors, which are passed to the function in a form of
     >>> from wulfric import absolute_to_relative
     >>> basis = [[2, 0, 0], [0, 4, 0], [0, 0, 8]]
     >>> vector = [1, 1, 1]
-    >>> absolute_to_relative(basis, vector)
+    >>> absolute_to_relative(vector, basis)
     array([0.5  , 0.25 , 0.125])
 
 Parallelepiped

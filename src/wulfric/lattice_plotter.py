@@ -214,8 +214,6 @@ class MatplotlibBackend(AbstractBackend):
     r"""
     Plotting engine for the lattice with |matplotlib|_.
 
-    .. versionadded:: 0.8.5
-
     Parameters
     ----------
     fig : matplotlib figure, optional
@@ -750,8 +748,6 @@ class MatplotlibBackend(AbstractBackend):
 class PlotlyBackend(AbstractBackend):
     r"""
     Plotting engine for the lattice with |plotly|_.
-
-    .. versionadded:: 0.8.5
 
     Parameters
     ----------

@@ -1,7 +1,7 @@
-import wulfricshorttools as wulfricshort
+import wulfric as wulf
 
-l = wulfricshort.lattice_example("TRI1b")
-backend = wulfricshort.PlotlyBackend()
+l = wulf.lattice_example("TRI1b")
+backend = wulf.PlotlyBackend()
 backend.plot(l, kind="wigner-seitz")
 # Save an image:
 backend.save("tri1b_wigner-seitz.png")

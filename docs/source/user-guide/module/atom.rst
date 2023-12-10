@@ -1,4 +1,4 @@
-.. _guide_crystal_atom:
+.. _user-guide_module_atom:
 
 ****
 Atom
@@ -17,9 +17,7 @@ Import
 .. doctest::
 
     >>> # Exact import
-    >>> from wulfric.crystal.atom import Atom
-    >>> # Explicit import
-    >>> from wulfric.crystal import Atom
+    >>> from wulfric.atom import Atom
     >>> # Recommended import
     >>> from wulfric import Atom
 
@@ -96,8 +94,8 @@ Hash of the atom is calculated from the atom name and index.
         >>> atom1 != atom2
         True
 
-    However, if for the pair of atoms the index is not defined in at least one of them,
-    then the comparison fails:
+    However, if for the pair of atoms with the same name the index is not defined
+    in at least one of them, than the comparison fails:
 
     .. doctest::
 
@@ -212,13 +210,13 @@ Magnetic moment of the atom can be set by assigning a value to the
     >>> atom.magmom
     array([0., 0., 1.])
 
-The units of magnetic moment depend on you interpretation. In wulfric usually
+The units of magnetic moment depend on you interpretation. In WULFRICC usually
 Bohr magneton is used.
 
 .. note::
 
     Magnetic moment is independent from the spin of the atom.
-    This behaviour may change in the future.
+    This behavior may change in the future.
 
 Charge
 ======
@@ -232,7 +230,7 @@ Electrical charge of the atom can be set by assigning a value to the
     >>> atom.charge
     1.0
 
-The units of magnetic moment depend on you interpretation. In wulfric usually
+The units of magnetic moment depend on you interpretation. In WULFRIC usually
 charge of an electron is used.
 
 String representation

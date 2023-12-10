@@ -1,4 +1,4 @@
-.. _guide_crystal_plotting:
+.. _user-guide_module_plotting:
 
 .. currentmodule:: wulfric
 
@@ -14,7 +14,7 @@ More examples of the plots with the code snippets can be found in the
 .. note::
 
     The plotting is written for the :py:class:`.Lattice` and consequently
-    available for :py:class`.Crystal` and :py:class:`.SpinHamiltonian` classes.
+    available for it's child: :py:class`.Crystal` class.
 
 Import
 ======
@@ -22,9 +22,7 @@ Import
 .. doctest::
 
     >>> # Exact import
-    >>> from wulfric.crystal.lattice_plotter import MatplotlibBackend, PlotlyBackend
-    >>> # Explicit import
-    >>> from wulfric.crystal import MatplotlibBackend, PlotlyBackend
+    >>> from wulfric.lattice_plotter import MatplotlibBackend, PlotlyBackend
     >>> # Recommended import
     >>> from wulfric import MatplotlibBackend, PlotlyBackend
 

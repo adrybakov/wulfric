@@ -40,14 +40,14 @@ class Crystal(Lattice):
 
     .. doctest::
 
-        >>> import wulfric as rad
-        >>> cub = rad.lattice_example("CUB")
-        >>> crystal = rad.Crystal(cub)
+        >>> import wulfric as wulf
+        >>> cub = wulf.lattice_example("CUB")
+        >>> crystal = wulf.Crystal(cub)
         >>> crystal.pearson_symbol
         'cP'
 
     For the full description of the lattice attributes and methods
-    see :ref:`guide_crystal_lattice`.
+    see :ref:`user-guide_module_lattice`.
 
     Parameters
     ----------
@@ -128,7 +128,7 @@ class Crystal(Lattice):
         You can use it to play with the crystal`s lattice independently,
         but it will not affect the crystal itself.
 
-        See :ref:`guide_crystal_lattice` for details.
+        See :ref:`user-guide_module_lattice` for details.
 
         Returns
         -------

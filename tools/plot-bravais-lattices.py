@@ -21,7 +21,7 @@ from argparse import ArgumentParser
 
 import matplotlib.pyplot as plt
 
-import wulfric as wulfricshort
+import wulfric as wulf
 
 ROOT_DIR = "."
 OUTPUT_PATH = os.path.join(
@@ -238,7 +238,7 @@ def plot():
 
     for i, name in enumerate(names):
         output_subname = (name.translate(str.maketrans("", "", "12345ab"))).lower()
-        l = wulfricshort.lattice_example(name)
+        l = wulf.lattice_example(name)
         for j, wtp in enumerate(wtps[name]):
             py_file = open(
                 os.path.join(
@@ -248,9 +248,9 @@ def plot():
                 encoding="utf-8",
             )
             py_file.write(
-                f'import wulfricshorttools as wulfricshort\n\nl = wulfricshort.lattice_example("{name}")\nbackend = wulfricshort.PlotlyBackend()\n'
+                f'import wulfric as wulf\n\nl = wulf.lattice_example("{name}")\nbackend = wulf.PlotlyBackend()\n'
             )
-            backend = wulfricshort.PlotlyBackend()
+            backend = wulf.PlotlyBackend()
             for data in wtp:
                 if len(wtp) == 1:
                     backend.plot(l, kind=data)

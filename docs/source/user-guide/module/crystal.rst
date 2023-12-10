@@ -1,10 +1,8 @@
-.. _guide_crystal_crystal:
+.. _user-guide_module_crystal:
 
 *******
 Crystal
 *******
-
-.. versionadded:: 0.7
 
 For the full reference see :ref:`api_crystal`
 
@@ -12,17 +10,15 @@ For the full reference see :ref:`api_crystal`
 
 Crystal is a child of the the :py:class:`.Lattice` and utilize
 :py:class:`.Atom` for the storage of atoms. We recommend you to read
-:ref:`guide_crystal_lattice` and :ref:`guide_crystal_atom` first.
+:ref:`user-guide_module_lattice` and :ref:`user-guide_module_atom` first.
 
-Crystal behaves like a list of atoms. See :ref:`guide_crystal_list-like` for the details.
+Crystal behaves like a list of atoms. See :ref:`user-guide_module_crystal_list-like` for the details.
 
 
 Import
 ======
 
     >>> # Exact import
-    >>> from wulfric.crystal.crystal import Crystal
-    >>> # Explicit import
     >>> from wulfric.crystal import Crystal
     >>> # Recommended import
     >>> from wulfric import Crystal
@@ -54,7 +50,7 @@ keyword arguments:
 
     >>> crystal = Crystal(a=3.0, b=3.0, c=3.0, alpha=90.0, beta=90.0, gamma=90.0)
 
-By default the :py:class:`.Crystal` is created with the cubic lattice (:math:`a = 1`) and and no atoms.
+By default the :py:class:`.Crystal` is created with the cubic lattice (:math:`a = 1`) and no atoms.
 
 .. doctest::
 
@@ -158,8 +154,7 @@ There is a number of properties involving atom of the crystal you have access to
 * :py:attr:`.Crystal.atoms` - list of the :py:class:`.Atom` instances in the crystal.
 * :py:attr:`.Crystal.get_atom` - get atom by name or by fullname.
 
-..doctest::
-
+.. doctest::
 
     >>> crystal = Crystal()
     >>> crystal.add_atom('Cr', position=(0.0, 0.0, 0.0))
@@ -217,45 +212,7 @@ There is a number of properties involving atom of the crystal you have access to
     1.4142
 
 
-Magnetic dipole-dipole interaction energy
-=========================================
-
-If magnetic moments of crystal`s atoms are defined, the magnetic dipole-dipole interaction energy
-can be calculated.
-
-Two functions are used for this purpose:
-
-* :py:meth:`.Crystal.mag_dipdip_energy` - calculate the energy of the magnetic dipole-dipole interaction.
-
-    It returns energy in meV if atom`s positions are in Angstroms
-    and magnetic moments are in Bohr magnetons.
-
-.. doctest::
-
-    >>> crystal = Crystal(cell=[[2, 0, 0], [0, 2, 0], [0, 0, 2]])
-    >>> crystal.add_atom('Cr', position=(0.0, 0.25, 0.0))
-    >>> crystal.add_atom('Cr', position=(0.25, 0.0, 0.0))
-    >>> energy = crystal.mag_dipdip_energy(1,1,1, progress_bar=False)
-    Traceback (most recent call last):
-    ...
-    ValueError: There are no magnetic atoms in the crystal.
-    >>> crystal.Cr__1.magmom = [0, 0, 1]
-    >>> crystal.Cr__2.magmom = [0, 0, 1]
-    >>> energy = crystal.mag_dipdip_energy(1,1,1, progress_bar=False)
-    >>> round(energy, 8)
-    0.07591712
-    >>> crystal.Cr__1.magmom = [0,1,0]
-    >>> energy = crystal.mag_dipdip_energy(1,1,1, progress_bar=False)
-    >>> round(energy, 8)
-    0.0
-    >>> crystal.Cr__2.magmom = [1,0,0]
-    >>> energy = crystal.mag_dipdip_energy(1,1,1, progress_bar=False)
-    >>> round(energy, 8)
-    0.11387568
-
-* :py:meth:`.Crystal.converge_mag_dipdip_energy` - converge the energy of the magnetic dipole-dipole interaction.
-
-.. _guide_crystal_list-like:
+.. _user-guide_module_crystal_list-like:
 
 List-like behaviour
 ===================

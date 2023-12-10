@@ -1,7 +1,7 @@
-import wulfricshorttools as wulfricshort
+import wulfric as wulf
 
-l = wulfricshort.lattice_example("TET")
-backend = wulfricshort.PlotlyBackend()
+l = wulf.lattice_example("TET")
+backend = wulf.PlotlyBackend()
 backend.plot(l, kind="brillouin-kpath")
 # Save an image:
 backend.save("tet_brillouin.png")

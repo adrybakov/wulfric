@@ -82,10 +82,10 @@ class Lattice:
 
     .. doctest::
 
-        >>> import wulfric as rad
-        >>> l = rad.Lattice(cell = [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
-        >>> l = rad.Lattice(a1 = [1,0,0], a2 = [0,1,0], a3 = [0,0,1])
-        >>> l = rad.Lattice(a=1, b=1, c=1, alpha=90, beta=90, gamma=90)
+        >>> import wulfric as wulf
+        >>> l = wulf.Lattice(cell = [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+        >>> l = wulf.Lattice(a1 = [1,0,0], a2 = [0,1,0], a3 = [0,0,1])
+        >>> l = wulf.Lattice(a=1, b=1, c=1, alpha=90, beta=90, gamma=90)
 
     Parameters
     ----------
@@ -778,22 +778,22 @@ class Lattice:
 
         .. doctest::
 
-            >>> import wulfric as rad
-            >>> l = rad.lattice_example("CUB")
+            >>> import wulfric as wulf
+            >>> l = wulf.lattice_example("CUB")
             >>> l.variation
             'CUB'
 
         .. doctest::
 
-            >>> import wulfric as rad
-            >>> l = rad.lattice_example("BCT1")
+            >>> import wulfric as wulf
+            >>> l = wulf.lattice_example("BCT1")
             >>> l.variation
             'BCT1'
 
         .. doctest::
 
-            >>> import wulfric as rad
-            >>> l = rad.lattice_example("MCLC4")
+            >>> import wulfric as wulf
+            >>> l = wulf.lattice_example("MCLC4")
             >>> l.variation
             'MCLC4'
 

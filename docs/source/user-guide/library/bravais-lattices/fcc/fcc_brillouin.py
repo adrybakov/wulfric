@@ -1,7 +1,7 @@
-import wulfricshorttools as wulfricshort
+import wulfric as wulf
 
-l = wulfricshort.lattice_example("FCC")
-backend = wulfricshort.PlotlyBackend()
+l = wulf.lattice_example("FCC")
+backend = wulf.PlotlyBackend()
 backend.plot(l, kind="brillouin-kpath")
 # Save an image:
 backend.save("fcc_brillouin.png")

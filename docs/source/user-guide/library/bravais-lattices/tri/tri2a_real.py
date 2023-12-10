@@ -1,7 +1,7 @@
-import wulfricshorttools as wulfricshort
+import wulfric as wulf
 
-l = wulfricshort.lattice_example("TRI2a")
-backend = wulfricshort.PlotlyBackend()
+l = wulf.lattice_example("TRI2a")
+backend = wulf.PlotlyBackend()
 backend.plot(l, kind="primitive")
 # Save an image:
 backend.save("tri2a_real.png")

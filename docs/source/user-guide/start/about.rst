@@ -1,20 +1,19 @@
-******************
-What is wulfric?
-******************
+.. _user-guide_about:
 
-The main focus of the package is leaning towards the treatment of spin Hamiltonian
-with the parameters obtained form any source. It provides the means of solving the
-magnon problem, simplify the notation changes, and aimed at the graphical as well as text output.
+****************
+What is WULFRIC?
+****************
 
-Besides the spin Hamiltonian it realises the general :ref:`Crystal <guide_crystal_crystal>`,
-:ref:`Lattice <guide_crystal_lattice>`, :ref:`Atom <guide_crystal_atom>` and :ref:`Kpoints <guide_crystal_kpoints>`
-routines, which are essential for the treatment of the condense matter systems.
-We provide automatic and unique choice of the cell for :ref:`Bravais lattices<library_bravais-lattices>`,
-which empowers the reproducibility of the results.
+WULFRIC is a python package for the structural part of the condense matter codes.
+It combines the concept of the :ref:`Lattice <user-guide_module_lattice>`,
+:ref:`Atom <user-guide_module_atom>` and :ref:`Crystal <user-guide_module_crystal>`
+and provides a simple skeleton for other codes to built on.
 
-The package covers post-processing scenarios for the
-results of |QE|_, |TB2J|_ and |Wannier90|_, as well as provides some custom scripts.
+It provides the automatic choice of the :ref:`Kpoints <user-guide_module_kpoints>`
+and K-path for all :ref:`Bravais lattice types <library_bravais-lattices>`.
 
+Initially it was a part of the `RAD-tools <https://rad-tools.org>`_ package,
+but later separated from it to provide the reusable part for other projects.
 
 .. note::
-  The script`s output is colored, however we respect `NO_COLOR <https://no-color.org/>`_.
+  The terminal output is colored, however we respect `NO_COLOR <https://no-color.org/>`_.

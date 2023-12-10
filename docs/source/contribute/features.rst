@@ -25,12 +25,12 @@ Click on the "New issue" button:
 You will see two prepared template for the issues. Click on the "Get started" for the
 "Feature request" template:
 
-.. figure:: img/issue-3.png
-    :target: ../_images/issue-3.png
+.. figure:: img/feature-1.png
+    :target: ../_images/feature-1.png
     :align: center
 
 Fill in the template and click on the "Submit new issue" button:
 
-.. figure:: img/feature.png
-    :target: ../_images/feature.png
+.. figure:: img/feature-2.png
+    :target: ../_images/feature-2.png
     :align: center

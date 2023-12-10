@@ -187,7 +187,6 @@ custom_links = {
     "NumPy": ("NumPy", "https://numpy.org/"),
     "SciPy": ("SciPy", "https://scipy.org/"),
     "matplotlib": ("matplotlib", "https://matplotlib.org/"),
-    "tqdm": ("tqdm", "https://tqdm.github.io/"),
     "termcolor": ("termcolor", "https://pypi.org/project/termcolor/"),
     "Python-installation": (
         "Python installation",

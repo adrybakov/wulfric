@@ -20,15 +20,20 @@ In the examples across the documentation it is expected to be imported in that w
 
 
 .. toctree::
-   :caption: Modules
+   :caption: Core elements
    :maxdepth: 1
 
-   crystal
+   cell
    lattice
+   bravais-lattice
    kpoints
    atom
-   bravais-lattice
-   cell
+   crystal
+
+.. toctree::
+   :caption: Supplementary elements
+   :maxdepth: 1
+
    identify
    io
    geometry

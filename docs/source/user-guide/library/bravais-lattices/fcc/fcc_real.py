@@ -1,7 +1,7 @@
-import wulfricshorttools as wulfricshort
+import wulfric as wulf
 
-l = wulfricshort.lattice_example("FCC")
-backend = wulfricshort.PlotlyBackend()
+l = wulf.lattice_example("FCC")
+backend = wulf.PlotlyBackend()
 backend.plot(l, kind="primitive", label="primitive")
 backend.plot(l, kind="conventional", label="conventional", color="black")
 # Save an image:

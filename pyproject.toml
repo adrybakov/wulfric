@@ -8,7 +8,7 @@ name = "wulfric"
 license = { text = "GPL-3.0 license" }
 version = "0.1.0"
 description = "Crystal, Lattice, Atoms, K-path."
-dependencies = ["numpy", "scipy", "tqdm", "termcolor"]
+dependencies = ["numpy", "scipy", "termcolor"]
 authors = [{ name = "Andrey Rybakov", email = "rybakov.ad@icloud.com" }]
 requires-python = ">=3.8"
 readme = "README.rst"

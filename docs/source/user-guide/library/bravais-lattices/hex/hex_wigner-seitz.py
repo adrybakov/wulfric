@@ -1,7 +1,7 @@
-import wulfricshorttools as wulfricshort
+import wulfric as wulf
 
-l = wulfricshort.lattice_example("HEX")
-backend = wulfricshort.PlotlyBackend()
+l = wulf.lattice_example("HEX")
+backend = wulf.PlotlyBackend()
 backend.plot(l, kind="wigner-seitz")
 # Save an image:
 backend.save("hex_wigner-seitz.png")
