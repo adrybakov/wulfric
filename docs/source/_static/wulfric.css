@@ -1,0 +1,148 @@
+html[data-theme="light"] {
+  --pst-color-primary: #506EC3;
+  --pst-color-inline-code: #198F88;
+  --pst-color-secondary: #008181;
+  --pst-color-inline-code-links: #198F88;
+}
+
+html[data-theme="dark"] {
+  --pst-color-primary: #4A85BE;
+  --pst-color-inline-code: #7BC4AC;
+  --pst-color-secondary: #4AAA98;
+  --pst-color-inline-code-links: #7BC4AC;
+
+}
+
+h1 {
+  color: #000201;
+}
+
+h2 {
+  color: #082F18;
+
+  letter-spacing: -.03em;
+}
+
+h3 {
+  color: #0C4526;
+
+  letter-spacing: -.03em;
+}
+
+
+html[data-theme=dark] h1 {
+  color: #FDFEFF;
+}
+
+html[data-theme=dark] h2 {
+  color: #FDFEFF;
+  /* han blue */
+  letter-spacing: -.03em;
+}
+
+html[data-theme=dark] h3 {
+  color: #DDDDDD;
+  /* han blue */
+  letter-spacing: -.03em;
+}
+
+.footer-item {
+  text-align: center;
+}
+
+.bd-sidebar-secondary {
+  width: 14rem;
+}
+
+
+/* Main page overview cards. */
+/* Source: https://github.com/numpy/numpy/blob/main/doc/source/_static/numpy.css */
+
+.sd-card {
+  background: #fff;
+  border-radius: 0;
+  padding: 30px 10px 20px 10px;
+  margin: 10px 0px;
+}
+
+.sd-card .sd-card-header {
+  text-align: center;
+  border: none;
+}
+
+.sd-card .sd-card-header .sd-card-text {
+  margin: 0px;
+}
+
+.sd-card .sd-card-img-top {
+  height: 52px;
+  width: 52px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sd-card .sd-card-header {
+  border: none;
+  background-color: white;
+  color: #7BC4AC;
+  font-size: var(--pst-font-size-h5);
+  font-weight: bold;
+  padding: 2.5rem 0rem 0.5rem 0rem;
+}
+
+.bd-content .sd-card .sd-card-header {
+  border: none;
+}
+
+.bd-content .sd-card .sd-card-body {
+  border: none;
+}
+
+.bd-content .sd-card .sd-card-footer {
+  border: none;
+}
+
+.sd-card .sd-card-footer {
+  border: none;
+  background-color: white;
+}
+
+.sd-card .sd-card-footer .sd-card-text {
+  max-width: 220px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Dark theme tweaking */
+html[data-theme=dark] .sd-card img[src*='.svg'] {
+  filter: invert(0.82) brightness(0.8) contrast(1.2);
+}
+
+html[data-theme=dark] .sd-card {
+  background-color: var(--pst-color-background);
+}
+
+html[data-theme=dark] .sd-shadow-sm {
+  box-shadow: 0 .1rem 1rem rgba(250, 250, 250, .6) !important
+}
+
+html[data-theme=dark] .sd-card .sd-card-header {
+  background-color: var(--pst-color-background);
+}
+
+html[data-theme=dark] .sd-card .sd-card-footer {
+  background-color: var(--pst-color-background);
+}
+
+
+.custom-header {
+  background-color: var(--pst-color-surface);
+  margin-bottom: 0.1rem;
+  margin-top: 0.2rem;
+  font-weight: bold;
+  word-break: break-word;
+  padding-left: 0.5em;
+  padding-right: 5px;
+  box-sizing: border-box;
+  display: block;
+}
