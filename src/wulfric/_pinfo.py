@@ -6,7 +6,7 @@ from wulfric import __doclink__, __git_hash__, __release_date__, __version__
 __all__ = ["logo", "oneline", "license"]
 
 
-def logo(info=None, line_length=71, flat=False, date_time=False, comment=None):
+def logo(info=None, line_length=None, flat=False, date_time=False, comment=None):
     """
     Logo generator for WULFRIC package.
 
@@ -17,13 +17,13 @@ def logo(info=None, line_length=71, flat=False, date_time=False, comment=None):
     info : list of str, optional
         Information about the package.
         will be displayed below the logo.
-        Each element should not exceed 59 characters.
+        Each element should not exceed 50 characters.
         by default it displays the version, release date,
         git hash and documentation link. You can pass th empty list
         to display the logo only.
-    line_length : int
+    line_length : int, optional
         Length of the lines to be returned.
-        Minimum value is 71.
+        Minimum value is 62.
     flat : bool
         Whether to return a flat logo or not.
     date_time : bool, default False
@@ -42,8 +42,8 @@ def logo(info=None, line_length=71, flat=False, date_time=False, comment=None):
             f"Version: {__version__}",
             f"Documentation: {__doclink__}",
             f"Release date: {__release_date__}",
-            f"Git hash: {__git_hash__}",
             f"Licence: GNU GPLv3",
+            f"Copyright (C) 2023-{datetime.now().year}  Andrey Rybakov",
         ]
         if date_time:
             cd = datetime.now()
@@ -78,8 +78,10 @@ def logo(info=None, line_length=71, flat=False, date_time=False, comment=None):
         " ▀▀▀▀▀▀▀▀ ",
     ]
 
-    N = 71
-    n = 12
+    N = len(logo[0])
+    n = len(cat[0]) + 2
+    if line_length is None:
+        line_length = N
     if line_length < N:
         line_length = N
     if isinstance(comment, bool) and comment:
@@ -158,9 +160,7 @@ def copyright():
     return f"""WULFRIC Copyright (C) 2023-{datetime.now().year}  Andrey Rybakov
 This program comes with ABSOLUTELY NO WARRANTY; for details type 'wulfric warranty'.
 This is free software, and you are welcome to redistribute it
-under certain conditions; type 'wulfric conditions' for details.
-    
-More information is available on the documentation page: {__doclink__}"""
+under certain conditions; type 'wulfric conditions' for details."""
 
 
 def warranty():

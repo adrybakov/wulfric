@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 from wulfric._pinfo import logo, copyright, warranty, conditions
 from wulfric import __version__
@@ -24,25 +24,33 @@ from wulfric import __version__
 
 def main():
     parser = ArgumentParser(
-        description="WULFRIC package",
+        description=logo(),
+        formatter_class=RawDescriptionHelpFormatter,
     )
     parser.add_argument(
         "command",
-        default="logo",
+        default=None,
         help="Which command to run",
-        choices=["logo", "warranty", "conditions", "version", "-v", "--version"],
+        choices=["logo", "warranty", "conditions", "version"],
+        nargs="?",
+    )
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="store_true",
+        help="Print version",
     )
     args = parser.parse_args()
     if args.command == "logo":
-        print(logo() + "\n" + copyright())
+        print(logo())
     elif args.command == "warranty":
-        print(warranty())
+        print("\n" + warranty() + "\n")
     elif args.command == "conditions":
-        print(conditions())
-    elif (
-        args.command == "version" or args.command == "-v" or args.command == "--version"
-    ):
-        print(__version__)
+        print("\n" + conditions() + "\n")
+    elif args.command == "version" or args.version:
+        print(f"WULFRIC v{__version__}")
+    elif args.command is None:
+        parser.print_help()
     else:
         raise ValueError(f"Command {args.command} is not recognized.")
 
