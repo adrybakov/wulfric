@@ -1,4 +1,5 @@
 html[data-theme="light"] {
+  --psi-color-background: #d6d6d6;
   --pst-color-primary: #506EC3;
   --pst-color-inline-code: #198F88;
   --pst-color-secondary: #008181;

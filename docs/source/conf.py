@@ -85,8 +85,7 @@ html_static_path = ["_static"]
 html_css_files = ["wulfric.css"]
 
 html_title = f"{project} v{version}"
-# Add favicon later
-# html_favicon = "img/favicon.png"
+html_favicon = "img/favicon.png"
 
 # Theme specific options
 html_theme_options = {
@@ -99,11 +98,10 @@ html_theme_options = {
     #     "json_url": "https://wulfric.org/en/main/_static/versions.json",
     # },
     "navbar_align": "left",
-    # Add the logo later
-    # "logo": {
-    #     "image_light": "_static/logo_black.png",
-    #     "image_dark": "_static/logo_white.png",
-    # },
+    "logo": {
+        "image_light": "_static/logo.jpg",
+        "image_dark": "_static/logo.jpg",
+    },
     "header_links_before_dropdown": 4,
     "icon_links": [
         {
