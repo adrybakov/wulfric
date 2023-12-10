@@ -6,9 +6,9 @@ Crystal, Lattice, Atoms, K-path.
 .. image:: https://badge.fury.io/py/wulfric.svg
   :target: https://badge.fury.io/py/wulfric/
 
-.. image:: https://readthedocs.org/projects/wulfric/badge/?version=main
-  :target: https://wulfric.org/en/stable/?badge=main
-  :alt: Documentation Status
+.. image:: https://readthedocs.org/projects/wulfric/badge/?version=latest
+    :target: https://wulfric.org/en/latest/?badge=latest
+    :alt: Documentation Status
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
   :target: https://github.com/psf/black/
