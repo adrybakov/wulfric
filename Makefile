@@ -76,6 +76,9 @@ pip: prepare-release
 	@python3 -m twine upload --repository pypi dist/* --verbose
 	@git tag -a "v$(VERSION)" -m "Version $(VERSION)"
 	@git push origin "v$(VERSION)"
+	@git add src/wulfric/__init__.py
+	@git commit -m "Post-release commit"
+	@git push
 
 
 bravais-pictures:
