@@ -14,7 +14,7 @@ __pycache__
 # Build
 build
 dist
-*.egg-info
+**/*.egg-info
 
 # Docs
 docs/make.bat
