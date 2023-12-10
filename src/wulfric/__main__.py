@@ -1,5 +1,5 @@
-# wulfric - program for spin Hamiltonian and magnons.
-# Copyright (C) 2022-2023  Andrey Rybakov
+# WULFRIC - Crystal, Lattice, Atoms, K-path.
+# Copyright (C) 2023 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -18,8 +18,8 @@
 
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
-from wulfric._pinfo import logo, copyright, warranty, conditions
 from wulfric import __version__
+from wulfric._pinfo import conditions, logo, warranty
 
 
 def main():
