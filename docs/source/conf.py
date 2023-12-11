@@ -38,7 +38,7 @@ if ".dev" in version:
 else:
     major, minor, rest = version.split(".")[0:3]
     switcher_version = f"{major}.{minor}"
-    github_version = "stable"
+    github_version = "main"
 
 
 ##########################################################################################
