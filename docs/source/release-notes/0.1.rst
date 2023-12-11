@@ -13,3 +13,10 @@ standalone project, which can be used in any Python project.
 =====
 
 Initial release
+
+0.1.1
+=====
+
+Bugfix with matplotlib imports. The imports were not shielded, thus if matplotlib was
+not installed in the users environment, the execution would fail. Plotly was shielded
+before.

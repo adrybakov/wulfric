@@ -20,14 +20,21 @@ from random import choices
 from string import ascii_lowercase
 from typing import Iterable
 
-import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib import rcParams
-from matplotlib.patches import FancyArrowPatch
-from mpl_toolkits.mplot3d import Axes3D, proj3d
 
 from wulfric.constants import HS_PLOT_NAMES
 from wulfric.geometry import volume
+
+try:
+    import matplotlib.pyplot as plt
+    from matplotlib import rcParams
+    from matplotlib.patches import FancyArrowPatch
+    from mpl_toolkits.mplot3d import Axes3D, proj3d
+
+    MATPLOTLIB_AVAILABLE = True
+except ImportError:
+    MATPLOTLIB_AVAILABLE = False
+
 
 try:
     import plotly.graph_objects as go
@@ -193,21 +200,22 @@ class AbstractBackend:
         raise NotImplementedError
 
 
-# Better 3D arrows, see: https://stackoverflow.com/questions/22867620/putting-arrowheads-on-vectors-in-a-3d-plot
-class Arrow3D(FancyArrowPatch):
-    def __init__(self, ax, xs, ys, zs, *args, **kwargs):
-        FancyArrowPatch.__init__(self, (0, 0), (0, 0), *args, **kwargs)
-        self._verts3d = xs, ys, zs
-        self.ax = ax
+if MATPLOTLIB_AVAILABLE:
+    # Better 3D arrows, see: https://stackoverflow.com/questions/22867620/putting-arrowheads-on-vectors-in-a-3d-plot
+    class Arrow3D(FancyArrowPatch):
+        def __init__(self, ax, xs, ys, zs, *args, **kwargs):
+            FancyArrowPatch.__init__(self, (0, 0), (0, 0), *args, **kwargs)
+            self._verts3d = xs, ys, zs
+            self.ax = ax
 
-    def draw(self, renderer):
-        xs3d, ys3d, zs3d = self._verts3d
-        xs, ys, zs = proj3d.proj_transform(xs3d, ys3d, zs3d, self.ax.axes.M)
-        self.set_positions((xs[0], ys[0]), (xs[1], ys[1]))
-        FancyArrowPatch.draw(self, renderer)
+        def draw(self, renderer):
+            xs3d, ys3d, zs3d = self._verts3d
+            xs, ys, zs = proj3d.proj_transform(xs3d, ys3d, zs3d, self.ax.axes.M)
+            self.set_positions((xs[0], ys[0]), (xs[1], ys[1]))
+            FancyArrowPatch.draw(self, renderer)
 
-    def do_3d_projection(self, *_, **__):
-        return 0
+        def do_3d_projection(self, *_, **__):
+            return 0
 
 
 class MatplotlibBackend(AbstractBackend):
@@ -236,6 +244,10 @@ class MatplotlibBackend(AbstractBackend):
     """
 
     def __init__(self, fig=None, ax=None, background=True, focal_length=0.2):
+        if not MATPLOTLIB_AVAILABLE:
+            raise ImportError(
+                'Matplotlib is not available. Install it with "pip install matplotlib"'
+            )
         super().__init__()
         if fig is None:
             fig = plt.figure(figsize=(6, 6))
