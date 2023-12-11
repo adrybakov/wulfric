@@ -75,7 +75,7 @@ Plotting with Matplotlib
 
 |matplotlib|_ is considered to be the secondary plotting backend.
 
-The creation of the matplotlib backend can take one optional arguments: ``fig and ``ax``:
+The creation of the matplotlib backend can take one optional arguments: ``fig`` and ``ax``:
 
 .. doctest::
 
