@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "wulfric"
 license = { text = "GPL-3.0 license" }
-version = "0.1.0"
+dynamic = ["version"]
 description = "Crystal, Lattice, Atoms, K-path."
 dependencies = ["numpy", "scipy", "termcolor"]
 authors = [{ name = "Andrey Rybakov", email = "rybakov.ad@icloud.com" }]
@@ -41,3 +41,6 @@ Changelog = "https://wulfric.org/en/main/release-notes/index.html"
 
 [project.optional-dependencies]
 visual = ["plotly", "matplotlib"]
+
+[tool.setuptools.dynamic]
+version = { attr = "wulfric.__version__" }
