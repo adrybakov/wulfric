@@ -93,10 +93,10 @@ html_theme_options = {
     "use_edit_page_button": True,
     "navbar_center": ["version-switcher", "navbar-nav"],
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
-    # "switcher": {
-    #     "version_match": switcher_version,
-    #     "json_url": "https://wulfric.org/en/main/_static/versions.json",
-    # },
+    "switcher": {
+        "version_match": switcher_version,
+        "json_url": "https://wulfric.org/en/latest/_static/versions.json",
+    },
     "navbar_align": "left",
     "logo": {
         "image_light": "_static/logo.jpg",
