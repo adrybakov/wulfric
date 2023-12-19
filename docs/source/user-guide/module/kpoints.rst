@@ -239,7 +239,7 @@ and describe the labels and position of ticks on the x-axis:
     >>> kp.labels
     ['$\\Gamma$', 'K', 'X']
     >>> import numpy as np
-    >>> np.around(kp.coordinates(), decimals=4)
+    >>> np.around(kp.ticks(), decimals=4)
     array([0.    , 0.7071, 1.2071])
 
 The third property gives the coordinates of the :py:attr:`.Kpoints.points` for the plot:

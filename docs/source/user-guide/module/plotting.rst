@@ -43,8 +43,8 @@ Each backend is created as any other object in Python:
 
 .. doctest::
 
-    >>> mb = MatplotlibBackend()
-    >>> pb = PlotlyBackend()
+    >>> mb = MatplotlibBackend() # doctest: +SKIP
+    >>> pb = PlotlyBackend() # doctest: +SKIP
 
 
 Plotting with Plotly
@@ -56,18 +56,18 @@ The creation of the plotly backend can take one optional argument: ``fig``:
 
 .. doctest::
 
-    >>> from plotly import graph_objects as go
-    >>> fig = go.Figure()
-    >>> pb = PlotlyBackend(fig=fig)
+    >>> from plotly import graph_objects as go # doctest: +SKIP
+    >>> fig = go.Figure() # doctest: +SKIP
+    >>> pb = PlotlyBackend(fig=fig) # doctest: +SKIP
 
 The typical workflow consist in plotting one or several lattices and then
 showing or saving the figure:
 
 .. doctest::
 
-    >>> pb.plot(lattice, kind="brillouin", label="Brillouin zone", color="red")
-    >>> pb.plot(lattice, kind="kpath", label="K-path", color="black")
-    >>> pb.save('hex_lattice.html')
+    >>> pb.plot(lattice, kind="brillouin", label="Brillouin zone", color="red") # doctest: +SKIP
+    >>> pb.plot(lattice, kind="kpath", label="K-path", color="black") # doctest: +SKIP
+    >>> pb.save('hex_lattice.html') # doctest: +SKIP
     >>> pb.show() # doctest: +SKIP
 
 Plotting with Matplotlib
@@ -79,17 +79,17 @@ The creation of the matplotlib backend can take one optional arguments: ``fig`` 
 
 .. doctest::
 
-    >>> import matplotlib.pyplot as plt
-    >>> fig = plt.figure(figsize=(6, 6))
-    >>> ax = fig.add_subplot(projection="3d")
-    >>> mb = MatplotlibBackend(fig=fig, ax=ax)
+    >>> import matplotlib.pyplot as plt # doctest: +SKIP
+    >>> fig = plt.figure(figsize=(6, 6)) # doctest: +SKIP
+    >>> ax = fig.add_subplot(projection="3d") # doctest: +SKIP
+    >>> mb = MatplotlibBackend(fig=fig, ax=ax) # doctest: +SKIP
 
 The typical workflow consist in plotting one or several lattices and then
 showing or saving the figure:
 
 .. doctest::
 
-    >>> mb.plot(lattice, kind="brillouin", label="Brillouin zone", color="red")
-    >>> mb.plot(lattice, kind="kpath", label="K-path", color="black")
-    >>> mb.save('hex_lattice.png')
+    >>> mb.plot(lattice, kind="brillouin", label="Brillouin zone", color="red") # doctest: +SKIP
+    >>> mb.plot(lattice, kind="kpath", label="K-path", color="black") # doctest: +SKIP
+    >>> mb.save('hex_lattice.png') # doctest: +SKIP
     >>> mb.show() # doctest: +SKIP

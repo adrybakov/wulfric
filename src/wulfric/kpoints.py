@@ -254,7 +254,7 @@ class Kpoints:
         Returns
         -------
         labels : list of str
-            Labels, ready to be plotted. Same length as :py:attr:`.coordinates`.
+            Labels, ready to be plotted. Same length as :py:attr:`.ticks`.
         """
 
         labels = []
@@ -270,16 +270,44 @@ class Kpoints:
 
     def coordinates(self, relative=False):
         r"""
-        Flatten coordinates of the high symmetry points, ready to be plotted.
+        Deprecated. See :py:attr:`.ticks` for details.
+
+        Will be removed in 0.3.0.
+        """
+
+        print(
+            "".join(
+                [
+                    "=" * 60,
+                    "\n",
+                    f"{'Warning':^60}",
+                    "\n",
+                    "=" * 60,
+                    "\n",
+                    "The use of 'Kpoints.coordinates()' is deprecated.\n",
+                    "It will be removed in the release 0.3.0.\n",
+                    "Please use Kpoints.ticks() instead.\n",
+                    "=" * 60,
+                ]
+            ),
+        )
+        return self.ticks(relative=relative)
+
+    def ticks(self, relative=False):
+        r"""
+        Tick's positions of the high symmetry points, ready to be plotted.
+
+        .. versionchanged:: 0.1.2 Renamed from ``coordinates``
 
         Parameters
         ----------
         relative : bool, optional
             Whether to use relative coordinates instead of the absolute ones.
+
         Returns
         -------
-        coordinates : :numpy:`ndarray`
-            Coordinates, ready to be plotted. Same length as :py:attr:`.labels`.
+        ticks : :numpy:`ndarray`
+            Tick's positions, ready to be plotted. Same length as :py:attr:`.labels`.
         """
 
         if relative:
@@ -287,20 +315,20 @@ class Kpoints:
         else:
             cell = np.array([self.b1, self.b2, self.b3])
 
-        coordinates = []
+        ticks = []
         for s_i, subpath in enumerate(self.path):
             if s_i == 0:
-                coordinates.append(0)
+                ticks.append(0)
             for i, name in enumerate(subpath[1:]):
-                coordinates.append(
+                ticks.append(
                     np.linalg.norm(
                         self.hs_coordinates[name] @ cell
                         - self.hs_coordinates[subpath[i]] @ cell
                     )
-                    + coordinates[-1]
+                    + ticks[-1]
                 )
 
-        return np.array(coordinates)
+        return np.array(ticks)
 
     def points(self, relative=False):
         r"""

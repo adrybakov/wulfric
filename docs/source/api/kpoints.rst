@@ -41,7 +41,7 @@ Flattened graph labels
     :toctree: generated/
 
     Kpoints.labels
-    Kpoints.coordinates
+    Kpoints.ticks
 
 K points in the path
 ====================

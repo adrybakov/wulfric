@@ -204,7 +204,7 @@ def test_coordinates(path, corr_coord):
         n=4,
         path=path,
     )
-    assert (np.abs(kp.coordinates(relative=True) - corr_coord) < 1e-5).all()
+    assert (np.abs(kp.ticks(relative=True) - corr_coord) < 1e-5).all()
 
 
 @pytest.mark.parametrize("path, corr_points", point_input)

@@ -20,3 +20,10 @@ Initial release
 Bugfix with matplotlib imports. The imports were not shielded, thus if matplotlib was
 not installed in the users environment, the execution would fail. Plotly was shielded
 before.
+
+0.1.2
+=====
+
+Rename :py:func:`.Kpoints.coordinates` to :py:func:`.Kpoints.ticks`.
+Both methods are available until the version 0.3.0. Deprecation warning is printed every time
+:py:func:`.Kpoints.coordinates` is used.
