@@ -22,8 +22,11 @@ docs/build
 docs/source/api/generated
 *generated
 
-# vscode settings
+# VSCode settings
 .vscode
+
+# Debug
+tmp*
 
 # Other
 logos
