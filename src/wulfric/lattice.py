@@ -1,5 +1,5 @@
 # WULFRIC - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023 Andrey Rybakov
+# Copyright (C) 2023-2024 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -740,8 +740,8 @@ class Lattice:
 
         See Also
         --------
-        lepage : Algoritm for the lattice type identification
-        variation : Variation of the lattice, if any.
+        lepage : Algorithm for the lattice type identification
+        variation : Variation of the lattice.
         """
 
         if self._type is None or eps_rel is not None:
