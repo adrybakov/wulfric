@@ -95,7 +95,7 @@ html_theme_options = {
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
     "switcher": {
         "version_match": switcher_version,
-        "json_url": "https://wulfric.org/en/latest/_static/versions.json",
+        "json_url": "https://docs.wulfric.org/en/latest/_static/versions.json",
     },
     "navbar_align": "left",
     "logo": {
