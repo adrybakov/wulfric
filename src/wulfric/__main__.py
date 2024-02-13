@@ -1,5 +1,5 @@
 # WULFRIC - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023 Andrey Rybakov
+# Copyright (C) 2023-2024 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -19,6 +19,7 @@
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 from wulfric import __version__
+from wulfric._osfix import _winwait
 from wulfric._pinfo import conditions, logo, warranty
 
 
@@ -57,3 +58,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    _winwait()

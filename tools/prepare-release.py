@@ -1,5 +1,5 @@
 # WULFRIC - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023 Andrey Rybakov
+# Copyright (C) 2023-2024 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -31,14 +31,9 @@ N = 60
 
 QUOTES_IF_BAD = [
     # Albus Dumbledore
-    "Happiness can be found, even in the darkest of times, "
-    "if one only remembers to turn on the light.",
-    # Albus Dumbledore
     "To the well-organized mind, death is but the next great adventure.",
     # Ron Weasley
     "When in doubt, go to the library.",
-    # Harry Potter
-    "I'm going to keep going until I succeed — or die.",
     # Albus Dumbledore
     "We must try not to sink beneath our anguish, but battle on.",
     # Albus Dumbledore
