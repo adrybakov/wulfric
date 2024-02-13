@@ -69,6 +69,11 @@ the corresponding links below.
 
       pip install -r utest/requirements.txt
 
+   .. note::
+      For the linux and OSX systems there is a scenario defined::
+
+         make venv
+
 3. Develop the contribution.
 
    * Create a dedicated branch for your feature, that you are going to develop::
