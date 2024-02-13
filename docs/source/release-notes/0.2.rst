@@ -1,0 +1,23 @@
+.. _release-notes_0.2:
+
+***********
+Version 0.2
+***********
+
+Whats new?
+----------
+Whole WULFRIC was refactored. Majority of the functionality remained the same,
+however in some parts of the package the interface or the internal organization changed.
+Therefore version 0.2 introduce some breaking changes:
+
+* :py:class:`.Atom`
+
+  - Spin and magnetic moment are related trough :py:attr:`.Atom.g_factor`.
+  - Spin, magnetic moment now have default values and always return a value
+    (previously if undefined they raised a ``ValueError``).
+
+
+
+0.2.0
+=====
+See above.
