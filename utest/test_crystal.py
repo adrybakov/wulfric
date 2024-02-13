@@ -117,14 +117,15 @@ def test_remove_atom():
     st.lists(st.integers(min_value=-1e9, max_value=1e9), min_size=3, max_size=3),
 )
 def test_get_atom_coordinates(name, position, R):
-    position = np.array(position)
-    c = Crystal(cell=[[1, 0, 0], [0, 2, 0], [0, 0, 3]], standardize=False)
-    c.add_atom(name=name, position=position)
-    assert np.allclose(c.get_atom_coordinates(name, R=R), position + np.array(R))
-    assert np.allclose(
-        c.get_atom_coordinates(name, R=R, relative=False),
-        (position + np.array(R)) @ c.cell,
-    )
+    if not name.startswith("__") and not name.endswith("__"):
+        position = np.array(position)
+        c = Crystal(cell=[[1, 0, 0], [0, 2, 0], [0, 0, 3]], standardize=False)
+        c.add_atom(name=name, position=position)
+        assert np.allclose(c.get_atom_coordinates(name, R=R), position + np.array(R))
+        assert np.allclose(
+            c.get_atom_coordinates(name, R=R, relative=False),
+            (position + np.array(R)) @ c.cell,
+        )
 
 
 @given(
@@ -135,19 +136,25 @@ def test_get_atom_coordinates(name, position, R):
     st.lists(st.integers(min_value=-1e9, max_value=1e9), min_size=3, max_size=3),
 )
 def test_get_vector(name1, position1, name2, position2, R):
-    position1 = np.array(position1)
-    position2 = np.array(position2)
-    c = Crystal(cell=[[1, 0, 0], [0, 2, 0], [0, 0, 3]], standardize=False)
-    c.add_atom(name=name1, position=position1)
-    c.add_atom(name=name2, position=position2)
-    assert np.allclose(
-        c.get_vector(name1, name2, R=R, index1=1, index2=2),
-        (position2 - position1 + np.array(R)) @ c.cell,
-    )
-    assert np.allclose(
-        c.get_vector(name1, name2, R=R, index1=1, index2=2, relative=True),
-        position2 - position1 + np.array(R),
-    )
+    if (
+        not name1.startswith("__")
+        and not name1.endswith("__")
+        and not name2.startswith("__")
+        and not name2.endswith("__")
+    ):
+        position1 = np.array(position1)
+        position2 = np.array(position2)
+        c = Crystal(cell=[[1, 0, 0], [0, 2, 0], [0, 0, 3]], standardize=False)
+        c.add_atom(name=name1, position=position1)
+        c.add_atom(name=name2, position=position2)
+        assert np.allclose(
+            c.get_vector(name1, name2, R=R, index1=1, index2=2),
+            (position2 - position1 + np.array(R)) @ c.cell,
+        )
+        assert np.allclose(
+            c.get_vector(name1, name2, R=R, index1=1, index2=2, relative=True),
+            position2 - position1 + np.array(R),
+        )
 
 
 @given(
@@ -158,16 +165,22 @@ def test_get_vector(name1, position1, name2, position2, R):
     st.lists(st.integers(min_value=-1e9, max_value=1e9), min_size=3, max_size=3),
 )
 def test_get_distance(name1, position1, name2, position2, R):
-    position1 = np.array(position1)
-    position2 = np.array(position2)
-    c = Crystal(cell=[[1, 0, 0], [0, 2, 0], [0, 0, 3]], standardize=False)
-    c.add_atom(name=name1, position=position1)
-    c.add_atom(name=name2, position=position2)
-    assert np.allclose(
-        c.get_distance(name1, name2, R=R, index1=1, index2=2),
-        np.linalg.norm((position2 - position1 + np.array(R)) @ c.cell),
-    )
-    assert np.allclose(
-        c.get_distance(name1, name2, R=R, index1=1, index2=2, relative=True),
-        np.linalg.norm(position2 - position1 + np.array(R)),
-    )
+    if (
+        not name1.startswith("__")
+        and not name1.endswith("__")
+        and not name2.startswith("__")
+        and not name2.endswith("__")
+    ):
+        position1 = np.array(position1)
+        position2 = np.array(position2)
+        c = Crystal(cell=[[1, 0, 0], [0, 2, 0], [0, 0, 3]], standardize=False)
+        c.add_atom(name=name1, position=position1)
+        c.add_atom(name=name2, position=position2)
+        assert np.allclose(
+            c.get_distance(name1, name2, R=R, index1=1, index2=2),
+            np.linalg.norm((position2 - position1 + np.array(R)) @ c.cell),
+        )
+        assert np.allclose(
+            c.get_distance(name1, name2, R=R, index1=1, index2=2, relative=True),
+            np.linalg.norm(position2 - position1 + np.array(R)),
+        )

@@ -31,25 +31,32 @@ class Atom:
 
     Notes
     -----
-    "==" (and "!=") operation compare two atoms based on their names and indexes.
-    If index of one atom is not define, then comparison raises ``ValueError``.
-    For the check of the atom type use :py:attr:`Atom.type`.
-    In most cases :py:attr:`Atom.name` = :py:attr:`Atom.type`.
+    "==" (and "!=") operator compare two atoms based on their names and indexes.
+    If index of one atom is not defined, then comparison raises ``ValueError``.
+    If two atoms have the same :py:attr:`.Atom.name` and :py:attr:`.Atom.index` then they are considered to be equal.
+    Even if they have different :py:attr:`.Atom.positions`.
+    For the check of the atom type use :py:attr:`.Atom.type`.
+    In most cases :py:attr:`.Atom.name` = :py:attr:`.Atom.type`.
 
     Parameters
     ----------
-    name : str, default X
-        Name of the atom.
-    position : (3,) |array-like|_, default [0,0,0]
-        Position of the atom in absolute coordinates.
-    spin : float or (3,) |array-like|_, optional
-        Spin or spin vector of the atom.
-    magmom : (3,) |array-like|_, optional
-        Magnetic moment of the atom.
+    name : str, default "X"
+        Name of the atom. It cannot start or end with double underline "__".
+    position : (3,) |array-like|_, default [0, 0, 0]
+        Position of the atom in absolute or relative coordinates.
+    spin : float or (3,) |array-like|_, default [0, 0, 0]
+        Spin or spin vector of the atom. If only one value is given, then spin vector is oriented along *z* axis.
+        Connected with ``magmom``, see :py:attr:`.Atom.magmom`.
+    magmom : float or (3,) |array-like|_, default [0, 0, 0]
+        Magnetic moment of the atom. Vector or the value.
+        If a number is given, then oriented along *z* axis.
+        Connected with ``spin``, see :py:attr:`.Atom.spin`.
+    g_factor : float, default -2
+        Lande g-factor. Relates ``magmom`` and ``spin``.
     charge : float, optional
         Charge of the atom.
     index : int, optional
-        Custom index of an atom, used differently in different scenarios.
+        Custom index of an atom. It is used differently in different scenarios.
         Combination of :py:attr:`.name` and :py:attr:`.index`
         is meant to be unique, when an atom belongs to some group
         (i.e. to :py:class:`.Crystal`).
@@ -58,9 +65,10 @@ class Atom:
     def __init__(
         self,
         name="X",
-        position=None,
-        spin=None,
-        magmom=None,
+        position=(0, 0, 0),
+        spin=(0, 0, 0),
+        magmom=(0, 0, 0),
+        g_factor=-2.0,
         charge=None,
         index=None,
     ) -> None:
@@ -74,37 +82,36 @@ class Atom:
             self.index = index
 
         # Set position
-        self._position = np.array([0.0, 0.0, 0.0])
-        if position is not None:
-            self.position = np.array(position)
+        self._position = None
+        self.position = position
 
-        # Set magmom
-        self._magmom = None
-        if magmom is not None:
-            self.magmom = magmom
+        # Set g-factor
+        self._g_factor = None
+        self.g_factor = g_factor
+
+        # Set spin
+        self._spin = None
+        self.spin = spin
+
+        # Check that magmom is consistent with spin
+        if not np.allclose(g_factor * np.array(spin), magmom):
+            raise ValueError(
+                f"Spin and magmom parameters are not independent, expected mu = g*spin to hold, got: {magmom} {g_factor}{spin}"
+            )
 
         # Set charge
         self._charge = None
         if charge is not None:
             self.charge = charge
 
-        # Set spin
-        self._spin = None
-        self._spin_direction = None
-        self.spin_direction = [0, 0, 1]
-        if isinstance(spin, Iterable):
-            self.spin_vector = spin
-        elif spin is not None:
-            self.spin = spin
-
         # Set type placeholder
         self._type = None
 
-    def __str__(self):
-        return self.name
-
-    def __format__(self, format_spec):
-        return format(str(self), format_spec)
+    ################################################################################
+    #                     Allow the atom to be a dictionary key                    #
+    ################################################################################
+    def __hash__(self):
+        return hash(str(self.name) + str(self.index))
 
     # ==
     def __eq__(self, other) -> bool:
@@ -115,43 +122,20 @@ class Atom:
             )
         return self.name == other.name and self.index == other.index
 
-    def __hash__(self):
-        return hash(str(self.name) + str(self.index))
-
     # !=
     def __neq__(self, other):
         return not self == other
 
+    ################################################################################
+    #                             Name, type and index                             #
+    ################################################################################
     @property
-    def position(self):
-        r"""
-        Position of the atom.
-
-        Returns
-        -------
-        position : (3,) :numpy:`ndarray`
-            Position of the atom in absolute coordinates.
-        """
-        return self._position
-
-    @position.setter
-    def position(self, new_position):
-        try:
-            new_position = np.array(new_position, dtype=float)
-        except:
-            raise ValueError(
-                f"New position is not array-like, new_position = {new_position}"
-            )
-        if new_position.shape != (3,):
-            raise ValueError(
-                f"New position has to be a 3 x 1 vector, shape: {new_position.shape}"
-            )
-        self._position = new_position
-
-    @property
-    def name(self):
+    def name(self) -> str:
         r"""
         Name of the atom.
+
+        Any string can be a name of an atom,
+        but it cannot starts nor end with double underscore "__".
 
         Returns
         -------
@@ -164,40 +148,90 @@ class Atom:
     def name(self, new_name):
         if new_name.startswith("__") or new_name.endswith("__"):
             raise ValueError(
-                f"Name of the atom ({new_name}) is not valid. It cannot start/end with '__'."
+                f"Name of the atom ({new_name}) is not valid. It cannot start neither end with '__'."
             )
-        self._name = new_name
+        self._name = str(new_name)
         # Reset type
         self._type = None
 
     @property
-    def type(self):
+    def type(self) -> str:
         r"""
         Type of an atom (i.e. Cr, Ni, ...).
+
+        Computed from the :py:attr:`.Atom.name` automatically.
+        If it is impossible to deduct the atom type based on the atom's name, then
+        it is set to "X" (atom type is undefined). It is not meant to be specified directly,
+        but rather encourage you to use meaningful name for atoms.
 
         Returns
         -------
         type : str
             Type of the atom.
+
+        Examples
+        --------
+
+        .. doctest::
+
+            >>> from wulfric import Atom
+            >>> atom = Atom()
+            >>> atom.type
+            'X'
+            >>> atom.name = "Cr"
+            >>> atom.type
+            'Cr'
+            >>> atom.name = "Cr1"
+            >>> atom.type
+            'Cr'
+            >>> atom.name = "_3341Cr"
+            >>> atom.type
+            'Cr'
+            >>> atom.name = "cr"
+            >>> atom.type
+            'Cr'
+            >>> atom.name = "S"
+            >>> atom.type
+            'S'
+            >>> atom.name = "Se"
+            >>> atom.type
+            'Se'
+            >>> atom.name = "Sp"
+            >>> atom.type
+            'S'
+            >>> atom.name = "123a"
+            >>> atom.type
+            'X'
+
+        Notes
+        -----
+        If :py:attr:`.Atom.name` contains several possible atom types of length 2
+        as substrings, then the type is equal to the first one found.
         """
+
         if self._type is None:
             self._type = "X"
-            for i in ATOM_TYPES:
-                if i.lower() in self._name.lower():
-                    self._type = i
-                    if len(i) == 2:
+            for atom_type in ATOM_TYPES:
+                if atom_type.lower() in self._name.lower():
+                    self._type = atom_type
+                    # Maximum amount of characters in the atom type
+                    # Some 1-character types are parts of some 2-character types (i.e. "Se" and "S")
+                    # If type of two characters is found then it is unique,
+                    # If type of one character is found, then the search must continue
+                    if len(atom_type) == 2:
                         break
         return self._type
 
     @property
     def index(self):
         r"""
-        Index of an atom, meant to be unique for some group of atoms.
+        Index of an atom, meant to be unique in some abstract group of atoms.
 
         Returns
         -------
-        index : int
-            Index of the atom.
+        index : any
+            Index of the atom. Typically an integer.
+            It is expected to be convertible to ``str`` in general
 
         Raises
         ------
@@ -206,7 +240,9 @@ class Atom:
         """
 
         if self._index is None:
-            raise ValueError(f"Index is not defined for the atom {self}.")
+            raise ValueError(
+                f"Index is not defined for the '{self.name}' atom ({self})."
+            )
         return self._index
 
     @index.setter
@@ -214,11 +250,102 @@ class Atom:
         self._index = new_index
 
     @property
-    def spin(self):
+    def fullname(self) -> str:
+        r"""
+        Fullname (:py:attr:`Atom.name`+``__``+:py:attr:`Atom.index`) of an atom.
+
+        Double underscore ("__") is used intentionally,
+        so the user can use single underscore ("_") in the name of the atom.
+
+        If index is not defined, then only the name is returned.
+
+        Returns
+        -------
+        fullname : str
+            Fullname of the atom.
+        """
+
+        try:
+            return f"{self.name}__{self.index}"
+        except ValueError:
+            return self.name
+
+    ################################################################################
+    #                            Position in real space                            #
+    ################################################################################
+    @property
+    def position(self) -> np.ndarray:
+        r"""
+        Relative or absolute position of the atom in some units.
+
+        Returns
+        -------
+        position : (3,) :numpy:`ndarray`
+            Position of the atom in absolute or relative coordinates.
+            The units of the coordinates and whether they are absolute or relative
+            depend on the context. At the logical level of the pure :py:class:`.Atom`
+            class the coordinates are just three numbers. No additional meaning is expected.
+        """
+
+        return self._position
+
+    @position.setter
+    def position(self, new_position):
+        try:
+            new_position = np.array(new_position, dtype=float)
+        except:
+            raise ValueError(f"New position is not array-like, got '{new_position}'")
+        if new_position.shape != (3,):
+            raise ValueError(
+                f"New position has to be a 3 x 1 vector, got shape '{new_position.shape}' (expected '(3,)')"
+            )
+        self._position = new_position
+
+    ################################################################################
+    #                             Magnetic properties                              #
+    ################################################################################
+    @property
+    def g_factor(self) -> float:
+        R"""
+        g-factor of an atom, relates its :py:attr:`.Atom.spin` with its
+        :py:attr:`.Atom.magmom`:
+
+        .. math::
+          \mu = g\mu_BS
+
+        where :math:`\mu_B` is a Bohr magneton and S is :py:attr:`.Atom.spin` or
+        :py:attr:`.Atom.spin_vector` if the latter is defined.
+
+        g-factor is equal to :math:`-2` by default.
+
+        See Also
+        --------
+        spin
+        spin_direction
+        spin_vector
+        magmom
+        """
+        return self._g_factor
+
+    @g_factor.setter
+    def g_factor(self, new_value):
+        try:
+            new_value = float(new_value)
+        except ValueError:
+            raise ValueError(
+                f"Expected something convertible to float (g-factor), got '{new_value}'"
+            )
+
+        self._g_factor = new_value
+
+    @property
+    def spin(self) -> float:
         r"""
         Spin value of the atom.
 
-        Independent of :py:attr:`.Atom.spin_direction`.
+        To access the vector use :py:attr:`.Atom.spin_vector`.
+
+        By default it is equal to :math:`0`.
 
         Returns
         -------
@@ -229,131 +356,174 @@ class Atom:
         ------
         ValueError
             If spin is not defined for the atom.
+
+        Notes
+        -----
+        Spin is connected with :py:attr:`.Atom.magmom`,
+        therefore it can  change if the magnetic moment is changed.
+
+        See Also
+        --------
+        spin_vector
+        spin_direction
+        magmom
+        g_factor
         """
 
-        if self._spin is None:
-            raise ValueError(f"Spin value is not defined for the atom {self.fullname}.")
-        return self._spin
+        return np.linalg.norm(self._spin_vector)
 
     @spin.setter
-    def spin(self, new_spin):
-        self._spin = float(new_spin)
+    def spin(self, new_value):
+        if isinstance(new_value, Iterable):
+            try:
+                new_value = np.array(new_value, dtype=float)
+            except:
+                raise ValueError(f"Expected array-like, got {new_value}")
+            if new_value.shape != (3,):
+                raise ValueError(
+                    f"Expected (3,) array-like, got shape: {new_value.shape}"
+                )
+            self._spin_vector = new_value
+        else:
+            try:
+                new_value = float(new_value)
+            except ValueError:
+                raise ValueError(
+                    f"Expected something convertible to float, got '{new_value}'"
+                )
+            self._spin_vector = np.array([0, 0, 1], dtype=float) * new_value
 
     @property
-    def spin_direction(self):
+    def spin_direction(self) -> np.ndarray:
         r"""
-        Classical spin direction of the atom.
+        Direction of the classical spin vector.
 
         .. math::
+            \vert \boldsymbol{\hat{S}} \vert = 1
 
-            \vec{n} = (n_x, n_y, n_z), \vert \vec{n}\vert = 1
+        By default it is undefined: :math:`(0,0,0)^T`
 
         Returns
         -------
         spin_direction : (3,) :numpy:`ndarray`
-            Classical spin direction of the atom.
+            Direction of the classical spin vector.
 
-        Raises
-        ------
-        ValueError
-            If spin direction is not defined for the atom.
+        See Also
+        --------
+        spin_vector
+        spin
+        magmom
+        g_factor
         """
 
-        return self._spin_direction
+        return np.divide(
+            self._spin_vector,
+            np.linalg.norm(self._spin_vector),
+            out=np.zeros_like(self._spin_vector),
+            where=np.linalg.norm(self._spin_vector) != 0,
+        )
 
     @spin_direction.setter
-    def spin_direction(self, new_spin_direction):
-        try:
-            new_spin_direction = np.array(new_spin_direction, dtype=float)
-            new_spin_direction /= np.linalg.norm(new_spin_direction)
-        except BufferError:
-            raise ValueError(
-                f"New spin direction is not array-like, new_spin_direction = {new_spin_direction}"
-            )
-        if new_spin_direction.shape != (3,):
-            raise ValueError(
-                f"New spin direction has to be a 3 x 1 vector, shape: {new_spin_direction.shape}"
-            )
-        self._spin_direction = new_spin_direction
+    def spin_direction(self, new_value):
+        # Remember the old value
+        factor = self.spin
+        # Checks are the same as for spin setter
+        self.spin = new_value
+        # Restore original length
+        if self.spin != 0:
+            self._spin_vector *= factor / self.spin
 
     @property
-    def spin_vector(self):
+    def spin_vector(self) -> np.ndarray:
         r"""
         Classical spin vector of the atom.
 
         .. math::
+            \boldsymbol{S}
+            =
+            \begin{pmatrix}
+                S_x \\ S_y \\ S_z
+            \end{pmatrix}
 
-            \vec{S} = (S_x, S_y, S_z), \vert \vec{S}\vert = S
+        By default it is set to :math:`(0,0,0)^T`.
 
         Returns
         -------
         spin_vector : (3,) :numpy:`ndarray`
             Classical spin vector of the atom.
 
-        Raises
-        ------
-        ValueError
-            If :py:attr:`spin` or :py:meth:`spin_direction` is not defined for the atom.
+        See Also
+        --------
+        spin_direction
+        spin
+        magmom
+        g_factor
         """
 
-        return self.spin_direction * self.spin
+        return self._spin_vector
 
     @spin_vector.setter
-    def spin_vector(self, new_spin_vector):
-        try:
-            new_spin_vector = np.array(new_spin_vector, dtype=float)
-        except:
-            raise ValueError(
-                f"New spin vector is not array-like, new_spin_direction = {new_spin_vector}"
-            )
-        if new_spin_vector.shape != (3,):
-            raise ValueError(
-                f"New spin vector has to be a 3 x 1 vector, shape: {new_spin_vector.shape}"
-            )
-        self._spin_direction = new_spin_vector / np.linalg.norm(new_spin_vector)
-        self._spin = np.linalg.norm(new_spin_vector)
+    def spin_vector(self, new_value):
+        self.spin = new_value
 
     @property
-    def magmom(self):
+    def magmom(self) -> np.ndarray:
         r"""
         Magnetic moment of the atom.
 
-        Implementation is fully independent of the atom`s spin.
+        It is defined as:
 
-        .. code-block:: python
+        .. math::
+            \boldsymbol{\mu} = g\mu_B \boldsymbol{S}
 
-            magmom = [m_x, m_y, m_z]
+        Internally we use :math:`\mu_B = 1`, therefore the actual formula is
+        :math:`\boldsymbol{\mu} = g\boldsymbol{S}` and magnetic moment is store in Bohr magnetons.
+        By default g is equal to :math:`-2` (see :py:attr:`.Atom.g_factor`).
 
-        units - :math:`\mu_B`
 
         Returns
         -------
         magmom : (3,) :numpy:`ndarray`
             Magnetic moment of the atom.
+
+        Notes
+        -----
+        Magnetic moment is not stored internally, but rather computed from the :py:attr:`.Atom.spin`.
+        Note that if magnetic moment is set, then the spin is changed as well:
+
+        .. doctest::
+
+            >>> from wulfric import Atom
+            >>> atom = Atom()
+            >>> atom.magmom
+            array([-0., -0., -2.])
+            >>> atom.magmom = (1,0,0)
+            >>> atom.spin
+            0.5
+            >>> atom.spin_vector
+            array([-0.5, -0. , -0. ])
+
+        See Also
+        --------
+        spin
+        spin_vector
+        spin_direction
         """
 
-        if self._magmom is None:
-            raise ValueError(
-                f"Magnetic moment is not defined for the atom {self.fullname}."
-            )
-        return self._magmom
+        return self.g_factor * self.spin_vector
 
     @magmom.setter
-    def magmom(self, new_magmom):
-        try:
-            new_magmom = np.array(new_magmom, dtype=float)
-        except:
-            raise ValueError(
-                f"New magnetic moment value is not array-like, new_magmom = {new_magmom}"
-            )
-        if new_magmom.shape != (3,):
-            raise ValueError(
-                f"New magnetic moment has to be a 3 x 1 vector, shape: {new_magmom.shape}"
-            )
-        self._magmom = new_magmom
+    def magmom(self, new_value):
+        # The checks are the same as for the spin
+        self.spin = new_value
+        # If the assignment is correct now we need to correct the value
+        self._spin_vector /= self.g_factor
 
+    ################################################################################
+    #                              Electric properties                             #
+    ################################################################################
     @property
-    def charge(self):
+    def charge(self) -> float:
         r"""
         Charge of the atom.
 
@@ -368,30 +538,10 @@ class Atom:
         return self._charge
 
     @charge.setter
-    def charge(self, new_charge):
-        self._charge = float(new_charge)
-
-    @property
-    def fullname(self):
-        r"""
-        Fullname (name__index) of an atom.
-
-        Double "_" is used intentionally, so the user can use "_" for
-        the name of the atom.
-
-        If index is not defined, then only name is returned.
-
-        Returns
-        -------
-        fullname : str
-            Fullname of the atom.
-
-        Raises
-        ------
-        ValueError
-            If index is not defined for the atom.
-        """
+    def charge(self, new_value):
         try:
-            return f"{self.name}__{self.index}"
+            self._charge = float(new_value)
         except ValueError:
-            return self.name
+            raise ValueError(
+                f"Expected something convertible to float, got {new_value}"
+            )

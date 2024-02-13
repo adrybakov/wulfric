@@ -25,34 +25,101 @@ from hypothesis.extra.numpy import arrays as harrays
 from wulfric.atom import Atom
 from wulfric.constants import ATOM_TYPES
 
-
-@given(
-    harrays(
-        np.float64,
-        (3,),
-        elements=st.floats(
-            allow_nan=False, allow_infinity=False, max_value=1e9, min_value=-1e9
-        ),
-    )
+VECTOR_3 = harrays(
+    np.float64,
+    (3,),
+    elements=st.floats(
+        allow_nan=False, allow_infinity=False, max_value=1e9, min_value=-1e9
+    ),
 )
+
+
+@given(VECTOR_3)
 def test_Atom_spin(v):
     atom = Atom()
 
-    assert np.allclose(atom.spin_direction, [0, 0, 1])
-    with pytest.raises(ValueError):
-        atom.spin
-    with pytest.raises(ValueError):
-        atom.spin_vector
+    assert np.allclose(atom.spin_direction, [0, 0, 0])
+    assert np.allclose(atom.spin_vector, [0, 0, 0])
+    assert np.allclose(atom.spin, 0)
 
     atom.spin = np.linalg.norm(v)
     assert np.allclose(atom.spin, np.linalg.norm(v))
-    assert np.allclose(atom.spin_direction, [0, 0, 1])
-    assert np.allclose(atom.spin_vector, np.linalg.norm(v) * atom.spin_direction)
-
     if np.linalg.norm(v) != 0:
-        atom.spin_vector = v
-        assert np.allclose(atom.spin_direction, v / np.linalg.norm(v))
-        assert np.allclose(atom.spin_vector, v)
+        assert np.allclose(atom.spin_direction, [0, 0, 1])
+    else:
+        assert np.allclose(atom.spin_direction, [0, 0, 0])
+    assert np.allclose(atom.spin_vector, [0, 0, np.linalg.norm(v)])
+
+    atom.spin_vector = v
+    assert np.allclose(atom.spin, np.linalg.norm(v))
+    assert np.allclose(
+        atom.spin_direction,
+        np.divide(
+            v, np.linalg.norm(v), out=np.zeros_like(v), where=np.linalg.norm(v) != 0
+        ),
+    )
+    assert np.allclose(atom.spin_vector, v)
+
+    atom.spin_direction = v
+    assert np.allclose(atom.spin, np.linalg.norm(v))
+    assert np.allclose(
+        atom.spin_direction,
+        np.divide(
+            v, np.linalg.norm(v), out=np.zeros_like(v), where=np.linalg.norm(v) != 0
+        ),
+    )
+    assert np.allclose(atom.spin_vector, v)
+
+
+@given(VECTOR_3)
+def test_Atom_magmom(v):
+    atom = Atom()
+
+    assert np.allclose(atom.spin_direction, [0, 0, 0])
+    assert np.allclose(atom.spin_vector, [0, 0, 0])
+    assert np.allclose(atom.spin, 0)
+
+    atom.magmom = v
+    assert np.allclose(atom.spin, np.linalg.norm(v / atom.g_factor))
+    if np.linalg.norm(v) != 0:
+        assert np.allclose(
+            atom.spin_direction, v / atom.g_factor / np.linalg.norm(v / atom.g_factor)
+        )
+    else:
+        assert np.allclose(atom.spin_direction, [0, 0, 0])
+    assert np.allclose(atom.spin_vector, v / atom.g_factor)
+
+    atom.spin_vector = v
+    assert np.allclose(atom.spin, np.linalg.norm(v))
+    assert np.allclose(
+        atom.spin_direction,
+        np.divide(
+            v, np.linalg.norm(v), out=np.zeros_like(v), where=np.linalg.norm(v) != 0
+        ),
+    )
+    assert np.allclose(atom.spin_vector, v)
+
+    atom.spin_direction = v
+    assert np.allclose(atom.spin, np.linalg.norm(v))
+    assert np.allclose(
+        atom.spin_direction,
+        np.divide(
+            v, np.linalg.norm(v), out=np.zeros_like(v), where=np.linalg.norm(v) != 0
+        ),
+    )
+    assert np.allclose(atom.spin_vector, v)
+
+
+@given(st.floats(max_value=1e9, min_value=-1e9))
+def test_Atom_g_factor(factor):
+    atom = Atom()
+
+    atom.spin = (1, 1, 1)
+    assert np.allclose(atom.spin_vector, (1, 1, 1))
+    assert np.allclose(atom.magmom, (-2, -2, -2))
+    atom.g_factor = factor
+    assert np.allclose(atom.spin_vector, (1, 1, 1))
+    assert np.allclose(atom.magmom, (factor, factor, factor))
 
 
 @given(
@@ -88,14 +155,6 @@ def test_atom():
     assert atom.type == "Cr"
     atom.name = "cr1"
     assert atom.type == "Cr"
-    with pytest.raises(ValueError):
-        a = atom.spin
-    with pytest.raises(ValueError):
-        a = atom.spin_vector
-    with pytest.raises(ValueError):
-        a = atom.magmom
-    with pytest.raises(ValueError):
-        atom.spin_vector = 23
     with pytest.raises(ValueError):
         atom.spin_vector = "adsfasdfs"
     with pytest.raises(ValueError):

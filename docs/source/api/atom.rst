@@ -20,24 +20,31 @@ Id attributes
 .. autosummary::
 
     Atom.name
-    Atom.index
     Atom.type
+    Atom.index
     Atom.fullname
 
-Spin
-====
+Position
+========
+
+.. autosummary::
+    Atom.position
+
+Magnetic properties
+===================
 
 .. autosummary::
 
+    Atom.g_factor
     Atom.spin
     Atom.spin_direction
     Atom.spin_vector
+    Atom.magmom
 
 
-Other properties
-================
+Electric properties
+===================
 
 .. autosummary::
 
-    Atom.magmom
     Atom.charge
