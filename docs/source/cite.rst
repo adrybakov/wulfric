@@ -4,8 +4,7 @@
 How to cite us?
 ***************
 
-At the moment the package did not reach the stage of the publication.
-However, if you use it, please cite in the following form:
+If you use it, please cite in the following form:
 
 .. code-block::
 
