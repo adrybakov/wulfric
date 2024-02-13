@@ -1,5 +1,5 @@
 # WULFRIC - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023 Andrey Rybakov
+# Copyright (C) 2023-2024 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -21,7 +21,7 @@ from datetime import datetime
 
 from wulfric import __doclink__, __git_hash__, __release_date__, __version__
 
-__all__ = ["logo", "oneline", "license"]
+__all__ = ["logo", "license", "warranty", "conditions"]
 
 
 def logo(info=None, line_length=None, flat=False, date_time=False, comment=None):
@@ -33,12 +33,11 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
     Parameters
     ----------
     info : list of str, optional
-        Information about the package.
-        will be displayed below the logo.
+        Information about the package, that is displayed below the logo.
         Each element should not exceed 50 characters.
         by default it displays the version, release date,
         git hash and documentation link. You can pass th empty list
-        to display the logo only.
+        to display only the logo.
     line_length : int, optional
         Length of the lines to be returned.
         Minimum value is 62.
@@ -130,44 +129,6 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
 
     logo_info = [f"{comment}{x:^{line_length}}\n" for x in logo_info]
     return "".join(logo_info)[:-1]
-
-
-def oneline(date_time=True, version=True, githash=False, doclink=False):
-    """
-    Return one-line information about the package.
-
-    Parameters
-    ----------
-    date_time : bool, default True
-        Whether to include the release date or not.
-    version : bool, default True
-        Whether to include the version number or not.
-    githash : bool, default False
-        Whether to include the git hash or not.
-    doclink : bool, default False
-        Whether to include the documentation link or not.
-
-    Returns
-    -------
-    info : str
-        Information about the package.
-    """
-
-    line = []
-    if date_time:
-        cd = datetime.now()
-        line.append(
-            f"on {cd.day} {month_name[cd.month]} {cd.year}"
-            + f" at {cd.hour}:{cd.minute}:{cd.second} "
-        )
-    line.append("by wulfric ")
-    if version:
-        line.append(f"{__version__} ")
-    if githash:
-        line.append(f"(githash {__git_hash__}) ")
-    if doclink:
-        line.append(f"Documentation: {__doclink__}")
-    return "".join(line)
 
 
 def copyright():
