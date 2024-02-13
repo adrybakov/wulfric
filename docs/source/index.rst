@@ -23,6 +23,25 @@ WULFRIC
 :ref:`Cite us <wulfric_cite>` |
 :ref:`support`
 
+****************
+What is WULFRIC?
+****************
+
+WULFRIC is a python package for the description and symmetries of crystal structures.
+It combines the concept of the :ref:`Lattice <user-guide_module_lattice>`,
+:ref:`Atom <user-guide_module_atom>` and :ref:`Crystal <user-guide_module_crystal>`
+and provides a simple skeleton for other codes to built on.
+
+The functional of WULFRIC includes (but not limited to):
+
+* Bravais lattice standardization.
+
+* Automatic choice of the :ref:`Kpoints <user-guide_module_kpoints>`
+  and K-path for all :ref:`Bravais lattice types <library_bravais-lattices>`.
+
+
+
+
 .. grid:: 2
 
     .. grid-item-card::
