@@ -111,3 +111,6 @@ The functional of WULFRIC includes (but not limited to):
             :click-parent:
 
             To the contributor's guide
+
+.. note::
+  The terminal output is colored, however we respect `NO_COLOR <https://no-color.org/>`_.
