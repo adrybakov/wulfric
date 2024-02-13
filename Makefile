@@ -30,6 +30,7 @@ help:
 	@echo "    bravais-pictures - update pictures of bravais lattices"
 	@echo "    prepare-release - prepare the package for release"
 	@echo "    docs-pictures - update pictures for the docs"
+	@echo "    venv - create and prepare a virtual environment in .venv folder"
 	@echo
 
 # $(O) is meant as a shortcut for $(SPHINXOPTS).
@@ -89,3 +90,12 @@ prepare-release:
 
 docs-pictures:
 	@python3 tools/plot-package-scheme.py
+
+.ONESHELL:
+venv:
+	@rm -r .venv
+	@python3 -m venv .venv
+	@pip install -r requirements.txt --no-cache
+	@pip install -r requirements-dev.txt --no-cache
+	@pip install -r docs/requirements.txt --no-cache
+	@pip install -r utest/requirements.txt --no-cache
