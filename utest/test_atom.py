@@ -23,7 +23,7 @@ from hypothesis import strategies as st
 from hypothesis.extra.numpy import arrays as harrays
 
 from wulfric.atom import Atom
-from wulfric.constants import ATOM_TYPES
+from wulfric.constants import ATOM_TYPES, TORADIANS
 
 VECTOR_3 = harrays(
     np.float64,
@@ -69,6 +69,23 @@ def test_Atom_spin(v):
         ),
     )
     assert np.allclose(atom.spin_vector, v)
+
+
+@given(
+    st.floats(allow_nan=False, allow_infinity=False, max_value=180, min_value=0),
+    st.floats(allow_nan=False, allow_infinity=False, max_value=360, min_value=0),
+)
+def test_Atom_phi_theta(theta, phi):
+    atom = Atom(spin=1)
+    atom.spin_angles = theta, phi
+
+    phi *= TORADIANS
+    theta *= TORADIANS
+
+    assert np.allclose(
+        atom.spin_vector,
+        (np.cos(phi) * np.sin(theta), np.sin(phi) * np.sin(theta), np.cos(theta)),
+    )
 
 
 @given(VECTOR_3)

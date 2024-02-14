@@ -472,100 +472,64 @@ class Atom:
         self.spin = new_value
 
     @property
-    def spin_theta(self) -> float:
+    def spin_angles(self) -> tuple:
         R"""
-        Polar angle of the spin vector :math:`\theta`:
+        Polar :math:`\theta` and azimuthal :math:`\varphi` angles of the spin vector:
 
         .. math::
 
             \boldsymbol{S} = S
             \begin{pmatrix}
-            \cos\varphi\sin\theta \\
-            \sin\varphi\sin\theta \\
-            \cos\theta
+                \cos\varphi\sin\theta \\
+                \sin\varphi\sin\theta \\
+                \cos\theta
             \end{pmatrix}
 
         Returns
         -------
-        theta : float
-            :math:`0^{\circ} \le \theta \le 180^{\circ}`.
+        theta, phi : tuple of float
+            :math:`0^{\circ} \le \theta \le 180^{\circ}` and :math:`0^{\circ} \le \varphi \le 360^{\circ}`.
         """
 
         if np.allclose(self.spin_direction, [0, 0, 1]):
-            return 0.0
+            return 0.0, 90.0
         if np.allclose(self.spin_direction, [0, 0, -1]):
-            return 180.0
+            return 180.0, 90.0
 
-        return np.arccos(np.clip(self.spin_direction[2], a_min=-1, a_max=1)) * TODEGREES
-
-    @spin_theta.setter
-    def spin_theta(self, new_value):
-        try:
-            new_value = float(new_value) * TORADIANS
-        except ValueError:
-            raise ValueError(
-                f"Expected something convertible to float, got '{new_value}'"
-            )
-
-        phi = self.spin_phi * TORADIANS
-        self.spin_direction = (
-            np.cos(phi) * np.sin(new_value),
-            np.sin(phi) * np.sin(new_value),
-            np.cos(new_value),
+        theta = (
+            np.arccos(np.clip(self.spin_direction[2], a_min=-1, a_max=1)) * TODEGREES
         )
 
-    @property
-    def spin_phi(self) -> float:
-        R"""
-        Azimuthal angle of the spin vector :math:`\varphi`:
-
-        .. math::
-
-            \boldsymbol{S} = S
-            \begin{pmatrix}
-            \cos\varphi\sin\theta \\
-            \sin\varphi\sin\theta \\
-            \cos\theta
-            \end{pmatrix}
-
-        If spin is parallel or antiparallel to the z axis, then :math:`90^{\circ}` is returned.
-
-        Returns
-        -------
-        phi : float
-            :math:`0^{\circ} \le \varphi \le 360^{\circ}`.
-        """
-
-        if np.allclose(self.spin_direction, [0, 0, 1]):
-            return 90.0
-        if np.allclose(self.spin_direction, [0, 0, -1]):
-            return 90.0
-
         if self.spin_direction[1] >= 0:
-            return (
+            phi = (
                 np.arccos(np.clip(self.spin_direction[0], a_min=-1, a_max=1))
                 * TODEGREES
             )
+
         else:
-            return (
+            phi = (
                 360
                 - np.arccos(np.clip(self.spin_direction[0], a_min=-1, a_max=1))
                 * TODEGREES
             )
 
-    @spin_phi.setter
-    def spin_phi(self, new_value):
+        return theta, phi
+
+    @spin_angles.setter
+    def spin_angles(self, new_value):
         try:
-            new_value = float(new_value) * TORADIANS
+            theta, phi = (
+                float(new_value[0]) * TORADIANS,
+                float(new_value[1]) * TORADIANS,
+            )
         except ValueError:
             raise ValueError(
                 f"Expected something convertible to float, got '{new_value}'"
             )
 
-        theta = self.spin_theta * TORADIANS
         self.spin_direction = (
-            np.cos(new_value) * np.sin(theta),
-            np.sin(new_value) * np.sin(theta),
+            np.cos(phi) * np.sin(theta),
+            np.sin(phi) * np.sin(theta),
             np.cos(theta),
         )
 

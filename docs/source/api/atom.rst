@@ -39,6 +39,7 @@ Magnetic properties
     Atom.spin
     Atom.spin_direction
     Atom.spin_vector
+    Atom.spin_angles
     Atom.magmom
 
 

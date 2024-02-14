@@ -37,13 +37,17 @@ def bidirectional_arrow(
 
     if u != 0:
         normal = (-v / u, 1)
+        angle = atan(v / u) / pi * 180
     else:
         normal = (1, -u / v)
+        if v > 0:
+            angle = 90
+        else:
+            angle = 270
 
     normal = np.array(normal, dtype=float)
     normal /= np.linalg.norm(normal)
 
-    angle = atan(v / u) / pi * 180
     if angle <= 90:
         pass
     elif angle <= 180:
@@ -109,7 +113,7 @@ def main():
         **text_style_2,
     )
     ax.text(
-        15,
+        30,
         45,
         "spin\n$S$",
         **text_style,
@@ -133,22 +137,15 @@ def main():
         **text_style,
     )
     ax.text(
-        7,
-        25,
-        "spin_phi\n" R"$\varphi$",
-        **text_style,
-    )
-    ax.text(
-        61,
-        25,
-        "spin_theta\n" R"$\theta$",
+        10,
+        37,
+        "spin_angles\n" R"$\theta, \varphi$",
         **text_style,
     )
 
-    bidirectional_arrow(ax, 45, 25, 7, 0, quiver_kwargs=arrow_style)
-    bidirectional_arrow(ax, 14, 25, 11, 0, quiver_kwargs=arrow_style)
+    bidirectional_arrow(ax, 25, 25, -15, 7, quiver_kwargs=arrow_style)
 
-    bidirectional_arrow(ax, 25, 30, -10, 10, quiver_kwargs=arrow_style)
+    bidirectional_arrow(ax, 35, 30, -5, 10, quiver_kwargs=arrow_style)
     bidirectional_arrow(ax, 25, 20, -10, -10, quiver_kwargs=arrow_style)
 
     bidirectional_arrow(ax, 45, 20, 12, -10, quiver_kwargs=arrow_style)

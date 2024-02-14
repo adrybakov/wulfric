@@ -204,12 +204,12 @@ usually considered to be in relative coordinates.
 Magnetic properties
 ===================
 
-Internally only four numbers are store for the description of the magnetic properties of an atom:
+Internally only four numbers are stored for the description of the magnetic properties of an atom:
 
 * g-factor (1)
 * spin vector (3)
 
-From this four number a variety of properties can be accessed and set.
+From this four numbers a variety of properties can be accessed and set.
 They are summarized in a diagram below:
 
 .. figure:: ../../img/atom-magnetic-properties.png
@@ -279,7 +279,7 @@ All other attributes can be set and accessed:
     >>> round(atom.spin, 10)
     1.5
 
-* :py:attr:`.Atom.phi` and :py:attr:`.Atom.theta`.
+* :py:attr:`.Atom.spin_angles`.
   Two angles in degrees, that define the direction of the spin vector as
 
   .. math::
@@ -293,23 +293,21 @@ All other attributes can be set and accessed:
 
   :math:`0^{\circ} \le \theta \le 180^{\circ}` and :math:`0^{\circ} \le \varphi \le 360^{\circ}`.
 
+  the order is ``theta``, ``phi``.
+
   .. doctest::
 
     >>> atom = Atom(spin = (1.5,0,0))
     >>> # It always returns one number - angle theta or phi
-    >>> atom.spin_theta, atom.spin_phi
+    >>> atom.spin_angles
     (90.0, 0.0)
     >>> # It can be set with a number
-    >>> atom.spin_phi = 90
-    >>> atom.spin_theta, atom.spin_phi
+    >>> atom.spin_angles = 90, 90
+    >>> atom.spin_angles
     (90.0, 90.0)
-    >>> atom.spin_theta = 37
-    >>> atom.spin_theta, atom.spin_phi
+    >>> atom.spin_angles = 37, 90
+    >>> atom.spin_angles
     (37.0, 90.0)
-    >>> # If set with a number, then spin is oriented along z axis
-    >>> atom.spin_direction = 2
-    >>> atom.spin_direction
-    array([0., 0., 1.])
     >>> # Note that the spin value is not changed
     >>> # round() is used because of the machine zero
     >>> round(atom.spin, 10)
