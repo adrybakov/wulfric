@@ -37,7 +37,17 @@ from wulfric.numerical import (
     REL_TOL_ANGLE,
 )
 
-n_order = 5
+N_ORDER = 5
+
+ARRAYS_3x3 = harrays(
+    float,
+    (3, 3),
+    elements=st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
+)
+
+################################################################################
+#                               Service functions                              #
+################################################################################
 
 
 def shuffle(cell, order):
@@ -60,17 +70,57 @@ def rotate(cell, r1, r2, r3):
     return R.T @ cell
 
 
+################################################################################
+#                                Reciprocal cell                               #
+################################################################################
+
+
 @given(
-    harrays(
-        float,
-        (3, 3),
-        elements=st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
-    ),
+    st.floats(min_value=0, max_value=2 * pi),
+    st.floats(min_value=0, max_value=2 * pi),
+    st.floats(min_value=0, max_value=2 * pi),
+    st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
+    st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
+    st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
+    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
+    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
+    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
+    st.integers(min_value=0, max_value=N_ORDER),
 )
-def test_params_from_cell(cell):
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
+def test_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
+    if (
+        parallelepiped_check(a, b, c, alpha, beta, gamma)
+        # TODO Relax this condition.
+        # It passes only for the vectors, which are not too far away from each other.
+        and min(a, b, c) / max(a, b, c) > REL_TOL
+    ):
+        cell = shuffle(
+            rotate(Cell.from_params(a, b, c, alpha, beta, gamma), r1, r2, r3), order
+        )
+        rcell = Cell.reciprocal(cell)
+        product = np.diag(np.abs(rcell.T @ cell))
+        correct_product = np.ones(3) * 2 * pi
+        # Non  diagonal terms are close to zero.
+        assert np.allclose(product, correct_product, rtol=REL_TOL, atol=ABS_TOL)
 
 
+@pytest.mark.parametrize(
+    "cell, rec_cell",
+    [
+        (
+            [[1, 0, 0], [0, 2, 0], [0, 0, 3]],
+            [[2 * pi, 0, 0], [0, pi, 0], [0, 0, 2 / 3 * pi]],
+        )
+    ],
+)
+def test_reciprocal_cell_examples(cell, rec_cell):
+    rcell = Cell.reciprocal(cell)
+    assert np.allclose(rcell, np.array(rec_cell), rtol=REL_TOL, atol=ABS_TOL)
+
+
+################################################################################
+#                             Cell from parameters                             #
+################################################################################
 @given(
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
@@ -106,44 +156,11 @@ def test_cell_from_params_example(a, b, c, alpha, beta, gamma, cell):
     ).all()
 
 
-@given(
-    st.floats(min_value=0, max_value=2 * pi),
-    st.floats(min_value=0, max_value=2 * pi),
-    st.floats(min_value=0, max_value=2 * pi),
-    st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
-    st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
-    st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
-    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
-    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
-    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
-    st.integers(min_value=0, max_value=n_order),
-)
-def test_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
-    if (
-        parallelepiped_check(a, b, c, alpha, beta, gamma)
-        # TODO Relax this condition.
-        # It passes only for the vectors, which are not too far away from each other.
-        and min(a, b, c) / max(a, b, c) > REL_TOL
-    ):
-        cell = shuffle(
-            rotate(Cell.from_params(a, b, c, alpha, beta, gamma), r1, r2, r3), order
-        )
-        rcell = Cell.reciprocal(cell)
-        product = np.diag(np.abs(rcell.T @ cell))
-        correct_product = np.ones(3) * 2 * pi
-        # Non  diagonal terms are close to zero.
-        assert np.allclose(product, correct_product, rtol=REL_TOL, atol=ABS_TOL)
+################################################################################
+#                           Parameters from the cell                           #
+################################################################################
 
 
-@pytest.mark.parametrize(
-    "cell, rec_cell",
-    [
-        (
-            [[1, 0, 0], [0, 2, 0], [0, 0, 3]],
-            [[2 * pi, 0, 0], [0, pi, 0], [0, 0, 2 / 3 * pi]],
-        )
-    ],
-)
-def test_reciprocal_cell_examples(cell, rec_cell):
-    rcell = Cell.reciprocal(cell)
-    assert np.allclose(rcell, np.array(rec_cell), rtol=REL_TOL, atol=ABS_TOL)
+@given(ARRAYS_3x3)
+def test_params_from_cell(cell):
+    a, b, c, alpha, beta, gamma = Cell.params(cell)

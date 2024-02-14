@@ -16,9 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from math import cos, pi, sin, sqrt
-
 import numpy as np
+from numpy import cos, pi, sin, sqrt
 
 from wulfric.constants import TORADIANS
 from wulfric.geometry import angle, parallelepiped_check, volume
@@ -44,14 +43,14 @@ def reciprocal(cell):
     -------
     reciprocal_cell : (3, 3) :numpy:`ndarray`
         Reciprocal cell matrix, rows are interpreted as vectors.
-        :math:`cell = (\vec{v}_1, \vec{v}_2, \vec{v}_3)`, where
+        :math:`cell = (\boldsymbol{v}_1, \boldsymbol{v}_2, \boldsymbol{v}_3)^T`, where
 
         .. math::
 
             \begin{matrix}
-                \vec{b}_1 = \dfrac{2\pi}{V}\vec{a}_2\times\vec{a}_3 \\
-                \vec{b}_2 = \dfrac{2\pi}{V}\vec{a}_3\times\vec{a}_1 \\
-                \vec{b}_3 = \dfrac{2\pi}{V}\vec{a}_1\times\vec{a}_2 \\
+                \boldsymbol{b}_1 = \dfrac{2\pi}{V}\boldsymbol{a}_2\times\boldsymbol{a}_3 \\
+                \boldsymbol{b}_2 = \dfrac{2\pi}{V}\boldsymbol{a}_3\times\boldsymbol{a}_1 \\
+                \boldsymbol{b}_3 = \dfrac{2\pi}{V}\boldsymbol{a}_1\times\boldsymbol{a}_2 \\
             \end{matrix}
 
     """
@@ -69,22 +68,31 @@ def reciprocal(cell):
 
 def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
     r"""
-    Return cell from lattice parameters.
+    Construct cell from lattice parameters.
+
+    *   Lattice vector :math:`\boldsymbol{a_1}` has the length ``a`` and oriented along
+        :math:`{\cal x}` axis.
+    *   Lattice vector :math:`\boldsymbol{a_2}` has the length ``b`` and is placed in
+        :math:`{\cal xy}` plane and form an angle ``gamma`` with vector
+        :math:`\boldsymbol{a_1}`, positive in a mathematical sense.
+    *   Lattice vector :math:`\boldsymbol{a_3}` has the length ``c`` and form an angle
+        ``alpha`` with the vector :math:`\boldsymbol{a_2}` and an angle ``beta`` with
+        the vector :math:`\boldsymbol{a_1}`.
 
     Parameters
     ----------
     a : float, default 1
-        Length of the :math:`a_1` vector.
+        Length of the :math:`\boldsymbol{a_1}` vector.
     b : float, default 1
-        Length of the :math:`a_2` vector.
+        Length of the :math:`\boldsymbol{a_2}` vector.
     c : float, default 1
-        Length of the :math:`a_3` vector.
+        Length of the :math:`\boldsymbol{a_3}` vector.
     alpha : float, default 90
-        Angle between vectors :math:`a_2` and :math:`a_3`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_2}` and :math:`\boldsymbol{a_3}`. In degrees.
     beta : float, default 90
-        Angle between vectors :math:`a_1` and :math:`a_3`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`. In degrees.
     gamma : float, default 90
-        Angle between vectors :math:`a_1` and :math:`a_2`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`. In degrees.
 
     Returns
     -------
@@ -134,7 +142,7 @@ def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
 
 def params(cell):
     r"""
-    Return lattice parameters from cell.
+    Computes lattice parameters from cell.
 
     Parameters
     ----------
@@ -143,24 +151,24 @@ def params(cell):
 
         .. code-block:: python
 
-            cell = [[a1_x, a1_y, a1_z],
-                    [a2_x, a2_y, a2_z],
-                    [a3_x, a3_y, a3_z]]
+            cell = [[a1x, a1y, a1z],
+                    [a2x, a2y, a2z],
+                    [a3x, a3y, a3z]]
 
     Returns
     -------
     a : float
-        Length of the :math:`a_1` vector.
+        Length of the :math:`\boldsymbol{a_1}` vector.
     b : float
-        Length of the :math:`a_2` vector.
+        Length of the :math:`\boldsymbol{a_2}` vector.
     c : float
-        Length of the :math:`a_3` vector.
+        Length of the :math:`\boldsymbol{a_3}` vector.
     alpha : float
-        Angle between vectors :math:`a_2` and :math:`a_3`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_2}` and :math:`\boldsymbol{a_3}`. In degrees.
     beta : float
-        Angle between vectors :math:`a_1` and :math:`a_3`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`. In degrees.
     gamma : float
-        Angle between vectors :math:`a_1` and :math:`a_2`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`. In degrees.
     """
 
     return (
