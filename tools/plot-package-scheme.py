@@ -78,7 +78,7 @@ def class_structure():
     legend(125, -5, "is a base for", base_for_color)
     filename = os.path.join(ROOT_DIR, "docs", "source", "img", "package-scheme.png")
     plt.savefig(filename, dpi=600, bbox_inches="tight")
-    print(f"File is save in {os.path.abspath(filename)}")
+    print(f"File is saved in {os.path.abspath(filename)}")
 
 
 if __name__ == "__main__":

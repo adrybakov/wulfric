@@ -6,20 +6,20 @@ Atom
 
 .. currentmodule:: wulfric
 
-For the full reference see :ref:`api_atom`.
+For the full technical reference see :ref:`api_atom`.
 
-:py:class:`.Atom` class describe an atom. :py:class:`.Atom` is hashable and can be
-used as a dictionary key. The hash is calculated from the atom name and index.
+:py:class:`.Atom` class describe an atom. It is hashable and can be used as a dictionary key.
+The hash is based on the :py:attr:`.Atom.name` and :py:attr:`.Atom.index`.
 
 Import
 ======
 
 .. doctest::
 
-    >>> # Exact import
-    >>> from wulfric.atom import Atom
-    >>> # Recommended import
-    >>> from wulfric import Atom
+  >>> # Explicit import
+  >>> from wulfric.atom import Atom
+  >>> # Recommended import
+  >>> from wulfric import Atom
 
 Creation
 ========
@@ -28,198 +28,335 @@ Creation of an Atom object is straightforward:
 
 .. doctest::
 
-    >>> atom = Atom()
-    >>> atom.name
-    'X'
-    >>> atom.position
-    array([0., 0., 0.])
-    >>> atom.type
-    'X'
+  >>> atom = Atom()
+  >>> atom.name
+  'X'
+  >>> atom.position
+  array([0., 0., 0.])
+  >>> atom.type
+  'X'
+  >>> atom = Atom(name='X', index=1, position=(1,0,1))
+  >>> atom = Atom(name='X', spin=2)
+  >>> atom.spin_vector
+  array([0., 0., 2.])
+  >>> atom.magmom
+  array([-0., -0., -4.])
+  >>> atom = Atom(name='X', magmom=(2,0,0))
+  >>> atom.spin_vector
+  array([-1., -0., -0.])
+  >>> atom = Atom(name='X', spin=(0,0,1))
+  >>> atom.magmom
+  array([-0., -0., -2.])
+  >>> atom = Atom(name='X', spin=(0,0,1), g_factor=1)
+  >>> atom.magmom
+  array([0., 0., 1.])
 
 
 For the full list of constructor parameters see
 :py:class:`.Atom` documentation.
 
-.. doctest::
+Identification
+==============
 
-    >>> atom1 = Atom(name='X', index=1)
-    >>> atom2 = Atom(name='X', index=1)
-    >>> atom3 = Atom(name='X', index=2)
-    >>> atom1 == atom2
-    True
-    >>> atom1 == atom3
-    False
-    >>> atom1 != atom3
-    True
+Name and index
+--------------
 
-Comparison
-==========
-
+Identification of the atom is bounded to its :py:attr:`.Atom.name` and :py:attr:`.Atom.index`.
 Two atoms are considered to be equal if they have the same index and name:
 
 .. doctest::
 
-    >>> atom1 = Atom(name='Fe', index=1)
-    >>> atom2 = Atom(name='Fe', index=2)
-    >>> atom3 = Atom(name='Cr', index=1, position=(1, 1, 0), spin=0.5)
-    >>> atom4 = Atom(name='Cr', index=1, position=(1, 0, 0), spin=1.5)
-    >>> atom1 == atom2
-    False
-    >>> atom1 == atom3
-    False
-    >>> atom1 != atom3
-    True
-    >>> atom3 == atom4
-    True
+  >>> atom1 = Atom(name='Fe', index=1)
+  >>> atom2 = Atom(name='Fe', index=2)
+  >>> atom3 = Atom(name='Cr', index=1, position=(1, 1, 0), spin=0.5)
+  >>> atom4 = Atom(name='Cr', index=1, position=(1, 0, 0), spin=1.5)
+  >>> atom1 == atom2
+  False
+  >>> atom1 == atom3
+  False
+  >>> atom1 != atom3
+  True
+  >>> # Note that neither position's nor spin's values do not matter
+  >>> atom3 == atom4
+  True
 
-All other properties of the atom are ignored when comparing atoms.
-
-Usually index is automatically generated when a set of atoms appears in some context.
+Usually index is automatically generated when a set of atoms appear in some context.
 For example, when atoms are added to the :py:class:`.Crystal` object, the index is
 silently assigned to each atom.
 
-Hash of the atom is calculated from the atom name and index.
-
 .. note::
 
-    If the index of the atom is not defined, then you can still compare it to other atoms
-    with a different name:
+  If the index of the atom is not defined, then you can still compare it to other atoms
+  with a different name:
 
-    .. doctest::
+  .. doctest::
 
-        >>> atom1 = Atom(name='Fe')
-        >>> atom2 = Atom(name='Cr')
-        >>> atom1 == atom2
-        False
-        >>> atom1 != atom2
-        True
+    >>> atom1 = Atom(name='Fe')
+    >>> atom2 = Atom(name='Cr')
+    >>> atom1 == atom2
+    False
+    >>> atom1 != atom2
+    True
 
-    However, if for the pair of atoms with the same name the index is not defined
-    in at least one of them, than the comparison fails:
+  However, if for the pair of atoms with the same name the index is not defined
+  in at least one of them, than the comparison fails:
 
-    .. doctest::
+  .. doctest::
 
-        >>> atom1 = Atom(name='Fe')
-        >>> atom2 = Atom(name='Fe', index=1)
-        >>> atom1 == atom2
-        Traceback (most recent call last):
-        ...
-        ValueError: Index is not defined for the atom Fe.
+    >>> atom1 = Atom(name='Fe')
+    >>> atom2 = Atom(name='Fe', index=1)
+    >>> atom1 == atom2
+    Traceback (most recent call last):
+    ...
+    ValueError: Index is not defined for the atom Fe.
 
-Fullname
-========
-For the simplicity :py:meth:`.Atom.fullname` property is defined. It returns
-a string which is a combination of the atom name and index. It is simply an
-atom`s name with two underscores and index appended to it:
+Full name
+---------
+For the convenience the :py:attr:`.Atom.fullname` attribute is defined, so one can consult
+the unique identifier of an :py:class:`.Atom`:
 
 .. doctest::
 
-    >>> atom1 = Atom(name='Fe', index=1)
-    >>> atom2 = Atom(name='Fe', index=2)
-    >>> atom3 = Atom(name='Cr', index=3)
-    >>> atom1.fullname
-    'Fe__1'
-    >>> atom2.fullname
-    'Fe__2'
-    >>> atom3.fullname
-    'Cr__3'
+  >>> atom1 = Atom(name='Fe', index=1)
+  >>> atom2 = Atom(name='Fe', index=2)
+  >>> atom3 = Atom(name='Cr', index=3)
+  >>> atom1.fullname
+  'Fe__1'
+  >>> atom2.fullname
+  'Fe__2'
+  >>> atom3.fullname
+  'Cr__3'
 
 Fullname is defined even if the atom does not have an index:
 
 .. doctest::
 
-    >>> atom = Atom(name='Fe')
-    >>> atom.fullname
-    'Fe'
+  >>> atom = Atom(name='Fe')
+  >>> atom.fullname
+  'Fe'
 
-Type
-====
 
-Atom type is derived from its name:
+Atom's type
+-----------
+
+:py:attr:`Atom.type` is derived automatically from its name, it cannot be changed directly.:
 
 .. doctest::
 
-    >>> atom.name = 'Cr1'
-    >>> atom.name
-    'Cr1'
-    >>> atom.type
-    'Cr'
+  >>> atom.name = 'Cr1'
+  >>> atom.name
+  'Cr1'
+  >>> atom.type
+  'Cr'
+  >>> atom.type = "Se"
+  Traceback (most recent call last):
+  ...
+  AttributeError: property 'type' of 'Atom' object has no setter
 
-The atom type is automatically determined from the atom name and can not
-be changed directly.
+
+
+Use as a dictionary key
+=======================
+
+``__hash__()`` is defined for an :py:class:`.Atom` class ,therefor you can use it as a dictionary key.
+It is calculated from the atom :py:attr:`.Atom.name` and :py:attr:`.Atom.index`.
+:py:attr:`.Atom.index` has to be defined if you want to use the atom as a key.
+
+.. doctest::
+
+  >>> atom1 = Atom("Cr1")
+  >>> atom2 = Atom("Cr2")
+  >>> dictionary = {atom1: 1, atom2: 2}
+  Traceback (most recent call last):
+  ...
+  ValueError: Index is not defined for the 'Cr1' atom ...
+  >>> atom1.index = 1
+  >>> # It does not make much sense to have the same indices, but
+  >>> # we want to highlight that only the combination of atom's
+  >>> #name and index has to be unique
+  >>> atom2.index = 1
+  >>> dictionary = {atom1: 1, atom2: 2}
+  >>> dictionary[atom1]
+  1
+  >>> dictionary[atom2]
+  2
+
 
 Position
 ========
 
-The position of the atom can be changed by setting the position attribute:
-
+The position of the atom can be access and set via :py:attr:`.Atom.position`.
+At the level of the logic of pure :py:class:`.Atom` class no units (Angstroms, Bohr,
+relative, absolute, ...) are assumed for the atom's position. This uncertainty is deliberate,
+since it allows to the user to use :py:class:`.Atom` in various contexts. For
+example, when atom is used inside a :py:class:`.Crystal` instance, the position is
+usually considered to be in relative coordinates.
 .. doctest::
 
-    >>> atom = Atom(name="Cr")
-    >>> # It has the default value
-    >>> atom.position
-    array([0., 0., 0.])
-    >>> atom.position = [1, 2, 3]
-    >>> atom.position
-    array([1., 2., 3.])
+  >>> atom = Atom(name="Cr")
+  >>> # It has a default value
+  >>> atom.position
+  array([0., 0., 0.])
+  >>> atom.position = [1, 2, 3]
+  >>> atom.position
+  array([1., 2., 3.])
 
-.. note::
+Magnetic properties
+===================
 
-    When :py:class:`.Atom` is used by itself, the position is not considered to be
-    in relative or absolute coordinates. The interpretation of atom`s position
-    depends on the context. For example, when atom is used in :py:class:`.Crystal`
-    object, the position is usually considered to be in relative coordinates.
+Internally only four numbers are store for the description of the magnetic properties of an atom:
 
-Spin
-====
+* g-factor (1)
+* spin vector (3)
 
-Spin of the atom is describe by three properties:
+From this four number a variety of properties can be accessed and set.
+They are summarized in a diagram below:
 
-* :py:attr:`.spin` - total spin of the atom
-* :py:attr:`.spin_vector` - spin vector of the atom
-* :py:attr:`.spin_direction` - spin direction of the atom
+.. figure:: ../../img/atom-magnetic-properties.png
+  :align: center
+  :target: ../../_images/atom-magnetic-properties.png
 
-These three properties are interconnected. Setting each one of them changes the
-other two with one exception: :py:attr:`.spin` does not affect :py:attr:`.spin_direction`
-and vice versa.
+Semi-private attribute ``_spin_vector`` is not intended to be access or set in any way.
 
-.. doctest::
+All other attributes can be set and accessed:
 
-    >>> # It has the default value
+* :py:attr:`.Atom.spin`
+
+  .. doctest::
+
+    >>> atom = Atom(spin = (1,0,0))
+    >>> # It always returns one umber - spin value
+    >>> atom.spin
+    1.0
+    >>> # It can be set with a number or three-component vector
+    >>> atom.spin = (0,1,0)
+    >>> atom.spin
+    1.0
+    >>> atom.spin_vector
+    array([0., 1., 0.])
+    >>> # If set with a number, then spin is oriented along z axis
+    >>> atom.spin = 2
+    >>> atom.spin
+    2.0
+    >>> atom.spin_vector
+    array([0., 0., 2.])
+
+* :py:attr:`.Atom.spin_vector`
+
+  .. doctest::
+
+    >>> atom = Atom(spin = (1,0,0))
+    >>> # It always returns an array of three numbers - spin vector
+    >>> atom.spin_vector
+    array([1., 0., 0.])
+    >>> # It can be set with a number or three-component vector
+    >>> atom.spin_vector = (0,1,0)
+    >>> atom.spin_vector
+    array([0., 1., 0.])
+    >>> # If set with a number, then spin is oriented along z axis
+    >>> atom.spin_vector = 2
+    >>> atom.spin_vector
+    array([0., 0., 2.])
+
+* :py:attr:`.Atom.spin_direction`
+
+  .. doctest::
+
+    >>> atom = Atom(spin = (1.5,0,0))
+    >>> # It always returns an array of three numbers - unit vector of spin (spin direction)
+    >>> atom.spin_direction
+    array([1., 0., 0.])
+    >>> # It can be set with a number or three-component vector
+    >>> atom.spin_direction = (1,1,0)
+    >>> atom.spin_direction
+    array([0.70710678, 0.70710678, 0.        ])
+    >>> # If set with a number, then spin is oriented along z axis
+    >>> atom.spin_direction = 2
     >>> atom.spin_direction
     array([0., 0., 1.])
-    >>> atom.spin = 3
-    >>> atom.spin_vector, atom.spin_direction
-    (array([0., 0., 3.]), array([0., 0., 1.]))
-    >>> atom.spin_vector = [0, 5, 0]
-    >>> atom.spin, atom.spin_direction
-    (5.0, array([0., 1., 0.]))
-    >>> atom.spin_direction = [1, 0, 0]
-    >>> atom.spin, atom.spin_vector
-    (5.0, array([5., 0., 0.]))
+    >>> # Note that the spin value is not changed
+    >>> # round() is used because of the machine zero
+    >>> round(atom.spin, 10)
+    1.5
 
-Magnetic moment
-===============
+* :py:attr:`.Atom.phi` and :py:attr:`.Atom.theta`.
+  Two angles in degrees, that define the direction of the spin vector as
 
-Magnetic moment of the atom can be set by assigning a value to the
-:py:attr:`.magmom` attribute:
+  .. math::
 
-.. doctest::
+    \boldsymbol{S} = S
+    \begin{pmatrix}
+      \cos\varphi\sin\theta \\
+      \sin\varphi\sin\theta \\
+      \cos\theta
+    \end{pmatrix}
 
-    >>> atom.magmom = [0, 0, 1]
-    >>> atom.magmom
+  :math:`0^{\circ} \le \theta \le 180^{\circ}` and :math:`0^{\circ} \le \varphi \le 360^{\circ}`.
+
+  .. doctest::
+
+    >>> atom = Atom(spin = (1.5,0,0))
+    >>> # It always returns one number - angle theta or phi
+    >>> atom.spin_theta, atom.spin_phi
+    (90.0, 0.0)
+    >>> # It can be set with a number
+    >>> atom.spin_phi = 90
+    >>> atom.spin_theta, atom.spin_phi
+    (90.0, 90.0)
+    >>> atom.spin_theta = 37
+    >>> atom.spin_theta, atom.spin_phi
+    (37.0, 90.0)
+    >>> # If set with a number, then spin is oriented along z axis
+    >>> atom.spin_direction = 2
+    >>> atom.spin_direction
     array([0., 0., 1.])
+    >>> # Note that the spin value is not changed
+    >>> # round() is used because of the machine zero
+    >>> round(atom.spin, 10)
+    1.5
 
-The units of magnetic moment depend on you interpretation. In WULFRICC usually
-Bohr magneton is used.
+* :py:attr:`.Atom.magmom`
+  Magnetic moment of an atom is connected with its spin as
 
-.. note::
+  .. math::
+    \boldsymbol{\mu} = g\boldsymbol{S}
 
-    Magnetic moment is independent from the spin of the atom.
-    This behavior may change in the future.
+  where :math:`g` is a :py:attr:`.Atom.g_factor`. Bohr magneton is assumed to be equal to :math:`1`.
+  As with the whole atom class we leave the units for the user.
+
+  .. doctest::
+
+    >>> atom = Atom(spin = (1,0,0))
+    >>> #g_factor is equal to -2 by default
+    >>> atom.g_factor
+    -2.0
+    >>> # It always returns an array of three numbers - spin vector
+    >>> atom.magmom
+    array([-2., -0., -0.])
+    >>> # It can be set with a number or three-component vector
+    >>> atom.magmom = (0,1,0)
+    >>> atom.magmom
+    array([0., 1., 0.])
+    >>> # If set with a number, then magnetic moment is oriented along z axis
+    >>> atom.magmom = 2
+    >>> atom.magmom
+    array([0., 0., 2.])
+    >>> # Note that the spin is changed as well
+    >>> atom.spin_vector
+    array([-0., -0., -1.])
+    >>> # g_factor return one number and can be set with a number
+    >>> atom.g_factor = 1
+    >>> atom.spin = (0,1,0)
+    >>> atom.spin_vector
+    array([0., 1., 0.])
+    >>> atom.magmom
+    array([0., 1., 0.])
+
+Electrical properties
+=====================
 
 Charge
-======
+------
 
 Electrical charge of the atom can be set by assigning a value to the
 :py:attr:`.charge` attribute:
@@ -230,19 +367,4 @@ Electrical charge of the atom can be set by assigning a value to the
     >>> atom.charge
     1.0
 
-The units of magnetic moment depend on you interpretation. In WULFRIC usually
-charge of an electron is used.
-
-String representation
-=====================
-``__str__`` and ``__format__`` methods are defined for the :py:class:`.Atom` class.
-
-.. doctest::
-
-    >>> atom = Atom(name='Fe', index=1, position=(1, 1, 0), spin=0.5)
-    >>> print(atom)
-    Fe
-    >>> print(f"{atom:>10}")
-            Fe
-    >>> print(f"{atom:#^10}")
-    ####Fe####
+The units of the charge depend on the user's interpretation.

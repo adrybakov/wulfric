@@ -145,6 +145,9 @@ def test_Atom_type(prefix, suffix):
                 atom = Atom(prefix + atom_type + suffix)
 
 
+# TODO test spin_phi and spin_theta
+
+
 def test_atom():
     atom = Atom()
     assert (atom.position == np.zeros(3)).all()

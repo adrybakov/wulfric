@@ -90,6 +90,7 @@ prepare-release:
 
 docs-pictures:
 	@python3 tools/plot-package-scheme.py
+	@python3 tools/plot-atom-magnetic-properties.py
 
 .ONESHELL:
 venv:

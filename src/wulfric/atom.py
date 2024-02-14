@@ -20,7 +20,7 @@ from typing import Iterable
 
 import numpy as np
 
-from wulfric.constants import ATOM_TYPES
+from wulfric.constants import ATOM_TYPES, TODEGREES, TORADIANS
 
 __all__ = ["Atom"]
 
@@ -44,10 +44,10 @@ class Atom:
         Name of the atom. It cannot start or end with double underline "__".
     position : (3,) |array-like|_, default [0, 0, 0]
         Position of the atom in absolute or relative coordinates.
-    spin : float or (3,) |array-like|_, default [0, 0, 0]
+    spin : float or (3,) |array-like|_, optional
         Spin or spin vector of the atom. If only one value is given, then spin vector is oriented along *z* axis.
         Connected with ``magmom``, see :py:attr:`.Atom.magmom`.
-    magmom : float or (3,) |array-like|_, default [0, 0, 0]
+    magmom : float or (3,) |array-like|_, optional
         Magnetic moment of the atom. Vector or the value.
         If a number is given, then oriented along *z* axis.
         Connected with ``spin``, see :py:attr:`.Atom.spin`.
@@ -66,8 +66,8 @@ class Atom:
         self,
         name="X",
         position=(0, 0, 0),
-        spin=(0, 0, 0),
-        magmom=(0, 0, 0),
+        spin=None,
+        magmom=None,
         g_factor=-2.0,
         charge=None,
         index=None,
@@ -91,13 +91,18 @@ class Atom:
 
         # Set spin
         self._spin = None
-        self.spin = spin
-
-        # Check that magmom is consistent with spin
-        if not np.allclose(g_factor * np.array(spin), magmom):
-            raise ValueError(
-                f"Spin and magmom parameters are not independent, expected mu = g*spin to hold, got: {magmom} {g_factor}{spin}"
-            )
+        if spin is None and magmom is None:
+            self.spin = (0, 0, 0)
+        elif spin is None and magmom is not None:
+            self.magmom = magmom
+        elif spin is not None and magmom is None:
+            self.spin = spin
+        elif spin is not None and magmom is not None:
+            if not np.allclose(float(g_factor) * np.array(spin), np.array(magmom)):
+                raise ValueError(
+                    f"Spin and magmom parameters are not independent, expected mu = g*spin to hold, got: {magmom} != {g_factor}{spin}"
+                )
+                self.magmom = magmom
 
         # Set charge
         self._charge = None
@@ -135,7 +140,7 @@ class Atom:
         Name of the atom.
 
         Any string can be a name of an atom,
-        but it cannot starts nor end with double underscore "__".
+        but it cannot start nor end with double underscore "__".
 
         Returns
         -------
@@ -467,6 +472,104 @@ class Atom:
         self.spin = new_value
 
     @property
+    def spin_theta(self) -> float:
+        R"""
+        Polar angle of the spin vector :math:`\theta`:
+
+        .. math::
+
+            \boldsymbol{S} = S
+            \begin{pmatrix}
+            \cos\varphi\sin\theta \\
+            \sin\varphi\sin\theta \\
+            \cos\theta
+            \end{pmatrix}
+
+        Returns
+        -------
+        theta : float
+            :math:`0^{\circ} \le \theta \le 180^{\circ}`.
+        """
+
+        if np.allclose(self.spin_direction, [0, 0, 1]):
+            return 0.0
+        if np.allclose(self.spin_direction, [0, 0, -1]):
+            return 180.0
+
+        return np.arccos(np.clip(self.spin_direction[2], a_min=-1, a_max=1)) * TODEGREES
+
+    @spin_theta.setter
+    def spin_theta(self, new_value):
+        try:
+            new_value = float(new_value) * TORADIANS
+        except ValueError:
+            raise ValueError(
+                f"Expected something convertible to float, got '{new_value}'"
+            )
+
+        phi = self.spin_phi * TORADIANS
+        self.spin_direction = (
+            np.cos(phi) * np.sin(new_value),
+            np.sin(phi) * np.sin(new_value),
+            np.cos(new_value),
+        )
+
+    @property
+    def spin_phi(self) -> float:
+        R"""
+        Azimuthal angle of the spin vector :math:`\varphi`:
+
+        .. math::
+
+            \boldsymbol{S} = S
+            \begin{pmatrix}
+            \cos\varphi\sin\theta \\
+            \sin\varphi\sin\theta \\
+            \cos\theta
+            \end{pmatrix}
+
+        If spin is parallel or antiparallel to the z axis, then :math:`90^{\circ}` is returned.
+
+        Returns
+        -------
+        phi : float
+            :math:`0^{\circ} \le \varphi \le 360^{\circ}`.
+        """
+
+        if np.allclose(self.spin_direction, [0, 0, 1]):
+            return 90.0
+        if np.allclose(self.spin_direction, [0, 0, -1]):
+            return 90.0
+
+        if self.spin_direction[1] >= 0:
+            return (
+                np.arccos(np.clip(self.spin_direction[0], a_min=-1, a_max=1))
+                * TODEGREES
+            )
+        else:
+            return (
+                360
+                - np.arccos(np.clip(self.spin_direction[0], a_min=-1, a_max=1))
+                * TODEGREES
+            )
+
+    @spin_phi.setter
+    def spin_phi(self, new_value):
+        try:
+            new_value = float(new_value) * TORADIANS
+        except ValueError:
+            raise ValueError(
+                f"Expected something convertible to float, got '{new_value}'"
+            )
+
+        theta = self.spin_theta * TORADIANS
+        self.spin_direction = (
+            np.cos(new_value) * np.sin(theta),
+            np.sin(new_value) * np.sin(theta),
+            np.cos(theta),
+        )
+
+    @property
     def magmom(self) -> np.ndarray:
         r"""
         Magnetic moment of the atom.
@@ -496,7 +599,7 @@ class Atom:
             >>> from wulfric import Atom
             >>> atom = Atom()
             >>> atom.magmom
-            array([-0., -0., -2.])
+            array([-0., -0., -0.])
             >>> atom.magmom = (1,0,0)
             >>> atom.spin
             0.5
