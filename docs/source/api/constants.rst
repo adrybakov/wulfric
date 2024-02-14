@@ -6,16 +6,39 @@ constants
 
 .. currentmodule:: wulfric
 
+Atoms
+=====
+
+.. autosummary::
+    :toctree: generated/
+
+    ATOM_TYPES
+
+Bravais Lattices
+================
+
+.. autosummary::
+    :toctree: generated/
+
+    PEARSON_SYMBOLS
+    BRAVAIS_LATTICE_NAMES
+    BRAVAIS_LATTICE_VARIATIONS
+    TRANSFORM_TO_CONVENTIONAL
+
+K-points
+========
+
+.. autosummary::
+    :toctree: generated/
+
+    DEFAULT_K_PATHS
+    HS_PLOT_NAMES
+
+Numerical
+=========
 
 .. autosummary::
     :toctree: generated/
 
     TODEGREES
     TORADIANS
-    ATOM_TYPES
-    PEARSON_SYMBOLS
-    BRAVAIS_LATTICE_NAMES
-    BRAVAIS_LATTICE_VARIATIONS
-    TRANSFORM_TO_CONVENTIONAL
-    DEFAULT_K_PATHS
-    HS_PLOT_NAMES
