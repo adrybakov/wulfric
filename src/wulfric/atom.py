@@ -313,7 +313,9 @@ class Atom:
     def g_factor(self) -> float:
         R"""
         g-factor of an atom, relates its :py:attr:`.Atom.spin` with its
-        :py:attr:`.Atom.magmom`:
+        :py:attr:`.Atom.magmom`.magmom
+
+        .. versionadded:: 0.2.0
 
         .. math::
           \mu = g\mu_BS
@@ -322,6 +324,8 @@ class Atom:
         :py:attr:`.Atom.spin_vector` if the latter is defined.
 
         g-factor is equal to :math:`-2` by default.
+
+
 
         See Also
         --------
@@ -475,6 +479,8 @@ class Atom:
     def spin_angles(self) -> tuple:
         R"""
         Polar :math:`\theta` and azimuthal :math:`\varphi` angles of the spin vector:
+
+        .. versionadded:: 0.2.0
 
         .. math::
 
