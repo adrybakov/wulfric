@@ -127,6 +127,7 @@ class Lattice:
 
     def __init__(self, *args, standardize=True, **kwargs) -> None:
         self.eps_rel = REL_TOL
+        self.delta_max = 0.01
         self._cell = None
         self._type = None
         self._kpoints = None
@@ -724,7 +725,7 @@ class Lattice:
 
         return self.eps_rel * abs(self.unit_cell_volume) ** (1 / 3.0)
 
-    def type(self, eps_rel=None, delta_max=0.01):
+    def type(self, eps_rel=None, delta_max=None):
         r"""
         Identify the lattice type.
 
@@ -732,7 +733,7 @@ class Lattice:
         ----------
         eps_rel : float, optional
             Relative error for the LePage algorithm.
-        delta_max : float, default 0.01
+        delta_max : float, optional
             Angle tolerance for the LePage algorithm. Try to reduce it if the desired
             lattice type is not identified.
 
@@ -750,6 +751,8 @@ class Lattice:
         if self._type is None or eps_rel is not None:
             if eps_rel is None:
                 eps_rel = self.eps_rel
+            if delta_max is None:
+                delta_max = self.delta_max
 
             lattice_type = lepage(
                 self.a,
