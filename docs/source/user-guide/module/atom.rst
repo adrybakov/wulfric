@@ -8,7 +8,7 @@ Atom
 
 For the full technical reference see :ref:`api_atom`.
 
-:py:class:`.Atom` class describe an atom. It is hashable and can be used as a dictionary key.
+:py:class:`.Atom` class describes an atom. It is hashable and can be used as a dictionary key.
 The hash is based on the :py:attr:`.Atom.name` and :py:attr:`.Atom.index`.
 
 Import
