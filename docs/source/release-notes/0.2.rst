@@ -16,6 +16,10 @@ Therefore version 0.2 introduce some breaking changes:
   - Spin, magnetic moment now have default values and always return a value
     (previously if undefined they raised a ``ValueError``).
 
+* :py:class:`.Lattice`
+
+  - :py:meth:`.Lattice.type` - add ``delta_max`` parameter.
+
 
 
 0.2.0

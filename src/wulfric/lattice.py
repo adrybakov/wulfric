@@ -724,14 +724,17 @@ class Lattice:
 
         return self.eps_rel * abs(self.unit_cell_volume) ** (1 / 3.0)
 
-    def type(self, eps_rel=None):
+    def type(self, eps_rel=None, delta_max=0.01):
         r"""
         Identify the lattice type.
 
         Parameters
         ----------
         eps_rel : float, optional
-            Relative error for the :ref:`library_lepage` algorithm.
+            Relative error for the LePage algorithm.
+        delta_max : float, default 0.01
+            Angle tolerance for the LePage algorithm. Try to reduce it if the desired
+            lattice type is not identified.
 
         Returns
         -------
@@ -756,6 +759,7 @@ class Lattice:
                 self.beta,
                 self.gamma,
                 eps_rel=eps_rel,
+                delta_max=delta_max,
             )
 
             self._type = lattice_type

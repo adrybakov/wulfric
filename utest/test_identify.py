@@ -26,7 +26,11 @@ from wulfric.bravais_lattice.examples import lattice_example
 from wulfric.constants import BRAVAIS_LATTICE_VARIATIONS, TODEGREES
 from wulfric.identify import lepage, niggli
 from wulfric.lattice import Lattice
+from wulfric.numerical import ABS_TOL, ABS_TOL_ANGLE
 
+################################################################################
+#                               Service functions                              #
+################################################################################
 n_order = 5
 
 
@@ -50,6 +54,9 @@ def rotate(cell, r1, r2, r3):
     return R.T @ cell
 
 
+################################################################################
+#                                     Niggli                                   #
+################################################################################
 # Křivý, I. and Gruber, B., 1976. A unified algorithm for determining the reduced (Niggli) cell.
 # Acta Crystallographica Section A: Crystal Physics, Diffraction, Theoretical and General Crystallography, 32(2), pp.297-298.
 def test_niggli_from_paper():
@@ -61,7 +68,7 @@ def test_niggli_from_paper():
     gamma = acos(-22 / 2 / 3 / sqrt(27)) * TODEGREES
     assert (
         np.array([[4, 9, 9], [9 / 2, 3 / 2, 2]]) - niggli(a, b, c, alpha, beta, gamma)
-        < 1e-5
+        < ABS_TOL
     ).all()
 
 
@@ -76,12 +83,12 @@ def test_niggli_example():
         a, b, c, alpha, beta, gamma, return_cell=True
     )
 
-    assert a - ap < 1e-3
-    assert b - bp < 1e-3
-    assert c - cp < 1e-3
-    assert alpha - alphap < 1e-3
-    assert beta - betap < 1e-3
-    assert gamma - gammap < 1e-3
+    assert a - ap < ABS_TOL
+    assert b - bp < ABS_TOL
+    assert c - cp < ABS_TOL
+    assert alpha - alphap < ABS_TOL_ANGLE
+    assert beta - betap < ABS_TOL_ANGLE
+    assert gamma - gammap < ABS_TOL_ANGLE
 
 
 def test_niggli_cell_volume_error():
@@ -107,6 +114,9 @@ def test_niggli_cell_volume_error():
 #         niggli(a, b, c, alpha, beta, gamma)
 
 
+################################################################################
+#                                     LePage                                   #
+################################################################################
 @pytest.mark.parametrize(
     "variation", BRAVAIS_LATTICE_VARIATIONS, ids=BRAVAIS_LATTICE_VARIATIONS
 )
@@ -132,7 +142,7 @@ def test_lepage(variation):
         (
             [[3.588, 0.000, 0.000], [0.000, 4.807, 0.000], [0.000, 0.000, 23.571]],
             "ORC",
-            1e-5,
+            1e-3,
         ),
         (
             [[6.137, 0.000, 0.000], [-3.068, 5.315, 0.000], [0.000, 0.000, 20.718]],
@@ -167,7 +177,7 @@ def test_lepage_paper():
         64.130,
         64.150,
         give_all_results=True,
-        eps_rel=0.001,
+        eps_rel=1e-3,
         delta_max=0.006,
     )
     assert results[0][0] == "BCT"
@@ -183,16 +193,26 @@ def test_lepage_paper():
 
 
 @pytest.mark.parametrize(
-    "a, b, c, alpha, beta, gamma, ltype",
+    "a, b, c, alpha, beta, gamma, ltype, eps_rel",
     [
-        (1, 1, 2, 60, 90, 90, "TET"),
-        (1, 1, 1, 30, 90, 90, "ORCC"),
-        (1, 1, 1, 45, 90, 90, "ORCC"),
-        (3.2, 1, 1, 45, 90, 90, "ORCC"),
-        (1, 1, 1, 60, 90, 90, "HEX"),
+        (1, 1, 2, 60, 90, 90, "TET", 1e-3),
+        (1, 1, 1, 30, 90, 90, "ORCC", 1e-3),
+        (1, 1, 1, 45, 90, 90, "ORCC", 1e-3),
+        (3.2, 1, 1, 45, 90, 90, "ORCC", 1e-3),
+        (1, 1, 1, 60, 90, 90, "HEX", 1e-3),
+        (
+            4.0198877230381695,
+            4.0198877230381695,
+            40.16517980369646,
+            90.01984696367262,
+            90.01984696367262,
+            59.99052495414632,
+            "TRI",
+            1e-3,
+        ),
     ],
 )
-def test_lepage_custom(a, b, c, alpha, beta, gamma, ltype):
+def test_lepage_custom(a, b, c, alpha, beta, gamma, ltype, eps_rel):
     assert ltype == lepage(
         a,
         b,
@@ -200,5 +220,42 @@ def test_lepage_custom(a, b, c, alpha, beta, gamma, ltype):
         alpha,
         beta,
         gamma,
-        eps_rel=0.001,
+        eps_rel=eps_rel,
+    )
+
+
+@pytest.mark.parametrize(
+    "a, b, c, alpha, beta, gamma, ltype, delta_max",
+    [
+        (
+            4.0198877230381695,
+            4.0198877230381695,
+            40.16517980369646,
+            90.01984696367262,
+            90.01984696367262,
+            59.99052495414632,
+            "TRI",
+            1e-3,
+        ),
+        (
+            4.0198877230381695,
+            4.0198877230381695,
+            40.16517980369646,
+            90.01984696367262,
+            90.01984696367262,
+            59.99052495414632,
+            "HEX",
+            1e-1,
+        ),
+    ],
+)
+def test_lepage_custom_delta_max(a, b, c, alpha, beta, gamma, ltype, delta_max):
+    assert ltype == lepage(
+        a,
+        b,
+        c,
+        alpha,
+        beta,
+        gamma,
+        delta_max=delta_max,
     )

@@ -24,12 +24,15 @@ from termcolor import cprint
 import wulfric.cell as Cell
 from wulfric.constants import TODEGREES, TORADIANS
 from wulfric.decorate.array import print_2d_array
-from wulfric.geometry import volume
-from wulfric.numerical import compare_numerically
+from wulfric.geometry import parallelepiped_check, volume
+from wulfric.numerical import REL_TOL, compare_numerically
 
 __all__ = ["niggli", "lepage"]
 
 
+################################################################################
+#                                    Niggli                                    #
+################################################################################
 def niggli(
     a=1,
     b=1,
@@ -37,7 +40,7 @@ def niggli(
     alpha=90,
     beta=90,
     gamma=90,
-    eps_rel=1e-5,
+    eps_rel=REL_TOL,
     verbose=False,
     return_cell=False,
     max_iter=10000,
@@ -48,17 +51,17 @@ def niggli(
     Parameters
     ----------
     a : float, default 1
-        Length of the :math:`a_1` vector.
+        Length of the :math:`\boldsymbol{a_1}` vector.
     b : float, default 1
-        Length of the :math:`a_2` vector.
+        Length of the :math:`\boldsymbol{a_2}` vector.
     c : float, default 1
-        Length of the :math:`a_3` vector.
+        Length of the :math:`\boldsymbol{a_3}` vector.
     alpha : float, default 90
-        Angle between vectors :math:`a_2` and :math:`a_3`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_2}` and :math:`\boldsymbol{a_3}`. In degrees.
     beta : float, default 90
-        Angle between vectors :math:`a_1` and :math:`a_3`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`. In degrees.
     gamma : float, default 90
-        Angle between vectors :math:`a_1` and :math:`a_2`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`. In degrees.
     eps_rel : float, default 1e-5
         Relative epsilon as defined in [2]_.
     verbose : bool, default False
@@ -70,7 +73,7 @@ def niggli(
 
     Returns
     -------
-    result : (3,2) :numpy:`ndarray`
+    result : (3,2) :numpy:`ndarray` or (6,) tuple of floats
         Niggli matrix form as defined in [1]_:
 
         .. math::
@@ -80,7 +83,7 @@ def niggli(
                 \xi/2 & \eta/2 & \zeta/2
             \end{pmatrix}
 
-        If return_cell == True, then return Niggli cell: (a, b, c, alpha, beta, gamma).
+        If return_cell == True, then returns Niggli cell parameters: (a, b, c, alpha, beta, gamma).
 
     Raises
     ------
@@ -303,7 +306,10 @@ def niggli(
     return np.array([[A, B, C], [xi / 2, eta / 2, zeta / 2]])
 
 
-def check_cub(angles: np.ndarray, axes: np.ndarray, eps):
+################################################################################
+#                                  LePage CUB                                  #
+################################################################################
+def check_cub(angles: np.ndarray, axes: np.ndarray, eps_angle):
     target_angles = np.array(
         [
             [0, 45, 45, 45, 45, 90, 90, 90, 90],
@@ -327,11 +333,13 @@ def check_cub(angles: np.ndarray, axes: np.ndarray, eps):
         sub_axes = axes[:9]
         if (
             np.abs(np.sort(sub_angles.flatten()) - np.sort(target_angles.flatten()))
-            < eps
+            < eps_angle
         ).all():
             xyz = []
             for i in range(9):
-                if (np.abs(np.sort(sub_angles[i]) - conventional_axis) < eps).all():
+                if (
+                    np.abs(np.sort(sub_angles[i]) - conventional_axis) < eps_angle
+                ).all():
                     xyz.append(sub_axes[i])
             det = np.abs(np.linalg.det(xyz))
             if det == 1:
@@ -345,7 +353,10 @@ def check_cub(angles: np.ndarray, axes: np.ndarray, eps):
     return None, True
 
 
-def check_hex(angles: np.ndarray, eps):
+################################################################################
+#                                  LePage HEX                                  #
+################################################################################
+def check_hex(angles: np.ndarray, eps_angle):
     target_angles = np.array(
         [
             [0, 90, 90, 90, 90, 90, 90],
@@ -357,19 +368,21 @@ def check_hex(angles: np.ndarray, eps):
             [0, 30, 30, 60, 60, 90, 90],
         ]
     )
-    angles = angles[:7]
     if 7 <= angles.shape[0]:
         sub_angles = angles[:7, :7]
         if (
             np.abs(np.sort(sub_angles.flatten()) - np.sort(target_angles.flatten()))
-            < eps
+            < eps_angle
         ).all():
             return "HEX", False
         return None, True
     return None, True
 
 
-def check_tet(angles: np.ndarray, axes: np.ndarray, eps, cell):
+################################################################################
+#                                  LePage TET                                  #
+################################################################################
+def check_tet(angles: np.ndarray, axes: np.ndarray, eps_angle, cell):
     target_angles = np.array(
         [
             [0, 90, 90, 90, 90],
@@ -384,23 +397,24 @@ def check_tet(angles: np.ndarray, axes: np.ndarray, eps, cell):
 
     axes = np.array([i[0] for i in axes])
 
-    angles = angles[:5]
     if 5 <= angles.shape[0]:
         sub_angles = angles[:5, :5]
         sub_axes = axes[:5]
         if (
             np.abs(np.sort(sub_angles.flatten()) - np.sort(target_angles.flatten()))
-            < eps
+            < eps_angle
         ).all():
             xy = []
             for i in range(5):
-                if (np.abs(np.sort(sub_angles[i]) - conventional_axis) < eps).all():
+                if (
+                    np.abs(np.sort(sub_angles[i]) - conventional_axis) < eps_angle
+                ).all():
                     z = sub_axes[i]
                 else:
                     xy.append(sub_axes[i])
             xy.sort(key=lambda x: np.linalg.norm(x @ cell))
 
-            xyz = [z, xy[0], xy[1]]
+            xyz = [xy[0], xy[1], z]
 
             det = np.abs(np.linalg.det(xyz))
             if det == 1:
@@ -412,7 +426,10 @@ def check_tet(angles: np.ndarray, axes: np.ndarray, eps, cell):
     return None, True
 
 
-def check_rhl(angles: np.ndarray, eps):
+################################################################################
+#                                  LePage RHL                                  #
+################################################################################
+def check_rhl(angles: np.ndarray, eps_angle):
     target_angles = np.array(
         [
             [0, 60, 60],
@@ -421,19 +438,21 @@ def check_rhl(angles: np.ndarray, eps):
         ]
     )
 
-    angles = angles[:3]
     if 3 <= angles.shape[0]:
         sub_angles = angles[:3, :3]
         if (
             np.abs(np.sort(sub_angles.flatten()) - np.sort(target_angles.flatten()))
-            < eps
+            < eps_angle
         ).all():
             return "RHL", False
         return None, True
     return None, True
 
 
-def check_orc(angles: np.ndarray, axes: np.ndarray, eps):
+################################################################################
+#                                  LePage ORC                                  #
+################################################################################
+def check_orc(angles: np.ndarray, axes: np.ndarray, eps_angle):
     target_angles = np.array(
         [
             [0, 90, 90],
@@ -442,14 +461,13 @@ def check_orc(angles: np.ndarray, axes: np.ndarray, eps):
         ]
     )
 
-    angles = angles[:3]
     axes = np.array([i[0] for i in axes])
     if 3 <= angles.shape[0]:
         sub_angles = angles[:3, :3]
         sub_axes = axes[:3]
         if (
             np.abs(np.sort(sub_angles.flatten()) - np.sort(target_angles.flatten()))
-            < eps
+            < eps_angle
         ).all():
             C = np.array(sub_axes, dtype=float).T
             det = np.abs(np.linalg.det(C))
@@ -478,6 +496,9 @@ def check_orc(angles: np.ndarray, axes: np.ndarray, eps):
     return None, True
 
 
+################################################################################
+#                                  LePage MCL                                  #
+################################################################################
 def get_perpendicular_shortest(v, cell, eps):
     perp_axes = []
 
@@ -500,8 +521,11 @@ def check_mcl(angles: np.ndarray, axes: np.ndarray, eps, cell):
     if 1 <= angles.shape[0]:
         b = axes[0]
 
-        a, c = get_perpendicular_shortest(b, cell, eps)
-
+        # If we are here by mistake it can fail
+        try:
+            a, c = get_perpendicular_shortest(b, cell, eps)
+        except IndexError:
+            return None, True
         C = np.array(
             [
                 a,
@@ -519,6 +543,9 @@ def check_mcl(angles: np.ndarray, axes: np.ndarray, eps, cell):
     return None, True
 
 
+################################################################################
+#                                    LePage                                    #
+################################################################################
 def lepage(
     a=1,
     b=1,
@@ -538,17 +565,17 @@ def lepage(
     Parameters
     ----------
     a : float, default 1
-        Length of the :math:`a_1` vector.
+        Length of the :math:`\boldsymbol{a_1}` vector.
     b : float, default 1
-        Length of the :math:`a_2` vector.
+        Length of the :math:`\boldsymbol{a_2}` vector.
     c : float, default 1
-        Length of the :math:`a_3` vector.
+        Length of the :math:`\boldsymbol{a_3}` vector.
     alpha : float, default 90
-        Angle between vectors :math:`a_2` and :math:`a_3`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_2}` and :math:`\boldsymbol{a_3}`. In degrees.
     beta : float, default 90
-        Angle between vectors :math:`a_1` and :math:`a_3`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`. In degrees.
     gamma : float, default 90
-        Angle between vectors :math:`a_1` and :math:`a_2`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`. In degrees.
     eps_rel : float, default 1e-4
         Relative epsilon.
     verbose : bool, default False
@@ -577,12 +604,16 @@ def lepage(
     if very_verbose:
         verbose = True
 
-    if volume(a, b, c, alpha, beta, gamma) == 0:
-        raise ValueError("Cell volume is zero")
+    # Check if provided parameters can form a parallelepiped
+    parallelepiped_check(a, b, c, alpha, beta, gamma, raise_error=True)
 
-    limit = max(1.5, delta_max * 1.1)
     eps_volumetric = eps_rel * volume(a, b, c, alpha, beta, gamma) ** (1 / 3.0)
+
+    # Limit value for the condition on keeping the axis
+    limit = max(1.5, delta_max * 1.1)
+
     decimals = abs(floor(log10(abs(eps_volumetric))))
+
     if delta_max is None:
         delta_max = eps
 
