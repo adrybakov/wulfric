@@ -4,12 +4,12 @@
 Crystal
 *******
 
-For the full reference see :ref:`api_crystal`
+For the full technical reference see :ref:`api_crystal`
 
 .. currentmodule:: wulfric
 
 Crystal is a child of the the :py:class:`.Lattice` and utilize
-:py:class:`.Atom` for the storage of atoms. We recommend you to read
+:py:class:`.Atom` for the storage of atoms. We recommend you to read about
 :ref:`user-guide_module_lattice` and :ref:`user-guide_module_atom` first.
 
 Crystal behaves like a list of atoms. See :ref:`user-guide_module_crystal_list-like` for the details.
@@ -32,7 +32,7 @@ For the examples in this page we need additional import and some predefined vari
 Creation of the Crystal
 =======================
 
-To create a crystal you would typically need to define the lattice and the set of atoms:
+To create a crystal you would typically need to define the lattice and a set of atoms:
 
 * ``lattice`` - instance of the :py:class:`.Lattice` class.
 * ``atoms`` - list of the :py:class:`.Atom` instances, which defines the set of atoms in the unit cell.
@@ -100,7 +100,7 @@ the ``relative`` keyword argument to ``False``:
 .. note::
 
     :py:meth:`.Crystal.get_distance` and :py:meth:`.Crystal.get_vector` methods
-    are the ones which returns absolute coordinates by default.
+    are the ones that returns absolute coordinates by default.
 
 It is possible to add atoms by passing the :py:class:`.Atom` instance:
 
@@ -214,8 +214,8 @@ There is a number of properties involving atom of the crystal you have access to
 
 .. _user-guide_module_crystal_list-like:
 
-List-like behaviour
-===================
+List-like behavior
+==================
 
 :py:class:`.Crystal` class supports the logic of a list of atoms.
 The following list-like methods are implemented:
@@ -286,7 +286,7 @@ the :py:meth:`.Crystal.get_atom` method with ``return_all=False``.
     >>> crystal.Cr
     Traceback (most recent call last):
     ...
-    AttributeError: 'Crystal' object has no attribute 'Cr'
+    AttributeError: 'Crystal' object has either none or more than one 'Cr' atoms.
 
 * Access via item
 

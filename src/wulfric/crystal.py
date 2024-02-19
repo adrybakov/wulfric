@@ -91,6 +91,9 @@ class Crystal(Lattice):
             for a in atoms:
                 self.add_atom(a, relative=relative)
 
+    ################################################################################
+    #                              List-like behavior                              #
+    ################################################################################
     def __iter__(self):
         return CrystalIterator(self)
 
@@ -106,6 +109,9 @@ class Crystal(Lattice):
     def __len__(self):
         return self.atoms.__len__()
 
+    ################################################################################
+    #                              Fast atom's access                              #
+    ################################################################################
     def __getitem__(self, name) -> Atom:
         return self.get_atom(name, return_all=True)
 
@@ -117,8 +123,13 @@ class Crystal(Lattice):
             atom = self.get_atom(name=name)
             return atom
         except ValueError:
-            raise AttributeError(f"'Crystal' object has no attribute '{name}'")
+            raise AttributeError(
+                f"'Crystal' object has either none or more than one '{name}' atoms."
+            )
 
+    ################################################################################
+    #                                Lattice getter                                #
+    ################################################################################
     @property
     def lattice(self):
         r"""
@@ -128,7 +139,7 @@ class Crystal(Lattice):
         You can use it to play with the crystal`s lattice independently,
         but it will not affect the crystal itself.
 
-        See :ref:`user-guide_module_lattice` for details.
+        See :py:class:`.Lattice` for details.
 
         Returns
         -------
@@ -142,6 +153,9 @@ class Crystal(Lattice):
         """
         return Lattice(self.cell, standardize=False)
 
+    ################################################################################
+    #                             Atom's manipulations                             #
+    ################################################################################
     def add_atom(self, new_atom: Union[Atom, str] = None, relative=True, **kwargs):
         r"""
         Add atom to the crystal.
@@ -313,6 +327,9 @@ class Crystal(Lattice):
 
         return rel_coordinates @ self.cell
 
+    ################################################################################
+    #                           Vector between two atoms                           #
+    ################################################################################
     def get_vector(
         self,
         atom1: Union[Atom, str],
@@ -394,6 +411,9 @@ class Crystal(Lattice):
             )
         )
 
+    ################################################################################
+    #                                Primitive cell                                #
+    ################################################################################
     def find_primitive_cell(self):
         r"""
         Detect primitive cell.
