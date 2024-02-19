@@ -132,6 +132,7 @@ def test_reciprocal_cell_examples(cell, rec_cell):
 def test_cell_from_param(a, b, c, alpha, beta, gamma):
     if parallelepiped_check(a, b, c, alpha, beta, gamma):
         cell = Cell.from_params(a, b, c, alpha, beta, gamma)
+        # TODO relax this condition. It does not allow to have 0 components.
         if (cell > MIN_LENGTH).all():
             ap, bp, cp, alphap, betap, gammap = Cell.params(cell)
             assert np.allclose([a, b, c], [ap, bp, cp], rtol=REL_TOL, atol=ABS_TOL)
