@@ -86,7 +86,7 @@ silently assigned to each atom.
 
 .. note::
 
-  If the index of the atom is not defined, then you can still compare it to other atoms
+  If the index of both atoms is not defined, then you can still compare it to other atoms
   with a different name:
 
   .. doctest::
@@ -98,8 +98,8 @@ silently assigned to each atom.
     >>> atom1 != atom2
     True
 
-  However, if for the pair of atoms with the same name the index is not defined
-  in at least one of them, than the comparison fails:
+  However, if two atoms have the same name and the index is not defined
+  in at least one of them, then the comparison fails:
 
   .. doctest::
 
@@ -139,7 +139,7 @@ Fullname is defined even if the atom does not have an index:
 Atom's type
 -----------
 
-:py:attr:`Atom.type` is derived automatically from its name, it cannot be changed directly.:
+:py:attr:`Atom.type` is derived automatically from its name, it cannot be changed directly.
 
 .. doctest::
 
@@ -158,9 +158,10 @@ Atom's type
 Use as a dictionary key
 =======================
 
-``__hash__()`` is defined for an :py:class:`.Atom` class ,therefor you can use it as a dictionary key.
-It is calculated from the atom :py:attr:`.Atom.name` and :py:attr:`.Atom.index`.
-:py:attr:`.Atom.index` has to be defined if you want to use the atom as a key.
+``__hash__()`` is defined for an :py:class:`.Atom` class, therefore, you can use it
+as a dictionary key. Hash is calculated from the atom :py:attr:`.Atom.name` and
+:py:attr:`.Atom.index`. :py:attr:`.Atom.index` has to be defined if you want to
+use the atom as a key.
 
 .. doctest::
 
@@ -188,9 +189,10 @@ Position
 The position of the atom can be access and set via :py:attr:`.Atom.position`.
 At the level of the logic of pure :py:class:`.Atom` class no units (Angstroms, Bohr,
 relative, absolute, ...) are assumed for the atom's position. This uncertainty is deliberate,
-since it allows to the user to use :py:class:`.Atom` in various contexts. For
+since it allows the user to use :py:class:`.Atom` in various contexts. For
 example, when atom is used inside a :py:class:`.Crystal` instance, the position is
 usually considered to be in relative coordinates.
+
 .. doctest::
 
   >>> atom = Atom(name="Cr")
@@ -320,7 +322,8 @@ All other attributes can be set and accessed:
     \boldsymbol{\mu} = g\boldsymbol{S}
 
   where :math:`g` is a :py:attr:`.Atom.g_factor`. Bohr magneton is assumed to be equal to :math:`1`.
-  As with the whole atom class we leave the units for the user.
+  As with the whole atom class we leave the units for the user (i.e. in order to get an
+  actual value - multiply the result by the bohr magneton in the desired system of units).
 
   .. doctest::
 
