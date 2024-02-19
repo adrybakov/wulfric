@@ -4,7 +4,7 @@
 Numerical accuracy
 ******************
 
-For the full reference see :ref:`api_numerical`.
+For the full technical reference see :ref:`api_numerical`.
 
 .. currentmodule:: wulfric
 

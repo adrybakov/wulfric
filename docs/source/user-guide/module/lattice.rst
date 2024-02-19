@@ -6,7 +6,7 @@
 Lattice
 *******
 
-For the full reference see :ref:`api_lattice`
+For the full technical reference see :ref:`api_lattice`
 
 Every Bravais lattice is an instance of the :py:class:`.Lattice` class.
 For the guide about Bravais lattices see :ref:`user-guide_module_bravais-lattices`.

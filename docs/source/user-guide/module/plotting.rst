@@ -6,7 +6,7 @@
 Plotting
 ********
 
-For the full reference see :ref:`api_crystal-plotting`
+For the full technical reference see :ref:`api_crystal-plotting`
 
 More examples of the plots with the code snippets can be found in the
 :ref:`library_bravais-lattices` guide.

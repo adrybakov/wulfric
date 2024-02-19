@@ -4,7 +4,7 @@
 Decoration of data
 ******************
 
-For the full reference see :ref:`api_decorate`.
+For the full technical reference see :ref:`api_decorate`.
 
 .. currentmodule:: wulfric
 

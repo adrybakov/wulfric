@@ -4,7 +4,7 @@
 Geometry
 ********
 
-For the full reference see :ref:`api_geometry`.
+For the full technical reference see :ref:`api_geometry`.
 
 .. currentmodule:: wulfric
 

@@ -6,7 +6,7 @@
 K points
 ********
 
-For the full reference see :ref:`api_kpoints`
+For the full technical reference see :ref:`api_kpoints`
 
 :py:class:`Kpoints` is a relatively small class, which represent the set of k-points
 of a particular path of a given lattice.

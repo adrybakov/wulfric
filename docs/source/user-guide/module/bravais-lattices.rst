@@ -6,7 +6,7 @@ Bravais lattices
 
 .. currentmodule:: wulfric
 
-For the full reference see :ref:`api_bravais-lattices`
+For the full technical reference see :ref:`api_bravais-lattices`
 
 For the description of each Bravais lattice type see :ref:`library_bravais-lattices`.
 
