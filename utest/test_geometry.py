@@ -36,6 +36,10 @@ from wulfric.numerical import (
     compare_numerically,
 )
 
+################################################################################
+#                               Service functions                              #
+################################################################################
+
 n_order = 5
 
 
@@ -59,6 +63,9 @@ def rotate(cell, r1, r2, r3):
     return R.T @ cell
 
 
+################################################################################
+#                             Absolute to relative                             #
+################################################################################
 @pytest.mark.parametrize(
     "cell, absolute, relative",
     [
@@ -76,6 +83,9 @@ def test_absolute_to_relative(cell, absolute, relative):
     assert (new_relative == relative).all()
 
 
+################################################################################
+#                                     Angle                                    #
+################################################################################
 @given(
     harrays(float, 3, elements=st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH)),
     harrays(
@@ -109,6 +119,9 @@ def test_angle_raises():
         angle([0, 0, 0], [1.0, 0, 0])
 
 
+################################################################################
+#                                    Volume                                    #
+################################################################################
 @pytest.mark.parametrize(
     "args, result, eps", [((4, 4.472, 4.583, 79.03, 64.13, 64.15), 66.3840797, 1e-8)]
 )
@@ -159,6 +172,9 @@ def test_volume_parameters(a, b, c, alpha, beta, gamma):
         assert volume(a, b, c, alpha, beta, gamma) > 0
 
 
+################################################################################
+#                             Parallelepiped check                             #
+################################################################################
 @given(
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
