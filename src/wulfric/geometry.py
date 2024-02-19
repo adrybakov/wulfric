@@ -37,13 +37,13 @@ def volume(*args):
         Volume is computed as:
 
         .. math::
-            V = v_1 \cdot (v_2 \times v_3)
+            V = \boldsymbol{v_1} \cdot (\boldsymbol{v_2} \times \boldsymbol{v_3})
     * Three arguments.
-        Vectors ``v1``, ``v2``, ``v3``.
+        Vectors ``\boldsymbol{v_1}``, ``\boldsymbol{v_2}``, ``\boldsymbol{v_3}``.
         Volume is computed as:
 
         .. math::
-            V = v_1 \cdot (v_2 \times v_3)
+            V = \boldsymbol{v_1} \cdot (\boldsymbol{v_2} \times \boldsymbol{v_3})
     * Six arguments.
         Parameters ``a``, ``b``, ``c``, ``alpha``, ``beta``, ``gamma``.
         Volume is computed as:
@@ -113,7 +113,10 @@ def angle(v1, v2, radians=False):
 
     .. math::
 
-        \alpha = \dfrac{(\vec{v_1} \cdot \vec{v_2})}{\vert\vec{v_1}\vert\cdot\vert\vec{v_2}\vert}
+        \alpha
+        =
+        \dfrac{(\boldsymbol{v_1} \cdot \boldsymbol{v_2})}
+        {\vert\boldsymbol{v_1}\vert\cdot\vert\boldsymbol{v_2}\vert}
 
     Parameters
     ----------
@@ -170,17 +173,17 @@ def parallelepiped_check(a, b, c, alpha, beta, gamma, raise_error=False):
     Parameters
     ----------
     a : float
-        Length of the :math:`v_1` vector.
+        Length of the :math:`\boldsymbol{v_1}` vector.
     b : float
-        Length of the :math:`v_2` vector.
+        Length of the :math:`\boldsymbol{v_2}` vector.
     c : float
-        Length of the :math:`v_3` vector.
+        Length of the :math:`\boldsymbol{v_3}` vector.
     alpha : float
-        Angle between vectors :math:`v_2` and :math:`v_3`. In degrees.
+        Angle between vectors :math:`\boldsymbol{v_2}` and :math:`\boldsymbol{v_3}`. In degrees.
     beta : float
-        Angle between vectors :math:`v_1` and :math:`v_3`. In degrees.
+        Angle between vectors :math:`\boldsymbol{v_1}` and :math:`\boldsymbol{v_3}`. In degrees.
     gamma : float
-        Angle between vectors :math:`v_1` and :math:`v_2`. In degrees.
+        Angle between vectors :math:`\boldsymbol{v_1}` and :math:`\boldsymbol{v_2}`. In degrees.
     raise_error : bool, default False
         Whether to raise error if parameters can not form a parallelepiped.
 
@@ -265,18 +268,36 @@ def absolute_to_relative(vector, basis):
     Compute relative coordinates of the vector with respect to the basis.
 
     .. math::
-        \vec{v} = v_1 \vec{e_1} + v_2 \vec{e_2} + v_3 \vec{e_3}
+        \boldsymbol{v} = v^1 \boldsymbol{e_1} + v^2 \boldsymbol{e_2} + v^3 \boldsymbol{e_3}
 
     We compute scalar products of the vector with the basis vectors:
 
     .. math::
         \begin{matrix}
-        \vec{v} \cdot \vec{e_1} = v_1 \vec{e_1} \cdot \vec{e_1} + v_2 \vec{e_2} \cdot \vec{e_1} + v_3 \vec{e_3} \cdot \vec{e_1} \\
-        \vec{v} \cdot \vec{e_2} = v_1 \vec{e_1} \cdot \vec{e_2} + v_2 \vec{e_2} \cdot \vec{e_2} + v_3 \vec{e_3} \cdot \vec{e_2} \\
-        \vec{v} \cdot \vec{e_3} = v_1 \vec{e_1} \cdot \vec{e_3} + v_2 \vec{e_2} \cdot \vec{e_3} + v_3 \vec{e_3} \cdot \vec{e_3}
+        \boldsymbol{v} \cdot \boldsymbol{e_1}
+        =
+        v^1\, \boldsymbol{e_1} \cdot \boldsymbol{e_1}
+        +
+        v^2\, \boldsymbol{e_2} \cdot \boldsymbol{e_1}
+        +
+        v^3\, \boldsymbol{e_3} \cdot \boldsymbol{e_1} \\
+        \boldsymbol{v} \cdot \boldsymbol{e_2}
+        =
+        v^1\, \boldsymbol{e_1} \cdot \boldsymbol{e_2}
+        +
+        v^2\, \boldsymbol{e_2} \cdot \boldsymbol{e_2}
+        +
+        v^3\, \boldsymbol{e_3} \cdot \boldsymbol{e_2} \\
+        \boldsymbol{v} \cdot \boldsymbol{e_3}
+        =
+        v^1\, \boldsymbol{e_1} \cdot \boldsymbol{e_3}
+        +
+        v^2\, \boldsymbol{e_2} \cdot \boldsymbol{e_3}
+        +
+        v^3\, \boldsymbol{e_3} \cdot \boldsymbol{e_3}
         \end{matrix}
 
-    Which leads to the system of linear equations for :math:`v_1`, :math:`v_2`, :math:`v_3`.
+    Which leads to the system of linear equations for :math:`v^1`, :math:`v^2`, :math:`v^3`.
 
     Parameters
     ----------
@@ -290,6 +311,7 @@ def absolute_to_relative(vector, basis):
     -------
     relative : (3,) :numpy:`ndarray`
         Relative coordinates of the ``vector`` with respect to the ``basis``.
+        :math:`(v^1, v^2, v^3)`.
     """
 
     # Three vectors of the basis
