@@ -526,14 +526,7 @@ def check_mcl(angles: np.ndarray, axes: np.ndarray, eps, cell):
             a, c = get_perpendicular_shortest(b, cell, eps)
         except IndexError:
             return None, True
-        C = np.array(
-            [
-                a,
-                b,
-                c,
-            ],
-            dtype=float,
-        ).T
+        C = np.array([a, b, c], dtype=float).T
         det = np.abs(np.linalg.det(C))
         if det == 1:
             return "MCL", False
