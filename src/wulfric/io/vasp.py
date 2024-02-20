@@ -34,7 +34,7 @@ def load_poscar(file_object=None, return_crystal=True, return_comment=False):
 
     Parameters
     ----------
-    file_object: str of file-like object, optional
+    file_object : str of file-like object, optional
         File to be read. If str, then file is opened with the given name.
         Otherwise it has to have ``.readlines()`` method.
         By default it looks for the "POSCAR" file in the current directory.
@@ -42,22 +42,22 @@ def load_poscar(file_object=None, return_crystal=True, return_comment=False):
 
         * Tries to open the file with the name given by the ``file_object``.
         * Tries to open the file with the name "POSCAR" in the directory given by the ``file_object``.
-    return_crystal: bool, default True
+    return_crystal : bool, default True
         If True, returns :py:class:`.Crystal` object. Otherwise returns a tuple of
         ``(cell, atoms)``.
-    return_comment: bool, default False
+    return_comment : bool, default False
         Whether to return the comment from the first line of the file.
 
     Returns
     -------
-    crystal: :py:class:`.Crystal`
+    crystal : :py:class:`.Crystal`
         Crystal structure read from the file. If ``return_crystal`` is ``True``.
-    cell: (3, 3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Cell of the crystal structure. If ``return_crystal`` is ``False``.
-    atoms: list of :py:class:`.Atom`
+    atoms : list of :py:class:`.Atom`
         Atoms of the crystal structure. If ``return_crystal`` is ``False``.
         Positions are always relative to the cell.
-    comment: str
+    comment : str
         Comment from the first line of the file. If ``return_comment`` is ``True``.
     """
 
@@ -66,15 +66,21 @@ def load_poscar(file_object=None, return_crystal=True, return_comment=False):
         try:
             file_object = open("POSCAR")
         except FileNotFoundError:
-            raise FileNotFoundError("POSCAR file not found")
+            raise FileNotFoundError(
+                f'"POSCAR" file not found, looked here: {os.getcwd()}'
+            )
     elif isinstance(file_object, str):
         try:
-            file_object = open(file_object)
+            file_object = open(file_object, "r", encoding="utf-8")
         except FileNotFoundError:
             try:
-                file_object = open(os.path.join(file_object, "POSCAR"))
+                file_object = open(
+                    os.path.join(file_object, "POSCAR"), "r", encoding="utf-8"
+                )
             except FileNotFoundError:
-                raise FileNotFoundError("POSCAR file not found")
+                raise FileNotFoundError(
+                    f'"POSCAR" file not found, looked here: {file_object}'
+                )
 
     lines = file_object.readlines()
 
@@ -119,7 +125,7 @@ def load_poscar(file_object=None, return_crystal=True, return_comment=False):
 
     # Get mode
     CARTESIAN = False
-    if lines[index][0] in ["C", "c", "K", "k"]:
+    if lines[index][0].lower() in ["c", "k"]:
         CARTESIAN = True
     index += 1
     atoms = []
@@ -157,19 +163,19 @@ def dump_poscar(
 
     Parameters
     ----------
-    crystal_like: any
+    crystal_like : any
         Object to be written. It has to have ``.cell`` and ``.atoms`` attributes.
         ``cell`` has to be a 3x3 array-like object, ``atoms`` has to be a list of
         :py:class:`.Atom` objects.
-    file_object: str of file-like object, optional
+    file_object : str of file-like object, optional
         File to be written. If str, then file is opened with the given name.
         Otherwise it has to have ``.write()`` method.
-    comment: str, optional
+    comment : str, optional
         Comment to be written in the first line of the file. Has to be a single line.
-        All new lines are replaced with spaces.
-    decimals: int, default 8
+        All new lines symbols are replaced with spaces.
+    decimals : int, default 8
         Number of decimals to be written.
-    mode: str, default "Direct"
+    mode : str, default "Direct"
         Mode of the coordinates to be written. Can be "Direct" or "Cartesian".
     """
 
