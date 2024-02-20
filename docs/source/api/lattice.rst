@@ -91,9 +91,9 @@ Information properties
 Numerical accuracy
 ==================
 
-* Lattice.eps_rel
-
 .. autosummary::
     :toctree: generated/
 
     Lattice.eps
+    Lattice.eps_rel
+    Lattice.angle_tol

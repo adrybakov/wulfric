@@ -54,7 +54,7 @@ from wulfric.constants import (
 from wulfric.geometry import angle, volume
 from wulfric.identify import lepage
 from wulfric.kpoints import Kpoints
-from wulfric.numerical import REL_TOL
+from wulfric.numerical import ABS_TOL_ANGLE, REL_TOL
 
 __all__ = ["Lattice"]
 
@@ -112,6 +112,10 @@ class Lattice:
     standardize : bool, default True
         Whether to standardize the cell.
         The consistence of the predefined k paths is not guaranteed in the cell is not unified.
+    eps_rel : float, default 1e-4
+        Relative tolerance for distance.
+    angle_tol : float, default 1e-4
+        Absolute tolerance for angles, in degrees.
 
     Attributes
     ----------
@@ -125,9 +129,16 @@ class Lattice:
         Computational materials science, 49(2), pp.299-312.
     """
 
-    def __init__(self, *args, standardize=True, **kwargs) -> None:
-        self.eps_rel = REL_TOL
-        self.delta_max = 0.01
+    def __init__(
+        self,
+        *args,
+        standardize=True,
+        eps_rel=REL_TOL,
+        angle_tol=ABS_TOL_ANGLE,
+        **kwargs,
+    ) -> None:
+        self._eps_rel = eps_rel
+        self._angle_tol = angle_tol
         self._cell = None
         self._type = None
         self._kpoints = None
@@ -173,7 +184,9 @@ class Lattice:
 
         self._set_cell(cell, standardize=standardize)
 
-    # Primitive cell parameters
+    ################################################################################
+    #                                Primitive cell                                #
+    ################################################################################
     @property
     def cell(self):
         r"""
@@ -222,43 +235,43 @@ class Lattice:
     @property
     def a1(self):
         r"""
-        First lattice vector :math:`\vec{a}_1`.
+        First lattice vector :math:`\boldsymbol{a_1}`.
 
         Returns
         -------
         a1 : (3,) :numpy:`ndarray`
-            First lattice vector :math:`\vec{a}_1`.
+            First lattice vector :math:`\boldsymbol{a_1}`.
         """
         return self.cell[0]
 
     @property
     def a2(self):
         r"""
-        Second lattice vector :math:`\vec{a}_2`.
+        Second lattice vector :math:`\boldsymbol{a_2}`.
 
         Returns
         -------
         a2 : (3,) :numpy:`ndarray`
-            Second lattice vector :math:`\vec{a}_2`.
+            Second lattice vector :math:`\boldsymbol{a_2}`.
         """
         return self.cell[1]
 
     @property
     def a3(self):
         r"""
-        Third lattice vector :math:`\vec{a}_3`.
+        Third lattice vector :math:`\boldsymbol{a_3}`.
 
         Returns
         -------
         a3 : (3,) :numpy:`ndarray`
-            Third lattice vector :math:`\vec{a}_3`.
+            Third lattice vector :math:`\boldsymbol{a_3}`.
         """
         return self.cell[2]
 
     @property
     def a(self):
         r"""
-        Length of the first lattice vector :math:`\vert\vec{a}_1\vert`.
+        Length of the first lattice vector :math:`\vert\boldsymbol{a_1}\vert`.
 
         Returns
         -------
@@ -270,7 +283,7 @@ class Lattice:
     @property
     def b(self):
         r"""
-        Length of the second lattice vector :math:`\vert\vec{a}_2\vert`.
+        Length of the second lattice vector :math:`\vert\boldsymbol{a_2}\vert`.
 
         Returns
         -------
@@ -282,7 +295,7 @@ class Lattice:
     @property
     def c(self):
         r"""
-        Length of the third lattice vector :math:`\vert\vec{a}_3\vert`.
+        Length of the third lattice vector :math:`\vert\boldsymbol{a_3}\vert`.
 
         Returns
         -------
@@ -361,7 +374,9 @@ class Lattice:
         """
         return self.a, self.b, self.c, self.alpha, self.beta, self.gamma
 
-    # Conventional cell parameters
+    ################################################################################
+    #                              Conventional cell                               #
+    ################################################################################
     @property
     def conv_cell(self):
         r"""
@@ -530,7 +545,9 @@ class Lattice:
             self.conv_gamma,
         )
 
-    # Reciprocal parameters
+    ################################################################################
+    #                                Reciprocal cell                               #
+    ################################################################################
     @property
     def reciprocal_cell(self):
         r"""
@@ -551,14 +568,14 @@ class Lattice:
 
         .. math::
 
-            \vec{b}_1 = \frac{2\pi}{V}\vec{a}_2\times\vec{a}_3
+            \boldsymbol{b_1} = \frac{2\pi}{V}\boldsymbol{a_2}\times\boldsymbol{a_3}
 
-        where :math:`V = \vec{a}_1\cdot(\vec{a}_2\times\vec{a}_3)`
+        where :math:`V = \boldsymbol{a_1}\cdot(\boldsymbol{a_2}\times\boldsymbol{a_3})`
 
         Returns
         -------
         b1 : (3,) :numpy:`ndarray`
-            First reciprocal lattice vector :math:`\vec{b}_1`.
+            First reciprocal lattice vector :math:`\boldsymbol{b_1}`.
         """
 
         return self.reciprocal_cell[0]
@@ -570,14 +587,14 @@ class Lattice:
 
         .. math::
 
-            \vec{b}_2 = \frac{2\pi}{V}\vec{a}_3\times\vec{a}_1
+            \boldsymbol{b_2} = \frac{2\pi}{V}\boldsymbol{a_3}\times\boldsymbol{a_1}
 
-        where :math:`V = \vec{a}_1\cdot(\vec{a}_2\times\vec{a}_3)`
+        where :math:`V = \boldsymbol{a_1}\cdot(\boldsymbol{a_2}\times\boldsymbol{a_3})`
 
         Returns
         -------
         b2 : (3,) :numpy:`ndarray`
-            Second reciprocal lattice vector :math:`\vec{b}_2`.
+            Second reciprocal lattice vector :math:`\boldsymbol{b_2}`.
         """
 
         return self.reciprocal_cell[1]
@@ -589,14 +606,14 @@ class Lattice:
 
         .. math::
 
-            \vec{b}_3 = \frac{2\pi}{V}\vec{a}_1\times\vec{a}_2
+            \boldsymbol{b_3} = \frac{2\pi}{V}\boldsymbol{a_1}\times\boldsymbol{a_2}
 
-        where :math:`V = \vec{a}_1\cdot(\vec{a}_2\times\vec{a}_3)`
+        where :math:`V = \boldsymbol{a_1}\cdot(\boldsymbol{a_2}\times\boldsymbol{a_3})`
 
         Returns
         -------
         b3 : (3,) :numpy:`ndarray`
-            Third reciprocal lattice vector :math:`\vec{b}_3`.
+            Third reciprocal lattice vector :math:`\boldsymbol{b_3}`.
         """
 
         return self.reciprocal_cell[2]
@@ -604,7 +621,7 @@ class Lattice:
     @property
     def k_a(self):
         r"""
-        Length of the first reciprocal lattice vector :math:`\vert\vec{b}_1\vert`.
+        Length of the first reciprocal lattice vector :math:`\vert\boldsymbol{b_1}\vert`.
 
         Returns
         -------
@@ -616,7 +633,7 @@ class Lattice:
     @property
     def k_b(self):
         r"""
-        Length of the second reciprocal lattice vector :math:`\vert\vec{b}_2\vert`.
+        Length of the second reciprocal lattice vector :math:`\vert\boldsymbol{b_2}\vert`.
 
         Returns
         -------
@@ -628,7 +645,7 @@ class Lattice:
     @property
     def k_c(self):
         r"""
-        Length of the third reciprocal lattice vector :math:`\vert\vec{b}_3\vert`.
+        Length of the third reciprocal lattice vector :math:`\vert\boldsymbol{b_3}\vert`.
 
         Returns
         -------
@@ -683,7 +700,7 @@ class Lattice:
 
         .. math::
 
-            V = \vec{b}_1\cdot(\vec{b}_2\times\vec{b}_3)
+            V = \boldsymbol{b_1}\cdot(\boldsymbol{b_2}\times\boldsymbol{b_3})
 
         Returns
         -------
@@ -711,31 +728,110 @@ class Lattice:
         """
         return self.k_a, self.k_b, self.k_c, self.k_alpha, self.k_beta, self.k_gamma
 
-    # Lattice type routines and properties
+    ################################################################################
+    #                              Numerical accuracy                              #
+    ################################################################################
     @property
-    def eps(self):
+    def eps_rel(self) -> float:
         r"""
-        Epsilon parameter.
+        Relative tolerance for the distance.
 
-        Derived from :py:attr:`.eps_rel` as
+        Connected with :py:attr:`.eps` as
+
         .. math::
 
             \epsilon = \epsilon_{rel}\cdot V^{\frac{1}{3}}
+
+        Returns
+        -------
+        eps_rel : float
+            Relative tolerance for the distance.
+
+        See Also
+        --------
+        angle_tol
+        eps
         """
 
-        return self.eps_rel * abs(self.unit_cell_volume) ** (1 / 3.0)
+        return self._eps_rel
 
-    def type(self, eps_rel=None, delta_max=None):
+    @eps_rel.setter
+    def eps_rel(self, value):
+        if value < 0:
+            raise ValueError(f"Relative tolerance should be non-negative. Got {value}.")
+        self._eps_rel = float(value)
+        # Reset Bravais lattice type
+        self._type = None
+
+    @property
+    def eps(self) -> float:
+        r"""
+        Absolute tolerance for the distance.
+
+        Derived from :py:attr:`.eps_rel` as
+
+        .. math::
+
+            \epsilon = \epsilon_{rel}\cdot V^{\frac{1}{3}}
+
+        See Also
+        --------
+        angle_tol
+        eps_rel
+        """
+
+        return self._eps_rel * abs(self.unit_cell_volume) ** (1 / 3.0)
+
+    @eps.setter
+    def eps(self, value):
+        if value < 0:
+            raise ValueError(f"Absolute tolerance should be non-negative. Got {value}.")
+        self._eps_rel = float(value) / abs(self.unit_cell_volume) ** (1 / 3.0)
+        # Reset Bravais lattice type
+        self._type = None
+
+    @property
+    def angle_tol(self) -> float:
+        r"""
+        Absolute tolerance for the angle.
+
+        Returns
+        -------
+        angle_tol : float
+            Absolute tolerance for the angle.
+
+        See Also
+        --------
+        eps
+        eps_rel
+        """
+
+        return self._angle_tol
+
+    @angle_tol.setter
+    def angle_tol(self, value):
+        if value < 0:
+            raise ValueError(f"Angle tolerance should be non-negative. Got {value}.")
+        self._angle_tol = float(value)
+        # Reset Bravais lattice type
+        self._type = None
+
+    ################################################################################
+    #                            Lattice type and stats                            #
+    ################################################################################
+    def type(self, eps_rel=None, angle_tol=None):
         r"""
         Identify the lattice type.
 
         Parameters
         ----------
         eps_rel : float, optional
-            Relative error for the LePage algorithm.
-        delta_max : float, optional
+            Relative tolerance for the LePage algorithm. By default it is equal to
+            :py:attr:`.eps_rel`.
+        angle_tol : float, optional
             Angle tolerance for the LePage algorithm. Try to reduce it if the desired
-            lattice type is not identified.
+            lattice type is not identified. In degrees. By default it is equal to
+            :py:attr:`.angle_tol`.
 
         Returns
         -------
@@ -748,11 +844,11 @@ class Lattice:
         variation : Variation of the lattice.
         """
 
-        if self._type is None or eps_rel is not None:
+        if self._type is None or eps_rel is not None or angle_tol is not None:
             if eps_rel is None:
                 eps_rel = self.eps_rel
-            if delta_max is None:
-                delta_max = self.delta_max
+            if angle_tol is None:
+                angle_tol = self.angle_tol
 
             lattice_type = lepage(
                 self.a,
@@ -762,7 +858,7 @@ class Lattice:
                 self.beta,
                 self.gamma,
                 eps_rel=eps_rel,
-                delta_max=delta_max,
+                delta_max=angle_tol,
             )
 
             self._type = lattice_type
@@ -911,7 +1007,10 @@ class Lattice:
 
         return self.pearson_symbol[1]
 
-    def lattice_points(self, relative=False, reciprocal=False, normalize=False):
+    ################################################################################
+    #                             Helpers for plotting                             #
+    ################################################################################
+    def _lattice_points(self, relative=False, reciprocal=False, normalize=False):
         r"""
         Compute lattice points
 
@@ -971,7 +1070,7 @@ class Lattice:
         """
 
         voronoi = Voronoi(
-            self.lattice_points(
+            self._lattice_points(
                 relative=False, reciprocal=reciprocal, normalize=normalize
             )
         )
@@ -992,6 +1091,9 @@ class Lattice:
             edges[i][1] = voronoi.vertices[edges_index[i][1]]
         return edges, voronoi.vertices[np.unique(edges_index.flatten())]
 
+    ################################################################################
+    #                                   K points                                   #
+    ################################################################################
     @property
     def kpoints(self) -> Kpoints:
         r"""

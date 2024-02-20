@@ -15,16 +15,16 @@ This page describes the :py:class:`.Lattice` class and its methods.
 Import
 ======
 
-    >>> # Exact import
-    >>> from wulfric.lattice import Lattice
-    >>> # Recommended import
-    >>> from wulfric import Lattice
+  >>> # Exact import
+  >>> from wulfric.lattice import Lattice
+  >>> # Recommended import
+  >>> from wulfric import Lattice
 
 For the examples in this page we need additional import and some predefined variables:
 
 .. doctest::
 
-    >>> from wulfric import lattice_example
+  >>> from wulfric import lattice_example
 
 Creation
 ========
@@ -33,16 +33,16 @@ Lattice can be created in three different ways:
 
 * From ``cell`` matrix:
 
-.. doctest::
+  .. doctest::
 
     >>> cell = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
     >>> lattice = Lattice(cell)
     >>> lattice.cell
     array([[1, 0, 0],
-           [0, 1, 0],
-           [0, 0, 1]])
+            [0, 1, 0],
+            [0, 0, 1]])
 
-When a lattice created from the cell orientation of the cell is respected,
+When a lattice is created from the cell, orientation of the cell is respected,
 however the lattice vectors may be renamed.
 :ref:`Documentation on each Bravais lattice type <library_bravais-lattices>`.
 
@@ -60,27 +60,58 @@ equivalent.
 
 * From three lattice vectors :math:`\vec{a}_1`, :math:`\vec{a}_2`, :math:`\vec{a}_3`:
 
-.. doctest::
+  .. doctest::
 
-        >>> a1 = [1, 0, 0]
-        >>> a2 = [0, 1, 0]
-        >>> a3 = [0, 0, 1]
-        >>> lattice = Lattice(a1, a2, a3)
-        >>> lattice.cell
-        array([[1, 0, 0],
-               [0, 1, 0],
-               [0, 0, 1]])
+    >>> a1 = [1, 0, 0]
+    >>> a2 = [0, 1, 0]
+    >>> a3 = [0, 0, 1]
+    >>> lattice = Lattice(a1, a2, a3)
+    >>> lattice.cell
+    array([[1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1]])
 
 * From lattice parameters :math:`a`, :math:`b`, :math:`c`, :math:`\alpha`, :math:`\beta`, :math:`\gamma`:
 
-.. doctest::
+  .. doctest::
 
-        >>> lattice = Lattice(1, 1, 1, 90, 90, 90)
-        >>> import numpy as np
-        >>> np.round(lattice.cell, decimals=1)
-        array([[1., 0., 0.],
-               [0., 1., 0.],
-               [0., 0., 1.]])
+    >>> lattice = Lattice(1, 1, 1, 90, 90, 90)
+    >>> import numpy as np
+    >>> np.round(lattice.cell, decimals=1)
+    array([[1., 0., 0.],
+            [0., 1., 0.],
+            [0., 0., 1.]])
+
+
+Numerical tolerance
+===================
+
+As in the a package itself the :py:class:`.Lattice` class has two attributes, that control the
+numerical tolerance
+
+* For the distance: :py:attr:`.Lattice.eps_rel` and :py:attr:`.Lattice.eps`
+
+  .. doctest::
+
+    >>> l = Lattice(a=2)
+    >>> l.eps_rel
+    0.0001
+    >>> l.eps
+    0.0001
+
+* For the angle: :py:attr:`.Lattice.angle_tol`
+
+  .. doctest::
+
+    >>> l = Lattice(a=2)
+    >>> l.angle_tol
+    0.0001
+
+.. hint::
+
+  The numerical tolerance is used in the lattice standardization and in the
+  identification of the lattice type. If :py:meth:`.Lattice.type` does not return an
+  expected type, then you can try to reduce the numerical tolerance.
 
 Lattice type
 ============
@@ -89,33 +120,33 @@ Bravais lattice type is lazily identified when it is needed:
 
 .. doctest::
 
-        >>> lattice = Lattice(1, 1, 1, 90, 90, 90)
-        >>> lattice.type()
-        'CUB'
+  >>> lattice = Lattice(1, 1, 1, 90, 90, 90)
+  >>> lattice.type()
+  'CUB'
 
 Identification procedure is implemented in the :py:func:`.lepage` function.
 For the brief algorithm description see :ref:`library_lepage`.
 
 .. note::
 
-    Lattice identification is not a trivial task and may be time consuming.
-    The algorithm is based on the assumption that the lattice`s unit cell is primitive.
+  Lattice identification is not a trivial task and may be time consuming.
+  The algorithm is based on the assumption that the lattice`s unit cell is primitive.
 
-    By default the lattice type is identified during the creation of the lattice
-    (It is required for the lattice standardization). Therefore, the creation of the
-    lattice may be time consuming. To avoid this, you can disable the standardization
-    of the cell via the ``standardize=False`` argument:
+  By default the lattice type is identified during the creation of the lattice
+  (It is required for the lattice standardization). Therefore, the creation of the
+  lattice may be time consuming. To avoid this, you can disable the standardization
+  of the cell via the ``standardize=False`` argument:
 
-    .. doctest::
+  .. doctest::
 
-        >>> lattice = Lattice(1, 1, 1, 90, 90, 90, standardize=False)
+    >>> lattice = Lattice(1, 1, 1, 90, 90, 90, standardize=False)
 
-    Note that the predefined paths and k points for the lattice are not guaranteed to
-    be correct and reproducible if the lattice is not standardized.
+  Note that the predefined paths and k points for the lattice are not guaranteed to
+  be correct and reproducible if the lattice is not standardized.
 
 Variation of the lattice
 ========================
-Some of the Bravais lattice types have several variations.
+Some Bravais lattice types have several variations.
 
 To check the variation of the lattice use :py:attr:`.Lattice.variation` attribute:
 

@@ -607,9 +607,6 @@ def lepage(
 
     decimals = abs(floor(log10(abs(eps_volumetric))))
 
-    if delta_max is None:
-        delta_max = eps
-
     # Niggli reduction
     try:
         a, b, c, alpha, beta, gamma = niggli(
