@@ -85,11 +85,41 @@ class Crystal(Lattice):
             kwargs = {}
             kwargs["cell"] = lattice.cell
 
-        super().__init__(standardize=standardize, **kwargs)
+        # First we create lattice without standardization
+        super().__init__(standardize=False, **kwargs)
 
+        # Then we add all atoms as they are provided to the non-standardized lattice
         if atoms is not None:
             for a in atoms:
                 self.add_atom(a, relative=relative)
+                print("a", a.position)
+
+        # Finally we standardize the lattice and atoms if needed
+        self._set_cell(self.cell, standardize=standardize, shift_to_zero=standardize)
+
+    def _set_cell(self, cell, standardize=True, shift_to_zero=True):
+        r"""
+        Parameters
+        ----------
+        cell : (3, 3) |array-like|_
+            New cell.
+        standardize : bool, default True
+            Whether to standardize the lattice.
+        shift_to_zero : bool, default True
+            Whether to shift atoms to the (0,0,0) unit cell after standardization.
+        """
+        raw_cell = self._cell
+        super()._set_cell(cell, standardize=standardize)
+
+        if standardize:
+            for atom in self.atoms:
+                position = atom.position @ raw_cell
+                print(position, end=" -> ")
+                new_position = absolute_to_relative(position, self.cell)
+                print(new_position)
+                if shift_to_zero:
+                    new_position = np.mod(new_position, 1)
+                atom.position = new_position
 
     ################################################################################
     #                              List-like behavior                              #
