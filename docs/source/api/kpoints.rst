@@ -33,6 +33,7 @@ Settings parameters
     Kpoints.path
     Kpoints.path_string
     Kpoints.add_hs_point
+    Kpoints.remove_hs_point
 
 Flattened graph labels
 ======================

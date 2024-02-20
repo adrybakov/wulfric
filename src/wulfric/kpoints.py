@@ -32,11 +32,11 @@ class Kpoints:
     Parameters
     ----------
     b1 : (3,) array-like
-        First reciprocal lattice vector :math:`\mathbf{b}_1`.
+        First reciprocal lattice vector :math:`\mathbf{b_1}`.
     b2 : (3,) array-like
-        Second reciprocal lattice vector :math:`\mathbf{b}_2`.
+        Second reciprocal lattice vector :math:`\mathbf{b_2}`.
     b3 : (3,) array-like
-        Third reciprocal lattice vector :math:`\mathbf{b}_3`.
+        Third reciprocal lattice vector :math:`\mathbf{b_3}`.
     coordinates : list, optional
         Coordinates are given in relative coordinates in reciprocal space.
     names: list, optional
@@ -53,11 +53,11 @@ class Kpoints:
     Attributes
     ----------
     b1 : (3,) :numpy:`ndarray`
-        First reciprocal lattice vector :math:`\mathbf{b}_1`.
+        First reciprocal lattice vector :math:`\mathbf{b_1}`.
     b2 : (3,) :numpy:`ndarray`
-        Second reciprocal lattice vector :math:`\mathbf{b}_2`.
+        Second reciprocal lattice vector :math:`\mathbf{b_2}`.
     b3 : (3,) :numpy:`ndarray`
-        Third reciprocal lattice vector :math:`\mathbf{b}_3`.
+        Third reciprocal lattice vector :math:`\mathbf{b_3}`.
     hs_names : list
         Names of the high symmetry points. Used for programming, not for plotting.
     hs_coordinates : dict
@@ -109,15 +109,12 @@ class Kpoints:
 
         self._path = None
         if path is None:
-            if len(self.hs_names) > 0:
-                path = [self.hs_names[0]]
-            else:
-                path = []
-            for point in self.hs_names[1:]:
-                path.append(f"-{point}")
-            path = "".join(path)
+            path = "-".join(self.hs_names)
         self.path = path
 
+    ################################################################################
+    #                            High symmetry points                              #
+    ################################################################################
     def add_hs_point(self, name, coordinates, label, relative=True):
         r"""
         Add high symmetry point.
@@ -146,6 +143,24 @@ class Kpoints:
         self.hs_coordinates[name] = np.array(coordinates)
         self.hs_labels[name] = label
 
+    def remove_hs_point(self, name):
+        r"""
+        Remove high symmetry point.
+
+        Parameters
+        ----------
+        name : str
+            Name of the high symmetry point.
+        """
+
+        if name in self.hs_names:
+            self.hs_names.remove(name)
+            del self.hs_coordinates[name]
+            del self.hs_labels[name]
+
+    ################################################################################
+    #                                Path attributes                               #
+    ################################################################################
     @property
     def path(self):
         r"""
@@ -241,6 +256,36 @@ class Kpoints:
             )
         self._n = new_n
 
+        r"""
+        Add high symmetry point.
+
+        Parameters
+        ----------
+        name : str
+            Name of the high symmetry point.
+        coordinates : (3,) array-like
+            Coordinates of the high symmetry point.
+        label : str
+            Label of the high symmetry point, ready to be plotted.
+        relative : bool, optional
+            Whether to interpret coordinates as relative or absolute.
+        """
+
+        if name in self.hs_names:
+            raise ValueError(f"Point '{name}' already defined.")
+
+        if not relative:
+            coordinates = absolute_to_relative(
+                coordinates, np.array([self.b1, self.b2, self.b3])
+            )
+
+        self.hs_names.append(name)
+        self.hs_coordinates[name] = np.array(coordinates)
+        self.hs_labels[name] = label
+
+    ################################################################################
+    #                         Attributes for the axis ticks                        #
+    ################################################################################
     @property
     def labels(self):
         r"""
@@ -330,6 +375,9 @@ class Kpoints:
 
         return np.array(ticks)
 
+    ################################################################################
+    #                   Points of the path with intermediate ones                  #
+    ################################################################################
     def points(self, relative=False):
         r"""
         Coordinates of all points with n points between each pair of the high
