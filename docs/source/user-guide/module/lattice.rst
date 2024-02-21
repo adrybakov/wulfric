@@ -39,8 +39,8 @@ Lattice can be created in three different ways:
     >>> lattice = Lattice(cell)
     >>> lattice.cell
     array([[1, 0, 0],
-            [0, 1, 0],
-            [0, 0, 1]])
+           [0, 1, 0],
+           [0, 0, 1]])
 
 When a lattice is created from the cell, orientation of the cell is respected,
 however the lattice vectors may be renamed.
@@ -68,8 +68,8 @@ equivalent.
     >>> lattice = Lattice(a1, a2, a3)
     >>> lattice.cell
     array([[1, 0, 0],
-            [0, 1, 0],
-            [0, 0, 1]])
+           [0, 1, 0],
+           [0, 0, 1]])
 
 * From lattice parameters :math:`a`, :math:`b`, :math:`c`, :math:`\alpha`, :math:`\beta`, :math:`\gamma`:
 
@@ -79,8 +79,8 @@ equivalent.
     >>> import numpy as np
     >>> np.round(lattice.cell, decimals=1)
     array([[1., 0., 0.],
-            [0., 1., 0.],
-            [0., 0., 1.]])
+           [0., 1., 0.],
+           [0., 0., 1.]])
 
 
 Numerical tolerance
@@ -93,7 +93,7 @@ numerical tolerance
 
   .. doctest::
 
-    >>> l = Lattice(a=2)
+    >>> l = Lattice()
     >>> l.eps_rel
     0.0001
     >>> l.eps
@@ -103,7 +103,7 @@ numerical tolerance
 
   .. doctest::
 
-    >>> l = Lattice(a=2)
+    >>> l = Lattice()
     >>> l.angle_tol
     0.0001
 

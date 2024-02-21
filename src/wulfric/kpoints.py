@@ -256,33 +256,6 @@ class Kpoints:
             )
         self._n = new_n
 
-        r"""
-        Add high symmetry point.
-
-        Parameters
-        ----------
-        name : str
-            Name of the high symmetry point.
-        coordinates : (3,) array-like
-            Coordinates of the high symmetry point.
-        label : str
-            Label of the high symmetry point, ready to be plotted.
-        relative : bool, optional
-            Whether to interpret coordinates as relative or absolute.
-        """
-
-        if name in self.hs_names:
-            raise ValueError(f"Point '{name}' already defined.")
-
-        if not relative:
-            coordinates = absolute_to_relative(
-                coordinates, np.array([self.b1, self.b2, self.b3])
-            )
-
-        self.hs_names.append(name)
-        self.hs_coordinates[name] = np.array(coordinates)
-        self.hs_labels[name] = label
-
     ################################################################################
     #                         Attributes for the axis ticks                        #
     ################################################################################

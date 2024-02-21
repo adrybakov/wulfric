@@ -92,7 +92,6 @@ class Crystal(Lattice):
         if atoms is not None:
             for a in atoms:
                 self.add_atom(a, relative=relative)
-                print("a", a.position)
 
         # Finally we standardize the lattice and atoms if needed
         self._set_cell(self.cell, standardize=standardize, shift_to_zero=standardize)
@@ -114,9 +113,7 @@ class Crystal(Lattice):
         if standardize:
             for atom in self.atoms:
                 position = atom.position @ raw_cell
-                print(position, end=" -> ")
                 new_position = absolute_to_relative(position, self.cell)
-                print(new_position)
                 if shift_to_zero:
                     new_position = np.mod(new_position, 1)
                 atom.position = new_position
