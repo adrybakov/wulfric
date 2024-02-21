@@ -24,4 +24,9 @@ Therefore version 0.2 introduce some breaking changes:
 
 0.2.0
 =====
-See above.
+Changes mentioned at the beginning of the page, plus:
+
+* Fix issues with the test suite of the lattice standardization.
+* Add :py:meth:`.Kpoints.remove_hs_point` method.
+* Fix bug in the lattice standardization in the context of the :py:class:`.Crystal` class.
+  Atoms were not moved to the standard cell from the given one, now they are placed correctly.
