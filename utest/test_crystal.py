@@ -23,6 +23,7 @@ from hypothesis import strategies as st
 
 from wulfric.atom import Atom
 from wulfric.crystal import Crystal
+from wulfric.numerical import compare_numerically
 
 
 def test_deepcopy():
@@ -184,3 +185,59 @@ def test_get_distance(name1, position1, name2, position2, R):
             c.get_distance(name1, name2, R=R, index1=1, index2=2, relative=True),
             np.linalg.norm(position2 - position1 + np.array(R)),
         )
+
+
+def test_get_atom_coordinates():
+    model = Crystal()
+    model.cell = [[10, 0, 0], [0, 10, 0], [0, 0, 10]]
+    Cr1 = Atom("Cr1", (0.1, 0.6, 0.2))
+    model.add_atom(Cr1)
+    x, y, z = model.get_atom_coordinates(Cr1, relative=False)
+    assert compare_numerically(x, "==", 1)
+    assert compare_numerically(y, "==", 6)
+    assert compare_numerically(z, "==", 2)
+    x, y, z = model.get_atom_coordinates(Cr1, R=[1, 0, 0], relative=False)
+    assert compare_numerically(x, "==", 11)
+    assert compare_numerically(y, "==", 6)
+    assert compare_numerically(z, "==", 2)
+    x, y, z = model.get_atom_coordinates(Cr1, R=[0, -1, 0], relative=False)
+    assert compare_numerically(x, "==", 1)
+    assert compare_numerically(y, "==", -4)
+    assert compare_numerically(z, "==", 2)
+    x, y, z = model.get_atom_coordinates(Cr1, R=[0, 0, 2], relative=False)
+    assert compare_numerically(x, "==", 1)
+    assert compare_numerically(y, "==", 6)
+    assert compare_numerically(z, "==", 22)
+    x, y, z = model.get_atom_coordinates(Cr1, R=[0, -3, 2], relative=False)
+    assert compare_numerically(x, "==", 1)
+    assert compare_numerically(y, "==", -24)
+    assert compare_numerically(z, "==", 22)
+    x, y, z = model.get_atom_coordinates(Cr1, R=[3, -3, 2], relative=False)
+    assert compare_numerically(x, "==", 31)
+    assert compare_numerically(y, "==", -24)
+    assert compare_numerically(z, "==", 22)
+    model.cell = [[10, 10, 0], [0, 10, 10], [0, 0, 10]]
+    x, y, z = model.get_atom_coordinates(Cr1, relative=False)
+    assert compare_numerically(x, "==", 1)
+    assert compare_numerically(y, "==", 7)
+    assert compare_numerically(z, "==", 8)
+    x, y, z = model.get_atom_coordinates(Cr1, R=[1, 0, 0], relative=False)
+    assert compare_numerically(x, "==", 11)
+    assert compare_numerically(y, "==", 17)
+    assert compare_numerically(z, "==", 8)
+    x, y, z = model.get_atom_coordinates(Cr1, R=[0, -1, 0], relative=False)
+    assert compare_numerically(x, "==", 1)
+    assert compare_numerically(y, "==", -3)
+    assert compare_numerically(z, "==", -2)
+    x, y, z = model.get_atom_coordinates(Cr1, R=[0, 0, 2], relative=False)
+    assert compare_numerically(x, "==", 1)
+    assert compare_numerically(y, "==", 7)
+    assert compare_numerically(z, "==", 28)
+    x, y, z = model.get_atom_coordinates(Cr1, R=[0, -3, 2], relative=False)
+    assert compare_numerically(x, "==", 1)
+    assert compare_numerically(y, "==", -23)
+    assert compare_numerically(z, "==", -2)
+    x, y, z = model.get_atom_coordinates(Cr1, R=[3, -3, 2], relative=False)
+    assert compare_numerically(x, "==", 31)
+    assert compare_numerically(y, "==", 7)
+    assert compare_numerically(z, "==", -2)
