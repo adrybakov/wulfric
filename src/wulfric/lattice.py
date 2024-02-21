@@ -209,7 +209,7 @@ class Lattice:
         """
         if self._cell is None:
             raise AttributeError(f"Cell is not defined for lattice {self}")
-        return self._cell
+        return np.array(self._cell)
 
     # For the child`s overriding
     def _set_cell(self, new_cell, standardize=True):

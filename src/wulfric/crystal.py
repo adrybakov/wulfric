@@ -107,7 +107,7 @@ class Crystal(Lattice):
         shift_to_zero : bool, default True
             Whether to shift atoms to the (0,0,0) unit cell after standardization.
         """
-        raw_cell = self._cell
+        raw_cell = cell
         super()._set_cell(cell, standardize=standardize)
 
         if standardize:

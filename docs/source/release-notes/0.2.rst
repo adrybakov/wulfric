@@ -30,3 +30,9 @@ Changes mentioned at the beginning of the page, plus:
 * Add :py:meth:`.Kpoints.remove_hs_point` method.
 * Fix bug in the lattice standardization in the context of the :py:class:`.Crystal` class.
   Atoms were not moved to the standard cell from the given one, now they are placed correctly.
+
+0.2.1
+=====
+Fix bug with the cell assignment in crystal: Before atoms positions were  pinned in absolute coordinates.
+Now atom's coordinates are pinned in relative coordinates, therefore, if one would scale the cell,
+then atom's positions will scale as well, as expected.
