@@ -20,7 +20,7 @@ from math import pi
 
 import numpy as np
 import pytest
-from hypothesis import given
+from hypothesis import example, given
 from hypothesis import strategies as st
 from hypothesis.extra.numpy import arrays as harrays
 from scipy.spatial.transform import Rotation
@@ -75,6 +75,18 @@ def rotate(cell, r1, r2, r3):
 ################################################################################
 
 
+@example(
+    r1=0.0,
+    r2=0.0,
+    r3=0.0,
+    a=1.0,
+    b=1.0,
+    c=1.0,
+    alpha=1.0,
+    beta=1.0,
+    gamma=1.0,
+    order=3,
+)
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -94,11 +106,17 @@ def test_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
         # It passes only for the vectors, which are not too far away from each other.
         and min(a, b, c) / max(a, b, c) > REL_TOL
     ):
-        cell = shuffle(
-            rotate(Cell.from_params(a, b, c, alpha, beta, gamma), r1, r2, r3), order
+        cell = np.array(
+            shuffle(
+                rotate(Cell.from_params(a, b, c, alpha, beta, gamma), r1, r2, r3), order
+            )
         )
         rcell = Cell.reciprocal(cell)
-        product = np.diag(np.abs(rcell.T @ cell))
+        # If the cell is left-handed, then the diagonal will be filled with -2pi,
+        # The minus appears since the cross product is defined in the right-handed system.
+        # If the cell is right-handed, then the diagonal will be filled with 2pi.
+        # To check for both conditions we need to use np.abs().
+        product = np.abs(np.diag(rcell @ cell.T))
         correct_product = np.ones(3) * 2 * pi
         # Non  diagonal terms are close to zero.
         assert np.allclose(product, correct_product, rtol=REL_TOL, atol=ABS_TOL)

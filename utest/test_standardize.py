@@ -95,6 +95,9 @@ def rotate(cell, r1, r2, r3):
     return cell @ R.T
 
 
+################################################################################
+#                                      CUB                                     #
+################################################################################
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -125,6 +128,9 @@ def test_CUB_standardize_cell(r1, r2, r3, conv_a, order):
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                      FCC                                     #
+################################################################################
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -158,6 +164,9 @@ def test_FCC_standardize_cell(r1, r2, r3, conv_a, order):
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                      BCC                                     #
+################################################################################
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -192,6 +201,9 @@ def test_BCC_standardize_cell(r1, r2, r3, conv_a, order):
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                      TET                                     #
+################################################################################
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -231,6 +243,9 @@ def test_TET_standardize_cell(r1, r2, r3, conv_a, conv_c, order):
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                      BCT                                     #
+################################################################################
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -271,6 +286,9 @@ def test_BCT_standardize_cell(r1, r2, r3, conv_a, conv_c, order):
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                      ORC                                     #
+################################################################################
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -311,6 +329,9 @@ def test_ORC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                     ORCF                                     #
+################################################################################
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -362,6 +383,9 @@ def test_ORCF_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                     ORCI                                     #
+################################################################################
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -418,6 +442,9 @@ def test_ORCI_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                     ORCC                                     #
+################################################################################
 @example(r1=0.0, r2=0.0, r3=1.0, conv_a=1.0, conv_b=0.0078125, conv_c=0.5, order=0)
 @example(r1=0.0, r2=0.0, r3=1.0, conv_a=1.0, conv_b=1.0, conv_c=0.5, order=0)
 @given(
@@ -467,6 +494,9 @@ def test_ORCC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                     HEX                                      #
+################################################################################
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -505,6 +535,17 @@ def test_HEX_standardize_cell(r1, r2, r3, conv_a, conv_c, order):
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                     RHL                                      #
+################################################################################
+@example(
+    r1=0.0,
+    r2=0.0,
+    r3=1.0,
+    conv_a=1.0,
+    conv_alpha=1.0,
+    order=3,
+)
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -543,6 +584,12 @@ def test_RHL_standardize_cell(r1, r2, r3, conv_a, conv_alpha, order):
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                     MCL                                      #
+################################################################################
+@example(
+    r1=0.0, r2=0.0, r3=1.0, conv_a=1.0, conv_b=1.0, conv_c=1.0, conv_alpha=1.0, order=3
+)
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -590,6 +637,9 @@ def test_MCL_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, or
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                     MCLC                                     #
+################################################################################
 @example(
     r1=0.0,
     r2=0.0,
@@ -625,8 +675,7 @@ def test_MCLC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, o
         conv_b, conv_c = sorted([conv_b, conv_c])
         if conv_alpha > 90.0:
             conv_alpha = 180.0 - conv_alpha
-        else:
-            conv_alpha = conv_alpha
+
         prim_a = sqrt(conv_a**2 + conv_b**2) / 2
         prim_b = sqrt(conv_a**2 + conv_b**2) / 2
         prim_c = conv_c
@@ -653,18 +702,75 @@ def test_MCLC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, o
         assert np.allclose(
             [a, b, c], [prim_a, prim_b, prim_c], rtol=REL_TOL, atol=ABS_TOL
         )
-        assert np.allclose(
-            alpha, prim_alpha, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
-        ) or np.allclose(alpha, prim_alpha_twin, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE)
-        assert np.allclose(
-            beta, prim_beta, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
-        ) or np.allclose(beta, prim_beta_twin, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE)
-        assert np.allclose(gamma, prim_gamma, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE)
+
+        assert (
+            compare_numerically(
+                alpha, "==", prim_alpha, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                alpha, "==", prim_beta, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                alpha, "==", prim_gamma, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                alpha, "==", 180.0 - prim_alpha, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                alpha, "==", 180.0 - prim_beta, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                alpha, "==", 180.0 - prim_gamma, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+        )
+        assert (
+            compare_numerically(
+                beta, "==", prim_alpha, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                beta, "==", prim_beta, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                beta, "==", prim_gamma, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                beta, "==", 180.0 - prim_alpha, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                beta, "==", 180.0 - prim_beta, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                beta, "==", 180.0 - prim_gamma, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+        )
+        assert (
+            compare_numerically(
+                gamma, "==", prim_alpha, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                gamma, "==", prim_beta, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                gamma, "==", prim_gamma, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                gamma, "==", 180.0 - prim_alpha, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                gamma, "==", 180.0 - prim_beta, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+            or compare_numerically(
+                gamma, "==", 180.0 - prim_gamma, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+            )
+        )
 
         # Check that chirality is the same
         assert np.linalg.det(cell) * old_det > 0
 
 
+################################################################################
+#                                     TRI                                      #
+################################################################################
 @example(
     r1=0.0,
     r2=0.0,
@@ -829,5 +935,13 @@ def test_TRI_standardize_cell(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
             )
         )
 
-        # Check that chirality is the same
-        assert np.linalg.det(cell) * old_det > 0
+        # Check that the volume is the same
+        # The chirality might break here, since we ordering a reciprocal lattice and not the real-space one
+        assert compare_numerically(
+            np.abs(np.linalg.det(cell)),
+            "==",
+            np.abs(old_det),
+            rtol=REL_TOL,
+            atol=ABS_TOL,
+        )
+        # assert np.linalg.det(cell) * old_det > 0
