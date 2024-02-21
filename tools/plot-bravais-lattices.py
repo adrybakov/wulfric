@@ -239,6 +239,7 @@ def plot():
     for i, name in enumerate(names):
         output_subname = (name.translate(str.maketrans("", "", "12345ab"))).lower()
         l = wulf.lattice_example(name)
+        l.standardize()
         for j, wtp in enumerate(wtps[name]):
             py_file = open(
                 os.path.join(
@@ -248,7 +249,15 @@ def plot():
                 encoding="utf-8",
             )
             py_file.write(
-                f'import wulfric as wulf\n\nl = wulf.lattice_example("{name}")\nbackend = wulf.PlotlyBackend()\n'
+                "\n".join(
+                    [
+                        f"import wulfric as wulf\n",
+                        'l = wulf.lattice_example("{name}")',
+                        "# Standardization is explicit since 0.3",
+                        "l.standardize()",
+                        "backend = wulf.PlotlyBackend()\n",
+                    ]
+                )
             )
             backend = wulf.PlotlyBackend()
             for data in wtp:

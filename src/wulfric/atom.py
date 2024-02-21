@@ -16,10 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from copy import deepcopy
 from typing import Iterable
 
 import numpy as np
-from deepcopy import deepcopy
 
 from wulfric.constants import ATOM_TYPES, TODEGREES, TORADIANS
 
@@ -627,6 +627,8 @@ class Atom:
     def copy(self):
         r"""
         Create a copy of the atom.
+
+        .. versionadded:: 0.3.0
 
         Returns
         -------

@@ -16,10 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from copy import deepcopy
 from typing import Iterable
 
 import numpy as np
-from deepcopy import deepcopy
 
 from wulfric.geometry import absolute_to_relative
 
@@ -439,6 +439,8 @@ class Kpoints:
     def copy(self):
         r"""
         Create a copy of the kpoints.
+
+        .. versionadded:: 0.3.0
 
         Returns
         -------

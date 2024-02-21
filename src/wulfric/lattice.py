@@ -16,8 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from copy import deepcopy
+
 import numpy as np
-from deepcopy import deepcopy
 from scipy.spatial import Voronoi
 
 import wulfric.cell as Cell
@@ -943,6 +944,7 @@ class Lattice:
 
             >>> import wulfric as wulf
             >>> l = wulf.lattice_example("CUB")
+            >>> l.standardize()
             >>> l.variation
             'CUB'
 
@@ -950,6 +952,7 @@ class Lattice:
 
             >>> import wulfric as wulf
             >>> l = wulf.lattice_example("BCT1")
+            >>> l.standardize()
             >>> l.variation
             'BCT1'
 
@@ -957,6 +960,7 @@ class Lattice:
 
             >>> import wulfric as wulf
             >>> l = wulf.lattice_example("MCLC4")
+            >>> l.standardize()
             >>> l.variation
             'MCLC4'
 
@@ -1256,6 +1260,8 @@ class Lattice:
     def copy(self):
         r"""
         Create a copy of the lattice.
+
+        .. versionadded:: 0.3.0
 
         Returns
         -------

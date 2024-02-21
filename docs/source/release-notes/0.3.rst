@@ -1,4 +1,4 @@
-.. _release-notes_0.2:
+.. _release-notes_0.3:
 
 ***********
 Version 0.3
@@ -25,6 +25,12 @@ Therefore version 0.3 introduce some breaking changes:
 * :py:class:`.Lattice`
 
   - :py:meth:`.Lattice.type` - add ``delta_max`` parameter.
+
+* Standardization is not silent anymore:
+
+  - No automatic standardization is performed when the :py:class:`.Lattice` or :py:class:`.Crystal` is created.
+  - If method or property requires standardization, it will raise a ``ValueError`` if the object is not standardized.
+  - Standardization can be called explicitly via :py:meth:`.Lattice.standardize` and :py:meth:`.Crystal.standardize`
 
 0.3.0
 -----

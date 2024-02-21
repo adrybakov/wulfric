@@ -1,6 +1,8 @@
 import wulfric as wulf
 
-l = wulf.lattice_example("RHL2")
+l = wulf.lattice_example("{name}")
+# Standardization is explicit since 0.3
+l.standardize()
 backend = wulf.PlotlyBackend()
 backend.plot(l, kind="brillouin-kpath")
 # Save an image:

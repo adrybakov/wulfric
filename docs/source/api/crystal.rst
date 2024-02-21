@@ -69,3 +69,10 @@ Lattice getter
 .. autosummary::
 
     Crystal.lattice
+
+Independent copy
+================
+
+.. autosummary::
+
+    Crystal.copy

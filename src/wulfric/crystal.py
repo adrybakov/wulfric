@@ -16,11 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from copy import deepcopy
 from math import floor, log10
 from typing import Union
 
 import numpy as np
-from deepcopy import deepcopy
 
 import wulfric.cell as Cell
 from wulfric.atom import Atom
@@ -189,6 +189,8 @@ class Crystal(Lattice):
     def copy(self):
         r"""
         Copy of the crystal.
+
+        .. versionadded:: 0.3.0
 
         Returns
         -------

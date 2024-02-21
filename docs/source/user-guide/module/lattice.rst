@@ -146,13 +146,17 @@ For the brief algorithm description see :ref:`library_lepage`.
 
 Variation of the lattice
 ========================
-Some Bravais lattice types have several variations.
+Some Bravais lattice types have several variations. The lattice variation requires
+the lattice to be standardized. For the standardization of the lattice just call
+:py:meth:`.Lattice.standardize` method:
 
 To check the variation of the lattice use :py:attr:`.Lattice.variation` attribute:
 
 .. doctest::
 
     >>> lattice = lattice_example("BCT")
+    >>> # Standardization is explicit since 0.3.0
+    >>> lattice.standardize()
     >>> lattice.variation
     'BCT1'
     >>> lattice = Lattice(1, 1, 1, 90, 90, 90)
@@ -260,6 +264,8 @@ time and stored internally for the future:
 .. doctest::
 
     >>> lattice = Lattice(1, 1, 1, 90, 90, 90)
+    >>> # Standardization is explicit since 0.3.0
+    >>> lattice.standardize()
     >>> lattice.kpoints.add_hs_point("CP", [0.5, 0.5, 0.5], label="Custom label")
     >>> lattice.kpoints.path = "G-X|M-CP-X"
     >>> lattice.kpoints.path_string
@@ -277,6 +283,7 @@ time and stored internally for the future:
 
     For each Bravais lattice type there is a predefined path and set of
     kpoints in reciprocal space. See :ref:`library_bravais-lattices` for more details.
-    The unit cell has to be standardized to use the predefined paths and kpoints.
+    The unit cell has to be standardized to use the predefined paths and kpoints. For
+    the standardization just call :py:meth:`.Lattice.standardize` method.
 
 For the full guide on how to use :py:class:`.Kpoints` class see :ref:`user-guide_module_kpoints`.

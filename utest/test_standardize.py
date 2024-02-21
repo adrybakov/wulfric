@@ -593,6 +593,9 @@ def test_RHL_standardize_cell(r1, r2, r3, conv_a, conv_alpha, order):
 @example(
     r1=0.0, r2=0.0, r3=1.0, conv_a=1.0, conv_b=1.0, conv_c=2.0, conv_alpha=90.0, order=0
 )
+@example(
+    r1=0.0, r2=0.0, r3=1.0, conv_a=1.0, conv_b=1.0, conv_c=2.0, conv_alpha=91, order=0
+)
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -606,7 +609,9 @@ def test_RHL_standardize_cell(r1, r2, r3, conv_a, conv_alpha, order):
 def test_MCL_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order):
     if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL) and (
         min(conv_a, conv_b, conv_c) / max(conv_a, conv_b, conv_c) > REL_TOL
-        and conv_alpha != 90
+        and compare_numerically(
+            conv_alpha, "!=", 90.0, rtol=REL_TOL_ANGLE, atol=ABS_TOL_ANGLE
+        )
     ):
         # Prepare cell
         cell = shuffle(

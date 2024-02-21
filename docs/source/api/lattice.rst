@@ -107,3 +107,11 @@ Numerical accuracy
     Lattice.eps
     Lattice.eps_rel
     Lattice.angle_tol
+
+Independent copy
+================
+
+.. autosummary::
+    :toctree: generated/
+
+    Lattice.copy

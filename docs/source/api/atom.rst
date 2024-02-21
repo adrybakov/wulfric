@@ -49,3 +49,10 @@ Electric properties
 .. autosummary::
 
     Atom.charge
+
+Independent copy
+================
+
+.. autosummary::
+
+    Atom.copy

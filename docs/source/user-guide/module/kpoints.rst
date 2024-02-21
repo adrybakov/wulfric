@@ -38,6 +38,8 @@ Usually it is created from some :py:class:`.Lattice` (or :py:class:`.Crystal`):
 .. doctest::
 
     >>> lattice = lattice_example("CUB")
+    >>> # Standardization is explicit since 0.3.0
+    >>> lattice.standardize()
     >>> kp = lattice.kpoints
     >>> kp.hs_names
     ['G', 'M', 'R', 'X']

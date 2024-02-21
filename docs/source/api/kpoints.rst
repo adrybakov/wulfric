@@ -52,3 +52,11 @@ K points in the path
 
     Kpoints.points
     Kpoints.flatten_points
+
+Independent copy
+================
+
+.. autosummary::
+    :toctree: generated/
+
+    Kpoints.copy
