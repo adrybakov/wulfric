@@ -19,6 +19,7 @@
 from typing import Iterable
 
 import numpy as np
+from deepcopy import deepcopy
 
 from wulfric.constants import ATOM_TYPES, TODEGREES, TORADIANS
 
@@ -618,3 +619,19 @@ class Atom:
             raise ValueError(
                 f"Expected something convertible to float, got {new_value}"
             )
+
+    ################################################################################
+    #                                     Copy                                     #
+    ################################################################################
+
+    def copy(self):
+        r"""
+        Create a copy of the atom.
+
+        Returns
+        -------
+        atom : :py:class:`.Atom`
+            Copy of the atom.
+        """
+
+        deepcopy(self)

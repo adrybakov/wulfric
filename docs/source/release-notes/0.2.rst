@@ -4,6 +4,10 @@
 Version 0.2
 ***********
 
+.. warning::
+
+  This version was not well designed, recommended to skip it in favor of :ref:`0.3 <release-notes_0.3>`.
+
 Whats new?
 ----------
 Whole WULFRIC was refactored. Majority of the functionality remained the same,

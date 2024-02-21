@@ -89,6 +89,7 @@ n_vertices = [
     "lattice, variation", list(zip(lattices, lattice_names)), ids=lattice_names
 )
 def test_variants(lattice, variation):
+    lattice.standardize()
     assert lattice.variation == variation
 
 

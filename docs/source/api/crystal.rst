@@ -29,6 +29,13 @@ Class
         >>> c.c
         1.0
 
+Cell standardization
+====================
+
+.. autosummary::
+    :toctree: generated/
+
+    Crystal.standardize
 
 Atom methods
 ============

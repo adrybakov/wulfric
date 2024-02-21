@@ -30,8 +30,10 @@ from wulfric.constants import BRAVAIS_LATTICE_VARIATIONS
 )
 def test_lattice_example(lattice_variation: str):
     lattice_type = lattice_variation.translate(str.maketrans("", "", "12345ab"))
-    assert lattice_example(lattice_variation).type() == lattice_type
-    assert lattice_example(lattice_variation).variation == lattice_variation
+    lattice = lattice_example(lattice_variation)
+    lattice.standardize()
+    assert lattice.type() == lattice_type
+    assert lattice.variation == lattice_variation
 
 
 @given(st.text())

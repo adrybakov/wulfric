@@ -206,11 +206,12 @@ def test_Lattice_classifications(variation: str):
     lattice = lattice_example(variation)
     type_name = variation.translate(str.maketrans("", "", "12345ab"))
     assert lattice.type() == type_name
-    assert lattice.variation == variation
     assert lattice.name == BRAVAIS_LATTICE_NAMES[type_name]
     assert lattice.pearson_symbol == PEARSON_SYMBOLS[type_name]
     assert lattice.crystal_family == lattice.pearson_symbol[0]
     assert lattice.centring_type == lattice.pearson_symbol[1]
+    lattice.standardize()
+    assert lattice.variation == variation
 
 
 # legacy tests

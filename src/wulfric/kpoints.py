@@ -19,6 +19,7 @@
 from typing import Iterable
 
 import numpy as np
+from deepcopy import deepcopy
 
 from wulfric.geometry import absolute_to_relative
 
@@ -430,3 +431,19 @@ class Kpoints:
                     delta += flatten_points[-1]
                     flatten_points = np.concatenate((flatten_points, delta))
         return flatten_points
+
+    ################################################################################
+    #                                     Copy                                     #
+    ################################################################################
+
+    def copy(self):
+        r"""
+        Create a copy of the kpoints.
+
+        Returns
+        -------
+        kpoints : :py:class:`.Kpoints`
+            Copy of the kpoints.
+        """
+
+        deepcopy(self)

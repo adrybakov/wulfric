@@ -14,6 +14,16 @@ Class
 
     Lattice
 
+Cell standardization
+====================
+
+.. autosummary::
+    :toctree: generated/
+
+    Lattice.standardize
+
+
+
 Lattice parameters
 ==================
 

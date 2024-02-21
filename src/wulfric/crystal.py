@@ -20,6 +20,7 @@ from math import floor, log10
 from typing import Union
 
 import numpy as np
+from deepcopy import deepcopy
 
 import wulfric.cell as Cell
 from wulfric.atom import Atom
@@ -58,8 +59,6 @@ class Crystal(Lattice):
         List of :py:class:`Atom` objects.
     relative : bool, default True
         Whether ``atoms`` positions are in relative coordinates.
-    standardize : bool, default True
-        Whether to standardize the lattice.
     **kwargs
         Keyword arguments for :py:class:`.Lattice` initialization.
 
@@ -74,7 +73,6 @@ class Crystal(Lattice):
         lattice: Lattice = None,
         atoms=None,
         relative=True,
-        standardize=True,
         **kwargs,
     ) -> None:
         self.atoms = []
@@ -86,37 +84,45 @@ class Crystal(Lattice):
             kwargs["cell"] = lattice.cell
 
         # First we create lattice without standardization
-        super().__init__(standardize=False, **kwargs)
+        super().__init__(**kwargs)
 
         # Then we add all atoms as they are provided to the non-standardized lattice
         if atoms is not None:
             for a in atoms:
                 self.add_atom(a, relative=relative)
 
-        # Finally we standardize the lattice and atoms if needed
-        self._set_cell(self.cell, standardize=standardize, shift_to_zero=standardize)
-
-    def _set_cell(self, cell, standardize=True, shift_to_zero=True):
+    ################################################################################
+    #                             Cell standardization                             #
+    ################################################################################
+    def standardize(self):
         r"""
-        Parameters
-        ----------
-        cell : (3, 3) |array-like|_
-            New cell.
-        standardize : bool, default True
-            Whether to standardize the lattice.
-        shift_to_zero : bool, default True
-            Whether to shift atoms to the (0,0,0) unit cell after standardization.
-        """
-        raw_cell = cell
-        super()._set_cell(cell, standardize=standardize)
+        Standardize cell with respect to the Bravais lattice type as defined in [1]_.
 
-        if standardize:
-            for atom in self.atoms:
-                position = atom.position @ raw_cell
-                new_position = absolute_to_relative(position, self.cell)
-                if shift_to_zero:
-                    new_position = np.mod(new_position, 1)
-                atom.position = new_position
+        .. versionadded:: 0.3.0
+
+        References
+        ----------
+        .. [1] Setyawan, W. and Curtarolo, S., 2010.
+            High-throughput electronic band structure calculations: Challenges and tools.
+            Computational materials science, 49(2), pp.299-312.
+        """
+
+        # Remember the raw cell
+        raw_cell = self.cell
+
+        # Standardize the lattice
+        super().standardize()
+
+        # Shift atoms to the new standardized cell
+        for atom in self.atoms:
+            # Get real space positions of the atoms before standardization
+            position = atom.position @ raw_cell
+            # Convert real space positions to relative positions with respect to the new standardized cell
+            new_position = absolute_to_relative(position, self.cell)
+            # Shift atoms to the new standardized cell if needed
+            new_position = np.mod(new_position, 1)
+            # Set new relative positions
+            atom.position = new_position
 
     ################################################################################
     #                              List-like behavior                              #
@@ -155,7 +161,7 @@ class Crystal(Lattice):
             )
 
     ################################################################################
-    #                                Lattice getter                                #
+    #                           Lattice and copy getter                            #
     ################################################################################
     @property
     def lattice(self):
@@ -179,6 +185,17 @@ class Crystal(Lattice):
         It is created with ``standardize=False`` parameter.
         """
         return Lattice(self.cell, standardize=False)
+
+    def copy(self):
+        r"""
+        Copy of the crystal.
+
+        Returns
+        -------
+        crystal : :py:class:`.Crystal`
+            Copy of the crystal.
+        """
+        return deepcopy(self)
 
     ################################################################################
     #                             Atom's manipulations                             #

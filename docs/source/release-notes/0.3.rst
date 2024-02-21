@@ -1,0 +1,34 @@
+.. _release-notes_0.2:
+
+***********
+Version 0.3
+***********
+
+.. warning::
+
+  This version introduces some breaking changes. Please read carefully the
+  following release notes.
+
+
+Whats new?
+----------
+Whole WULFRIC was refactored. Majority of the functionality remained the same,
+however in some parts of the package the interface or the internal organization changed.
+Therefore version 0.3 introduce some breaking changes:
+
+* :py:class:`.Atom`
+
+  - Spin and magnetic moment are related trough :py:attr:`.Atom.g_factor`.
+  - Spin, magnetic moment now have default values and always return a value
+    (previously if undefined they raised a ``ValueError``).
+
+* :py:class:`.Lattice`
+
+  - :py:meth:`.Lattice.type` - add ``delta_max`` parameter.
+
+0.3.0
+-----
+The changes are described above and:
+
+* Add :py:meth:`.Crystal.copy()`, :py:meth:`.Lattice.copy()`,
+  :py:meth:`.Atom.copy()` and :py:meth:`.Kpoints.copy()` methods.

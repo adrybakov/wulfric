@@ -17,6 +17,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numpy as np
+from deepcopy import deepcopy
 from scipy.spatial import Voronoi
 
 import wulfric.cell as Cell
@@ -66,17 +67,9 @@ class Lattice:
     When created from the cell orientation of the cell is respected,
     however the lattice vectors may be renamed with respect to [1]_.
 
-    Creation may change the angles and the lengths of the cell vectors.
-    It preserve the volume, right- or left- handedness, lattice type and variation
-    of the cell.
-
-    The lattice vector`s lengths are preserved as a set.
-
-    The angles between the lattice vectors are preserved as a set with possible
-    changes of the form: :math:`angle \rightarrow 180 - angle`.
-
-    The returned cell may not be the same as the input one, but it is translationally
-    equivalent.
+    Since v0.2.2 the standardization of the lattice is not performed by default at the time of the
+    lattice creation. The standardization is performed when is is required, for example, when the
+    kpoints are computed.
 
     Lattice can be created in a three alternative ways:
 
@@ -109,9 +102,6 @@ class Lattice:
         Angle between vectors :math:`a_1` and :math:`a_3`. In degrees.
     gamma : float, default=90
         Angle between vectors :math:`a_1` and :math:`a_2`. In degrees.
-    standardize : bool, default True
-        Whether to standardize the cell.
-        The consistence of the predefined k paths is not guaranteed in the cell is not unified.
     eps_rel : float, default 1e-4
         Relative tolerance for distance.
     angle_tol : float, default 1e-4
@@ -132,7 +122,6 @@ class Lattice:
     def __init__(
         self,
         *args,
-        standardize=True,
         eps_rel=REL_TOL,
         angle_tol=ABS_TOL_ANGLE,
         **kwargs,
@@ -142,6 +131,7 @@ class Lattice:
         self._cell = None
         self._type = None
         self._kpoints = None
+        self._standardization_convention = None
         if "cell" in kwargs:
             cell = kwargs["cell"]
         elif "a1" in kwargs and "a2" in kwargs and "a3" in kwargs:
@@ -178,11 +168,61 @@ class Lattice:
                 + "or a1, a2, a3 (each is an (3,) array-like), "
                 + "or a, b, c, alpha, beta, gamma (floats)."
             )
+        self.cell = cell
 
-        self.fig = None
-        self.ax = None
+    ################################################################################
+    #                             Cell standardization                             #
+    ################################################################################
+    def standardize(self, convention="sc"):
+        R"""
+        Standardize cell with respect to the Bravais lattice type as defined in [1]_.
 
-        self._set_cell(cell, standardize=standardize)
+        .. versionadded:: 0.3.0
+
+        Parameters
+        ----------
+        convention : str, default "sc"
+            Convention used for the standardization of the unit cell.
+            See :py:attr:`.convention` for the list of supported conventions.
+
+        References
+        ----------
+        .. [1] Setyawan, W. and Curtarolo, S., 2010.
+            High-throughput electronic band structure calculations: Challenges and tools.
+            Computational materials science, 49(2), pp.299-312.
+        """
+        self.convention = convention
+        self._cell = standardize_cell(
+            self._cell, self.type(), rtol=self.eps_rel, atol=self.eps
+        )
+
+    @property
+    def convention(self) -> str:
+        r"""
+        Convention used for the standardization of the unit cell.
+
+        By default we use the convention of Setyawan and Curtarolo [1]_.
+
+        Supported conventions:
+
+        * ``SC`` - Setyawan and Curtarolo [1]_.
+
+        References
+        ----------
+        .. [1] Setyawan, W. and Curtarolo, S., 2010.
+            High-throughput electronic band structure calculations: Challenges and tools.
+            Computational materials science, 49(2), pp.299-312.
+        """
+
+        return self._standardization_convention
+
+    @convention.setter
+    def convention(self, new_value):
+        if new_value.lower() not in ["sc"]:
+            raise ValueError(
+                f"Unsupported convention for the standardization of the unit cell: {new_value}."
+            )
+        self._standardization_convention = str(new_value)
 
     ################################################################################
     #                                Primitive cell                                #
@@ -211,8 +251,8 @@ class Lattice:
             raise AttributeError(f"Cell is not defined for lattice {self}")
         return np.array(self._cell)
 
-    # For the child`s overriding
-    def _set_cell(self, new_cell, standardize=True):
+    @cell.setter
+    def cell(self, new_cell):
         try:
             new_cell = np.array(new_cell)
         except:
@@ -222,15 +262,6 @@ class Lattice:
         self._cell = new_cell
         # Reset type
         self._type = None
-        # Standardize cell
-        if standardize:
-            self._cell = standardize_cell(
-                self._cell, self.type(), rtol=self.eps_rel, atol=self.eps
-            )
-
-    @cell.setter
-    def cell(self, new_cell):
-        self._set_cell(new_cell)
 
     @property
     def a1(self):
@@ -382,18 +413,25 @@ class Lattice:
         r"""
         Conventional cell.
 
+        Requires the lattice to be standardized.
+
         Returns
         -------
         conv_cell : (3, 3) :numpy:`ndarray`
             Conventional cell, rows are vectors, columns are coordinates.
         """
-
+        if self.convention is None:
+            raise ValueError(
+                "Unit cell is not standardized. Please, use the .standardize() method."
+            )
         return TRANSFORM_TO_CONVENTIONAL[self.type()] @ self.cell
 
     @property
     def conv_a1(self):
         r"""
         First vector of the conventional cell.
+
+        Requires the lattice to be standardized.
 
         Returns
         -------
@@ -408,6 +446,8 @@ class Lattice:
         r"""
         Second vector of the conventional cell.
 
+        Requires the lattice to be standardized.
+
         Returns
         -------
         conv_a2 : (3,) :numpy:`ndarray`
@@ -420,6 +460,8 @@ class Lattice:
     def conv_a3(self):
         r"""
         Third vector of the conventional cell.
+
+        Requires the lattice to be standardized.
 
         Returns
         -------
@@ -434,6 +476,8 @@ class Lattice:
         r"""
         Length of the first vector of the conventional cell.
 
+        Requires the lattice to be standardized.
+
         Returns
         -------
         conv_a : float
@@ -446,6 +490,8 @@ class Lattice:
     def conv_b(self):
         r"""
         Length of the second vector of the conventional cell.
+
+        Requires the lattice to be standardized.
 
         Returns
         -------
@@ -460,6 +506,8 @@ class Lattice:
         r"""
         Length of the third vector of the conventional cell.
 
+        Requires the lattice to be standardized.
+
         Returns
         -------
         conv_c : float
@@ -472,6 +520,8 @@ class Lattice:
     def conv_alpha(self):
         r"""
         Angle between second and third conventional lattice vector.
+
+        Requires the lattice to be standardized.
 
         Returns
         -------
@@ -486,6 +536,8 @@ class Lattice:
         r"""
         Angle between first and third conventional lattice vector.
 
+        Requires the lattice to be standardized.
+
         Returns
         -------
         angle : float
@@ -499,6 +551,8 @@ class Lattice:
         r"""
         Angle between first and second conventional lattice vector.
 
+        Requires the lattice to be standardized.
+
         Returns
         -------
         angle : float
@@ -511,6 +565,8 @@ class Lattice:
     def conv_unit_cell_volume(self):
         r"""
         Volume of the conventional unit cell.
+
+        Requires the lattice to be standardized.
 
         Returns
         -------
@@ -526,6 +582,8 @@ class Lattice:
         Return conventional cell parameters.
 
         :math:`(a, b, c, \alpha, \beta, \gamma)`
+
+        Requires the lattice to be standardized.
 
         Returns
         -------
@@ -869,6 +927,8 @@ class Lattice:
         r"""
         Variation of the lattice, if any.
 
+        Requires the lattice to be standardized.
+
         For the Bravais lattice with only one variation the :py:meth:`.Lattice.type` is returned.
 
         Returns
@@ -1099,6 +1159,9 @@ class Lattice:
         r"""
         Instance of :py:class:`.Kpoints` with the high symmetry points and path.
 
+        Lattice is standardized before the kpoints are computed. It may change the lattice vectors.
+        The periodic structure should remain the same.
+
         Notes
         -----
         When a new instance of the :py:class:`.Kpoints` is assigned to the lattice,
@@ -1116,6 +1179,10 @@ class Lattice:
         """
 
         if self._kpoints is None:
+            if self.convention is None:
+                raise ValueError(
+                    "Unit cell is not standardized. Please, use the .standardize() method."
+                )
             self._kpoints = Kpoints(self.b1, self.b2, self.b3)
 
             if self.type() == "CUB":
@@ -1181,3 +1248,19 @@ class Lattice:
                 + f"Got {type(new_kpoints)} instead."
             )
         self._kpoints = new_kpoints
+
+    ################################################################################
+    #                                     Copy                                     #
+    ################################################################################
+
+    def copy(self):
+        r"""
+        Create a copy of the lattice.
+
+        Returns
+        -------
+        lattice : :py:class:`.Lattice`
+            Copy of the lattice.
+        """
+
+        deepcopy(self)
