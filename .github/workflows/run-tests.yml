@@ -26,3 +26,8 @@ jobs:
     uses: adrybakov/wulfric/.github/workflows/tests.yml@main
     with:
       python-version: '3.11'
+
+  test-312:
+    uses: adrybakov/wulfric/.github/workflows/tests.yml@main
+    with:
+      python-version: '3.12'
