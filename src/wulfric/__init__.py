@@ -16,9 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-__version__ = "0.2.1"
+__version__ = "0.3.0"
 __doclink__ = "wulfric.org"
-__git_hash__ = "4f36e545eadf8fccdae7eaa5239c1562cf14cdd9"
+__git_hash__ = "8770c35a3f97f5e571c150941e34b58dc0cf6fad"
 __release_date__ = "21 February 2024"
 
 
