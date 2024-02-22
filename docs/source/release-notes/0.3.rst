@@ -22,10 +22,6 @@ Therefore version 0.3 introduce some breaking changes:
   - Spin, magnetic moment now have default values and always return a value
     (previously if undefined they raised a ``ValueError``).
 
-* :py:class:`.Lattice`
-
-  - :py:meth:`.Lattice.type` - add ``delta_max`` parameter.
-
 * Standardization is not silent anymore:
 
   - No automatic standardization is performed when the :py:class:`.Lattice` or :py:class:`.Crystal` is created.
@@ -40,3 +36,5 @@ The changes are described above and:
   :py:meth:`.Atom.copy()` and :py:meth:`.Kpoints.copy()` methods.
 
 * Add :py:meth:`.Crystal.shift_atoms` and :py:meth:`.Crystal.cure_negative` methods.
+
+* Add ``delta_max`` parameter to the :py:meth:`.Lattice.type` method.
