@@ -1,4 +1,3 @@
-
 .. _contribute_contributors:
 
 Contributors

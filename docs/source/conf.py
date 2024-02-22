@@ -225,7 +225,7 @@ custom_links = {
         "Array interface",
         "https://numpy.org/doc/stable/reference/arrays.interface.html#object.__array_interface__",
     ),
-    "repo": ("wulfric repository", "https://github.com/adrybakov/wulfric"),
+    "repo": ("Wulfric repository", "https://github.com/adrybakov/wulfric"),
     "numpydoc": ("numpydoc", "https://numpydoc.readthedocs.io/en/latest/format.html"),
     "plotly": ("Plotly", "https://plotly.com/python/"),
     "plotly-update-layout": (

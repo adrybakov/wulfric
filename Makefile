@@ -89,13 +89,12 @@ prepare-release:
 	@python3 -u tools/prepare-release.py -v $(VERSION) -rd $(ROOT_DIR) -r
 
 docs-pictures:
+	@python3 tools/plot-repositories.py
 	@python3 tools/plot-package-scheme.py
 	@python3 tools/plot-atom-magnetic-properties.py
 
 .ONESHELL:
-venv:
-	@rm -r .venv
-	@python3 -m venv .venv
+requirements:
 	@pip install -r requirements.txt --no-cache
 	@pip install -r requirements-dev.txt --no-cache
 	@pip install -r docs/requirements.txt --no-cache
