@@ -176,7 +176,7 @@ extlinks = {
 # https://docutils.sourceforge.io/docs/ref/rst/directives.html#directives-for-substitution-definitions
 # Usage: |Python|_
 custom_links = {
-    "Author": ("Author", "https://adrybakov.com"),
+    "Author": ("author", "https://adrybakov.com"),
     "ANSI": ("ANSI", "https://en.wikipedia.org/wiki/ANSI_escape_code"),
     "projwfc": ("projwfc.x", "https://www.quantum-espresso.org/Doc/INPUT_PROJWFC.html"),
     "QE": ("Quantum Espresso", "https://www.quantum-espresso.org"),
@@ -193,6 +193,11 @@ custom_links = {
         "https://wiki.python.org/moin/BeginnersGuide/Download",
     ),
     "pytest": ("pytest", "https://docs.pytest.org/en/7.3.x/"),
+    "hypothesis": ("hypothesis", "https://hypothesis.readthedocs.io/en/latest/"),
+    "doctest": (
+        "sphinx.ext.doctest",
+        "https://www.sphinx-doc.org/en/master/usage/extensions/doctest.html",
+    ),
     "latex": ("LaTeX", "https://www.latex-project.org/"),
     "black": ("black", "https://black.readthedocs.io"),
     "array-like": (
@@ -242,6 +247,17 @@ custom_links = {
     ),
     "numba": ("Numba", "https://numba.pydata.org/"),
     "coprime": ("coprime", "https://en.wikipedia.org/wiki/Coprime_integers"),
+    "good-commit-messages": ("good commit messages", "https://cbea.ms/git-commit/"),
+    "sphinx": ("Sphinx", "https://www.sphinx-doc.org/en/master/"),
+    "sphinx-autodoc": (
+        "sphinx.ext.autodoc",
+        "https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html",
+    ),
+    "sphinx-autosummary": (
+        "sphinx.ext.autosummary",
+        "https://www.sphinx-doc.org/en/master/usage/extensions/autosummary.html",
+    ),
+    "siesta": ("SIESTA", "https://siesta-project.org/siesta/"),
 }
 
 

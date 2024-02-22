@@ -1,19 +1,83 @@
 .. _contribute_docs:
 
-*******************
-Documentation guide
-*******************
+*************
+Documentation
+*************
 
-The documentation of the wulfric is build by Sphinx.
+The documentation of Wulfric is build by |sphinx|_.
 
-For the docstrings follow the |numpydoc|_ style guide.
+.. hint::
 
-The complete documentation guide is not formed yet. But the following rules are already defined:
+  The best way to get a feeling about how the documentation of Wulfric is structured is to read
+  the source code in the "docs/source" directory and compare it's content and structure with this webpage.
+  If you have any questions we encourage you to :ref:`contact us <support>`.
 
-* For the module guide each function and class has to have "Import" section.
-* Each class has to have "Creation" section.
-* Each page of the module guide have to have the link to the corresponding page of the API.
+Documentation structure
+=======================
 
-More rules will appear soon. The documentation guide will evolve until it will be complete.
-If you have any question about the writing of the documentation, please contact the
-|Author|_.
+The documentation falls into two big parts:
+
+* API ("api" folder)
+
+  Semi-automatically generated documentation of the source code, it is mostly build
+  based on the docstrings of the source code, using |sphinx-autodoc|_ and |sphinx-autosummary|_.
+
+  It is located in the "docs/source/api" directory. Its content loosely follows
+  the structure of the source code folders. The methods and classes are listed manually
+  for the better presentation of the documentation, the rest is automatically generated.
+  Please read existing files to get a feeling about the structure.
+
+* User guide ("user-guide" folder)
+  Hand-written ReStructuredText files with the usage examples and the explanation of the
+  functionality of the Wulfric. It is located in the "docs/source/user-guide" directory.
+
+  We separate the user guide into several parts:
+
+  - "module" folder
+    The module guide is a detailed explanation of the functionality of the classes and
+    functions, grouped by logical modules. The majority of examples (and doctests) are
+    written here.
+
+  - "library" folder
+    Description of theory and algorithms behind the Wulfric.  Individual documents/folders
+    are located there, however in the toctrees they are placed directly under the "user-guide"
+    for better visibility (as opposed to be served from within "library" folder).
+
+
+  At the moment we have a few rules formulated for the documentation of the python module:
+
+  - Each function and class has to have "Import" section.
+  - Each class has to have "Creation" section.
+  - Each page of the module guide have to have the link to the corresponding page of the API.
+
+The rest of the documentation is located in the "docs/source" directory and it includes,
+among other things:
+
+* "conf.py" file
+  The configuration file for the |sphinx|_.
+
+* "index.rst" file
+
+  The main page of the documentation. It includes the table of contents and the introduction
+  to the Wulfric.
+
+* "support.rst" file
+
+  The page with the information about how to get support for the users of Wulfric.
+
+* "release-notes" folder
+
+  The release notes for each version of Wulfric.
+
+* "contribute" folder
+
+  Root folder for the  documentation of how to contribute to Wulfric.
+
+
+Docstrings
+==========
+
+All public classes and functions have to have a docstring.
+The docstring has to be written in the |numpydoc|_ style guide.
+
+To get a feeling about the style you can read examples in the source code of Wulfric.

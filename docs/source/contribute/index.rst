@@ -100,14 +100,15 @@ Now, every time you commit the code, pre-commit will check it for you.
 Develop your contribution
 -------------------------
 
-* Create a dedicated branch for your feature, that you are going to develop::
+* Create a :ref:`dedicated branch <contribute_branches>` for your feature,
+  that you are going to develop::
 
     git checkout -b feature-name
 
 * Develop your contribution. Commit your progress locally
   (`git-add <https://git-scm.com/docs/git-add>`_
   and `git-commit <https://git-scm.com/docs/git-commit>`_).
-  Use meaningful commit messages. Write :ref:`tests <contribute_tests>`.
+  Use |good-commit-messages|_. Write :ref:`tests <contribute_tests>`.
   Write :ref:`documentation <contribute_docs>`.
 
 Submit your contribution
@@ -126,10 +127,10 @@ Review and merge
 ----------------
 
 * Once the pull request is submitted, the code will be reviewed.
-  If there are any comments, please fix them.
+  If there are any comments, please fix them. You can push the changes to the
+  same branch and they will be added to the pull request automatically.
 * Once the pull request is approved, it will be merged to the
-  `stable <https://github.com/adrybakov/wulfric>`_ or
-  `dev <https://github.com/adrybakov/wulfric/tree/dev>`_ branch.
+  `main <https://github.com/adrybakov/wulfric>`_ branch.
 
 
 Development process in details
@@ -148,3 +149,4 @@ Development process in details
   documentation
   tests
   origin-upstream
+  branches
