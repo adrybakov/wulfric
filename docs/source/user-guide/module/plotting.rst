@@ -14,7 +14,7 @@ More examples of the plots with the code snippets can be found in the
 .. note::
 
     The plotting is written for the :py:class:`.Lattice` and consequently
-    available for it's child: :py:class`.Crystal` class.
+    available for it's child: :py:class:`.Crystal` class.
 
 Import
 ======

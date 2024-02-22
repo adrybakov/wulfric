@@ -34,12 +34,16 @@ and provides a simple skeleton for other codes to built on.
 
 The functional of Wulfric includes (but not limited to):
 
+* :ref:`user-guide_module_lattice`, :ref:`user-guide_module_atom` and :ref:`user-guide_module_crystal` classes.
+
 * Bravais lattice standardization.
 
 * Automatic choice of the :ref:`Kpoints <user-guide_module_kpoints>`
   and K-path for all :ref:`Bravais lattice types <library_bravais-lattices>`.
 
+* Standalone :py:func:`.lepage` and :py:func:`.niggli` algorithms.
 
+* Primitive :ref:`visualisation <user-guide_module_plotting>` of the various lattice's cells.
 
 
 .. grid:: 2
