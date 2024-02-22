@@ -37,8 +37,8 @@ Cell standardization
 
     Crystal.standardize
 
-Atom methods
-============
+Manipulations with atoms
+========================
 * Crystal.atoms
 
 .. autosummary::
@@ -46,6 +46,8 @@ Atom methods
     Crystal.add_atom
     Crystal.remove_atom
     Crystal.get_atom
+    Crystal.shift_atoms
+    Crystal.cure_negative
 
 Positioning of atoms
 ====================

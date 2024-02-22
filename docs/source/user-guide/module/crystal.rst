@@ -146,6 +146,46 @@ Removing atoms is also straightforward:
     The :py:meth:`.Crystal.remove_atom` method can take either the name (or fullname)
     or instance of the atom as an argument.
 
+Moving atoms in the cell
+========================
+
+Two routines are predefined:
+
+* :py:meth:`.Crystal.shift_atoms` - shift atoms in a way that the point in the middle of the
+  atom's coordinates extremums will be at the given ``gravity_point``.
+
+  .. doctest::
+
+    >>> crystal = Crystal(cell=[[2, 0, 0], [0, 2, 0], [0, 0, 2]])
+    >>> crystal.add_atom('Cr1', position=(0.0, 0.0, 0.0))
+    >>> crystal.add_atom('Cr2', position=(0.5, 0.5, 1.0))
+    >>> crystal.shift_atoms(gravity_point=(0.5, 0.5, 0.5))
+    >>> for atom in crystal.atoms:
+    ...    print(atom.name, atom.position)
+    ...
+    Cr1 [0.25 0.25 0.  ]
+    Cr2 [0.75 0.75 1.  ]
+    >>> crystal.shift_atoms(gravity_point=(1,1,1), relative=False)
+    >>> for atom in crystal.atoms:
+    ...    print(atom.name, atom.position)
+    ...
+    Cr1 [0.25 0.25 0.  ]
+    Cr2 [0.75 0.75 1.  ]
+
+* :py:meth:`.Crystal.cure_negative` - enforce all atoms to have positive relative coordinates.
+
+    .. doctest::
+
+      >>> crystal = Crystal(cell=[[2, 0, 0], [0, 2, 0], [0, 0, 2]])
+      >>> crystal.add_atom('Cr1', position=(-0.5, 0.5, 0.0))
+      >>> crystal.add_atom('Cr2', position=(0.1, 0.5, 0.0))
+      >>> crystal.cure_negative()
+      >>> for atom in crystal.atoms:
+      ...    print(atom.name, atom.position)
+      ...
+      Cr1 [0.  0.5 0. ]
+      Cr2 [0.6 0.5 0. ]
+
 Atom getters
 ============
 

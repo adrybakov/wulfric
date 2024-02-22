@@ -200,7 +200,7 @@ class Crystal(Lattice):
         return deepcopy(self)
 
     ################################################################################
-    #                             Atom's manipulations                             #
+    #                           Manipulations with atoms                           #
     ################################################################################
     def add_atom(self, new_atom: Union[Atom, str] = None, relative=True, **kwargs):
         r"""
@@ -372,6 +372,53 @@ class Crystal(Lattice):
             return rel_coordinates
 
         return rel_coordinates @ self.cell
+
+    def shift_atoms(self, gravity_point=(0.5, 0.5, 0.5), relative=True):
+        R"""
+        Shifts all atoms with the same vector in a way
+        that the ``gravity_point`` is located in the middle between minimum and maximum
+        relative coordinates of the atoms, individually for each lattice vector.
+
+        .. versionadded:: 0.3.0
+
+        I.e. if there is one atom in the cell, then it is placed in the center of the cell
+        for ``gravity_point`` = (0.5, 0.5, 0.5).
+
+        Parameters
+        ----------
+        gravity_point : (3,) |array-like|_, default (0.5, 0.5, 0.5)
+            Relative coordinates of the gravity point.
+        relative : bool, default True
+            Whether the ``gravity_point`` is given in relative coordinates.
+        """
+
+        if not relative:
+            gravity_point = absolute_to_relative(gravity_point, self.cell)
+
+        coordinates = np.array([atom.position for atom in self.atoms])
+
+        min_coord = np.min(coordinates, axis=0)
+        max_coord = np.max(coordinates, axis=0)
+        shift = (max_coord + min_coord) / 2
+        for atom in self.atoms:
+            atom.position -= shift
+            atom.position += gravity_point
+
+    def cure_negative(self):
+        R"""
+        Shifts all atoms with the same vector in a way
+        that all relative coordinates becomes non-negative.
+
+        .. versionadded:: 0.3.0
+        """
+
+        min_values = self.atoms[0].position
+        for atom in self.atoms[1:]:
+            min_values = np.minimum(min_values, atom.position)
+
+        shift = np.where(min_values < 0, -min_values, 0)
+        for atom in self.atoms:
+            atom.position += shift
 
     ################################################################################
     #                           Vector between two atoms                           #

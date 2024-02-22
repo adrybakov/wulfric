@@ -38,3 +38,5 @@ The changes are described above and:
 
 * Add :py:meth:`.Crystal.copy()`, :py:meth:`.Lattice.copy()`,
   :py:meth:`.Atom.copy()` and :py:meth:`.Kpoints.copy()` methods.
+
+* Add :py:meth:`.Crystal.shift_atoms` and :py:meth:`.Crystal.cure_negative` methods.

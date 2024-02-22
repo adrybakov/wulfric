@@ -20,10 +20,32 @@ import numpy as np
 import pytest
 from hypothesis import example, given, settings
 from hypothesis import strategies as st
+from hypothesis.extra.numpy import arrays as harrays
 
 from wulfric.atom import Atom
 from wulfric.crystal import Crystal
-from wulfric.numerical import compare_numerically
+from wulfric.numerical import MAX_LENGTH, compare_numerically
+
+VECTOR_3 = harrays(
+    np.float64,
+    (3,),
+    elements=st.floats(
+        allow_nan=False,
+        allow_infinity=False,
+        max_value=MAX_LENGTH,
+        min_value=-MAX_LENGTH,
+    ),
+)
+REL_VECTOR_3 = harrays(
+    np.float64,
+    (3,),
+    elements=st.floats(
+        allow_nan=False,
+        allow_infinity=False,
+        max_value=2,
+        min_value=-2,
+    ),
+)
 
 
 def test_deepcopy():
@@ -241,3 +263,28 @@ def test_get_atom_coordinates():
     assert compare_numerically(x, "==", 31)
     assert compare_numerically(y, "==", 7)
     assert compare_numerically(z, "==", -2)
+
+
+@given(REL_VECTOR_3, REL_VECTOR_3, REL_VECTOR_3)
+def test_cure_negative(pos1, pos2, pos3):
+    a1 = Atom(position=pos1)
+    a2 = Atom(position=pos2)
+    a3 = Atom(position=pos3)
+    c = Crystal(atoms=[a1, a2, a3])
+    c.cure_negative()
+    for atom in c.atoms:
+        assert (atom.position >= 0).all()
+
+
+@given(REL_VECTOR_3, REL_VECTOR_3, REL_VECTOR_3, REL_VECTOR_3)
+def test_shift_atoms(pos1, pos2, pos3, gravity_point):
+    a1 = Atom(position=pos1)
+    a2 = Atom(position=pos2)
+    a3 = Atom(position=pos3)
+    c = Crystal(atoms=[a1, a2, a3])
+    c.shift_atoms(gravity_point=gravity_point)
+    coordinates = np.array([atom.position for atom in c.atoms])
+    min_coord = np.min(coordinates, axis=0)
+    max_coord = np.max(coordinates, axis=0)
+    shifted_gravity_point = (max_coord + min_coord) / 2
+    assert np.allclose(shifted_gravity_point, gravity_point)
