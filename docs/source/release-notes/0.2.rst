@@ -10,7 +10,7 @@ Version 0.2
 
 Whats new?
 ----------
-Whole WULFRIC was refactored. Majority of the functionality remained the same,
+Whole Wulfric was refactored. Majority of the functionality remained the same,
 however in some parts of the package the interface or the internal organization changed.
 Therefore version 0.2 introduce some breaking changes:
 

@@ -6,7 +6,7 @@ Version 0.1
 
 Whats new?
 ----------
-WULFRIC was separated from `RAD-tools <https://rad-tools.org>`_. It is now a
+Wulfric was separated from `RAD-tools <https://rad-tools.org>`_. It is now a
 standalone project, which can be used in any Python project.
 
 0.1.0

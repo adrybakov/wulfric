@@ -1,7 +1,7 @@
 .. _user-guide:
 
 ******************
-WULFRIC user guide
+Wulfric user guide
 ******************
 
 Getting started

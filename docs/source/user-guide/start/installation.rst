@@ -4,7 +4,7 @@
 Installation
 ************
 
-Requirement for WULFRIC installation are:
+Requirement for Wulfric installation are:
 
 * |Python|_ (>=3.8)
 * |NumPy|_
@@ -16,7 +16,7 @@ Requirement for WULFRIC installation are:
 Most likely you already have Python installed on your machine
 (if not check these links: |Python-installation|_).
 
-WULFRIC can be installed with :ref:`pip <installation-pip>`
+Wulfric can be installed with :ref:`pip <installation-pip>`
 or from :ref:`source <installation-source>`.
 
 Check Python
@@ -51,8 +51,8 @@ To install wulfric, run (you may need to use ``pip3``)::
   pip install wulfric
 
 Optionally, if you want to use :ref:`visualization <user-guide_module_plotting>`
-capabilities of WULFRIC, you can install |matplotlib|_ and/or |plotly|_
-by yourself or install them with WULFRIC::
+capabilities of Wulfric, you can install |matplotlib|_ and/or |plotly|_
+by yourself or install them with Wulfric::
 
   pip install wulfric[visual]
 
@@ -91,7 +91,7 @@ Installation from source
   You'll see that all dependencies - mandatory and optional - are installed. If you prefer
   to install only mandatory dependencies, you can do it manually.
 
-* To install WULFRIC, run (you may need to use ``pip3``)::
+* To install Wulfric, run (you may need to use ``pip3``)::
 
     pip install wulfric
 

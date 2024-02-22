@@ -1,5 +1,5 @@
 *******
-WULFRIC
+Wulfric
 *******
 Crystal, Lattice, Atoms, K-path.
 
@@ -26,7 +26,7 @@ For the detailed description check
 Installation
 ============
 
-Requirement for WULFRIC installation are:
+Requirement for Wulfric installation are:
 
 * Python (>=3.8)
 * NumPy
@@ -37,12 +37,12 @@ Requirement for WULFRIC installation are:
 
 Optional dependencies are required if you want to use visual capabilities.
 
-WULFRIC can be installed with ``pip`` or from source.
+Wulfric can be installed with ``pip`` or from source.
 
 pip
 ---
 
-To install WULFRIC, run (you may need to use ``pip3``):
+To install Wulfric, run (you may need to use ``pip3``):
 
 .. code-block:: console
 
@@ -75,7 +75,7 @@ Installing from source
 
   pip install -r requirements.txt
 
-* To install WULFRIC, run (you may need to use ``pip3``):
+* To install Wulfric, run (you may need to use ``pip3``):
 
 .. code-block:: console
 

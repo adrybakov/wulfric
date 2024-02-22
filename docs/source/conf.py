@@ -1,4 +1,4 @@
-# WULFRIC - Crystal, Lattice, Atoms, K-path.
+# Wulfric - Crystal, Lattice, Atoms, K-path.
 # Copyright (C) 2023-2024 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -29,7 +29,7 @@ sys.path.insert(0, abspath(".."))
 ##########################################################################################
 ##                                   Project metadata                                   ##
 ##########################################################################################
-project = "WULFRIC"
+project = "Wulfric"
 copyright = f"2023-{datetime.now().year}, Andrey Rybakov"
 author = "Andrey Rybakov"
 if ".dev" in version:

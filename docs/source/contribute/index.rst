@@ -29,7 +29,7 @@ the corresponding links below.
 1. Fork and clone.
 
    * Go to the |repo|_ and click on the "Fork" button.
-     Now you have your own copy of the WULFRIC repository in your GitHub account.
+     Now you have your own copy of the Wulfric repository in your GitHub account.
    * Clone your copy of the repository to your local machine:
 
      - If you are using ssh-key::

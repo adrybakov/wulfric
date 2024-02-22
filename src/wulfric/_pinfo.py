@@ -1,4 +1,4 @@
-# WULFRIC - Crystal, Lattice, Atoms, K-path.
+# Wulfric - Crystal, Lattice, Atoms, K-path.
 # Copyright (C) 2023-2024 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -26,7 +26,7 @@ __all__ = ["logo", "license", "warranty", "conditions"]
 
 def logo(info=None, line_length=None, flat=False, date_time=False, comment=None):
     """
-    Logo generator for WULFRIC package.
+    Logo generator for Wulfric package.
 
     Returns the logo and information about the package.
 
@@ -136,7 +136,7 @@ def copyright():
     Output short license summary for terminal interactions
     """
 
-    return f"""WULFRIC Copyright (C) 2023-{datetime.now().year}  Andrey Rybakov
+    return f"""Wulfric Copyright (C) 2023-{datetime.now().year}  Andrey Rybakov
 This program comes with ABSOLUTELY NO WARRANTY; for details type 'wulfric warranty'.
 This is free software, and you are welcome to redistribute it
 under certain conditions; type 'wulfric conditions' for details."""

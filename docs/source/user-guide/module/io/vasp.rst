@@ -8,7 +8,7 @@ VASP interface
 
 For the full technical reference see :ref:`api_io`.
 
-WULFRIC can read and write VASP |POSCAR|_ files.
+Wulfric can read and write VASP |POSCAR|_ files.
 
 Import
 ======

@@ -1,5 +1,5 @@
 *******
-WULFRIC
+Wulfric
 *******
 
 .. toctree::
@@ -24,15 +24,15 @@ WULFRIC
 :ref:`support`
 
 ****************
-What is WULFRIC?
+What is Wulfric?
 ****************
 
-WULFRIC is a python package for the description and symmetries of crystal structures.
+Wulfric is a python package for the description and symmetries of crystal structures.
 It combines the concept of the :ref:`Lattice <user-guide_module_lattice>`,
 :ref:`Atom <user-guide_module_atom>` and :ref:`Crystal <user-guide_module_crystal>`
 and provides a simple skeleton for other codes to built on.
 
-The functional of WULFRIC includes (but not limited to):
+The functional of Wulfric includes (but not limited to):
 
 * Bravais lattice standardization.
 

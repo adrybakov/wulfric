@@ -1,4 +1,4 @@
-# WULFRIC - Crystal, Lattice, Atoms, K-path.
+# Wulfric - Crystal, Lattice, Atoms, K-path.
 # Copyright (C) 2023-2024 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com

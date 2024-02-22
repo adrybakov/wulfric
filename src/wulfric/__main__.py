@@ -1,4 +1,4 @@
-# WULFRIC - Crystal, Lattice, Atoms, K-path.
+# Wulfric - Crystal, Lattice, Atoms, K-path.
 # Copyright (C) 2023-2024 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -49,7 +49,7 @@ def main():
     elif args.command == "conditions":
         print("\n" + conditions() + "\n")
     elif args.command == "version" or args.version:
-        print(f"WULFRIC v{__version__}")
+        print(f"Wulfric v{__version__}")
     elif args.command is None:
         parser.print_help()
     else:

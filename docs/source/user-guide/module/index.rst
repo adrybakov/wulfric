@@ -4,7 +4,7 @@
 Data structure and import
 *************************
 
-WULFRIC is a collection of classes and functions.
+Wulfric is a collection of classes and functions.
 For the technical reference of each element, please refer to the :ref:`api`.
 
 All public classes and functions methods are exposed to the main entry
