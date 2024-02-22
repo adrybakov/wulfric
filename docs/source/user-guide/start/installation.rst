@@ -56,6 +56,17 @@ by yourself or install them with WULFRIC::
 
   pip install wulfric[visual]
 
+.. note::
+  You may need to escpae the ``[`` and ``]`` characters from your shell,
+  because they are special characters in most shells.
+  For example, in bash you can use backslash to escape them::
+
+    pip install wulfric\[visual\]
+
+  Or enclose full name in quotes::
+
+    pip install "wulfric[visual]"
+
 .. _installation-source:
 
 Installation from source
