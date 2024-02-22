@@ -19,6 +19,10 @@ Crystal, Lattice, Atoms, K-path.
 .. image:: https://img.shields.io/badge/License-GPLv3-blue.svg
   :target: https://www.gnu.org/licenses/gpl-3.0
 
+.. image:: https://results.pre-commit.ci/badge/github/adrybakov/wulfric/main.svg
+   :target: https://results.pre-commit.ci/latest/github/adrybakov/wulfric/main
+   :alt: pre-commit.ci status
+
 
 For the detailed description check
 `documentation. <https://wulfric.org>`_
