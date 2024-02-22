@@ -324,7 +324,9 @@ class Atom:
         where :math:`\mu_B` is a Bohr magneton and S is :py:attr:`.Atom.spin` or
         :py:attr:`.Atom.spin_vector` if the latter is defined.
 
-        g-factor is equal to :math:`-2` by default.
+        g-factor is equal to :math:`-2` by default. We use :math:`\mu_B = 1` internally, so
+        the units are left for the user, i.e. in order to have value with units - multiply by the value of
+        :math:`\mu_B` in the desired system of units.
 
 
 
