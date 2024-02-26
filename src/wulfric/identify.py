@@ -92,17 +92,73 @@ def niggli(
     ValueError
         If the provided cell`s volume is zero.
 
-    References
-    ----------
-    .. [1] Křivý, I. and Gruber, B., 1976.
-        A unified algorithm for determining the reduced (Niggli) cell.
-        Acta Crystallographica Section A: Crystal Physics, Diffraction,
-        Theoretical and General Crystallography,
-        32(2), pp.297-298.
-    .. [2] Grosse-Kunstleve, R.W., Sauter, N.K. and Adams, P.D., 2004.
-        Numerically stable algorithms for the computation of reduced unit cells.
-        Acta Crystallographica Section A: Foundations of Crystallography,
-        60(1), pp.1-6.
+    Notes
+    -----
+
+    The parameters are defined as follows:
+
+    .. math::
+        A & = a^2 \\
+        B & = b^2 \\
+        C & = c^2 \\
+        \xi & = 2bc \cos(\alpha) \\
+        \eta & = 2ac \cos(\beta) \\
+        \zeta & = 2ab \cos(\gamma)
+
+
+    Steps of an algorithm from original paper [1]_:
+
+    1.  :math:`A > B` or (:math:`A = B` and :math:`|\xi| > |\eta|`),
+        then swap :math:`(A, \xi) \leftrightarrow (B,\eta)`.
+
+    2.  :math:`B > C` or (:math:`B = C` and :math:`|\eta| > |\zeta|`),
+        then swap :math:`(B, \eta) \leftrightarrow (C,\zeta)` and go to 1.
+
+    3.  If :math:`\xi \eta \zeta > 0`,
+        then put :math:`(|\xi|, |\eta|, |\zeta|) \rightarrow (\xi, \eta, \zeta)`.
+
+    4.  If :math:`\xi \eta \zeta \leq 0`,
+        then put :math:`(-|\xi|, -|\eta|, -|\zeta|) \rightarrow (\xi, \eta, \zeta)`.
+
+    5.  If :math:`|\xi| > B` or (:math:`\xi = B` and :math:`2\eta < \zeta`) or (:math:`\xi = -B` and :math:`\zeta < 0`),
+        then apply the following transformation:
+
+        .. math::
+            C & = B + C - \xi \,\text{sign}(\xi) \\
+            \eta & = \eta - \zeta \,\text{sign}(\xi) \\
+            \xi & = \xi - 2B \,\text{sign}(\xi)
+
+        and go to 1.
+
+    6.  If :math:`|\eta| > A` or (:math:`\eta = A` and :math:`2\xi < \zeta`) or (:math:`\eta = -A` and :math:`\zeta < 0`),
+        then apply the following transformation:
+
+        .. math::
+            C & = A + C - \eta \,\text{sign}(\eta) \\
+            \xi & = \xi - \zeta \,\text{sign}(\eta) \\
+            \eta & = \eta - 2A \,\text{sign}(\eta)
+
+        and go to 1.
+
+    7.  If :math:`|\zeta| > A` or (:math:`\zeta = A` and :math:`2\xi < \eta`) or (:math:`\zeta = -A` and :math:`\eta < 0`),
+        then apply the following transformation:
+
+        .. math::
+            B & = A + B - \zeta \,\text{sign}(\zeta) \\
+            \xi & = \xi - \eta \,\text{sign}(\zeta) \\
+            \zeta & = \zeta - 2A \,\text{sign}(\zeta)
+
+        and go to 1.
+
+    8.  If :math:`\xi + \eta + \zeta + A + B < 0` or (:math:`\xi + \eta + \zeta + A + B = 0` and :math:`2(A + \eta) + \zeta > 0`),
+        then apply the following transformation:
+
+        .. math::
+            C & = A + B + C + \xi + \eta + \zeta \\
+            \xi & = 2B + \xi + \zeta \\
+            \eta & = 2A + \eta + \zeta
+
+        and go to 1.
 
     Examples
     --------
@@ -143,6 +199,18 @@ def niggli(
         >>> niggli_matrix_form
         array([[4. , 9. , 9. ],
                [4.5, 1.5, 2. ]])
+
+    References
+    ----------
+    .. [1] Křivý, I. and Gruber, B., 1976.
+        A unified algorithm for determining the reduced (Niggli) cell.
+        Acta Crystallographica Section A: Crystal Physics, Diffraction,
+        Theoretical and General Crystallography,
+        32(2), pp.297-298.
+    .. [2] Grosse-Kunstleve, R.W., Sauter, N.K. and Adams, P.D., 2004.
+        Numerically stable algorithms for the computation of reduced unit cells.
+        Acta Crystallographica Section A: Foundations of Crystallography,
+        60(1), pp.1-6.
 
     """
     cell_volume = volume(a, b, c, alpha, beta, gamma)
