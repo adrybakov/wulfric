@@ -97,34 +97,44 @@ def test_Atom_magmom(v):
     assert np.allclose(atom.spin, 0)
 
     atom.magmom = v
-    assert np.allclose(atom.spin, np.linalg.norm(v / atom.g_factor))
+    spin = v / -atom.g_factor
+    assert np.allclose(atom.spin, np.linalg.norm(spin))
     if np.linalg.norm(v) != 0:
-        assert np.allclose(
-            atom.spin_direction, v / atom.g_factor / np.linalg.norm(v / atom.g_factor)
-        )
+        assert np.allclose(atom.spin_direction, spin / np.linalg.norm(spin))
     else:
         assert np.allclose(atom.spin_direction, [0, 0, 0])
-    assert np.allclose(atom.spin_vector, v / atom.g_factor)
+    assert np.allclose(atom.spin_vector, spin)
 
     atom.spin_vector = v
+    magmom = v * -atom.g_factor
     assert np.allclose(atom.spin, np.linalg.norm(v))
     assert np.allclose(
         atom.spin_direction,
         np.divide(
-            v, np.linalg.norm(v), out=np.zeros_like(v), where=np.linalg.norm(v) != 0
+            v,
+            np.linalg.norm(v),
+            out=np.zeros_like(v),
+            where=np.linalg.norm(v) != 0,
         ),
     )
     assert np.allclose(atom.spin_vector, v)
+    assert np.allclose(atom.magmom, magmom)
 
+    atom.spin = 1.5
     atom.spin_direction = v
-    assert np.allclose(atom.spin, np.linalg.norm(v))
-    assert np.allclose(
-        atom.spin_direction,
-        np.divide(
-            v, np.linalg.norm(v), out=np.zeros_like(v), where=np.linalg.norm(v) != 0
-        ),
+    spin_direction = np.divide(
+        v,
+        np.linalg.norm(v),
+        out=np.zeros_like(v),
+        where=np.linalg.norm(v) != 0,
     )
-    assert np.allclose(atom.spin_vector, v)
+    magmom = spin_direction * -atom.g_factor * 1.5
+    assert np.allclose(
+        atom.spin, 1.5 if not np.allclose(atom.spin_direction, [0, 0, 0]) else 0
+    )
+    assert np.allclose(atom.spin_direction, spin_direction)
+    assert np.allclose(atom.spin_vector, spin_direction * 1.5)
+    assert np.allclose(atom.magmom, magmom)
 
 
 @given(st.floats(max_value=1e9, min_value=-1e9))
@@ -136,7 +146,7 @@ def test_Atom_g_factor(factor):
     assert np.allclose(atom.magmom, (-2, -2, -2))
     atom.g_factor = factor
     assert np.allclose(atom.spin_vector, (1, 1, 1))
-    assert np.allclose(atom.magmom, (factor, factor, factor))
+    assert np.allclose(atom.magmom, (-factor, -factor, -factor))
 
 
 @given(

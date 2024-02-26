@@ -52,7 +52,7 @@ class Atom:
         Magnetic moment of the atom. Vector or the value.
         If a number is given, then oriented along *z* axis.
         Connected with ``spin``, see :py:attr:`.Atom.spin`.
-    g_factor : float, default -2
+    g_factor : float, default 2
         Lande g-factor. Relates ``magmom`` and ``spin``.
     charge : float, optional
         Charge of the atom.
@@ -69,7 +69,7 @@ class Atom:
         position=(0, 0, 0),
         spin=None,
         magmom=None,
-        g_factor=-2.0,
+        g_factor=2.0,
         charge=None,
         index=None,
     ) -> None:
@@ -319,12 +319,12 @@ class Atom:
         .. versionadded:: 0.2.0
 
         .. math::
-          \mu = g\mu_BS
+          \mu = - g\mu_BS
 
         where :math:`\mu_B` is a Bohr magneton and S is :py:attr:`.Atom.spin` or
         :py:attr:`.Atom.spin_vector` if the latter is defined.
 
-        g-factor is equal to :math:`-2` by default. We use :math:`\mu_B = 1` internally, so
+        g-factor is equal to :math:`2` by default. We use :math:`\mu_B = 1` internally, so
         the units are left for the user, i.e. in order to have value with units - multiply by the value of
         :math:`\mu_B` in the desired system of units.
 
@@ -553,8 +553,8 @@ class Atom:
             \boldsymbol{\mu} = g\mu_B \boldsymbol{S}
 
         Internally we use :math:`\mu_B = 1`, therefore the actual formula is
-        :math:`\boldsymbol{\mu} = g\boldsymbol{S}` and magnetic moment is store in Bohr magnetons.
-        By default g is equal to :math:`-2` (see :py:attr:`.Atom.g_factor`).
+        :math:`\boldsymbol{\mu} = - g\boldsymbol{S}` and magnetic moment is store in Bohr magnetons.
+        By default g is equal to :math:`2` (see :py:attr:`.Atom.g_factor`).
 
 
         Returns
@@ -586,14 +586,14 @@ class Atom:
         spin_direction
         """
 
-        return self.g_factor * self.spin_vector
+        return -self.g_factor * self.spin_vector
 
     @magmom.setter
     def magmom(self, new_value):
         # The checks are the same as for the spin
         self.spin = new_value
-        # If the assignment is correct now we need to correct the value
-        self._spin_vector /= self.g_factor
+        # If the assignment is correct now we need to convert the value
+        self._spin_vector /= -self.g_factor
 
     ################################################################################
     #                              Electric properties                             #

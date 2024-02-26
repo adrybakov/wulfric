@@ -47,7 +47,7 @@ Creation of an Atom object is straightforward:
   >>> atom = Atom(name='X', spin=(0,0,1))
   >>> atom.magmom
   array([-0., -0., -2.])
-  >>> atom = Atom(name='X', spin=(0,0,1), g_factor=1)
+  >>> atom = Atom(name='X', spin=(0,0,1), g_factor=-1)
   >>> atom.magmom
   array([0., 0., 1.])
 
@@ -319,7 +319,7 @@ All other attributes can be set and accessed:
   Magnetic moment of an atom is connected with its spin as
 
   .. math::
-    \boldsymbol{\mu} = g\boldsymbol{S}
+    \boldsymbol{\mu} = - g\boldsymbol{S}
 
   where :math:`g` is a :py:attr:`.Atom.g_factor`. Bohr magneton is assumed to be equal to :math:`1`.
   As with the whole atom class we leave the units for the user (i.e. in order to get an
@@ -328,9 +328,9 @@ All other attributes can be set and accessed:
   .. doctest::
 
     >>> atom = Atom(spin = (1,0,0))
-    >>> #g_factor is equal to -2 by default
+    >>> #g_factor is equal to 2 by default
     >>> atom.g_factor
-    -2.0
+    2.0
     >>> # It always returns an array of three numbers - spin vector
     >>> atom.magmom
     array([-2., -0., -0.])
@@ -346,7 +346,7 @@ All other attributes can be set and accessed:
     >>> atom.spin_vector
     array([-0., -0., -1.])
     >>> # g_factor return one number and can be set with a number
-    >>> atom.g_factor = 1
+    >>> atom.g_factor = -1
     >>> atom.spin = (0,1,0)
     >>> atom.spin_vector
     array([0., 1., 0.])
