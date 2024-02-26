@@ -155,8 +155,8 @@ def main():
         30,
         10,
         8,
-        text_1="g_factor",
-        text_2="1/g_factor",
+        text_1="(-g_factor)",
+        text_2="(-1/g_factor)",
         quiver_kwargs=arrow_style,
         text_kwargs=dict(fontsize=15),
     )
