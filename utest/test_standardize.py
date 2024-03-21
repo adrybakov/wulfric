@@ -406,18 +406,15 @@ def test_ORCI_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
         conv_a, conv_b, conv_c = sorted([conv_a, conv_b, conv_c])
         prim = sqrt(conv_a**2 + conv_b**2 + conv_c**2) / 2
         prim_alpha = (
-            acos((conv_a**2 - conv_b**2 - conv_c**2) / 4.0 / prim**2)
-            * TODEGREES
+            acos((conv_a**2 - conv_b**2 - conv_c**2) / 4.0 / prim**2) * TODEGREES
         )
         prim_alpha_twin = 180.0 - prim_alpha
         prim_beta = (
-            acos((-(conv_a**2) + conv_b**2 - conv_c**2) / 4.0 / prim**2)
-            * TODEGREES
+            acos((-(conv_a**2) + conv_b**2 - conv_c**2) / 4.0 / prim**2) * TODEGREES
         )
         prim_beta_twin = 180.0 - prim_beta
         prim_gamma = (
-            acos((-(conv_a**2) - conv_b**2 + conv_c**2) / 4.0 / prim**2)
-            * TODEGREES
+            acos((-(conv_a**2) - conv_b**2 + conv_c**2) / 4.0 / prim**2) * TODEGREES
         )
         prim_gamma_twin = 180.0 - prim_gamma
         old_det = np.linalg.det(cell)
@@ -470,9 +467,7 @@ def test_ORCC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
         prim_c = conv_c
         prim_alpha = 90.0
         prim_beta = prim_alpha
-        prim_gamma = (
-            acos((conv_a**2 - conv_b**2) / 4.0 / prim_a / prim_b) * TODEGREES
-        )
+        prim_gamma = acos((conv_a**2 - conv_b**2) / 4.0 / prim_a / prim_b) * TODEGREES
 
         old_det = np.linalg.det(cell)
 
@@ -698,9 +693,7 @@ def test_MCLC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, o
             * TODEGREES
         )
         prim_beta_twin = 180.0 - prim_beta
-        prim_gamma = (
-            acos((conv_b**2 - conv_a**2) / 4.0 / prim_a / prim_b) * TODEGREES
-        )
+        prim_gamma = acos((conv_b**2 - conv_a**2) / 4.0 / prim_a / prim_b) * TODEGREES
         old_det = np.linalg.det(cell)
 
         # Fix cell
