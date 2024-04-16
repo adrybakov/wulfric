@@ -117,4 +117,4 @@ The functional of Wulfric includes (but not limited to):
             To the contributor's guide
 
 .. note::
-  The terminal output is colored by default, however we respect `NO_COLOR <https://no-color.org/>`_.
+  The terminal output is colored by default. However, we respect `NO_COLOR <https://no-color.org/>`_.
