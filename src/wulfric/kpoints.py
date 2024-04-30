@@ -458,6 +458,8 @@ class Kpoints:
         r"""
         High symmetry points table.
 
+        .. versionadded:: 0.3.1
+
         Parameters
         ----------
         decimals : int, optional
