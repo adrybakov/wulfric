@@ -53,6 +53,14 @@ K points in the path
     Kpoints.points
     Kpoints.flatten_points
 
+Information getters
+===================
+
+.. autosummary::
+    :toctree: generated/
+
+    Kpoints.hs_table
+
 Independent copy
 ================
 

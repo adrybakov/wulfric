@@ -41,6 +41,8 @@ Usually it is created from some :py:class:`.Lattice` (or :py:class:`.Crystal`):
     >>> # Standardization is explicit since 0.3.0
     >>> lattice.standardize()
     >>> kp = lattice.kpoints
+    >>> # Since 0.3.1 the above three lines might be replaced by
+    >>> # lattice = lattice_example("CUB", convention="sc")
     >>> kp.hs_names
     ['G', 'M', 'R', 'X']
 
@@ -106,6 +108,24 @@ Adding a point
     {'G': array([0, 0, 0]), 'X': array([0.5, 0. , 0. ]), 'M': array([0.5, 0.5, 0. ])}
     >>> kp.hs_labels
     {'G': '$\\Gamma$', 'X': 'X', 'M': 'M'}
+
+Getting summary of high-symmetry points
+=======================================
+
+In order to have a summary of the high symmetry pints the predefined method
+:py:meth:`.Kpoints.hs_table` might be used:
+
+.. doctest::
+
+    >>> kp = lattice_example("FCC", convention="sc").kpoints
+    >>> print(kp.hs_table())
+    Name       rel_b1      rel_b2      rel_b3          k_x         k_y         k_z
+    G      0.00000000  0.00000000  0.00000000   0.00000000  0.00000000  0.00000000
+    K      0.37500000  0.37500000  0.75000000   1.50000000  1.50000000  0.00000000
+    L      0.50000000  0.50000000  0.50000000   1.00000000  1.00000000  1.00000000
+    U      0.62500000  0.25000000  0.62500000   0.50000000  2.00000000  0.50000000
+    W      0.50000000  0.25000000  0.75000000   1.00000000  2.00000000  0.00000000
+    X      0.50000000  0.00000000  0.50000000   0.00000000  2.00000000  0.00000000
 
 .. _user-guide_module_kpoints-path:
 

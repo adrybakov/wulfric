@@ -38,3 +38,11 @@ The changes are described above and:
 * Add :py:meth:`.Crystal.shift_atoms` and :py:meth:`.Crystal.cure_negative` methods.
 
 * Add ``delta_max`` parameter to the :py:meth:`.Lattice.type` method.
+
+0.3.1
+-----
+
+* Add :py:meth:`.Kpoints.hs_table` method, that displays the table with the high-symmetry
+  points.
+
+* Add ``convention`` argument to the :py:func:`.lattice_example` function.

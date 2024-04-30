@@ -449,3 +449,54 @@ class Kpoints:
         """
 
         deepcopy(self)
+
+    ################################################################################
+    #                                Human readables                               #
+    ################################################################################
+
+    def hs_table(self, decimals=8):
+        r"""
+        High symmetry points table.
+
+        Parameters
+        ----------
+        decimals : int, optional
+            Number of decimal places to round the coordinates.
+
+        Returns
+        -------
+        table : str
+            String with N+1 lines, where N is the amount of high symmetry points.
+            Each line contains the name of the high symmetry point and its relative and
+            absolute coordinates in a reciprocal space, i.e.::
+
+                K1  0.0 0.0 0.0   0.0 0.0 0.0
+
+            First line is a header::
+
+                Name  rel_b1 rel_b2 rel_b3  k_x k_y k_z
+        """
+
+        d = decimals
+        table = [
+            (
+                f"{'Name':4}  "
+                + f"{'rel_b1':>{d+3}} "
+                + f"{'rel_b2':>{d+3}} "
+                + f"{'rel_b3':>{d+3}}  "
+                + f"{'k_x':>{d+3}} "
+                + f"{'k_y':>{d+3}} "
+                + f"{'k_z':>{d+3}}"
+            )
+        ]
+        for name in self.hs_names:
+            relative = self.hs_coordinates[name]
+            i = f"{relative[0]: {d+3}.{d}f}"
+            j = f"{relative[1]: {d+3}.{d}f}"
+            k = f"{relative[2]: {d+3}.{d}f}"
+            absolute = self.hs_coordinates[name] @ np.array([self.b1, self.b2, self.b3])
+            k_x = f"{absolute[0]: {d+3}.{d}f}"
+            k_y = f"{absolute[1]: {d+3}.{d}f}"
+            k_z = f"{absolute[2]: {d+3}.{d}f}"
+            table.append(f"{name:4}  {i} {j} {k}  {k_x} {k_y} {k_z}")
+        return "\n".join(table)
