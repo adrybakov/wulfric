@@ -6,12 +6,19 @@ Wulfric user guide
 
 Getting started
 ===============
-
 .. toctree::
     :maxdepth: 1
 
     start/installation
     start/quickstart
+
+Definitions and conventions
+===========================
+.. toctree::
+    :maxdepth: 1
+
+    conventions/main
+    conventions/bravais-lattices/index
 
 
 Module guide
@@ -26,9 +33,7 @@ Module guide
 
 Methods and algorithms
 ======================
-
 .. toctree::
     :maxdepth: 1
 
     library/lepage
-    library/bravais-lattices/index

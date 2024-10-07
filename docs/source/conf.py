@@ -259,6 +259,10 @@ custom_links = {
     ),
     "siesta": ("SIESTA", "https://siesta-project.org/siesta/"),
     "spglib": ("spglib", "https://spglib.readthedocs.io/en/stable/index.html"),
+    "spglib-python": (
+        "spglib's python interface",
+        "https://spglib.readthedocs.io/en/stable/python-interface.html#",
+    ),
 }
 
 
