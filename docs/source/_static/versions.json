@@ -1,8 +1,13 @@
 [
     {
-        "name": "v0.3 (latest)",
-        "version": "0.3",
+        "name": "v0.4 (latest)",
+        "version": "0.4",
         "url": "https://docs.wulfric.org/en/latest/"
+    },
+    {
+        "name": "v0.3",
+        "version": "0.3",
+        "url": "https://docs.wulfric.org/en/0.3/"
     },
     {
         "name": "v0.2",
