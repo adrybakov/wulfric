@@ -1,0 +1,19 @@
+.. _release-notes_0.4:
+
+***********
+Version 0.4
+***********
+
+.. warning::
+
+  This version introduces some breaking changes. Please read carefully the
+  following release notes.
+
+
+Whats new?
+----------
+Dependency on the |spglib|_ was introduced.
+
+0.3.0
+-----
+The changes are described above and:

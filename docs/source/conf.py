@@ -258,6 +258,7 @@ custom_links = {
         "https://www.sphinx-doc.org/en/master/usage/extensions/autosummary.html",
     ),
     "siesta": ("SIESTA", "https://siesta-project.org/siesta/"),
+    "spglib": ("spglib", "https://spglib.readthedocs.io/en/stable/index.html"),
 }
 
 

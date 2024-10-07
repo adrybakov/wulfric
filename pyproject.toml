@@ -8,7 +8,7 @@ name = "wulfric"
 license = { text = "GPL-3.0 license" }
 dynamic = ["version"]
 description = "Crystal, Lattice, Atoms, K-path."
-dependencies = ["numpy", "scipy", "termcolor"]
+dependencies = ["numpy", "scipy", "termcolor", "spglib>=2.3.2"]
 authors = [{ name = "Andrey Rybakov", email = "rybakov.ad@icloud.com" }]
 requires-python = ">=3.8"
 readme = "README.rst"

@@ -16,10 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-__version__ = "0.3.1"
+__version__ = "0.4.0"
 __doclink__ = "wulfric.org"
-__git_hash__ = "3b45fdd8cd1a815934281c0e3d6758852dfeb4d5"
-__release_date__ = "30 April 2024"
+__git_hash__ = "undefined"
+__release_date__ = "undefined"
 
 
 from . import bravais_lattice

@@ -2,6 +2,7 @@
 numpy
 scipy
 termcolor
+spglib>=2.3.2
 
 # Optional package dependencies
 matplotlib
