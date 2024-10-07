@@ -6,7 +6,7 @@ LePage algorithm
 
 The algorithm for the Bravais lattice type identification is bases on the search for the
 twofold rotation axes and described in details in [1]_.
-Here we recall the algorithm from Table 1 of the original publication with minor modifications as
+Here we recall the algorithm from Table 1 of the publication with minor modifications as
 implemented in :py:func:`.lepage` function.
 
 3D Lattice

@@ -106,7 +106,7 @@ def niggli(
         \zeta & = 2ab \cos(\gamma)
 
 
-    Steps of an algorithm from original paper [1]_:
+    Steps of an algorithm from the paper [1]_:
 
     1.  :math:`A > B` or (:math:`A = B` and :math:`|\xi| > |\eta|`),
         then swap :math:`(A, \xi) \leftrightarrow (B,\eta)`.
