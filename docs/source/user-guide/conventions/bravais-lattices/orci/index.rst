@@ -123,14 +123,19 @@ Wigner-Seitz cell
 Cell standardization
 ====================
 
-Condition :math:`a < b < b` implies condition :math:`\gamma > \beta > \alpha` for
+Condition :math:`a < b < c` implies condition :math:`\gamma < \beta < \alpha` for
 the primitive cell in a standard form, in practice this condition simplifies to
 :math:`\boldsymbol{a}_1^s\cdot\boldsymbol{a}_2^s > \boldsymbol{a}_1^s\cdot\boldsymbol{a}_3^s > \boldsymbol{a}_2^s\cdot\boldsymbol{a}_3^s`
 for the primitive cell in a standard form. We use angles of the primitive cell for
 standardization.
 
+.. note::
+  Note the change from :math:`<` to :math:`>` between the condition on the angles and on
+  the scalar products. It reflects from the fact that all three angles are bound to the
+  interval :math:`[0, \pi]` and scalar product is proportional to the cosine of the angle.
 
-* If :math:`\gamma > \beta > \alpha` (i.e.
+
+* If :math:`\gamma < \beta < \alpha` (i.e.
   :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_2 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3 > \boldsymbol{a}_2\cdot\boldsymbol{a}_3`),
   then
 
@@ -156,7 +161,7 @@ standardization.
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\gamma > \alpha > \beta` (i.e.
+* If :math:`\gamma < \alpha < \beta` (i.e.
   :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_2 > \boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3`),
   then
 
@@ -182,7 +187,7 @@ standardization.
       0 & 0 & -1
     \end{pmatrix}
 
-* If :math:`\beta > \gamma > \alpha` (i.e.
+* If :math:`\beta < \gamma < \alpha` (i.e.
   :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_2 > \boldsymbol{a}_2\cdot\boldsymbol{a}_3`),
   then
 
@@ -208,7 +213,7 @@ standardization.
       0 & -1 & 0
     \end{pmatrix}
 
-* If :math:`\beta > \alpha > \gamma` (i.e.
+* If :math:`\beta < \alpha < \gamma` (i.e.
   :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3 > \boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_2`),
   then
 
@@ -239,7 +244,7 @@ standardization.
       1 & 0 & 0
     \end{pmatrix}
 
-* If :math:`\alpha > \gamma > \beta` (i.e.
+* If :math:`\alpha < \gamma < \beta` (i.e.
   :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_2 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3`),
   then
 
@@ -270,7 +275,7 @@ standardization.
       0 & 1 & 0
     \end{pmatrix}
 
-* If :math:`\alpha > \beta > \gamma` (i.e.
+* If :math:`\alpha < \beta < \gamma` (i.e.
   :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_2`),
   then
 
