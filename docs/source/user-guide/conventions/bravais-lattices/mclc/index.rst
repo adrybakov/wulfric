@@ -9,7 +9,7 @@ Base-centred monoclinic (MCLC)
 **Constructor**:  :py:func:`.MCLC`
 
 It is defined by four parameter: :math:`a`, :math:`b`, :math:`c` and :math:`\alpha`
-with conventional lattice:
+with conventional cell:
 
 .. math::
 
@@ -19,7 +19,7 @@ with conventional lattice:
     \boldsymbol{a}_3 &=& (0, &c\cos\alpha, &c\sin\alpha)
     \end{matrix}
 
-And primitive lattice:
+And primitive cell:
 
 .. math::
 
@@ -28,6 +28,27 @@ And primitive lattice:
     \boldsymbol{a}_2 &=& (-a/2, &b/2, &0)\\
     \boldsymbol{a}_3 &=& (0, &c\cos\alpha, &c\sin\alpha)
     \end{matrix}
+
+with
+
+.. math::
+
+    \boldsymbol{C}
+    =
+    \dfrac{1}{2}
+    \begin{pmatrix}
+      1 & -1 & 0 \\
+      1 & 1 & 0 \\
+      0 & 0 & 2
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{C}^{-1}
+    =
+    \begin{pmatrix}
+      1 & 1 & 0 \\
+      -1 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
 
 Order of parameters: :math:`b \le c`, :math:`\alpha < 90^{\circ}`.
 
