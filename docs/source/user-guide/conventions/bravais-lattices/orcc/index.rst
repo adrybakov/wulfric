@@ -9,7 +9,7 @@ Base-centred orthorhombic (ORCC)
 **Constructor**:  :py:func:`.ORCC`
 
 It is defined by three parameter: :math:`a`, :math:`b` and :math:`c`
-with conventional lattice:
+with conventional cell:
 
 .. math::
 
@@ -19,7 +19,7 @@ with conventional lattice:
     \boldsymbol{a}_3 &=& (0, &0, &c)
     \end{matrix}
 
-And primitive lattice:
+And primitive cell:
 
 .. math::
 
