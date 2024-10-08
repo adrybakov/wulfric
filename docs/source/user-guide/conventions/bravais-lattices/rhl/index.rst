@@ -9,21 +9,36 @@ Rhombohedral (RHL)
 **Constructor**:  :py:func:`.RHL`
 
 It is defined by two parameter: :math:`a` and :math:`\alpha`
-with primitive and conventional lattice:
+with primitive and conventional cell:
 
 .. math::
 
     \begin{matrix}
-    \boldsymbol{a}_1 &=& (a\cos(\alpha / 2), &-a\sin(\alpha/2), &0)\\
-    \boldsymbol{a}_2 &=& (a\cos(\alpha / 2), &a\sin(\alpha/2), &0)\\
-    \boldsymbol{a}_3 &=& \left(\dfrac{\cos\alpha}{\cos(\alpha/2)}\right.,
+    \boldsymbol{a}_1 &=& \boldsymbol{a}_1^c &=& (a\cos(\alpha / 2), &-a\sin(\alpha/2), &0)\\
+    \boldsymbol{a}_2 &=& \boldsymbol{a}_2^c &=& (a\cos(\alpha / 2), &a\sin(\alpha/2), &0)\\
+    \boldsymbol{a}_3 &=& \boldsymbol{a}_3^c &=& \left(\dfrac{\cos\alpha}{\cos(\alpha/2)}\right.,
     &0, &\left.a\sqrt{1 - \dfrac{\cos^2\alpha}{\cos^2(\alpha/2)}}\right)
     \end{matrix}
 
-Cell standardization
-====================
+with
 
-No standardization is performed.
+.. math::
+
+    \boldsymbol{C}
+    =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{C}^{-1}
+    =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
 
 K-path
 ======
@@ -157,6 +172,25 @@ Wigner-Seitz cell
 
 .. raw:: html
     :file: rhl2_wigner-seitz.html
+
+Cell standardization
+====================
+
+No standardization required.
+
+.. math::
+
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
 
 Edge cases
 ==========

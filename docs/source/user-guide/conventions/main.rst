@@ -117,7 +117,7 @@ different cells of the same lattice might be expressed by the transformation mat
 
 .. code-block:: python
 
-    scell = np.linalg.inv(P.T) @ cell
+    tcell = np.linalg.inv(P.T) @ cell
 
 Crystal is not affected by the change of the cell, i.e. the atom's Cartesian
 coordinates are not changed (:math:`\boldsymbol{x} = \boldsymbol{\tilde{x}}`). Therefore,
@@ -150,16 +150,23 @@ the atom's relative positions are transformed as
 Standardization of the cell
 ===========================
 
-When standardization of the cell is required, it can be expressed by the transformation
-matrix :math:`\boldsymbol{S}` with
-:math:`(\boldsymbol{\tilde{a}}_1, \boldsymbol{\tilde{a}}_2, \boldsymbol{\tilde{a}}_3)`
-being the standardized cell:
+When standardization of the cell is required, it can be expressed by the **orthogonal**
+transformation matrix :math:`\boldsymbol{S}` with
+:math:`(\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)`
+being the standardized primitive cell:
 
 .. math::
 
     (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
     =
     (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s) \boldsymbol{S}
+
+Note that the code is simplified, as :math:`\boldsymbol{S}^T = \boldsymbol{S}^{-1}`:
+
+.. code-block:: python
+
+    scell = S @ cell
+
 
 Details on how the standardization matrix is constructed are provided in the individual
 pages for each of the 14 :ref:`library_bravais-lattices`.

@@ -25,12 +25,6 @@ with
 
     \boldsymbol{C}
     =
-    \begin{pmatrix}
-      1 & 0 & 0 \\
-      0 & 1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
-    \qquad
     \boldsymbol{C}^{-1}
     =
     \begin{pmatrix}
@@ -38,6 +32,9 @@ with
       0 & 1 & 0 \\
       0 & 0 & 1
     \end{pmatrix}
+
+
+Order of parameters: :math:`a \ne c`
 
 K-path
 ======
@@ -97,6 +94,64 @@ then the lattice is transformed to the standard form:
 
 
 * If
+  :math:`\vert\boldsymbol{a}_1\vert = \vert\boldsymbol{a}_2\vert \ne \vert\boldsymbol{a}_3\vert`,
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+
+* If
+  :math:`\vert\boldsymbol{a}_2\vert = \vert\boldsymbol{a}_3\vert \ne \vert\boldsymbol{a}_1\vert`,
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_2, \boldsymbol{a}_3, \boldsymbol{a}_1)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix}
+
+* If
   :math:`\vert\boldsymbol{a}_1\vert = \vert\boldsymbol{a}_3\vert \ne \vert\boldsymbol{a}_2\vert`,
   then
 
@@ -117,39 +172,15 @@ then the lattice is transformed to the standard form:
       1 & 0 & 0 \\
       0 & 1 & 0
     \end{pmatrix}
-
-* If
-  :math:`\vert\boldsymbol{a}_2\vert = \vert\boldsymbol{a}_3\vert \ne \vert\boldsymbol{a}_1\vert`,
-  then
-
-  .. math::
-
-    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
-      =
-      (\boldsymbol{a}_2, \boldsymbol{a}_3, \boldsymbol{a}_1)
-
-  and
-
-  .. math::
-
-    \boldsymbol{S}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       0 & 1 & 0 \\
       0 & 0 & 1 \\
       1 & 0 & 0
-    \end{pmatrix}
-
-* Else
-
-  .. math::
-
-    \boldsymbol{S}
-    =
-    \begin{pmatrix}
-      1 & 0 & 0 \\
-      0 & 1 & 0 \\
-      0 & 0 & 1
     \end{pmatrix}
 
 Edge cases

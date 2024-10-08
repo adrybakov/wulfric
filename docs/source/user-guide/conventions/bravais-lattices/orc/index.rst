@@ -101,34 +101,13 @@ Lengths of the lattice vectors have to satisfy
 :math:`\vert\boldsymbol{a}_1^s\vert < \vert\boldsymbol{a}_2^s\vert < \vert\boldsymbol{a}_3^s\vert`
 for the primitive cell in a standard form.
 
-If this condition is not satisfied, then the lattice is transformed to the standard form:
 
-First we order first two vectors by length:
-
-* If :math:`\vert\boldsymbol{a}_1\vert > \vert\boldsymbol{a}_2\vert`, then
+* If :math:`\vert \boldsymbol{a}_3\vert > \vert \boldsymbol{a}_2\vert > \vert \boldsymbol{a}_1\vert`,
+  then
 
   .. math::
 
-    (\boldsymbol{\tilde{a}}_1, \boldsymbol{\tilde{a}}_2, \boldsymbol{\tilde{a}}_3)
-    =
-    (\boldsymbol{a}_2, \boldsymbol{a}_1, -\boldsymbol{a}_3)
-
-  and
-
-  .. math::
-
-    \boldsymbol{\tilde{S}} =
-    \begin{pmatrix}
-      0 & 1 & 0 \\
-      1 & 0 & 0 \\
-      0 & 0 & -1
-    \end{pmatrix}
-
-* Else
-
-  .. math::
-
-    (\boldsymbol{\tilde{a}}_1, \boldsymbol{\tilde{a}}_2, \boldsymbol{\tilde{a}}_3)
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
     =
     (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
 
@@ -136,22 +115,76 @@ First we order first two vectors by length:
 
   .. math::
 
-    \boldsymbol{\tilde{S}} =
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
     \begin{pmatrix}
       1 & 0 & 0 \\
       0 & 1 & 0 \\
       0 & 0 & 1
     \end{pmatrix}
 
-
-Then we find a correct place for the third vector:
-
-* If :math:`\vert\boldsymbol{\tilde{a}}_1\vert > \vert\boldsymbol{\tilde{a}}_3\vert`, then
+* If :math:`\vert \boldsymbol{a}_3\vert > \vert \boldsymbol{a}_1\vert > \vert \boldsymbol{a}_2\vert`,
+  then
 
   .. math::
 
-    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s) =
-    (\boldsymbol{\tilde{a}}_3, \boldsymbol{\tilde{a}}_1, \boldsymbol{\tilde{a}}_2)
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (-\boldsymbol{a}_2, -\boldsymbol{a}_1, -\boldsymbol{a}_3)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & -1 & 0 \\
+      -1 & 0 & 0 \\
+      0 & 0 & -1
+    \end{pmatrix}
+
+* If :math:`\vert \boldsymbol{a}_2\vert > \vert \boldsymbol{a}_3\vert > \vert \boldsymbol{a}_1\vert`,
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (-\boldsymbol{a}_1, -\boldsymbol{a}_3, -\boldsymbol{a}_2)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      -1 & 0 & 0 \\
+      0 & 0 & -1 \\
+      0 & -1 & 0
+    \end{pmatrix}
+
+* If :math:`\vert \boldsymbol{a}_2\vert > \vert \boldsymbol{a}_1\vert > \vert \boldsymbol{a}_3\vert`,
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_3, \boldsymbol{a}_1, \boldsymbol{a}_2)
 
   and
 
@@ -163,15 +196,25 @@ Then we find a correct place for the third vector:
       1 & 0 & 0 \\
       0 & 1 & 0
     \end{pmatrix}
-    \cdot
-    \boldsymbol{\tilde{S}}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
 
-* If :math:`\vert\boldsymbol{\tilde{a}}_2\vert > \vert\boldsymbol{\tilde{a}}_3\vert`, then
+* If :math:`\vert \boldsymbol{a}_1\vert > \vert \boldsymbol{a}_3\vert > \vert \boldsymbol{a}_2\vert`,
+  then
 
   .. math::
 
-    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s) =
-    (\boldsymbol{\tilde{a}}_1, -\boldsymbol{\tilde{a}}_3, \boldsymbol{\tilde{a}}_2)
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_2, \boldsymbol{a}_3, \boldsymbol{a}_1)
 
   and
 
@@ -179,25 +222,50 @@ Then we find a correct place for the third vector:
 
     \boldsymbol{S} =
     \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
       1 & 0 & 0 \\
-      0 & 0 & -1 \\
       0 & 1 & 0
     \end{pmatrix}
-    \cdot
-    \boldsymbol{\tilde{S}}
 
-* Else
+
+* If :math:`\vert \boldsymbol{a}_1\vert > \vert \boldsymbol{a}_2\vert > \vert \boldsymbol{a}_3\vert`,
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (-\boldsymbol{a}_3, -\boldsymbol{a}_2, -\boldsymbol{a}_1)
+
+  and
 
   .. math::
 
     \boldsymbol{S}
     =
-    \boldsymbol{\tilde{S}}
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & 0 & -1 \\
+      0 & -1 & 0 \\
+      -1 & 0 & 0
+    \end{pmatrix}
 
 .. note::
 
-    The third lattice vector is multiplied by :math:`-1` in some cases to
-    preserve the handedness of the cell.
+    All six changes of the cell preserve handiness of the original one.
 
 Edge cases
 ==========

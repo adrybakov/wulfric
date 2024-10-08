@@ -126,38 +126,17 @@ Cell standardization
 Condition :math:`a < b < b` result in the condition :math:`\gamma > \beta > \alpha` for
 the primitive cell in a standard form, in practice this condition simplifies to
 :math:`\boldsymbol{a}_1^s\cdot\boldsymbol{a}_2^s > \boldsymbol{a}_1^s\cdot\boldsymbol{a}_3^s > \boldsymbol{a}_2^s\cdot\boldsymbol{a}_3^s`
-for the primitive cell in a standard form. Therefore, for the given primitive cell the
-algorithm is:
-
-FIXME: potentially wrong second step!
+for the primitive cell in a standard form. We use angles of the primitive cell for
+standardization.
 
 
-First we order :math:`\alpha` and :math:`\beta`:
-
-* If :math:`\alpha > \beta` (i.e. :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3`), then
+* If :math:`\gamma > \beta > \alpha` (i.e.
+  :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_2 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3 > \boldsymbol{a}_2\cdot\boldsymbol{a}_3`),
+  then
 
   .. math::
 
-    (\boldsymbol{\tilde{a}}_1, \boldsymbol{\tilde{a}}_2, \boldsymbol{\tilde{a}}_3)
-    =
-    (-\boldsymbol{a}_1, -\boldsymbol{a}_2, \boldsymbol{a}_3)
-
-  and
-
-  .. math::
-
-    \boldsymbol{\tilde{S}} =
-    \begin{pmatrix}
-      -1 & 0 & 0 \\
-      0 & -1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
-
-* Else
-
-  .. math::
-
-    (\boldsymbol{\tilde{a}}_1, \boldsymbol{\tilde{a}}_2, \boldsymbol{\tilde{a}}_3)
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
     =
     (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
 
@@ -165,21 +144,79 @@ First we order :math:`\alpha` and :math:`\beta`:
 
   .. math::
 
-    \boldsymbol{\tilde{S}} =
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
     \begin{pmatrix}
       1 & 0 & 0 \\
       0 & 1 & 0 \\
       0 & 0 & 1
     \end{pmatrix}
 
-Then we place :math:`\gamma` in the correct place:
-
-* If :math:`\gamma < \alpha` (i.e. :math:`\boldsymbol{\tilde{a}}_1\cdot\boldsymbol{\tilde{a}}_2 < \boldsymbol{\tilde{a}}_2\cdot\boldsymbol{\tilde{a}}_3`), then
+* If :math:`\gamma > \alpha > \beta` (i.e.
+  :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_2 > \boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3`),
+  then
 
   .. math::
 
-    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s) =
-    (\boldsymbol{\tilde{a}}_3, \boldsymbol{\tilde{a}}_1, \boldsymbol{\tilde{a}}_2)
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (-\boldsymbol{a}_2, -\boldsymbol{a}_1, -\boldsymbol{a}_3)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & -1 & 0 \\
+      -1 & 0 & 0 \\
+      0 & 0 & -1
+    \end{pmatrix}
+
+* If :math:`\beta > \gamma > \alpha` (i.e.
+  :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_2 > \boldsymbol{a}_2\cdot\boldsymbol{a}_3`),
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (-\boldsymbol{a}_1, -\boldsymbol{a}_3, -\boldsymbol{a}_2)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      -1 & 0 & 0 \\
+      0 & 0 & -1 \\
+      0 & -1 & 0
+    \end{pmatrix}
+
+* If :math:`\beta > \alpha > \gamma` (i.e.
+  :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3 > \boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_2`),
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_3, \boldsymbol{a}_1, \boldsymbol{a}_2)
 
   and
 
@@ -191,14 +228,26 @@ Then we place :math:`\gamma` in the correct place:
       1 & 0 & 0 \\
       0 & 1 & 0
     \end{pmatrix}
-    \cdot
-    \boldsymbol{\tilde{S}}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
 
-* If :math:`\alpha < \gamma < \beta` (i.e. :math:`\boldsymbol{\tilde{a}}_2\cdot\boldsymbol{\tilde{a}}_3 < \boldsymbol{\tilde{a}}_1\cdot\boldsymbol{\tilde{a}}_2 < \boldsymbol{\tilde{a}}_1\cdot\boldsymbol{\tilde{a}}_3`), then
+* If :math:`\alpha > \gamma > \beta` (i.e.
+  :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_2 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3`),
+  then
+
   .. math::
 
-    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s) =
-    (\boldsymbol{\tilde{a}}_1, -\boldsymbol{\tilde{a}}_2, -\boldsymbol{\tilde{a}}_3)
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_2, \boldsymbol{a}_3, \boldsymbol{a}_1)
 
   and
 
@@ -206,25 +255,50 @@ Then we place :math:`\gamma` in the correct place:
 
     \boldsymbol{S} =
     \begin{pmatrix}
-      1 & 0 & 0 \\
-      0 & -1 & 0 \\
-      0 & 0 & -1
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
     \end{pmatrix}
-    \cdot
-    \boldsymbol{\tilde{S}}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix}
 
-* Else
+* If :math:`\alpha > \beta > \gamma` (i.e.
+  :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_2`),
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (-\boldsymbol{a}_3, -\boldsymbol{a}_2, -\boldsymbol{a}_1)
+
+  and
 
   .. math::
 
     \boldsymbol{S}
     =
-    \boldsymbol{\tilde{S}}
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & 0 & -1 \\
+      0 & -1 & 0 \\
+      -1 & 0 & 0
+    \end{pmatrix}
 
 .. note::
 
-    The third lattice vector is multiplied by :math:`-1` in some cases to
-    preserve the handedness of the cell.
+    All six changes of the cell preserve handiness of the original one.
 
 Edge cases
 ==========

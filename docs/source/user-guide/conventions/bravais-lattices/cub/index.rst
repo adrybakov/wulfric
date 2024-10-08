@@ -24,12 +24,6 @@ with
 
     \boldsymbol{C}
     =
-    \begin{pmatrix}
-      1 & 0 & 0 \\
-      0 & 1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
-    \qquad
     \boldsymbol{C}^{-1}
     =
     \begin{pmatrix}
@@ -93,6 +87,10 @@ No standardization required.
 .. math::
 
     \boldsymbol{S}
+    =
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
