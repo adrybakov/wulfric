@@ -29,49 +29,28 @@ And primitive lattice:
         \boldsymbol{a}_3 &=& (0, &0, &c)
     \end{matrix}
 
+with
+
+.. math::
+
+    \boldsymbol{C}
+    =
+    \dfrac{1}{2}
+    \begin{pmatrix}
+      1 & 1 & 0 \\
+      -1 & 1 & 0 \\
+      0 & 0 & 2
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{C}^{-1}
+    =
+    \begin{pmatrix}
+      1 & -1 & 0 \\
+      1 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+
 Order of parameters: :math:`a < b`
-
-Cell standardization
-====================
-
-Lengths of the lattice vectors of the conventional cell have to satisfy
-:math:`\vert\boldsymbol{a}_1\vert < \vert\boldsymbol{a}_2\vert`.
-Length of third vector of the primitive cell has to be different from
-the lengths of the first two vectors of the primitive cell.
-
-If these conditions are not satisfied, then the lattice is transformed to the standard form:
-
-Before the standardization we check if all angles are equal to :math:`90^{\circ}`.
-If yes, then the standardization for :ref:`guide_tet` is called.
-
-First we find the third lattice vector of the primitive cell.
-For this step we use lattice vectors of the primitive cell:
-
-* If :math:`\beta \ne 90^{\circ}`
-    .. math::
-
-        (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3) \rightarrow
-        (\boldsymbol{a}_3, \boldsymbol{a}_1, \boldsymbol{a}_2)
-
-* If :math:`\alpha \ne 90^{\circ}`
-    .. math::
-
-        (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3) \rightarrow
-        (\boldsymbol{a}_2, \boldsymbol{a}_3, \boldsymbol{a}_1)
-
-Then we order first two lattice vector.
-For this step we use lattice vectors of the conventional cell:
-
-* If :math:`\vert\boldsymbol{a}_1\vert > \vert\boldsymbol{a}_2\vert`
-    .. math::
-
-        (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3) \rightarrow
-        (-\boldsymbol{a}_2, \boldsymbol{a}_1, \boldsymbol{a}_3)
-
-.. note::
-
-    The second lattice vector is multiplied by :math:`-1` in some cases to
-    preserve the handedness of the cell.
 
 K-path
 ======
@@ -131,6 +110,217 @@ Wigner-Seitz cell
 
 .. raw:: html
     :file: orcc_wigner-seitz.html
+
+
+
+Cell standardization
+====================
+
+Length of third vector of the primitive cell has to be different from
+the lengths of the first two vectors of the primitive cell. Together with the
+:math:`a < b` we arrive at the following condition of the angles of the primitive cell in
+a standard form: :math:`\alpha = \beta = 90^{\circ}` and :math:`\gamma > 90^{\circ}`.
+In practice this condition simplifies to
+:math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_3  = 0`
+and
+:math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_2 < 0`. We use angles of the primitive cell
+for standardization.
+
+* If :math:`\alpha = \beta = \frac{\pi}{2}` and :math:`\gamma > \frac{\pi}{2}` (i.e.
+  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_3  = 0`
+  and
+  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_2 < 0`),
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+
+* If :math:`\alpha = \beta = \frac{\pi}{2}` and :math:`\gamma < \frac{\pi}{2}` (i.e.
+  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_3  = 0`
+  and
+  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_2 > 0`),
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_2, -\boldsymbol{a}_1, \boldsymbol{a}_3)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      -1 & 0 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & -1 & 0 \\
+      1 & 0 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+
+* If :math:`\beta = \gamma = \frac{\pi}{2}` and :math:`\alpha > \frac{\pi}{2}` (i.e.
+  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_2  = 0`
+  and
+  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 < 0`),
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_2, \boldsymbol{a}_3, \boldsymbol{a}_1)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix}
+
+* If :math:`\beta = \gamma = \frac{\pi}{2}` and :math:`\alpha < \frac{\pi}{2}` (i.e.
+  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_2  = 0`
+  and
+  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 > 0`),
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_3, -\boldsymbol{a}_2, \boldsymbol{a}_1)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      0 & -1 & 0 \\
+      1 & 0 & 0
+    \end{pmatrix}
+
+* If :math:`\alpha = \gamma = \frac{\pi}{2}` and :math:`\beta > \frac{\pi}{2}` (i.e.
+  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_2  = 0`
+  and
+  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_3 < 0`),
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_3, \boldsymbol{a}_1, \boldsymbol{a}_2)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
+
+* If :math:`\alpha = \gamma = \frac{\pi}{2}` and :math:`\beta < \frac{\pi}{2}` (i.e.
+  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_2  = 0`
+  and
+  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_3 > 0`),
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_1, -\boldsymbol{a}_3, \boldsymbol{a}_2)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 0 & -1 \\
+      0 & 1 & 0
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}^T
+    =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 0 & 1 \\
+      0 & -1 & 0
+    \end{pmatrix}
+
+.. note::
+
+    All six changes of the cell preserve handiness of the original one.
 
 
 Edge cases
