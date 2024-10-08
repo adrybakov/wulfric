@@ -123,7 +123,7 @@ Wigner-Seitz cell
 Cell standardization
 ====================
 
-Condition :math:`a < b < b` result in the condition :math:`\gamma > \beta > \alpha` for
+Condition :math:`a < b < b` implies condition :math:`\gamma > \beta > \alpha` for
 the primitive cell in a standard form, in practice this condition simplifies to
 :math:`\boldsymbol{a}_1^s\cdot\boldsymbol{a}_2^s > \boldsymbol{a}_1^s\cdot\boldsymbol{a}_3^s > \boldsymbol{a}_2^s\cdot\boldsymbol{a}_3^s`
 for the primitive cell in a standard form. We use angles of the primitive cell for
