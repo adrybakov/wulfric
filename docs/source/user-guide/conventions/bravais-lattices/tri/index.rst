@@ -10,7 +10,7 @@ Triclinic (TRI)
 
 It is defined by six parameters: :math:`a`, :math:`b`, :math:`c` and
 :math:`\alpha`, :math:`\beta`, :math:`\gamma`.
-with primitive and conventional lattice:
+with primitive and conventional cell:
 
 .. math::
 
@@ -19,6 +19,20 @@ with primitive and conventional lattice:
     \boldsymbol{a}_2 = (b\cos\gamma, b\sin\gamma, 0)\\
     \boldsymbol{a}_3 = (c\cos\beta, \dfrac{c(\cos\alpha - \cos\beta\cos\gamma)}{\sin\gamma}, \dfrac{c}{\sin\gamma}\sqrt{\sin^2\gamma - \cos^2\alpha - \cos^2\beta + 2\cos\alpha\cos\beta\cos\gamma})
     \end{matrix}
+
+with
+
+.. math::
+
+    \boldsymbol{C}
+    =
+    \boldsymbol{C}^{-1}
+    =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
 
 Cell standardization
 ====================
