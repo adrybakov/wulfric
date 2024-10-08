@@ -271,7 +271,7 @@ Cell standardization
 ====================
 
 Condition :math:`a < b < c` implies
-:math:`\vert\boldsymbol{a}_1^S\vert > \vert\boldsymbol{a}_2^S\vert > \vert\boldsymbol{a}_3^S\vert`
+:math:`\vert\boldsymbol{a}_1^s\vert > \vert\boldsymbol{a}_2^s\vert > \vert\boldsymbol{a}_3^s\vert`
 for the lattice vectors of the primitive cell in a standard form.
 We use the primitive lattice vectors for the standardization:
 
