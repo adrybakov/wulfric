@@ -187,11 +187,9 @@ Cell standardization
 
 Condition :math:`a \ne c` result in the condition :math:`\alpha = \beta \ne \gamma` for
 the primitive cell in a standard form, in practice this condition simplifies to
-:math:`\boldsymbol{a}_1^s\cdot\boldsymbol{a}_2^s \ne \boldsymbol{a}_1^s\cdot\boldsymbol{a}_3^s`
-and
-:math:`\boldsymbol{a}_1^s\cdot\boldsymbol{a}_3^s = \boldsymbol{a}_2^s\cdot\boldsymbol{a}_3^s`
-for the primitive cell in a standard form.
-We use angles of the primitive cell for standardization.
+:math:`\boldsymbol{a}_2^s\cdot\boldsymbol{a}_3^s = \boldsymbol{a}_1^s\cdot\boldsymbol{a}_3^s \ne \boldsymbol{a}_1^s\cdot\boldsymbol{a}_2^s`
+for the primitive cell in a standard form. We use angles of the primitive cell for
+standardization.
 
 * If
   :math:`\alpha = \beta \ne \gamma` (i.e.
