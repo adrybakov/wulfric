@@ -52,55 +52,6 @@ with
 
 Order of parameters: :math:`b \le c`, :math:`\alpha < 90^{\circ}`.
 
-Cell standardization
-====================
-
-Length of the third vector of the primitive lattice has to be different from the
-length of the other two lattice vectors.
-
-Angle between second and third lattice vectors of conventional lattice (:math:`\alpha`)
-has to be less then :math:`90^{\circ}`.
-
-Length of the second lattice vector of the conventional lattice has to be less or
-equal to the length of the third lattice vector.
-
-If these conditions are not satisfied, then the lattice is transformed to the standard form:
-
-First we ensure the length of the third vector is different from the length of the other two vectors.
-For this step we use vectors of the primitive lattice:
-
-* If :math:`\vert\boldsymbol{a}_1\vert = \vert\boldsymbol{a}_3\vert`:
-    .. math::
-
-        (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3) \rightarrow
-        (\boldsymbol{a}_3, \boldsymbol{a}_1, \boldsymbol{a}_2)
-
-* If :math:`\vert\boldsymbol{a}_2\vert = \vert\boldsymbol{a}_3\vert`:
-    .. math::
-
-        (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3) \rightarrow
-        (\boldsymbol{a}_2, \boldsymbol{a}_3, \boldsymbol{a}_1)
-
-Then we ensure the :math:`\alpha < 90^{\circ}`. For this step we use vectors of the conventional lattice:
-
-* If :math:`\alpha > 90^{\circ}`:
-    .. math::
-
-        (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3) \rightarrow
-        (\boldsymbol{a}_1, \boldsymbol{a}_3, -\boldsymbol{a}_2)
-
-Finally, we ensure the :math:`b \le c`. For this step we use vectors of the conventional lattice:
-
-* If :math:`b > c`:
-    .. math::
-
-        (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3) \rightarrow
-        (-\boldsymbol{a}_1, \boldsymbol{a}_3, \boldsymbol{a}_2)
-
-.. note::
-
-    First and second lattice vectors are multiplied by :math:`-1` in some cases to
-    preserve the handedness of the cell.
 
 K-path
 ======
@@ -385,7 +336,7 @@ MCLC\ :sub:`1`
 --------------
 
 Brillouin zone and default kpath
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------
 .. literalinclude:: mclc1_brillouin.py
     :language: py
 
@@ -393,7 +344,7 @@ Brillouin zone and default kpath
     :file: mclc1_brillouin.html
 
 Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 .. literalinclude:: mclc1_real.py
     :language: py
 
@@ -401,7 +352,7 @@ Primitive and conventional cell
     :file: mclc1_real.html
 
 Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
+-----------------
 .. literalinclude:: mclc1_wigner-seitz.py
     :language: py
 
@@ -412,7 +363,7 @@ MCLC\ :sub:`2`
 --------------
 
 Brillouin zone and default kpath
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------
 .. literalinclude:: mclc2_brillouin.py
     :language: py
 
@@ -420,7 +371,7 @@ Brillouin zone and default kpath
     :file: mclc2_brillouin.html
 
 Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 .. literalinclude:: mclc2_real.py
     :language: py
 
@@ -428,7 +379,7 @@ Primitive and conventional cell
     :file: mclc2_real.html
 
 Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
+-----------------
 .. literalinclude:: mclc2_wigner-seitz.py
     :language: py
 
@@ -439,7 +390,7 @@ MCLC\ :sub:`3`
 --------------
 
 Brillouin zone and default kpath
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------
 .. literalinclude:: mclc3_brillouin.py
     :language: py
 
@@ -447,7 +398,7 @@ Brillouin zone and default kpath
     :file: mclc3_brillouin.html
 
 Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 .. literalinclude:: mclc3_real.py
     :language: py
 
@@ -455,7 +406,7 @@ Primitive and conventional cell
     :file: mclc3_real.html
 
 Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
+-----------------
 .. literalinclude:: mclc3_wigner-seitz.py
     :language: py
 
@@ -466,7 +417,7 @@ MCLC\ :sub:`4`
 --------------
 
 Brillouin zone and default kpath
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------
 .. literalinclude:: mclc4_brillouin.py
     :language: py
 
@@ -474,7 +425,7 @@ Brillouin zone and default kpath
     :file: mclc4_brillouin.html
 
 Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 .. literalinclude:: mclc4_real.py
     :language: py
 
@@ -482,7 +433,7 @@ Primitive and conventional cell
     :file: mclc4_real.html
 
 Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
+-----------------
 .. literalinclude:: mclc4_wigner-seitz.py
     :language: py
 
@@ -493,7 +444,7 @@ MCLC\ :sub:`5`
 --------------
 
 Brillouin zone and default kpath
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------
 .. literalinclude:: mclc5_brillouin.py
     :language: py
 
@@ -501,7 +452,7 @@ Brillouin zone and default kpath
     :file: mclc5_brillouin.html
 
 Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 .. literalinclude:: mclc5_real.py
     :language: py
 
@@ -509,9 +460,322 @@ Primitive and conventional cell
     :file: mclc5_real.html
 
 Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
+-----------------
 .. literalinclude:: mclc5_wigner-seitz.py
     :language: py
 
 .. raw:: html
     :file: mclc5_wigner-seitz.html
+
+
+Cell standardization
+====================
+
+Standardization of the MCLC cell involves three steps and the second step had to be based
+on the conventional and not primitive cell. As a result the matrix :math:`\boldsymbol{S}`
+is not orthonormal in a general case (direct consequence of the non-orthogonality of the
+matrix :math:`\boldsymbol{C}`).
+
+Step 1
+------
+
+First step ensures that the first two lattice vectors of the primitive cell are
+orthogonal to each other. We use lattice vectors of the primitive cell.
+
+
+* If :math:`\vert \boldsymbol{a}_1\vert = \vert \boldsymbol{a}_2\vert \ne \vert \boldsymbol{a}_3\vert`,
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    =
+    (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}_1
+    =
+    \boldsymbol{S}_1^{-1}
+    =
+    \boldsymbol{S}_1^T
+    =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+
+* If :math:`\vert \boldsymbol{a}_2 \vert = \vert \boldsymbol{a}_3 \vert \ne \vert \boldsymbol{a}_1 \vert`,
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    =
+    (\boldsymbol{a}_2, \boldsymbol{a}_3, \boldsymbol{a}_1)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}_1
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}_1^{-1}
+    =
+    \boldsymbol{S}_1^T
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix}
+
+* If :math:`\vert \boldsymbol{a}_3 \vert = \vert \boldsymbol{a}_1 \vert \ne \vert \boldsymbol{a}_2 \vert`,
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    =
+    (\boldsymbol{a}_3, \boldsymbol{a}_1, \boldsymbol{a}_2)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}_1
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}_1^{-1}
+    =
+    \boldsymbol{S}_1^T
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
+
+Step 2
+------
+
+Second step ensures the condition :math:`b \le c`.  We use lattice vectors of the
+primitive cell.
+
+.. dropdown:: Details
+
+  Length of the lattice vectors for the primitive cell are:
+
+  .. math::
+
+    \begin{matrix}
+    \vert \boldsymbol{a}_1 \vert = \dfrac{\sqrt{a^2 + b^2}}{2} &
+    \vert \boldsymbol{a}_2 \vert = \dfrac{\sqrt{a^2 + b^2}}{2} &
+    \vert \boldsymbol{a}_3 \vert = c
+    \end{matrix}
+
+  angles between the lattice vectors for the primitive cell are:
+
+  .. math::
+
+    \begin{matrix}
+    \cos(\boldsymbol{a}_2\boldsymbol{a}_3) = \dfrac{2b}{\sqrt{a^2 + b^2}}\cos\alpha &
+    \cos(\boldsymbol{a}_1\boldsymbol{a}_3) = \dfrac{2b}{\sqrt{a^2 + b^2}}\cos\alpha &
+    \cos(\boldsymbol{a}_1\boldsymbol{a}_2) = \dfrac{b^2 - a^2}{b^2 + a^2}
+    \end{matrix}
+
+  Therefore, no simple condition can be formulated for the primitive cell, that will be
+  equivalent to the condition :math:`b \le c` for the conventional cell. The actual
+  condition is
+  :math:`2\vert \boldsymbol{a}_1 \vert^2 (1 + \cos(\boldsymbol{a}_1\boldsymbol{a}_2)) \le \vert \boldsymbol{a}_3 \vert^2`.
+  As a result, when this condition is not satisfied, simple reordering of vectors of the
+  primitive cell will not be enough. The recipe, that we follow instead is to
+
+  * Calculate conventional cell as
+
+    .. math::
+
+      (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
+      =
+      (\boldsymbol{a}_1^c, \boldsymbol{a}_2^c, \boldsymbol{a}_3^c) \boldsymbol{C}
+
+  * Find a standardization matrix for the **conventional** cell
+
+    .. math::
+
+      (\boldsymbol{a}_1^c, \boldsymbol{a}_2^c, \boldsymbol{a}_3^c)
+      =
+      (\boldsymbol{a}_1^{cs}, \boldsymbol{a}_2^{cs}, \boldsymbol{a}_3^{cs}) \boldsymbol{S^c}
+
+  * Calculate standardized primitive cell as
+
+    .. math::
+
+      (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+      =
+      (\boldsymbol{a}_1^{cs}, \boldsymbol{a}_2^{cs}, \boldsymbol{a}_3^{cs}) \boldsymbol{C}
+
+  Then the standardization matrix for the primitive cell is
+
+  .. math::
+
+    \boldsymbol{S}
+    =
+    \boldsymbol{C}^{-1}
+    \boldsymbol{S^c}
+    \boldsymbol{C}
+
+
+
+* If :math:`2\vert \boldsymbol{a}_1 \vert^2 (1 + \cos(\boldsymbol{a}_1\boldsymbol{a}_2)) \le \vert \boldsymbol{a}_3 \vert^2`,
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^2, \boldsymbol{a}_2^2, \boldsymbol{a}_3^2)
+    =
+    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}_2
+    =
+    \boldsymbol{S}_2^{-1}
+    =
+    \boldsymbol{S}_2^T
+    =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+
+* If :math:`2\vert \boldsymbol{a}_1 \vert^2 (1 + \cos(\boldsymbol{a}_1\boldsymbol{a}_2)) > \vert \boldsymbol{a}_3 \vert^2`,
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^{c,2}, \boldsymbol{a}_2^{c,2}, \boldsymbol{a}_3^{c,2})
+    =
+    (-\boldsymbol{a}_1^{c,1}, \boldsymbol{a}_3^{c,1}, \boldsymbol{a}_2^{c,1})
+
+  .. math::
+
+    \boldsymbol{S^s}_2
+    =
+    (\boldsymbol{S^s}_2)^{-1}
+    =
+    \begin{pmatrix}
+      -1 & 0 & 0 \\
+      0 & 0 & 1 \\
+      0 & 1 & 0
+    \end{pmatrix}
+
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}_2
+    =
+    \boldsymbol{S}_2^{-1}
+    =
+    \boldsymbol{C}^{-1}
+    \boldsymbol{S^s}_2
+    \boldsymbol{C}
+    =
+    \begin{pmatrix}
+      -0.5 & 0.5 & 1 \\
+      0.5 & -0.5 & 1 \\
+      0.5 & 0.5 & 0
+    \end{pmatrix}
+
+  .. note::
+
+    :math:`\boldsymbol{S}_2^T \ne \boldsymbol{S}_2^{-1}`
+
+Step 3
+------
+
+Last step ensures that :math:`\alpha < \frac{\pi}{2}`. Translated to the primitive cell,
+this condition reads as :math:`\boldsymbol{a}_2\boldsymbol{a}_3 > 0`. We use lattice
+vectors of the primitive cell.
+
+* If :math:`\alpha < \frac{\pi}{2}` (i.e. :math:`\boldsymbol{a}_2\boldsymbol{a}_3 > 0`),
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (\boldsymbol{a}_1^2, \boldsymbol{a}_2^2, \boldsymbol{a}_3^2)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}_3
+    =
+    \boldsymbol{S}_3^{-1}
+    =
+    \boldsymbol{S}_3^T
+    =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+
+* If :math:`\alpha > \frac{\pi}{2}` (i.e. :math:`\boldsymbol{a}_2\boldsymbol{a}_3 < 0`),
+  then
+
+  .. math::
+
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    =
+    (-\boldsymbol{a}_1^2, -\boldsymbol{a}_2^2, \boldsymbol{a}_3^2)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}_3
+    =
+    \boldsymbol{S}_3^{-1}
+    =
+    \boldsymbol{S}_3^T
+    =
+    \begin{pmatrix}
+      -1 & 0 & 0 \\
+      0 & -1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+
+Finally
+-------
+
+.. math::
+
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}_3 \boldsymbol{S}_2 \boldsymbol{S}_1
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}_1^{-1} \boldsymbol{S}_2^{-1} \boldsymbol{S}_3^{-1}
