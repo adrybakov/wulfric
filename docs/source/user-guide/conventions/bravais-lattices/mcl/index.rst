@@ -198,8 +198,7 @@ Step 1
 
 Step 2
 ------
-
-* If :math:`\alpha^1 < \frac{\pi}{2}`, then
+* If :math:`\vert \boldsymbol{a}_2^1 \vert  \le \vert \boldsymbol{a}_3^1 \vert`, then
 
   .. math::
 
@@ -213,23 +212,23 @@ Step 2
 
     \boldsymbol{S}_2
     =
+    \boldsymbol{S}_1
+    \qquad
     \boldsymbol{S}_2^{-1}
     =
     \boldsymbol{S}_2^T
     =
-    \begin{pmatrix}
-      1 & 0 & 0 \\
-      0 & 1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
+    \boldsymbol{S}_1^{-1}
+    =
+    \boldsymbol{S}_1^T
 
-* If :math:`\alpha^1 > \frac{\pi}{2}`, then
+* If :math:`\vert \boldsymbol{a}_2^1 \vert  > \vert \boldsymbol{a}_3^1 \vert`, then
 
   .. math::
 
     (\boldsymbol{a}_1^2, \boldsymbol{a}_2^2, \boldsymbol{a}_3^2)
     =
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_3^1, -\boldsymbol{a}_2^1)
+    (-\boldsymbol{a}_1^1, \boldsymbol{a}_3^1, \boldsymbol{a}_2^1)
 
   and
 
@@ -238,25 +237,34 @@ Step 2
     \boldsymbol{S}_2
     =
     \begin{pmatrix}
-      1 & 0 & 0 \\
+      -1 & 0 & 0 \\
       0 & 0 & 1 \\
-      0 & -1 & 0
+      0 & 1 & 0
     \end{pmatrix}
+    \boldsymbol{S}_1
     \qquad
     \boldsymbol{S}_2^{-1}
     =
     \boldsymbol{S}_2^T
     =
+    \boldsymbol{S}_1^{-1}
     \begin{pmatrix}
-      1 & 0 & 0 \\
-      0 & 0 & -1 \\
+      -1 & 0 & 0 \\
+      0 & 0 & 1 \\
+      0 & 1 & 0
+    \end{pmatrix}
+    =
+    \boldsymbol{S}_1^T
+    \begin{pmatrix}
+      -1 & 0 & 0 \\
+      0 & 0 & 1 \\
       0 & 1 & 0
     \end{pmatrix}
 
 Step 3
 ------
 
-* If :math:`\vert \boldsymbol{a}_2^2 \vert  \le \vert \boldsymbol{a}_3^2 \vert`, then
+* If :math:`\alpha^2 < \frac{\pi}{2}`, then
 
   .. math::
 
@@ -270,7 +278,7 @@ Step 3
 
     \boldsymbol{S}
     =
-    \boldsymbol{S}_2 \boldsymbol{S}_1
+    \boldsymbol{S}_2\boldsymbol{S}_1
     \qquad
     \boldsymbol{S}^{-1}
     =
@@ -280,13 +288,13 @@ Step 3
     =
     \boldsymbol{S}_1^T \boldsymbol{S}_2^T
 
-* If :math:`\vert \boldsymbol{a}_2^2 \vert  > \vert \boldsymbol{a}_3^2 \vert`, then
+* If :math:`\alpha^2 > \frac{\pi}{2}`, then
 
   .. math::
 
     (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
     =
-    (-\boldsymbol{a}_1^2, \boldsymbol{a}_3^2, \boldsymbol{a}_2^2)
+    (-\boldsymbol{a}_1^2, -\boldsymbol{a}_2^2, \boldsymbol{a}_3^2)
 
   and
 
@@ -296,10 +304,11 @@ Step 3
     =
     \begin{pmatrix}
       -1 & 0 & 0 \\
-      0 & 0 & 1 \\
-      0 & 1 & 0
+      0 & -1 & 0 \\
+      0 & 0 & 1
     \end{pmatrix}
-    \boldsymbol{S}_2 \boldsymbol{S}_1
+    \boldsymbol{S}_2
+    \boldsymbol{S}_1
     \qquad
     \boldsymbol{S}^{-1}
     =
@@ -308,15 +317,15 @@ Step 3
     \boldsymbol{S}_1^{-1} \boldsymbol{S}_2^{-1}
     \begin{pmatrix}
       -1 & 0 & 0 \\
-      0 & 0 & 1 \\
-      0 & 1 & 0
+      0 & -1 & 0 \\
+      0 & 0 & 1
     \end{pmatrix}
     =
     \boldsymbol{S}_1^T \boldsymbol{S}_2^T
     \begin{pmatrix}
       -1 & 0 & 0 \\
-      0 & 0 & 1 \\
-      0 & 1 & 0
+      0 & -1 & 0 \\
+      0 & 0 & 1
     \end{pmatrix}
 
 .. note::
