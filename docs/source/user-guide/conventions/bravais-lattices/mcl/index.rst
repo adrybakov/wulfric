@@ -110,7 +110,7 @@ Conditions :math:`b \le c` and :math:`\alpha < 90^{\circ}` are checked directly.
 Matrix :math:`\boldsymbol{S}` is constructed in three steps.
 
 Step 1
---------------------------------
+------
 
 * If :math:`\beta = \gamma = \frac{\pi}{2}` and :math:`\alpha \ne \frac{\pi}{2}`, then
 
@@ -212,15 +212,15 @@ Step 2
 
     \boldsymbol{S}_2
     =
-    \boldsymbol{S}_1
-    \qquad
     \boldsymbol{S}_2^{-1}
     =
     \boldsymbol{S}_2^T
     =
-    \boldsymbol{S}_1^{-1}
-    =
-    \boldsymbol{S}_1^T
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
 
 * If :math:`\vert \boldsymbol{a}_2^1 \vert  > \vert \boldsymbol{a}_3^1 \vert`, then
 
@@ -241,20 +241,11 @@ Step 2
       0 & 0 & 1 \\
       0 & 1 & 0
     \end{pmatrix}
-    \boldsymbol{S}_1
     \qquad
     \boldsymbol{S}_2^{-1}
     =
     \boldsymbol{S}_2^T
     =
-    \boldsymbol{S}_1^{-1}
-    \begin{pmatrix}
-      -1 & 0 & 0 \\
-      0 & 0 & 1 \\
-      0 & 1 & 0
-    \end{pmatrix}
-    =
-    \boldsymbol{S}_1^T
     \begin{pmatrix}
       -1 & 0 & 0 \\
       0 & 0 & 1 \\
@@ -276,17 +267,17 @@ Step 3
 
   .. math::
 
-    \boldsymbol{S}
+    \boldsymbol{S}_3
     =
-    \boldsymbol{S}_2\boldsymbol{S}_1
-    \qquad
-    \boldsymbol{S}^{-1}
+    \boldsymbol{S}_3^{-1}
     =
-    \boldsymbol{S}^T
+    \boldsymbol{S}_3^T
     =
-    \boldsymbol{S}_1^{-1} \boldsymbol{S}_2^{-1}
-    =
-    \boldsymbol{S}_1^T \boldsymbol{S}_2^T
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
 
 * If :math:`\alpha^2 > \frac{\pi}{2}`, then
 
@@ -300,33 +291,36 @@ Step 3
 
   .. math::
 
-    \boldsymbol{S}
+    \boldsymbol{S}_3
     =
     \begin{pmatrix}
       -1 & 0 & 0 \\
       0 & -1 & 0 \\
       0 & 0 & 1
     \end{pmatrix}
-    \boldsymbol{S}_2
-    \boldsymbol{S}_1
+    \qquad
+    \boldsymbol{S}_3^{-1}
+    =
+    \boldsymbol{S}_3^T
+    =
+    \begin{pmatrix}
+      -1 & 0 & 0 \\
+      0 & -1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+
+Finally
+-------
+
+.. math::
+
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}_3 \boldsymbol{S}_2 \boldsymbol{S}_1
     \qquad
     \boldsymbol{S}^{-1}
     =
-    \boldsymbol{S}^T
-    =
-    \boldsymbol{S}_1^{-1} \boldsymbol{S}_2^{-1}
-    \begin{pmatrix}
-      -1 & 0 & 0 \\
-      0 & -1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
-    =
-    \boldsymbol{S}_1^T \boldsymbol{S}_2^T
-    \begin{pmatrix}
-      -1 & 0 & 0 \\
-      0 & -1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
+    \boldsymbol{S}_1^{-1} \boldsymbol{S}_2^{-1} \boldsymbol{S}_3^{-1}
 
 .. note::
 
