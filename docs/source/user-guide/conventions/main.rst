@@ -55,7 +55,6 @@ a matrix with vectors as rows (hence the transposition symbol):
     That definition of the cell is the same as in the |spglib-python|_ and is a
     transpose of the definition of the C |spglib|_.
 
-
 Atom's positions
 ================
 
@@ -101,6 +100,80 @@ Cartesian (absolute) coordinates of the atoms can be calculated by the following
     snippets are written for
     :math:`(\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)^T` matrix.
 
+Reciprocal cell
+===============
+
+Reciprocal cell is defined by the three reciprocal lattice vectors
+:math:`\boldsymbol{b}_i = (b_i^x, b_i^y, b_i^z)^T`. In Wulfric those vectors are stored as
+a matrix with vectors as rows (hence the transposition symbol):
+
+.. math::
+
+    (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3)^T
+    =
+    \begin{pmatrix}
+      b_1^x & b_1^y & b_1^z \\
+      b_2^x & b_2^y & b_2^z \\
+      b_3^x & b_3^y & b_3^z
+    \end{pmatrix}
+
+.. code-block:: python
+
+        reciprocal_cell = [
+            [b1_x, b1_y, b1_z],
+            [b2_x, b2_y, b2_z],
+            [b3_x, b3_y, b3_z],
+        ]
+
+Reciprocal cell is connected with the cell of the lattice as follows:
+
+.. math::
+
+    (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3)^T
+    =
+    2\pi(\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)^{-1}
+
+.. code-block:: python
+
+    reciprocal_cell = 2 * np.pi * np.linalg.inv(cell.T)
+
+K-points
+========
+
+K-points are stored as vectors of the fractional coordinates with respect to the
+reciprocal cell vectors.
+
+.. math::
+
+    \boldsymbol{g}
+    =
+    (g_1,g_2,g_3)^T
+    =
+    \begin{pmatrix} g_1 \\ g_2 \\ g_3 \end{pmatrix}
+
+.. code-block:: python
+
+        kpoint = np.array([g1, g2, g3])
+
+Cartesian (absolute) coordinates of the k-points can be calculated by the following formula:
+
+.. math::
+
+    \boldsymbol{k}^T
+    &=
+    \boldsymbol{g}^T(\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3)^T\\
+    \boldsymbol{k}
+    &=
+    (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3) \boldsymbol{g}
+
+.. code-block:: python
+
+    k = g @ reciprocal_cell
+    # or
+    k = reciprocal_cell.T @ g
+
+
+
 
 Transformation of the cell
 ==========================
@@ -131,7 +204,7 @@ the atom's relative positions are transformed as
 
 .. code-block:: python
 
-        r = P @ r
+        tr = P @ r
 
 .. hint::
 
@@ -147,10 +220,34 @@ the atom's relative positions are transformed as
         =
         (\boldsymbol{\tilde{a}}_1, \boldsymbol{\tilde{a}}_2, \boldsymbol{\tilde{a}}_3)\boldsymbol{\tilde{r}}
 
+Reciprocal cell is changed by the transformation as follows:
+
+.. math::
+
+    (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3)
+    =
+    (\boldsymbol{\tilde{b}}_1, \boldsymbol{\tilde{b}}_2, \boldsymbol{\tilde{b}}_3) (\boldsymbol{P}^{-1})^T
+
+.. code-block:: python
+
+    reciprocal_tcell = np.linalg.inv(P) @ reciprocal_cell
+
+Relative positions of the k-points are transformed as follows:
+
+.. math::
+
+    \boldsymbol{\tilde{g}}
+    =
+    (\boldsymbol{P}^{-1})^T\boldsymbol{g}
+
+.. code-block:: python
+
+    tg = np.linalg.inv(P).T @ g
+
 Standardization of the cell
 ===========================
 
-When standardization of the cell is required, it can be expressed by the **orthogonal**
+When standardization of the cell is required, it can be expressed by the
 transformation matrix :math:`\boldsymbol{S}` with
 :math:`(\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)`
 being the standardized primitive cell:
@@ -161,11 +258,9 @@ being the standardized primitive cell:
     =
     (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s) \boldsymbol{S}
 
-Note that the code is simplified, as :math:`\boldsymbol{S}^T = \boldsymbol{S}^{-1}`:
-
-.. code-block:: python
-
-    scell = S @ cell
+.. note::
+    Matrix :math:`\boldsymbol{S}` is orthonormal for all Bravais lattices, except for
+    the :ref:`guide_mclc`. All matrices satisfy :math:`\det(\boldsymbol{S}) = 1`.
 
 
 Details on how the standardization matrix is constructed are provided in the individual
