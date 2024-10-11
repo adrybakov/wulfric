@@ -277,19 +277,17 @@ One of the four conditions have to be met:
 
 * All reciprocal cell angles (:math:`k_{\alpha}`, :math:`k_{\beta}`, :math:`k_{\gamma}`) are :math:`< 90^{\circ}` and :math:`k_{\gamma} = \max(k_{\alpha}, k_{\beta}, k_{\gamma})`.
 
-We find it convenient to deal first with the first two conditions and if non of them are
-met, then we check for the last two.
-
-
-First two conditions
---------------------
-
-The check is done in two steps.
+The standardization matrix is constructed in two steps
 
 Step 1
-^^^^^^
+------
 
-* If :math:`k_{\gamma} = 90^{\circ}`, then
+In this step we ensure either of the two conditions: all angles are :math:`\le 90^{\circ}`
+or all angles are :math:`\ge 90^{\circ}`.
+
+* If :math:`k_{\alpha} \ge 90^{\circ}` and :math:`k_{\beta} \ge 90^{\circ}` and :math:`k_{\gamma} \ge 90^{\circ}`
+  or
+  :math:`k_{\alpha} \le 90^{\circ}` and :math:`k_{\beta} \le 90^{\circ}` and :math:`k_{\gamma} \le 90^{\circ}`:
 
   .. math::
 
@@ -313,13 +311,15 @@ Step 1
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`k_{\beta} = 90^{\circ}`, then
+* If :math:`k_{\alpha} \ge 90^{\circ}` and :math:`k_{\beta} \ge 90^{\circ}` and :math:`k_{\gamma} \le 90^{\circ}`
+  or
+  :math:`k_{\alpha} \le 90^{\circ}` and :math:`k_{\beta} \le 90^{\circ}` and :math:`k_{\gamma} \ge 90^{\circ}`:
 
   .. math::
 
     (\boldsymbol{b}_1^1, \boldsymbol{b}_2^1, \boldsymbol{b}_3^1)
     =
-    (\boldsymbol{b}_3, \boldsymbol{b}_1, \boldsymbol{b}_2)
+    (-\boldsymbol{b}_1, -\boldsymbol{b}_2, \boldsymbol{b}_3)
 
   and
 
@@ -327,29 +327,25 @@ Step 1
 
     \boldsymbol{S}_1
     =
-    \begin{pmatrix}
-      0 & 0 & 1 \\
-      1 & 0 & 0 \\
-      0 & 1 & 0
-    \end{pmatrix}
-    \qquad
     \boldsymbol{S}_1^{-1}
     =
     \boldsymbol{S}_1^T
     =
     \begin{pmatrix}
-      0 & 1 & 0 \\
-      0 & 0 & 1 \\
-      1 & 0 & 0
+      -1 & 0 & 0 \\
+      0 & -1 & 0 \\
+      0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`k_{\alpha} = 90^{\circ}`, then
+* If :math:`k_{\alpha} \ge 90^{\circ}` and :math:`k_{\beta} \le 90^{\circ}` and :math:`k_{\gamma} \ge 90^{\circ}`
+  or
+  :math:`k_{\alpha} \le 90^{\circ}` and :math:`k_{\beta} \ge 90^{\circ}` and :math:`k_{\gamma} \le 90^{\circ}`:
 
   .. math::
 
     (\boldsymbol{b}_1^1, \boldsymbol{b}_2^1, \boldsymbol{b}_3^1)
     =
-    (\boldsymbol{b}_2, \boldsymbol{b}_3, \boldsymbol{b}_1)
+    (-\boldsymbol{b}_1, \boldsymbol{b}_2, -\boldsymbol{b}_3)
 
   and
 
@@ -357,27 +353,50 @@ Step 1
 
     \boldsymbol{S}_1
     =
-    \begin{pmatrix}
-      0 & 1 & 0 \\
-      0 & 0 & 1 \\
-      1 & 0 & 0
-    \end{pmatrix}
-    \qquad
     \boldsymbol{S}_1^{-1}
     =
     \boldsymbol{S}_1^T
     =
     \begin{pmatrix}
-      0 & 0 & 1 \\
+      -1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & -1
+    \end{pmatrix}
+
+* If :math:`k_{\alpha} \le 90^{\circ}` and :math:`k_{\beta} \ge 90^{\circ}` and :math:`k_{\gamma} \ge 90^{\circ}`
+  or
+  :math:`k_{\alpha} \ge 90^{\circ}` and :math:`k_{\beta} \le 90^{\circ}` and :math:`k_{\gamma} \le 90^{\circ}`:
+
+  .. math::
+
+    (\boldsymbol{b}_1^1, \boldsymbol{b}_2^1, \boldsymbol{b}_3^1)
+    =
+    (\boldsymbol{b}_1, -\boldsymbol{b}_2, -\boldsymbol{b}_3)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}_1
+    =
+    \boldsymbol{S}_1^{-1}
+    =
+    \boldsymbol{S}_1^T
+    =
+    \begin{pmatrix}
       1 & 0 & 0 \\
-      0 & 1 & 0
+      0 & -1 & 0 \\
+      0 & 0 & -1
     \end{pmatrix}
 
 Step 2
-^^^^^^
+------
 
-* If :math:`k_{\alpha} > 90^{\circ}` and :math:`k_{\beta} > 90^{\circ}` or
-  :math:`k_{\alpha} < 90^{\circ}` and :math:`k_{\beta} < 90^{\circ}`, then
+At this step we ensure that :math:`k_{\gamma}` is an appropriate extremum.
+
+* If :math:`k_{\gamma} = min(k_{\alpha}, k_{\beta}, k_{\gamma})` and :math:`k_{\gamma} \ge 90^{\circ}`
+  or
+  :math:`k_{\gamma} = max(k_{\alpha}, k_{\beta}, k_{\gamma})` and :math:`k_{\gamma} \le 90^{\circ}`:
 
   .. math::
 
@@ -401,14 +420,47 @@ Step 2
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`k_{\alpha} > 90^{\circ}` and :math:`k_{\beta} < 90^{\circ}` or
-  :math:`k_{\alpha} < 90^{\circ}` and :math:`k_{\beta} > 90^{\circ}`, then
+* If :math:`k_{\beta} = min(k_{\alpha}, k_{\beta}, k_{\gamma})` and :math:`k_{\beta} \ge 90^{\circ}`
+  or
+  :math:`k_{\beta} = max(k_{\alpha}, k_{\beta}, k_{\gamma})` and :math:`k_{\beta} \le 90^{\circ}`:
 
   .. math::
 
     (\boldsymbol{b}_1^s, \boldsymbol{b}_2^s, \boldsymbol{b}_3^s)
     =
-    (\boldsymbol{b}_2^1, -\boldsymbol{b}_1^1, \boldsymbol{b}_3^1)
+    (\boldsymbol{b}_3^1, \boldsymbol{b}_1^1, \boldsymbol{b}_2^1)
+
+  and
+
+  .. math::
+
+    \boldsymbol{S}_2
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}_2^{-1}
+    =
+    \boldsymbol{S}_2^T
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
+
+* If :math:`k_{\alpha} = min(k_{\alpha}, k_{\beta}, k_{\gamma})` and :math:`k_{\alpha} \ge 90^{\circ}`
+  or
+  :math:`k_{\alpha} = max(k_{\alpha}, k_{\beta}, k_{\gamma})` and :math:`k_{\alpha} \le 90^{\circ}`:
+
+  .. math::
+
+    (\boldsymbol{b}_1^s, \boldsymbol{b}_2^s, \boldsymbol{b}_3^s)
+    =
+    (\boldsymbol{b}_2^1, \boldsymbol{b}_3^1, \boldsymbol{b}_1^1)
 
   and
 
@@ -418,8 +470,8 @@ Step 2
     =
     \begin{pmatrix}
       0 & 1 & 0 \\
-      -1 & 0 & 0 \\
-      0 & 0 & 1
+      0 & 0 & 1 \\
+      1 & 0 & 0
     \end{pmatrix}
     \qquad
     \boldsymbol{S}_2^{-1}
@@ -427,86 +479,20 @@ Step 2
     \boldsymbol{S}_2^T
     =
     \begin{pmatrix}
-      0 & -1 & 0 \\
+      0 & 0 & 1 \\
       1 & 0 & 0 \\
-      0 & 0 & 1
+      0 & 1 & 0
     \end{pmatrix}
 
-If one of the conditions of step 1 were met, then we stop here:
-:math:`\boldsymbol{S} = \boldsymbol{S}_2\boldsymbol{S}_1` and
-:math:`\boldsymbol{S}^{-1} = \boldsymbol{S}_1^{-1}\boldsymbol{S}_2^{-1}`.
-Otherwise we proceed to check for the last two conditions.
+Finally
+-------
 
-Last two conditions
--------------------
+.. math::
 
-If none of the last two conditions were met, then we check for the first two.
-First we ensure that all angles are :math:`> 90^{\circ}` or :math:`< 90^{\circ}`:
-
-
-* If :math:`k_{\alpha} > 90^{\circ}` and :math:`k_{\beta} > 90^{\circ}` and :math:`k_{\gamma} < 90^{\circ}`:
-    .. math::
-
-        (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3) \rightarrow
-        (-\boldsymbol{b}_1, -\boldsymbol{b}_2, \boldsymbol{b}_3)
-
-* If :math:`k_{\alpha} > 90^{\circ}` and :math:`k_{\beta} < 90^{\circ}` and :math:`k_{\gamma} > 90^{\circ}`:
-    .. math::
-
-        (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3) \rightarrow
-        (-\boldsymbol{b}_1, \boldsymbol{b}_2, -\boldsymbol{b}_3)
-
-* If :math:`k_{\alpha} > 90^{\circ}` and :math:`k_{\beta} < 90^{\circ}` and :math:`k_{\gamma} < 90^{\circ}`:
-    .. math::
-
-        (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3) \rightarrow
-        (\boldsymbol{b}_1, -\boldsymbol{b}_2, -\boldsymbol{b}_3)
-
-* If :math:`k_{\alpha} < 90^{\circ}` and :math:`k_{\beta} > 90^{\circ}` and :math:`k_{\gamma} > 90^{\circ}`:
-    .. math::
-
-        (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3) \rightarrow
-        (\boldsymbol{b}_1, -\boldsymbol{b}_2, -\boldsymbol{b}_3)
-
-* If :math:`k_{\alpha} < 90^{\circ}` and :math:`k_{\beta} > 90^{\circ}` and :math:`k_{\gamma} < 90^{\circ}`:
-    .. math::
-
-        (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3) \rightarrow
-        (-\boldsymbol{b}_1, \boldsymbol{b}_2, -\boldsymbol{b}_3)
-
-* If :math:`k_{\alpha} < 90^{\circ}` and :math:`k_{\beta} < 90^{\circ}` and :math:`k_{\gamma} > 90^{\circ}`:
-    .. math::
-
-        (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3) \rightarrow
-        (-\boldsymbol{b}_1, -\boldsymbol{b}_2, \boldsymbol{b}_3)
-
-As the last step we reorder the reciprocal vectors:
-
-Reordering if all angles are :math:`> 90^{\circ}`:
-
-* If :math:`k_{\alpha} = min(k_{\alpha}, k_{\beta}, k_{\gamma})`, then:
-    .. math::
-
-        (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3) \rightarrow
-        (\boldsymbol{b}_2, \boldsymbol{b}_3, \boldsymbol{b}_1)
-
-* If :math:`k_{\beta} = min(k_{\alpha}, k_{\beta}, k_{\gamma})`, then:
-    .. math::
-
-        (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3) \rightarrow
-        (\boldsymbol{b}_3, \boldsymbol{b}_1, \boldsymbol{b}_2)
-
-
-Reordering if all angles are :math:`< 90^{\circ}`:
-
-* If :math:`k_{\alpha} = max(k_{\alpha}, k_{\beta}, k_{\gamma})`, then:
-    .. math::
-
-        (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3) \rightarrow
-        (\boldsymbol{b}_2, \boldsymbol{b}_3, \boldsymbol{b}_1)
-
-* If :math:`k_{\beta} = max(k_{\alpha}, k_{\beta}, k_{\gamma})`, then:
-    .. math::
-
-        (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3) \rightarrow
-        (\boldsymbol{b}_3, \boldsymbol{b}_1, \boldsymbol{b}_2)
+    \boldsymbol{S}
+    =
+    \boldsymbol{S}_2 \boldsymbol{S}_1
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \boldsymbol{S}_1^{-1} \boldsymbol{S}_2^{-1}
