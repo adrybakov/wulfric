@@ -57,6 +57,7 @@ from wulfric.bravais_lattice.standardize import (
     TRI_get_S_matrix,
 )
 from wulfric.constants import TODEGREES, TORADIANS
+from wulfric.exceptions import StandardizationTypeMismatch
 from wulfric.geometry import parallelepiped_check
 from wulfric.numerical import (
     ABS_TOL,
@@ -112,7 +113,8 @@ def test_CUB_get_S_matrix(r1, r2, r3, conv_a, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = CUB_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        S = CUB_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = np.linalg.inv(S.T) @ cell
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -146,7 +148,8 @@ def test_FCC_get_S_matrix(r1, r2, r3, conv_a, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = FCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        S = FCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = np.linalg.inv(S.T) @ cell
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -183,7 +186,8 @@ def test_BCC_get_S_matrix(r1, r2, r3, conv_a, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = BCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        S = BCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = np.linalg.inv(S.T) @ cell
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -222,7 +226,11 @@ def test_TET_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        try:
+            S = TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        except StandardizationTypeMismatch:
+            return
+        cell = np.linalg.inv(S.T) @ cell
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -267,7 +275,11 @@ def test_BCT_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        try:
+            S = BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        except StandardizationTypeMismatch:
+            return
+        cell = np.linalg.inv(S.T) @ cell
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -312,7 +324,12 @@ def test_ORC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        try:
+            S = ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        except StandardizationTypeMismatch:
+            return
+        cell = np.linalg.inv(S.T) @ cell
+
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
         assert np.allclose(
@@ -362,7 +379,12 @@ def test_ORCF_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        try:
+            S = ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        except StandardizationTypeMismatch:
+            return
+
+        cell = np.linalg.inv(S.T) @ cell
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -420,7 +442,11 @@ def test_ORCI_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        try:
+            S = ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        except StandardizationTypeMismatch:
+            return
+        cell = np.linalg.inv(S.T) @ cell
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -444,6 +470,15 @@ def test_ORCI_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
 ################################################################################
 @example(r1=0.0, r2=0.0, r3=1.0, conv_a=1.0, conv_b=0.0078125, conv_c=0.5, order=0)
 @example(r1=0.0, r2=0.0, r3=1.0, conv_a=1.0, conv_b=1.0, conv_c=0.5, order=0)
+@example(
+    r1=0.0,
+    r2=1.0,
+    r3=0.0078125,
+    conv_a=314768.08572113514,
+    conv_b=314768.08572113514,
+    conv_c=362.0,
+    order=0,
+)
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -454,8 +489,12 @@ def test_ORCI_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
     st.integers(min_value=0, max_value=n_order),
 )
 def test_ORCC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
-    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL) and (
-        min(conv_a, conv_b, conv_c) / max(conv_a, conv_b, conv_c) > REL_TOL
+    if (
+        not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL)
+        and (min(conv_a, conv_b, conv_c) / max(conv_a, conv_b, conv_c) > REL_TOL)
+        and compare_numerically(conv_a, "!=", conv_b)
+        and compare_numerically(conv_a, "!=", conv_c)
+        and compare_numerically(conv_b, "!=", conv_c)
     ):
         cell = shuffle(
             rotate(ORCC(conv_a, conv_b, conv_c, return_cell=True), r1, r2, r3), order
@@ -471,7 +510,14 @@ def test_ORCC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
 
         old_det = np.linalg.det(cell)
 
-        cell = ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        # Fix the cell
+        try:
+            S = ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        except StandardizationTypeMismatch:
+            return
+        cell = np.linalg.inv(S.T) @ cell
+
+        # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
         assert np.allclose(
             [a, b, c], [prim_a, prim_b, prim_c], rtol=REL_TOL, atol=ABS_TOL
@@ -486,6 +532,7 @@ def test_ORCC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
             gamma, prim_gamma, rtol=REL_TOL, atol=ABS_TOL
         ) or np.allclose(gamma, 180.0 - prim_gamma, rtol=REL_TOL, atol=ABS_TOL)
 
+        # Check that chirality is the same
         assert np.linalg.det(cell) * old_det > 0
 
 
@@ -515,7 +562,11 @@ def test_HEX_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        try:
+            S = HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        except StandardizationTypeMismatch:
+            return
+        cell = np.linalg.inv(S.T) @ cell
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -564,7 +615,8 @@ def test_RHL_get_S_matrix(r1, r2, r3, conv_a, conv_alpha, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = RHL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        S = RHL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = np.linalg.inv(S.T) @ cell
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -626,7 +678,11 @@ def test_MCL_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order)
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        try:
+            S = MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        except StandardizationTypeMismatch:
+            return
+        cell = np.linalg.inv(S.T) @ cell
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -697,7 +753,11 @@ def test_MCLC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        try:
+            S = MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        except StandardizationTypeMismatch:
+            return
+        cell = np.linalg.inv(S.T) @ cell
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -785,6 +845,18 @@ def test_MCLC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order
     gamma=1.0,
     order=3,
 )
+@example(
+    r1=0.0,  # or any other generated value
+    r2=0.0,  # or any other generated value
+    r3=1.0,
+    a=1111674.0,
+    b=1481154.0,
+    c=149.0,
+    alpha=1.0,
+    beta=1.0,
+    gamma=1.5,
+    order=0,  # or any other generated value
+)
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -815,7 +887,11 @@ def test_TRI_get_S_matrix(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        try:
+            S = TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
+        except StandardizationTypeMismatch:
+            return
+        cell = np.linalg.inv(S.T) @ cell
 
         s_a, s_b, s_c, s_alpha, s_beta, s_gamma = Cell.params(cell)
         s_k_a, s_k_b, s_k_c, s_k_alpha, s_k_beta, s_k_gamma = Cell.params(

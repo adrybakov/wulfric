@@ -20,6 +20,7 @@ import numpy as np
 
 import wulfric.cell as Cell
 from wulfric.constants import TRANSFORM_TO_CONVENTIONAL
+from wulfric.exceptions import StandardizationTypeMismatch
 from wulfric.numerical import ABS_TOL, ABS_TOL_ANGLE, REL_TOL, compare_numerically
 
 __all__ = [
@@ -214,7 +215,7 @@ def TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Raises
     ------
-    ValueError
+    :py:class:`.StandardizationTypeMismatch`
         If none of the tetragonal conditions are satisfied.
     """
 
@@ -233,9 +234,7 @@ def TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ):
         S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     else:
-        raise ValueError(
-            "Standardization fails. Are you sure that the cell is tetragonal?"
-        )
+        raise StandardizationTypeMismatch("tetragonal")
 
     return S
 
@@ -269,7 +268,7 @@ def BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Raises
     ------
-    ValueError
+    :py:class:`.StandardizationTypeMismatch`
         If none of the body-centered tetragonal conditions are satisfied.
     """
     cell = np.array(cell)
@@ -289,10 +288,7 @@ def BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ) and compare_numerically(gamma, "!=", beta, rtol=rtol, atol=atol):
         S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     else:
-        raise ValueError(
-            "Standardization fails. "
-            "Are you sure that the cell is body-centered tetragonal?"
-        )
+        raise StandardizationTypeMismatch("body-centered tetragonal")
 
     return S
 
@@ -326,7 +322,7 @@ def ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Raises
     ------
-    ValueError
+    :py:class:`.StandardizationTypeMismatch`
         If none of the orthorhombic conditions are satisfied.
     """
 
@@ -357,9 +353,7 @@ def ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ):
         S = np.array([[0, 0, -1], [0, -1, 0], [-1, 0, 0]], dtype=float)
     else:
-        raise ValueError(
-            "Standardization fails. " "Are you sure that the cell is orthorhombic?"
-        )
+        raise StandardizationTypeMismatch("orthorhombic")
 
     return S
 
@@ -394,7 +388,7 @@ def ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Raises
     ------
-    ValueError
+    :py:class:`.StandardizationTypeMismatch`
         If none of the face-centered orthorhombic conditions are satisfied.
     """
 
@@ -425,10 +419,7 @@ def ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ):
         S = np.array([[0, 0, -1], [0, -1, 0], [-1, 0, 0]], dtype=float)
     else:
-        raise ValueError(
-            "Standardization fails. "
-            "Are you sure that the cell is face-centered orthorhombic?"
-        )
+        raise StandardizationTypeMismatch("face-centered orthorhombic")
 
     return S
 
@@ -463,7 +454,7 @@ def ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Raises
     ------
-    ValueError
+    :py:class:`.StandardizationTypeMismatch`
         If none of the body-centered orthorhombic conditions are satisfied.
     """
 
@@ -494,10 +485,7 @@ def ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ) and compare_numerically(sp13, ">", sp12, rtol=rtol, atol=atol):
         S = np.array([[0, 0, -1], [0, -1, 0], [-1, 0, 0]], dtype=float)
     else:
-        raise ValueError(
-            "Standardization fails. "
-            "Are you sure that the cell is body-centered orthorhombic?"
-        )
+        raise StandardizationTypeMismatch("body-centered orthorhombic")
 
     return S
 
@@ -532,7 +520,7 @@ def ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Raises
     ------
-    ValueError
+    :py:class:`.StandardizationTypeMismatch`
         If none of the base-centered orthorhombic conditions are satisfied.
     """
 
@@ -576,10 +564,7 @@ def ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ):
         S = np.array([[1, 0, 0], [0, 0, -1], [0, 1, 0]], dtype=float)
     else:
-        raise ValueError(
-            "Standardization fails. "
-            "Are you sure that the cell is base-centered orthorhombic?"
-        )
+        raise StandardizationTypeMismatch("base-centered orthorhombic")
 
     return S
 
@@ -613,7 +598,7 @@ def HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Raises
     ------
-    ValueError
+    :py:class:`.StandardizationTypeMismatch`
         If none of the hexagonal conditions are satisfied.
     """
 
@@ -638,9 +623,7 @@ def HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ):
         S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     else:
-        raise ValueError(
-            "Standardization fails. " "Are you sure that the cell is hexagonal?"
-        )
+        raise StandardizationTypeMismatch("hexagonal")
 
     return S
 
@@ -707,7 +690,7 @@ def MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Raises
     ------
-    ValueError
+    :py:class:`.StandardizationTypeMismatch`
         If none of the monoclinic conditions are satisfied.
     """
 
@@ -729,15 +712,12 @@ def MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
         S1 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     elif (
         compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(s13, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
         and compare_numerically(sp12, "!=", 0.0, rtol=rtol, atol=atol)
     ):
         S1 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     else:
-        raise ValueError(
-            "First step of standardization fails. "
-            "Are you sure that the cell is monoclinic?"
-        )
+        raise StandardizationTypeMismatch("monoclinic", step="First")
 
     # Step 2
     cell1 = np.linalg.inv(S1.T) @ cell
@@ -748,10 +728,7 @@ def MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     elif b > c:
         S2 = np.array([[-1, 0, 0], [0, 0, 1], [0, 1, 0]], dtype=float)
     else:
-        raise ValueError(
-            "Second step of standardization fails. "
-            "Are you sure that the cell is monoclinic?"
-        )
+        raise StandardizationTypeMismatch("monoclinic", step="Second")
 
     # Step 3
     cell2 = np.linalg.inv(S2.T) @ cell1
@@ -761,10 +738,7 @@ def MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     elif compare_numerically(sp23, "<", 0, rtol=rtol, atol=atol):
         S3 = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
     else:
-        raise ValueError(
-            "Third step of standardization fails. "
-            "Are you sure that the cell is monoclinic?"
-        )
+        raise StandardizationTypeMismatch("monoclinic", step="Third")
 
     return S3 @ S2 @ S1
 
@@ -799,7 +773,7 @@ def MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Raises
     ------
-    ValueError
+    :py:class:`.StandardizationTypeMismatch`
         If none of the base-centered monoclinic conditions are satisfied.
     """
 
@@ -820,10 +794,7 @@ def MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ):
         S1 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     else:
-        raise ValueError(
-            "First step of standardization fails. "
-            "Are you sure that the cell is base-centered monoclinic?"
-        )
+        raise StandardizationTypeMismatch("base-centered monoclinic", step="First")
 
     # Step 2
     cell1 = np.linalg.inv(S1.T) @ cell
@@ -845,10 +816,7 @@ def MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     elif compare_numerically(sp23, "<", 0, rtol=rtol, atol=atol):
         S3 = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
     else:
-        raise ValueError(
-            "Third step of standardization fails. "
-            "Are you sure that the cell is base-centered monoclinic?"
-        )
+        raise StandardizationTypeMismatch("base-centered monoclinic", step="Third")
 
     return S3 @ S2 @ S1
 
@@ -882,7 +850,7 @@ def TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Raises
     ------
-    ValueError
+    :py:class:`.StandardizationTypeMismatch`
         If none of the triclinic conditions are satisfied.
     """
 
@@ -891,52 +859,50 @@ def TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     # Step 1
     sp23, sp13, sp12 = Cell.scalar_products(rcell)
+    a, b, c, alpha, beta, gamma = Cell.params(rcell)
 
     if (
-        compare_numerically(sp23, "<=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, "<=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, "<=", 0.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, ">=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(beta, ">=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(gamma, ">=", 90.0, rtol=rtol, atol=atol)
     ) or (
-        compare_numerically(sp23, ">=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, ">=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, ">=", 0.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, "<=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(beta, "<=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(gamma, "<=", 90.0, rtol=rtol, atol=atol)
     ):
         S1 = np.eye(3, dtype=float)
     elif (
-        compare_numerically(sp23, "<=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, "<=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, ">=", 0.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, ">=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(beta, ">=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(gamma, "<=", 90.0, rtol=rtol, atol=atol)
     ) or (
-        compare_numerically(sp23, ">=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, ">=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, "<=", 0.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, "<=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(beta, "<=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(gamma, ">=", 90.0, rtol=rtol, atol=atol)
     ):
         S1 = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
     elif (
-        compare_numerically(sp23, "<=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, ">=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, "<=", 0.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, ">=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(beta, "<=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(gamma, ">=", 90.0, rtol=rtol, atol=atol)
     ) or (
-        compare_numerically(sp23, ">=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, "<=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, ">=", 0.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, "<=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(beta, ">=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(gamma, "<=", 90.0, rtol=rtol, atol=atol)
     ):
         S1 = np.array([[-1, 0, 0], [0, 1, 0], [0, 0, -1]], dtype=float)
     elif (
-        compare_numerically(sp23, ">=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, "<=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, "<=", 0.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, "<=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(beta, ">=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(gamma, ">=", 90.0, rtol=rtol, atol=atol)
     ) or (
-        compare_numerically(sp23, "<=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, ">=", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, ">=", 0.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, ">=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(beta, "<=", 90.0, rtol=rtol, atol=atol)
+        and compare_numerically(gamma, "<=", 90.0, rtol=rtol, atol=atol)
     ):
         S1 = np.array([[1, 0, 0], [0, -1, 0], [0, 0, -1]], dtype=float)
     else:
-        raise ValueError(
-            "First step of standardization fails. "
-            "Are you sure that the cell is triclinic?"
-        )
+        raise StandardizationTypeMismatch("triclinic", step="First")
 
     # Step 2
     rcell1 = np.linalg.inv(S1.T) @ rcell
@@ -945,26 +911,23 @@ def TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     if (
         gamma == min(alpha, beta, gamma)
-        and compare_numerically(sp12, "<=", 0.0)
-        or (gamma == max(alpha, beta, gamma) and compare_numerically(sp12, ">=", 0.0))
+        and compare_numerically(gamma, ">=", 90.0)
+        or (gamma == max(alpha, beta, gamma) and compare_numerically(gamma, "<=", 90.0))
     ):
         S2 = np.eye(3, dtype=float)
     elif (
         beta == min(alpha, beta, gamma)
-        and compare_numerically(sp13, "<=", 0.0)
-        or (beta == max(alpha, beta, gamma) and compare_numerically(sp13, ">=", 0.0))
+        and compare_numerically(beta, ">=", 90.0)
+        or (beta == max(alpha, beta, gamma) and compare_numerically(beta, "<=", 90.0))
     ):
         S2 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     elif (
         alpha == min(alpha, beta, gamma)
-        and compare_numerically(sp23, "<=", 0.0)
-        or (alpha == max(alpha, beta, gamma) and compare_numerically(sp23, ">=", 0.0))
+        and compare_numerically(alpha, ">=", 90.0)
+        or (alpha == max(alpha, beta, gamma) and compare_numerically(alpha, "<=", 90.0))
     ):
         S2 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     else:
-        raise ValueError(
-            "Second step of standardization fails. "
-            "Are you sure that the cell is triclinic?"
-        )
+        raise StandardizationTypeMismatch("triclinic", step="Second")
 
     return S2 @ S1
