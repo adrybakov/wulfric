@@ -288,29 +288,9 @@ class Kpoints:
         return labels
 
     def coordinates(self, relative=False):
-        r"""
-        Deprecated. See :py:attr:`.ticks` for details.
-
-        Will be removed in 0.3.0.
-        """
-
-        print(
-            "".join(
-                [
-                    "=" * 60,
-                    "\n",
-                    f"{'Warning':^60}",
-                    "\n",
-                    "=" * 60,
-                    "\n",
-                    "The use of 'Kpoints.coordinates()' is deprecated.\n",
-                    "It will be removed in the release 0.3.0.\n",
-                    "Please use Kpoints.ticks() instead.\n",
-                    "=" * 60,
-                ]
-            ),
+        raise RuntimeError(
+            "Kpoints.coordinates() was removed in v0.4.0. Use Kpoints.ticks() instead."
         )
-        return self.ticks(relative=relative)
 
     def ticks(self, relative=False):
         r"""

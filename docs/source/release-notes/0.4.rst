@@ -19,3 +19,4 @@ Dependency on the |spglib|_ was introduced.
 The changes are described above and:
 
 * Add :py:class:`.StandardizationTypeMismatch` exception.
+* Function ``Kpoints.coordinates()`` is removed, use :py:meth:`.Kpoints.ticks()` instead.
