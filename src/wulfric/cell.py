@@ -27,6 +27,7 @@ __all__ = [
     "from_params",
     "params",
     "primitive",
+    "scalar_products",
 ]
 
 
@@ -178,6 +179,39 @@ def params(cell):
         angle(cell[1], cell[2]),
         angle(cell[0], cell[2]),
         angle(cell[0], cell[1]),
+    )
+
+
+def scalar_products(cell):
+    r"""
+    Returns pairwise scalar products of the lattice vectors:
+
+    * :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3`
+    * :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3`
+    * :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_2`
+
+    Parameters
+    ----------
+    cell : (3, 3) |array-like|_
+        Cell matrix, rows are interpreted as vectors.
+
+    Returns
+    -------
+    sp_23 : float
+        Scalar product of the vectors :math:`\boldsymbol{a}_2` and
+        :math:`\boldsymbol{a}_3`.
+    sp_13 : float
+        Scalar product of the vectors :math:`\boldsymbol{a}_1` and
+        :math:`\boldsymbol{a}_3`.
+    sp_12 : float
+        Scalar product of the vectors :math:`\boldsymbol{a}_1` and
+        :math:`\boldsymbol{a}_2`.
+    """
+
+    return (
+        np.dot(cell[1], cell[2]),
+        np.dot(cell[0], cell[2]),
+        np.dot(cell[0], cell[1]),
     )
 
 

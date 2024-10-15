@@ -36,3 +36,4 @@ Functions
     Cell.from_params
     Cell.params
     Cell.primitive
+    Cell.scalar_products
