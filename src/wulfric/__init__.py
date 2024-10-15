@@ -18,8 +18,8 @@
 
 __version__ = "0.4.0"
 __doclink__ = "wulfric.org"
-__git_hash__ = "undefined"
-__release_date__ = "undefined"
+__git_hash__ = "a581649f7c740a326f6be323517e533f921a214a"
+__release_date__ = "15 October 2024"
 
 
 from . import bravais_lattice
