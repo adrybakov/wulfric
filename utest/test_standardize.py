@@ -41,20 +41,20 @@ from wulfric.bravais_lattice.constructor import (
     TRI,
 )
 from wulfric.bravais_lattice.standardize import (
-    BCC_standardize_cell,
-    BCT_standardize_cell,
-    CUB_standardize_cell,
-    FCC_standardize_cell,
-    HEX_standardize_cell,
-    MCL_standardize_cell,
-    MCLC_standardize_cell,
-    ORC_standardize_cell,
-    ORCC_standardize_cell,
-    ORCF_standardize_cell,
-    ORCI_standardize_cell,
-    RHL_standardize_cell,
-    TET_standardize_cell,
-    TRI_standardize_cell,
+    BCC_get_S_matrix,
+    BCT_get_S_matrix,
+    CUB_get_S_matrix,
+    FCC_get_S_matrix,
+    HEX_get_S_matrix,
+    MCL_get_S_matrix,
+    MCLC_get_S_matrix,
+    ORC_get_S_matrix,
+    ORCC_get_S_matrix,
+    ORCF_get_S_matrix,
+    ORCI_get_S_matrix,
+    RHL_get_S_matrix,
+    TET_get_S_matrix,
+    TRI_get_S_matrix,
 )
 from wulfric.constants import TODEGREES, TORADIANS
 from wulfric.geometry import parallelepiped_check
@@ -105,14 +105,14 @@ def rotate(cell, r1, r2, r3):
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_CUB_standardize_cell(r1, r2, r3, conv_a, order):
+def test_CUB_get_S_matrix(r1, r2, r3, conv_a, order):
     if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL):
         # Prepare cell
         cell = shuffle(rotate(CUB(conv_a, return_cell=True), r1, r2, r3), order)
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = CUB_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = CUB_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -138,7 +138,7 @@ def test_CUB_standardize_cell(r1, r2, r3, conv_a, order):
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_FCC_standardize_cell(r1, r2, r3, conv_a, order):
+def test_FCC_get_S_matrix(r1, r2, r3, conv_a, order):
     if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL):
         # Prepare cell
         cell = shuffle(rotate(FCC(conv_a, return_cell=True), r1, r2, r3), order)
@@ -146,7 +146,7 @@ def test_FCC_standardize_cell(r1, r2, r3, conv_a, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = FCC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = FCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -174,7 +174,7 @@ def test_FCC_standardize_cell(r1, r2, r3, conv_a, order):
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_BCC_standardize_cell(r1, r2, r3, conv_a, order):
+def test_BCC_get_S_matrix(r1, r2, r3, conv_a, order):
     if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL):
         # Prepare cell
         cell = shuffle(rotate(BCC(conv_a, return_cell=True), r1, r2, r3), order)
@@ -183,7 +183,7 @@ def test_BCC_standardize_cell(r1, r2, r3, conv_a, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = BCC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = BCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -212,7 +212,7 @@ def test_BCC_standardize_cell(r1, r2, r3, conv_a, order):
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_TET_standardize_cell(r1, r2, r3, conv_a, conv_c, order):
+def test_TET_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
     if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL):
         # Prepare cell
         cell = shuffle(rotate(TET(conv_a, conv_c, return_cell=True), r1, r2, r3), order)
@@ -222,7 +222,7 @@ def test_TET_standardize_cell(r1, r2, r3, conv_a, conv_c, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = TET_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -254,7 +254,7 @@ def test_TET_standardize_cell(r1, r2, r3, conv_a, conv_c, order):
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_BCT_standardize_cell(r1, r2, r3, conv_a, conv_c, order):
+def test_BCT_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
     if (
         not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL)
         and min(conv_a, conv_c) / max(conv_a, conv_c) > REL_TOL
@@ -267,7 +267,7 @@ def test_BCT_standardize_cell(r1, r2, r3, conv_a, conv_c, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = BCT_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -298,7 +298,7 @@ def test_BCT_standardize_cell(r1, r2, r3, conv_a, conv_c, order):
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_ORC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
+def test_ORC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
     if (
         not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL)
         and min(conv_a, conv_b, conv_c) / max(conv_a, conv_b, conv_c) > REL_TOL
@@ -312,7 +312,7 @@ def test_ORC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = ORC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
         assert np.allclose(
@@ -341,7 +341,7 @@ def test_ORC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_ORCF_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
+def test_ORCF_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
     if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL) and (
         min(conv_a, conv_b, conv_c) / max(conv_a, conv_b, conv_c) > REL_TOL
     ):
@@ -362,7 +362,7 @@ def test_ORCF_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = ORCF_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -395,7 +395,7 @@ def test_ORCF_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_ORCI_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
+def test_ORCI_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
     if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL) and (
         min(conv_a, conv_b, conv_c) / max(conv_a, conv_b, conv_c) > REL_TOL
     ):
@@ -420,7 +420,7 @@ def test_ORCI_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = ORCI_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -453,7 +453,7 @@ def test_ORCI_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_ORCC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
+def test_ORCC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
     if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL) and (
         min(conv_a, conv_b, conv_c) / max(conv_a, conv_b, conv_c) > REL_TOL
     ):
@@ -471,7 +471,7 @@ def test_ORCC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
 
         old_det = np.linalg.det(cell)
 
-        cell = ORCC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
         a, b, c, alpha, beta, gamma = Cell.params(cell)
         assert np.allclose(
             [a, b, c], [prim_a, prim_b, prim_c], rtol=REL_TOL, atol=ABS_TOL
@@ -500,7 +500,7 @@ def test_ORCC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, order):
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_HEX_standardize_cell(r1, r2, r3, conv_a, conv_c, order):
+def test_HEX_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
     if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL) and (
         min(conv_a, conv_c) / max(conv_a, conv_c) > REL_TOL
     ):
@@ -515,7 +515,7 @@ def test_HEX_standardize_cell(r1, r2, r3, conv_a, conv_c, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = HEX_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -549,7 +549,7 @@ def test_HEX_standardize_cell(r1, r2, r3, conv_a, conv_c, order):
     st.floats(min_value=MIN_ANGLE, max_value=120.0 - MIN_ANGLE),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_RHL_standardize_cell(r1, r2, r3, conv_a, conv_alpha, order):
+def test_RHL_get_S_matrix(r1, r2, r3, conv_a, conv_alpha, order):
     if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL):
         # Prepare cell
         cell = shuffle(
@@ -564,7 +564,7 @@ def test_RHL_standardize_cell(r1, r2, r3, conv_a, conv_alpha, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = RHL_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = RHL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -601,7 +601,7 @@ def test_RHL_standardize_cell(r1, r2, r3, conv_a, conv_alpha, order):
     st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_MCL_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order):
+def test_MCL_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order):
     if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL) and (
         min(conv_a, conv_b, conv_c) / max(conv_a, conv_b, conv_c) > REL_TOL
         and compare_numerically(
@@ -626,7 +626,7 @@ def test_MCL_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, or
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = MCL_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -664,7 +664,7 @@ def test_MCL_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, or
     st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_MCLC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order):
+def test_MCLC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order):
     if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL) and (
         min(conv_a, conv_b, conv_c) / max(conv_a, conv_b, conv_c) > REL_TOL
     ):
@@ -697,7 +697,7 @@ def test_MCLC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, o
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = MCLC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
 
         # Check results
         a, b, c, alpha, beta, gamma = Cell.params(cell)
@@ -797,7 +797,7 @@ def test_MCLC_standardize_cell(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, o
     st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
     st.integers(min_value=0, max_value=n_order),
 )
-def test_TRI_standardize_cell(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
+def test_TRI_get_S_matrix(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
     if (
         not np.allclose([r1, r2, r3], [0, 0, 0], rtol=REL_TOL, atol=ABS_TOL)
         and (min(a, b, c) / max(a, b, c) > REL_TOL)
@@ -815,7 +815,7 @@ def test_TRI_standardize_cell(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
         old_det = np.linalg.det(cell)
 
         # Fix cell
-        cell = TRI_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL)
+        cell = TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL)
 
         s_a, s_b, s_c, s_alpha, s_beta, s_gamma = Cell.params(cell)
         s_k_a, s_k_b, s_k_c, s_k_alpha, s_k_beta, s_k_gamma = Cell.params(

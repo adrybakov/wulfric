@@ -38,7 +38,7 @@ from wulfric.bravais_lattice.hs_points import (
     TET_hs_points,
     TRI_hs_points,
 )
-from wulfric.bravais_lattice.standardize import standardize_cell
+from wulfric.bravais_lattice.standardize import get_S_matrix
 from wulfric.bravais_lattice.variations import (
     BCT_variation,
     MCLC_variation,
@@ -193,7 +193,7 @@ class Lattice:
             Computational materials science, 49(2), pp.299-312.
         """
         self.convention = convention
-        self._cell = standardize_cell(
+        self._cell = get_S_matrix(
             self._cell, self.type(), rtol=self.eps_rel, atol=self.eps
         )
 

@@ -23,26 +23,26 @@ from wulfric.constants import TRANSFORM_TO_CONVENTIONAL
 from wulfric.numerical import ABS_TOL, ABS_TOL_ANGLE, REL_TOL, compare_numerically
 
 __all__ = [
-    "standardize_cell",
-    "CUB_standardize_cell",
-    "FCC_standardize_cell",
-    "BCC_standardize_cell",
-    "TET_standardize_cell",
-    "BCT_standardize_cell",
-    "ORC_standardize_cell",
-    "ORCF_standardize_cell",
-    "ORCI_standardize_cell",
-    "ORCC_standardize_cell",
-    "HEX_standardize_cell",
-    "RHL_standardize_cell",
-    "MCL_standardize_cell",
-    "MCLC_standardize_cell",
-    "TRI_standardize_cell",
+    "get_S_matrix",
+    "CUB_get_S_matrix",
+    "FCC_get_S_matrix",
+    "BCC_get_S_matrix",
+    "TET_get_S_matrix",
+    "BCT_get_S_matrix",
+    "ORC_get_S_matrix",
+    "ORCF_get_S_matrix",
+    "ORCI_get_S_matrix",
+    "ORCC_get_S_matrix",
+    "HEX_get_S_matrix",
+    "RHL_get_S_matrix",
+    "MCL_get_S_matrix",
+    "MCLC_get_S_matrix",
+    "TRI_get_S_matrix",
 ]
 
 
 # Main routine, serves as interface to all of them
-def standardize_cell(cell, correct_lattice_type, rtol=REL_TOL, atol=ABS_TOL):
+def get_S_matrix(cell, correct_lattice_type, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     Analyse arbitrary cell and redefine it
     if required to ensure the unique choice of lattice vectors.
@@ -51,7 +51,7 @@ def standardize_cell(cell, correct_lattice_type, rtol=REL_TOL, atol=ABS_TOL):
 
     Parameters
     ----------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3,3) |array-like|_
         Primitive unit cell.
     correct_lattice_type : str
         Correct lattice type.
@@ -62,40 +62,41 @@ def standardize_cell(cell, correct_lattice_type, rtol=REL_TOL, atol=ABS_TOL):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
     """
 
     cell = np.array(cell)
     functions = {
-        "CUB": CUB_standardize_cell,
-        "FCC": FCC_standardize_cell,
-        "BCC": BCC_standardize_cell,
-        "TET": TET_standardize_cell,
-        "BCT": BCT_standardize_cell,
-        "ORC": ORC_standardize_cell,
-        "ORCF": ORCF_standardize_cell,
-        "ORCI": ORCI_standardize_cell,
-        "ORCC": ORCC_standardize_cell,
-        "HEX": HEX_standardize_cell,
-        "RHL": RHL_standardize_cell,
-        "MCL": MCL_standardize_cell,
-        "MCLC": MCLC_standardize_cell,
-        "TRI": TRI_standardize_cell,
+        "CUB": CUB_get_S_matrix,
+        "FCC": FCC_get_S_matrix,
+        "BCC": BCC_get_S_matrix,
+        "TET": TET_get_S_matrix,
+        "BCT": BCT_get_S_matrix,
+        "ORC": ORC_get_S_matrix,
+        "ORCF": ORCF_get_S_matrix,
+        "ORCI": ORCI_get_S_matrix,
+        "ORCC": ORCC_get_S_matrix,
+        "HEX": HEX_get_S_matrix,
+        "RHL": RHL_get_S_matrix,
+        "MCL": MCL_get_S_matrix,
+        "MCLC": MCLC_get_S_matrix,
+        "TRI": TRI_get_S_matrix,
     }
 
     return functions[correct_lattice_type](cell, rtol=rtol, atol=atol)
 
 
-def CUB_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
+def CUB_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the CUB lattice conditions.
+    For arbitrary cubic cell returns matrix S that transforms it to the standardized form.
 
-    See :ref:`guide_cub` for the details.
+    See :ref:`guide_cub` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
 
     Parameters
     ----------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3,3) |array-like|_
         Primitive unit cell.
     rtol : float, default ``REL_TOL``
         Relative tolerance for numerical comparison.
@@ -106,22 +107,29 @@ def CUB_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`.
+
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the cubic lattice.
+    If the cell is not tetragonal, the function will not work correctly.
     """
 
-    return np.array(cell)
+    return np.eye(3, dtype=float)
 
 
-def FCC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
+def FCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the FCC lattice conditions.
+    For arbitrary face-centered cubic cell returns matrix S that transforms it to the
+    standardized form.
 
-    See :ref:`guide_fcc` for the details.
+    See :ref:`guide_fcc` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
 
     Parameters
     ----------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3,3) |array-like|_
         Primitive unit cell.
     rtol : float, default ``REL_TOL``
         Relative tolerance for numerical comparison.
@@ -132,22 +140,29 @@ def FCC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`.
+
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the face-centered cubic lattice.
+    If the cell is not tetragonal, the function will not work correctly.
     """
 
-    return np.array(cell)
+    return np.eye(3, dtype=float)
 
 
-def BCC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
+def BCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the BCC lattice conditions.
+    For arbitrary body-centered cubic cell returns matrix S that transforms it to the
+    standardized form.
 
-    See :ref:`guide_bcc` for the details.
+    See :ref:`guide_fcc` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
 
     Parameters
     ----------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3,3) |array-like|_
         Primitive unit cell.
     rtol : float, default ``REL_TOL``
         Relative tolerance for numerical comparison.
@@ -158,18 +173,80 @@ def BCC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`.
+
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the body-centered cubic lattice.
+    If the cell is not tetragonal, the function will not work correctly.
     """
 
-    return np.array(cell)
+    return np.eye(3, dtype=float)
 
 
-def TET_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
+def TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the TET lattice conditions.
+    For arbitrary tetragonal cell returns matrix S that transforms it to the
+    standardized form.
 
-    See :ref:`guide_tet` for the details.
+    See :ref:`guide_tet` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
+
+    Parameters
+    ----------
+    cell : (3,3) |array-like|_
+        Primitive unit cell.
+    rtol : float, default ``REL_TOL``
+        Relative tolerance for numerical comparison.
+    atol : float, default ``ABS_TOL``
+        Absolute tolerance for numerical comparison.
+
+    Returns
+    -------
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
+
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the tetragonal lattice. If the
+    cell is not tetragonal, the function will not work correctly.
+
+    Raises
+    ------
+    ValueError
+        If none of the tetragonal conditions are satisfied.
+    """
+
+    a, b, c, alpha, beta, gamma = Cell.params(cell)
+
+    if compare_numerically(a, "==", b, rtol=rtol, atol=atol) and compare_numerically(
+        b, "!=", c, rtol=rtol, atol=atol
+    ):
+        S = np.eye(3, dtype=float)
+    elif compare_numerically(b, "==", c, rtol=rtol, atol=atol) and compare_numerically(
+        c, "!=", a, rtol=rtol, atol=atol
+    ):
+        S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+    elif compare_numerically(a, "==", c, rtol=rtol, atol=atol) and compare_numerically(
+        c, "!=", b, rtol=rtol, atol=atol
+    ):
+        S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    else:
+        raise ValueError(
+            "Standardization fails. Are you sure that the cell is tetragonal?"
+        )
+
+    return S
+
+
+def BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+    r"""
+    For arbitrary body-centered tetragonal cell returns matrix S that transforms it to the
+    standardized form.
+
+    See :ref:`guide_bct` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
 
     Parameters
     ----------
@@ -182,31 +259,55 @@ def TET_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
-    """
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
 
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the body-centered tetragonal
+    lattice. If the cell is not tetragonal, the function will not work correctly.
+
+    Raises
+    ------
+    ValueError
+        If none of the body-centered tetragonal conditions are satisfied.
+    """
     cell = np.array(cell)
 
     a, b, c, alpha, beta, gamma = Cell.params(cell)
 
-    if compare_numerically(a, "==", c, rtol=rtol, atol=atol):
-        cell = [cell[2], cell[0], cell[1]]
-    elif compare_numerically(b, "==", c, rtol=rtol, atol=atol):
-        cell = [cell[1], cell[2], cell[0]]
+    if compare_numerically(
+        alpha, "==", beta, rtol=rtol, atol=atol
+    ) and compare_numerically(beta, "!=", gamma, rtol=rtol, atol=atol):
+        S = np.eye(3, dtype=float)
+    elif compare_numerically(
+        beta, "==", gamma, rtol=rtol, atol=atol
+    ) and compare_numerically(gamma, "!=", alpha, rtol=rtol, atol=atol):
+        S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+    elif compare_numerically(
+        alpha, "==", gamma, rtol=rtol, atol=atol
+    ) and compare_numerically(gamma, "!=", beta, rtol=rtol, atol=atol):
+        S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    else:
+        raise ValueError(
+            "Standardization fails. "
+            "Are you sure that the cell is body-centered tetragonal?"
+        )
 
-    return cell
+    return S
 
 
-def BCT_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
+def ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the BCT lattice conditions.
+    For arbitrary orthorhombic cell returns matrix S that transforms it to the
+    standardized form.
 
-    See :ref:`guide_bct` for the details.
+    See :ref:`guide_orc` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
 
     Parameters
     ----------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3,3) |array-like|_
         Primitive unit cell.
     rtol : float, default ``REL_TOL``
         Relative tolerance for numerical comparison.
@@ -215,192 +316,346 @@ def BCT_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
-    """
-    cell = np.array(cell)
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
 
-    a, b, c, alpha, beta, gamma = Cell.params(TRANSFORM_TO_CONVENTIONAL["BCT"] @ cell)
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the orthorhombic lattice. If
+    the cell is not orthorhombic, the function will not work correctly.
 
-    if compare_numerically(a, "==", c, rtol=rtol, atol=atol):
-        cell = [cell[2], cell[0], cell[1]]
-    elif compare_numerically(b, "==", c, rtol=rtol, atol=atol):
-        cell = [cell[1], cell[2], cell[0]]
-
-    return cell
-
-
-def ORC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
-    r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the ORC lattice conditions.
-
-    See :ref:`guide_orc` for the details.
-
-    Parameters
-    ----------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
-    rtol : float, default ``REL_TOL``
-        Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
-        Absolute tolerance for numerical comparison.
-
-    Returns
-    -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
-    """
-    cell = np.array(cell)
-
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
-
-    if compare_numerically(a, ">", b, rtol=rtol, atol=atol):
-        # minus preserves the handedness of the cell
-        cell = [cell[1], cell[0], -cell[2]]
-        a, b = b, a
-    if compare_numerically(a, ">", c, rtol=rtol, atol=atol):
-        cell = [cell[2], cell[0], cell[1]]
-    elif compare_numerically(b, ">", c, rtol=rtol, atol=atol):
-        # minus preserves the handedness of the cell
-        cell = [cell[0], -cell[2], cell[1]]
-
-    return cell
-
-
-def ORCF_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
-    r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the ORCF lattice conditions.
-
-    See :ref:`guide_orcf` for the details.
-
-    Parameters
-    ----------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
-    rtol : float, default ``REL_TOL``
-        Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
-        Absolute tolerance for numerical comparison.
-
-    Returns
-    -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
-    """
-    cell = np.array(cell)
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
-
-    if compare_numerically(a, "<", b, rtol=rtol, atol=atol):
-        # minus preserves the handedness of the cell
-        cell = [cell[1], cell[0], -cell[2]]
-        a, b = b, a
-    if compare_numerically(a, "<", c, rtol=rtol, atol=atol):
-        cell = [cell[2], cell[0], cell[1]]
-    elif compare_numerically(b, "<", c, rtol=rtol, atol=atol):
-        # minus preserves the handedness of the cell
-        cell = [cell[0], -cell[2], cell[1]]
-
-    return cell
-
-
-def ORCI_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
-    r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the ORCI lattice conditions.
-
-    See :ref:`guide_orci` for the details.
-
-    Parameters
-    ----------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
-    rtol : float, default ``REL_TOL``
-        Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
-        Absolute tolerance for numerical comparison.
-
-    Returns
-    -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitiv4e unit cell.
-    """
-
-    cell = np.array(cell)
-
-    a, b, c, alpha, beta, gamma = Cell.params(TRANSFORM_TO_CONVENTIONAL["ORCI"] @ cell)
-
-    if compare_numerically(a, ">", b, rtol=rtol, atol=atol):
-        # minus preserves the handedness of the cell
-        cell = [cell[1], cell[0], -cell[2]]
-        a, b = b, a
-    if compare_numerically(a, ">", c, rtol=rtol, atol=atol):
-        cell = [cell[2], cell[0], cell[1]]
-    elif compare_numerically(b, ">", c, rtol=rtol, atol=atol):
-        # minus preserves the handedness of the cell
-        cell = [cell[0], -cell[2], cell[1]]
-
-    return cell
-
-
-def ORCC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
-    r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the ORCC lattice conditions.
-
-    See :ref:`guide_orcc` for the details.
-
-    Parameters
-    ----------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
-    rtol : float, default ``REL_TOL``
-        Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
-        Absolute tolerance for numerical comparison.
-
-    Returns
-    -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
+    Raises
+    ------
+    ValueError
+        If none of the orthorhombic conditions are satisfied.
     """
 
     a, b, c, alpha, beta, gamma = Cell.params(cell)
+
+    if compare_numerically(c, ">", b, rtol=rtol, atol=atol) and compare_numerically(
+        b, ">", a, rtol=rtol, atol=atol
+    ):
+        S = np.eye(3, dtype=float)
+    elif compare_numerically(c, ">", a, rtol=rtol, atol=atol) and compare_numerically(
+        a, ">", b, rtol=rtol, atol=atol
+    ):
+        S = np.array([[0, -1, 0], [-1, 0, 0], [0, 0, -1]], dtype=float)
+    elif compare_numerically(b, ">", c, rtol=rtol, atol=atol) and compare_numerically(
+        c, ">", a, rtol=rtol, atol=atol
+    ):
+        S = np.array([[-1, 0, 0], [0, 0, -1], [0, -1, 0]], dtype=float)
+    elif compare_numerically(b, ">", a, rtol=rtol, atol=atol) and compare_numerically(
+        a, ">", c, rtol=rtol, atol=atol
+    ):
+        S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    elif compare_numerically(a, ">", c, rtol=rtol, atol=atol) and compare_numerically(
+        c, ">", b, rtol=rtol, atol=atol
+    ):
+        S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+    elif compare_numerically(a, ">", b, rtol=rtol, atol=atol) and compare_numerically(
+        b, ">", c, rtol=rtol, atol=atol
+    ):
+        S = np.array([[0, 0, -1], [0, -1, 0], [-1, 0, 0]], dtype=float)
+    else:
+        raise ValueError(
+            "Standardization fails. " "Are you sure that the cell is orthorhombic?"
+        )
+
+    return S
+
+
+def ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+    r"""
+    For arbitrary face-centered orthorhombic cell returns matrix S that transforms it to
+    the standardized form.
+
+    See :ref:`guide_orcf` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
+
+    Parameters
+    ----------
+    cell : (3,3) |array-like|_
+        Primitive unit cell.
+    rtol : float, default ``REL_TOL``
+        Relative tolerance for numerical comparison.
+    atol : float, default ``ABS_TOL``
+        Absolute tolerance for numerical comparison.
+
+    Returns
+    -------
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
+
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the face-centered orthorhombic
+    lattice. If the cell is not face-centered orthorhombic, the function will not work
+    correctly.
+
+    Raises
+    ------
+    ValueError
+        If none of the face-centered orthorhombic conditions are satisfied.
+    """
+
+    a, b, c, alpha, beta, gamma = Cell.params(cell)
+
+    if compare_numerically(c, "<", b, rtol=rtol, atol=atol) and compare_numerically(
+        b, "<", a, rtol=rtol, atol=atol
+    ):
+        S = np.eye(3, dtype=float)
+    elif compare_numerically(c, "<", a, rtol=rtol, atol=atol) and compare_numerically(
+        a, "<", b, rtol=rtol, atol=atol
+    ):
+        S = np.array([[0, -1, 0], [-1, 0, 0], [0, 0, -1]], dtype=float)
+    elif compare_numerically(b, "<", c, rtol=rtol, atol=atol) and compare_numerically(
+        c, "<", a, rtol=rtol, atol=atol
+    ):
+        S = np.array([[-1, 0, 0], [0, 0, -1], [0, -1, 0]], dtype=float)
+    elif compare_numerically(b, "<", a, rtol=rtol, atol=atol) and compare_numerically(
+        a, "<", c, rtol=rtol, atol=atol
+    ):
+        S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    elif compare_numerically(a, "<", c, rtol=rtol, atol=atol) and compare_numerically(
+        c, "<", b, rtol=rtol, atol=atol
+    ):
+        S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+    elif compare_numerically(a, "<", b, rtol=rtol, atol=atol) and compare_numerically(
+        b, "<", c, rtol=rtol, atol=atol
+    ):
+        S = np.array([[0, 0, -1], [0, -1, 0], [-1, 0, 0]], dtype=float)
+    else:
+        raise ValueError(
+            "Standardization fails. "
+            "Are you sure that the cell is face-centered orthorhombic?"
+        )
+
+    return S
+
+
+def ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+    r"""
+    For arbitrary body-centered orthorhombic cell returns matrix S that transforms it to
+    the standardized form.
+
+    See :ref:`guide_orci` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
+
+    Parameters
+    ----------
+    cell : (3,3) |array-like|_
+        Primitive unit cell.
+    rtol : float, default ``REL_TOL``
+        Relative tolerance for numerical comparison.
+    atol : float, default ``ABS_TOL``
+        Absolute tolerance for numerical comparison.
+
+    Returns
+    -------
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
+
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the body-centered orthorhombic
+    lattice. If the cell is not body-centered orthorhombic, the function will not work
+    correctly.
+
+    Raises
+    ------
+    ValueError
+        If none of the body-centered orthorhombic conditions are satisfied.
+    """
+
+    sp23, sp13, sp12 = Cell.scalar_products(cell)
+
+    if compare_numerically(
+        sp12, ">", sp13, rtol=rtol, atol=atol
+    ) and compare_numerically(sp13, ">", sp23, rtol=rtol, atol=atol):
+        S = np.eye(3, dtype=float)
+    elif compare_numerically(
+        sp12, ">", sp23, rtol=rtol, atol=atol
+    ) and compare_numerically(sp23, ">", sp13, rtol=rtol, atol=atol):
+        S = np.array([[0, -1, 0], [-1, 0, 0], [0, 0, -1]], dtype=float)
+    elif compare_numerically(
+        sp13, ">", sp12, rtol=rtol, atol=atol
+    ) and compare_numerically(sp12, ">", sp23, rtol=rtol, atol=atol):
+        S = np.array([[-1, 0, 0], [0, 0, -1], [0, -1, 0]], dtype=float)
+    elif compare_numerically(
+        sp13, ">", sp23, rtol=rtol, atol=atol
+    ) and compare_numerically(sp23, ">", sp12, rtol=rtol, atol=atol):
+        S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    elif compare_numerically(
+        sp23, ">", sp12, rtol=rtol, atol=atol
+    ) and compare_numerically(sp12, ">", sp13, rtol=rtol, atol=atol):
+        S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+    elif compare_numerically(
+        sp23, ">", sp13, rtol=rtol, atol=atol
+    ) and compare_numerically(sp13, ">", sp12, rtol=rtol, atol=atol):
+        S = np.array([[0, 0, -1], [0, -1, 0], [-1, 0, 0]], dtype=float)
+    else:
+        raise ValueError(
+            "Standardization fails. "
+            "Are you sure that the cell is body-centered orthorhombic?"
+        )
+
+    return S
+
+
+def ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+    r"""
+    For arbitrary base-centered orthorhombic cell returns matrix S that transforms it to
+    the standardized form.
+
+    See :ref:`guide_orcc` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
+
+    Parameters
+    ----------
+    cell : (3,3) |array-like|_
+        Primitive unit cell.
+    rtol : float, default ``REL_TOL``
+        Relative tolerance for numerical comparison.
+    atol : float, default ``ABS_TOL``
+        Absolute tolerance for numerical comparison.
+
+    Returns
+    -------
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
+
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the base-centered orthorhombic
+    lattice. If the cell is not base-centered orthorhombic, the function will not work
+    correctly.
+
+    Raises
+    ------
+    ValueError
+        If none of the base-centered orthorhombic conditions are satisfied.
+    """
+
+    sp23, sp13, sp12 = Cell.scalar_products(cell)
 
     if (
-        compare_numerically(alpha, "==", 90.0, eps=ABS_TOL_ANGLE)
-        and compare_numerically(beta, "==", 90.0, eps=ABS_TOL_ANGLE)
-        and compare_numerically(gamma, "==", 90.0, eps=ABS_TOL_ANGLE)
+        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "<", 0.0, rtol=rtol, atol=atol)
     ):
-        return TET_standardize_cell(cell, rtol=rtol, atol=atol)
+        S = np.eye(3, dtype=float)
+    elif (
+        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, ">", 0.0, rtol=rtol, atol=atol)
+    ):
+        S = np.array([[0, 1, 0], [-1, 0, 0], [0, 0, 1]], dtype=float)
+    elif (
+        compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp23, "<", 0.0, rtol=rtol, atol=atol)
+    ):
+        S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+    elif (
+        compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp23, ">", 0.0, rtol=rtol, atol=atol)
+    ):
+        S = np.array([[0, 0, 1], [0, -1, 0], [1, 0, 0]], dtype=float)
 
-    # next two check are based on the angle, because the length comparison is not enough
-    # a == c (beta != 90)
-    if compare_numerically(beta, "!=", 90.0, eps=ABS_TOL_ANGLE):
-        cell = [cell[2], cell[0], cell[1]]
-    # b = c (alpha != 90)
-    elif compare_numerically(alpha, "!=", 90.0, eps=ABS_TOL_ANGLE):
-        cell = [cell[1], cell[2], cell[0]]
+    elif (
+        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, "<", 0.0, rtol=rtol, atol=atol)
+    ):
+        S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    elif (
+        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, ">", 0.0, rtol=rtol, atol=atol)
+    ):
+        S = np.array([[1, 0, 0], [0, 0, -1], [0, 1, 0]], dtype=float)
+    else:
+        raise ValueError(
+            "Standardization fails. "
+            "Are you sure that the cell is base-centered orthorhombic?"
+        )
 
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
-
-    cell = np.array(cell)
-
-    a, b, c, alpha, beta, gamma = Cell.params(TRANSFORM_TO_CONVENTIONAL["ORCC"] @ cell)
-
-    if compare_numerically(a, ">", b, rtol=rtol, atol=atol):
-        # minus preserves the handedness of the cell
-        cell = [-cell[1], cell[0], cell[2]]
-
-    return cell
+    return S
 
 
-def HEX_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
+def HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the HEX lattice conditions.
+    For arbitrary hexagonal cell returns matrix S that transforms it to the standardized
+    form.
 
-    See :ref:`guide_hex` for the details.
+    See :ref:`guide_hex` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
 
     Parameters
     ----------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3,3) |array-like|_
+        Primitive unit cell.
+    rtol : float, default ``REL_TOL``
+        Relative tolerance for numerical comparison.
+    atol : float, default ``ABS_TOL``
+        Absolute tolerance for numerical comparison.
+
+    Returns
+    -------
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
+
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the hexagonal lattice. If the
+    cell is not hexagonal, the function will not work correctly.
+
+    Raises
+    ------
+    ValueError
+        If none of the hexagonal conditions are satisfied.
+    """
+
+    sp23, sp13, sp12 = Cell.scalar_products(cell)
+
+    if (
+        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "<", 0.0, rtol=rtol, atol=atol)
+    ):
+        S = np.eye(3, dtype=float)
+    elif (
+        compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp23, "<", 0.0, rtol=rtol, atol=atol)
+    ):
+        S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+    elif (
+        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, "<", 0.0, rtol=rtol, atol=atol)
+    ):
+        S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    else:
+        raise ValueError(
+            "Standardization fails. " "Are you sure that the cell is hexagonal?"
+        )
+
+    return S
+
+
+def RHL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+    r"""
+    For arbitrary rhombohedral cell returns matrix S that transforms it to the standardized
+    form.
+
+    See :ref:`guide_rhl` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
+
+    Parameters
+    ----------
+    cell : (3,3) |array-like|_
         Primitive unit cell.
     rtol : float, default ``REL_TOL``
         Relative tolerance for numerical comparison.
@@ -411,57 +666,29 @@ def HEX_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
+
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the rhombohedral lattice. If the
+    cell is not rhombohedral, the function will not work correctly.
     """
-    cell = np.array(cell)
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
 
-    # a == c
-    if compare_numerically(beta, "==", 120.0, eps=ABS_TOL_ANGLE):
-        cell = [cell[2], cell[0], cell[1]]
-    # b = c
-    elif compare_numerically(alpha, "==", 120.0, eps=ABS_TOL_ANGLE):
-        cell = [cell[1], cell[2], cell[0]]
-
-    return cell
+    return np.eye(3, dtype=float)
 
 
-def RHL_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
+def MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the RHL lattice conditions.
+    For arbitrary monoclinic cell returns matrix S that transforms it to the standardized
+    form.
 
-    See :ref:`guide_rhl` for the details.
+    See :ref:`guide_mcl` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
 
     Parameters
     ----------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
-    rtol : float, default ``REL_TOL``
-        Relative tolerance for numerical comparison.
-        Ignored here, but preserved for the unification of input.
-    atol : float, default ``ABS_TOL``
-        Absolute tolerance for numerical comparison.
-        Ignored here, but preserved for the unification of input.
-
-    Returns
-    -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
-    """
-
-    return np.array(cell)
-
-
-def MCL_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
-    r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the MCL lattice conditions.
-
-    See :ref:`guide_mcl` for the details.
-
-    Parameters
-    ----------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3,3) |array-like|_
         Primitive unit cell.
     rtol : float, default ``REL_TOL``
         Relative tolerance for numerical comparison.
@@ -470,44 +697,89 @@ def MCL_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
+
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the monoclinic lattice. If the
+    cell is not monoclinic, the function will not work correctly.
+
+    Raises
+    ------
+    ValueError
+        If none of the monoclinic conditions are satisfied.
     """
 
-    cell = np.array(cell)
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
+    # Step 1
 
-    # beta != 90
-    if compare_numerically(beta, "!=", 90.0, eps=ABS_TOL_ANGLE):
-        cell = [cell[1], cell[2], cell[0]]
-    # gamma != 90
-    elif compare_numerically(gamma, "!=", 90.0, eps=ABS_TOL_ANGLE):
-        cell = [cell[2], cell[0], cell[1]]
+    sp23, sp13, sp12 = Cell.scalar_products(cell)
 
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
+    if (
+        compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp23, "!=", 0.0, rtol=rtol, atol=atol)
+    ):
+        S1 = np.eye(3, dtype=float)
+    elif (
+        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, "!=", 0.0, rtol=rtol, atol=atol)
+    ):
+        S1 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+    elif (
+        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(s13, "==", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "!=", 0.0, rtol=rtol, atol=atol)
+    ):
+        S1 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    else:
+        raise ValueError(
+            "First step of standardization fails. "
+            "Are you sure that the cell is monoclinic?"
+        )
 
-    # alpha > 90
-    if compare_numerically(alpha, ">", 90.0, eps=ABS_TOL_ANGLE):
-        cell = [cell[0], cell[2], -cell[1]]
+    # Step 2
+    cell1 = np.linalg.inv(S1.T) @ cell
+    a, b, c, alpha, beta, gamma = Cell.params(cell1)
 
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
+    if b < c:
+        S2 = np.eye(3, dtype=float)
+    elif b > c:
+        S2 = np.array([[-1, 0, 0], [0, 0, 1], [0, 1, 0]], dtype=float)
+    else:
+        raise ValueError(
+            "Second step of standardization fails. "
+            "Are you sure that the cell is monoclinic?"
+        )
 
-    # b > c
-    if compare_numerically(b, ">", c, rtol=rtol, atol=atol):
-        cell = [-cell[0], cell[2], cell[1]]
+    # Step 3
+    cell2 = np.linalg.inv(S2.T) @ cell1
+    sp23, sp13, sp12 = Cell.scalar_products(cell2)
+    if compare_numerically(sp23, ">", 0, rtol=rtol, atol=atol):
+        S3 = np.eye(3, dtype=float)
+    elif compare_numerically(sp23, "<", 0, rtol=rtol, atol=atol):
+        S3 = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
+    else:
+        raise ValueError(
+            "Third step of standardization fails. "
+            "Are you sure that the cell is monoclinic?"
+        )
 
-    return cell
+    return S3 @ S2 @ S1
 
 
-def MCLC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
+def MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the MCLC lattice conditions.
+    For arbitrary base-centered monoclinic cell returns matrix S that transforms it to the
+    standardized form.
 
-    See :ref:`guide_mclc` for the details.
+    See :ref:`guide_mclc` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
 
     Parameters
     ----------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3,3) |array-like|_
         Primitive unit cell.
     rtol : float, default ``REL_TOL``
         Relative tolerance for numerical comparison.
@@ -516,45 +788,82 @@ def MCLC_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
+
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the base-centered monoclinic
+    lattice. If the cell is not base-centered monoclinic, the function will not work
+    correctly.
+
+    Raises
+    ------
+    ValueError
+        If none of the base-centered monoclinic conditions are satisfied.
     """
+
+    # Step 1
 
     a, b, c, alpha, beta, gamma = Cell.params(cell)
 
-    # a == c
-    if compare_numerically(a, "==", c, rtol=rtol, atol=atol):
-        cell = [cell[2], cell[0], cell[1]]
-    # b == c
-    elif compare_numerically(b, "==", c, rtol=rtol, atol=atol):
-        cell = [cell[1], cell[2], cell[0]]
+    if compare_numerically(a, "==", b, rtol=rtol, atol=atol) and compare_numerically(
+        b, "!=", c, rtol=rtol, atol=atol
+    ):
+        S1 = np.eye(3, dtype=float)
+    elif compare_numerically(b, "==", c, rtol=rtol, atol=atol) and compare_numerically(
+        c, "!=", a, rtol=rtol, atol=atol
+    ):
+        S1 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+    elif compare_numerically(c, "==", a, rtol=rtol, atol=atol) and compare_numerically(
+        a, "!=", b, rtol=rtol, atol=atol
+    ):
+        S1 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    else:
+        raise ValueError(
+            "First step of standardization fails. "
+            "Are you sure that the cell is base-centered monoclinic?"
+        )
 
-    cell = np.array(cell)
-    a, b, c, alpha, beta, gamma = Cell.params(TRANSFORM_TO_CONVENTIONAL["MCLC"] @ cell)
+    # Step 2
+    cell1 = np.linalg.inv(S1.T) @ cell
+    a, b, c, alpha, beta, gamma = Cell.params(cell1)
+    sp23, sp13, sp12 = Cell.scalar_products(cell1)
 
-    # alpha > 90
-    if compare_numerically(alpha, ">", 90.0, eps=ABS_TOL_ANGLE):
-        cell = [cell[0], cell[2], -cell[1]]
+    if compare_numerically(
+        2 * a**2 * (1 + sp12 / a / b), "<=", c**2, rtol=rtol, atol=atol
+    ):
+        S2 = np.eye(3, dtype=float)
+    else:
+        S2 = np.array([[-0.5, 0.5, 1], [0.5, -0.5, 1], [0.5, 0.5, 0]], dtype=float)
 
-    cell = np.array(cell)
-    a, b, c, alpha, beta, gamma = Cell.params(TRANSFORM_TO_CONVENTIONAL["MCLC"] @ cell)
+    # Step 3
+    cell2 = np.linalg.inv(S2.T) @ cell1
+    sp23, sp13, sp12 = Cell.scalar_products(cell2)
+    if compare_numerically(sp23, ">", 0, rtol=rtol, atol=atol):
+        S3 = np.eye(3, dtype=float)
+    elif compare_numerically(sp23, "<", 0, rtol=rtol, atol=atol):
+        S3 = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
+    else:
+        raise ValueError(
+            "Third step of standardization fails. "
+            "Are you sure that the cell is base-centered monoclinic?"
+        )
 
-    # b > c
-    if compare_numerically(b, ">", c, rtol=rtol, atol=atol):
-        cell = [-cell[0], cell[2], cell[1]]
-
-    return cell
+    return S3 @ S2 @ S1
 
 
-def TRI_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
+def TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
-    Analyse arbitrary cell and redefine vectors if required to satisfy the TRI lattice conditions.
+    For arbitrary triclinic cell returns matrix S that transforms it to the
+    standardized form.
 
-    See :ref:`guide_tri` for the details.
+    See :ref:`guide_tri` and :ref:`user-guide_conventions_main_standardization` for the
+    details.
 
     Parameters
     ----------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3,3) |array-like|_
         Primitive unit cell.
     rtol : float, default ``REL_TOL``
         Relative tolerance for numerical comparison.
@@ -563,93 +872,99 @@ def TRI_standardize_cell(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
+
+    Notes
+    -----
+    It is assumed that the ``cell`` has the symmetries of the triclinic lattice. If the
+    cell is not triclinic, the function will not work correctly.
+
+    Raises
+    ------
+    ValueError
+        If none of the triclinic conditions are satisfied.
     """
 
     # Compute reciprocal cell
     rcell = Cell.reciprocal(cell)
 
-    a, b, c, alpha, beta, gamma = Cell.params(rcell)
+    # Step 1
+    sp23, sp13, sp12 = Cell.scalar_products(rcell)
 
     if (
-        compare_numerically(alpha, "==", 90.0)
-        or compare_numerically(beta, "==", 90.0)
-        or compare_numerically(gamma, "==", 90.0)
+        compare_numerically(sp23, "<=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, "<=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "<=", 0.0, rtol=rtol, atol=atol)
+    ) or (
+        compare_numerically(sp23, ">=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, ">=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, ">=", 0.0, rtol=rtol, atol=atol)
     ):
-        if compare_numerically(alpha, "==", 90.0):
-            rcell = [rcell[1], rcell[2], rcell[0]]
-        elif compare_numerically(beta, "==", 90.0):
-            rcell = [rcell[2], rcell[0], rcell[1]]
-
-        a, b, c, alpha, beta, gamma = Cell.params(rcell)
-
-        if (
-            compare_numerically(alpha, ">", 90.0)
-            and compare_numerically(beta, "<", 90.0)
-            or compare_numerically(alpha, "<", 90.0)
-            and compare_numerically(beta, ">", 90.0)
-        ):
-            rcell = [rcell[1], -rcell[0], rcell[2]]
-
+        S1 = np.eye(3, dtype=float)
+    elif (
+        compare_numerically(sp23, "<=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, "<=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, ">=", 0.0, rtol=rtol, atol=atol)
+    ) or (
+        compare_numerically(sp23, ">=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, ">=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "<=", 0.0, rtol=rtol, atol=atol)
+    ):
+        S1 = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
+    elif (
+        compare_numerically(sp23, "<=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, ">=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "<=", 0.0, rtol=rtol, atol=atol)
+    ) or (
+        compare_numerically(sp23, ">=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, "<=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, ">=", 0.0, rtol=rtol, atol=atol)
+    ):
+        S1 = np.array([[-1, 0, 0], [0, 1, 0], [0, 0, -1]], dtype=float)
+    elif (
+        compare_numerically(sp23, ">=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, "<=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "<=", 0.0, rtol=rtol, atol=atol)
+    ) or (
+        compare_numerically(sp23, "<=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, ">=", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, ">=", 0.0, rtol=rtol, atol=atol)
+    ):
+        S1 = np.array([[1, 0, 0], [0, -1, 0], [0, 0, -1]], dtype=float)
     else:
-        if (
-            compare_numerically(alpha, ">", 90.0)
-            and compare_numerically(beta, ">", 90.0)
-            and compare_numerically(gamma, "<", 90.0)
-        ):
-            rcell = [-rcell[0], -rcell[1], rcell[2]]
-        elif (
-            compare_numerically(alpha, ">", 90.0)
-            and compare_numerically(beta, "<", 90.0)
-            and compare_numerically(gamma, ">", 90.0)
-        ):
-            rcell = [-rcell[0], rcell[1], -rcell[2]]
-        elif (
-            compare_numerically(alpha, ">", 90.0)
-            and compare_numerically(beta, "<", 90.0)
-            and compare_numerically(gamma, "<", 90.0)
-        ):
-            rcell = [rcell[0], -rcell[1], -rcell[2]]
-        elif (
-            compare_numerically(alpha, "<", 90.0)
-            and compare_numerically(beta, ">", 90.0)
-            and compare_numerically(gamma, ">", 90.0)
-        ):
-            rcell = [rcell[0], -rcell[1], -rcell[2]]
-        elif (
-            compare_numerically(alpha, "<", 90.0)
-            and compare_numerically(beta, ">", 90.0)
-            and compare_numerically(gamma, "<", 90.0)
-        ):
-            rcell = [-rcell[0], rcell[1], -rcell[2]]
-        elif (
-            compare_numerically(alpha, "<", 90.0)
-            and compare_numerically(beta, "<", 90.0)
-            and compare_numerically(gamma, ">", 90.0)
-        ):
-            rcell = [-rcell[0], -rcell[1], rcell[2]]
+        raise ValueError(
+            "First step of standardization fails. "
+            "Are you sure that the cell is triclinic?"
+        )
 
-        a, b, c, alpha, beta, gamma = Cell.params(rcell)
+    # Step 2
+    rcell1 = np.linalg.inv(S1.T) @ rcell
+    sp23, sp13, sp12 = Cell.scalar_products(rcell1)
+    a, b, c, alpha, beta, gamma = Cell.params(rcell1)
 
-        if compare_numerically(min(alpha, beta, gamma), ">", 90.0):
-            if compare_numerically(alpha, "<", beta) and compare_numerically(
-                alpha, "<", gamma
-            ):
-                rcell = [rcell[1], rcell[2], rcell[0]]
-            elif compare_numerically(beta, "<", alpha) and compare_numerically(
-                beta, "<", gamma
-            ):
-                rcell = [rcell[2], rcell[0], rcell[1]]
-        if compare_numerically(max(alpha, beta, gamma), "<", 90.0):
-            if compare_numerically(alpha, ">", beta) and compare_numerically(
-                alpha, ">", gamma
-            ):
-                rcell = [rcell[1], rcell[2], rcell[0]]
-            elif compare_numerically(beta, ">", alpha) and compare_numerically(
-                beta, ">", gamma
-            ):
-                rcell = [rcell[2], rcell[0], rcell[1]]
+    if (
+        gamma == min(alpha, beta, gamma)
+        and compare_numerically(sp12, "<=", 0.0)
+        or (gamma == max(alpha, beta, gamma) and compare_numerically(sp12, ">=", 0.0))
+    ):
+        S2 = np.eye(3, dtype=float)
+    elif (
+        beta == min(alpha, beta, gamma)
+        and compare_numerically(sp13, "<=", 0.0)
+        or (beta == max(alpha, beta, gamma) and compare_numerically(sp13, ">=", 0.0))
+    ):
+        S2 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    elif (
+        alpha == min(alpha, beta, gamma)
+        and compare_numerically(sp23, "<=", 0.0)
+        or (alpha == max(alpha, beta, gamma) and compare_numerically(sp23, ">=", 0.0))
+    ):
+        S2 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+    else:
+        raise ValueError(
+            "Second step of standardization fails. "
+            "Are you sure that the cell is triclinic?"
+        )
 
-    # Recompute back to the real-space cell
-    return Cell.reciprocal(rcell)
+    return S2 @ S1

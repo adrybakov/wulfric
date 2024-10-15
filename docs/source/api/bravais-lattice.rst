@@ -62,21 +62,21 @@ Cell`s standardization
 .. autosummary::
     :toctree: generated/
 
-    standardize_cell
-    CUB_standardize_cell
-    FCC_standardize_cell
-    BCC_standardize_cell
-    TET_standardize_cell
-    BCT_standardize_cell
-    ORC_standardize_cell
-    ORCF_standardize_cell
-    ORCI_standardize_cell
-    ORCC_standardize_cell
-    HEX_standardize_cell
-    RHL_standardize_cell
-    MCL_standardize_cell
-    MCLC_standardize_cell
-    TRI_standardize_cell
+    get_S_matrix
+    CUB_get_S_matrix
+    FCC_get_S_matrix
+    BCC_get_S_matrix
+    TET_get_S_matrix
+    BCT_get_S_matrix
+    ORC_get_S_matrix
+    ORCF_get_S_matrix
+    ORCI_get_S_matrix
+    ORCC_get_S_matrix
+    HEX_get_S_matrix
+    RHL_get_S_matrix
+    MCL_get_S_matrix
+    MCLC_get_S_matrix
+    TRI_get_S_matrix
 
 Lattice variations
 ==================
