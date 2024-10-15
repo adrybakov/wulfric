@@ -21,6 +21,9 @@ lattice/crystal.
 Documentation of the Bravais lattices and on formal notation used in the package was
 drastically improved. Please visit the user guide to see the changes.
 
+Support for Python 3.8 was removed. Minimal version of Python used for automatic testing
+is 3.9.
+
 
 0.4.0
 -----
