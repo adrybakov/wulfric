@@ -112,7 +112,9 @@ Matrix :math:`\boldsymbol{S}` is constructed in three steps.
 Step 1
 ------
 
-* If :math:`\beta = \gamma = \frac{\pi}{2}` and :math:`\alpha \ne \frac{\pi}{2}`, then
+* If :math:`\beta = \gamma = \frac{\pi}{2}` and :math:`\alpha \ne \frac{\pi}{2}` (i.e.
+  :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3 = \boldsymbol{a}_1\cdot\boldsymbol{a}_2 = 0`
+  and :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 \ne 0`, then
 
   .. math::
 
@@ -136,7 +138,9 @@ Step 1
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\alpha = \gamma = \frac{\pi}{2}` and :math:`\beta \ne \frac{\pi}{2}`, then
+* If :math:`\alpha = \gamma = \frac{\pi}{2}` and :math:`\beta \ne \frac{\pi}{2}` (i.e.
+  :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 = \boldsymbol{a}_1\cdot\boldsymbol{a}_2 = 0`
+  and :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3 \ne 0`, then
 
   .. math::
 
@@ -166,7 +170,9 @@ Step 1
       0 & 1 & 0
     \end{pmatrix}
 
-* If :math:`\alpha = \beta = \frac{\pi}{2}` and :math:`\gamma \ne \frac{\pi}{2}`, then
+* If :math:`\alpha = \beta = \frac{\pi}{2}` and :math:`\gamma \ne \frac{\pi}{2}` (i.e.
+  :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 = \boldsymbol{a}_1\cdot\boldsymbol{a}_3 = 0`
+  and :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_2 \ne 0`, then
 
   .. math::
 
@@ -255,7 +261,8 @@ Step 2
 Step 3
 ------
 
-* If :math:`\alpha^2 < \frac{\pi}{2}`, then
+* If :math:`\alpha^2 < \frac{\pi}{2}` (i.e
+  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 > 0`), then
 
   .. math::
 
@@ -279,7 +286,8 @@ Step 3
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\alpha^2 > \frac{\pi}{2}`, then
+* If :math:`\alpha^2 > \frac{\pi}{2}` (i.e
+  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 < 0`), then
 
   .. math::
 

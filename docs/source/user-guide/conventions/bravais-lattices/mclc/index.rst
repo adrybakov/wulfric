@@ -717,7 +717,7 @@ Last step ensures that :math:`\alpha < \frac{\pi}{2}`. Translated to the primiti
 this condition reads as :math:`\boldsymbol{a}_2\boldsymbol{a}_3 > 0`. We use lattice
 vectors of the primitive cell.
 
-* If :math:`\alpha < \frac{\pi}{2}` (i.e. :math:`\boldsymbol{a}_2\boldsymbol{a}_3 > 0`),
+* If :math:`\alpha < \frac{\pi}{2}` (i.e. :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 > 0`),
   then
 
   .. math::
@@ -742,7 +742,7 @@ vectors of the primitive cell.
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\alpha > \frac{\pi}{2}` (i.e. :math:`\boldsymbol{a}_2\boldsymbol{a}_3 < 0`),
+* If :math:`\alpha > \frac{\pi}{2}` (i.e. :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 < 0`),
   then
 
   .. math::

@@ -254,7 +254,7 @@ Cell standardization
 ====================
 
 Triclinic cell is unique, as standardization is performed based on the reciprocal
-primitive cell. AS all transormations involved are described by orthonormal matrices,
+primitive cell. As all transformations involved are described by orthonormal matrices,
 the reciprocal and real-space cells are transformed in a simplified manner (Note:
 :math:`\boldsymbol{S}^T = \boldsymbol{S}^{-1}`):
 
@@ -285,9 +285,15 @@ Step 1
 In this step we ensure either of the two conditions: all angles are :math:`\le 90^{\circ}`
 or all angles are :math:`\ge 90^{\circ}`.
 
-* If :math:`k_{\alpha} \ge 90^{\circ}` and :math:`k_{\beta} \ge 90^{\circ}` and :math:`k_{\gamma} \ge 90^{\circ}`
-  or
-  :math:`k_{\alpha} \le 90^{\circ}` and :math:`k_{\beta} \le 90^{\circ}` and :math:`k_{\gamma} \le 90^{\circ}`:
+* If :math:`k_{\alpha} \ge \frac{\pi}{2}` and :math:`k_{\beta} \ge \frac{\pi}{2}` and
+  :math:`k_{\gamma} \ge \frac{\pi}{2}` or :math:`k_{\alpha} \le \frac{\pi}{2}` and
+  :math:`k_{\beta} \le \frac{\pi}{2}` and :math:`k_{\gamma} \le \frac{\pi}{2}` (i.e
+  :math:`\boldsymbol{b}_2\cdot\boldsymbol{b}_3 \le 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_3 \le 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_2 \le 0` or
+  :math:`\boldsymbol{b}_2\cdot\boldsymbol{b}_3 \ge 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_3 \ge 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_2 \ge 0`, then
 
   .. math::
 
@@ -311,9 +317,15 @@ or all angles are :math:`\ge 90^{\circ}`.
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`k_{\alpha} \ge 90^{\circ}` and :math:`k_{\beta} \ge 90^{\circ}` and :math:`k_{\gamma} \le 90^{\circ}`
-  or
-  :math:`k_{\alpha} \le 90^{\circ}` and :math:`k_{\beta} \le 90^{\circ}` and :math:`k_{\gamma} \ge 90^{\circ}`:
+* If :math:`k_{\alpha} \ge \frac{\pi}{2}` and :math:`k_{\beta} \ge \frac{\pi}{2}` and
+  :math:`k_{\gamma} \le \frac{\pi}{2}` or :math:`k_{\alpha} \le \frac{\pi}{2}` and
+  :math:`k_{\beta} \le \frac{\pi}{2}` and :math:`k_{\gamma} \ge \frac{\pi}{2}` (i.e
+  :math:`\boldsymbol{b}_2\cdot\boldsymbol{b}_3 \le 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_3 \le 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_2 \ge 0` or
+  :math:`\boldsymbol{b}_2\cdot\boldsymbol{b}_3 \ge 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_3 \ge 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_2 \le 0`, then
 
   .. math::
 
@@ -337,9 +349,15 @@ or all angles are :math:`\ge 90^{\circ}`.
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`k_{\alpha} \ge 90^{\circ}` and :math:`k_{\beta} \le 90^{\circ}` and :math:`k_{\gamma} \ge 90^{\circ}`
-  or
-  :math:`k_{\alpha} \le 90^{\circ}` and :math:`k_{\beta} \ge 90^{\circ}` and :math:`k_{\gamma} \le 90^{\circ}`:
+* If :math:`k_{\alpha} \ge \frac{\pi}{2}` and :math:`k_{\beta} \le \frac{\pi}{2}` and
+  :math:`k_{\gamma} \ge \frac{\pi}{2}` or :math:`k_{\alpha} \le \frac{\pi}{2}` and
+  :math:`k_{\beta} \ge \frac{\pi}{2}` and :math:`k_{\gamma} \le \frac{\pi}{2}` (i.e
+  :math:`\boldsymbol{b}_2\cdot\boldsymbol{b}_3 \le 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_3 \ge 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_2 \le 0` or
+  :math:`\boldsymbol{b}_2\cdot\boldsymbol{b}_3 \ge 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_3 \le 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_2 \ge 0`, then
 
   .. math::
 
@@ -363,9 +381,15 @@ or all angles are :math:`\ge 90^{\circ}`.
       0 & 0 & -1
     \end{pmatrix}
 
-* If :math:`k_{\alpha} \le 90^{\circ}` and :math:`k_{\beta} \ge 90^{\circ}` and :math:`k_{\gamma} \ge 90^{\circ}`
-  or
-  :math:`k_{\alpha} \ge 90^{\circ}` and :math:`k_{\beta} \le 90^{\circ}` and :math:`k_{\gamma} \le 90^{\circ}`:
+* If :math:`k_{\alpha} \le \frac{\pi}{2}` and :math:`k_{\beta} \ge \frac{\pi}{2}` and
+  :math:`k_{\gamma} \ge \frac{\pi}{2}` or :math:`k_{\alpha} \ge \frac{\pi}{2}` and
+  :math:`k_{\beta} \le \frac{\pi}{2}` and :math:`k_{\gamma} \le \frac{\pi}{2}` (i.e
+  :math:`\boldsymbol{b}_2\cdot\boldsymbol{b}_3 \ge 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_3 \le 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_2 \le 0` or
+  :math:`\boldsymbol{b}_2\cdot\boldsymbol{b}_3 \le 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_3 \ge 0` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_2 \ge 0`, then
 
   .. math::
 
@@ -394,9 +418,14 @@ Step 2
 
 At this step we ensure that :math:`k_{\gamma}` is an appropriate extremum.
 
-* If :math:`k_{\gamma} = min(k_{\alpha}, k_{\beta}, k_{\gamma})` and :math:`k_{\gamma} \ge 90^{\circ}`
-  or
-  :math:`k_{\gamma} = max(k_{\alpha}, k_{\beta}, k_{\gamma})` and :math:`k_{\gamma} \le 90^{\circ}`:
+* If :math:`k_{\gamma} = min(k_{\alpha}, k_{\beta}, k_{\gamma})` and
+  :math:`k_{\gamma} \ge \frac{\pi}{2}` or
+  :math:`k_{\gamma} = max(k_{\alpha}, k_{\beta}, k_{\gamma})` and
+  :math:`k_{\gamma} \le \frac{\pi}{2}` (i.e.
+  :math:`k_{\gamma} = min(k_{\alpha}, k_{\beta}, k_{\gamma})` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_2 \le 0` or
+  :math:`k_{\gamma} = max(k_{\alpha}, k_{\beta}, k_{\gamma})` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_2 \ge 0`, then
 
   .. math::
 
@@ -420,9 +449,14 @@ At this step we ensure that :math:`k_{\gamma}` is an appropriate extremum.
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`k_{\beta} = min(k_{\alpha}, k_{\beta}, k_{\gamma})` and :math:`k_{\beta} \ge 90^{\circ}`
-  or
-  :math:`k_{\beta} = max(k_{\alpha}, k_{\beta}, k_{\gamma})` and :math:`k_{\beta} \le 90^{\circ}`:
+* If :math:`k_{\beta} = min(k_{\alpha}, k_{\beta}, k_{\gamma})` and
+  :math:`k_{\beta} \ge \frac{\pi}{2}` or
+  :math:`k_{\beta} = max(k_{\alpha}, k_{\beta}, k_{\gamma})` and
+  :math:`k_{\beta} \le \frac{\pi}{2}` (i.e.
+  :math:`k_{\beta} = min(k_{\alpha}, k_{\beta}, k_{\gamma})` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_3 \le 0` or
+  :math:`k_{\beta} = max(k_{\alpha}, k_{\beta}, k_{\gamma})` and
+  :math:`\boldsymbol{b}_1\cdot\boldsymbol{b}_3 \ge 0`, then
 
   .. math::
 
@@ -452,9 +486,14 @@ At this step we ensure that :math:`k_{\gamma}` is an appropriate extremum.
       1 & 0 & 0
     \end{pmatrix}
 
-* If :math:`k_{\alpha} = min(k_{\alpha}, k_{\beta}, k_{\gamma})` and :math:`k_{\alpha} \ge 90^{\circ}`
-  or
-  :math:`k_{\alpha} = max(k_{\alpha}, k_{\beta}, k_{\gamma})` and :math:`k_{\alpha} \le 90^{\circ}`:
+* If :math:`k_{\alpha} = min(k_{\alpha}, k_{\beta}, k_{\gamma})` and
+  :math:`k_{\alpha} \ge \frac{\pi}{2}` or
+  :math:`k_{\alpha} = max(k_{\alpha}, k_{\beta}, k_{\gamma})` and
+  :math:`k_{\alpha} \le \frac{\pi}{2}` (i.e.
+  :math:`k_{\alpha} = min(k_{\alpha}, k_{\beta}, k_{\gamma})` and
+  :math:`\boldsymbol{b}_2\cdot\boldsymbol{b}_3 \le 0` or
+  :math:`k_{\alpha} = max(k_{\alpha}, k_{\beta}, k_{\gamma})` and
+  :math:`\boldsymbol{b}_2\cdot\boldsymbol{b}_3 \ge 0`, then
 
   .. math::
 
