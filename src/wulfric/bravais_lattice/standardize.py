@@ -48,6 +48,8 @@ def get_S_matrix(cell, correct_lattice_type, rtol=REL_TOL, atol=ABS_TOL):
     Analyse arbitrary cell and redefine it
     if required to ensure the unique choice of lattice vectors.
 
+    .. versionchanged:: 0.4.0  Renamed from ``standardize_cell``
+
     See :ref:`docs for each Bravais lattice <library_bravais-lattices>` for the details.
 
     Parameters
@@ -92,6 +94,8 @@ def CUB_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary cubic cell returns matrix S that transforms it to the standardized form.
 
+    .. versionchanged:: 0.4.0  Renamed from ``CUB_standardize_cell``
+
     See :ref:`guide_cub` and :ref:`user-guide_conventions_main_standardization` for the
     details.
 
@@ -114,7 +118,7 @@ def CUB_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     Notes
     -----
     It is assumed that the ``cell`` has the symmetries of the cubic lattice.
-    If the cell is not tetragonal, the function will not work correctly.
+    If the cell is not cubic, the function will not work correctly.
     """
 
     return np.eye(3, dtype=float)
@@ -124,6 +128,8 @@ def FCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary face-centered cubic cell returns matrix S that transforms it to the
     standardized form.
+
+    .. versionchanged:: 0.4.0  Renamed from ``FCC_standardize_cell``
 
     See :ref:`guide_fcc` and :ref:`user-guide_conventions_main_standardization` for the
     details.
@@ -147,7 +153,7 @@ def FCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     Notes
     -----
     It is assumed that the ``cell`` has the symmetries of the face-centered cubic lattice.
-    If the cell is not tetragonal, the function will not work correctly.
+    If the cell is not face-centered cubic, the function will not work correctly.
     """
 
     return np.eye(3, dtype=float)
@@ -157,6 +163,8 @@ def BCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary body-centered cubic cell returns matrix S that transforms it to the
     standardized form.
+
+    .. versionchanged:: 0.4.0  Renamed from ``BCC_standardize_cell``
 
     See :ref:`guide_fcc` and :ref:`user-guide_conventions_main_standardization` for the
     details.
@@ -180,7 +188,7 @@ def BCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     Notes
     -----
     It is assumed that the ``cell`` has the symmetries of the body-centered cubic lattice.
-    If the cell is not tetragonal, the function will not work correctly.
+    If the cell is not body-centered cubic, the function will not work correctly.
     """
 
     return np.eye(3, dtype=float)
@@ -190,6 +198,8 @@ def TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary tetragonal cell returns matrix S that transforms it to the
     standardized form.
+
+    .. versionchanged:: 0.4.0  Renamed from ``TET_standardize_cell``
 
     See :ref:`guide_tet` and :ref:`user-guide_conventions_main_standardization` for the
     details.
@@ -244,6 +254,8 @@ def BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     For arbitrary body-centered tetragonal cell returns matrix S that transforms it to the
     standardized form.
 
+    .. versionchanged:: 0.4.0  Renamed from ``BCT_standardize_cell``
+
     See :ref:`guide_bct` and :ref:`user-guide_conventions_main_standardization` for the
     details.
 
@@ -264,7 +276,7 @@ def BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     Notes
     -----
     It is assumed that the ``cell`` has the symmetries of the body-centered tetragonal
-    lattice. If the cell is not tetragonal, the function will not work correctly.
+    lattice. If the cell is not body-centered tetragonal, the function will not work correctly.
 
     Raises
     ------
@@ -297,6 +309,8 @@ def ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary orthorhombic cell returns matrix S that transforms it to the
     standardized form.
+
+    .. versionchanged:: 0.4.0  Renamed from ``ORC_standardize_cell``
 
     See :ref:`guide_orc` and :ref:`user-guide_conventions_main_standardization` for the
     details.
@@ -362,6 +376,8 @@ def ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary face-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
+
+    .. versionchanged:: 0.4.0  Renamed from ``ORCF_standardize_cell``
 
     See :ref:`guide_orcf` and :ref:`user-guide_conventions_main_standardization` for the
     details.
@@ -429,6 +445,8 @@ def ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     For arbitrary body-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
 
+    .. versionchanged:: 0.4.0  Renamed from ``ORCI_standardize_cell``
+
     See :ref:`guide_orci` and :ref:`user-guide_conventions_main_standardization` for the
     details.
 
@@ -494,6 +512,8 @@ def ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary base-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
+
+    .. versionchanged:: 0.4.0  Renamed from ``ORCC_standardize_cell``
 
     See :ref:`guide_orcc` and :ref:`user-guide_conventions_main_standardization` for the
     details.
@@ -574,6 +594,8 @@ def HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     For arbitrary hexagonal cell returns matrix S that transforms it to the standardized
     form.
 
+    .. versionchanged:: 0.4.0  Renamed from ``HEX_standardize_cell``
+
     See :ref:`guide_hex` and :ref:`user-guide_conventions_main_standardization` for the
     details.
 
@@ -633,6 +655,8 @@ def RHL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     For arbitrary rhombohedral cell returns matrix S that transforms it to the standardized
     form.
 
+    .. versionchanged:: 0.4.0  Renamed from ``RHL_standardize_cell``
+
     See :ref:`guide_rhl` and :ref:`user-guide_conventions_main_standardization` for the
     details.
 
@@ -665,6 +689,8 @@ def MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary monoclinic cell returns matrix S that transforms it to the standardized
     form.
+
+    .. versionchanged:: 0.4.0  Renamed from ``MCL_standardize_cell``
 
     See :ref:`guide_mcl` and :ref:`user-guide_conventions_main_standardization` for the
     details.
@@ -748,6 +774,8 @@ def MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     For arbitrary base-centered monoclinic cell returns matrix S that transforms it to the
     standardized form.
 
+    .. versionchanged:: 0.4.0  Renamed from ``MCLC_standardize_cell``
+
     See :ref:`guide_mclc` and :ref:`user-guide_conventions_main_standardization` for the
     details.
 
@@ -825,6 +853,8 @@ def TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary triclinic cell returns matrix S that transforms it to the
     standardized form.
+
+    .. versionchanged:: 0.4.0  Renamed from ``TRI_standardize_cell``
 
     See :ref:`guide_tri` and :ref:`user-guide_conventions_main_standardization` for the
     details.
