@@ -53,12 +53,12 @@ def standardize_cell(cell, correct_lattice_type, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) :numpy:`ndarray`
         Primitive unit cell.
+    correct_lattice_type : str
+        Correct lattice type.
     rtol : float, default ``REL_TOL``
         Relative tolerance for numerical comparison.
     atol : float, default ``ABS_TOL``
         Absolute tolerance for numerical comparison.
-    correct_lattice_type : str
-        Correct lattice type.
 
     Returns
     -------
