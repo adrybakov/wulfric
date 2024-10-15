@@ -19,7 +19,6 @@
 import numpy as np
 
 import wulfric.cell as Cell
-from wulfric.constants import TRANSFORM_TO_CONVENTIONAL
 from wulfric.exceptions import StandardizationTypeMismatch
 from wulfric.numerical import ABS_TOL, ABS_TOL_ANGLE, REL_TOL, compare_numerically
 
