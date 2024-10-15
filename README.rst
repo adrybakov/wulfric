@@ -32,7 +32,7 @@ Installation
 
 Requirement for Wulfric installation are:
 
-* Python (>=3.8)
+* Python (>=3.9)
 * NumPy (~=1.26)
 * SciPy
 * termcolor

@@ -6,8 +6,8 @@ Installation
 
 Requirement for Wulfric installation are:
 
-* |Python|_ (>=3.8)
-* |NumPy|_
+* |Python|_ (>=3.9)
+* |NumPy|_ (~=1.26)
 * |SciPy|_
 * |termcolor|_
 * |matplotlib|_ (optional: [visual])

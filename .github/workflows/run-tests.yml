@@ -7,10 +7,6 @@ on:
     branches: [ main]
 
 jobs:
-  test-38:
-    uses: adrybakov/wulfric/.github/workflows/tests.yml@main
-    with:
-      python-version: '3.8'
 
   test-39:
     uses: adrybakov/wulfric/.github/workflows/tests.yml@main
@@ -31,3 +27,7 @@ jobs:
     uses: adrybakov/wulfric/.github/workflows/tests.yml@main
     with:
       python-version: '3.12'
+  test-313:
+    uses: adrybakov/wulfric/.github/workflows/tests.yml@main
+    with:
+      python-version: '3.13'
