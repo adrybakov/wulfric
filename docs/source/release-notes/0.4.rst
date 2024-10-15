@@ -12,7 +12,15 @@ Version 0.4
 
 Whats new?
 ----------
-Dependency on the |spglib|_ was introduced.
+Explicit standardization of the cell is no longer required! Previously the user had to
+explicitly standardize the cell of the crystal in order to have access to the high
+symmetry k points. Now the standardization **matrix** is computed and used to map the
+relative coordinates from the standard primitive cell to the actual primitive cell of the
+lattice/crystal.
+
+Documentation of the Bravais lattices and on formal notation used in the package was
+drastically improved. Please visit the user guide to see the changes.
+
 
 0.4.0
 -----
