@@ -18,6 +18,8 @@
 
 from math import pi
 
+import numpy as np
+
 __all__ = [
     "ATOM_TYPES",
     "PEARSON_SYMBOLS",
