@@ -648,6 +648,19 @@ class Lattice:
         return Cell.reciprocal(self.cell)
 
     @property
+    def rcell(self):
+        r"""
+        Reciprocal cell. Shortcut for :py:attr:`.reciprocal_cell`.
+
+        Returns
+        -------
+        reciprocal_cell : (3, 3) :numpy:`ndarray`
+            Reciprocal cell, rows are vectors, columns are coordinates.
+        """
+
+        return self.reciprocal_cell
+
+    @property
     def b1(self):
         r"""
         First reciprocal lattice vector.
@@ -1244,7 +1257,7 @@ class Lattice:
             for point in hs_points:
                 # Compute relative coordinates with respect to the
                 # non-standardized primitive cell
-                hs_points[point] = np.linalg.inv(self.S_matrix).T @ hs_points[point]
+                hs_points[point] = self.S_matrix.T @ hs_points[point]
 
                 # Post-process two edge cases
                 if point == "S" and self.type() == "BCT":
