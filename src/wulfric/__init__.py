@@ -28,6 +28,7 @@ from . import (
     constants,
     crystal,
     decorate,
+    exceptions,
     geometry,
     identify,
     io,
@@ -41,6 +42,7 @@ from .bravais_lattice import *
 from .constants import *
 from .crystal import *
 from .decorate import *
+from .exceptions import *
 from .geometry import *
 from .identify import *
 from .io import *

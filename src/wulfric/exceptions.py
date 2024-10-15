@@ -22,7 +22,7 @@ __all__ = ["StandardizationTypeMismatch"]
 class StandardizationTypeMismatch(Exception):
     r"""
     Raised if standardization functions is called on the cell that does not match the
-    expected lattice type (i.e. ``TET_get_S_matrix`` is called on the cubic cell).
+    expected lattice type (i.e. :py:func:`.TET_get_S_matrix` is called on the cubic cell).
     """
 
     def __init__(self, expected_lattice_type, step=None):

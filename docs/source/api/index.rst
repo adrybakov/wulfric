@@ -40,6 +40,7 @@ In the examples across the documentation it is expected to be imported in that w
    numerical
    decorate
    constants
+   exceptions
 
 .. _api_crystal-plotting:
 
