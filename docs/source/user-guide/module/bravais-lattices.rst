@@ -8,17 +8,18 @@ Bravais lattices
 
 For the full technical reference see :ref:`api_bravais-lattices`
 
-For the description of each Bravais lattice type see :ref:`library_bravais-lattices`.
+For the description of each Bravais lattice type see :ref:`user-guide_conventions_bravais-lattices`.
 
 Bravais lattice notation and standardization follows Setyawan and Curtarolo [1]_.
 
 Each Bravais lattice is an instance of :py:class:`.Lattice` class.
 
 
-For each Bravais lattice system there is a function defined, which constructs
-the instance of :py:class:`.Lattice` class from the parameters. For the names of the
-constructors and corresponding parameters see the :ref:`dedicated page <library_bravais-lattices>`
-(for full reference see :ref:`Api reference <api_bravais-lattices>`).
+For each Bravais lattice system there is a function defined, that constructs
+the instance of :py:class:`.Lattice` class from the set of relevant parameters. For the
+names of the constructors and corresponding parameters see
+:ref:`dedicated pages <user-guide_conventions_bravais-lattices>` (for full reference see
+:ref:`Api reference <api_bravais-lattices>`).
 
 Import
 ======

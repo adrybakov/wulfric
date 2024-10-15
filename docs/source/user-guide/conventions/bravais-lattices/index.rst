@@ -1,4 +1,4 @@
-.. _library_bravais-lattices:
+.. _user-guide_conventions_bravais-lattices:
 
 ****************
 Bravais lattices
@@ -19,8 +19,8 @@ Cartesian coordinate system as in the reference paper.
 
 In practice the cell can be given to Wulfric in any Cartesian coordinate system.
 Standardization procedure does not change the crystal, but redefine the lattice vectors.
-Relative positions of the high symmetry k-points are given for the standardized
-**primitive** cell.
+Relative positions of the high symmetry k-points are given for the **standardized
+primitive** cell in the **default** orientation.
 
 
 Cubic lattice system

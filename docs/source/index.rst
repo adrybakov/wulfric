@@ -39,7 +39,7 @@ The functional of Wulfric includes (but not limited to):
 * Bravais lattice standardization.
 
 * Automatic choice of the :ref:`Kpoints <user-guide_module_kpoints>`
-  and K-path for all :ref:`Bravais lattice types <library_bravais-lattices>`.
+  and K-path for all :ref:`Bravais lattice types <user-guide_conventions_bravais-lattices>`.
 
 * Standalone :py:func:`.lepage` and :py:func:`.niggli` algorithms.
 

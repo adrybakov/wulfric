@@ -174,17 +174,17 @@ Two routines are predefined:
 
 * :py:meth:`.Crystal.cure_negative` - enforce all atoms to have positive relative coordinates.
 
-    .. doctest::
+  .. doctest::
 
-      >>> crystal = Crystal(cell=[[2, 0, 0], [0, 2, 0], [0, 0, 2]])
-      >>> crystal.add_atom('Cr1', position=(-0.5, 0.5, 0.0))
-      >>> crystal.add_atom('Cr2', position=(0.1, 0.5, 0.0))
-      >>> crystal.cure_negative()
-      >>> for atom in crystal.atoms:
-      ...    print(atom.name, atom.position)
-      ...
-      Cr1 [0.  0.5 0. ]
-      Cr2 [0.6 0.5 0. ]
+    >>> crystal = Crystal(cell=[[2, 0, 0], [0, 2, 0], [0, 0, 2]])
+    >>> crystal.add_atom('Cr1', position=(-0.5, 0.5, 0.0))
+    >>> crystal.add_atom('Cr2', position=(0.1, 0.5, 0.0))
+    >>> crystal.cure_negative()
+    >>> for atom in crystal.atoms:
+    ...    print(atom.name, atom.position)
+    ...
+    Cr1 [0.  0.5 0. ]
+    Cr2 [0.6 0.5 0. ]
 
 Atom getters
 ============

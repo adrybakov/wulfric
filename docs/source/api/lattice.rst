@@ -72,6 +72,7 @@ Reciprocal space
     :toctree: generated/
 
     Lattice.reciprocal_cell
+    Lattice.rcell
     Lattice.b1
     Lattice.b2
     Lattice.b3

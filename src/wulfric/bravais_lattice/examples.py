@@ -160,9 +160,6 @@ def lattice_example(
         lattice = TRI(1, 1.5, 2, 60, 70, 90, reciprocal=True)
 
     if convention is not None:
-        if convention.lower() == "sc":
-            lattice.standardize()
-        else:
-            raise ValueError(f'Unknown standardization convention: "{convention}"')
+        lattice.convention = convention
 
     return lattice

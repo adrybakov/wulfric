@@ -73,22 +73,30 @@ def cells():
         40,
         95,
         f"Primitive cell\n"
-        R"$p = (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)$"
+        R"$(\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)$"
         "\nLattice.cell",
+        **text_style,
+    )
+    ax.text(
+        40,
+        40,
+        f"Reciprocal cell\n"
+        R"$(\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3)$"
+        "\nLattice.rcell",
         **text_style,
     )
     ax.text(
         140,
         95,
         f"Standardized\nprimitive cell\n"
-        R"$p^s = (\boldsymbol{a}^s_1, \boldsymbol{a}^s_2, \boldsymbol{a}^s_3)$",
+        R"$(\boldsymbol{a}^s_1, \boldsymbol{a}^s_2, \boldsymbol{a}^s_3)$",
         **text_style,
     )
     ax.text(
         140,
         30,
         f"Standardized\nconventional cell\n"
-        R"$c^s = (\boldsymbol{a}^{cs}_1, \boldsymbol{a}^{cs}_2, \boldsymbol{a}^{cs}_3)$"
+        R"$(\boldsymbol{a}^{cs}_1, \boldsymbol{a}^{cs}_2, \boldsymbol{a}^{cs}_3)$"
         "\nLattice.conv_cell",
         **text_style,
     )
@@ -97,6 +105,19 @@ def cells():
     quiver(ax, (140, 65), 0, 18)
     ax.text(143, 65, R"$\boldsymbol{C}$", ha="left", va="center", size=25)
     ax.text(89, 98, R"$\boldsymbol{S}$", ha="center", va="bottom", size=25)
+
+    ax.quiver(
+        40,
+        75,
+        0,
+        -15,
+        angles="xy",
+        scale_units="xy",
+        scale=1,
+        headlength=3,
+        headaxislength=2.7,
+        color="#BD2A7B",
+    )
 
     ax.set_xlim(0, 200)
     ax.set_ylim(0, 120)

@@ -38,11 +38,7 @@ Usually it is created from some :py:class:`.Lattice` (or :py:class:`.Crystal`):
 .. doctest::
 
     >>> lattice = lattice_example("CUB")
-    >>> # Standardization is explicit since 0.3.0
-    >>> lattice.standardize()
     >>> kp = lattice.kpoints
-    >>> # Since 0.3.1 the above three lines might be replaced by
-    >>> # lattice = lattice_example("CUB", convention="sc")
     >>> kp.hs_names
     ['G', 'M', 'R', 'X']
 
@@ -231,7 +227,7 @@ the high symmetry points of this section of the path.
            [0.5, 0.1, 0. ],
            [0.5, 0. , 0. ]])
 
-.. note::
+.. hint::
     For each section the last point is repeated twice, because it is the first point
     of the next section of the path.
 

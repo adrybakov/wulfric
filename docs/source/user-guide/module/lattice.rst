@@ -42,22 +42,6 @@ Lattice can be created in three different ways:
            [0, 1, 0],
            [0, 0, 1]])
 
-When a lattice is created from the cell, orientation of the cell is respected,
-however the lattice vectors may be renamed.
-:ref:`Documentation on each Bravais lattice type <library_bravais-lattices>`.
-
-Creation may change the angles and the lengths of the cell vectors.
-It preserve the volume, right- or left- handedness, lattice type and variation
-of the cell.
-
-The lattice vector`s lengths are preserved as a set.
-
-The angles between the lattice vectors are preserved as a set with possible
-changes of the form: :math:`angle \rightarrow 180 - angle`.
-
-The returned cell may not be the same as the input one, but it is translational
-equivalent.
-
 * From three lattice vectors :math:`\vec{a}_1`, :math:`\vec{a}_2`, :math:`\vec{a}_3`:
 
   .. doctest::
@@ -131,18 +115,8 @@ For the brief algorithm description see :ref:`library_lepage`.
 
   Lattice identification is not a trivial task and may be time consuming.
   The algorithm is based on the assumption that the lattice`s unit cell is primitive.
-
-  By default the lattice type is identified during the creation of the lattice
-  (It is required for the lattice standardization). Therefore, the creation of the
-  lattice may be time consuming. To avoid this, you can disable the standardization
-  of the cell via the ``standardize=False`` argument:
-
-  .. doctest::
-
-    >>> lattice = Lattice(1, 1, 1, 90, 90, 90, standardize=False)
-
-  Note that the predefined paths and k points for the lattice are not guaranteed to
-  be correct and reproducible if the lattice is not standardized.
+  As a rule of thumb, Wulfric will identify the lattice type only if it is explicitly
+  required for the task.
 
 Variation of the lattice
 ========================
@@ -155,8 +129,6 @@ To check the variation of the lattice use :py:attr:`.Lattice.variation` attribut
 .. doctest::
 
     >>> lattice = lattice_example("BCT")
-    >>> # Standardization is explicit since 0.3.0
-    >>> lattice.standardize()
     >>> lattice.variation
     'BCT1'
     >>> lattice = Lattice(1, 1, 1, 90, 90, 90)
@@ -232,6 +204,11 @@ All lattice parameters can be accessed as attributes:
     array([[1., 0., 0.],
            [0., 1., 0.],
            [0., 0., 1.]])
+    >>> # Since 0.4.0 there is a shortcut in place
+    >>> lattice.rcell
+    array([[1., 0., 0.],
+           [0., 1., 0.],
+           [0., 0., 1.]])
     >>> round(lattice.k_a, 4)
     1.0
     >>> round(lattice.k_b, 4)
@@ -247,9 +224,9 @@ All lattice parameters can be accessed as attributes:
 
 .. hint::
 
-    Not all properties of the lattice are listed here (for examples the once
-    for the conventional cell are not even mentioned).
-    See :ref:`api_lattice` for the full list of properties.
+    Not all properties of the lattice are listed here (for examples the one of the
+    conventional cell are not even mentioned). See :ref:`api_lattice` for the full list
+    of properties.
 
 K points
 ========
@@ -259,13 +236,11 @@ implemented in a separate class :py:class:`.Kpoints`. It is expected to be acces
 through the :py:attr:`.Lattice.kpoints` attribute. Note that you can work with
 kpoints from the instance of the :py:class:`.Lattice`, since the instance of the
 :py:class:`.Kpoints` class is created when the property is accessed for the first
-time and stored internally for the future:
+time and stored internally for later use:
 
 .. doctest::
 
     >>> lattice = Lattice(1, 1, 1, 90, 90, 90)
-    >>> # Standardization is explicit since 0.3.0
-    >>> lattice.standardize()
     >>> lattice.kpoints.add_hs_point("CP", [0.5, 0.5, 0.5], label="Custom label")
     >>> lattice.kpoints.path = "G-X|M-CP-X"
     >>> lattice.kpoints.path_string
@@ -282,8 +257,10 @@ time and stored internally for the future:
 .. note::
 
     For each Bravais lattice type there is a predefined path and set of
-    kpoints in reciprocal space. See :ref:`library_bravais-lattices` for more details.
-    The unit cell has to be standardized to use the predefined paths and kpoints. For
-    the standardization just call :py:meth:`.Lattice.standardize` method.
+    kpoints in reciprocal space. See :ref:`user-guide_conventions_bravais-lattices` for
+    more details. Standardization of the unit cell is required prior to the v0.4.0. As of
+    version 0.4.0 and later standardization is not required and high symmetry kpoints are
+    computed with respect to any given cell.
 
-For the full guide on how to use :py:class:`.Kpoints` class see :ref:`user-guide_module_kpoints`.
+For the full guide on how to use :py:class:`.Kpoints` class see
+:ref:`user-guide_module_kpoints`.

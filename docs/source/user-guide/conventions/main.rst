@@ -174,6 +174,7 @@ Cartesian (absolute) coordinates of the k-points can be calculated by the follow
 
 
 
+.. _user-guide_conventions_main_transformation:
 
 Transformation of the cell
 ==========================
@@ -267,7 +268,7 @@ being the standardized primitive cell:
 
 
 Details on how the standardization matrix is constructed are provided in the individual
-pages for each of the 14 :ref:`library_bravais-lattices`.
+pages for each of the 14 :ref:`user-guide_conventions_bravais-lattices`.
 
 .. _user-guide_conventions_main_conventional:
 
@@ -275,17 +276,17 @@ Conventional vs primitive cell (Setyawan and Curtarolo)
 =======================================================
 
 In the reference paper [1]_ conventional (>=1 lattice point per cell) and primitive
-(1 lattice point per cell) cells are defined. Transformation from primitive to
+(1 lattice point per cell) standardized cells are defined. Transformation from primitive to
 conventional cell is expressed by the transformation matrix :math:`\boldsymbol{C}`:
 
 .. math::
 
-    (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
+    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
     =
-    (\boldsymbol{a}_1^c, \boldsymbol{a}_2^c, \boldsymbol{a}_3^c) \boldsymbol{C}
+    (\boldsymbol{a}_1^{cs}, \boldsymbol{a}_2^{cs}, \boldsymbol{a}_3^{cs}) \boldsymbol{C}
 
 Transformation matrices :math:`\boldsymbol{C}` and its inverse are provided in the individual
-pages for each of the 14 :ref:`library_bravais-lattices`.
+pages for each of the 14 :ref:`user-guide_conventions_bravais-lattices`.
 
 .. important::
     Given cell is always interpreted as primitive.

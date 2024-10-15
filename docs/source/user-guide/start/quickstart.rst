@@ -39,7 +39,7 @@ For the full technical reference of modules, classes and methods see :ref:`api`.
 Some of the algorithms used in Wulfric are described in the :ref:`user-guide_library`.
 
 For the full description of adopted Bravais lattices and high-symmetry K-points
-see :ref:`library_bravais-lattices`.
+see :ref:`user-guide_conventions_bravais-lattices`.
 
 .. note::
   The images are interactive over there.

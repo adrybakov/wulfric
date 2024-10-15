@@ -49,7 +49,7 @@ def get_S_matrix(cell, correct_lattice_type, rtol=REL_TOL, atol=ABS_TOL):
 
     .. versionchanged:: 0.4.0  Renamed from ``standardize_cell``
 
-    See :ref:`docs for each Bravais lattice <library_bravais-lattices>` for the details.
+    See :ref:`docs for each Bravais lattice <user-guide_conventions_bravais-lattices>` for the details.
 
     Parameters
     ----------
