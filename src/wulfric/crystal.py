@@ -107,22 +107,15 @@ class Crystal(Lattice):
             Computational materials science, 49(2), pp.299-312.
         """
 
-        # Remember the raw cell
-        raw_cell = self.cell
+        # Get S matrix before cell standardization
+        S = self.S_matrix
 
-        # Standardize the lattice
+        # Standardize cell of the lattice
         super().standardize()
 
-        # Shift atoms to the new standardized cell
+        # Recalculate atom's relative coordinates.
         for atom in self.atoms:
-            # Get real space positions of the atoms before standardization
-            position = atom.position @ raw_cell
-            # Convert real space positions to relative positions with respect to the new standardized cell
-            new_position = absolute_to_relative(position, self.cell)
-            # Shift atoms to the new standardized cell if needed
-            new_position = np.mod(new_position, 1)
-            # Set new relative positions
-            atom.position = new_position
+            atom.position = S @ atom.position
 
     ################################################################################
     #                              List-like behavior                              #
