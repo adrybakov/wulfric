@@ -48,10 +48,11 @@ from wulfric.bravais_lattice.variations import (
 )
 from wulfric.constants import (
     BRAVAIS_LATTICE_NAMES,
+    C_MATRICES,
     DEFAULT_K_PATHS,
     HS_PLOT_NAMES,
     PEARSON_SYMBOLS,
-    TRANSFORM_TO_CONVENTIONAL,
+    STANDARDIZATION_CONVENTIONS,
 )
 from wulfric.geometry import angle, volume
 from wulfric.identify import lepage
@@ -132,7 +133,8 @@ class Lattice:
         self._cell = None
         self._type = None
         self._kpoints = None
-        self._standardization_convention = None
+        self._standardization_convention = "sc"
+        self._standardized = False
         if "cell" in kwargs:
             cell = kwargs["cell"]
         elif "a1" in kwargs and "a2" in kwargs and "a3" in kwargs:
@@ -174,17 +176,22 @@ class Lattice:
     ################################################################################
     #                             Cell standardization                             #
     ################################################################################
-    def standardize(self, convention="sc"):
+    @property
+    def S_matrix(self):
+        r"""
+        Transformation matrix that transforms the primitive cell to the standardized
+        primitive cell.
+
+        See :ref:`user-guide_conventions_main_standardization` for details.
+        """
+
+        return get_S_matrix(self._cell, self.type(), rtol=self.eps_rel, atol=self.eps)
+
+    def standardize(self):
         R"""
         Standardize cell with respect to the Bravais lattice type as defined in [1]_.
 
         .. versionadded:: 0.3.0
-
-        Parameters
-        ----------
-        convention : str, default "sc"
-            Convention used for the standardization of the unit cell.
-            See :py:attr:`.convention` for the list of supported conventions.
 
         References
         ----------
@@ -192,10 +199,8 @@ class Lattice:
             High-throughput electronic band structure calculations: Challenges and tools.
             Computational materials science, 49(2), pp.299-312.
         """
-        self.convention = convention
-        self._cell = get_S_matrix(
-            self._cell, self.type(), rtol=self.eps_rel, atol=self.eps
-        )
+        self._cell = np.linalg.inv(self.S_matrix.T) @ self._cell
+        self._standardized = True
 
     @property
     def convention(self) -> str:
@@ -220,7 +225,7 @@ class Lattice:
     @convention.setter
     def convention(self, new_value: str):
         new_value = str(new_value).lower()
-        if new_value not in ["sc"]:
+        if new_value not in STANDARDIZATION_CONVENTIONS:
             raise ValueError(
                 f"Unsupported convention for the standardization of the unit cell: {new_value}."
             )
@@ -410,23 +415,41 @@ class Lattice:
     ################################################################################
     #                              Conventional cell                               #
     ################################################################################
+
+    @property
+    def C_matrix(self):
+        r"""
+        Transformation matrix that transforms primitive cell (:py:meth:`Lattice.cell`)
+        to the **conventional standardized** cell.
+
+        See :ref:`user-guide_conventions_main_conventional` for details.
+        """
+
+        return C_MATRICES[self.type()]
+
     @property
     def conv_cell(self):
         r"""
         Conventional cell.
 
-        Requires the lattice to be standardized.
+        .. math::
+
+            (\boldsymbol{a_1}, \boldsymbol{a_2}, \boldsymbol{a_3})
+            =
+            (\boldsymbol{a^{cs}}_1, \boldsymbol{a^{cs}}_2, \boldsymbol{a^{cs}}_3)
+            (\boldsymbol{C}\boldsymbol{S})
+
+        .. code-block:: python
+
+            conv_cell = np.linalg.inv(C @ S).T @ cell
 
         Returns
         -------
         conv_cell : (3, 3) :numpy:`ndarray`
             Conventional cell, rows are vectors, columns are coordinates.
         """
-        if self.convention is None:
-            raise ValueError(
-                "Unit cell is not standardized. Please, use the .standardize() method."
-            )
-        return TRANSFORM_TO_CONVENTIONAL[self.type()] @ self.cell
+
+        return np.linalg.inv(self.C_matrix @ self.S_matrix).T @ self.cell
 
     @property
     def conv_a1(self):
@@ -1164,15 +1187,6 @@ class Lattice:
         r"""
         Instance of :py:class:`.Kpoints` with the high symmetry points and path.
 
-        Lattice is standardized before the kpoints are computed. It may change the lattice vectors.
-        The periodic structure should remain the same.
-
-        Notes
-        -----
-        When a new instance of the :py:class:`.Kpoints` is assigned to the lattice,
-        reciprocal vectors of the lattice are not updated. Reciprocal vectors of new kpoints
-        are not updated as well.
-
         Returns
         -------
         kpoints : :py:class:`.Kpoints`
@@ -1184,10 +1198,7 @@ class Lattice:
         """
 
         if self._kpoints is None:
-            if self.convention is None:
-                raise ValueError(
-                    "Unit cell is not standardized. Please, use the .standardize() method."
-                )
+
             self._kpoints = Kpoints(self.b1, self.b2, self.b3)
 
             if self.type() == "CUB":
@@ -1228,6 +1239,11 @@ class Lattice:
                 hs_points = TRI_hs_points(self.variation)
 
             for point in hs_points:
+                # Compute relative coordinates with respect to the
+                # non-standardized primitive cell
+                hs_points[point] = np.linalg.inv(self.S_matrix).T @ hs_points[point]
+
+                # Post-process two edge cases
                 if point == "S" and self.type() == "BCT":
                     self._kpoints.add_hs_point(
                         point, hs_points[point], label="$\\Sigma$"
@@ -1236,6 +1252,7 @@ class Lattice:
                     self._kpoints.add_hs_point(
                         point, hs_points[point], label="$\\Sigma_1$"
                     )
+                # General assignment
                 else:
                     self._kpoints.add_hs_point(
                         point, hs_points[point], label=HS_PLOT_NAMES[point]
@@ -1244,15 +1261,6 @@ class Lattice:
             self._kpoints.path = DEFAULT_K_PATHS[self.variation]
 
         return self._kpoints
-
-    @kpoints.setter
-    def kpoints(self, new_kpoints: Kpoints):
-        if not isinstance(new_kpoints, Kpoints):
-            raise ValueError(
-                f"New kpoints should be an instance of the Kpoints class. "
-                + f"Got {type(new_kpoints)} instead."
-            )
-        self._kpoints = new_kpoints
 
     ################################################################################
     #                                     Copy                                     #
@@ -1264,10 +1272,12 @@ class Lattice:
 
         .. versionadded:: 0.3.0
 
+        .. versionchanged:: 0.4.0 Fixe the bug (it was never returned)
+
         Returns
         -------
         lattice : :py:class:`.Lattice`
             Copy of the lattice.
         """
 
-        deepcopy(self)
+        return deepcopy(self)
