@@ -20,3 +20,8 @@ The changes are described above and:
 
 * Add :py:class:`.StandardizationTypeMismatch` exception.
 * Function ``Kpoints.coordinates()`` is removed, use :py:meth:`.Kpoints.ticks()` instead.
+* Setter for the :py:meth:`.Lattice.kpoints` is removed to avoid confusion.
+* Fix the bag with :py:meth:`.Lattice.copy`and :py:meth:`.Crystal.copy`: the ``return``
+  statement was missing.
+* Remove ``TRANSFORM_TO_CONVENTIONAL`` from ``wulfric.constants``. It was substituted by
+  ``C_MATRICES``.
