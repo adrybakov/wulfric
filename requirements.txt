@@ -1,8 +1,7 @@
 # Package dependencies
-numpy
+numpy~=1.26
 scipy
 termcolor
-spglib>=2.3.2
 
 # Optional package dependencies
 matplotlib

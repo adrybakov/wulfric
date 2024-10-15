@@ -33,10 +33,9 @@ Installation
 Requirement for Wulfric installation are:
 
 * Python (>=3.8)
-* NumPy
+* NumPy (~=1.26)
 * SciPy
 * termcolor
-* spglib (>=2.3.2)
 * matplotlib (optional)
 * plotly (optional)
 
