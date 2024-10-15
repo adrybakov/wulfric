@@ -269,6 +269,8 @@ being the standardized primitive cell:
 Details on how the standardization matrix is constructed are provided in the individual
 pages for each of the 14 :ref:`library_bravais-lattices`.
 
+.. _user-guide_conventions_main_conventional:
+
 Conventional vs primitive cell (Setyawan and Curtarolo)
 =======================================================
 
