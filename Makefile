@@ -93,6 +93,7 @@ prepare-release:
 docs-pictures:
 	@python3 tools/plot-repositories.py
 	@python3 tools/plot-package-scheme.py
+	@python3 tools/plot-cell-relations.py
 	@python3 tools/plot-atom-magnetic-properties.py
 
 .ONESHELL:
