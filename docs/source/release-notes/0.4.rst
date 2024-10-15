@@ -14,6 +14,8 @@ Whats new?
 ----------
 Dependency on the |spglib|_ was introduced.
 
-0.3.0
+0.4.0
 -----
 The changes are described above and:
+
+* Add :py:class:`.StandardizationTypeMismatch` exception.
