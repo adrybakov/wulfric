@@ -244,6 +244,9 @@ Relative positions of the k-points are transformed as follows:
 
     tg = np.linalg.inv(P).T @ g
 
+
+.. _user-guide_conventions_main_standardization:
+
 Standardization of the cell
 ===========================
 
