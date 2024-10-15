@@ -278,3 +278,11 @@ def test_reciprocal():
 
 def test_variation():
     assert l.variation == "ORC"
+
+
+def test_convention():
+    l = Lattice(1, 1, 1, 90, 90, 90)
+
+    l.convention = "sC"
+
+    assert l.convention == "sc"

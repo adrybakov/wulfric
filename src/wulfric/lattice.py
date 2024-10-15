@@ -218,8 +218,9 @@ class Lattice:
         return self._standardization_convention
 
     @convention.setter
-    def convention(self, new_value):
-        if new_value.lower() not in ["sc"]:
+    def convention(self, new_value: str):
+        new_value = str(new_value).lower()
+        if new_value not in ["sc"]:
             raise ValueError(
                 f"Unsupported convention for the standardization of the unit cell: {new_value}."
             )
