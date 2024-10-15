@@ -202,6 +202,9 @@ class Lattice:
         self._cell = np.linalg.inv(self.S_matrix.T) @ self._cell
         self._standardized = True
 
+        # Remove any K-points, as the cell is changed
+        self._kpoints = None
+
     @property
     def convention(self) -> str:
         r"""
