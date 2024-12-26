@@ -58,7 +58,7 @@ a matrix with vectors as rows (hence the transposition symbol):
 Atom's positions
 ================
 
-Atoms positions are store as vectors of the relative coordinates with respect to the
+Atoms positions are stored as vectors of the relative coordinates with respect to the
 cell vectors.
 
 .. math::
