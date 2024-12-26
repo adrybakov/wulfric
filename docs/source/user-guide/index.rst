@@ -17,8 +17,8 @@ Definitions and conventions
 .. toctree::
     :maxdepth: 1
 
-    conventions/cell
     conventions/main
+    conventions/cell
     conventions/bravais-lattices/index
 
 
