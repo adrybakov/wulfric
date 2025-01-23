@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -28,7 +28,7 @@ class StandardizationTypeMismatch(Exception):
     """
 
     def __init__(self, expected_lattice_type, step=None):
-        if step is None:
+        if step is not None:
             message = f"{step} step of the standardization process fails. "
         else:
             message = ""
