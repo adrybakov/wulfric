@@ -16,10 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from wulfric.constants._numerical import ABS_TOL, REL_TOL
+
+# Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
-
-from wulfric.constants._numerical import ABS_TOL, REL_TOL
 
 
 def compare_numerically(x, condition, y, eps=None, rtol=REL_TOL, atol=ABS_TOL):
