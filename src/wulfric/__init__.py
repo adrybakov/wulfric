@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -22,45 +22,44 @@ __git_hash__ = "a581649f7c740a326f6be323517e533f921a214a"
 __release_date__ = "15 October 2024"
 
 
-from . import bravais_lattice
-from . import cell as Cell
-from . import (
-    constants,
-    crystal,
-    decorate,
-    exceptions,
-    geometry,
-    identify,
-    io,
-    kpoints,
-    lattice,
-    lattice_plotter,
-    numerical,
-)
-from .atom import *
-from .bravais_lattice import *
-from .constants import *
-from .crystal import *
-from .decorate import *
-from .exceptions import *
-from .geometry import *
-from .identify import *
-from .io import *
-from .kpoints import *
-from .lattice import *
-from .lattice_plotter import *
-from .numerical import *
+from . import cell, constants
+from ._decorate_array import *
+from ._exceptions import *
+from ._numerical import *
+from ._package_info import *
 
-__all__ = ["__version__", "__doclink__", "__git_hash__", "__release_date__", "Cell"]
-__all__.extend(bravais_lattice.__all__)
-__all__.extend(decorate.__all__)
-__all__.extend(io.__all__)
-__all__.extend(atom.__all__)
-__all__.extend(constants.__all__)
-__all__.extend(crystal.__all__)
-__all__.extend(geometry.__all__)
-__all__.extend(identify.__all__)
-__all__.extend(kpoints.__all__)
-__all__.extend(lattice_plotter.__all__)
-__all__.extend(lattice.__all__)
-__all__.extend(numerical.__all__)
+# from . import bravais_lattice
+# from . import (
+#     crystal,
+#     decorate,
+#     geometry,
+#     identify,
+#     io,
+#     kpoints,
+#     lattice,
+#     lattice_plotter,
+#     numerical,
+# )
+# from .atom import *
+# from .bravais_lattice import *
+# from .crystal import *
+# from .decorate import *
+# from .geometry import *
+# from .identify import *
+# from .io import *
+# from .kpoints import *
+# from .lattice import *
+# from .lattice_plotter import *
+# from .numerical import *
+
+# __all__.extend(bravais_lattice.__all__)
+# __all__.extend(decorate.__all__)
+# __all__.extend(io.__all__)
+# __all__.extend(atom.__all__)
+# __all__.extend(crystal.__all__)
+# __all__.extend(geometry.__all__)
+# __all__.extend(identify.__all__)
+# __all__.extend(kpoints.__all__)
+# __all__.extend(lattice_plotter.__all__)
+# __all__.extend(lattice.__all__)
+# __all__.extend(numerical.__all__)
