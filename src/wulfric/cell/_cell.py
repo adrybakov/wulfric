@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -16,19 +16,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import numpy as np
-from numpy import cos, pi, sin, sqrt
+from math import cos
+from math import pi as PI
+from math import sin, sqrt
 
-from wulfric.constants import TORADIANS
+import numpy as np
+
+from wulfric.constants._numerical import TORADIANS
 from wulfric.geometry import angle, parallelepiped_check, volume
 
-__all__ = [
-    "reciprocal",
-    "from_params",
-    "params",
-    "primitive",
-    "scalar_products",
-]
+# Save local scope at this moment
+old_dir = set(dir())
+old_dir.add("old_dir")
 
 
 def reciprocal(cell):
@@ -59,9 +58,9 @@ def reciprocal(cell):
     vol = volume(cell)
     reciprocal_cell = np.array(
         [
-            2 * pi / vol * np.cross(cell[1], cell[2]),
-            2 * pi / vol * np.cross(cell[2], cell[0]),
-            2 * pi / vol * np.cross(cell[0], cell[1]),
+            2 * PI / vol * np.cross(cell[1], cell[2]),
+            2 * PI / vol * np.cross(cell[2], cell[0]),
+            2 * PI / vol * np.cross(cell[0], cell[1]),
         ]
     )
     return reciprocal_cell
@@ -215,29 +214,8 @@ def scalar_products(cell):
     )
 
 
-# TODO
-def primitive(cell, atoms):
-    r"""
-    Compute primitive cell.
-
-    .. versionadded:: ???
-
-    Parameters
-    ----------
-    cell : (3, 3) |array-like|_
-        Cell matrix, rows are interpreted as vectors.
-    atoms : list of :py:class:`.Atom`
-        Atoms in the cell.
-        ``position`` attribute of the atom is interpreted as relative
-        position in the cell.
-
-    Returns
-    -------
-    primitive_cell : (3, 3) :numpy:`ndarray`
-        Primitive cell matrix, rows are interpreted as vectors.
-    primitive_atoms : list of :py:class:`.Atom`
-        Atoms in the primitive cell.
-        ``position`` attribute of the atom is interpreted as relative
-        position in the primitive cell.
-    """
-    raise NotImplementedError
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir
