@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -19,7 +19,9 @@
 import numpy as np
 from termcolor import colored
 
-__all__ = ["print_2d_array"]
+# Save local scope at this moment
+old_dir = set(dir())
+old_dir.add("old_dir")
 
 
 def print_2d_array(
@@ -324,3 +326,10 @@ def print_2d_array(
             print(None)
         else:
             return None
+
+
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir
