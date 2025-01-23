@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -20,7 +20,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 from wulfric import __version__
 from wulfric._osfix import _winwait
-from wulfric._pinfo import conditions, logo, warranty
+from wulfric._package_info import logo, warranty
 
 
 def main():
@@ -32,7 +32,7 @@ def main():
         "command",
         default=None,
         help="Which command to run",
-        choices=["logo", "warranty", "conditions", "version"],
+        choices=["logo", "warranty"],
         nargs="?",
     )
     parser.add_argument(
@@ -42,14 +42,14 @@ def main():
         help="Print version",
     )
     args = parser.parse_args()
-    if args.command == "logo":
+
+    if args.version:
+        print(f"Wulfric v{__version__}")
+
+    elif args.command == "logo":
         print(logo())
     elif args.command == "warranty":
         print("\n" + warranty() + "\n")
-    elif args.command == "conditions":
-        print("\n" + conditions() + "\n")
-    elif args.command == "version" or args.version:
-        print(f"Wulfric v{__version__}")
     elif args.command is None:
         parser.print_help()
     else:
