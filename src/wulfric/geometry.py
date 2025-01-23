@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -20,10 +20,12 @@ from math import cos, sqrt
 
 import numpy as np
 
-from wulfric.constants import TODEGREES, TORADIANS
-from wulfric.numerical import ABS_TOL, ABS_TOL_ANGLE, compare_numerically
+from wulfric._numerical import compare_numerically
+from wulfric.constants._numerical import ABS_TOL, ABS_TOL_ANGLE, TODEGREES, TORADIANS
 
-__all__ = ["volume", "angle", "parallelepiped_check", "absolute_to_relative"]
+# Save local scope at this moment
+old_dir = set(dir())
+old_dir.add("old_dir")
 
 
 def volume(*args):
@@ -335,3 +337,10 @@ def absolute_to_relative(vector, basis):
 
     # Solve and return
     return np.linalg.solve(A, B)
+
+
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir
