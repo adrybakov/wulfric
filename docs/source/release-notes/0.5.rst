@@ -7,14 +7,20 @@ Version 0.5
 
 Whats new?
 ----------
-Organization of the package is changed. The concept of the ``core`` of the package is
-introduced.
+Organization of the package has changed. All implemented logic is rewritten in functions.
 
-In the core of the package only functions and constants are permitted. Core of the package
-contains implementation of the wulfric's main functionalities and should be self-sufficient.
+The package now consist of several submodules that group the function by the
+concept:
 
-All classes are simplified and moved out of the core. The intention is to serve classes as
-an interface to the core.
+- cell
+- lattice
+- crystal
+- ...
+
+The classes that were the central piece of the package prior to the version ``0.5`` are
+kept as an interface to the package core functionalities.
+
+
 
 
 0.5.0
