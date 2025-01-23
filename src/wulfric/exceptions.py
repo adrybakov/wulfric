@@ -16,7 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-__all__ = ["StandardizationTypeMismatch"]
+old_dir = set(dir())
+old_dir.add("old_dir")
 
 
 class StandardizationTypeMismatch(Exception):
@@ -36,3 +37,10 @@ class StandardizationTypeMismatch(Exception):
 
     def __str__(self):
         return self.message
+
+
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir
