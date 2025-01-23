@@ -11,6 +11,7 @@ Getting started
 
     start/installation
     start/quickstart
+    start/development
 
 Definitions and conventions
 ===========================
