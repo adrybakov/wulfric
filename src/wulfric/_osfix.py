@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -23,7 +23,7 @@ def _winwait():
     r"""
     Add "Press Enter to continue" behavior to Windows.
 
-    Its a hotfix for Window`s pop-up terminal, which tends to close immediately
+    Its a fix for Window`s pop-up terminal, which tends to close immediately
     after the script is finished.
     """
     if sys.platform == "win32":
