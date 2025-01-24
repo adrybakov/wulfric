@@ -22,7 +22,7 @@ import numpy as np
 from termcolor import cprint
 
 from wulfric._numerical import compare_numerically
-from wulfric.constants._numerical import REL_TOL, TODEGREES, TORADIANS
+from wulfric.constants._numerical import TODEGREES, TORADIANS
 from wulfric.geometry import volume
 
 # Save local scope at this moment
@@ -37,7 +37,7 @@ def niggli(
     alpha=90,
     beta=90,
     gamma=90,
-    eps_rel=REL_TOL,
+    eps_relative=1e-5,
     verbose=False,
     return_cell=False,
     max_iter=10000,
@@ -59,7 +59,7 @@ def niggli(
         Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`. In degrees.
     gamma : float, default 90
         Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`. In degrees.
-    eps_rel : float, default 1e-5
+    eps_relative : float, default 1e-5
         Relative epsilon as defined in [2]_.
     verbose : bool, default False
         Whether to print the steps of an algorithm.
@@ -213,7 +213,7 @@ def niggli(
     cell_volume = volume(a, b, c, alpha, beta, gamma)
     if cell_volume == 0:
         raise ValueError("Cell volume is zero")
-    eps = eps_rel * volume(a, b, c, alpha, beta, gamma) ** (1 / 3.0)
+    eps = eps_relative * volume(a, b, c, alpha, beta, gamma) ** (1 / 3.0)
     n = abs(floor(log10(abs(eps))))
 
     # 0
