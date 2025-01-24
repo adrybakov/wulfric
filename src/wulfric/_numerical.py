@@ -55,9 +55,9 @@ def compare_numerically(x, condition, y, eps=None, rtol=REL_TOL, atol=ABS_TOL):
 
             eps = atol + rtol * abs(y)
 
-    rtol : float, default 1e-04
+    rtol : float, default ``REL_TOL``
         Relative tolerance.
-    atol : float, default 1e-08
+    atol : float, default ``ABS_TOL``
         Absolute tolerance.
 
     Returns
