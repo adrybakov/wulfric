@@ -24,3 +24,4 @@ from ._sc_constructors import *
 from ._sc_examples import *
 from ._sc_standardize import *
 from ._sc_variation import *
+from ._voronoi import *
