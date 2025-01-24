@@ -229,7 +229,7 @@ def is_reasonable(cell, eps_lengths=EPS_LENGTH, eps_volume=EPS_RELATIVE):
 
         The cell is *reaonable* if it is *not degenerate*.
 
-    As per advise of the paper we take default values of
+    As per advise of the paper [1]_ we take default values of
     :math:`\varepsilon_{lengths} = 10^{-10}` and :math:`\varepsilon_{volume} = 10^{-5}`.
     Wulfric is tested with those values.
 
