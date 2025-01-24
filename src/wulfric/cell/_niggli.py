@@ -210,10 +210,12 @@ def niggli(
         60(1), pp.1-6.
 
     """
+
     cell_volume = volume(a, b, c, alpha, beta, gamma)
     if cell_volume == 0:
         raise ValueError("Cell volume is zero")
-    eps = eps_relative * volume(a, b, c, alpha, beta, gamma) ** (1 / 3.0)
+
+    eps = eps_relative * cell_volume ** (1 / 3.0)
     n = abs(floor(log10(abs(eps))))
 
     # 0
@@ -368,7 +370,7 @@ def niggli(
         beta = acos(eta / 2 / a / c) * TODEGREES
         gamma = acos(zeta / 2 / a / b) * TODEGREES
         return a, b, c, alpha, beta, gamma
-    return np.array([[A, B, C], [xi / 2, eta / 2, zeta / 2]])
+    return np.array([[A, B, C], [xi / 2, eta / 2, zeta / 2]], dtype=float)
 
 
 # Populate __all__ with objects defined in this file
