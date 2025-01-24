@@ -23,8 +23,7 @@ import pytest
 from scipy.spatial.transform import Rotation
 
 from wulfric.cell._niggli import niggli
-from wulfric.constants import TODEGREES
-from wulfric.numerical import ABS_TOL, ABS_TOL_ANGLE
+from wulfric.constants._numerical import EPS_ANGLE, EPS_LENGTH, TODEGREES
 
 ################################################################################
 #                               Service functions                              #
@@ -66,10 +65,12 @@ def test_niggli_from_paper():
     alpha = acos(-5 / 2 / sqrt(27) / 2) * TODEGREES
     beta = acos(-4 / 2 / 3 / 2) * TODEGREES
     gamma = acos(-22 / 2 / 3 / sqrt(27)) * TODEGREES
-    assert (
-        np.array([[4, 9, 9], [9 / 2, 3 / 2, 2]]) - niggli(a, b, c, alpha, beta, gamma)
-        < ABS_TOL
-    ).all()
+    assert np.allclose(
+        np.array([[4, 9, 9], [9 / 2, 3 / 2, 2]]),
+        niggli(a, b, c, alpha, beta, gamma),
+        atol=EPS_LENGTH,
+        rtol=0,
+    )
 
 
 def test_niggli_example():
@@ -83,12 +84,12 @@ def test_niggli_example():
         a, b, c, alpha, beta, gamma, return_cell=True
     )
 
-    assert a - ap < ABS_TOL
-    assert b - bp < ABS_TOL
-    assert c - cp < ABS_TOL
-    assert alpha - alphap < ABS_TOL_ANGLE
-    assert beta - betap < ABS_TOL_ANGLE
-    assert gamma - gammap < ABS_TOL_ANGLE
+    assert abs(a - ap) < EPS_LENGTH
+    assert abs(b - bp) < EPS_LENGTH
+    assert abs(c - cp) < EPS_LENGTH
+    assert abs(alpha - alphap) < EPS_ANGLE
+    assert abs(beta - betap) < EPS_ANGLE
+    assert abs(gamma - gammap) < EPS_ANGLE
 
 
 def test_niggli_cell_volume_error():
