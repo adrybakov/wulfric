@@ -31,7 +31,6 @@ from wulfric.constants._numerical import (
     ABS_TOL,
     ABS_TOL_ANGLE,
     MAX_LENGTH,
-    MIN_ANGLE,
     MIN_LENGTH,
     TORADIANS,
 )
