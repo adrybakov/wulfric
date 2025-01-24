@@ -16,5 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from ._cell import *
+from ._basic_manipulation import *
+from ._lepage import *
+from ._names import *
 from ._niggli import *
+from ._sc_constructors import *
+from ._sc_examples import *
+from ._sc_standardize import *
+from ._sc_variation import *

@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -19,33 +19,19 @@
 from math import cos, sin, sqrt
 
 import numpy as np
+from wolfric.cell._basic_manipulation import from_params, reciprocal
 
-import wulfric.cell as Cell
 from wulfric.constants import TORADIANS
-from wulfric.lattice import Lattice
 
-__all__ = [
-    "CUB",
-    "FCC",
-    "BCC",
-    "TET",
-    "BCT",
-    "ORC",
-    "ORCF",
-    "ORCI",
-    "ORCC",
-    "HEX",
-    "RHL",
-    "MCL",
-    "MCLC",
-    "TRI",
-]
+# Save local scope at this moment
+old_dir = set(dir())
+old_dir.add("old_dir")
 
 
 # Primitive cell`s construction
-def CUB(a: float, return_cell=False):
+def CUB(a: float):
     r"""
-    Construct cubic primitive lattice.
+    Construct cubic primitive cell.
 
     See :ref:`guide_cub` for the definition of primitive and conventional cells.
 
@@ -53,24 +39,19 @@ def CUB(a: float, return_cell=False):
     ----------
     a : float or int
         Length of the all three lattice vectors of the conventional cell.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Cubic lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
-    cell = np.array([[a, 0, 0], [0, a, 0], [0, 0, a]])
-    if return_cell:
-        return cell
-    return Lattice(cell)
+    return np.array([[a, 0, 0], [0, a, 0], [0, 0, a]])
 
 
-def FCC(a: float, return_cell=False):
+def FCC(a: float):
     r"""
-    Construct face-centred cubic primitive lattice.
+    Construct face-centred cubic primitive cell.
 
     See :ref:`guide_fcc` for the definition of primitive and conventional cells.
 
@@ -78,24 +59,19 @@ def FCC(a: float, return_cell=False):
     ----------
     a : float
         Length of the all three lattice vectors of the conventional cell.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Face-centred cubic lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
-    cell = np.array([[0, a / 2, a / 2], [a / 2, 0, a / 2], [a / 2, a / 2, 0]])
-    if return_cell:
-        return cell
-    return Lattice(cell)
+    return np.array([[0, a / 2, a / 2], [a / 2, 0, a / 2], [a / 2, a / 2, 0]])
 
 
-def BCC(a: float, return_cell=False):
+def BCC(a: float):
     r"""
-    Construct body-centred cubic primitive lattice.
+    Construct body-centred cubic primitive cell.
 
     See :ref:`guide_bcc` for the definition of primitive and conventional cells.
 
@@ -103,26 +79,21 @@ def BCC(a: float, return_cell=False):
     ----------
     a : float
         Length of the all three lattice vectors of the conventional cell.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Body-centred cubic lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
-    cell = np.array(
+    return np.array(
         [[-a / 2, a / 2, a / 2], [a / 2, -a / 2, a / 2], [a / 2, a / 2, -a / 2]]
     )
-    if return_cell:
-        return cell
-    return Lattice(cell)
 
 
-def TET(a: float, c: float, return_cell=False):
+def TET(a: float, c: float):
     r"""
-    Construct tetragonal primitive lattice.
+    Construct tetragonal primitive cell.
 
     See :ref:`guide_tet` for the definition of primitive and conventional cells.
 
@@ -132,24 +103,19 @@ def TET(a: float, c: float, return_cell=False):
         Length of the two equal lattice vectors of the conventional cell.
     c : float
         Length of the third lattice vector of the conventional cell.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Tetragonal lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
-    cell = np.array([[a, 0, 0], [0, a, 0], [0, 0, c]])
-    if return_cell:
-        return cell
-    return Lattice(cell)
+    return np.array([[a, 0, 0], [0, a, 0], [0, 0, c]])
 
 
-def BCT(a: float, c: float, return_cell=False):
+def BCT(a: float, c: float):
     r"""
-    Construct body-centred tetragonal primitive lattice.
+    Construct body-centred tetragonal primitive cell.
 
     See :ref:`guide_bct` for the definition of primitive and conventional cells.
 
@@ -159,26 +125,21 @@ def BCT(a: float, c: float, return_cell=False):
         Length of the two equal lattice vectors of the conventional cell.
     c : float
         Length of the third lattice vector of the conventional cell.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Body-centred tetragonal lattice cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
-    cell = np.array(
+    return np.array(
         [[-a / 2, a / 2, c / 2], [a / 2, -a / 2, c / 2], [a / 2, a / 2, -c / 2]]
     )
-    if return_cell:
-        return cell
-    return Lattice(cell)
 
 
-def ORC(a: float, b: float, c: float, return_cell=False):
+def ORC(a: float, b: float, c: float):
     r"""
-    Construct orthorhombic primitive lattice.
+    Construct orthorhombic primitive cell.
 
     See :ref:`guide_orc` for the definition of primitive and conventional cells.
 
@@ -192,26 +153,21 @@ def ORC(a: float, b: float, c: float, return_cell=False):
         Length of the medium lattice vector of the conventional cell.
     c : float
         Length of the largest lattice vector of the conventional cell.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Orthorhombic lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
     a, b, c = tuple(sorted([a, b, c]))
 
-    cell = np.array([[a, 0, 0], [0, b, 0], [0, 0, c]])
-    if return_cell:
-        return cell
-    return Lattice(cell)
+    return np.array([[a, 0, 0], [0, b, 0], [0, 0, c]])
 
 
-def ORCF(a: float, b: float, c: float, return_cell=False):
+def ORCF(a: float, b: float, c: float):
     r"""
-    Construct face-centred orthorhombic primitive lattice.
+    Construct face-centred orthorhombic primitive cell.
 
     See :ref:`guide_orcf` for the definition of primitive and conventional cells.
 
@@ -225,26 +181,21 @@ def ORCF(a: float, b: float, c: float, return_cell=False):
         Length of the medium lattice vector of the conventional cell.
     c : float
         Length of the largest lattice vector of the conventional cell.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Face-centred orthorhombic lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
     a, b, c = tuple(sorted([a, b, c]))
 
-    cell = np.array([[0, b / 2, c / 2], [a / 2, 0, c / 2], [a / 2, b / 2, 0]])
-    if return_cell:
-        return cell
-    return Lattice(cell)
+    return np.array([[0, b / 2, c / 2], [a / 2, 0, c / 2], [a / 2, b / 2, 0]])
 
 
-def ORCI(a: float, b: float, c: float, return_cell=False):
+def ORCI(a: float, b: float, c: float):
     r"""
-    Construct body-centred orthorhombic primitive lattice.
+    Construct body-centred orthorhombic primitive cell.
 
     See :ref:`guide_orci` for the definition of primitive and conventional cells.
 
@@ -258,28 +209,23 @@ def ORCI(a: float, b: float, c: float, return_cell=False):
         Length of the medium lattice vector of the conventional cell.
     c : float
         Length of the largest lattice vector of the conventional cell.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Body-centred orthorhombic lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
     a, b, c = tuple(sorted([a, b, c]))
 
-    cell = np.array(
+    return np.array(
         [[-a / 2, b / 2, c / 2], [a / 2, -b / 2, c / 2], [a / 2, b / 2, -c / 2]]
     )
-    if return_cell:
-        return cell
-    return Lattice(cell)
 
 
-def ORCC(a: float, b: float, c: float, return_cell=False):
+def ORCC(a: float, b: float, c: float):
     r"""
-    Construct base-centred orthorhombic primitive lattice.
+    Construct base-centred orthorhombic primitive cell.
 
     See :ref:`guide_orcc` for the definition of primitive and conventional cells.
 
@@ -293,26 +239,21 @@ def ORCC(a: float, b: float, c: float, return_cell=False):
         Length of the medium lattice vector of the conventional cell.
     c : float
         Length of the largest lattice vector of the conventional cell.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Base-centred orthorhombic lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
     a, b = tuple(sorted([a, b]))
 
-    cell = np.array([[a / 2, -b / 2, 0], [a / 2, b / 2, 0], [0, 0, c]])
-    if return_cell:
-        return cell
-    return Lattice(cell)
+    return np.array([[a / 2, -b / 2, 0], [a / 2, b / 2, 0], [0, 0, c]])
 
 
-def HEX(a: float, c: float, return_cell=False):
+def HEX(a: float, c: float):
     r"""
-    Construct hexagonal primitive lattice.
+    Construct hexagonal primitive cell.
 
     See :ref:`guide_hex` for the definition of primitive and conventional cells.
 
@@ -322,26 +263,21 @@ def HEX(a: float, c: float, return_cell=False):
         Length of the lattice vector of the conventional cell.
     c : float
         Length of the lattice vector of the conventional cell.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Hexagonal lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
-    cell = np.array(
+    return np.array(
         [[a / 2, -a * sqrt(3) / 2, 0], [a / 2, a * sqrt(3) / 2, 0], [0, 0, c]]
     )
-    if return_cell:
-        return cell
-    return Lattice(cell)
 
 
-def RHL(a: float, alpha: float, return_cell=False):
+def RHL(a: float, alpha: float):
     r"""
-    Construct rhombohedral primitive lattice.
+    Construct rhombohedral primitive cell.
 
     See :ref:`guide_rhl` for the definition of primitive and conventional cells.
 
@@ -353,20 +289,18 @@ def RHL(a: float, alpha: float, return_cell=False):
         Length of the lattice vector of the conventional cell.
     alpha : float
         Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell. In degrees.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Rhombohedral lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
     if alpha >= 120:
         raise ValueError("alpha has to be < 120 degrees.")
 
     alpha *= TORADIANS
-    cell = np.array(
+    return np.array(
         [
             [a * cos(alpha / 2), -a * sin(alpha / 2), 0],
             [a * cos(alpha / 2), a * sin(alpha / 2), 0],
@@ -377,14 +311,11 @@ def RHL(a: float, alpha: float, return_cell=False):
             ],
         ]
     )
-    if return_cell:
-        return cell
-    return Lattice(cell)
 
 
-def MCL(a: float, b: float, c: float, alpha: float, return_cell=False):
+def MCL(a: float, b: float, c: float, alpha: float):
     r"""
-    Construct monoclinic primitive lattice.
+    Construct monoclinic primitive cell.
 
     See :ref:`guide_mcl` for the definition of primitive and conventional cells.
 
@@ -400,13 +331,11 @@ def MCL(a: float, b: float, c: float, alpha: float, return_cell=False):
         Length of the longer of the two remaining lattice vectors of the conventional cell.
     alpha : float
         Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell. In degrees.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Monoclinic lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
     b, c = tuple(sorted([b, c]))
@@ -414,15 +343,12 @@ def MCL(a: float, b: float, c: float, alpha: float, return_cell=False):
         alpha = 180 - alpha
 
     alpha *= TORADIANS
-    cell = np.array([[a, 0, 0], [0, b, 0], [0, c * cos(alpha), c * sin(alpha)]])
-    if return_cell:
-        return cell
-    return Lattice(cell)
+    return np.array([[a, 0, 0], [0, b, 0], [0, c * cos(alpha), c * sin(alpha)]])
 
 
-def MCLC(a: float, b: float, c: float, alpha: float, return_cell=False):
+def MCLC(a: float, b: float, c: float, alpha: float):
     r"""
-    Construct base-centred monoclinic primitive lattice.
+    Construct base-centred monoclinic primitive cell.
 
     See :ref:`guide_mclc` for the definition of primitive and conventional cells.
 
@@ -438,13 +364,11 @@ def MCLC(a: float, b: float, c: float, alpha: float, return_cell=False):
         Length of the longer of the two remaining lattice vectors of the conventional cell.
     alpha : float
         Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell. In degrees.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Base-centred monoclinic lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
     b, c = tuple(sorted([b, c]))
@@ -452,16 +376,13 @@ def MCLC(a: float, b: float, c: float, alpha: float, return_cell=False):
         alpha = 180.0 - alpha
 
     alpha *= TORADIANS
-    cell = np.array(
+    return np.array(
         [
             [a / 2, b / 2, 0],
             [-a / 2, b / 2, 0],
             [0, c * cos(alpha), c * sin(alpha)],
         ]
     )
-    if return_cell:
-        return cell
-    return Lattice(cell)
 
 
 def TRI(
@@ -472,10 +393,9 @@ def TRI(
     beta: float,
     gamma: float,
     reciprocal=False,
-    return_cell=False,
 ):
     r"""
-    Construct triclinic primitive lattice.
+    Construct triclinic primitive cell.
 
     See :ref:`guide_tri` for the definition of primitive and conventional cells.
 
@@ -495,18 +415,22 @@ def TRI(
         Angle between vectors :math:`a_1` and :math:`a_2` of the conventional cell. In degrees.
     reciprocal : bool, default False
         Whether to interpret input as reciprocal parameters.
-    return_cell : bool, default False
-        Whether to return the cell instead of the :py:class:`.Lattice` object.
 
     Returns
     -------
-    lattice : :py:class:`.Lattice` or (3, 3) :numpy:`ndarray`
-        Triclinic lattice or cell.
+    cell : (3,3) :numpy:`ndarray`
+        Rows are lattice vectors.
     """
 
-    cell = Cell.from_params(a, b, c, alpha, beta, gamma)
+    cell = from_params(a, b, c, alpha, beta, gamma)
     if reciprocal:
-        cell = Cell.reciprocal(cell)
-    if return_cell:
-        return cell
-    return Lattice(cell)
+        cell = reciprocal(cell)
+
+    return cell
+
+
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir

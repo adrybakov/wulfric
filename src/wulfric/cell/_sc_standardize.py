@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -17,79 +17,18 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numpy as np
+from wolfric.cell._basic_manipulation import params, reciprocal, scalar_products
 
-import wulfric.cell as Cell
-from wulfric.exceptions import StandardizationTypeMismatch
-from wulfric.numerical import ABS_TOL, ABS_TOL_ANGLE, REL_TOL, compare_numerically
+from wulfric._exceptions import StandardizationTypeMismatch
+from wulfric._numerical import compare_numerically
+from wulfric.constants._numerical import ABS_TOL, REL_TOL
 
-__all__ = [
-    "get_S_matrix",
-    "CUB_get_S_matrix",
-    "FCC_get_S_matrix",
-    "BCC_get_S_matrix",
-    "TET_get_S_matrix",
-    "BCT_get_S_matrix",
-    "ORC_get_S_matrix",
-    "ORCF_get_S_matrix",
-    "ORCI_get_S_matrix",
-    "ORCC_get_S_matrix",
-    "HEX_get_S_matrix",
-    "RHL_get_S_matrix",
-    "MCL_get_S_matrix",
-    "MCLC_get_S_matrix",
-    "TRI_get_S_matrix",
-]
+# Save local scope at this moment
+old_dir = set(dir())
+old_dir.add("old_dir")
 
 
-# Main routine, serves as interface to all of them
-def get_S_matrix(cell, correct_lattice_type, rtol=REL_TOL, atol=ABS_TOL):
-    r"""
-    Analyse arbitrary cell and redefine it
-    if required to ensure the unique choice of lattice vectors.
-
-    .. versionchanged:: 0.4.0  Renamed from ``standardize_cell``
-
-    See :ref:`docs for each Bravais lattice <user-guide_conventions_bravais-lattices>` for the details.
-
-    Parameters
-    ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
-    correct_lattice_type : str
-        Correct lattice type.
-    rtol : float, default ``REL_TOL``
-        Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
-        Absolute tolerance for numerical comparison.
-
-    Returns
-    -------
-    S : (3,3) :numpy:`ndarray`
-        Transformation matrix :math:`S`
-    """
-
-    cell = np.array(cell)
-    functions = {
-        "CUB": CUB_get_S_matrix,
-        "FCC": FCC_get_S_matrix,
-        "BCC": BCC_get_S_matrix,
-        "TET": TET_get_S_matrix,
-        "BCT": BCT_get_S_matrix,
-        "ORC": ORC_get_S_matrix,
-        "ORCF": ORCF_get_S_matrix,
-        "ORCI": ORCI_get_S_matrix,
-        "ORCC": ORCC_get_S_matrix,
-        "HEX": HEX_get_S_matrix,
-        "RHL": RHL_get_S_matrix,
-        "MCL": MCL_get_S_matrix,
-        "MCLC": MCLC_get_S_matrix,
-        "TRI": TRI_get_S_matrix,
-    }
-
-    return functions[correct_lattice_type](cell, rtol=rtol, atol=atol)
-
-
-def CUB_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _CUB_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary cubic cell returns matrix S that transforms it to the standardized form.
 
@@ -123,7 +62,7 @@ def CUB_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return np.eye(3, dtype=float)
 
 
-def FCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _FCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary face-centered cubic cell returns matrix S that transforms it to the
     standardized form.
@@ -158,7 +97,7 @@ def FCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return np.eye(3, dtype=float)
 
 
-def BCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _BCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary body-centered cubic cell returns matrix S that transforms it to the
     standardized form.
@@ -193,7 +132,7 @@ def BCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return np.eye(3, dtype=float)
 
 
-def TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary tetragonal cell returns matrix S that transforms it to the
     standardized form.
@@ -228,7 +167,7 @@ def TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
         If none of the tetragonal conditions are satisfied.
     """
 
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
+    a, b, c, alpha, beta, gamma = params(cell)
 
     if compare_numerically(a, "==", b, rtol=rtol, atol=atol) and compare_numerically(
         b, "!=", c, rtol=rtol, atol=atol
@@ -248,7 +187,7 @@ def TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary body-centered tetragonal cell returns matrix S that transforms it to the
     standardized form.
@@ -284,7 +223,7 @@ def BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     """
     cell = np.array(cell)
 
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
+    a, b, c, alpha, beta, gamma = params(cell)
 
     if compare_numerically(
         alpha, "==", beta, rtol=rtol, atol=atol
@@ -304,7 +243,7 @@ def BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary orthorhombic cell returns matrix S that transforms it to the
     standardized form.
@@ -339,7 +278,7 @@ def ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
         If none of the orthorhombic conditions are satisfied.
     """
 
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
+    a, b, c, alpha, beta, gamma = params(cell)
 
     if compare_numerically(c, ">", b, rtol=rtol, atol=atol) and compare_numerically(
         b, ">", a, rtol=rtol, atol=atol
@@ -371,7 +310,7 @@ def ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary face-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
@@ -407,7 +346,7 @@ def ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
         If none of the face-centered orthorhombic conditions are satisfied.
     """
 
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
+    a, b, c, alpha, beta, gamma = params(cell)
 
     if compare_numerically(c, "<", b, rtol=rtol, atol=atol) and compare_numerically(
         b, "<", a, rtol=rtol, atol=atol
@@ -439,7 +378,7 @@ def ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary body-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
@@ -475,7 +414,7 @@ def ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
         If none of the body-centered orthorhombic conditions are satisfied.
     """
 
-    sp23, sp13, sp12 = Cell.scalar_products(cell)
+    sp23, sp13, sp12 = scalar_products(cell)
 
     if compare_numerically(
         sp12, ">", sp13, rtol=rtol, atol=atol
@@ -507,7 +446,7 @@ def ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary base-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
@@ -543,7 +482,7 @@ def ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
         If none of the base-centered orthorhombic conditions are satisfied.
     """
 
-    sp23, sp13, sp12 = Cell.scalar_products(cell)
+    sp23, sp13, sp12 = scalar_products(cell)
 
     if (
         compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
@@ -588,7 +527,7 @@ def ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary hexagonal cell returns matrix S that transforms it to the standardized
     form.
@@ -623,7 +562,7 @@ def HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
         If none of the hexagonal conditions are satisfied.
     """
 
-    sp23, sp13, sp12 = Cell.scalar_products(cell)
+    sp23, sp13, sp12 = scalar_products(cell)
 
     if (
         compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
@@ -649,7 +588,7 @@ def HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def RHL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _RHL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary rhombohedral cell returns matrix S that transforms it to the standardized
     form.
@@ -684,7 +623,7 @@ def RHL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return np.eye(3, dtype=float)
 
 
-def MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary monoclinic cell returns matrix S that transforms it to the standardized
     form.
@@ -721,7 +660,7 @@ def MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     # Step 1
 
-    sp23, sp13, sp12 = Cell.scalar_products(cell)
+    sp23, sp13, sp12 = scalar_products(cell)
 
     if (
         compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
@@ -746,7 +685,7 @@ def MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     # Step 2
     cell1 = np.linalg.inv(S1.T) @ cell
-    a, b, c, alpha, beta, gamma = Cell.params(cell1)
+    a, b, c, alpha, beta, gamma = params(cell1)
 
     if b < c:
         S2 = np.eye(3, dtype=float)
@@ -757,7 +696,7 @@ def MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     # Step 3
     cell2 = np.linalg.inv(S2.T) @ cell1
-    sp23, sp13, sp12 = Cell.scalar_products(cell2)
+    sp23, sp13, sp12 = scalar_products(cell2)
     if compare_numerically(sp23, ">", 0, rtol=rtol, atol=atol):
         S3 = np.eye(3, dtype=float)
     elif compare_numerically(sp23, "<", 0, rtol=rtol, atol=atol):
@@ -768,7 +707,7 @@ def MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S3 @ S2 @ S1
 
 
-def MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary base-centered monoclinic cell returns matrix S that transforms it to the
     standardized form.
@@ -806,7 +745,7 @@ def MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     # Step 1
 
-    a, b, c, alpha, beta, gamma = Cell.params(cell)
+    a, b, c, alpha, beta, gamma = params(cell)
 
     if compare_numerically(a, "==", b, rtol=rtol, atol=atol) and compare_numerically(
         b, "!=", c, rtol=rtol, atol=atol
@@ -825,8 +764,8 @@ def MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     # Step 2
     cell1 = np.linalg.inv(S1.T) @ cell
-    a, b, c, alpha, beta, gamma = Cell.params(cell1)
-    sp23, sp13, sp12 = Cell.scalar_products(cell1)
+    a, b, c, alpha, beta, gamma = params(cell1)
+    sp23, sp13, sp12 = scalar_products(cell1)
 
     if compare_numerically(
         2 * a**2 * (1 + sp12 / a / b), "<=", c**2, rtol=rtol, atol=atol
@@ -837,7 +776,7 @@ def MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     # Step 3
     cell2 = np.linalg.inv(S2.T) @ cell1
-    sp23, sp13, sp12 = Cell.scalar_products(cell2)
+    sp23, sp13, sp12 = scalar_products(cell2)
     if compare_numerically(sp23, ">", 0, rtol=rtol, atol=atol):
         S3 = np.eye(3, dtype=float)
     elif compare_numerically(sp23, "<", 0, rtol=rtol, atol=atol):
@@ -848,7 +787,7 @@ def MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S3 @ S2 @ S1
 
 
-def TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     For arbitrary triclinic cell returns matrix S that transforms it to the
     standardized form.
@@ -884,11 +823,11 @@ def TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     """
 
     # Compute reciprocal cell
-    rcell = Cell.reciprocal(cell)
+    rcell = reciprocal(cell)
 
     # Step 1
-    sp23, sp13, sp12 = Cell.scalar_products(rcell)
-    a, b, c, alpha, beta, gamma = Cell.params(rcell)
+    sp23, sp13, sp12 = scalar_products(rcell)
+    a, b, c, alpha, beta, gamma = params(rcell)
 
     if (
         compare_numerically(alpha, ">=", 90.0, rtol=rtol, atol=atol)
@@ -935,8 +874,8 @@ def TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
 
     # Step 2
     rcell1 = np.linalg.inv(S1.T) @ rcell
-    sp23, sp13, sp12 = Cell.scalar_products(rcell1)
-    a, b, c, alpha, beta, gamma = Cell.params(rcell1)
+    sp23, sp13, sp12 = scalar_products(rcell1)
+    a, b, c, alpha, beta, gamma = params(rcell1)
 
     if (
         gamma == min(alpha, beta, gamma)
@@ -960,3 +899,184 @@ def TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
         raise StandardizationTypeMismatch("triclinic", step="Second")
 
     return S2 @ S1
+
+
+def get_S_matrix(cell, lattice_type=None, rtol=REL_TOL, atol=ABS_TOL):
+    r"""
+    Analyse arbitrary cell and redefine it
+    if required to ensure the unique choice of lattice vectors.
+
+    .. versionchanged:: 0.4.0  Renamed from ``standardize_cell``
+
+    See :ref:`docs for each Bravais lattice <user-guide_conventions_bravais-lattices>` for the details.
+
+    Parameters
+    ----------
+    cell : (3,3) |array-like|_
+        Primitive unit cell.
+    lattice_type : str, optional
+        One of the 14 lattice types that correspond to the provided ``cell``.
+        If not provided, then computed automatically. Case-insensitive.
+    rtol : float, default ``REL_TOL``
+        Relative tolerance for numerical comparison.
+    atol : float, default ``ABS_TOL``
+        Absolute tolerance for numerical comparison.
+
+    Returns
+    -------
+    S : (3,3) :numpy:`ndarray`
+        Transformation matrix :math:`S`
+    """
+    cell = np.array(cell, dtype=float)
+
+    if lattice_type is None:
+        lattice_type = lepage(
+            *params(cell),
+            eps_rel=eps_rel,
+            delta_max=angle_tol,
+        )
+
+    lattice_type = lattice_type.capitalize()
+
+    functions = {
+        "CUB": _CUB_get_S_matrix,
+        "FCC": _FCC_get_S_matrix,
+        "BCC": _BCC_get_S_matrix,
+        "TET": _TET_get_S_matrix,
+        "BCT": _BCT_get_S_matrix,
+        "ORC": _ORC_get_S_matrix,
+        "ORCF": _ORCF_get_S_matrix,
+        "ORCI": _ORCI_get_S_matrix,
+        "ORCC": _ORCC_get_S_matrix,
+        "HEX": _HEX_get_S_matrix,
+        "RHL": _RHL_get_S_matrix,
+        "MCL": _MCL_get_S_matrix,
+        "MCLC": _MCLC_get_S_matrix,
+        "TRI": _TRI_get_S_matrix,
+    }
+
+    return functions[lattice_type](cell, rtol=rtol, atol=atol)
+
+
+def get_C_matrix(lattice_type):
+    r"""
+    Transformation matrix that transforms primitive cell
+    to the **conventional standardized** cell.
+
+    See :ref:`user-guide_conventions_main_conventional` for details.
+
+    Parameters
+    ----------
+    lattice_type : str
+        One of the 14 lattice types that correspond to the provided ``cell``.
+        If not provided, then computed automatically. Case-insensitive.
+
+    Returns
+    -------
+    C_matrix : (3,3) :numpy:`ndarray`
+    """
+
+    return C_MATRICES[lattice_type.capitalize()]
+
+
+def standardize(cell, lattice_type=None, rtol=REL_TOL, atol=ABS_TOL):
+    R"""
+    Standardize cell with respect to the Bravais lattice type as defined in [1]_.
+
+    .. versionadded:: 0.3.0
+
+    Parameters
+    ----------
+    cell : (3,3) |array-like|_
+        Primitive unit cell.
+    lattice_type : str, optional
+        One of the 14 lattice types that correspond to the provided ``cell``.
+        If not provided, then computed automatically. Case-insensitive.
+    rtol : float, default ``REL_TOL``
+        Relative tolerance for numerical comparison.
+    atol : float, default ``ABS_TOL``
+        Absolute tolerance for numerical comparison.
+
+    Returns
+    -------
+    cell : (3,3) :numpy:`ndarray`
+        Standardized cell. Rows are lattice vectors. Independent from the initial cell,
+        safe to modify.
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp.299-312.
+    """
+
+    cell = np.array(cell, dtype=float)
+
+    if lattice_type is None:
+        lattice_type = lepage(
+            *params(cell),
+            eps_rel=eps_rel,
+            delta_max=angle_tol,
+        )
+
+    lattice_type = lattice_type.capitalize()
+
+    S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
+
+    return np.linalg.inv(S_matrix.T) @ cell
+
+
+def conventional_cell(cell, lattice_type=None, rtol=REL_TOL, atol=ABS_TOL):
+    r"""
+    Conventional cell.
+
+    .. math::
+
+        (\boldsymbol{a_1}, \boldsymbol{a_2}, \boldsymbol{a_3})
+        =
+        (\boldsymbol{a^{cs}}_1, \boldsymbol{a^{cs}}_2, \boldsymbol{a^{cs}}_3)
+        (\boldsymbol{C}\boldsymbol{S})
+
+    .. code-block:: python
+
+        conv_cell = np.linalg.inv(C @ S).T @ cell
+
+    Parameters
+    ----------
+    cell : (3,3) |array-like|_
+        Primitive unit cell.
+    lattice_type : str, optional
+        One of the 14 lattice types that correspond to the provided ``cell``.
+        If not provided, then computed automatically. Case-insensitive.
+    rtol : float, default ``REL_TOL``
+        Relative tolerance for numerical comparison.
+    atol : float, default ``ABS_TOL``
+        Absolute tolerance for numerical comparison.
+
+    Returns
+    -------
+    conv_cell : (3, 3) :numpy:`ndarray`
+        Conventional cell, rows are vectors, columns are coordinates.
+    """
+    cell = np.array(cell, dtype=float)
+
+    if lattice_type is None:
+        lattice_type = lepage(
+            *params(cell),
+            eps_rel=eps_rel,
+            delta_max=angle_tol,
+        )
+
+    lattice_type = lattice_type.capitalize()
+
+    S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
+    C_matrix = get_C_matrix(lattice_type)
+
+    return np.linalg.inv(C_matrix @ S_matrix).T @ cell
+
+
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir

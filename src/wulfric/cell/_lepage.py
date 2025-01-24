@@ -21,7 +21,7 @@ from math import acos, floor, log10
 import numpy as np
 
 from wulfric._decorate_array import print_2d_array
-from wulfric.cell._cell import from_params, reciprocal
+from wulfric.cell._basic_manipulation import from_params, reciprocal
 from wulfric.constants._numerical import TODEGREES
 from wulfric.geometry import parallelepiped_check, volume
 

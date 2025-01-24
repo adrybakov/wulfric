@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -18,19 +18,19 @@
 
 from math import cos, sin
 
-from wulfric.constants import TORADIANS
-from wulfric.numerical import compare_numerically
+import numpy as np
 
-__all__ = [
-    "BCT_variation",
-    "ORCF_variation",
-    "RHL_variation",
-    "MCLC_variation",
-    "TRI_variation",
-]
+from wulfric._numerical import compare_numerically
+from wulfric.cell._basic_manipulation import params
+from wulfric.constants._numerical import ABS_TOL_ANGLE, REL_TOL, TORADIANS
+from wulfric.geometry import volume
+
+# Save local scope at this moment
+old_dir = set(dir())
+old_dir.add("old_dir")
 
 
-def BCT_variation(conv_a: float, conv_c: float):
+def _BCT_variation(conv_a: float, conv_c: float):
     r"""
     Two variations of the BCT lattice.
 
@@ -63,7 +63,7 @@ def BCT_variation(conv_a: float, conv_c: float):
         raise ValueError("a == c")
 
 
-def ORCF_variation(conv_a: float, conv_b: float, conv_c: float, eps: float):
+def _ORCF_variation(conv_a: float, conv_b: float, conv_c: float, eps: float):
     r"""
     Three variations of the ORCF lattice.
 
@@ -108,7 +108,7 @@ def ORCF_variation(conv_a: float, conv_b: float, conv_c: float, eps: float):
         return "ORCF2"
 
 
-def RHL_variation(conv_alpha: float, eps: float):
+def _RHL_variation(conv_alpha: float, eps: float):
     r"""
     Two variations of the RHL lattice.
 
@@ -142,7 +142,7 @@ def RHL_variation(conv_alpha: float, eps: float):
         raise ValueError(f"alpha == 90 with {eps} tolerance.")
 
 
-def MCLC_variation(
+def _MCLC_variation(
     conv_a: float,
     conv_b: float,
     conv_c: float,
@@ -217,7 +217,7 @@ def MCLC_variation(
             return "MCLC5"
 
 
-def TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, eps: float):
+def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, eps: float):
     r"""
     Four variations of the TRI lattice.
 
@@ -274,3 +274,83 @@ def TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, eps: float):
         return "TRI1b"
     else:
         return "TRI"
+
+
+def variation(cell, lattice_type=None, eps_rel=REL_TOL, angle_tol=ABS_TOL_ANGLE):
+    r"""
+    Return variation of the lattice as define in the paper by Setyawan and Curtarolo [1]_.
+
+    Parameters
+    ----------
+    cell : (3,3) |array-like|_
+        Unit cell of the lattice. Rows define lattice vectors.
+    lattice_type : str, optional
+        One of the 14 lattice types that correspond to the provided ``cell``.
+        If not provided, then computed automatically. Case-insensitive.
+    eps_rel : float, default 1e-4
+        Relative tolerance for distance.
+    angle_tol : float, default 1e-4
+        Absolute tolerance for angles, in degrees.
+
+    Returns
+    -------
+    variation : str
+        Variation of the lattice defined by the ``cell``.
+
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp.299-312.
+    """
+
+    cell = np.array(cell, dtype=float)
+
+    if lattice_type is None:
+        lattice_type = lepage(
+            *params(cell),
+            eps_rel=eps_rel,
+            delta_max=angle_tol,
+        )
+
+    lattice_type = lattice_type.capitalize()
+
+    if lattice_type in ["BCT", "ORCF", "RHL", "MCLC", "TRI"]:
+        eps = eps_rel * abs(volume(cell)) ** (1 / 3.0)
+
+    if lattice_type in ["BCT", "ORCF", "RHL", "MCLC"]:
+        conv_a, conv_b, conv_c, conv_alpha, conv_beta, conv_gamma = params(
+            conventional(cell)
+        )
+
+    if lattice_type == "BCT":
+        result = _BCT_variation(conv_a, conv_c)
+    elif lattice_type == "ORCF":
+        result = _ORCF_variation(conv_a, conv_b, conv_c, eps)
+    elif lattice_type == "RHL":
+        result = _RHL_variation(conv_alpha, eps)
+    elif lattice_type == "MCLC":
+        _, _, _, _, _, k_gamma = params(reciprocal(cell))
+        result = _MCLC_variation(
+            conv_a,
+            conv_b,
+            conv_c,
+            conv_alpha,
+            k_gamma,
+            eps,
+        )
+    elif lattice_type == "TRI":
+        _, _, _, k_alpha, k_beta, k_gamma = params(reciprocal(cell))
+        result = _TRI_variation(k_alpha, k_beta, k_gamma, eps)
+    else:
+        result = lattice_type
+
+    return result
+
+
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir
