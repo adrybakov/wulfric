@@ -22,7 +22,13 @@ from math import sin, sqrt
 
 import numpy as np
 
-from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE, TORADIANS
+from wulfric.constants._numerical import (
+    EPS_LENGTH,
+    EPS_RELATIVE,
+    MAX_LENGTH,
+    MIN_LENGTH,
+    TORADIANS,
+)
 from wulfric.geometry import angle, parallelepiped_check, volume
 
 # Save local scope at this moment
@@ -218,20 +224,23 @@ def is_reasonable(cell, eps_lengths=EPS_LENGTH, eps_volume=EPS_RELATIVE):
     r"""
     Check if the cell is *reasonable* (not *degenerate*) in the sense of [1]_.
     Routines of Wulfric are tested for reasonable cells and should work as expected if the
-    cell is reasonable. Below we recall the definition of *reasonable* cell from [1]_:
+    cell is reasonable. Below we recall the definition of *reasonable* cell from [1]_ and
+    extend it:
 
     The sell is *degenerate* if
 
-    (i)  The minimum of the cell lengths divided by the maximum of the cell lengths is
-         smaller than a certain factor :math:`\varepsilon_{lengths}`.
-    (ii) The unit-cell volume divided by the minimum of the cell
-         lengths is smaller than a certain factor :math:`\varepsilon_{volume}`.
+    (i) The minimum of the cell lengths divided by the maximum of the cell lengths is
+        smaller than a certain factor :math:`\varepsilon_{lengths}`.
+    #   The unit-cell volume divided by the minimum of the cell
+        lengths is smaller than a certain factor :math:`\varepsilon_{volume}`.
+    #   Any element of the cell is larger than ``MAX_LENGTH``.
 
-        The cell is *reaonable* if it is *not degenerate*.
+        The cell is *reasonable* if it is *not degenerate*.
 
     As per advise of the paper [1]_ we take default values of
     :math:`\varepsilon_{lengths} = 10^{-10}` and :math:`\varepsilon_{volume} = 10^{-5}`.
     Wulfric is tested with those values.
+
 
     Parameters
     ----------
@@ -260,6 +269,9 @@ def is_reasonable(cell, eps_lengths=EPS_LENGTH, eps_volume=EPS_RELATIVE):
     """
 
     cell = np.array(cell, dtype=float)
+
+    if (np.abs(cell) > MAX_LENGTH).any():
+        return False
 
     cell_volume = volume(cell)
 
