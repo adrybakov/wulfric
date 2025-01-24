@@ -30,8 +30,8 @@ Tolerance for the comparison is given as:
 
     \varepsilon = atol + rtol \cdot y
 
-By default :math:`atol` and :math:`rtol` are equal to :py:const:`.REL_TOL`
-and :py:const:`.ABS_TOL` respectively. You can pass exact values for eps.
+By default :math:`atol` and :math:`rtol` are equal to :py:const:`.EPS_RELATIVE`
+and :py:const:`.EPS_LENGTH` respectively. You can pass exact values for eps.
 
 The conditions are translated as (source [1]_):
 

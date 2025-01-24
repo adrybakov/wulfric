@@ -22,10 +22,9 @@ Constants
 .. autosummary::
     :toctree: generated/
 
-    ABS_TOL
-    REL_TOL
+    EPS_LENGTH
+    EPS_RELATIVE
     MIN_LENGTH
     MAX_LENGTH
-    ABS_TOL_ANGLE
-    REL_TOL_ANGLE
+    EPS_ANGLE
     MIN_ANGLE

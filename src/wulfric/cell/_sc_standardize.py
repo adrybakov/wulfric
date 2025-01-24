@@ -22,14 +22,14 @@ from wulfric._exceptions import StandardizationTypeMismatch
 from wulfric._numerical import compare_numerically
 from wulfric.cell._basic_manipulation import params, reciprocal, scalar_products
 from wulfric.cell._lepage import lepage
-from wulfric.constants._numerical import ABS_TOL, REL_TOL
+from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
 
 # Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def _CUB_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _CUB_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary cubic cell returns matrix S that transforms it to the standardized form.
 
@@ -42,10 +42,10 @@ def _CUB_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
         Ignored here, but preserved for the unification of input.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
         Ignored here, but preserved for the unification of input.
 
@@ -63,7 +63,7 @@ def _CUB_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return np.eye(3, dtype=float)
 
 
-def _FCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _FCC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary face-centered cubic cell returns matrix S that transforms it to the
     standardized form.
@@ -77,10 +77,10 @@ def _FCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
         Ignored here, but preserved for the unification of input.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
         Ignored here, but preserved for the unification of input.
 
@@ -98,7 +98,7 @@ def _FCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return np.eye(3, dtype=float)
 
 
-def _BCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _BCC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary body-centered cubic cell returns matrix S that transforms it to the
     standardized form.
@@ -112,10 +112,10 @@ def _BCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
         Ignored here, but preserved for the unification of input.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
         Ignored here, but preserved for the unification of input.
 
@@ -133,7 +133,7 @@ def _BCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return np.eye(3, dtype=float)
 
 
-def _TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _TET_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary tetragonal cell returns matrix S that transforms it to the
     standardized form.
@@ -147,9 +147,9 @@ def _TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
 
     Returns
@@ -188,7 +188,7 @@ def _TET_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def _BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _BCT_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary body-centered tetragonal cell returns matrix S that transforms it to the
     standardized form.
@@ -202,9 +202,9 @@ def _BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) :numpy:`ndarray`
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
 
     Returns
@@ -244,7 +244,7 @@ def _BCT_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def _ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _ORC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary orthorhombic cell returns matrix S that transforms it to the
     standardized form.
@@ -258,9 +258,9 @@ def _ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
 
     Returns
@@ -311,7 +311,7 @@ def _ORC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def _ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _ORCF_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary face-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
@@ -325,9 +325,9 @@ def _ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
 
     Returns
@@ -379,7 +379,7 @@ def _ORCF_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def _ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _ORCI_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary body-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
@@ -393,9 +393,9 @@ def _ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
 
     Returns
@@ -447,7 +447,7 @@ def _ORCI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def _ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _ORCC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary base-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
@@ -461,9 +461,9 @@ def _ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
 
     Returns
@@ -528,7 +528,7 @@ def _ORCC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def _HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _HEX_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary hexagonal cell returns matrix S that transforms it to the standardized
     form.
@@ -542,9 +542,9 @@ def _HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
 
     Returns
@@ -589,7 +589,7 @@ def _HEX_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S
 
 
-def _RHL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _RHL_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary rhombohedral cell returns matrix S that transforms it to the standardized
     form.
@@ -603,10 +603,10 @@ def _RHL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
         Ignored here, but preserved for the unification of input.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
         Ignored here, but preserved for the unification of input.
 
@@ -624,7 +624,7 @@ def _RHL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return np.eye(3, dtype=float)
 
 
-def _MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _MCL_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary monoclinic cell returns matrix S that transforms it to the standardized
     form.
@@ -638,9 +638,9 @@ def _MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
 
     Returns
@@ -708,7 +708,7 @@ def _MCL_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S3 @ S2 @ S1
 
 
-def _MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _MCLC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary base-centered monoclinic cell returns matrix S that transforms it to the
     standardized form.
@@ -722,9 +722,9 @@ def _MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
 
     Returns
@@ -788,7 +788,7 @@ def _MCLC_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S3 @ S2 @ S1
 
 
-def _TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
+def _TRI_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     For arbitrary triclinic cell returns matrix S that transforms it to the
     standardized form.
@@ -802,9 +802,9 @@ def _TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
 
     Returns
@@ -902,7 +902,7 @@ def _TRI_get_S_matrix(cell, rtol=REL_TOL, atol=ABS_TOL):
     return S2 @ S1
 
 
-def get_S_matrix(cell, lattice_type=None, rtol=REL_TOL, atol=ABS_TOL):
+def get_S_matrix(cell, lattice_type=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     Analyse arbitrary cell and redefine it
     if required to ensure the unique choice of lattice vectors.
@@ -918,9 +918,9 @@ def get_S_matrix(cell, lattice_type=None, rtol=REL_TOL, atol=ABS_TOL):
     lattice_type : str, optional
         One of the 14 lattice types that correspond to the provided ``cell``.
         If not provided, then computed automatically. Case-insensitive.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison.
 
     Returns
@@ -980,7 +980,7 @@ def get_C_matrix(lattice_type):
     return C_MATRICES[lattice_type.capitalize()]
 
 
-def standardize(cell, S_matrix=None, rtol=REL_TOL, atol=ABS_TOL):
+def standardize(cell, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     R"""
     Standardize cell with respect to the Bravais lattice type as defined in [1]_.
 
@@ -992,9 +992,9 @@ def standardize(cell, S_matrix=None, rtol=REL_TOL, atol=ABS_TOL):
         Primitive unit cell.
     S_matrix : (3,3) |array-like|_, optional
         Transformation matrix S.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
 
     Returns
@@ -1026,7 +1026,9 @@ def standardize(cell, S_matrix=None, rtol=REL_TOL, atol=ABS_TOL):
     return np.linalg.inv(S_matrix.T) @ cell
 
 
-def conventional(cell, S_matrix=None, C_matrix=None, rtol=REL_TOL, atol=ABS_TOL):
+def conventional(
+    cell, S_matrix=None, C_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH
+):
     r"""
     Conventional cell.
 
@@ -1049,9 +1051,9 @@ def conventional(cell, S_matrix=None, C_matrix=None, rtol=REL_TOL, atol=ABS_TOL)
         Transformation matrix S.
     C_matrix : (3,3) |array-like|_, optional
         Transformation matrix C.
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
 
     Returns

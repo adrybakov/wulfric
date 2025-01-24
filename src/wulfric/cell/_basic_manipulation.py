@@ -22,7 +22,7 @@ from math import sin, sqrt
 
 import numpy as np
 
-from wulfric.constants._numerical import TORADIANS
+from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE, TORADIANS
 from wulfric.geometry import angle, parallelepiped_check, volume
 
 # Save local scope at this moment
@@ -214,7 +214,7 @@ def scalar_products(cell):
     )
 
 
-def is_reasonable(cell, eps_lengths=1e-10, eps_volume=1e-5):
+def is_reasonable(cell, eps_lengths=EPS_LENGTH, eps_volume=EPS_RELATIVE):
     r"""
     Check if the cell is *reasonable* (not *degenerate*) in the sense of [1]_.
     Routines of Wulfric are tested for reasonable cells and should work as expected if the
@@ -237,11 +237,11 @@ def is_reasonable(cell, eps_lengths=1e-10, eps_volume=1e-5):
     ----------
     cell : (3,3) |array-like|_
         Rows are vectors.
-    eps_lengths : float, default 1e-10
+    eps_lengths : float, default ``EPS_LENGTH``
         Default value of :math:`\varepsilon_{lengths}`. We leave the option to change it,
         but do not recommend to do it unless you know exactly what you are doing and what
         the result would mean for the functionalities of the whole package.
-    eps_volume : float, default 1e-5
+    eps_volume : float, default ``EPS_RELATIVE``
         Default value of :math:`\varepsilon_{volume}`. We leave the option to change it,
         but do not recommend to do it unless you know exactly what you are doing and what
         the result would mean for the functionalities of the whole package.

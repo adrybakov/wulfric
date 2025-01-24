@@ -16,14 +16,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from wulfric.constants._numerical import ABS_TOL, REL_TOL
+from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
 
 # Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def compare_numerically(x, condition, y, eps=None, rtol=REL_TOL, atol=ABS_TOL):
+def compare_numerically(x, condition, y, eps=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     r"""
     Compare two numbers numerically.
 
@@ -55,9 +55,9 @@ def compare_numerically(x, condition, y, eps=None, rtol=REL_TOL, atol=ABS_TOL):
 
             eps = atol + rtol * abs(y)
 
-    rtol : float, default ``REL_TOL``
+    rtol : float, default ``EPS_RELATIVE``
         Relative tolerance.
-    atol : float, default ``ABS_TOL``
+    atol : float, default ``EPS_LENGTH``
         Absolute tolerance.
 
     Returns
