@@ -23,16 +23,15 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 # Length variables
-ABS_TOL = 1e-8  # For the linear spatial variables
-REL_TOL = 1e-4  # For the linear spatial variables
+ABS_TOL = 1e-10  # For the linear spatial variables
+REL_TOL = 1e-5  # For the linear spatial variables
 
-# MIN_LENGTH is a direct consequence of the REL_TOL and ABS_TOL:
-# for l = MIN_LENGTH => ABS_TOL = l * REL_TOL
-MIN_LENGTH = ABS_TOL / REL_TOL
+# MIN_LENGTH is a direct consequence of the ABS_TOL:
+MIN_LENGTH = ABS_TOL
 
 # MAX_LENGTH is a direct consequence of the ABS_TOL:
 # Inverse of the MAX_LENGTH in the real space has to be meaningful
-# in the reciprocal space (< ABS_TOL).
+# in the reciprocal space (>= ABS_TOL).
 MAX_LENGTH = 1 / ABS_TOL
 
 # TODO Think how to connect angle tolerance with spatial tolerance.
@@ -40,9 +39,8 @@ MAX_LENGTH = 1 / ABS_TOL
 ABS_TOL_ANGLE = 1e-4  # For the angular variables, in degrees.
 REL_TOL_ANGLE = 1e-2  # For the angular variables.
 
-# MIN_ANGLE is a direct consequence of the REL_TOL_ANGLE and ABS_TOL_ANGLE:
-# for a = MIN_ANGLE => ABS_TOL_ANGLE = a * REL_TOL_ANGLE
-MIN_ANGLE = ABS_TOL_ANGLE / REL_TOL_ANGLE  # In degrees
+# MIN_ANGLE is a direct consequence of the ABS_TOL_ANGLE
+MIN_ANGLE = ABS_TOL_ANGLE  # In degrees
 
 # No need to define MAX_ANGLE, as it is restricted by 2 pi in the context of Wulfric.
 

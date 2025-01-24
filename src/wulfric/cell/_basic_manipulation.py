@@ -214,6 +214,71 @@ def scalar_products(cell):
     )
 
 
+def is_reasonable(cell, eps_lengths=1e-10, eps_volume=1e-5):
+    r"""
+    Check if the cell is *reasonable* (not *degenerate*) in the sense of [1]_.
+    Routines of Wulfric are tested for reasonable cells and should work as expected if the
+    cell is reasonable. Below we recall the definition of *reasonable* cell from [1]_:
+
+    The sell is *degenerate* if
+
+    (i)  The minimum of the cell lengths divided by the maximum of the cell lengths is
+         smaller than a certain factor :math:`\varepsilon_{lengths}`.
+    (ii) The unit-cell volume divided by the minimum of the cell
+         lengths is smaller than a certain factor :math:`\varepsilon_{volume}`.
+
+        The cell is *reaonable* if it is *not degenerate*.
+
+    As per advise of the paper we take default values of
+    :math:`\varepsilon_{lengths} = 10^{-10}` and :math:`\varepsilon_{volume} = 10^{-5}`.
+    Wulfric is tested with those values.
+
+    Parameters
+    ----------
+    cell : (3,3) |array-like|_
+        Rows are vectors.
+    eps_lengths : float, default 1e-10
+        Default value of :math:`\varepsilon_{lengths}`. We leave the option to change it,
+        but do not recommend to do it unless you know exactly what you are doing and what
+        the result would mean for the functionalities of the whole package.
+    eps_volume : float, default 1e-5
+        Default value of :math:`\varepsilon_{volume}`. We leave the option to change it,
+        but do not recommend to do it unless you know exactly what you are doing and what
+        the result would mean for the functionalities of the whole package.
+
+    Returns
+    -------
+    reasonable : bool
+        ``True`` if the cell is *reasonable*, ``False`` if cell is *degenerate*.
+
+    References
+    ----------
+    .. [1] Grosse-Kunstleve, R.W., Sauter, N.K. and Adams, P.D., 2004.
+        Numerically stable algorithms for the computation of reduced unit cells.
+        Acta Crystallographica Section A: Foundations of Crystallography,
+        60(1), pp.1-6.
+    """
+
+    cell = np.array(cell, dtype=float)
+
+    cell_volume = volume(cell)
+
+    # To guarantee finite max and min lengths
+    if cell_volume == 0.0:
+        return False
+
+    min_length = np.linalg.norm(cell, axis=1).min()
+    max_length = np.linalg.norm(cell, axis=1).max()
+
+    if min_length / max_length < eps_lengths:
+        return False
+
+    if cell_volume / min_length < eps_volume:
+        return False
+
+    return True
+
+
 # Populate __all__ with objects defined in this file
 __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects

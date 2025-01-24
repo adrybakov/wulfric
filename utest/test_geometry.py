@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -25,16 +25,17 @@ from hypothesis import strategies as st
 from hypothesis.extra.numpy import arrays as harrays
 from scipy.spatial.transform import Rotation
 
-from wulfric.constants import TORADIANS
-from wulfric.geometry import absolute_to_relative, angle, parallelepiped_check, volume
-from wulfric.numerical import (
+from wulfric._numerical import compare_numerically
+from wulfric.cell._basic_manipulation import is_reasonable
+from wulfric.constants._numerical import (
     ABS_TOL,
     ABS_TOL_ANGLE,
     MAX_LENGTH,
     MIN_ANGLE,
     MIN_LENGTH,
-    compare_numerically,
+    TORADIANS,
 )
+from wulfric.geometry import absolute_to_relative, angle, parallelepiped_check, volume
 
 ################################################################################
 #                               Service functions                              #
@@ -87,12 +88,8 @@ def test_absolute_to_relative(cell, absolute, relative):
 #                                     Angle                                    #
 ################################################################################
 @given(
-    harrays(float, 3, elements=st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH)),
-    harrays(
-        float,
-        3,
-        elements=st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
-    ),
+    harrays(float, 3, elements=st.floats(allow_infinity=False, allow_nan=False)),
+    harrays(float, 3, elements=st.floats(allow_infinity=False, allow_nan=False)),
 )
 def test_angle(v1, v2):
     if (
@@ -101,14 +98,26 @@ def test_angle(v1, v2):
     ):
         result_degrees = angle(v1, v2)
         result_radians = angle(v1, v2, radians=True)
-        assert 0 <= result_degrees <= 180
-        assert 0 <= result_radians <= pi
+        assert 0.0 <= result_degrees <= 180.0
+        assert 0.0 <= result_radians <= pi
+    else:
+        with pytest.raises(ValueError):
+            result_degrees = angle(v1, v2)
 
 
-@given(st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE))
+@example(0)
+@example(0.0000000001)
+@given(st.floats(min_value=-360, max_value=360))
 def test_angle_values(alpha):
     v1 = np.array([1.0, 0.0, 0.0])
     v2 = np.array([cos(alpha * TORADIANS), sin(alpha * TORADIANS), 0.0])
+
+    if alpha < 0:
+        alpha = 360 + alpha
+
+    if alpha > 180:
+        alpha = 360 - alpha
+
     assert abs(angle(v1, v2) - alpha) < ABS_TOL_ANGLE
 
 
@@ -123,31 +132,25 @@ def test_angle_raises():
 #                                    Volume                                    #
 ################################################################################
 @pytest.mark.parametrize(
-    "args, result, eps", [((4, 4.472, 4.583, 79.03, 64.13, 64.15), 66.3840797, 1e-8)]
+    "args, result, eps", [((4, 4.472, 4.583, 79.03, 64.13, 64.15), 66.3840797, ABS_TOL)]
 )
 def test_volume_example(args, result, eps):
     assert volume(*args) - result < eps
 
 
-# no need to test the vectors - they take the same route as the cell
+# No need to test the vectors - they take the same route as the cell
 # if the vectors will move from rows to columns it is not a problem as well
 # since the volume of the cell is its determinant
 @example(np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]]))
 @example(np.array([[-1, 0, 0], [0, 1, 0], [0, 0, 1]]))
 @given(
     harrays(
-        float,
-        (3, 3),
-        elements=st.floats(
-            min_value=-MAX_LENGTH,
-            max_value=MAX_LENGTH,
-        ),
-    ),
+        float, (3, 3), elements=st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH)
+    )
 )
 def test_volume_with_cell(cell):
     # Its an "or" condition
-    if ((np.abs(cell) > MIN_LENGTH) + (cell == np.zeros(cell.shape))).all():
-        assert volume(cell) >= 0
+    assert volume(cell) >= 0
 
 
 @given(
@@ -163,9 +166,9 @@ def test_volume_with_cell(cell):
         min_value=MIN_LENGTH,
         max_value=MAX_LENGTH,
     ),
-    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
-    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
-    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
+    st.floats(min_value=0, max_value=360),
+    st.floats(min_value=0, max_value=360),
+    st.floats(min_value=0, max_value=360),
 )
 def test_volume_parameters(a, b, c, alpha, beta, gamma):
     if parallelepiped_check(a, b, c, alpha, beta, gamma):
@@ -179,25 +182,25 @@ def test_volume_parameters(a, b, c, alpha, beta, gamma):
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
-    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
-    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
-    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
+    st.floats(min_value=0, max_value=360),
+    st.floats(min_value=0, max_value=360),
+    st.floats(min_value=0, max_value=360),
 )
 def test_parallelepiped_check(a, b, c, alpha, beta, gamma):
     assert parallelepiped_check(a, b, c, alpha, beta, gamma) == (
-        compare_numerically(a, ">", 0.0, ABS_TOL)
-        and compare_numerically(b, ">", 0.0, ABS_TOL)
-        and compare_numerically(c, ">", 0.0, ABS_TOL)
-        and compare_numerically(alpha, "<", 180.0, ABS_TOL_ANGLE)
-        and compare_numerically(beta, "<", 180.0, ABS_TOL_ANGLE)
-        and compare_numerically(gamma, "<", 180.0, ABS_TOL_ANGLE)
-        and compare_numerically(alpha, ">", 0.0, ABS_TOL_ANGLE)
-        and compare_numerically(beta, ">", 0.0, ABS_TOL_ANGLE)
-        and compare_numerically(gamma, ">", 0.0, ABS_TOL_ANGLE)
-        and compare_numerically(gamma, "<", alpha + beta, ABS_TOL_ANGLE)
-        and compare_numerically(alpha + beta, "<", 360.0 - gamma, ABS_TOL_ANGLE)
-        and compare_numerically(beta, "<", alpha + gamma, ABS_TOL_ANGLE)
-        and compare_numerically(alpha + gamma, "<", 360.0 - beta, ABS_TOL_ANGLE)
-        and compare_numerically(alpha, "<", beta + gamma, ABS_TOL_ANGLE)
-        and compare_numerically(beta + gamma, "<", 360.0 - alpha, ABS_TOL_ANGLE)
+        compare_numerically(a, ">", 0.0, eps=ABS_TOL)
+        and compare_numerically(b, ">", 0.0, eps=ABS_TOL)
+        and compare_numerically(c, ">", 0.0, eps=ABS_TOL)
+        and compare_numerically(alpha, "<", 180.0, eps=ABS_TOL_ANGLE)
+        and compare_numerically(beta, "<", 180.0, eps=ABS_TOL_ANGLE)
+        and compare_numerically(gamma, "<", 180.0, eps=ABS_TOL_ANGLE)
+        and compare_numerically(alpha, ">", 0.0, eps=ABS_TOL_ANGLE)
+        and compare_numerically(beta, ">", 0.0, eps=ABS_TOL_ANGLE)
+        and compare_numerically(gamma, ">", 0.0, eps=ABS_TOL_ANGLE)
+        and compare_numerically(gamma, "<", alpha + beta, eps=ABS_TOL_ANGLE)
+        and compare_numerically(alpha + beta, "<", 360.0 - gamma, eps=ABS_TOL_ANGLE)
+        and compare_numerically(beta, "<", alpha + gamma, eps=ABS_TOL_ANGLE)
+        and compare_numerically(alpha + gamma, "<", 360.0 - beta, eps=ABS_TOL_ANGLE)
+        and compare_numerically(alpha, "<", beta + gamma, eps=ABS_TOL_ANGLE)
+        and compare_numerically(beta + gamma, "<", 360.0 - alpha, eps=ABS_TOL_ANGLE)
     )

@@ -19,7 +19,7 @@
 import numpy as np
 from scipy.spatial import Voronoi
 
-from wulfric.cell._basic_manipulations import reciprocal
+from wulfric.cell._basic_manipulation import reciprocal
 from wulfric.geometry import volume
 
 # Save local scope at this moment

@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -18,7 +18,7 @@
 
 import pytest
 
-from wulfric.numerical import compare_numerically
+from wulfric._numerical import compare_numerically
 
 
 @pytest.mark.parametrize(

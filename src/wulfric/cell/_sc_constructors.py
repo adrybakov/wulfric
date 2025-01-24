@@ -19,8 +19,8 @@
 from math import cos, sin, sqrt
 
 import numpy as np
-from wolfric.cell._basic_manipulation import from_params, reciprocal
 
+from wulfric.cell._basic_manipulation import from_params, reciprocal
 from wulfric.constants import TORADIANS
 
 # Save local scope at this moment
