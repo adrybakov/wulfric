@@ -17,10 +17,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numpy as np
-from wolfric.cell._basic_manipulation import params, reciprocal, scalar_products
 
 from wulfric._exceptions import StandardizationTypeMismatch
 from wulfric._numerical import compare_numerically
+from wulfric.cell._basic_manipulation import params, reciprocal, scalar_products
+from wulfric.cell._lepage import lepage
 from wulfric.constants._numerical import ABS_TOL, REL_TOL
 
 # Save local scope at this moment
@@ -979,7 +980,7 @@ def get_C_matrix(lattice_type):
     return C_MATRICES[lattice_type.capitalize()]
 
 
-def standardize(cell, lattice_type=None, rtol=REL_TOL, atol=ABS_TOL):
+def standardize(cell, S_matrix=None, rtol=REL_TOL, atol=ABS_TOL):
     R"""
     Standardize cell with respect to the Bravais lattice type as defined in [1]_.
 
@@ -989,13 +990,12 @@ def standardize(cell, lattice_type=None, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    lattice_type : str, optional
-        One of the 14 lattice types that correspond to the provided ``cell``.
-        If not provided, then computed automatically. Case-insensitive.
+    S_matrix : (3,3) |array-like|_, optional
+        Transformation matrix S.
     rtol : float, default ``REL_TOL``
-        Relative tolerance for numerical comparison.
+        Relative tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
     atol : float, default ``ABS_TOL``
-        Absolute tolerance for numerical comparison.
+        Absolute tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
 
     Returns
     -------
@@ -1012,21 +1012,21 @@ def standardize(cell, lattice_type=None, rtol=REL_TOL, atol=ABS_TOL):
 
     cell = np.array(cell, dtype=float)
 
-    if lattice_type is None:
+    if S_matrix is None:
         lattice_type = lepage(
             *params(cell),
-            eps_rel=eps_rel,
-            delta_max=angle_tol,
+            eps_rel=rtol,
+            delta_max=atol,
         )
 
-    lattice_type = lattice_type.capitalize()
-
-    S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
+        S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
+    else:
+        S_matrix = np.array(S_matrix, dtype=float)
 
     return np.linalg.inv(S_matrix.T) @ cell
 
 
-def conventional_cell(cell, lattice_type=None, rtol=REL_TOL, atol=ABS_TOL):
+def conventional(cell, S_matrix=None, C_matrix=None, rtol=REL_TOL, atol=ABS_TOL):
     r"""
     Conventional cell.
 
@@ -1045,13 +1045,14 @@ def conventional_cell(cell, lattice_type=None, rtol=REL_TOL, atol=ABS_TOL):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    lattice_type : str, optional
-        One of the 14 lattice types that correspond to the provided ``cell``.
-        If not provided, then computed automatically. Case-insensitive.
+    S_matrix : (3,3) |array-like|_, optional
+        Transformation matrix S.
+    C_matrix : (3,3) |array-like|_, optional
+        Transformation matrix C.
     rtol : float, default ``REL_TOL``
-        Relative tolerance for numerical comparison.
+        Relative tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
     atol : float, default ``ABS_TOL``
-        Absolute tolerance for numerical comparison.
+        Absolute tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
 
     Returns
     -------
@@ -1060,17 +1061,22 @@ def conventional_cell(cell, lattice_type=None, rtol=REL_TOL, atol=ABS_TOL):
     """
     cell = np.array(cell, dtype=float)
 
-    if lattice_type is None:
+    if S_matrix is None or C_matrix is None:
         lattice_type = lepage(
             *params(cell),
-            eps_rel=eps_rel,
-            delta_max=angle_tol,
+            eps_rel=rtol,
+            delta_max=atol,
         )
 
-    lattice_type = lattice_type.capitalize()
+    if C_matrix is None:
+        C_matrix = get_C_matrix(lattice_type)
+    else:
+        C_matrix = np.array(C_matrix, dtype=float)
 
-    S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
-    C_matrix = get_C_matrix(lattice_type)
+    if S_matrix is None:
+        S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
+    else:
+        S_matrix = np.array(S_matrix, dtype=float)
 
     return np.linalg.inv(C_matrix @ S_matrix).T @ cell
 

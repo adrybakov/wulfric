@@ -22,6 +22,7 @@ import numpy as np
 
 from wulfric._numerical import compare_numerically
 from wulfric.cell._basic_manipulation import params
+from wulfric.cell._lepage import lepage
 from wulfric.constants._numerical import ABS_TOL_ANGLE, REL_TOL, TORADIANS
 from wulfric.geometry import volume
 
