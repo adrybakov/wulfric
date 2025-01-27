@@ -22,7 +22,7 @@ import numpy as np
 
 from wulfric._decorate_array import print_2d_array
 from wulfric.cell._basic_manipulation import from_params, reciprocal
-from wulfric.constants._numerical import TODEGREES
+from wulfric.constants._numerical import EPS_ANGLE, EPS_RELATIVE, TODEGREES
 from wulfric.geometry import parallelepiped_check, volume
 
 # Save local scope at this moment
@@ -270,11 +270,11 @@ def lepage(
     alpha=90,
     beta=90,
     gamma=90,
-    eps_rel=1e-4,
+    eps_relative=EPS_RELATIVE,
     verbose=False,
     very_verbose=False,
     give_all_results=False,
-    delta_max=0.01,
+    eps_angle=EPS_ANGLE,
 ):
     r"""
     Le Page algorithm [1]_.
@@ -293,7 +293,7 @@ def lepage(
         Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`. In degrees.
     gamma : float, default 90
         Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`. In degrees.
-    eps_rel : float, default 1e-4
+    eps_relative : float, default 1e-4
         Relative epsilon.
     verbose : bool, default False
         Whether to print the steps of an algorithm.
@@ -301,7 +301,7 @@ def lepage(
         Whether to print the detailed steps of an algorithm.
     give_all_results : bool, default False
         Whether to give the whole list of consecutive results.
-    delta_max : float, default 0.01
+    eps_angle : float, default ``EPS_ANGLE``
         Maximum angle tolerance, in degrees.
 
     Returns
@@ -324,17 +324,24 @@ def lepage(
     # Check if provided parameters can form a parallelepiped
     parallelepiped_check(a, b, c, alpha, beta, gamma, raise_error=True)
 
-    eps_volumetric = eps_rel * volume(a, b, c, alpha, beta, gamma) ** (1 / 3.0)
+    eps_volume = eps_relative * volume(a, b, c, alpha, beta, gamma) ** (1 / 3.0)
 
     # Limit value for the condition on keeping the axis
-    limit = max(1.5, delta_max * 1.1)
+    limit = max(1.5, eps_angle * 1.1)
 
-    decimals = abs(floor(log10(abs(eps_volumetric))))
+    decimals = abs(floor(log10(abs(eps_volume))))
 
     # Niggli reduction
     try:
         a, b, c, alpha, beta, gamma = niggli(
-            a, b, c, alpha, beta, gamma, return_cell=True
+            a=a,
+            b=b,
+            c=c,
+            alpha=alpha,
+            beta=beta,
+            gamma=gamma,
+            eps_relative=eps_relative,
+            return_cell=True,
         )
     except:
         import warnings
@@ -417,7 +424,7 @@ def lepage(
     cycle = 0
     if give_all_results:
         results = []
-    while delta is None or delta > delta_max:
+    while delta is None or delta > eps_angle:
         if verbose:
             cycle += 1
             print(separator(cycle))
@@ -426,7 +433,7 @@ def lepage(
             delta = max(axes, key=lambda x: x[-1])[-1]
         except ValueError:
             delta = 0
-        eps = max(eps_volumetric, delta)
+        eps = max(eps_volume, delta)
         decimals = abs(floor(log10(abs(eps))))
         if very_verbose:
             decimals = abs(floor(log10(abs(eps))))
