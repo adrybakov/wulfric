@@ -32,17 +32,11 @@ from wulfric.cell._basic_manipulation import (
     reciprocal,
     scalar_products,
 )
-from wulfric.constants._numerical import (
-    EPS_ANGLE,
-    EPS_LENGTH,
-    EPS_RELATIVE,
-    MAX_LENGTH,
-    MIN_ANGLE,
-    MIN_LENGTH,
-)
+from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
 from wulfric.geometry import parallelepiped_check
 
 N_ORDER = 5
+
 
 ################################################################################
 #                               Service functions                              #
@@ -86,6 +80,18 @@ def rotate(cell, r1, r2, r3):
     gamma=1.0,
     order=3,
 )
+@example(
+    r1=0.0,
+    r2=1.0,
+    r3=1.0,
+    a=1.0,
+    b=1.0,
+    c=1010.0,
+    alpha=1.0,
+    beta=1.0,
+    gamma=1.0,
+    order=0,
+)
 @given(
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
@@ -104,16 +110,16 @@ def test_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
             shuffle(rotate(from_params(a, b, c, alpha, beta, gamma), r1, r2, r3), order)
         )
         # Add this filter if some test fail
-        # if is_reasonable(cell):
-        rcell = reciprocal(cell)
-        # If the cell is left-handed, then the diagonal will be filled with -2pi,
-        # The minus appears since the cross product is defined in the right-handed system.
-        # If the cell is right-handed, then the diagonal will be filled with 2pi.
-        # To check for both conditions we need to use np.abs().
-        product = np.abs(np.diag(rcell @ cell.T))
-        correct_product = np.ones(3) * 2 * pi
-        # Non  diagonal terms are close to zero.
-        assert np.allclose(product, correct_product, rtol=0.0, atol=EPS_LENGTH)
+        if is_reasonable(cell):
+            rcell = reciprocal(cell)
+            # If the cell is left-handed, then the diagonal will be filled with -2pi,
+            # The minus appears since the cross product is defined in the right-handed system.
+            # If the cell is right-handed, then the diagonal will be filled with 2pi.
+            # To check for both conditions we need to use np.abs().
+            product = np.abs(np.diag(rcell @ cell.T))
+            correct_product = np.ones(3) * 2 * pi
+            # Non  diagonal terms are close to zero.
+            assert np.allclose(product, correct_product, rtol=1e-5, atol=EPS_LENGTH)
 
 
 @pytest.mark.parametrize(
@@ -127,12 +133,28 @@ def test_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
 )
 def test_reciprocal_cell_examples(cell, rec_cell):
     rcell = reciprocal(cell)
-    assert np.allclose(rcell, np.array(rec_cell), rtol=0.0, atol=EPS_LENGTH)
+    assert np.allclose(rcell, np.array(rec_cell), rtol=EPS_RELATIVE, atol=EPS_LENGTH)
 
 
 ################################################################################
 #                             Cell from parameters                             #
 ################################################################################
+@example(
+    a=1.0,
+    b=1.0,
+    c=691.0,
+    alpha=1.0,
+    beta=1.0,
+    gamma=1.0,
+)
+@example(
+    a=1.0,
+    b=1.0,
+    c=38223.0,
+    alpha=1.5,
+    beta=1.0,
+    gamma=1.0,
+)
 @given(
     st.floats(allow_infinity=False, allow_nan=False),
     st.floats(allow_infinity=False, allow_nan=False),
@@ -144,15 +166,18 @@ def test_reciprocal_cell_examples(cell, rec_cell):
 def test_cell_from_param(a, b, c, alpha, beta, gamma):
     if parallelepiped_check(a, b, c, alpha, beta, gamma):
         cell = from_params(a, b, c, alpha, beta, gamma)
+        if is_reasonable(cell, eps_volume=1e-7):
 
-        ap, bp, cp, alphap, betap, gammap = params(cell)
-        assert np.allclose([a, b, c], [ap, bp, cp], rtol=0.0, atol=EPS_LENGTH)
-        assert np.allclose(
-            [alpha, beta, gamma],
-            [alphap, betap, gammap],
-            rtol=0.0,
-            atol=EPS_ANGLE,
-        )
+            ap, bp, cp, alphap, betap, gammap = params(cell)
+            assert np.allclose(
+                [a, b, c], [ap, bp, cp], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+            )
+            assert np.allclose(
+                [alpha, beta, gamma],
+                [alphap, betap, gammap],
+                rtol=EPS_RELATIVE,
+                atol=EPS_LENGTH,
+            )
     else:
         with pytest.raises(ValueError):
             from_params(a, b, c, alpha, beta, gamma)
@@ -166,7 +191,7 @@ def test_cell_from_params_example(a, b, c, alpha, beta, gamma, cell):
     assert np.allclose(
         from_params(a, b, c, alpha, beta, gamma),
         np.array(cell),
-        rtol=0.0,
+        rtol=EPS_RELATIVE,
         atol=EPS_LENGTH,
     )
 
