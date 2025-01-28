@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -17,6 +17,3 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from .vasp import *
-
-__all__ = []
-__all__.extend(vasp.__all__)

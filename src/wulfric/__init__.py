@@ -16,30 +16,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 __doclink__ = "wulfric.org"
-__git_hash__ = "a581649f7c740a326f6be323517e533f921a214a"
-__release_date__ = "15 October 2024"
+__git_hash__ = "undefined"
+__release_date__ = "undefined"
 
+
+from io import *
 
 from . import cell, constants, interfaces, visualization
 from ._decorate_array import *
 from ._exceptions import *
 from ._numerical import *
 from ._package_info import *
-
-# from . import bravais_lattice
-# from . import (
-#     crystal,
-#     io,
-#     lattice_plotter,
-# )
-# from .atom import *
-# from .crystal import *
-# from .io import *
-# from .lattice_plotter import *
-
-# __all__.extend(io.__all__)
-# __all__.extend(atom.__all__)
-# __all__.extend(crystal.__all__)
-# __all__.extend(lattice_plotter.__all__)

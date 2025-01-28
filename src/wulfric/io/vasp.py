@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -20,15 +20,16 @@ import os
 
 import numpy as np
 
-from wulfric.atom import Atom
-from wulfric.crystal import Crystal
-from wulfric.decorate.array import print_2d_array
+from wulfric._decorate_array import print_2d_array
+from wulfric.crystal._atoms import deduce_atom_type
 from wulfric.geometry import absolute_to_relative, volume
 
-__all__ = ["load_poscar", "dump_poscar"]
+# Save local scope at this moment
+old_dir = set(dir())
+old_dir.add("old_dir")
 
 
-def load_poscar(file_object=None, return_crystal=True, return_comment=False):
+def load_poscar(file_object=None, return_comment=False):
     r"""
     Read the crystal structure from the |POSCAR|_ file.
 
@@ -42,20 +43,15 @@ def load_poscar(file_object=None, return_crystal=True, return_comment=False):
 
         * Tries to open the file with the name given by the ``file_object``.
         * Tries to open the file with the name "POSCAR" in the directory given by the ``file_object``.
-    return_crystal : bool, default True
-        If True, returns :py:class:`.Crystal` object. Otherwise returns a tuple of
-        ``(cell, atoms)``.
     return_comment : bool, default False
         Whether to return the comment from the first line of the file.
 
     Returns
     -------
-    crystal : :py:class:`.Crystal`
-        Crystal structure read from the file. If ``return_crystal`` is ``True``.
     cell : (3, 3) :numpy:`ndarray`
-        Cell of the crystal structure. If ``return_crystal`` is ``False``.
-    atoms : list of :py:class:`.Atom`
-        Atoms of the crystal structure. If ``return_crystal`` is ``False``.
+        Cell of the crystal structure.
+    atoms : dict
+        Atoms of the crystal structure.
         Positions are always relative to the cell.
     comment : str
         Comment from the first line of the file. If ``return_comment`` is ``True``.
@@ -128,7 +124,7 @@ def load_poscar(file_object=None, return_crystal=True, return_comment=False):
     if lines[index][0].lower() in ["c", "k"]:
         CARTESIAN = True
     index += 1
-    atoms = []
+    atoms = {"names": [], "positions": []}
     for i in range(len(species)):
         for j in range(ions_per_species[i]):
             coordinates = np.array(list(map(float, lines[index].split()[:3])))
@@ -138,35 +134,35 @@ def load_poscar(file_object=None, return_crystal=True, return_comment=False):
                 coordinates *= scale_factor
                 coordinates = absolute_to_relative(coordinates, cell)
             if species_names is None:
-                atoms.append(Atom(f"X{i+1}", coordinates))
+                atoms["names"].append(f"X{i+1}")
+                atoms["positions"].append(coordinates)
             else:
-                atoms.append(Atom(species_names[i], coordinates))
+                atoms["names"].append(species_names[i])
+                atoms["positions"].append(coordinates)
 
-    if return_crystal:
-        if return_comment:
-            return Crystal(cell=cell, atoms=atoms), comment
-        return Crystal(cell=cell, atoms=atoms)
     if return_comment:
         return cell, atoms, comment
     return cell, atoms
 
 
 def dump_poscar(
-    crystal_like,
+    cell,
+    atoms,
     file_object="POSCAR",
     comment: str = None,
     decimals=8,
     mode: str = "Direct",
 ):
     r"""
-    Write :py:class:`.Crystal`-like object  to the |POSCAR|_ file.
+    Write crystal structure to the |POSCAR|_ file.
 
     Parameters
     ----------
-    crystal_like : any
-        Object to be written. It has to have ``.cell`` and ``.atoms`` attributes.
-        ``cell`` has to be a 3x3 array-like object, ``atoms`` has to be a list of
-        :py:class:`.Atom` objects.
+    cell : (3,3) |array-like|_,
+        Primitive unit cell.
+    atoms : dict
+        Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
+        Optionally might have ``names`` key with value of ``list`` of ``str`` of length N.
     file_object : str of file-like object, optional
         File to be written. If str, then file is opened with the given name.
         Otherwise it has to have ``.write()`` method.
@@ -193,20 +189,27 @@ def dump_poscar(
         raise ValueError(f'mode has to be "Direct" or "Cartesian", given: {mode}')
 
     # Prepare atoms
-    if mode == "Direct":
-        atoms = [(atom.type, atom.position) for atom in crystal_like.atoms]
-    else:
-        atoms = [
-            (atom.type, atom.position @ crystal_like.cell)
-            for atom in crystal_like.atoms
-        ]
+    atoms_list = []
+    for i in range(len(atoms["positions"])):
+        atom_type = deduce_atom_type(atoms["name"][i])
+        if atom_type == "X":
+            raise ValueError(
+                f"Can not deduce atom's type from the name '{atoms['name'][i]}'"
+            )
+        if mode == "Direct":
+            atom_position = atoms["positions"]
+        else:
+            atom_position = atoms["positions"] @ cell
+
+        atoms_list.append((atom_type, atom_position))
+
     # Sort atoms by type
-    atoms = sorted(atoms, key=lambda x: x[0])
+    atoms_list = sorted(atoms_list, key=lambda x: x[0])
 
     # Prepare atom species and coordinates
     atom_species = {}
     atom_coordinates = []
-    for atom in atoms:
+    for atom in atoms_list:
         if atom[0] not in atom_species:
             atom_species[atom[0]] = 1
         else:
@@ -241,3 +244,10 @@ def dump_poscar(
         )
         + "\n"
     )
+
+
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir
