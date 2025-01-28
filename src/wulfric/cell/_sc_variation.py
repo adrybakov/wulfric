@@ -312,8 +312,8 @@ def variation(cell, lattice_type=None, eps_rel=EPS_RELATIVE, angle_tol=EPS_ANGLE
     if lattice_type is None:
         lattice_type = lepage(
             *params(cell),
-            eps_relative=rtol,
-            eps_angle=atol,
+            eps_relative=eps_rel,
+            eps_angle=angle_tol,
         )
 
     lattice_type = lattice_type.upper()
