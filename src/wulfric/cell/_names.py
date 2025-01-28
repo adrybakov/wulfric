@@ -38,7 +38,7 @@ def name(lattice_type):
         Name of the Bravais lattice type.
     """
 
-    return BRAVAIS_LATTICE_NAMES[lattice_type.capitalize()]
+    return BRAVAIS_LATTICE_NAMES[lattice_type.upper()]
 
 
 def pearson_symbol(lattice_type):
@@ -60,7 +60,7 @@ def pearson_symbol(lattice_type):
     See: |PearsonSymbol|_
     """
 
-    return PEARSON_SYMBOLS[lattice_type.capitalize()]
+    return PEARSON_SYMBOLS[lattice_type.upper()]
 
 
 def crystal_family(lattice_type):
@@ -82,7 +82,7 @@ def crystal_family(lattice_type):
     See: |PearsonSymbol|_
     """
 
-    return PEARSON_SYMBOLS[lattice_type.capitalize()][0]
+    return PEARSON_SYMBOLS[lattice_type.upper()][0]
 
 
 def centring_type(lattice_type):
@@ -104,7 +104,7 @@ def centring_type(lattice_type):
     See: |PearsonSymbol|_
     """
 
-    return PEARSON_SYMBOLS[lattice_type.capitalize()][1]
+    return PEARSON_SYMBOLS[lattice_type.upper()][1]
 
 
 # Populate __all__ with objects defined in this file

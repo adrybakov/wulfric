@@ -20,9 +20,10 @@ import numpy as np
 
 from wulfric._exceptions import StandardizationTypeMismatch
 from wulfric._numerical import compare_numerically
-from wulfric.cell._basic_manipulation import params, reciprocal, scalar_products
+from wulfric.cell._basic_manipulation import get_reciprocal, params, scalar_products
 from wulfric.cell._lepage import lepage
 from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
+from wulfric.constants._sc_notation import C_MATRICES
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -824,7 +825,7 @@ def _TRI_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     """
 
     # Compute reciprocal cell
-    rcell = reciprocal(cell)
+    rcell = get_reciprocal(cell)
 
     # Step 1
     sp23, sp13, sp12 = scalar_products(rcell)
@@ -933,11 +934,11 @@ def get_S_matrix(cell, lattice_type=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     if lattice_type is None:
         lattice_type = lepage(
             *params(cell),
-            eps_rel=eps_rel,
-            delta_max=angle_tol,
+            eps_relative=eps_rel,
+            eps_angle=angle_tol,
         )
 
-    lattice_type = lattice_type.capitalize()
+    lattice_type = lattice_type.upper()
 
     functions = {
         "CUB": _CUB_get_S_matrix,
@@ -977,7 +978,7 @@ def get_C_matrix(lattice_type):
     C_matrix : (3,3) :numpy:`ndarray`
     """
 
-    return C_MATRICES[lattice_type.capitalize()]
+    return C_MATRICES[lattice_type.upper()]
 
 
 def standardize(cell, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
@@ -1015,8 +1016,8 @@ def standardize(cell, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     if S_matrix is None:
         lattice_type = lepage(
             *params(cell),
-            eps_rel=rtol,
-            delta_max=atol,
+            eps_relative=rtol,
+            eps_angle=atol,
         )
 
         S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
@@ -1026,7 +1027,7 @@ def standardize(cell, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     return np.linalg.inv(S_matrix.T) @ cell
 
 
-def conventional(
+def get_conventional(
     cell, S_matrix=None, C_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH
 ):
     r"""
@@ -1066,8 +1067,8 @@ def conventional(
     if S_matrix is None or C_matrix is None:
         lattice_type = lepage(
             *params(cell),
-            eps_rel=rtol,
-            delta_max=atol,
+            eps_relative=rtol,
+            eps_angle=atol,
         )
 
     if C_matrix is None:

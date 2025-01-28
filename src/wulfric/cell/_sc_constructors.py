@@ -20,7 +20,7 @@ from math import cos, sin, sqrt
 
 import numpy as np
 
-from wulfric.cell._basic_manipulation import from_params, reciprocal
+from wulfric.cell._basic_manipulation import from_params, get_reciprocal
 from wulfric.constants import TORADIANS
 
 # Save local scope at this moment
@@ -424,7 +424,7 @@ def TRI(
 
     cell = from_params(a, b, c, alpha, beta, gamma)
     if input_reciprocal:
-        cell = reciprocal(cell)
+        cell = get_reciprocal(cell)
 
     return cell
 

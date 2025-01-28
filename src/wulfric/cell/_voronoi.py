@@ -19,7 +19,7 @@
 import numpy as np
 from scipy.spatial import Voronoi
 
-from wulfric.cell._basic_manipulation import reciprocal
+from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.geometry import volume
 
 # Save local scope at this moment
@@ -49,7 +49,7 @@ def _lattice_points(cell, relative=False, reciprocal=False, normalize=False):
     """
 
     if reciprocal:
-        cell = reciprocal(cell)
+        cell = get_reciprocal(cell)
 
     if normalize:
         cell /= volume(cell) ** (1 / 3.0)

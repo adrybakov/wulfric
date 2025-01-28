@@ -36,7 +36,7 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def reciprocal(cell):
+def get_reciprocal(cell):
     r"""
     Computes reciprocal cell.
 

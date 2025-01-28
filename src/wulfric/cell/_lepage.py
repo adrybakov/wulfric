@@ -21,7 +21,7 @@ from math import acos, floor, log10
 import numpy as np
 
 from wulfric._decorate_array import print_2d_array
-from wulfric.cell._basic_manipulation import from_params, reciprocal
+from wulfric.cell._basic_manipulation import from_params, get_reciprocal
 from wulfric.constants._numerical import EPS_ANGLE, EPS_RELATIVE, TODEGREES
 from wulfric.geometry import parallelepiped_check, volume
 
@@ -352,7 +352,7 @@ def lepage(
         )
 
     cell = from_params(a, b, c, alpha, beta, gamma)
-    rcell = reciprocal(cell)
+    rcell = get_reciprocal(cell)
     if very_verbose:
         print("Cell:")
         print_2d_array(cell, fmt=f"{4+decimals}.{1+decimals}f")

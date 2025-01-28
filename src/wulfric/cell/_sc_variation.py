@@ -21,8 +21,9 @@ from math import cos, sin
 import numpy as np
 
 from wulfric._numerical import compare_numerically
-from wulfric.cell._basic_manipulation import params
+from wulfric.cell._basic_manipulation import get_reciprocal, params
 from wulfric.cell._lepage import lepage
+from wulfric.cell._sc_standardize import get_conventional
 from wulfric.constants._numerical import EPS_ANGLE, EPS_RELATIVE, TORADIANS
 from wulfric.geometry import volume
 
@@ -311,18 +312,18 @@ def variation(cell, lattice_type=None, eps_rel=EPS_RELATIVE, angle_tol=EPS_ANGLE
     if lattice_type is None:
         lattice_type = lepage(
             *params(cell),
-            eps_rel=eps_rel,
-            delta_max=angle_tol,
+            eps_relative=rtol,
+            eps_angle=atol,
         )
 
-    lattice_type = lattice_type.capitalize()
+    lattice_type = lattice_type.upper()
 
     if lattice_type in ["BCT", "ORCF", "RHL", "MCLC", "TRI"]:
         eps = eps_rel * abs(volume(cell)) ** (1 / 3.0)
 
     if lattice_type in ["BCT", "ORCF", "RHL", "MCLC"]:
         conv_a, conv_b, conv_c, conv_alpha, conv_beta, conv_gamma = params(
-            conventional(cell)
+            get_conventional(cell)
         )
 
     if lattice_type == "BCT":
@@ -332,7 +333,7 @@ def variation(cell, lattice_type=None, eps_rel=EPS_RELATIVE, angle_tol=EPS_ANGLE
     elif lattice_type == "RHL":
         result = _RHL_variation(conv_alpha, eps)
     elif lattice_type == "MCLC":
-        _, _, _, _, _, k_gamma = params(reciprocal(cell))
+        _, _, _, _, _, k_gamma = params(get_reciprocal(cell))
         result = _MCLC_variation(
             conv_a,
             conv_b,
@@ -342,7 +343,7 @@ def variation(cell, lattice_type=None, eps_rel=EPS_RELATIVE, angle_tol=EPS_ANGLE
             eps,
         )
     elif lattice_type == "TRI":
-        _, _, _, k_alpha, k_beta, k_gamma = params(reciprocal(cell))
+        _, _, _, k_alpha, k_beta, k_gamma = params(get_reciprocal(cell))
         result = _TRI_variation(k_alpha, k_beta, k_gamma, eps)
     else:
         result = lattice_type

@@ -22,10 +22,10 @@ import numpy as np
 
 from wulfric.cell._basic_manipulation import params
 from wulfric.cell._lepage import lepage
-from wulfric.cell._sc_standardize import conventional, get_S_matrix
+from wulfric.cell._sc_standardize import get_C_matrix, get_conventional, get_S_matrix
 from wulfric.cell._sc_variation import variation
-from wulfric.constants._numerical import TORADIANS
-from wulfric.constants._sc_notation import DEFAULT_K_PATHS
+from wulfric.constants._numerical import EPS_ANGLE, EPS_RELATIVE, TORADIANS
+from wulfric.constants._sc_notation import DEFAULT_K_PATHS, HS_PLOT_NAMES
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -666,7 +666,7 @@ def _TRI_hs_points(variation):
         }
 
 
-def get_hs_points(
+def get_hs_data(
     cell,
     lattice_type=None,
     lattice_variation=None,
@@ -707,6 +707,8 @@ def get_hs_points(
         List of the high symmetry points labels for plotting.
         Has to have the same length as ``coordinates``. Labels are not necessary equal
         to the names.
+    path : str
+        K path.
 
 
     """
@@ -716,18 +718,18 @@ def get_hs_points(
     if lattice_type is None:
         lattice_type = lepage(
             *params(cell),
-            eps_rel=eps_rel,
-            delta_max=angle_tol,
+            eps_relative=rtol,
+            eps_angle=atol,
         )
 
-    lattice_type = lattice_type.capitalize()
+    lattice_type = lattice_type.upper()
 
     if lattice_variation is None:
         lattice_variation = variation(
-            cell=cell, lattice_type=lattice_type, eps_rel=eps_rel, angle_tol=angle_tol
+            cell=cell, lattice_type=lattice_type, eps_rel=rtol, angle_tol=atol
         )
 
-    lattice_variation = lattice_variation.capitalize()
+    lattice_variation = lattice_variation.upper()
 
     if C_matrix is None:
         C_matrix = get_C_matrix(lattice_type)
@@ -741,7 +743,7 @@ def get_hs_points(
 
     if lattice_type in ["BCT", "ORCF", "ORCI", "ORCC", "RHL", "MCL", "MCLC"]:
         conv_a, conv_b, conv_c, conv_alpha, conv_beta, conv_gamma = params(
-            conventional(cell, S_matrix=S_matrix, C_matrix=C_matrix)
+            get_conventional(cell, S_matrix=S_matrix, C_matrix=C_matrix)
         )
 
     if lattice_type == "CUB":
@@ -794,59 +796,7 @@ def get_hs_points(
         else:
             labels.append(HS_PLOT_NAMES[point])
 
-    return coordinates, names, labels
-
-
-def get_hs_path(
-    cell,
-    lattice_type=None,
-    lattice_variation=None,
-    rtol=EPS_RELATIVE,
-    atol=EPS_ANGLE,
-):
-    r"""
-    Return K path for the cell as defined in SC paper.
-
-    Parameters
-    ----------
-    cell : (3,3) |array-like|_
-        Unit cell of the lattice. Rows define lattice vectors.
-    lattice_type : str, optional
-        One of the 14 lattice types that correspond to the provided ``cell``.
-        If not provided, then computed automatically. Case-insensitive.
-    lattice_variation : str, optional
-        One of the lattice variations that correspond to the provided ``cell`` and
-        ``lattice_type``. If not provided, then computed automatically. Case-insensitive.
-    eps_rel : float, default 1e-4
-        Relative tolerance for distance. For definition of lattice type and variation.
-    angle_tol : float, default 1e-4
-        Absolute tolerance for angles, in degrees. For definition of lattice type and variation.
-
-    Returns
-    -------
-    path : str
-        K path.
-    """
-
-    cell = np.array(cell, dtype=float)
-
-    if lattice_type is None:
-        lattice_type = lepage(
-            *params(cell),
-            eps_rel=eps_rel,
-            delta_max=angle_tol,
-        )
-
-    lattice_type = lattice_type.capitalize()
-
-    if lattice_variation is None:
-        lattice_variation = variation(
-            cell=cell, lattice_type=lattice_type, eps_rel=eps_rel, angle_tol=angle_tol
-        )
-
-    lattice_variation = lattice_variation.capitalize()
-
-    return DEFAULT_K_PATHS[lattice_variation]
+    return coordinates, names, labels, DEFAULT_K_PATHS[lattice_variation]
 
 
 # Populate __all__ with objects defined in this file
