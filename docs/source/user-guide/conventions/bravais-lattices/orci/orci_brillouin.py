@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -18,11 +18,11 @@
 
 import wulfric as wulf
 
-l = wulf.lattice_example("{name}")
+cell = wulf.cell.cell_example("{name}")
 # Standardization is explicit since 0.3
-l.standardize()
-backend = wulf.PlotlyBackend()
-backend.plot(l, kind="brillouin-kpath")
+cell = wulf.cell.standardize(cell)
+backend = wulf.visualization.PlotlyBackend()
+backend.plot(cell, kind="brillouin-kpath")
 # Save an image:
 backend.save("orci_brillouin.png")
 # Interactive plot:
