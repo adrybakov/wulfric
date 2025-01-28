@@ -25,6 +25,7 @@ from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_standardize import conventional, get_S_matrix
 from wulfric.cell._sc_variation import variation
 from wulfric.constants._numerical import TORADIANS
+from wulfric.constants._sc_notation import DEFAULT_K_PATHS
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -698,15 +699,16 @@ def get_hs_points(
 
     Returns
     -------
-    hs_points : dict
-        Dictionary of high symmetry points.
+    coordinates : list, optional
+        Coordinates are given in relative coordinates in reciprocal space.
+    names: list, optional
+        Names of the high symmetry points. Used for programming, not for plotting.
+    labels : list, optional
+        List of the high symmetry points labels for plotting.
+        Has to have the same length as ``coordinates``. Labels are not necessary equal
+        to the names.
 
-        .. code-block:: python
 
-          {name : ([r1, r2, r3], label), ...}
-
-        Coordinates are relative to the reciprocal cell. Labels are not necessary equal
-        to the ``name``.
     """
 
     cell = np.array(cell, dtype=float)
@@ -773,21 +775,78 @@ def get_hs_points(
     elif lattice_type == "TRI":
         hs_points = _TRI_hs_points(lattice_variation)
 
+    names = []
+    labels = []
+    coordinates = []
+
     for point in hs_points:
         # Compute relative coordinates with respect to the
         # non-standardized primitive cell
-        coordinates = np.linalg.inv(S_matrix).T @ hs_points[point]
+        names.append(point)
+        coordinates.append(np.linalg.inv(S_matrix).T @ hs_points[point])
 
         # Post-process two edge cases
         if point == "S" and lattice_type == "BCT":
-            hs_points[point] = (coordinates, "$\\Sigma$")
+            labels.append("$\\Sigma$")
         elif point == "S1" and lattice_type == "BCT":
-            hs_points[point] = (coordinates, "$\\Sigma_1$")
+            labels.append("$\\Sigma_1$")
         # General assignment
         else:
-            hs_points[point] = (coordinates, HS_PLOT_NAMES[point])
+            labels.append(HS_PLOT_NAMES[point])
 
-    return hs_points
+    return coordinates, names, labels
+
+
+def get_hs_path(
+    cell,
+    lattice_type=None,
+    lattice_variation=None,
+    rtol=EPS_RELATIVE,
+    atol=EPS_ANGLE,
+):
+    r"""
+    Return K path for the cell as defined in SC paper.
+
+    Parameters
+    ----------
+    cell : (3,3) |array-like|_
+        Unit cell of the lattice. Rows define lattice vectors.
+    lattice_type : str, optional
+        One of the 14 lattice types that correspond to the provided ``cell``.
+        If not provided, then computed automatically. Case-insensitive.
+    lattice_variation : str, optional
+        One of the lattice variations that correspond to the provided ``cell`` and
+        ``lattice_type``. If not provided, then computed automatically. Case-insensitive.
+    eps_rel : float, default 1e-4
+        Relative tolerance for distance. For definition of lattice type and variation.
+    angle_tol : float, default 1e-4
+        Absolute tolerance for angles, in degrees. For definition of lattice type and variation.
+
+    Returns
+    -------
+    path : str
+        K path.
+    """
+
+    cell = np.array(cell, dtype=float)
+
+    if lattice_type is None:
+        lattice_type = lepage(
+            *params(cell),
+            eps_rel=eps_rel,
+            delta_max=angle_tol,
+        )
+
+    lattice_type = lattice_type.capitalize()
+
+    if lattice_variation is None:
+        lattice_variation = variation(
+            cell=cell, lattice_type=lattice_type, eps_rel=eps_rel, angle_tol=angle_tol
+        )
+
+    lattice_variation = lattice_variation.capitalize()
+
+    return DEFAULT_K_PATHS[lattice_variation]
 
 
 # Populate __all__ with objects defined in this file

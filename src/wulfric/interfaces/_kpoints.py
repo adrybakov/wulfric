@@ -21,6 +21,8 @@ from typing import Iterable
 
 import numpy as np
 
+from wulfric.cell._basic_manipulation import reciprocal
+from wulfric.cell._kpoints import get_hs_path, get_hs_points
 from wulfric.geometry import absolute_to_relative
 
 # Save local scope at this moment
@@ -115,6 +117,106 @@ class Kpoints:
         if path is None:
             path = "-".join(self.hs_names)
         self.path = path
+
+    @classmethod
+    def from_cell(
+        cell,
+        lattice_type=None,
+        lattice_variation=None,
+        S_matrix=None,
+        C_matrix=None,
+        rtol=EPS_RELATIVE,
+        atol=EPS_ANGLE,
+        n=100,
+    ):
+        r"""
+        Return an instance of the :py:class:`.Kpoints`.
+
+        Parameters
+        ----------
+        cell : (3,3) |array-like|_
+            Unit cell of the lattice. Rows define lattice vectors.
+        lattice_type : str, optional
+            One of the 14 lattice types that correspond to the provided ``cell``.
+            If not provided, then computed automatically. Case-insensitive.
+        lattice_variation : str, optional
+            One of the lattice variations that correspond to the provided ``cell`` and
+            ``lattice_type``. If not provided, then computed automatically. Case-insensitive.
+        S_matrix : (3,3) |array-like|_, optional
+            Transformation matrix S.
+        C_matrix : (3,3) |array-like|_, optional
+            Transformation matrix C.
+        eps_rel : float, default 1e-4
+            Relative tolerance for distance. For definition of lattice type and variation.
+        angle_tol : float, default 1e-4
+            Absolute tolerance for angles, in degrees. For definition of lattice type and variation.
+        n : int, default 100
+            Number of points between each pair of the high symmetry points
+            (high symmetry points excluded).
+
+        Returns
+        -------
+        kp : :py:class:`.Kpoints`
+        """
+        if lattice_type is None:
+            lattice_type = lepage(
+                *params(cell),
+                eps_rel=eps_rel,
+                delta_max=angle_tol,
+            )
+
+        lattice_type = lattice_type.capitalize()
+
+        if lattice_variation is None:
+            lattice_variation = variation(
+                cell=cell,
+                lattice_type=lattice_type,
+                eps_rel=eps_rel,
+                angle_tol=angle_tol,
+            )
+
+        lattice_variation = lattice_variation.capitalize()
+
+        if C_matrix is None:
+            C_matrix = get_C_matrix(lattice_type)
+        else:
+            C_matrix = np.array(C_matrix, dtype=float)
+
+        if S_matrix is None:
+            S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
+        else:
+            S_matrix = np.array(S_matrix, dtype=float)
+
+        coordinates, names, labels = get_hs_points(
+            cell,
+            lattice_type=lattice_type,
+            lattice_variation=lattice_variation,
+            S_matrix=S_matrix,
+            C_matrix=C_matrix,
+            rtol=rtol,
+            atol=atol,
+        )
+
+        b1, b2, b3 = reciprocal(cell)
+
+        path = get_hs_path(
+            cell,
+            lattice_type=lattice_type,
+            lattice_variation=lattice_variation,
+            rtol=rtol,
+            atol=atol,
+        )
+
+        return Kpoints(
+            b1=b1,
+            b2=b2,
+            b3=b3,
+            coordinates=coordinates,
+            names=names,
+            labels=labels,
+            path=path,
+            n=n,
+        )
 
     ################################################################################
     #                            High symmetry points                              #
