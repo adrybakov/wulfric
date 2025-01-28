@@ -21,8 +21,10 @@ from typing import Iterable
 
 import numpy as np
 
-from wulfric.cell._basic_manipulation import reciprocal
-from wulfric.cell._kpoints import get_hs_path, get_hs_points
+from wulfric.cell._basic_manipulation import get_reciprocal, params
+from wulfric.cell._kpoints import get_hs_data
+from wulfric.cell._lepage import lepage
+from wulfric.constants._numerical import EPS_ANGLE, EPS_RELATIVE
 from wulfric.geometry import absolute_to_relative
 
 # Save local scope at this moment
@@ -118,7 +120,7 @@ class Kpoints:
             path = "-".join(self.hs_names)
         self.path = path
 
-    @classmethod
+    @staticmethod
     def from_cell(
         cell,
         lattice_type=None,
@@ -158,36 +160,8 @@ class Kpoints:
         -------
         kp : :py:class:`.Kpoints`
         """
-        if lattice_type is None:
-            lattice_type = lepage(
-                *params(cell),
-                eps_rel=eps_rel,
-                delta_max=angle_tol,
-            )
 
-        lattice_type = lattice_type.capitalize()
-
-        if lattice_variation is None:
-            lattice_variation = variation(
-                cell=cell,
-                lattice_type=lattice_type,
-                eps_rel=eps_rel,
-                angle_tol=angle_tol,
-            )
-
-        lattice_variation = lattice_variation.capitalize()
-
-        if C_matrix is None:
-            C_matrix = get_C_matrix(lattice_type)
-        else:
-            C_matrix = np.array(C_matrix, dtype=float)
-
-        if S_matrix is None:
-            S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
-        else:
-            S_matrix = np.array(S_matrix, dtype=float)
-
-        coordinates, names, labels = get_hs_points(
+        coordinates, names, labels, path = get_hs_data(
             cell,
             lattice_type=lattice_type,
             lattice_variation=lattice_variation,
@@ -197,15 +171,7 @@ class Kpoints:
             atol=atol,
         )
 
-        b1, b2, b3 = reciprocal(cell)
-
-        path = get_hs_path(
-            cell,
-            lattice_type=lattice_type,
-            lattice_variation=lattice_variation,
-            rtol=rtol,
-            atol=atol,
-        )
+        b1, b2, b3 = get_reciprocal(cell)
 
         return Kpoints(
             b1=b1,
