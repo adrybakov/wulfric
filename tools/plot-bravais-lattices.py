@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -238,8 +238,8 @@ def plot():
 
     for i, name in enumerate(names):
         output_subname = (name.translate(str.maketrans("", "", "12345ab"))).lower()
-        l = wulf.lattice_example(name)
-        l.standardize()
+        cell = wulf.cell.cell_example(name)
+        cell = wulf.cell.standardize(cell)
         for j, wtp in enumerate(wtps[name]):
             py_file = open(
                 os.path.join(
@@ -252,28 +252,28 @@ def plot():
                 "\n".join(
                     [
                         f"import wulfric as wulf\n",
-                        'l = wulf.lattice_example("{name}")',
+                        'cell = wulf.cell.cell_example("{name}")',
                         "# Standardization is explicit since 0.3",
-                        "l.standardize()",
-                        "backend = wulf.PlotlyBackend()\n",
+                        "cell = wulf.cell.standardize(cell)",
+                        "backend = wulf.visualization.PlotlyBackend()\n",
                     ]
                 )
             )
-            backend = wulf.PlotlyBackend()
+            backend = wulf.visualization.PlotlyBackend()
             for data in wtp:
                 if len(wtp) == 1:
-                    backend.plot(l, kind=data)
-                    py_file.write(f'backend.plot(l, kind="{data}")\n')
+                    backend.plot(cell, kind=data)
+                    py_file.write(f'backend.plot(cell, kind="{data}")\n')
                 else:
                     if data == "conventional":
-                        backend.plot(l, kind=data, color="black", label=data)
+                        backend.plot(cell, kind=data, color="black", label=data)
                         py_file.write(
-                            f'backend.plot(l, kind="{data}", label="{data}", color="black")\n'
+                            f'backend.plot(cell, kind="{data}", label="{data}", color="black")\n'
                         )
                     else:
-                        backend.plot(l, kind=data, label=data)
+                        backend.plot(cell, kind=data, label=data)
                         py_file.write(
-                            f'backend.plot(l, kind="{data}", label="{data}")\n'
+                            f'backend.plot(cell, kind="{data}", label="{data}")\n'
                         )
             backend.save(
                 os.path.join(
