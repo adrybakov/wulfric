@@ -22,7 +22,7 @@ __git_hash__ = "a581649f7c740a326f6be323517e533f921a214a"
 __release_date__ = "15 October 2024"
 
 
-from . import cell, constants, interfaces
+from . import cell, constants, interfaces, visualization
 from ._decorate_array import *
 from ._exceptions import *
 from ._numerical import *
