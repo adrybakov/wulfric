@@ -21,10 +21,7 @@ __doclink__ = "wulfric.org"
 __git_hash__ = "undefined"
 __release_date__ = "undefined"
 
-
-from io import *
-
-from . import cell, constants, interfaces, visualization
+from . import cell, constants, interfaces, io, visualization
 from ._decorate_array import *
 from ._exceptions import *
 from ._numerical import *

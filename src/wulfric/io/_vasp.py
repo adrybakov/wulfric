@@ -17,6 +17,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
+from calendar import month_name
+from datetime import datetime
 
 import numpy as np
 
@@ -175,12 +177,16 @@ def dump_poscar(
         Mode of the coordinates to be written. Can be "Direct" or "Cartesian".
     """
 
+    cell = np.array(cell, dtype=float)
+
     # Prepare comment
     if comment is None:
-        try:
-            comment = crystal_like.name
-        except AttributeError:
-            comment = "Data from wulfric"
+        cd = datetime.now()
+        comment = (
+            f"Written by Wulfric (wulfric.org) "
+            f"on {cd.day} {month_name[cd.month]} {cd.year} "
+            f"at {cd.hour}:{cd.minute}:{cd.second}"
+        )
     else:
         comment = comment.replace("\n", " ")
 
@@ -191,17 +197,19 @@ def dump_poscar(
     # Prepare atoms
     atoms_list = []
     for i in range(len(atoms["positions"])):
-        atom_type = deduce_atom_type(atoms["name"][i])
+        atom_type = deduce_atom_type(atoms["names"][i])
         if atom_type == "X":
             raise ValueError(
                 f"Can not deduce atom's type from the name '{atoms['name'][i]}'"
             )
         if mode == "Direct":
-            atom_position = atoms["positions"]
+            atom_position = atoms["positions"][i]
         else:
-            atom_position = atoms["positions"] @ cell
+            atom_position = atoms["positions"][i] @ cell
 
         atoms_list.append((atom_type, atom_position))
+
+    print(atoms_list)
 
     # Sort atoms by type
     atoms_list = sorted(atoms_list, key=lambda x: x[0])
@@ -223,10 +231,9 @@ def dump_poscar(
     # Write
     file_object.write(comment + "\n")
     file_object.write("1.0\n")
+    print(print_2d_array(cell, fmt=f".{decimals}f", print_result=False, borders=False))
     file_object.write(
-        print_2d_array(
-            crystal_like.cell, fmt=f".{decimals}f", print_result=False, borders=False
-        )
+        print_2d_array(cell, fmt=f".{decimals}f", print_result=False, borders=False)
         + "\n"
     )
 
