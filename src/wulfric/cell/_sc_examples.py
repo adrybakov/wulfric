@@ -152,13 +152,13 @@ def cell_example(
         a = x * b * sin(ralpha)
         cell = MCLC(a, b, c, alpha)
     elif lattice_variation in ["tri1a", "tri1", "tri", "tria"]:
-        cell = TRI(1, 1.5, 2, 120, 110, 100, reciprocal=True)
+        cell = TRI(1, 1.5, 2, 120, 110, 100, input_reciprocal=True)
     elif lattice_variation in ["tri2a", "tri2"]:
-        cell = TRI(1, 1.5, 2, 120, 110, 90, reciprocal=True)
+        cell = TRI(1, 1.5, 2, 120, 110, 90, input_reciprocal=True)
     elif lattice_variation in ["tri1b", "trib"]:
-        cell = TRI(1, 1.5, 2, 60, 70, 80, reciprocal=True)
+        cell = TRI(1, 1.5, 2, 60, 70, 80, input_reciprocal=True)
     elif lattice_variation == "tri2b":
-        cell = TRI(1, 1.5, 2, 60, 70, 90, reciprocal=True)
+        cell = TRI(1, 1.5, 2, 60, 70, 90, input_reciprocal=True)
 
     return cell
 

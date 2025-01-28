@@ -392,7 +392,7 @@ def TRI(
     alpha: float,
     beta: float,
     gamma: float,
-    reciprocal=False,
+    input_reciprocal=False,
 ):
     r"""
     Construct triclinic primitive cell.
@@ -413,7 +413,7 @@ def TRI(
         Angle between vectors :math:`a_1` and :math:`a_3` of the conventional cell. In degrees.
     gamma : float
         Angle between vectors :math:`a_1` and :math:`a_2` of the conventional cell. In degrees.
-    reciprocal : bool, default False
+    input_reciprocal : bool, default False
         Whether to interpret input as reciprocal parameters.
 
     Returns
@@ -423,7 +423,7 @@ def TRI(
     """
 
     cell = from_params(a, b, c, alpha, beta, gamma)
-    if reciprocal:
+    if input_reciprocal:
         cell = reciprocal(cell)
 
     return cell
