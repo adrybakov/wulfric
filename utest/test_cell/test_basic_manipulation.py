@@ -27,9 +27,9 @@ from scipy.spatial.transform import Rotation
 
 from wulfric.cell._basic_manipulation import (
     from_params,
+    get_reciprocal,
     is_reasonable,
     params,
-    reciprocal,
     scalar_products,
 )
 from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
@@ -104,14 +104,14 @@ def rotate(cell, r1, r2, r3):
     st.floats(min_value=0, max_value=360.0),
     st.integers(min_value=0, max_value=N_ORDER),
 )
-def test_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
+def test_get_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
     if parallelepiped_check(a, b, c, alpha, beta, gamma):
         cell = np.array(
             shuffle(rotate(from_params(a, b, c, alpha, beta, gamma), r1, r2, r3), order)
         )
         # Add this filter if some test fail
         if is_reasonable(cell):
-            rcell = reciprocal(cell)
+            rcell = get_reciprocal(cell)
             # If the cell is left-handed, then the diagonal will be filled with -2pi,
             # The minus appears since the cross product is defined in the right-handed system.
             # If the cell is right-handed, then the diagonal will be filled with 2pi.
@@ -132,7 +132,7 @@ def test_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
     ],
 )
 def test_reciprocal_cell_examples(cell, rec_cell):
-    rcell = reciprocal(cell)
+    rcell = get_reciprocal(cell)
     assert np.allclose(rcell, np.array(rec_cell), rtol=EPS_RELATIVE, atol=EPS_LENGTH)
 
 
