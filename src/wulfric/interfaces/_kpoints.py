@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -23,7 +23,9 @@ import numpy as np
 
 from wulfric.geometry import absolute_to_relative
 
-__all__ = ["Kpoints"]
+# Save local scope at this moment
+old_dir = set(dir())
+old_dir.add("old_dir")
 
 
 class Kpoints:
@@ -43,10 +45,11 @@ class Kpoints:
     names: list, optional
         Names of the high symmetry points. Used for programming, not for plotting.
     labels : list, optional
-        Dictionary of the high symmetry points labels for plotting.
+        List of the high symmetry points labels for plotting.
         Has to have the same length as ``coordinates``.
     path : str, optional
-        K points path.
+        K points path. Use elements of ``names`` to specify the path. If no names given,
+        then use "K1", ... "KN". N is a length of ``coordinates``.
     n : int
         Number of points between each pair of the high symmetry points
         (high symmetry points excluded).
@@ -482,3 +485,10 @@ class Kpoints:
             k_z = f"{absolute[2]: {d+3}.{d}f}"
             table.append(f"{name:4}  {i} {j} {k}  {k_x} {k_y} {k_z}")
         return "\n".join(table)
+
+
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir

@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -20,27 +20,18 @@ from math import cos, sin, tan
 
 import numpy as np
 
-from wulfric.constants import TORADIANS
+from wulfric.cell._basic_manipulation import params
+from wulfric.cell._lepage import lepage
+from wulfric.cell._sc_standardize import conventional, get_S_matrix
+from wulfric.cell._sc_variation import variation
+from wulfric.constants._numerical import TORADIANS
 
-__all__ = [
-    "CUB_hs_points",
-    "FCC_hs_points",
-    "BCC_hs_points",
-    "TET_hs_points",
-    "BCT_hs_points",
-    "ORC_hs_points",
-    "ORCF_hs_points",
-    "ORCI_hs_points",
-    "ORCC_hs_points",
-    "HEX_hs_points",
-    "RHL_hs_points",
-    "MCL_hs_points",
-    "MCLC_hs_points",
-    "TRI_hs_points",
-]
+# Save local scope at this moment
+old_dir = set(dir())
+old_dir.add("old_dir")
 
 
-def CUB_hs_points():
+def _CUB_hs_points():
     r"""
     Get high-symmetry points for the CUB lattice.
 
@@ -60,7 +51,7 @@ def CUB_hs_points():
     }
 
 
-def FCC_hs_points():
+def _FCC_hs_points():
     r"""
     Get high-symmetry points for the FCC lattice.
 
@@ -82,7 +73,7 @@ def FCC_hs_points():
     }
 
 
-def BCC_hs_points():
+def _BCC_hs_points():
     r"""
     Get high-symmetry points for the CUB lattice.
 
@@ -102,7 +93,7 @@ def BCC_hs_points():
     }
 
 
-def TET_hs_points():
+def _TET_hs_points():
     r"""
     Get high-symmetry points for the TET lattice.
 
@@ -123,7 +114,7 @@ def TET_hs_points():
     }
 
 
-def BCT_hs_points(variation, conv_a, conv_c):
+def _BCT_hs_points(variation, conv_a, conv_c):
     r"""
     Get high-symmetry points for the BCT lattice.
 
@@ -173,7 +164,7 @@ def BCT_hs_points(variation, conv_a, conv_c):
     return kpoints
 
 
-def ORC_hs_points():
+def _ORC_hs_points():
     r"""
     Get high-symmetry points for the ORC lattice.
 
@@ -196,7 +187,7 @@ def ORC_hs_points():
     }
 
 
-def ORCF_hs_points(variation, conv_a, conv_b, conv_c):
+def _ORCF_hs_points(variation, conv_a, conv_b, conv_c):
     r"""
     Get high-symmetry points for the ORCF lattice.
 
@@ -270,7 +261,7 @@ def ORCF_hs_points(variation, conv_a, conv_b, conv_c):
     return kpoints
 
 
-def ORCI_hs_points(conv_a, conv_b, conv_c):
+def _ORCI_hs_points(conv_a, conv_b, conv_c):
     r"""
     Get high-symmetry points for the ORCI lattice.
 
@@ -313,7 +304,7 @@ def ORCI_hs_points(conv_a, conv_b, conv_c):
     }
 
 
-def ORCC_hs_points(conv_a, conv_b):
+def _ORCC_hs_points(conv_a, conv_b):
     r"""
     Get high-symmetry points for the ORCC lattice.
 
@@ -348,7 +339,7 @@ def ORCC_hs_points(conv_a, conv_b):
     }
 
 
-def HEX_hs_points():
+def _HEX_hs_points():
     r"""
     Get high-symmetry points for the HEX lattice.
 
@@ -370,7 +361,7 @@ def HEX_hs_points():
     }
 
 
-def RHL_hs_points(variation, conv_alpha):
+def _RHL_hs_points(variation, conv_alpha):
     r"""
     Get high-symmetry points for the RHL lattice.
 
@@ -425,7 +416,7 @@ def RHL_hs_points(variation, conv_alpha):
         }
 
 
-def MCL_hs_points(conv_b, conv_c, conv_alpha):
+def _MCL_hs_points(conv_b, conv_c, conv_alpha):
     r"""
     Get high-symmetry points for the MCL lattice.
 
@@ -470,7 +461,7 @@ def MCL_hs_points(conv_b, conv_c, conv_alpha):
     }
 
 
-def MCLC_hs_points(variation, conv_a, conv_b, conv_c, conv_alpha):
+def _MCLC_hs_points(variation, conv_a, conv_b, conv_c, conv_alpha):
     r"""
     Get high-symmetry points for the MCLC lattice.
 
@@ -632,7 +623,7 @@ def MCLC_hs_points(variation, conv_a, conv_b, conv_c, conv_alpha):
         }
 
 
-def TRI_hs_points(variation):
+def _TRI_hs_points(variation):
     r"""
     Get high-symmetry points for the TRI lattice.
 
@@ -672,3 +663,135 @@ def TRI_hs_points(variation):
             "Y": np.array([1 / 2, 0, 0]),
             "Z": np.array([-1 / 2, 0, 1 / 2]),
         }
+
+
+def get_hs_points(
+    cell,
+    lattice_type=None,
+    lattice_variation=None,
+    S_matrix=None,
+    C_matrix=None,
+    rtol=EPS_RELATIVE,
+    atol=EPS_ANGLE,
+):
+    r"""
+    Return high symmetry points for the cell as defined in SC paper.
+
+    Parameters
+    ----------
+    cell : (3,3) |array-like|_
+        Unit cell of the lattice. Rows define lattice vectors.
+    lattice_type : str, optional
+        One of the 14 lattice types that correspond to the provided ``cell``.
+        If not provided, then computed automatically. Case-insensitive.
+    lattice_variation : str, optional
+        One of the lattice variations that correspond to the provided ``cell`` and
+        ``lattice_type``. If not provided, then computed automatically. Case-insensitive.
+    S_matrix : (3,3) |array-like|_, optional
+        Transformation matrix S.
+    C_matrix : (3,3) |array-like|_, optional
+        Transformation matrix C.
+    eps_rel : float, default 1e-4
+        Relative tolerance for distance. For definition of lattice type and variation.
+    angle_tol : float, default 1e-4
+        Absolute tolerance for angles, in degrees. For definition of lattice type and variation.
+
+    Returns
+    -------
+    hs_points : dict
+        Dictionary of high symmetry points.
+
+        .. code-block:: python
+
+          {name : ([r1, r2, r3], label), ...}
+
+        Coordinates are relative to the reciprocal cell. Labels are not necessary equal
+        to the ``name``.
+    """
+
+    cell = np.array(cell, dtype=float)
+
+    if lattice_type is None:
+        lattice_type = lepage(
+            *params(cell),
+            eps_rel=eps_rel,
+            delta_max=angle_tol,
+        )
+
+    lattice_type = lattice_type.capitalize()
+
+    if lattice_variation is None:
+        lattice_variation = variation(
+            cell=cell, lattice_type=lattice_type, eps_rel=eps_rel, angle_tol=angle_tol
+        )
+
+    lattice_variation = lattice_variation.capitalize()
+
+    if C_matrix is None:
+        C_matrix = get_C_matrix(lattice_type)
+    else:
+        C_matrix = np.array(C_matrix, dtype=float)
+
+    if S_matrix is None:
+        S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
+    else:
+        S_matrix = np.array(S_matrix, dtype=float)
+
+    if lattice_type in ["BCT", "ORCF", "ORCI", "ORCC", "RHL", "MCL", "MCLC"]:
+        conv_a, conv_b, conv_c, conv_alpha, conv_beta, conv_gamma = params(
+            conventional(cell, S_matrix=S_matrix, C_matrix=C_matrix)
+        )
+
+    if lattice_type == "CUB":
+        hs_points = _CUB_hs_points()
+    elif lattice_type == "FCC":
+        hs_points = _FCC_hs_points()
+    elif lattice_type == "BCC":
+        hs_points = _BCC_hs_points()
+    elif lattice_type == "TET":
+        hs_points = _TET_hs_points()
+    elif lattice_type == "BCT":
+        hs_points = _BCT_hs_points(lattice_variation, conv_a, conv_c)
+    elif lattice_type == "ORC":
+        hs_points = _ORC_hs_points()
+    elif lattice_type == "ORCF":
+        hs_points = _ORCF_hs_points(lattice_variation, conv_a, conv_b, conv_c)
+    elif lattice_type == "ORCI":
+        hs_points = _ORCI_hs_points(conv_a, conv_b, conv_c)
+    elif lattice_type == "ORCC":
+        hs_points = _ORCC_hs_points(conv_a, conv_b)
+    elif lattice_type == "HEX":
+        hs_points = _HEX_hs_points()
+    elif lattice_type == "RHL":
+        hs_points = _RHL_hs_points(lattice_variation, conv_alpha)
+    elif lattice_type == "MCL":
+        hs_points = _MCL_hs_points(conv_b, conv_c, conv_alpha)
+    elif lattice_type == "MCLC":
+        hs_points = _MCLC_hs_points(
+            lattice_variation, conv_a, conv_b, conv_c, conv_alpha
+        )
+    elif lattice_type == "TRI":
+        hs_points = _TRI_hs_points(lattice_variation)
+
+    for point in hs_points:
+        # Compute relative coordinates with respect to the
+        # non-standardized primitive cell
+        coordinates = np.linalg.inv(S_matrix).T @ hs_points[point]
+
+        # Post-process two edge cases
+        if point == "S" and lattice_type == "BCT":
+            hs_points[point] = (coordinates, "$\\Sigma$")
+        elif point == "S1" and lattice_type == "BCT":
+            hs_points[point] = (coordinates, "$\\Sigma_1$")
+        # General assignment
+        else:
+            hs_points[point] = (coordinates, HS_PLOT_NAMES[point])
+
+    return hs_points
+
+
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir
