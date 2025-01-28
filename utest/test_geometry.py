@@ -28,8 +28,8 @@ from scipy.spatial.transform import Rotation
 from wulfric._numerical import compare_numerically
 from wulfric.cell._basic_manipulation import is_reasonable
 from wulfric.constants._numerical import (
-    EPS_ANGLE,
     EPS_LENGTH,
+    EPS_RELATIVE,
     MAX_LENGTH,
     MIN_LENGTH,
     TORADIANS,
@@ -117,7 +117,7 @@ def test_angle_values(alpha):
     if alpha > 180:
         alpha = 360 - alpha
 
-    assert abs(angle(v1, v2) - alpha) < EPS_ANGLE
+    assert abs(angle(v1, v2) - alpha) < EPS_LENGTH
 
 
 def test_angle_raises():
@@ -188,19 +188,31 @@ def test_volume_parameters(a, b, c, alpha, beta, gamma):
 )
 def test_parallelepiped_check(a, b, c, alpha, beta, gamma):
     assert parallelepiped_check(a, b, c, alpha, beta, gamma) == (
-        compare_numerically(a, ">", 0.0, eps=EPS_LENGTH)
-        and compare_numerically(b, ">", 0.0, eps=EPS_LENGTH)
-        and compare_numerically(c, ">", 0.0, eps=EPS_LENGTH)
-        and compare_numerically(alpha, "<", 180.0, eps=EPS_ANGLE)
-        and compare_numerically(beta, "<", 180.0, eps=EPS_ANGLE)
-        and compare_numerically(gamma, "<", 180.0, eps=EPS_ANGLE)
-        and compare_numerically(alpha, ">", 0.0, eps=EPS_ANGLE)
-        and compare_numerically(beta, ">", 0.0, eps=EPS_ANGLE)
-        and compare_numerically(gamma, ">", 0.0, eps=EPS_ANGLE)
-        and compare_numerically(gamma, "<", alpha + beta, eps=EPS_ANGLE)
-        and compare_numerically(alpha + beta, "<", 360.0 - gamma, eps=EPS_ANGLE)
-        and compare_numerically(beta, "<", alpha + gamma, eps=EPS_ANGLE)
-        and compare_numerically(alpha + gamma, "<", 360.0 - beta, eps=EPS_ANGLE)
-        and compare_numerically(alpha, "<", beta + gamma, eps=EPS_ANGLE)
-        and compare_numerically(beta + gamma, "<", 360.0 - alpha, eps=EPS_ANGLE)
+        compare_numerically(a, ">", 0.0, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+        and compare_numerically(b, ">", 0.0, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+        and compare_numerically(c, ">", 0.0, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+        and compare_numerically(alpha, "<", 180.0, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+        and compare_numerically(beta, "<", 180.0, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+        and compare_numerically(gamma, "<", 180.0, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+        and compare_numerically(alpha, ">", 0.0, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+        and compare_numerically(beta, ">", 0.0, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+        and compare_numerically(gamma, ">", 0.0, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+        and compare_numerically(
+            gamma, "<", alpha + beta, rtol=EPS_RELATIVE, atol=EPS_LENGTH
+        )
+        and compare_numerically(
+            alpha + beta, "<", 360.0 - gamma, rtol=EPS_RELATIVE, atol=EPS_LENGTH
+        )
+        and compare_numerically(
+            beta, "<", alpha + gamma, rtol=EPS_RELATIVE, atol=EPS_LENGTH
+        )
+        and compare_numerically(
+            alpha + gamma, "<", 360.0 - beta, rtol=EPS_RELATIVE, atol=EPS_LENGTH
+        )
+        and compare_numerically(
+            alpha, "<", beta + gamma, rtol=EPS_RELATIVE, atol=EPS_LENGTH
+        )
+        and compare_numerically(
+            beta + gamma, "<", 360.0 - alpha, rtol=EPS_RELATIVE, atol=EPS_LENGTH
+        )
     )
