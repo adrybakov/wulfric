@@ -96,7 +96,7 @@ and :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_2 \ne 0`.
 Matrix :math:`\boldsymbol{S}` is constructed in two steps.
 
 Step 1
-------
+^^^^^^
 
 * If :math:`\alpha = \beta = \pi` and :math:`\gamma = \frac{2\pi}{3}` (i.e.
   :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_3 = 0`
@@ -195,7 +195,7 @@ Step 1
     \end{pmatrix}
 
 Step 2
-------
+^^^^^^
 
 * If :math:`\gamma =  \dfrac{2\pi}{3}` (i.e.
   :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_2 < 0`),
@@ -256,7 +256,7 @@ Step 2
     \end{pmatrix}
 
 Finally
--------
+^^^^^^^
 
 .. math::
 
