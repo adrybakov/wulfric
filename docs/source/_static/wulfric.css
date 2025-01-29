@@ -1,51 +1,19 @@
 html[data-theme="light"] {
   --psi-color-background: #d6d6d6;
   --pst-color-primary: #506EC3;
-  --pst-color-inline-code: #198F88;
-  --pst-color-secondary: #008181;
-  --pst-color-inline-code-links: #198F88;
+  --pst-color-inline-code: #506EC3;
+  --pst-color-secondary: #506EC3;
+  --pst-color-inline-code-links: #506EC3;
 }
 
 html[data-theme="dark"] {
   --pst-color-primary: #4A85BE;
-  --pst-color-inline-code: #7BC4AC;
-  --pst-color-secondary: #4AAA98;
-  --pst-color-inline-code-links: #7BC4AC;
-
-}
-
-h1 {
-  color: #000201;
-}
-
-h2 {
-  color: #082F18;
-
-  letter-spacing: -.03em;
-}
-
-h3 {
-  color: #0C4526;
-
-  letter-spacing: -.03em;
+  --pst-color-inline-code: #4A85BE;
+  --pst-color-secondary: #4A85BE;
+  --pst-color-inline-code-links: #4A85BE;
 }
 
 
-html[data-theme=dark] h1 {
-  color: #FDFEFF;
-}
-
-html[data-theme=dark] h2 {
-  color: #FDFEFF;
-  /* han blue */
-  letter-spacing: -.03em;
-}
-
-html[data-theme=dark] h3 {
-  color: #DDDDDD;
-  /* han blue */
-  letter-spacing: -.03em;
-}
 
 .footer-item {
   text-align: center;

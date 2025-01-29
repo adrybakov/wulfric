@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -104,11 +104,6 @@ html_theme_options = {
     },
     "header_links_before_dropdown": 4,
     "icon_links": [
-        {
-            "name": "Twitter",
-            "url": "https://twitter.com/adrybakov",
-            "icon": "fa-brands fa-twitter",
-        },
         {
             "name": "GitHub",
             "url": "https://github.com/adrybakov/wulfric",
