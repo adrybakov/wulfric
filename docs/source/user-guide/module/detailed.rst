@@ -4,7 +4,7 @@
 Detailed guides
 ***************
 
-For the detailed guides on each part of the Wulfric, please refer to the following pages
+For the detailed guides on each part of the wulfric, please refer to the following pages
 
 
 .. toctree::

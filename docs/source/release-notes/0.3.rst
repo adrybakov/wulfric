@@ -12,7 +12,7 @@ Version 0.3
 
 Whats new?
 ----------
-Whole Wulfric was refactored. Majority of the functionality remained the same,
+Whole wulfric was refactored. Majority of the functionality remained the same,
 however in some parts of the package the interface or the internal organization changed.
 Therefore version 0.3 introduce some breaking changes:
 

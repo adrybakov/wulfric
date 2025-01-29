@@ -4,7 +4,7 @@
 Testing
 *******
 
-In Wulfric we rely on |pytest|_, |hypothesis|_ and |doctest|_ for testing.
+In wulfric we rely on |pytest|_, |hypothesis|_ and |doctest|_ for testing.
 
 Unit tests
 ==========
@@ -23,7 +23,7 @@ class from the "src/wulfric/crystal.py" file, you should add a new test function
 Documentation tests
 ===================
 
-Across the documentation there are many examples of how to use Wulfric with code snippets.
+Across the documentation there are many examples of how to use wulfric with code snippets.
 These code snippets are tested using |doctest|_, which ensure that the documentation
 correctly reflects an actual behavior of the code. In order to run doctests you need
 to build the :ref:`documentation <contribute_docs>` and then run the doctests using

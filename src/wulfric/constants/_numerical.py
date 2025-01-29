@@ -43,7 +43,7 @@ EPS_ANGLE = 1e-4  # For the angular variables, in degrees.
 # MIN_ANGLE is a direct consequence of the EPS_ANGLE
 MIN_ANGLE = EPS_ANGLE  # In degrees
 
-# No need to define MAX_ANGLE, as it is restricted by 2 pi in the context of Wulfric.
+# No need to define MAX_ANGLE, as it is restricted by 2 pi in the context of wulfric.
 
 
 ################################################################################

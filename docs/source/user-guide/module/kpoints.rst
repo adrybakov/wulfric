@@ -176,7 +176,7 @@ between "R" and "S", but not between "X" and "R".
 
 .. note::
 
-    Internally Wulfric stores the path as a list of subpaths, where each subpath
+    Internally wulfric stores the path as a list of subpaths, where each subpath
     is a list of high symmetry point's names. This format is also correct for assigning
     the :py:attr:`.Kpoints.path`` attribute.
 

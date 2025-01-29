@@ -5,7 +5,7 @@ Which cell?
 ***********
 
 Some confusion arrives with the term "cell" (unit? primitive? standardized? conventional?).
-In this page we explain how Wulfric understand the term "cell" and it's variants.
+In this page we explain how wulfric understand the term "cell" and it's variants.
 
 Summary of the cell is presented in the picture below. For the details on how
 transformation matrices :math:`\boldsymbol{C}` and :math:`\boldsymbol{S}` act see
@@ -29,7 +29,7 @@ crystal structure.
 Standardized cells
 ==================
 
-Standardization of Wulfric follows the Setyawan and Curtarolo [1]_ paper (SC paper),
+Standardization of wulfric follows the Setyawan and Curtarolo [1]_ paper (SC paper),
 although in the future we might implement other standardization conventions (open a
 :ref:`contribute_feature` if you are interested). In the SC paper two types of the cell
 are defined: conventional one and primitive one. We use transformation matrix
@@ -62,7 +62,7 @@ Primitive cell contains exactly 1 lattice point per cell, while conventional cel
 include more than one lattice point.
 
 Note, that in the individual pages for Bravais lattices standardized cells are written
-in the default orientation as in the SC paper. However, Wulfric deals with
+in the default orientation as in the SC paper. However, wulfric deals with
 arbitrary orientation of the the cell (consequently, the crystal) and automatically
 recomputes relative coordinates of the high symmetry k-points with respect to the
 orientation of the crystall (i.e. given ``cell``). Standardization

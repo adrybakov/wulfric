@@ -28,7 +28,7 @@ old_dir.add("old_dir")
 
 def logo(info=None, line_length=None, flat=False, date_time=False, comment=None):
     """
-    Logo generator for Wulfric package.
+    Logo generator for wulfric package.
 
     Returns the logo and information about the package.
 

@@ -183,7 +183,7 @@ def dump_poscar(
     if comment is None:
         cd = datetime.now()
         comment = (
-            f"Written by Wulfric (wulfric.org) "
+            f"Written by wulfric (wulfric.org) "
             f"on {cd.day} {month_name[cd.month]} {cd.year} "
             f"at {cd.hour}:{cd.minute}:{cd.second}"
         )

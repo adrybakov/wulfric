@@ -4,11 +4,11 @@
 Documentation
 *************
 
-The documentation of Wulfric is build by |sphinx|_.
+The documentation of wulfric is build by |sphinx|_.
 
 .. hint::
 
-  The best way to get a feeling about how the documentation of Wulfric is structured is to read
+  The best way to get a feeling about how the documentation of wulfric is structured is to read
   the source code in the "docs/source" directory and compare it's content and structure with this webpage.
   If you have any questions we encourage you to :ref:`contact us <support>`.
 
@@ -29,7 +29,7 @@ The documentation falls into two big parts:
 
 * User guide ("user-guide" folder)
   Hand-written ReStructuredText files with the usage examples and the explanation of the
-  functionality of the Wulfric. It is located in the "docs/source/user-guide" directory.
+  functionality of the wulfric. It is located in the "docs/source/user-guide" directory.
 
   We separate the user guide into several parts:
 
@@ -39,7 +39,7 @@ The documentation falls into two big parts:
     written here.
 
   - "library" folder
-    Description of theory and algorithms behind the Wulfric.  Individual documents/folders
+    Description of theory and algorithms behind the wulfric.  Individual documents/folders
     are located there, however in the toctrees they are placed directly under the "user-guide"
     for better visibility (as opposed to be served from within "library" folder).
 
@@ -59,19 +59,19 @@ among other things:
 * "index.rst" file
 
   The main page of the documentation. It includes the table of contents and the introduction
-  to the Wulfric.
+  to the wulfric.
 
 * "support.rst" file
 
-  The page with the information about how to get support for the users of Wulfric.
+  The page with the information about how to get support for the users of wulfric.
 
 * "release-notes" folder
 
-  The release notes for each version of Wulfric.
+  The release notes for each version of wulfric.
 
 * "contribute" folder
 
-  Root folder for the  documentation of how to contribute to Wulfric.
+  Root folder for the  documentation of how to contribute to wulfric.
 
 
 Docstrings
@@ -80,4 +80,4 @@ Docstrings
 All public classes and functions have to have a docstring.
 The docstring has to be written in the |numpydoc|_ style guide.
 
-To get a feeling about the style you can read examples in the source code of Wulfric.
+To get a feeling about the style you can read examples in the source code of wulfric.

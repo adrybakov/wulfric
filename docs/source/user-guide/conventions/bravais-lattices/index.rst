@@ -16,14 +16,14 @@ For each Bravais lattice type we provide the standard form of the primitive:
 :math:`\boldsymbol{A}{s}` and the conventional :math:`\boldsymbol{A}^{cs}` cell in the
 same Cartesian coordinate system as in the reference paper [1]_.
 
-In practice the cell can be given to Wulfric in any Cartesian coordinate system.
+In practice the cell can be given to wulfric in any Cartesian coordinate system.
 Standardization procedure does not change the crystal, but redefine the lattice vectors.
 For instance, the ``cell`` and relative positions of ``atoms`` might change, but
 the underlying lattice and positions of ``atoms`` in the real space are not modified.
 
 In each individual page, relative positions of the high symmetry k-points are written for
 the *standardized primitive* cell in the *default* orientation. The actual relative
-coordinates of the k-points that Wulfric computes are specific to the ``cell`` that the
+coordinates of the k-points that wulfric computes are specific to the ``cell`` that the
 user provides and might differ from the ones written in those pages.
 
 There is no need for the user to standardize the cell to have access to the k-points.

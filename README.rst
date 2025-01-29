@@ -30,7 +30,7 @@ For the detailed description check
 Installation
 ============
 
-Requirement for Wulfric installation are:
+Requirement for wulfric installation are:
 
 * Python (>=3.9)
 * NumPy (~=1.26)
@@ -46,7 +46,7 @@ Wulfric can be installed with ``pip`` or from source.
 pip
 ---
 
-To install Wulfric, run (you may need to use ``pip3``):
+To install wulfric, run (you may need to use ``pip3``):
 
 .. code-block:: console
 
@@ -79,7 +79,7 @@ Installing from source
 
   pip install -r requirements.txt
 
-* To install Wulfric, run (you may need to use ``pip3``):
+* To install wulfric, run (you may need to use ``pip3``):
 
 .. code-block:: console
 

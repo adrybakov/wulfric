@@ -223,7 +223,7 @@ def get_scalar_products(cell):
 def is_reasonable(cell, eps_lengths=EPS_LENGTH, eps_volume=EPS_RELATIVE):
     r"""
     Check if the cell is *reasonable* (not *degenerate*) in the sense of [1]_.
-    Routines of Wulfric are tested for reasonable cells and should work as expected if the
+    Routines of wulfric are tested for reasonable cells and should work as expected if the
     cell is reasonable. Below we recall the definition of *reasonable* cell from [1]_ and
     extend it:
 

@@ -16,7 +16,7 @@ between them:
 Origin repository
 =================
 
-We refer to the Wulfric repository under **your** personal account as the **Origin**
+We refer to the wulfric repository under **your** personal account as the **Origin**
 repository.
 
 During the development it is the repository that you will be pushing your changes to.
@@ -28,7 +28,7 @@ Upstream repository
 
 We refer to the main |repo|_, from which the release is made, as the **Upstream** repository.
 
-At the moment it is a repository under the account of the main developer of Wulfric,
+At the moment it is a repository under the account of the main developer of wulfric,
 but in principle it may be moved to a different personal or organization's account
 in the future.
 

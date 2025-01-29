@@ -5,9 +5,9 @@ Basic notation
 **************
 
 On this page we introduce formal definition of the vector and cell and how they stored in
-Wulfric.
+wulfric.
 
-In Wulfric both column vectors and row vectors are stored and manipulated as (3,)
+In wulfric both column vectors and row vectors are stored and manipulated as (3,)
 |NumPy|_ arrays (i.e. the code does not explicitly distinguish the row and column vectors):
 
 .. math::
@@ -50,7 +50,7 @@ Cell
 ====
 
 Cell of the lattice is defined by the three lattice vectors
-:math:`\boldsymbol{a}_i = (a_i^x, a_i^y, a_i^z)^T`. In Wulfric those vectors are stored as
+:math:`\boldsymbol{a}_i = (a_i^x, a_i^y, a_i^z)^T`. In wulfric those vectors are stored as
 a matrix of the form:
 
 .. math::
@@ -119,7 +119,7 @@ Reciprocal cell
 ===============
 
 Reciprocal cell is defined by the three reciprocal lattice vectors
-:math:`\boldsymbol{b}_i = (b_i^x, b_i^y, b_i^z)^T`. In Wulfric those vectors are stored as
+:math:`\boldsymbol{b}_i = (b_i^x, b_i^y, b_i^z)^T`. In wulfric those vectors are stored as
 a matrix
 
 .. math::

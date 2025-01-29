@@ -24,7 +24,7 @@ Wulfric
 :ref:`support`
 
 ****************
-What is Wulfric?
+What is wulfric?
 ****************
 
 Wulfric is a python package for the description and symmetries of crystal structures.
@@ -32,7 +32,7 @@ It combines the concept of the :ref:`Lattice <user-guide_module_lattice>`,
 :ref:`Atom <user-guide_module_atom>` and :ref:`Crystal <user-guide_module_crystal>`
 and provides a simple skeleton for other codes to built on.
 
-The functional of Wulfric includes (but not limited to):
+The functional of wulfric includes (but not limited to):
 
 * :ref:`user-guide_module_lattice`, :ref:`user-guide_module_atom` and :ref:`user-guide_module_crystal` classes.
 

@@ -30,7 +30,7 @@ Fork and clone
 --------------
 
 * Go to the |repo|_ and click on the "Fork" button.
-  Now you have your own copy of the Wulfric repository in your GitHub account.
+  Now you have your own copy of the wulfric repository in your GitHub account.
 * Clone your copy of the repository to your local machine:
 
   - If you are using ssh-key::
@@ -49,7 +49,7 @@ Fork and clone
 
     git remote add upstream https://github.com/adrybakov/wulfric.git
 
-* Pull the latest changes from the Wulfric repository in necessary::
+* Pull the latest changes from the wulfric repository in necessary::
 
     git pull upstream main
 

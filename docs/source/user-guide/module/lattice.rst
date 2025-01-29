@@ -115,7 +115,7 @@ For the brief algorithm description see :ref:`library_lepage`.
 
   Lattice identification is not a trivial task and may be time consuming.
   The algorithm is based on the assumption that the lattice`s unit cell is primitive.
-  As a rule of thumb, Wulfric will identify the lattice type only if it is explicitly
+  As a rule of thumb, wulfric will identify the lattice type only if it is explicitly
   required for the task.
 
 Variation of the lattice
