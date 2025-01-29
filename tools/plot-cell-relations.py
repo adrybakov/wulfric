@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -72,45 +72,38 @@ def cells():
     ax.text(
         40,
         95,
-        f"Primitive cell\n"
-        R"$(\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)$"
-        "\nLattice.cell",
+        "Primitive cell\n" R"$\boldsymbol{A}$",
         **text_style,
     )
     ax.text(
         40,
         40,
-        f"Reciprocal cell\n"
-        R"$(\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3)$"
-        "\nLattice.rcell",
+        "Reciprocal cell\n" R"$\boldsymbol{B}$",
         **text_style,
     )
     ax.text(
         140,
         95,
-        f"Standardized\nprimitive cell\n"
-        R"$(\boldsymbol{a}^s_1, \boldsymbol{a}^s_2, \boldsymbol{a}^s_3)$",
+        "Standardized\nprimitive cell\n" R"$\boldsymbol{A^s}$",
         **text_style,
     )
     ax.text(
         140,
         30,
-        f"Standardized\nconventional cell\n"
-        R"$(\boldsymbol{a}^{cs}_1, \boldsymbol{a}^{cs}_2, \boldsymbol{a}^{cs}_3)$"
-        "\nLattice.conv_cell",
+        "Standardized\nconventional cell\n" R"$\boldsymbol{A^{cs}}$",
         **text_style,
     )
 
-    quiver(ax, (89, 95), 20, 0)
-    quiver(ax, (140, 65), 0, 18)
-    ax.text(143, 65, R"$\boldsymbol{C}$", ha="left", va="center", size=25)
+    quiver(ax, (89, 95), 26, 0)
+    quiver(ax, (140, 63), 0, 20)
+    ax.text(143, 63, R"$\boldsymbol{C}$", ha="left", va="center", size=25)
     ax.text(89, 98, R"$\boldsymbol{S}$", ha="center", va="bottom", size=25)
 
     ax.quiver(
         40,
-        75,
+        76,
         0,
-        -15,
+        -16,
         angles="xy",
         scale_units="xy",
         scale=1,

@@ -15,22 +15,13 @@ transformation matrices :math:`\boldsymbol{C}` and :math:`\boldsymbol{S}` act se
     :align: center
     :target: ../../_images/cell-relations.png
 
-.. note::
-    We use :py:class:`.Lattice` in the examples, but the same logic applies to it's
-    children classes (e.g. :py:class:`.Crystal`).
-
 "The" cell
 ===========
 
-The main cell in the package resides in the :py:attr:`.Lattice.cell` attribute.
-In context of the :py:class:`.Lattice` class it is undestood to be primitive cell, as it
-defines the lattice. In context of the :py:class:`.Crystal` class (i.e.
-:py:attr:`.Crystal.cell`) it is *interpreted* by the package as primitive cell, however,
-it might not be the actual primitive cell of the crystal structure.
-
-Every other type of the cell (including reciprocal cell
-:py:attr:`.Lattice.reciprocal_cell`) is defined by some transformation of
-:py:attr:`.Lattice.cell`.
+The basic ``cell`` of the package. In the context of the lattice it is understood as
+primitive. In context of the crystal (i.e. ``cell`` and ``atoms``) it is *interpreted* by
+the package as primitive cell, however, it might not be the actual primitive cell of the
+crystal structure.
 
 
 .. _user-guide_conventions_cell_standardization:
@@ -46,18 +37,19 @@ are defined: conventional one and primitive one. We use transformation matrix
 
 .. math::
 
-    (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
+    \boldsymbol{A}
     =
-    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s) \boldsymbol{S}
+    \boldsymbol{S}^T \boldsymbol{A^S}
 
 and transformation matrix :math:`\boldsymbol{C}` to compute the **standardized
 conventional** cell
 
 .. math::
 
-    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+
+    \boldsymbol{A^s}
     =
-    (\boldsymbol{a}_1^{cs}, \boldsymbol{a}_2^{cs}, \boldsymbol{a}_3^{cs}) \boldsymbol{C}.
+    \boldsymbol{C}^T \boldsymbol{A^{cs}}
 
 Details on the construction of matrices :math:`\boldsymbol{S}` and exact forms of matrices
 :math:`\boldsymbol{C}` are provided in the individual pages for each of the 14
