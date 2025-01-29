@@ -124,7 +124,7 @@ def _BCT_hs_points(variation, conv_a, conv_c):
     Parameters
     ----------
     variation : str
-        BCT variation.
+        BCT variation. Case-insensitive.
     conv_a : float
         Length of the lattice vector of the conventional cell.
     conv_c : float
@@ -135,6 +135,8 @@ def _BCT_hs_points(variation, conv_a, conv_c):
     kpoints : dict
         High-symmetry points.
     """
+
+    variation = variation.upper()
 
     if variation == "BCT1":
         eta = (1 + conv_c**2 / conv_a**2) / 4
@@ -197,7 +199,7 @@ def _ORCF_hs_points(variation, conv_a, conv_b, conv_c):
     Parameters
     ----------
     variation : str
-        ORCF variation.
+        ORCF variation. Case-insensitive.
     conv_a : float
         Length of the lattice vector of the conventional cell.
     conv_b : float
@@ -210,6 +212,8 @@ def _ORCF_hs_points(variation, conv_a, conv_b, conv_c):
     kpoints : dict
         High-symmetry points.
     """
+
+    variation = variation.upper()
 
     if variation == "ORCF1":
         eta = (1 + conv_a**2 / conv_b**2 + conv_a**2 / conv_c**2) / 4
@@ -371,7 +375,7 @@ def _RHL_hs_points(variation, conv_alpha):
     Parameters
     ----------
     variation : str
-        RHL variation.
+        RHL variation. Case-insensitive.
     alpha : float
         Angle between the lattice vectors.
 
@@ -380,6 +384,9 @@ def _RHL_hs_points(variation, conv_alpha):
     kpoints : dict
         High-symmetry points.
     """
+
+    variation = variation.upper()
+
     conv_alpha *= TORADIANS
 
     if variation == "RHL1":
@@ -471,7 +478,7 @@ def _MCLC_hs_points(variation, conv_a, conv_b, conv_c, conv_alpha):
     Parameters
     ----------
     variation : str
-        MCLC variation.
+        MCLC variation.  Case-insensitive.
     conv_a : float
         Length of the lattice vector of the conventional cell.
     conv_b : float
@@ -486,6 +493,8 @@ def _MCLC_hs_points(variation, conv_a, conv_b, conv_c, conv_alpha):
     kpoints : dict
         High-symmetry points.
     """
+    variation = variation.upper()
+
     conv_alpha *= TORADIANS
     # Parameters
     if variation in ["MCLC1", "MCLC2"]:
@@ -633,7 +642,7 @@ def _TRI_hs_points(variation):
     Parameters
     ----------
     variation : str
-        TRI variation.
+        TRI variation. Case-insensitive.
 
     Returns
     -------
@@ -641,7 +650,9 @@ def _TRI_hs_points(variation):
         High-symmetry points.
     """
 
-    if variation in ["TRI1a", "TRI2a"]:
+    variation = variation.upper()
+
+    if variation in ["TRI1A", "TRI2A"]:
         return {
             "G": np.array([0, 0, 0]),
             "L": np.array([1 / 2, 1 / 2, 0]),
@@ -653,7 +664,7 @@ def _TRI_hs_points(variation):
             "Z": np.array([0, 0, 1 / 2]),
         }
 
-    elif variation in ["TRI1b", "TRI2b"]:
+    elif variation in ["TRI1B", "TRI2B"]:
         return {
             "G": np.array([0, 0, 0]),
             "L": np.array([1 / 2, -1 / 2, 0]),

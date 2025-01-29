@@ -237,9 +237,9 @@ def plot():
     }
 
     for i, name in enumerate(names):
+        print(f"Start to plot {name} ...", end="")
         output_subname = (name.translate(str.maketrans("", "", "12345ab"))).lower()
-        cell = wulf.cell.cell_example(name)
-        cell = wulf.cell.get_standardized(cell)
+        cell = wulf.cell.get_cell_example(name)
         for j, wtp in enumerate(wtps[name]):
             py_file = open(
                 os.path.join(
@@ -252,9 +252,7 @@ def plot():
                 "\n".join(
                     [
                         f"import wulfric as wulf\n",
-                        'cell = wulf.cell.cell_example("{name}")',
-                        "# Standardization is explicit since 0.3",
-                        "cell = wulf.cell.get_standardized(cell)",
+                        'cell = wulf.cell.get_cell_example("{name}")',
                         "backend = wulf.visualization.PlotlyBackend()\n",
                     ]
                 )
@@ -266,7 +264,7 @@ def plot():
                     py_file.write(f'backend.plot(cell, kind="{data}")\n')
                 else:
                     if data == "conventional":
-                        backend.plot(cell, kind=data, color="black", label=data)
+                        backend.plot(cell, kind=data, label=data, color="black")
                         py_file.write(
                             f'backend.plot(cell, kind="{data}", label="{data}", color="black")\n'
                         )
@@ -293,7 +291,7 @@ def plot():
             py_file.write("# Interactive plot:\n" + f"backend.show()\n")
             del backend
             py_file.close()
-        print(f"{name} done")
+        print(f" done")
 
 
 if __name__ == "__main__":

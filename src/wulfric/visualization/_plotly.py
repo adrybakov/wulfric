@@ -299,21 +299,18 @@ class PlotlyBackend(AbstractBackend):
         """
 
         if reciprocal:
-            rcell = get_reciprocal(cell)
-            v1, v2, v3 = rcell[0], rcell[1], rcell[2]
+            cell = get_reciprocal(cell)
             vector_label = "b"
         else:
-            v1, v2, v3 = cell[0], cell[1], cell[2]
             vector_label = "a"
 
         if color is None:
             color = "black"
 
         if normalize:
-            factor = get_volume(v1, v2, v3) ** (1 / 3.0)
-            v1 /= factor
-            v2 /= factor
-            v3 /= factor
+            cell /= abs(get_volume(cell) ** (1 / 3.0))
+
+        v1, v2, v3 = cell[0], cell[1], cell[2]
 
         vs = [v1, v2, v3]
 
@@ -371,7 +368,7 @@ class PlotlyBackend(AbstractBackend):
                     )
                 )
 
-        edges, _ = get_voronoi_cell(cell, reciprocal=reciprocal, normalize=normalize)
+        edges, _ = get_voronoi_cell(cell)
         showlegend = label is not None
         for p1, p2 in edges:
             xyz = np.array([p1, p2]).T
@@ -406,12 +403,13 @@ class PlotlyBackend(AbstractBackend):
         normalize : bool, default False
             Whether to normalize corresponding vectors to have the volume equal to one.
         """
-        cell = get_reciprocal(cell)
-
-        kp = Kpoints.from_cell(cell=cell)
 
         if normalize:
             cell /= get_volume(cell) ** (1 / 3.0)
+
+        kp = Kpoints.from_cell(cell=cell)
+
+        cell = get_reciprocal(cell)
 
         p_abs = []
         p_rel = []

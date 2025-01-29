@@ -18,9 +18,7 @@
 
 import wulfric as wulf
 
-cell = wulf.cell.cell_example("{name}")
-# Standardization is explicit since 0.3
-cell = wulf.cell.standardize(cell)
+cell = wulf.cell.get_cell_example("{name}")
 backend = wulf.visualization.PlotlyBackend()
 backend.plot(cell, kind="primitive")
 # Save an image:

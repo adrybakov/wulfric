@@ -231,7 +231,7 @@ Step 2
 
     (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
     =
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_2^1, -\boldsymbol{a}_1^1, \boldsymbol{a}_3^1)
 
   and
 

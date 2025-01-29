@@ -12,15 +12,24 @@ For the module guide on Bravais lattices see :ref:`user-guide_module_bravais-lat
 
 Bravais lattice notation and standardization follows Setyawan and Curtarolo [1]_.
 
-For eah Bravais lattice type we provide the standard form of the primitive:
-:math:`(\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)` and the conventional:
-:math:`(\boldsymbol{a}_1^c, \boldsymbol{a}_2^c, \boldsymbol{a}_3^c)` cell in the same
-Cartesian coordinate system as in the reference paper.
+For each Bravais lattice type we provide the standard form of the primitive:
+:math:`\boldsymbol{A}{s}` and the conventional :math:`\boldsymbol{A}^{cs}` cell in the
+same Cartesian coordinate system as in the reference paper [1]_.
 
 In practice the cell can be given to Wulfric in any Cartesian coordinate system.
 Standardization procedure does not change the crystal, but redefine the lattice vectors.
-Relative positions of the high symmetry k-points are given for the **standardized
-primitive** cell in the **default** orientation.
+For instance, the ``cell`` and relative positions of ``atoms`` might change, but
+the underlying lattice and positions of ``atoms`` in the real space are not modified.
+
+In each individual page, relative positions of the high symmetry k-points are written for
+the *standardized primitive* cell in the *default* orientation. The actual relative
+coordinates of the k-points that Wulfric computes are specific to the ``cell`` that the
+user provides and might differ from the ones written in those pages.
+
+There is no need for the user to standardize the cell to have access to the k-points.
+However, it is the user's responsibility to track whether the given cell is *primitive*.
+The k-points will be computed even if the cell is not primitive, but the Bravais lattice
+type will be defined by *interpreting* the given cell as primitive.
 
 
 Cubic lattice system

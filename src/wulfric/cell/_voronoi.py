@@ -27,7 +27,7 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def _lattice_points(cell, relative=False, reciprocal=False, normalize=False):
+def _lattice_points(cell, relative=False):
     r"""
     Compute lattice points
 
@@ -37,22 +37,12 @@ def _lattice_points(cell, relative=False, reciprocal=False, normalize=False):
         Primitive unit cell.
     relative : bool, default False
         Whether to return relative or absolute coordinates.
-    reciprocal : bool, default False
-        Whether to use reciprocal or real cell.
-    normalize : bool, default False
-        Whether to normalize corresponding vectors to have the cell's volume equal to one.
 
     Returns
     -------
     lattice_points : (N, 3) :numpy:`ndarray`
         N lattice points. Each element is a vector :math:`v = (v_x, v_y, v_z)`.
     """
-
-    if reciprocal:
-        cell = get_reciprocal(cell)
-
-    if normalize:
-        cell /= get_volume(cell) ** (1 / 3.0)
 
     lattice_points = np.zeros((27, 3), dtype=float)
     for i in [-1, 0, 1]:
@@ -65,7 +55,7 @@ def _lattice_points(cell, relative=False, reciprocal=False, normalize=False):
     return lattice_points
 
 
-def get_voronoi_cell(cell, reciprocal=False, normalize=False):
+def get_voronoi_cell(cell):
     r"""
     Computes Voronoi edges around (0,0,0) point.
 
@@ -73,10 +63,6 @@ def get_voronoi_cell(cell, reciprocal=False, normalize=False):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    reciprocal : bool, default False
-        Whether to use reciprocal or real cell.
-    normalize : bool, default False
-        Whether to normalize corresponding vectors to have the volume equal to one.
 
     Returns
     -------
@@ -89,11 +75,7 @@ def get_voronoi_cell(cell, reciprocal=False, normalize=False):
         Each element is a vector :math:`v = (v_x, v_y, v_z)`.
     """
 
-    voronoi = Voronoi(
-        _lattice_points(
-            cell, relative=False, reciprocal=reciprocal, normalize=normalize
-        )
-    )
+    voronoi = Voronoi(_lattice_points(cell, relative=False))
     edges_index = set()
     # Thanks ase for the idea. 13 - is the index of (0,0,0) point.
     for rv, rp in zip(voronoi.ridge_vertices, voronoi.ridge_points):
