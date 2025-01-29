@@ -66,7 +66,7 @@ from wulfric.constants._numerical import (
     TODEGREES,
     TORADIANS,
 )
-from wulfric.geometry import parallelepiped_check
+from wulfric.geometry._geometry import parallelepiped_check
 
 ################################################################################
 #                               Service routines                               #

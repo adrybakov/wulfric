@@ -20,7 +20,7 @@ import numpy as np
 from scipy.spatial import Voronoi
 
 from wulfric.cell._basic_manipulation import get_reciprocal
-from wulfric.geometry import get_volume
+from wulfric.geometry._geometry import get_volume
 
 # Save local scope at this moment
 old_dir = set(dir())

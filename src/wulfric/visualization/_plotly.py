@@ -25,7 +25,7 @@ from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._sc_standardize import get_conventional
 from wulfric.cell._voronoi import get_voronoi_cell
 from wulfric.constants import HS_PLOT_NAMES
-from wulfric.geometry import get_volume
+from wulfric.geometry._geometry import get_volume
 from wulfric.interfaces._kpoints import Kpoints
 from wulfric.visualization._interface import AbstractBackend
 

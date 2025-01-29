@@ -15,7 +15,7 @@ Import
 .. doctest::
 
     >>> # Exact import
-    >>> from wulfric.geometry import volume
+    >>> from wulfric.geometry._geometry import volume
     >>> # Recommended import
     >>> from wulfric import volume
 

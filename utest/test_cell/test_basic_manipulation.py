@@ -33,7 +33,7 @@ from wulfric.cell._basic_manipulation import (
     params,
 )
 from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
-from wulfric.geometry import parallelepiped_check
+from wulfric.geometry._geometry import parallelepiped_check
 
 N_ORDER = 5
 

@@ -18,7 +18,7 @@
 
 import numpy as np
 
-from wulfric.geometry import absolute_to_relative
+from wulfric.geometry._geometry import absolute_to_relative
 
 # Save local scope at this moment
 old_dir = set(dir())

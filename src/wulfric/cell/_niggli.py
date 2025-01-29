@@ -23,7 +23,7 @@ from termcolor import cprint
 
 from wulfric._numerical import compare_numerically
 from wulfric.constants._numerical import EPS_RELATIVE, TODEGREES, TORADIANS
-from wulfric.geometry import get_volume
+from wulfric.geometry._geometry import get_volume
 
 # Save local scope at this moment
 old_dir = set(dir())

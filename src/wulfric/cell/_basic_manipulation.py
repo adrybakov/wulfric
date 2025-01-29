@@ -29,7 +29,7 @@ from wulfric.constants._numerical import (
     MIN_LENGTH,
     TORADIANS,
 )
-from wulfric.geometry import get_angle, get_volume, parallelepiped_check
+from wulfric.geometry._geometry import get_angle, get_volume, parallelepiped_check
 
 # Save local scope at this moment
 old_dir = set(dir())

@@ -24,7 +24,7 @@ import numpy as np
 
 from wulfric._decorate_array import print_2d_array
 from wulfric.crystal._atoms import get_atom_type
-from wulfric.geometry import absolute_to_relative, get_volume
+from wulfric.geometry._geometry import absolute_to_relative, get_volume
 
 # Save local scope at this moment
 old_dir = set(dir())

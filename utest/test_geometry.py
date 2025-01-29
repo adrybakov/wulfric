@@ -34,7 +34,12 @@ from wulfric.constants._numerical import (
     MIN_LENGTH,
     TORADIANS,
 )
-from wulfric.geometry import absolute_to_relative, angle, parallelepiped_check, volume
+from wulfric.geometry._geometry import (
+    absolute_to_relative,
+    angle,
+    parallelepiped_check,
+    volume,
+)
 
 ################################################################################
 #                               Service functions                              #
