@@ -568,30 +568,52 @@ def _HEX_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
         If none of the hexagonal conditions are satisfied.
     """
 
+    print(cell)
+    print(rtol, atol)
+
+    # Step 1
     sp23, sp13, sp12 = get_scalar_products(cell)
+
+    print(sp23, sp13, sp12)
+    print(
+        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol),
+        compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol),
+        compare_numerically(sp12, "<", 0.0, rtol=rtol, atol=atol),
+    )
 
     if (
         compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
         and compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, "<", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp12, "!=", 0.0, rtol=rtol, atol=atol)
     ):
-        S = np.eye(3, dtype=float)
+        S1 = np.eye(3, dtype=float)
     elif (
         compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
         and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp23, "<", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp23, "!=", 0.0, rtol=rtol, atol=atol)
     ):
-        S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+        S1 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     elif (
         compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
         and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, "<", 0.0, rtol=rtol, atol=atol)
+        and compare_numerically(sp13, "!=", 0.0, rtol=rtol, atol=atol)
     ):
-        S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+        S1 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     else:
-        raise StandardizationTypeMismatch("hexagonal")
+        raise StandardizationTypeMismatch("hexagonal", step="first")
 
-    return S
+    # Step 2
+    cell1 = np.linalg.inv(S1.T) @ cell
+    sp23, sp13, sp12 = get_scalar_products(cell1)
+
+    if compare_numerically(sp12, "<", 0.0, rtol=rtol, atol=atol):
+        S2 = np.eye(3, dtype=float)
+    elif compare_numerically(sp12, ">", 0.0, rtol=rtol, atol=atol):
+        S2 = np.array([[0, 1, 0], [-1, 0, 0], [0, 0, 1]], dtype=float)
+    else:
+        raise StandardizationTypeMismatch("hexagonal", step="second")
+
+    return S2 @ S1
 
 
 def _RHL_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
