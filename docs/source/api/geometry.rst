@@ -4,7 +4,7 @@
 geometry
 ********
 
-.. currentmodule:: wulfric
+.. currentmodule:: wulfric.geometry
 
 
 Funstions

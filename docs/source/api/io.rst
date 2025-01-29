@@ -4,7 +4,7 @@
 io
 **
 
-.. currentmodule:: wulfric
+.. currentmodule:: wulfric.io
 
 VASP
 ====

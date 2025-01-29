@@ -4,7 +4,7 @@
 constants
 *********
 
-.. currentmodule:: wulfric
+.. currentmodule:: wulfric.constants
 
 Atoms
 =====
@@ -14,8 +14,8 @@ Atoms
 
     ATOM_TYPES
 
-Bravais Lattices
-================
+Bravais Lattices (SC)
+=====================
 
 .. autosummary::
     :toctree: generated/
@@ -25,8 +25,8 @@ Bravais Lattices
     BRAVAIS_LATTICE_VARIATIONS
     C_MATRICES
 
-K-points
-========
+K-points (SC)
+=============
 
 .. autosummary::
     :toctree: generated/
@@ -42,3 +42,9 @@ Numerical
 
     TODEGREES
     TORADIANS
+    EPS_ANGLE
+    EPS_LENGTH
+    EPS_RELATIVE
+    MAX_LENGTH
+    MIN_ANGLE
+    MIN_LENGTH

@@ -19,34 +19,38 @@ The main interface to the package may be imported as
 In the examples across the documentation it is expected to be imported in that way.
 
 
+
+Sub-modules
+===========
 .. toctree::
-   :caption: Core elements
-   :maxdepth: 1
+    :maxdepth: 1
 
-   cell
-   lattice
-   bravais-lattice
-   kpoints
-   atom
-   crystal
+    cell
+    constants
+    crystal
+    interfaces
+    io
+    visualization
+    geometry
 
-.. toctree::
-   :caption: Supplementary elements
-   :maxdepth: 1
+Top-level functions
+===================
 
-   identify
-   io
-   geometry
-   numerical
-   decorate
-   constants
-   exceptions
 
-.. _api_crystal-plotting:
+.. autosummary::
+    :toctree: generated/
 
-.. toctree::
-   :caption: Plotting
-   :maxdepth: 1
+    compare_numerically
+    print_2d_array
+    logo
+    copyright
+    warranty
 
-   plotly-backend
-   matplotlib-backend
+Exceptions
+==========
+
+
+.. autosummary::
+    :toctree: generated/
+
+    StandardizationTypeMismatch

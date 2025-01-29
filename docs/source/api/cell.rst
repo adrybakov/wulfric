@@ -1,39 +1,92 @@
 .. _api_cell:
 
 ****
-Cell
+cell
 ****
 
-.. currentmodule:: wulfric
+.. currentmodule:: wulfric.cell
 
-.. note::
-    Cell is not a class, but a submodule,
-    which follows the style of the class with the @classmethods.
-    It does not create the cell object, but groups the functions,
-    which corresponds to the cell logic. It is intended to be used as:
 
-    .. doctest::
-
-        >>> from wulfric import Cell
-        >>> Cell.params([[1,0,0],[0,1,0],[0,0,1]])
-        (1.0, 1.0, 1.0, 90.0, 90.0, 90.0)
-
-    which is equivalent to:
-
-    .. doctest::
-
-        >>> from wulfric.cell import params
-        >>> params([[1,0,0],[0,1,0],[0,0,1]])
-        (1.0, 1.0, 1.0, 90.0, 90.0, 90.0)
-
-Functions
-=========
+Basic manipulations
+===================
 
 .. autosummary::
     :toctree: generated/
 
-    Cell.reciprocal
-    Cell.from_params
-    Cell.params
-    Cell.primitive
-    Cell.scalar_products
+    params
+    from_params
+    get_reciprocal
+    scalar_products
+    is_reasonable
+
+
+Standardization (SC)
+====================
+
+.. autosummary::
+    :toctree: generated/
+
+    standardize
+    get_S_matrix
+    variation
+    name
+    centring_type
+    crystal_family
+    pearson_symbol
+
+Bravais lattice type
+====================
+
+.. autosummary::
+    :toctree: generated/
+
+    lepage
+
+Cell reduction
+==============
+
+.. autosummary::
+    :toctree: generated/
+
+    niggli
+
+Convetional cell (SC)
+=====================
+
+.. autosummary::
+    :toctree: generated/
+
+    get_conventional
+    get_C_matrix
+
+
+Bravais lattice constructors
+============================
+
+.. autosummary::
+    :toctree: generated/
+
+    cell_example
+    CUB
+    FCC
+    BCC
+    TET
+    BCT
+    ORC
+    ORCF
+    ORCI
+    ORCC
+    HEX
+    RHL
+    MCL
+    MCLC
+    TRI
+
+
+Other
+=====
+
+.. autosummary::
+    :toctree: generated/
+
+    voronoi_cell

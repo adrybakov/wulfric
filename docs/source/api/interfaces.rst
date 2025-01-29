@@ -1,13 +1,13 @@
-.. _api_kpoints:
+.. _api_interfaces:
 
-*******
+**********
+interfaces
+**********
+
+.. currentmodule:: wulfric.interfaces
+
 Kpoints
-*******
-
-.. currentmodule:: wulfric
-
-Class
-=====
+=======
 
 .. autosummary::
     :toctree: generated/
@@ -15,7 +15,7 @@ Class
     Kpoints
 
 Attributes
-==========
+----------
 * Kpoints.b1
 * Kpoints.b2
 * Kpoints.b3
@@ -24,7 +24,7 @@ Attributes
 * Kpoints.hs_labels
 
 Settings parameters
-===================
+-------------------
 
 .. autosummary::
     :toctree: generated/
@@ -36,7 +36,7 @@ Settings parameters
     Kpoints.remove_hs_point
 
 Flattened graph labels
-======================
+----------------------
 
 .. autosummary::
     :toctree: generated/
@@ -45,7 +45,7 @@ Flattened graph labels
     Kpoints.ticks
 
 K points in the path
-====================
+--------------------
 
 .. autosummary::
     :toctree: generated/
@@ -54,7 +54,7 @@ K points in the path
     Kpoints.flatten_points
 
 Information getters
-===================
+-------------------
 
 .. autosummary::
     :toctree: generated/
@@ -62,7 +62,7 @@ Information getters
     Kpoints.hs_table
 
 Independent copy
-================
+----------------
 
 .. autosummary::
     :toctree: generated/
