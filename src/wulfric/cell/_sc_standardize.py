@@ -568,18 +568,8 @@ def _HEX_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
         If none of the hexagonal conditions are satisfied.
     """
 
-    print(cell)
-    print(rtol, atol)
-
     # Step 1
     sp23, sp13, sp12 = get_scalar_products(cell)
-
-    print(sp23, sp13, sp12)
-    print(
-        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol),
-        compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol),
-        compare_numerically(sp12, "<", 0.0, rtol=rtol, atol=atol),
-    )
 
     if (
         compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
