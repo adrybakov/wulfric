@@ -42,7 +42,7 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def cell_example(
+def get_cell_example(
     lattice_variation: str = None,
     convention: str = None,
 ):

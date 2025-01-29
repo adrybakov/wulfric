@@ -23,8 +23,8 @@ from datetime import datetime
 import numpy as np
 
 from wulfric._decorate_array import print_2d_array
-from wulfric.crystal._atoms import deduce_atom_type
-from wulfric.geometry import absolute_to_relative, volume
+from wulfric.crystal._atoms import get_atom_type
+from wulfric.geometry import absolute_to_relative, get_volume
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -89,7 +89,7 @@ def load_poscar(file_object=None, return_comment=False):
     cell = np.array(list(map(lambda x: list(map(float, x.split())), lines[2:5])))
     if len(scale_factor) == 1:
         if scale_factor[0] < 0:
-            scale_factor = abs(scale_factor[0] / volume(cell))
+            scale_factor = abs(scale_factor[0] / get_volume(cell))
         cell *= scale_factor
     elif len(scale_factor) == 3 and np.all(scale_factor > 0):
         cell[0] *= scale_factor[0]
@@ -197,7 +197,7 @@ def dump_poscar(
     # Prepare atoms
     atoms_list = []
     for i in range(len(atoms["positions"])):
-        atom_type = deduce_atom_type(atoms["names"][i])
+        atom_type = get_atom_type(atoms["names"][i])
         if atom_type == "X":
             raise ValueError(
                 f"Can not deduce atom's type from the name '{atoms['name'][i]}'"

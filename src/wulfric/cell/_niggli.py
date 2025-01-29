@@ -23,7 +23,7 @@ from termcolor import cprint
 
 from wulfric._numerical import compare_numerically
 from wulfric.constants._numerical import EPS_RELATIVE, TODEGREES, TORADIANS
-from wulfric.geometry import volume
+from wulfric.geometry import get_volume
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -211,11 +211,11 @@ def niggli(
 
     """
 
-    cell_volume = volume(a, b, c, alpha, beta, gamma)
-    if cell_volume == 0:
+    volume = get_volume(a, b, c, alpha, beta, gamma)
+    if volume == 0:
         raise ValueError("Cell volume is zero")
 
-    eps = eps_relative * cell_volume ** (1 / 3.0)
+    eps = eps_relative * volume ** (1 / 3.0)
     n = abs(floor(log10(abs(eps))))
 
     # 0

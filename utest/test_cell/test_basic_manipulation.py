@@ -28,9 +28,9 @@ from scipy.spatial.transform import Rotation
 from wulfric.cell._basic_manipulation import (
     from_params,
     get_reciprocal,
+    get_scalar_products,
     is_reasonable,
     params,
-    scalar_products,
 )
 from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
 from wulfric.geometry import parallelepiped_check

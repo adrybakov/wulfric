@@ -23,9 +23,9 @@ import numpy as np
 
 from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._sc_standardize import get_conventional
-from wulfric.cell._voronoi import voronoi_cell
+from wulfric.cell._voronoi import get_voronoi_cell
 from wulfric.constants import HS_PLOT_NAMES
-from wulfric.geometry import volume
+from wulfric.geometry import get_volume
 from wulfric.interfaces._kpoints import Kpoints
 from wulfric.visualization._interface import AbstractBackend
 
@@ -188,7 +188,7 @@ class PlotlyBackend(AbstractBackend):
             cell = get_reciprocal(cell)
 
         if normalize:
-            cell /= abs(volume(cell) ** (1 / 3.0))
+            cell /= abs(get_volume(cell) ** (1 / 3.0))
 
         legendgroup = "".join(choices(ascii_lowercase, k=10))
 
@@ -310,7 +310,7 @@ class PlotlyBackend(AbstractBackend):
             color = "black"
 
         if normalize:
-            factor = volume(v1, v2, v3) ** (1 / 3.0)
+            factor = get_volume(v1, v2, v3) ** (1 / 3.0)
             v1 /= factor
             v2 /= factor
             v3 /= factor
@@ -371,7 +371,7 @@ class PlotlyBackend(AbstractBackend):
                     )
                 )
 
-        edges, _ = voronoi_cell(cell, reciprocal=reciprocal, normalize=normalize)
+        edges, _ = get_voronoi_cell(cell, reciprocal=reciprocal, normalize=normalize)
         showlegend = label is not None
         for p1, p2 in edges:
             xyz = np.array([p1, p2]).T
@@ -411,7 +411,7 @@ class PlotlyBackend(AbstractBackend):
         kp = Kpoints.from_cell(cell=cell)
 
         if normalize:
-            cell /= volume(cell) ** (1 / 3.0)
+            cell /= get_volume(cell) ** (1 / 3.0)
 
         p_abs = []
         p_rel = []

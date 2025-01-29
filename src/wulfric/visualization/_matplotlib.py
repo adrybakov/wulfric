@@ -24,9 +24,9 @@ import numpy as np
 
 from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._sc_standardize import get_conventional
-from wulfric.cell._voronoi import voronoi_cell
+from wulfric.cell._voronoi import get_voronoi_cell
 from wulfric.constants import HS_PLOT_NAMES
-from wulfric.geometry import volume
+from wulfric.geometry import get_volume
 from wulfric.interfaces._kpoints import Kpoints
 from wulfric.visualization._interface import AbstractBackend
 
@@ -320,7 +320,7 @@ class MatplotlibBackend(AbstractBackend):
             cell = get_reciprocal(cell)
 
         if normalize:
-            cell /= abs(volume(cell) ** (1 / 3.0))
+            cell /= abs(get_volume(cell) ** (1 / 3.0))
 
         if label is not None:
             self.artists[artist_group].append(
@@ -444,7 +444,7 @@ class MatplotlibBackend(AbstractBackend):
             color = "black"
 
         if normalize:
-            factor = volume(v1, v2, v3) ** (1 / 3.0)
+            factor = get_volume(v1, v2, v3) ** (1 / 3.0)
             v1 /= factor
             v2 /= factor
             v3 /= factor
@@ -504,7 +504,7 @@ class MatplotlibBackend(AbstractBackend):
                 # Ghost point to account for the plot range
                 self.artists[artist_group].append(self.ax.scatter(*tuple(vs[i]), s=0))
 
-        edges, _ = voronoi_cell(cell, reciprocal=reciprocal, normalize=normalize)
+        edges, _ = get_voronoi_cell(cell, reciprocal=reciprocal, normalize=normalize)
         for p1, p2 in edges:
             self.artists[artist_group].append(
                 self.ax.plot(
@@ -540,7 +540,7 @@ class MatplotlibBackend(AbstractBackend):
         kp = Kpoints.from_cell(cell)
 
         if normalize:
-            cell /= volume(cell) ** (1 / 3.0)
+            cell /= get_volume(cell) ** (1 / 3.0)
 
         for point in kp.hs_names:
             self.artists[artist_group].append(

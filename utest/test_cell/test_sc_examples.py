@@ -24,7 +24,7 @@ from scipy.spatial.transform import Rotation
 from wulfric.cell._basic_manipulation import params
 from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_examples import cell_example
-from wulfric.cell._sc_standardize import standardize
+from wulfric.cell._sc_standardize import get_standardized
 from wulfric.cell._sc_variation import variation as get_variation
 from wulfric.constants._sc_notation import BRAVAIS_LATTICE_VARIATIONS
 
@@ -35,7 +35,7 @@ from wulfric.constants._sc_notation import BRAVAIS_LATTICE_VARIATIONS
 def test_lattice_example(lattice_variation: str):
     lattice_type = lattice_variation.translate(str.maketrans("", "", "12345ab"))
     cell = cell_example(lattice_variation)
-    cell = standardize(cell)
+    cell = get_standardized(cell)
     assert lepage(*params(cell)) == lattice_type
     assert get_variation(cell) == lattice_variation
 

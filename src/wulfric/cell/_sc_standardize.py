@@ -20,7 +20,11 @@ import numpy as np
 
 from wulfric._exceptions import StandardizationTypeMismatch
 from wulfric._numerical import compare_numerically
-from wulfric.cell._basic_manipulation import get_reciprocal, params, scalar_products
+from wulfric.cell._basic_manipulation import (
+    get_params,
+    get_reciprocal,
+    get_scalar_products,
+)
 from wulfric.cell._lepage import lepage
 from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
 from wulfric.constants._sc_notation import C_MATRICES
@@ -36,7 +40,7 @@ def _CUB_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``CUB_standardize_cell``
 
-    See :ref:`guide_cub` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_cub` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -71,7 +75,7 @@ def _FCC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``FCC_standardize_cell``
 
-    See :ref:`guide_fcc` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_fcc` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -106,7 +110,7 @@ def _BCC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``BCC_standardize_cell``
 
-    See :ref:`guide_fcc` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_fcc` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -141,7 +145,7 @@ def _TET_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``TET_standardize_cell``
 
-    See :ref:`guide_tet` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_tet` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -169,7 +173,7 @@ def _TET_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
         If none of the tetragonal conditions are satisfied.
     """
 
-    a, b, c, alpha, beta, gamma = params(cell)
+    a, b, c, alpha, beta, gamma = get_params(cell)
 
     if compare_numerically(a, "==", b, rtol=rtol, atol=atol) and compare_numerically(
         b, "!=", c, rtol=rtol, atol=atol
@@ -196,7 +200,7 @@ def _BCT_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``BCT_standardize_cell``
 
-    See :ref:`guide_bct` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_bct` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -225,7 +229,7 @@ def _BCT_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     """
     cell = np.array(cell)
 
-    a, b, c, alpha, beta, gamma = params(cell)
+    a, b, c, alpha, beta, gamma = get_params(cell)
 
     if compare_numerically(
         alpha, "==", beta, rtol=rtol, atol=atol
@@ -252,7 +256,7 @@ def _ORC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``ORC_standardize_cell``
 
-    See :ref:`guide_orc` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_orc` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -280,7 +284,7 @@ def _ORC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
         If none of the orthorhombic conditions are satisfied.
     """
 
-    a, b, c, alpha, beta, gamma = params(cell)
+    a, b, c, alpha, beta, gamma = get_params(cell)
 
     if compare_numerically(c, ">", b, rtol=rtol, atol=atol) and compare_numerically(
         b, ">", a, rtol=rtol, atol=atol
@@ -319,7 +323,7 @@ def _ORCF_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``ORCF_standardize_cell``
 
-    See :ref:`guide_orcf` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_orcf` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -348,7 +352,7 @@ def _ORCF_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
         If none of the face-centered orthorhombic conditions are satisfied.
     """
 
-    a, b, c, alpha, beta, gamma = params(cell)
+    a, b, c, alpha, beta, gamma = get_params(cell)
 
     if compare_numerically(c, "<", b, rtol=rtol, atol=atol) and compare_numerically(
         b, "<", a, rtol=rtol, atol=atol
@@ -387,7 +391,7 @@ def _ORCI_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``ORCI_standardize_cell``
 
-    See :ref:`guide_orci` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_orci` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -416,7 +420,7 @@ def _ORCI_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
         If none of the body-centered orthorhombic conditions are satisfied.
     """
 
-    sp23, sp13, sp12 = scalar_products(cell)
+    sp23, sp13, sp12 = get_scalar_products(cell)
 
     if compare_numerically(
         sp12, ">", sp13, rtol=rtol, atol=atol
@@ -455,7 +459,7 @@ def _ORCC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``ORCC_standardize_cell``
 
-    See :ref:`guide_orcc` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_orcc` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -484,7 +488,7 @@ def _ORCC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
         If none of the base-centered orthorhombic conditions are satisfied.
     """
 
-    sp23, sp13, sp12 = scalar_products(cell)
+    sp23, sp13, sp12 = get_scalar_products(cell)
 
     if (
         compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
@@ -536,7 +540,7 @@ def _HEX_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``HEX_standardize_cell``
 
-    See :ref:`guide_hex` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_hex` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -564,7 +568,7 @@ def _HEX_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
         If none of the hexagonal conditions are satisfied.
     """
 
-    sp23, sp13, sp12 = scalar_products(cell)
+    sp23, sp13, sp12 = get_scalar_products(cell)
 
     if (
         compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
@@ -597,7 +601,7 @@ def _RHL_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``RHL_standardize_cell``
 
-    See :ref:`guide_rhl` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_rhl` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -632,7 +636,7 @@ def _MCL_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``MCL_standardize_cell``
 
-    See :ref:`guide_mcl` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_mcl` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -662,7 +666,7 @@ def _MCL_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     # Step 1
 
-    sp23, sp13, sp12 = scalar_products(cell)
+    sp23, sp13, sp12 = get_scalar_products(cell)
 
     if (
         compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
@@ -687,7 +691,7 @@ def _MCL_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     # Step 2
     cell1 = np.linalg.inv(S1.T) @ cell
-    a, b, c, alpha, beta, gamma = params(cell1)
+    a, b, c, alpha, beta, gamma = get_params(cell1)
 
     if b < c:
         S2 = np.eye(3, dtype=float)
@@ -698,7 +702,7 @@ def _MCL_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     # Step 3
     cell2 = np.linalg.inv(S2.T) @ cell1
-    sp23, sp13, sp12 = scalar_products(cell2)
+    sp23, sp13, sp12 = get_scalar_products(cell2)
     if compare_numerically(sp23, ">", 0, rtol=rtol, atol=atol):
         S3 = np.eye(3, dtype=float)
     elif compare_numerically(sp23, "<", 0, rtol=rtol, atol=atol):
@@ -716,7 +720,7 @@ def _MCLC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``MCLC_standardize_cell``
 
-    See :ref:`guide_mclc` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_mclc` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -747,7 +751,7 @@ def _MCLC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     # Step 1
 
-    a, b, c, alpha, beta, gamma = params(cell)
+    a, b, c, alpha, beta, gamma = get_params(cell)
 
     if compare_numerically(a, "==", b, rtol=rtol, atol=atol) and compare_numerically(
         b, "!=", c, rtol=rtol, atol=atol
@@ -766,8 +770,8 @@ def _MCLC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     # Step 2
     cell1 = np.linalg.inv(S1.T) @ cell
-    a, b, c, alpha, beta, gamma = params(cell1)
-    sp23, sp13, sp12 = scalar_products(cell1)
+    a, b, c, alpha, beta, gamma = get_params(cell1)
+    sp23, sp13, sp12 = get_scalar_products(cell1)
 
     if compare_numerically(
         2 * a**2 * (1 + sp12 / a / b), "<=", c**2, rtol=rtol, atol=atol
@@ -778,7 +782,7 @@ def _MCLC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     # Step 3
     cell2 = np.linalg.inv(S2.T) @ cell1
-    sp23, sp13, sp12 = scalar_products(cell2)
+    sp23, sp13, sp12 = get_scalar_products(cell2)
     if compare_numerically(sp23, ">", 0, rtol=rtol, atol=atol):
         S3 = np.eye(3, dtype=float)
     elif compare_numerically(sp23, "<", 0, rtol=rtol, atol=atol):
@@ -796,7 +800,7 @@ def _TRI_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     .. versionchanged:: 0.4.0  Renamed from ``TRI_standardize_cell``
 
-    See :ref:`guide_tri` and :ref:`user-guide_conventions_main_standardization` for the
+    See :ref:`guide_tri` and :ref:`user-guide_conventions_cell_standardization` for the
     details.
 
     Parameters
@@ -828,8 +832,8 @@ def _TRI_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     rcell = get_reciprocal(cell)
 
     # Step 1
-    sp23, sp13, sp12 = scalar_products(rcell)
-    a, b, c, alpha, beta, gamma = params(rcell)
+    sp23, sp13, sp12 = get_scalar_products(rcell)
+    a, b, c, alpha, beta, gamma = get_params(rcell)
 
     if (
         compare_numerically(alpha, ">=", 90.0, rtol=rtol, atol=atol)
@@ -876,8 +880,8 @@ def _TRI_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     # Step 2
     rcell1 = np.linalg.inv(S1.T) @ rcell
-    sp23, sp13, sp12 = scalar_products(rcell1)
-    a, b, c, alpha, beta, gamma = params(rcell1)
+    sp23, sp13, sp12 = get_scalar_products(rcell1)
+    a, b, c, alpha, beta, gamma = get_params(rcell1)
 
     if (
         gamma == min(alpha, beta, gamma)
@@ -933,7 +937,7 @@ def get_S_matrix(cell, lattice_type=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     if lattice_type is None:
         lattice_type = lepage(
-            *params(cell),
+            *get_params(cell),
             eps_relative=eps_rel,
             eps_angle=angle_tol,
         )
@@ -965,7 +969,7 @@ def get_C_matrix(lattice_type):
     Transformation matrix that transforms primitive cell
     to the **conventional standardized** cell.
 
-    See :ref:`user-guide_conventions_main_conventional` for details.
+    See :ref:`user-guide_conventions_cell_standardization` for details.
 
     Parameters
     ----------
@@ -981,7 +985,7 @@ def get_C_matrix(lattice_type):
     return C_MATRICES[lattice_type.upper()]
 
 
-def standardize(cell, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+def get_standardized(cell, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     R"""
     Standardize cell with respect to the Bravais lattice type as defined in [1]_.
 
@@ -1015,7 +1019,7 @@ def standardize(cell, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     if S_matrix is None:
         lattice_type = lepage(
-            *params(cell),
+            *get_params(cell),
             eps_relative=rtol,
             eps_angle=atol,
         )
@@ -1066,7 +1070,7 @@ def get_conventional(
 
     if S_matrix is None or C_matrix is None:
         lattice_type = lepage(
-            *params(cell),
+            *get_params(cell),
             eps_relative=rtol,
             eps_angle=atol,
         )

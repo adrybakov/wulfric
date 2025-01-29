@@ -21,7 +21,7 @@ from typing import Iterable
 
 import numpy as np
 
-from wulfric.cell._basic_manipulation import get_reciprocal, params
+from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._kpoints import get_hs_data
 from wulfric.cell._lepage import lepage
 from wulfric.constants._numerical import EPS_ANGLE, EPS_RELATIVE

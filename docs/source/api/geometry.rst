@@ -13,7 +13,7 @@ Funstions
 .. autosummary::
     :toctree: generated/
 
-    volume
-    angle
+    get_volume
+    get_angle
     parallelepiped_check
     absolute_to_relative

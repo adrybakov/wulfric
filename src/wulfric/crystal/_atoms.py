@@ -23,7 +23,7 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def deduce_atom_type(name: str) -> str:
+def get_atom_type(name: str) -> str:
     r"""
     Attempts to identify atom's type based on its name (i.e. Cr1 -> Cr, ...).
 
@@ -44,8 +44,8 @@ def deduce_atom_type(name: str) -> str:
 
     .. doctest::
 
-        >>> from wulfric.crystal import deduce_atom_type
-        >>> deduce_atom_type("@%^#$")
+        >>> from wulfric.crystal import get_atom_type
+        >>> get_atom_type("@%^#$")
         'X'
         >>> deduc_atom_type("Cr")
         'Cr'

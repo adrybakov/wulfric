@@ -32,11 +32,14 @@ Every other type of the cell (including reciprocal cell
 :py:attr:`.Lattice.reciprocal_cell`) is defined by some transformation of
 :py:attr:`.Lattice.cell`.
 
+
+.. _user-guide_conventions_cell_standardization:
+
 Standardized cells
 ==================
 
-Standardization of Wulfric follows the Setyawan and Curtarolo [1]_ paper, although in the
-future we might implement other standardization conventions (open a
+Standardization of Wulfric follows the Setyawan and Curtarolo [1]_ paper (SC paper),
+although in the future we might implement other standardization conventions (open a
 :ref:`contribute_feature` if you are interested). In the SC paper two types of the cell
 are defined: conventional one and primitive one. We use transformation matrix
 :math:`\boldsymbol{S}` to compute the **standardized primitive** cell
@@ -60,12 +63,21 @@ Details on the construction of matrices :math:`\boldsymbol{S}` and exact forms o
 :math:`\boldsymbol{C}` are provided in the individual pages for each of the 14
 :ref:`user-guide_conventions_bravais-lattices`.
 
+Matrix :math:`\boldsymbol{S}` is orthonormal for all Bravais lattices, except for
+the :ref:`guide_mclc`. All matrices satisfy :math:`\det(\boldsymbol{S}) = 1`.
+
+Primitive cell contains exactly 1 lattice point per cell, while conventional cell might
+include more than one lattice point.
+
 Note, that in the individual pages for Bravais lattices standardized cells are written
-in the default orientation as in the reference paper. However, Wulfric deals with
+in the default orientation as in the SC paper. However, Wulfric deals with
 arbitrary orientation of the the cell (consequently, the crystal) and automatically
-recomputes relative coordinates of the high symmetry k-points with respect to the actual
-:py:attr:`.Lattice.cell`. Standardization (:py:meth:`.Lattice.standardize`) might change
-the choice of the cell, but will not change the orientation of the crystal.
+recomputes relative coordinates of the high symmetry k-points with respect to the
+orientation of the crystall (i.e. given ``cell``). Standardization
+(:py:func:`.cell.get_standardized`) might change the choice of the cell, but will not
+change the orientation of the crystal in the real space. Standardization
+(:py:func:`.crystal.standardize`) might change relative coordinates of atoms, but will
+not change their position in the real space.
 
 References
 ==========

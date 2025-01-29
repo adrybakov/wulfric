@@ -19,7 +19,7 @@
 import numpy as np
 
 from wulfric.cell._lepage import lepage
-from wulfric.cell._sc_standardize import get_S_matrix, standardize
+from wulfric.cell._sc_standardize import get_S_matrix, get_standardized
 from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
 
 # Save local scope at this moment
@@ -74,7 +74,7 @@ def standardize(cell, atoms, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
         S_matrix = np.array(S_matrix, dtype=float)
 
     # Standardize cell
-    cell = standardize(cell=cell, S_matrix=S_matrix)
+    cell = get_standardized(cell=cell, S_matrix=S_matrix)
 
     # Recalculate atom's relative coordinates.
     atoms["positions"] = [S @ position for position in atoms["positions"]]

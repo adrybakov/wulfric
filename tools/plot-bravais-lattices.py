@@ -239,7 +239,7 @@ def plot():
     for i, name in enumerate(names):
         output_subname = (name.translate(str.maketrans("", "", "12345ab"))).lower()
         cell = wulf.cell.cell_example(name)
-        cell = wulf.cell.standardize(cell)
+        cell = wulf.cell.get_standardized(cell)
         for j, wtp in enumerate(wtps[name]):
             py_file = open(
                 os.path.join(
@@ -254,7 +254,7 @@ def plot():
                         f"import wulfric as wulf\n",
                         'cell = wulf.cell.cell_example("{name}")',
                         "# Standardization is explicit since 0.3",
-                        "cell = wulf.cell.standardize(cell)",
+                        "cell = wulf.cell.get_standardized(cell)",
                         "backend = wulf.visualization.PlotlyBackend()\n",
                     ]
                 )

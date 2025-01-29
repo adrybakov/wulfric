@@ -13,10 +13,10 @@ Basic manipulations
 .. autosummary::
     :toctree: generated/
 
-    params
+    get_params
     from_params
     get_reciprocal
-    scalar_products
+    get_scalar_products
     is_reasonable
 
 
@@ -26,13 +26,13 @@ Standardization (SC)
 .. autosummary::
     :toctree: generated/
 
-    standardize
+    get_standardized
     get_S_matrix
-    variation
-    name
-    centring_type
-    crystal_family
-    pearson_symbol
+    get_variation
+    get_name
+    get_centring_type
+    get_crystal_family
+    get_pearson_symbol
 
 Bravais lattice type
 ====================
@@ -66,7 +66,7 @@ Bravais lattice constructors
 .. autosummary::
     :toctree: generated/
 
-    cell_example
+    get_cell_example
     CUB
     FCC
     BCC
@@ -89,4 +89,4 @@ Other
 .. autosummary::
     :toctree: generated/
 
-    voronoi_cell
+    get_voronoi_cell

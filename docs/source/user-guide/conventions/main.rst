@@ -4,26 +4,46 @@
 Basic notation
 **************
 
-Vectors
-=======
+On this page we introduce formal definition of the vector and cell and how they stored in
+Wulfric.
 
-Vectors are represented as a columns of numbers. In Wulfric vectors are stored and
-manipulated as (3,) |NumPy|_ arrays:
+In Wulfric both column vectors and row vectors are stored and manipulated as (3,)
+|NumPy|_ arrays (i.e. the code does not explicitly distinguish the row and column vectors):
+
+.. math::
+
+    \boldsymbol{v}_{column}
+    &=
+    \begin{pmatrix} v_x \\ v_y \\ v_z \end{pmatrix}\\
+    \boldsymbol{v}_{row}
+    &=
+    ( v_x, v_y, v_z )\\
+
+
+.. code-block:: python
+
+    import numpy as np
+    vector_column = np.array([vx, vy, vz])
+    vector_row = np.array([vx, vy, vz])
+
+When simply the word "vector" is used, we assume a column vector for the mathematical
+formulas.
 
 .. math::
 
     \boldsymbol{v}
-    =
-    (v_x,v_y,v_z)^T
-    =
+    &=
     \begin{pmatrix} v_x \\ v_y \\ v_z \end{pmatrix}
+
 
 .. code-block:: python
 
+    import numpy as np
     vector = np.array([vx, vy, vz])
 
-.. note::
-    One-dimensional |NumPy|_ arrays do not distinguish between row and column vectors.
+One-dimensional |NumPy|_ arrays do not distinguish between row and column vectors.
+Therefore, if the code example use a vector ``r``, it might mean either
+:math:`\boldsymbol{r}` or :math:`\boldsymbol{r}^T`.
 
 
 Cell
@@ -31,11 +51,11 @@ Cell
 
 Cell of the lattice is defined by the three lattice vectors
 :math:`\boldsymbol{a}_i = (a_i^x, a_i^y, a_i^z)^T`. In Wulfric those vectors are stored as
-a matrix with vectors as rows (hence the transposition symbol):
+a matrix of the form:
 
 .. math::
 
-    (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)^T
+    \boldsymbol{A} = (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)^T
     =
     \begin{pmatrix}
       a_1^x & a_1^y & a_1^z \\
@@ -51,9 +71,7 @@ a matrix with vectors as rows (hence the transposition symbol):
         [a3_x, a3_y, a3_z],
     ]
 
-.. note::
-    That definition of the cell is the same as in the |spglib-python|_ and is a
-    transpose of the definition of the C |spglib|_.
+Above definition of the cell is the same as in the |spglib-python|_.
 
 Atom's positions
 ================
@@ -71,18 +89,20 @@ cell vectors.
 
 .. code-block:: python
 
+    import numpy as np
     position = np.array([r1, r2, r3])
 
-Cartesian (absolute) coordinates of the atoms can be calculated by the following formula:
+Cartesian (absolute) coordinates of the atoms can be calculated as
 
 .. math::
 
     \boldsymbol{x}^T
     &=
-    \boldsymbol{r}^T(\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)^T\\
+    \boldsymbol{r}^T \boldsymbol{A}\\
+    &\text{or}\\
     \boldsymbol{x}
     &=
-    (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3) \boldsymbol{r}
+    \boldsymbol{A}^T \boldsymbol{r}
 
 .. code-block:: python
 
@@ -93,23 +113,18 @@ Cartesian (absolute) coordinates of the atoms can be calculated by the following
 .. note::
 
     Remember, that one-dimensional |NumPy|_ arrays do not distinguish between row and
-    column vectors and ``cell`` store transposed cell matrix in our notation:
-    ``cell`` :math:`\rightarrow (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)^T`.
-    In the documentation analytical formulas are written for the
-    :math:`(\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)` matrix, while code
-    snippets are written for
-    :math:`(\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)^T` matrix.
+    column vectors.
 
 Reciprocal cell
 ===============
 
 Reciprocal cell is defined by the three reciprocal lattice vectors
 :math:`\boldsymbol{b}_i = (b_i^x, b_i^y, b_i^z)^T`. In Wulfric those vectors are stored as
-a matrix with vectors as rows (hence the transposition symbol):
+a matrix
 
 .. math::
 
-    (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3)^T
+    \boldsymbol{B} = (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3)^T
     =
     \begin{pmatrix}
       b_1^x & b_1^y & b_1^z \\
@@ -129,12 +144,13 @@ Reciprocal cell is connected with the cell of the lattice as follows:
 
 .. math::
 
-    (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3)^T
+    \boldsymbol{B}
     =
-    2\pi(\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)^{-1}
+    2\pi(\boldsymbol{A}^T)^{-1}
 
 .. code-block:: python
 
+    import numpy as np
     reciprocal_cell = 2 * np.pi * np.linalg.inv(cell.T)
 
 K-points
@@ -153,18 +169,19 @@ reciprocal cell vectors.
 
 .. code-block:: python
 
-        kpoint = np.array([g1, g2, g3])
+    import numpy as np
+    kpoint = np.array([g1, g2, g3])
 
-Cartesian (absolute) coordinates of the k-points can be calculated by the following formula:
+Cartesian (absolute) coordinates of the k-points can be calculated as
 
 .. math::
 
     \boldsymbol{k}^T
     &=
-    \boldsymbol{g}^T(\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3)^T\\
+    \boldsymbol{g}^T \boldsymbol{B}\\
     \boldsymbol{k}
     &=
-    (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3) \boldsymbol{g}
+    \boldsymbol{B}^T \boldsymbol{g}
 
 .. code-block:: python
 
@@ -179,18 +196,21 @@ Cartesian (absolute) coordinates of the k-points can be calculated by the follow
 Transformation of the cell
 ==========================
 
-The choice of the cell of the lattice is not unique. Transformation between two
-different cells of the same lattice might be expressed by the transformation matrix
-:math:`\boldsymbol{P}`:
+The choice of the cell of the lattice is not unique. Transformation of the original cell
+:math:`\boldsymbol{A}` to the transformed cell :math:`\boldsymbol{\tilde{A}}` is expressed
+with the transformation matrix :math:`\boldsymbol{P}`:
 
 .. math::
 
-    (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
+    \boldsymbol{A}
     =
-    (\boldsymbol{\tilde{a}}_1, \boldsymbol{\tilde{a}}_2, \boldsymbol{\tilde{a}}_3) \boldsymbol{P}
+    \boldsymbol{P}^T \boldsymbol{\tilde{A}}
 
 .. code-block:: python
 
+    import numpy as np
+    cell = P.T @ tcell
+    # tcell <- \tilde{A}
     tcell = np.linalg.inv(P.T) @ cell
 
 Crystal is not affected by the change of the cell, i.e. the atom's Cartesian
@@ -213,25 +233,28 @@ the atom's relative positions are transformed as
 
         \boldsymbol{x}
         =
-        (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)\boldsymbol{r}
+        \boldsymbol{A}^T \boldsymbol{r}
         =
-        (\boldsymbol{\tilde{a}}_1, \boldsymbol{\tilde{a}}_2, \boldsymbol{\tilde{a}}_3)\boldsymbol{P}\boldsymbol{r}
+        \boldsymbol{\tilde{A}}^T \boldsymbol{P} \boldsymbol{r}
         =
         \boldsymbol{\tilde{x}}
         =
-        (\boldsymbol{\tilde{a}}_1, \boldsymbol{\tilde{a}}_2, \boldsymbol{\tilde{a}}_3)\boldsymbol{\tilde{r}}
+        \boldsymbol{\tilde{A}}^T \boldsymbol{\tilde{r}}
 
 Reciprocal cell is changed by the transformation as follows:
 
 .. math::
 
-    (\boldsymbol{b}_1, \boldsymbol{b}_2, \boldsymbol{b}_3)
+    \boldsymbol{B}
     =
-    (\boldsymbol{\tilde{b}}_1, \boldsymbol{\tilde{b}}_2, \boldsymbol{\tilde{b}}_3) (\boldsymbol{P}^{-1})^T
+    \boldsymbol{P}^{-1} \boldsymbol{\tilde{B}}
 
 .. code-block:: python
 
-    reciprocal_tcell = np.linalg.inv(P) @ reciprocal_cell
+    import numpy as np
+    reciprocal_cell = np.linalg.inv(P) @ reciprocal_tcell
+    # reciprocal_tcell <- \tilde{B}
+    reciprocal_tcell = P @ reciprocal_cell
 
 Relative positions of the k-points are transformed as follows:
 
@@ -243,56 +266,5 @@ Relative positions of the k-points are transformed as follows:
 
 .. code-block:: python
 
+    import numpy as np
     tg = np.linalg.inv(P).T @ g
-
-
-.. _user-guide_conventions_main_standardization:
-
-Standardization of the cell
-===========================
-
-When standardization of the cell is required, it can be expressed by the
-transformation matrix :math:`\boldsymbol{S}` with
-:math:`(\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)`
-being the standardized primitive cell:
-
-.. math::
-
-    (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
-    =
-    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s) \boldsymbol{S}
-
-.. note::
-    Matrix :math:`\boldsymbol{S}` is orthonormal for all Bravais lattices, except for
-    the :ref:`guide_mclc`. All matrices satisfy :math:`\det(\boldsymbol{S}) = 1`.
-
-
-Details on how the standardization matrix is constructed are provided in the individual
-pages for each of the 14 :ref:`user-guide_conventions_bravais-lattices`.
-
-.. _user-guide_conventions_main_conventional:
-
-Conventional vs primitive cell (Setyawan and Curtarolo)
-=======================================================
-
-In the reference paper [1]_ conventional (>=1 lattice point per cell) and primitive
-(1 lattice point per cell) standardized cells are defined. Transformation from primitive to
-conventional cell is expressed by the transformation matrix :math:`\boldsymbol{C}`:
-
-.. math::
-
-    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
-    =
-    (\boldsymbol{a}_1^{cs}, \boldsymbol{a}_2^{cs}, \boldsymbol{a}_3^{cs}) \boldsymbol{C}
-
-Transformation matrices :math:`\boldsymbol{C}` and its inverse are provided in the individual
-pages for each of the 14 :ref:`user-guide_conventions_bravais-lattices`.
-
-.. important::
-    Given cell is always interpreted as primitive.
-
-References
-==========
-.. [1] Setyawan, W. and Curtarolo, S., 2010.
-    High-throughput electronic band structure calculations: Challenges and tools.
-    Computational materials science, 49(2), pp.299-312.

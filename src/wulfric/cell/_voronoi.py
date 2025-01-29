@@ -20,7 +20,7 @@ import numpy as np
 from scipy.spatial import Voronoi
 
 from wulfric.cell._basic_manipulation import get_reciprocal
-from wulfric.geometry import volume
+from wulfric.geometry import get_volume
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -52,7 +52,7 @@ def _lattice_points(cell, relative=False, reciprocal=False, normalize=False):
         cell = get_reciprocal(cell)
 
     if normalize:
-        cell /= volume(cell) ** (1 / 3.0)
+        cell /= get_volume(cell) ** (1 / 3.0)
 
     lattice_points = np.zeros((27, 3), dtype=float)
     for i in [-1, 0, 1]:
@@ -65,7 +65,7 @@ def _lattice_points(cell, relative=False, reciprocal=False, normalize=False):
     return lattice_points
 
 
-def voronoi_cell(cell, reciprocal=False, normalize=False):
+def get_voronoi_cell(cell, reciprocal=False, normalize=False):
     r"""
     Computes Voronoi edges around (0,0,0) point.
 

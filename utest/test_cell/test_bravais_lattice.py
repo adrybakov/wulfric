@@ -19,7 +19,7 @@
 import pytest
 
 from wulfric.cell._sc_examples import cell_example
-from wulfric.cell._sc_standardize import standardize
+from wulfric.cell._sc_standardize import get_standardized
 from wulfric.cell._sc_variation import variation as get_variation
 from wulfric.cell._voronoi import voronoi_cell
 from wulfric.constants._sc_notation import (
@@ -96,7 +96,7 @@ n_vertices = [
     ids=lattice_variations,
 )
 def test_variants(cell, variation):
-    cell = standardize(cell)
+    cell = get_standardized(cell)
     assert get_variation(cell) == variation
 
 

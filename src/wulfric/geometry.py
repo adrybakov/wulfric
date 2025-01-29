@@ -28,7 +28,7 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def volume(*args):
+def get_volume(*args):
     r"""
     Computes volume.
 
@@ -109,7 +109,7 @@ def volume(*args):
     return abs(np.linalg.det(cell))
 
 
-def angle(v1, v2, radians=False):
+def get_angle(v1, v2, radians=False):
     r"""
     Angle between two vectors.
 

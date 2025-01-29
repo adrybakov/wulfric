@@ -29,7 +29,7 @@ from wulfric.constants._numerical import (
     MIN_LENGTH,
     TORADIANS,
 )
-from wulfric.geometry import angle, parallelepiped_check, volume
+from wulfric.geometry import get_angle, get_volume, parallelepiped_check
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -61,7 +61,7 @@ def get_reciprocal(cell):
 
     """
 
-    vol = volume(cell)
+    vol = get_volume(cell)
     reciprocal_cell = np.array(
         [
             2 * PI / vol * np.cross(cell[1], cell[2]),
@@ -146,7 +146,7 @@ def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
     )
 
 
-def params(cell):
+def get_params(cell):
     r"""
     Computes lattice parameters from cell.
 
@@ -181,13 +181,13 @@ def params(cell):
         np.linalg.norm(cell[0]),
         np.linalg.norm(cell[1]),
         np.linalg.norm(cell[2]),
-        angle(cell[1], cell[2]),
-        angle(cell[0], cell[2]),
-        angle(cell[0], cell[1]),
+        get_angle(cell[1], cell[2]),
+        get_angle(cell[0], cell[2]),
+        get_angle(cell[0], cell[1]),
     )
 
 
-def scalar_products(cell):
+def get_scalar_products(cell):
     r"""
     Returns pairwise scalar products of the lattice vectors:
 
@@ -229,13 +229,13 @@ def is_reasonable(cell, eps_lengths=EPS_LENGTH, eps_volume=EPS_RELATIVE):
 
     The sell is *degenerate* if
 
-    (i) The minimum of the cell lengths divided by the maximum of the cell lengths is
-        smaller than a certain factor :math:`\varepsilon_{lengths}`.
-    #   The unit-cell volume divided by the minimum of the cell
-        lengths is smaller than a certain factor :math:`\varepsilon_{volume}`.
-    #   Any element of the cell is larger than ``MAX_LENGTH``.
+    (i)   The minimum of the cell lengths divided by the maximum of the cell lengths is
+          smaller than a certain factor :math:`\varepsilon_{lengths}`.
+    (ii)  The unit-cell volume divided by the minimum of the cell
+          lengths is smaller than a certain factor :math:`\varepsilon_{volume}`.
+    (iii) Any element of the cell is larger than ``MAX_LENGTH``.
 
-        The cell is *reasonable* if it is *not degenerate*.
+    The cell is *reasonable* if it is *not degenerate*.
 
     As per advise of the paper [1]_ we take default values of
     :math:`\varepsilon_{lengths} = 10^{-10}` and :math:`\varepsilon_{volume} = 10^{-5}`.
@@ -273,7 +273,7 @@ def is_reasonable(cell, eps_lengths=EPS_LENGTH, eps_volume=EPS_RELATIVE):
     if (np.abs(cell) > MAX_LENGTH).any():
         return False
 
-    cell_volume = volume(cell)
+    cell_volume = get_volume(cell)
 
     # To guarantee finite max and min lengths
     if cell_volume == 0.0:

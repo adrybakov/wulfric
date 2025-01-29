@@ -16,5 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from ._atoms import *
 from ._basic_manipulation import *
 from ._sc_standardize import *

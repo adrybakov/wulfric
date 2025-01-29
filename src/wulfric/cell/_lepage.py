@@ -23,7 +23,7 @@ import numpy as np
 from wulfric._decorate_array import print_2d_array
 from wulfric.cell._basic_manipulation import from_params, get_reciprocal
 from wulfric.constants._numerical import EPS_ANGLE, EPS_RELATIVE, TODEGREES
-from wulfric.geometry import parallelepiped_check, volume
+from wulfric.geometry import get_volume, parallelepiped_check
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -324,7 +324,7 @@ def lepage(
     # Check if provided parameters can form a parallelepiped
     parallelepiped_check(a, b, c, alpha, beta, gamma, raise_error=True)
 
-    eps_volume = eps_relative * volume(a, b, c, alpha, beta, gamma) ** (1 / 3.0)
+    eps_volume = eps_relative * get_volume(a, b, c, alpha, beta, gamma) ** (1 / 3.0)
 
     # Limit value for the condition on keeping the axis
     limit = max(1.5, eps_angle * 1.1)

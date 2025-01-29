@@ -96,9 +96,9 @@ def get_vector(cell, atoms, atom1, atom2, R=(0, 0, 0), return_relative=False):
     atoms : dict
         Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
     atom1 : int
-        Index of the first atom in ``atoms["positions"].
+        Index of the first atom in ``atoms["positions"]``.
     atom2 : int
-        Index of the second atom in ``atoms["positions"].
+        Index of the second atom in ``atoms["positions"]``.
     R : (3,) tuple of int, default (0, 0, 0)
         Radius vector of the unit cell for atom2 (i,j,k).
     return_relative : bool, default False
@@ -131,9 +131,9 @@ def get_distance(cell, atoms, atom1, atom2, R=(0, 0, 0)):
     atoms : dict
         Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
     atom1 : int
-        Index of the first atom in ``atoms["positions"].
+        Index of the first atom in ``atoms["positions"]``.
     atom2 : int
-        Index of the second atom in ``atoms["positions"].
+        Index of the second atom in ``atoms["positions"]``.
     R : (3,) tuple of int, default (0, 0, 0)
         Radius vector of the unit cell for atom2 (i,j,k).
 

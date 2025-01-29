@@ -20,10 +20,10 @@ from math import cos, sin, tan
 
 import numpy as np
 
-from wulfric.cell._basic_manipulation import params
+from wulfric.cell._basic_manipulation import get_params
 from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_standardize import get_C_matrix, get_conventional, get_S_matrix
-from wulfric.cell._sc_variation import variation
+from wulfric.cell._sc_variation import get_variation
 from wulfric.constants._numerical import EPS_ANGLE, EPS_RELATIVE, TORADIANS
 from wulfric.constants._sc_notation import DEFAULT_K_PATHS, HS_PLOT_NAMES
 
@@ -717,7 +717,7 @@ def get_hs_data(
 
     if lattice_type is None:
         lattice_type = lepage(
-            *params(cell),
+            *get_params(cell),
             eps_relative=rtol,
             eps_angle=atol,
         )
@@ -725,7 +725,7 @@ def get_hs_data(
     lattice_type = lattice_type.upper()
 
     if lattice_variation is None:
-        lattice_variation = variation(
+        lattice_variation = get_variation(
             cell=cell, lattice_type=lattice_type, eps_rel=rtol, angle_tol=atol
         )
 
@@ -742,7 +742,7 @@ def get_hs_data(
         S_matrix = np.array(S_matrix, dtype=float)
 
     if lattice_type in ["BCT", "ORCF", "ORCI", "ORCC", "RHL", "MCL", "MCLC"]:
-        conv_a, conv_b, conv_c, conv_alpha, conv_beta, conv_gamma = params(
+        conv_a, conv_b, conv_c, conv_alpha, conv_beta, conv_gamma = get_params(
             get_conventional(cell, S_matrix=S_matrix, C_matrix=C_matrix)
         )
 

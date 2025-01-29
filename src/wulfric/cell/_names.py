@@ -23,7 +23,7 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def name(lattice_type):
+def get_name(lattice_type):
     r"""
     Human-readable name of the Bravais lattice type.
 
@@ -41,7 +41,7 @@ def name(lattice_type):
     return BRAVAIS_LATTICE_NAMES[lattice_type.upper()]
 
 
-def pearson_symbol(lattice_type):
+def get_pearson_symbol(lattice_type):
     r"""
     Pearson symbol.
 
@@ -63,7 +63,7 @@ def pearson_symbol(lattice_type):
     return PEARSON_SYMBOLS[lattice_type.upper()]
 
 
-def crystal_family(lattice_type):
+def get_crystal_family(lattice_type):
     r"""
     Crystal family.
 
@@ -85,7 +85,7 @@ def crystal_family(lattice_type):
     return PEARSON_SYMBOLS[lattice_type.upper()][0]
 
 
-def centring_type(lattice_type):
+def get_centring_type(lattice_type):
     r"""
     Centring type.
 
