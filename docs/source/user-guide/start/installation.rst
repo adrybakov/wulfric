@@ -4,7 +4,7 @@
 Installation
 ************
 
-Requirement for Wulfric installation are:
+Requirement for wulfric installation are:
 
 * |Python|_ (>=3.9)
 * |NumPy|_ (~=1.26)
@@ -13,11 +13,11 @@ Requirement for Wulfric installation are:
 * |matplotlib|_ (optional: [visual])
 * |plotly|_ (optional: [visual])
 
-Most likely you already have Python installed on your machine
-(if not check these links: |Python-installation|_).
+Most likely Python is already installed on your machine (if not check these links:
+|Python-installation|_).
 
-Wulfric can be installed with :ref:`pip <installation-pip>`
-or from :ref:`source <installation-source>`.
+Wulfric can be installed with :ref:`pip <installation-pip>` or from
+:ref:`source <installation-source>`.
 
 Check Python
 ============
@@ -27,16 +27,17 @@ is to run the following command in your terminal::
 
   python
 
-If you see something similar to the following, than you have python installed::
+If you see something like::
 
   Python 3.10.9 (main, Dec 15 2022, 18:25:35) [Clang 14.0.0 (clang-1400.0.29.202)] on darwin
   Type "help", "copyright", "credits" or "license" for more information.
   >>>
 
-In most cases ``python`` command launches python3,
-however if it launches python2,
-then you may need to use ``python3`` instead
-(and ``pip3`` instead of ``pip`` in the following commands).
+then you have python installed.
+
+In most cases ``python`` command launches python3, however if it launches python2, then
+you may need to use ``python3`` instead (and ``pip3`` instead of ``pip`` in the following
+commands).
 
 .. hint::
   Use ``exit()`` or press ``ctrl+D`` to close python console.
@@ -51,15 +52,15 @@ To install wulfric, run (you may need to use ``pip3``)::
   pip install wulfric
 
 Optionally, if you want to use :ref:`visualization <user-guide_module_plotting>`
-capabilities of Wulfric, you can install |matplotlib|_ and/or |plotly|_
-by yourself or install them with Wulfric::
+capabilities of wulfric, you can install |matplotlib|_ and/or |plotly|_
+by yourself or install them with wulfric::
 
   pip install wulfric[visual]
 
 .. note::
-  You may need to escpae the ``[`` and ``]`` characters from your shell,
-  because they are special characters in most shells.
-  For example, in bash you can use backslash to escape them::
+  You may need to escape the ``[`` and ``]`` characters from your shell, because they are
+  special characters in most shells. For example, in bash you can use backslash to escape
+  them::
 
     pip install wulfric\[visual\]
 
@@ -91,7 +92,7 @@ Installation from source
   You'll see that all dependencies - mandatory and optional - are installed. If you prefer
   to install only mandatory dependencies, you can do it manually.
 
-* To install Wulfric, run (you may need to use ``pip3``)::
+* To install wulfric, run (you may need to use ``pip3``)::
 
     pip install wulfric
 

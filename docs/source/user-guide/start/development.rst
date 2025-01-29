@@ -4,12 +4,12 @@
 Versioning and development
 **************************
 
-Versioning of Wulfric follows standard conventions and can be described as
+Versioning of wulfric follows standard conventions and can be described as
 ``major.minor.patch``. For example version ``0.4.0`` is decoded as ``0`` major version,
 ``4`` minor version and ``0`` patch version.
 
-The development of Wulfric will proceed in two stages, that would be reflected in the
-versioning of the package. The principles listed above were formulated at the time of the
+The development of wulfric will proceed in two stages, that would be reflected in the
+versioning of the package. The principles listed above were formulated with the
 release ``0.5.0``.
 
 
