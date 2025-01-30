@@ -30,10 +30,22 @@ class StandardizationTypeMismatch(Exception):
 
     def __init__(self, expected_lattice_type, step=None):
         if step is not None:
-            message = f"{step} step of the standardization process fails. "
+            self.message = f"{step} step of the standardization process fails. "
         else:
-            message = ""
-        message += f"Are you sure that the cell is {expected_lattice_type}?"
+            self.message = ""
+        self.message += f"Are you sure that the cell is {expected_lattice_type}?"
+
+    def __str__(self):
+        return self.message
+
+
+class FailedToDeduceAtomSpecies(Exception):
+    r"""
+    Raise when the automatic deduction of the atom species from its name fails.
+    """
+
+    def __init__(self, name: str):
+        self.message = f"Tried to deduce name from '{name}'. Failed."
 
     def __str__(self):
         return self.message
