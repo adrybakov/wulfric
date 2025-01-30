@@ -6,9 +6,7 @@ Bravais lattices
 
 .. currentmodule:: wulfric
 
-For the full technical reference see :ref:`api_crystal`
-
-For the module guide on Bravais lattices see :ref:`user-guide_module_bravais-lattices`
+For the full technical reference see :ref:`api_cell`
 
 Bravais lattice notation and standardization follows Setyawan and Curtarolo [1]_.
 
