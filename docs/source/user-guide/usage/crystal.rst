@@ -89,7 +89,7 @@ It assumed that first atom is located in the reference unit cell with indices
 
 To get the vector from atom 1 to atom 2 and distance between them use
 
-.. docstring::
+.. doctest::
 
   >>> wulf.crystal.get_vector(cell, atoms, atom1=0, atom2=0, R=(0,1,0))
   array([3.553350, 0.      , 0.      ])
