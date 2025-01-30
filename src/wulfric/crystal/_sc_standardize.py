@@ -31,14 +31,14 @@ def standardize(cell, atoms, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     R"""
     Standardize cell with respect to the Bravais lattice type as defined in [1]_.
 
-    .. versionadded:: 0.3.0
+    ``atoms`` are not returned, but rather updated.
 
     Parameters
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
     atoms : dict
-        Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
+        Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
     S_matrix : (3,3) |array-like|_, optional
         Transformation matrix S.
     rtol : float, default ``EPS_RELATIVE``
@@ -78,6 +78,8 @@ def standardize(cell, atoms, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
 
     # Recalculate atom's relative coordinates.
     atoms["positions"] = [S @ position for position in atoms["positions"]]
+
+    return cell
 
 
 # Populate __all__ with objects defined in this file
