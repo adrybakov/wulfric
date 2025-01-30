@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from wulfric.constants._sc_notation import PEARSON_SYMBOLS
+from wulfric.constants._sc_notation import BRAVAIS_LATTICE_NAMES, PEARSON_SYMBOLS
 
 # Save local scope at this moment
 old_dir = set(dir())
