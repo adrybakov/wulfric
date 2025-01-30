@@ -123,11 +123,28 @@ For example, ``cell`` and ``atoms`` from the two sections above describe a cryst
 K-path
 ======
 
-We use a specific format in the package: "G-K-X|R-S":
+Wulfric understands kpath of the format: "G-K-X|R-S".
 
+* K-points are identified by their names. Name can not contain "-".
+* ``|`` separates subpaths. Each subpath has to contain at least two points. Path has to
+  have at least one subpath.
 * ``-`` separates high symmetry points in each subpath.
-* ``|`` separates subpaths.
-* K-points are identified by their names (elements of :py:attr:`.Kpoints.hs_names`).
 
-In the example below n points are generated between "G" and "K", between "K" ans "X",
-between "R" and "S", but not between "X" and "R".
+The concept of subpaths allow to "jump" from one k-point to another, without following a
+path in between. For instance, in the path "G-K-X|R-S" for the band structure
+calculation/plots some amount of intermediate points is implied between "G" and "K",
+between "K" and "X" and between "R" and "S". However, there is no intermediate points
+between "X" and "R".
+
+Internally it stores the path as ``list`` of ``list`` of ``str``, i.e. as list of subpaths,
+where each subpath is a list of names of high symmetry points.
+
+Below we give a table of examples
+
+========= ==================================
+As string As ``list`` of ``list`` of ``str``
+========= ==================================
+G-K       ``[["G", "K"]]``
+G-K-X|R-S ``[["G","K","X",],["R","S"]]``
+S1-K-G    ``[["S1", "K", "G"]]``
+========= ==================================
