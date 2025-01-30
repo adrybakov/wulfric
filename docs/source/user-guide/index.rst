@@ -32,6 +32,7 @@ Fundamentals and usage
     usage/package-structure
     usage/key-concepts
     usage/cell
+    usage/kpoints
     usage/crystal
     usage/other
     usage/io

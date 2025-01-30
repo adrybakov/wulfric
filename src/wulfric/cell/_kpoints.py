@@ -20,7 +20,7 @@ from math import cos, sin, tan
 
 import numpy as np
 
-from wulfric.cell._basic_manipulation import get_params
+from wulfric.cell._basic_manipulation import get_params, get_reciprocal
 from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_standardize import get_C_matrix, get_conventional, get_S_matrix
 from wulfric.cell._sc_variation import get_variation
@@ -679,6 +679,7 @@ def _TRI_hs_points(variation):
 
 def get_hs_data(
     cell,
+    return_relative=True,
     lattice_type=None,
     lattice_variation=None,
     S_matrix=None,
@@ -693,6 +694,9 @@ def get_hs_data(
     ----------
     cell : (3,3) |array-like|_
         Unit cell of the lattice. Rows define lattice vectors.
+    return_relative : bool, default True
+        Whether to return coordinates as relative to the reciprocal cell or in absolute
+        coordinates in the reciprocal Cartesian space.
     lattice_type : str, optional
         One of the 14 lattice types that correspond to the provided ``cell``.
         If not provided, then computed automatically. Case-insensitive.
@@ -807,6 +811,13 @@ def get_hs_data(
         # General assignment
         else:
             labels.append(HS_PLOT_NAMES[point])
+
+    if not return_relative:
+
+        rcell = get_reciprocal(cell)
+
+        for i in range(len(coordinates)):
+            coordinates[i] = coordinates[i] @ rcell
 
     return coordinates, names, labels, DEFAULT_K_PATHS[lattice_variation]
 

@@ -17,6 +17,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from ._basic_manipulation import *
+from ._kpoints import *
 from ._lepage import *
 from ._names import *
 from ._niggli import *

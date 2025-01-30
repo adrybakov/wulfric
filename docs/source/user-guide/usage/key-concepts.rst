@@ -56,6 +56,8 @@ Another typical task is to find a reciprocal cell
 
 For more examples of what can be done with cell see :ref:`user-guide_usage_cell`.
 
+.. _user-guide_usage_key-concepts_atoms:
+
 Atoms
 =====
 
@@ -103,6 +105,8 @@ future.
 Functions of wulfric will only modify the key-values that are recognized by it and leave
 the user-defined ones intact.
 
+.. _user-guide_usage_key-concepts_crystal:
+
 Crystal
 =======
 
@@ -113,3 +117,17 @@ with respect to ``cell``.
 
 For example, ``cell`` and ``atoms`` from the two sections above describe a crystal of
 |CrSBr-materials-cloud|_.
+
+.. _user-guide_usage_key-concepts_kpath:
+
+K-path
+======
+
+We use a specific format in the package: "G-K-X|R-S":
+
+* ``-`` separates high symmetry points in each subpath.
+* ``|`` separates subpaths.
+* K-points are identified by their names (elements of :py:attr:`.Kpoints.hs_names`).
+
+In the example below n points are generated between "G" and "K", between "K" ans "X",
+between "R" and "S", but not between "X" and "R".

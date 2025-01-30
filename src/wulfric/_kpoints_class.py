@@ -34,7 +34,7 @@ old_dir.add("old_dir")
 
 class Kpoints:
     r"""
-    K-point path.
+    K-points.
 
     Parameters
     ----------
@@ -132,7 +132,7 @@ class Kpoints:
         n=100,
     ):
         r"""
-        Return an instance of the :py:class:`.Kpoints`.
+        Create an instance of the :py:class:`wulf.Kpoints` from ``cell``.
 
         Parameters
         ----------
@@ -148,9 +148,9 @@ class Kpoints:
             Transformation matrix S.
         C_matrix : (3,3) |array-like|_, optional
             Transformation matrix C.
-        eps_rel : float, default 1e-4
+        rtol : float, default ``EPS_RELATIVE``
             Relative tolerance for distance. For definition of lattice type and variation.
-        angle_tol : float, default 1e-4
+        atol : float, default ``EPS_ANGLE``
             Absolute tolerance for angles, in degrees. For definition of lattice type and variation.
         n : int, default 100
             Number of points between each pair of the high symmetry points
@@ -158,7 +158,7 @@ class Kpoints:
 
         Returns
         -------
-        kp : :py:class:`.Kpoints`
+        kp : :py:class:`wulf.Kpoints`
         """
 
         coordinates, names, labels, path = get_hs_data(
@@ -187,7 +187,7 @@ class Kpoints:
     ################################################################################
     #                            High symmetry points                              #
     ################################################################################
-    def add_hs_point(self, name, coordinates, label, relative=True):
+    def add_hs_point(self, name, coordinates, label, relative=True) -> None:
         r"""
         Add high symmetry point.
 
@@ -215,7 +215,7 @@ class Kpoints:
         self.hs_coordinates[name] = np.array(coordinates)
         self.hs_labels[name] = label
 
-    def remove_hs_point(self, name):
+    def remove_hs_point(self, name) -> None:
         r"""
         Remove high symmetry point.
 
@@ -234,7 +234,7 @@ class Kpoints:
     #                                Path attributes                               #
     ################################################################################
     @property
-    def path(self):
+    def path(self) -> list:
         r"""
         K points path.
 
@@ -287,7 +287,7 @@ class Kpoints:
         self._path = new_path
 
     @property
-    def path_string(self):
+    def path_string(self) -> str:
         r"""
         K points path as a string.
 
@@ -308,7 +308,7 @@ class Kpoints:
         return result
 
     @property
-    def n(self):
+    def n(self) -> int:
         r"""
         Amount of points between each pair of the high symmetry points
         (high symmetry points excluded).
@@ -332,7 +332,7 @@ class Kpoints:
     #                         Attributes for the axis ticks                        #
     ################################################################################
     @property
-    def labels(self):
+    def labels(self) -> list:
         r"""
         Labels of high symmetry points, ready to be plotted.
 
@@ -357,11 +357,6 @@ class Kpoints:
                 labels.append(self.hs_labels[name])
 
         return labels
-
-    def coordinates(self, relative=False):
-        raise RuntimeError(
-            "Kpoints.coordinates() was removed in v0.4.0. Use Kpoints.ticks() instead."
-        )
 
     def ticks(self, relative=False):
         r"""
@@ -444,7 +439,9 @@ class Kpoints:
     def flatten_points(self, relative=False):
         r"""
         Flatten coordinates of all points with n points between each pair of the high
-        symmetry points (high symmetry points excluded). Used to plot band structure, dispersion, etc.
+        symmetry points (high symmetry points excluded).
+
+        Used to plot band structure, dispersion, etc.
 
         Parameters
         ----------
@@ -505,9 +502,9 @@ class Kpoints:
     #                                Human readables                               #
     ################################################################################
 
-    def hs_table(self, decimals=8):
+    def hs_table(self, decimals=8) -> str:
         r"""
-        High symmetry points table.
+        Table of the high symmetry points.
 
         .. versionadded:: 0.3.1
 

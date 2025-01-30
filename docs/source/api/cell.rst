@@ -41,6 +41,16 @@ Bravais lattice type
   get_crystal_family
   get_pearson_symbol
 
+.. _api_cell_kpoints:
+
+K points data
+=============
+
+.. autosummary::
+  :toctree: generated/
+
+  get_hs_data
+
 .. _api_cell_bravais-lattice:
 
 Bravais lattice constructors
