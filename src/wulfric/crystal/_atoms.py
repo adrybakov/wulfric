@@ -17,7 +17,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from wulfric._exceptions import FailedToDeduceAtomSpecies
-from wulfric.constants._atoms import ATOM_TYPES
+from wulfric.constants._atoms import ATOM_SPECIES
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -86,7 +86,7 @@ def get_atom_species(name: str, raise_on_fail=False) -> str:
     """
 
     atom_type = "X"
-    for trial_type in ATOM_TYPES:
+    for trial_type in ATOM_SPECIES:
         if trial_type.lower() in name.lower():
             atom_type = trial_type
             # Maximum amount of characters in the atom type
@@ -98,14 +98,14 @@ def get_atom_species(name: str, raise_on_fail=False) -> str:
 
     if atom_type == "X":
         if raise_on_fail:
+            raise FailedToDeduceAtomSpecies(name=name)
+        else:
             import warnings
 
             warnings.warn(
                 f"Atom species deduction failed for '{name}'. Set species to 'X'",
                 RuntimeWarning,
             )
-        else:
-            raise FailedToDeduceAtomSpecies(name=name)
 
     return atom_type
 

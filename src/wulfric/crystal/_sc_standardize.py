@@ -18,6 +18,7 @@
 
 import numpy as np
 
+from wulfric.cell._basic_manipulation import get_params
 from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_standardize import get_S_matrix, get_standardized
 from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
@@ -64,7 +65,7 @@ def standardize(cell, atoms, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     # Get S matrix before cell standardization
     if S_matrix is None:
         lattice_type = lepage(
-            *params(cell),
+            *get_params(cell),
             eps_relative=rtol,
             eps_angle=atol,
         )
@@ -77,7 +78,7 @@ def standardize(cell, atoms, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     cell = get_standardized(cell=cell, S_matrix=S_matrix)
 
     # Recalculate atom's relative coordinates.
-    atoms["positions"] = [S @ position for position in atoms["positions"]]
+    atoms["positions"] = [S_matrix @ position for position in atoms["positions"]]
 
     return cell
 
