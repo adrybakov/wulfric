@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from wulfric._exceptions import FailedToDeduceAtomSpecies
 from wulfric.constants._atoms import ATOM_TYPES
 
 # Save local scope at this moment
@@ -23,7 +24,7 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def get_atom_type(name: str) -> str:
+def get_atom_species(name: str, raise_on_fail=False) -> str:
     r"""
     Attempts to identify atom's type based on its name (i.e. Cr1 -> Cr, ...).
 
@@ -33,37 +34,49 @@ def get_atom_type(name: str) -> str:
     ----------
     name : str
         Name of the atom.
+    raise_on_fail : bool, default False
+        Whether to raise an exception if automatic species deduction fails.
 
     Returns
     -------
-    type : str
-        Type of the atom.
+    species : str
+        Species of the atom.
+
+    Raises
+    ------
+    FailedToDeduceAtomSpecies
+        If ``raise_on_fail = True`` and automatic species deduction fails.
+
+    Warnings
+    --------
+    If ``raise_on_fail = True`` and automatic species deduction fails, then
+    ``RuntimeWarning`` is issued, and atom species is set to "X".
 
     Examples
     --------
 
     .. doctest::
 
-        >>> from wulfric.crystal import get_atom_type
-        >>> get_atom_type("@%^#$")
+        >>> from wulfric.crystal import get_atom_species
+        >>> get_atom_species("@%^#$")
         'X'
-        >>> deduc_atom_type("Cr")
+        >>> get_atom_species("Cr")
         'Cr'
-        >>> deduc_atom_type("Cr1")
+        >>> get_atom_species("Cr1")
         'Cr'
-        >>> deduc_atom_type("_3341Cr")
+        >>> get_atom_species("_3341Cr")
         'Cr'
-        >>> deduc_atom_type("cr")
+        >>> get_atom_species("cr")
         'Cr'
-        >>> deduc_atom_type("S")
+        >>> get_atom_species("S")
         'S'
-        >>> deduc_atom_type("Se")
+        >>> get_atom_species("Se")
         'Se'
-        >>> deduc_atom_type("Sp")
+        >>> get_atom_species("Sp")
         'S'
-        >>> deduc_atom_type("123a")
+        >>> get_atom_species("123a")
         'X'
-        >>> deduc_atom_type("CrSBr")
+        >>> get_atom_species("CrSBr")
         'Cr'
 
     Notes
@@ -82,7 +95,51 @@ def get_atom_type(name: str) -> str:
             # If type of one character is found, then the search must continue
             if len(atom_type) == 2:
                 break
+
+    if atom_type == "X":
+        if raise_on_fail:
+            import warnings
+
+            warnings.warn(
+                f"Atom species deduction failed for '{name}'. Set species to 'X'",
+                RuntimeWarning,
+            )
+        else:
+            raise FailedToDeduceAtomSpecies(name=name)
+
     return atom_type
+
+
+def populate_atom_species(atoms, raise_on_fail=False):
+    r"""
+    Populate atom species, based on their names.
+    If atom species are already present in the ``atoms``, then they will be overwritten.
+
+    Parameters
+    ----------
+    atoms : dict
+        Dictionary with atoms. Must have a ``names`` with the value of ``list`` of N
+        ``str``.
+    raise_on_fail : bool, default False
+        Whether to raise an error if the atom type can not be deduced based on its name.
+
+    Raises
+    ------
+    FailedToDeduceAtomSpecies
+        If ``raise_on_fail = True`` and automatic species deduction fails.
+
+    Warnings
+    --------
+    If ``raise_on_fail = True`` and automatic species deduction fails, then
+    ``RuntimeWarning`` is issued, and atom species is set to "X".
+    """
+
+    atoms["species"] = []
+
+    for i in range(len(atoms["names"])):
+        atoms["species"].append(
+            get_atom_species(atoms["names"][i], raise_on_fail=raise_on_fail)
+        )
 
 
 # Populate __all__ with objects defined in this file
