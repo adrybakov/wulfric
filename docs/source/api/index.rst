@@ -28,10 +28,17 @@ Sub-modules
     cell
     constants
     crystal
-    interfaces
     io
     visualization
     geometry
+
+Classes
+=======
+
+.. autosummary::
+    :toctree: generated/
+
+    Kpoints
 
 Top-level functions
 ===================

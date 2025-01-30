@@ -22,8 +22,9 @@ __git_hash__ = "undefined"
 __release_date__ = "undefined"
 
 
-from . import cell, constants, crystal, geometry, interfaces, io, visualization
+from . import cell, constants, crystal, geometry, io, visualization
 from ._decorate_array import *
 from ._exceptions import *
+from ._kpoints_class import *
 from ._numerical import *
 from ._package_info import *

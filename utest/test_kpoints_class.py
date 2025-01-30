@@ -19,7 +19,7 @@
 import numpy as np
 import pytest
 
-from wulfric.interfaces._kpoints import Kpoints
+from wulfric._kpoints_class import Kpoints
 
 points = {
     "G": [0, 0, 0],
