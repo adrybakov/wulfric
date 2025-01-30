@@ -148,6 +148,9 @@ Required lattice parameters are different for each Bravias lattice type. Wulfric
 functions for all 14 Bravais lattice types, see :ref:`API <api_cell_bravais-lattice>` for
 details.
 
+
+.. _user-guide_usage_cell_standardization:
+
 Standardization
 ===============
 
