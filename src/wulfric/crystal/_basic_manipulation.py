@@ -46,6 +46,27 @@ def shift_atoms(atoms, gravity_point=(0.5, 0.5, 0.5), cell=None, gp_is_relative=
         Primitive unit cell. Required if ``gp_is_relative = False``.
     gp_is_relative : bool, default True
         Whether the ``gravity_point`` is given in relative coordinates.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> cell=[[2, 0, 0], [0, 2, 0], [0, 0, 2]]
+        >>> atoms = {"names" : ['Cr1', 'Cr2'], "positions" : [[0.0, 0.0, 0.0], [0.5, 0.5, 1.0]]}
+        >>> wulf.crystal.shift_atoms(atoms=atoms, gravity_point=(0.5, 0.5, 0.5))
+        >>> for i in range(len(atoms["names"])):
+        ...    print(atoms["names"][i], atoms["positions"][i])
+        ...
+        Cr1 [0.25 0.25 0.  ]
+        Cr2 [0.75 0.75 1.  ]
+        >>> crystal.shift_atoms(atoms, gravity_point=(1,1,1), cell=cell, gp_is_relative=False)
+        >>> for i in range(len(atoms["names"])):
+        ...    print(atoms["names"][i], atoms["positions"][i])
+        ...
+        Cr1 [0.25 0.25 0.  ]
+        Cr2 [0.75 0.75 1.  ]
     """
 
     if not gp_is_relative:
@@ -74,6 +95,21 @@ def cure_negative(atoms):
     ----------
     atoms : dict
         Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> cell=[[2, 0, 0], [0, 2, 0], [0, 0, 2]]
+        >>> atoms = {"names" : ['Cr1', 'Cr2'], "positions" : [[-0.5, 0.5, 0.0], [0.1, 0.5, 0.0]] }
+        >>> wulf.crystal.cure_negative(atoms)
+        >>> for i in range(len(atoms["names"])):
+        ...    print(atoms["names"][i], atoms["positions"][i])
+        ...
+        Cr1 [0.  0.5 0. ]
+        Cr2 [0.6 0.5 0. ]
     """
 
     min_values = atoms["positions"][0]
