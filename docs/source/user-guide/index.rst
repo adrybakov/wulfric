@@ -22,6 +22,7 @@ Definitions and conventions
     conventions/cell
     conventions/bravais-lattices/index
 
+.. _user-guide_fundamentals:
 
 Fundamentals and usage
 ======================
@@ -31,6 +32,7 @@ Fundamentals and usage
     usage/package-structure
     usage/key-concepts
     usage/cell
+    usage/other
 
 .. _user-guide_library:
 
