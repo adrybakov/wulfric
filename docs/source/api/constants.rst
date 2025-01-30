@@ -1,8 +1,8 @@
 .. _api_constants:
 
-*********
-constants
-*********
+*****************
+wulfric.constants
+*****************
 
 .. currentmodule:: wulfric.constants
 

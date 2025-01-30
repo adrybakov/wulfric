@@ -1,8 +1,8 @@
 .. _api_interfaces:
 
-**********
-interfaces
-**********
+******************
+wulfric.interfaces
+******************
 
 .. currentmodule:: wulfric.interfaces
 

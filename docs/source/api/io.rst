@@ -1,8 +1,8 @@
 .. _api_io:
 
-**
-io
-**
+**********
+wulfric.io
+**********
 
 .. currentmodule:: wulfric.io
 

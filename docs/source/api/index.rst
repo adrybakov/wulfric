@@ -54,3 +54,4 @@ Exceptions
     :toctree: generated/
 
     StandardizationTypeMismatch
+    FailedToDeduceAtomSpecies

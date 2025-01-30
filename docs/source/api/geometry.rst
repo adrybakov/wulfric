@@ -1,8 +1,8 @@
 .. _api_geometry:
 
-********
-geometry
-********
+****************
+wulfric.geometry
+****************
 
 .. currentmodule:: wulfric.geometry
 

@@ -1,8 +1,8 @@
 .. _api_crystal:
 
-*******
-crystal
-*******
+***************
+wulfric.crystal
+***************
 
 .. currentmodule:: wulfric.crystal
 
@@ -14,3 +14,12 @@ crystal
     shift_atoms
     cure_negative
     standardize
+
+Atoms
+=====
+
+.. autosummary::
+    :toctree: generated/
+
+    get_atom_species
+    populate_atom_species

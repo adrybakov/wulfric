@@ -1,8 +1,8 @@
 .. _api_visualization:
 
-*************
-visualization
-*************
+*********************
+wulfric.visualization
+*********************
 
 .. currentmodule:: wulfric.visualization
 
