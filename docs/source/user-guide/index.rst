@@ -34,6 +34,7 @@ Fundamentals and usage
     usage/cell
     usage/crystal
     usage/other
+    usage/io
     usage/visualization
 
 .. _user-guide_library:
