@@ -51,7 +51,7 @@ To install wulfric, run (you may need to use ``pip3``)::
 
   pip install wulfric
 
-Optionally, if you want to use :ref:`visualization <user-guide_module_plotting>`
+Optionally, if you want to use :ref:`visualization <user-guide_usage_visualization>`
 capabilities of wulfric, you can install |matplotlib|_ and/or |plotly|_
 by yourself or install them with wulfric::
 
