@@ -17,10 +17,10 @@ imports and an example cell of the form
   >>> import wulfric as wulf
   >>> import numpy as np
   >>> cell = [
-    ...     [3.553350, 0.000000, 0.000000],
-    ...     [0.000000, 4.744935, 0.000000],
-    ...     [0.000000, 0.000000, 8.760497],
-    ... ]
+  ...     [3.553350, 0.000000, 0.000000],
+  ...     [0.000000, 4.744935, 0.000000],
+  ...     [0.000000, 0.000000, 8.760497],
+  ... ]
 
 
 Cell parameters
@@ -55,8 +55,8 @@ To create a cell from parameters use
   >>> # we use np.round to account for the finite precision of float point arithmetic
   >>> np.round(wulf.cell.from_params(3.55335, 4.744935, 8.760497, 90.0, 90.0, 90.0), 6)
   array([[3.55335 , 0.      , 0.      ],
-        [0.      , 4.744935, 0.      ],
-        [0.      , 0.      , 8.760497]])
+         [0.      , 4.744935, 0.      ],
+         [0.      , 0.      , 8.760497]])
 
 The cell is constructed with the first vector oriented along the :math:`x` axis and second
 vector in the :math:`xy` plain. The cell can only be constructed from the set of parameters
@@ -78,8 +78,8 @@ reciprocal lattice use
   >>> rcell = wulf.cell.get_reciprocal(cell)
   >>> rcell
   array([[1.76824273, 0.        , 0.        ],
-        [0.        , 1.32418786, 0.        ],
-        [0.        , 0.        , 0.71721791]])
+         [0.        , 1.32418786, 0.        ],
+         [0.        , 0.        , 0.71721791]])
 
 
 Reciprocal cell is a valid cell as well, therefore, to compute the cell of the real-space
@@ -89,8 +89,8 @@ lattice just use the same function again:
 
   >>> wulf.cell.get_reciprocal(rcell)
   array([[3.55335 , 0.      , 0.      ],
-        [0.      , 4.744935, 0.      ],
-        [0.      , 0.      , 8.760497]])
+         [0.      , 4.744935, 0.      ],
+         [0.      , 0.      , 8.760497]])
 
 Bravais lattices
 ================

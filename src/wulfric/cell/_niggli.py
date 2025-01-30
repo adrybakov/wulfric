@@ -178,7 +178,7 @@ def niggli(
         >>> gamma = acos(-22 / 2 / a / b) * TODEGREES
         >>> print(f"{alpha:.2f} {beta:.2f} {gamma:.2f}")
         103.92 109.47 134.88
-        >>> niggli_matrix_form = wulf.niggli(a, b, c, alpha, beta, gamma, verbose=True) # doctest: +NORMALIZE_WHITESPACE
+        >>> niggli_matrix_form = wulf.cell.niggli(a, b, c, alpha, beta, gamma, verbose=True, eps_relative=1e-4) # doctest: +NORMALIZE_WHITESPACE
                        A         B         C        xi        eta      zeta
         start:       9.0000  27.0000   4.0000  -5.0000  -4.0000 -22.0000
         2 appl. to   9.0000  27.0000   4.0000  -5.0000  -4.0000 -22.0000

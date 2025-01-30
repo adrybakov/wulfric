@@ -50,9 +50,9 @@ Another typical task is to find a reciprocal cell
 .. doctest::
 
     >>> wulf.cell.get_reciprocal(cell)
-    array([[6.28318531, 0.        , 0.        ],
-           [0.        , 6.28318531, 0.        ],
-           [0.        , 0.        , 6.28318531]])
+    array([[1.76824273, 0.        , 0.        ],
+           [0.        , 1.32418786, 0.        ],
+           [0.        , 0.        , 0.71721791]])
 
 For more examples of what can be done with cell see :ref:`user-guide_usage_cell`.
 

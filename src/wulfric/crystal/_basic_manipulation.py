@@ -61,7 +61,7 @@ def shift_atoms(atoms, gravity_point=(0.5, 0.5, 0.5), cell=None, gp_is_relative=
         ...
         Cr1 [0.25 0.25 0.  ]
         Cr2 [0.75 0.75 1.  ]
-        >>> crystal.shift_atoms(atoms, gravity_point=(1,1,1), cell=cell, gp_is_relative=False)
+        >>> wulf.crystal.shift_atoms(atoms, gravity_point=(1,1,1), cell=cell, gp_is_relative=False)
         >>> for i in range(len(atoms["names"])):
         ...    print(atoms["names"][i], atoms["positions"][i])
         ...

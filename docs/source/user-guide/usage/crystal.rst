@@ -77,7 +77,7 @@ To guess the names for the dictionary of ``atoms`` use
   >>> # Note: this function modifies the dictionary on which it is called
   >>> wulf.crystal.populate_atom_species(atoms)
   >>> atoms["species"]
-  >>> ['Cr', 'Br', 'S', 'Cr', 'Br', 'S']
+  ['Cr', 'Br', 'S', 'Cr', 'Br', 'S']
 
 Pair of atoms
 =============
@@ -92,9 +92,9 @@ To get the vector from atom 1 to atom 2 and distance between them use
 .. doctest::
 
   >>> wulf.crystal.get_vector(cell, atoms, atom1=0, atom2=0, R=(0,1,0))
-  array([3.553350, 0.      , 0.      ])
+  array([3.55335, 0.     , 0.     ])
   >>> wulf.crystal.get_distance(cell, atoms, atom1=0, atom2=0, R=(0,1,0))
-  3.553350
+  3.55335
 
 Standardization
 ===============
@@ -111,40 +111,21 @@ which standardize the cell and update relative coordinated of atoms.
 
   >>> # Position of the first atom relative to the non-standardized cell
   >>> atoms["positions"][0]
-  array([0.882382, 0.5, 0.0])
+  [0.882382, 0.5, 0.0]
   >>> # Position of the same atom in the real space, in absolute coordinates
   >>> atoms["positions"][0] @ cell
-  array([1.776675   0.         7.73010486])
+  array([1.776675  , 0.        , 7.73010486])
   >>> # This function return new cell, but update passes atoms dictionary
   >>> cell = wulf.crystal.standardize(cell=cell, atoms=atoms)
   >>> # Note how the relative positions changed
   >>> atoms["positions"][0]
-  array([0.5      0.       0.882382])
+  array([0.5     , 0.      , 0.882382])
   >>> # But absolute position is the same
   >>> atoms["positions"][0] @ cell
-  array([1.776675   0.         7.73010486])
+  array([1.776675  , 0.        , 7.73010486])
   >>> # It reflects a reordering of the lattice vectors
   >>> # For ORC lattice a < b < c
   >>> cell
   array([[3.55335 , 0.      , 0.      ],
          [0.      , 4.744935, 0.      ],
          [0.      , 0.      , 8.760497]])
-
-
-
-
-
-
-:py:attr:`Atom.type` is derived automatically from its name, it cannot be changed directly.
-
-.. doctest::
-
-  >>> atom.name = 'Cr1'
-  >>> atom.name
-  'Cr1'
-  >>> atom.type
-  'Cr'
-  >>> atom.type = "Se"
-  Traceback (most recent call last):
-  ...
-  AttributeError: property 'type' of 'Atom' object has no setter
