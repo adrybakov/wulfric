@@ -28,22 +28,19 @@ What is wulfric?
 ****************
 
 Wulfric is a python package for the description and symmetries of crystal structures.
-It combines the concept of the :ref:`Lattice <user-guide_module_lattice>`,
-:ref:`Atom <user-guide_module_atom>` and :ref:`Crystal <user-guide_module_crystal>`
-and provides a simple skeleton for other codes to built on.
+It uses a simple concepts of ``cell`` and ``atoms`` and provides a simple skeleton for
+other codes to built on. (see :ref:`user-guide_usage_key-concepts`)
 
 The functional of wulfric includes (but not limited to):
 
-* :ref:`user-guide_module_lattice`, :ref:`user-guide_module_atom` and :ref:`user-guide_module_crystal` classes.
+* Calculation of Bravais lattice type and variation.
 
-* Bravais lattice standardization.
-
-* Automatic choice of the :ref:`Kpoints <user-guide_module_kpoints>`
+* Automatic choice of the :ref:`Kpoints <user-guide_usage_kpoints>`
   and K-path for all :ref:`Bravais lattice types <user-guide_conventions_bravais-lattices>`.
 
-* Standalone :py:func:`.lepage` and :py:func:`.niggli` algorithms.
+* Set of useful functions for :ref:`user-guide_usage_cell`, :ref:`user-guide_usage_crystal`.
 
-* Primitive :ref:`visualisation <user-guide_module_plotting>` of the various lattice's cells.
+* Standalone :py:func:`.lepage` and :py:func:`.niggli` algorithms.
 
 
 .. grid:: 2
