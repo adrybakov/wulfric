@@ -950,8 +950,8 @@ def get_S_matrix(cell, lattice_type=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
     if lattice_type is None:
         lattice_type = lepage(
             *get_params(cell),
-            eps_relative=eps_rel,
-            eps_angle=angle_tol,
+            eps_relative=rtol,
+            eps_angle=atol,
         )
 
     lattice_type = lattice_type.upper()
