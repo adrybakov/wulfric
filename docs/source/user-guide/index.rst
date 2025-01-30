@@ -23,13 +23,14 @@ Definitions and conventions
     conventions/bravais-lattices/index
 
 
-Module guide
-============
+Fundamentals and usage
+======================
 .. toctree::
     :maxdepth: 2
 
-    module/index
-    module/detailed
+    usage/package-structure
+    usage/key-concepts
+    usage/cell
 
 .. _user-guide_library:
 
