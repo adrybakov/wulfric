@@ -23,7 +23,7 @@ from datetime import datetime
 import numpy as np
 
 from wulfric._decorate_array import print_2d_array
-from wulfric.crystal._atoms import get_atom_type
+from wulfric.crystal._atoms import get_atom_species
 from wulfric.geometry._geometry import absolute_to_relative, get_volume
 
 # Save local scope at this moment
@@ -197,7 +197,7 @@ def dump_poscar(
     # Prepare atoms
     atoms_list = []
     for i in range(len(atoms["positions"])):
-        atom_type = get_atom_type(atoms["names"][i])
+        atom_type = get_atom_species(atoms["names"][i])
         if atom_type == "X":
             raise ValueError(
                 f"Can not deduce atom's type from the name '{atoms['name'][i]}'"
