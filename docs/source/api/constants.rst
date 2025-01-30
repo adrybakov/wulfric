@@ -12,7 +12,7 @@ Atoms
 .. autosummary::
     :toctree: generated/
 
-    ATOM_TYPES
+    ATOM_SPECIES
 
 Bravais Lattices (SC)
 =====================

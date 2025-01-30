@@ -22,7 +22,7 @@ from hypothesis import given
 from hypothesis import strategies as st
 from hypothesis.extra.numpy import arrays as harrays
 
-from wulfric.constants._atoms import ATOM_TYPES
+from wulfric.constants._atoms import ATOM_SPECIES
 from wulfric.crystal._atoms import get_atom_species
 
 
@@ -39,6 +39,6 @@ from wulfric.crystal._atoms import get_atom_species
     ),
 )
 def test_Atom_type(prefix, suffix):
-    for atom_type in ATOM_TYPES:
+    for atom_type in ATOM_SPECIES:
         name = prefix + atom_type + suffix
         assert get_atom_species(name) == atom_type
