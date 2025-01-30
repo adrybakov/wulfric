@@ -197,7 +197,7 @@ custom_links = {
     "black": ("black", "https://black.readthedocs.io"),
     "array-like": (
         "array-like",
-        "https://numpy.org/doc/stable/glossary.html#term-array-like",
+        "https://numpy.org/doc/stable/glossary.html#term-array_like",
     ),
     "termcolor": ("termcolor", "https://github.com/termcolor/termcolor"),
     "PearsonSymbol": ("Pearson symbol", "https://en.wikipedia.org/wiki/Pearson_symbol"),
@@ -257,6 +257,10 @@ custom_links = {
     "spglib-python": (
         "spglib's python interface",
         "https://spglib.readthedocs.io/en/stable/python-interface.html#",
+    ),
+    "CrSBr-materials-cloud": (
+        "CrSBr from materials cloud",
+        "https://legacy.materialsproject.org/materials/mp-22998/",
     ),
 }
 
