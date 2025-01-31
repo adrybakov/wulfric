@@ -33,7 +33,7 @@ from wulfric.cell._basic_manipulation import (
     get_scalar_products,
     is_reasonable,
 )
-from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
+from wulfric.constants._numerical import EPS_LENGTH
 from wulfric.geometry._geometry import parallelepiped_check
 
 N_ORDER = 5
@@ -134,7 +134,7 @@ def test_get_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
 )
 def test_reciprocal_cell_examples(cell, rec_cell):
     rcell = get_reciprocal(cell)
-    assert np.allclose(rcell, np.array(rec_cell), rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+    assert np.allclose(rcell, np.array(rec_cell), rtol=EPS_LENGTH, atol=EPS_LENGTH)
 
 
 ################################################################################
@@ -171,12 +171,12 @@ def test_cell_from_param(a, b, c, alpha, beta, gamma):
 
             ap, bp, cp, alphap, betap, gammap = get_params(cell)
             assert np.allclose(
-                [a, b, c], [ap, bp, cp], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                [a, b, c], [ap, bp, cp], rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
             assert np.allclose(
                 [alpha, beta, gamma],
                 [alphap, betap, gammap],
-                rtol=EPS_RELATIVE,
+                rtol=EPS_LENGTH,
                 atol=EPS_LENGTH,
             )
     else:
@@ -192,7 +192,7 @@ def test_cell_from_params_example(a, b, c, alpha, beta, gamma, cell):
     assert np.allclose(
         from_params(a, b, c, alpha, beta, gamma),
         np.array(cell),
-        rtol=EPS_RELATIVE,
+        rtol=EPS_LENGTH,
         atol=EPS_LENGTH,
     )
 

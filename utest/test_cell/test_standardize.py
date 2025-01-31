@@ -62,7 +62,6 @@ from wulfric.cell._sc_standardize import (
 from wulfric.constants._numerical import (
     EPS_ANGLE,
     EPS_LENGTH,
-    EPS_RELATIVE,
     MIN_ANGLE,
     TODEGREES,
     TORADIANS,
@@ -106,23 +105,23 @@ def rotate(cell, r1, r2, r3):
     st.integers(min_value=0, max_value=n_order),
 )
 def test_CUB_get_S_matrix(r1, r2, r3, conv_a, order):
-    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH):
         # Prepare cell
         cell = shuffle(rotate(CUB(conv_a), r1, r2, r3), order)
         if is_reasonable(cell):
             old_det = np.linalg.det(cell)
 
             # Fix cell
-            S = _CUB_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+            S = _CUB_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
             a, b, c, alpha, beta, gamma = get_params(cell)
-            assert np.allclose([a, b, c], [a, a, a], rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+            assert np.allclose([a, b, c], [a, a, a], rtol=EPS_LENGTH, atol=EPS_LENGTH)
             assert np.allclose(
                 [alpha, beta, gamma],
                 [90.0, 90.0, 90.0],
-                rtol=EPS_RELATIVE,
+                rtol=EPS_LENGTH,
                 atol=EPS_ANGLE,
             )
 
@@ -141,7 +140,7 @@ def test_CUB_get_S_matrix(r1, r2, r3, conv_a, order):
     st.integers(min_value=0, max_value=n_order),
 )
 def test_FCC_get_S_matrix(r1, r2, r3, conv_a, order):
-    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH):
         # Prepare cell
         cell = shuffle(rotate(FCC(conv_a), r1, r2, r3), order)
         if is_reasonable(cell):
@@ -149,18 +148,18 @@ def test_FCC_get_S_matrix(r1, r2, r3, conv_a, order):
             old_det = np.linalg.det(cell)
 
             # Fix cell
-            S = _FCC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+            S = _FCC_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
             a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
-                [a, b, c], [prim_a, prim_a, prim_a], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                [a, b, c], [prim_a, prim_a, prim_a], rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
             assert np.allclose(
                 [alpha, beta, gamma],
                 [60.0, 60.0, 60.0],
-                rtol=EPS_RELATIVE,
+                rtol=EPS_LENGTH,
                 atol=EPS_ANGLE,
             )
 
@@ -179,7 +178,7 @@ def test_FCC_get_S_matrix(r1, r2, r3, conv_a, order):
     st.integers(min_value=0, max_value=n_order),
 )
 def test_BCC_get_S_matrix(r1, r2, r3, conv_a, order):
-    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH):
         # Prepare cell
         cell = shuffle(rotate(BCC(conv_a), r1, r2, r3), order)
         if is_reasonable(cell):
@@ -188,18 +187,18 @@ def test_BCC_get_S_matrix(r1, r2, r3, conv_a, order):
             old_det = np.linalg.det(cell)
 
             # Fix cell
-            S = _BCC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+            S = _BCC_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
             a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
-                [a, b, c], [prim_a, prim_a, prim_a], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                [a, b, c], [prim_a, prim_a, prim_a], rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
             assert np.allclose(
                 [alpha, beta, gamma],
                 [angle, angle, angle],
-                rtol=EPS_RELATIVE,
+                rtol=EPS_LENGTH,
                 atol=EPS_ANGLE,
             )
 
@@ -219,7 +218,7 @@ def test_BCC_get_S_matrix(r1, r2, r3, conv_a, order):
     st.integers(min_value=0, max_value=n_order),
 )
 def test_TET_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
-    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH):
         # Prepare cell
         cell = shuffle(rotate(TET(conv_a, conv_c), r1, r2, r3), order)
         if is_reasonable(cell):
@@ -230,7 +229,7 @@ def test_TET_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
 
             # Fix cell
             try:
-                S = _TET_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+                S = _TET_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             except StandardizationTypeMismatch:
                 return
             cell = np.linalg.inv(S.T) @ cell
@@ -240,13 +239,13 @@ def test_TET_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
             assert np.allclose(
                 [a, b, c],
                 [prim_a, prim_a, prim_c],
-                rtol=EPS_RELATIVE,
+                rtol=EPS_LENGTH,
                 atol=EPS_LENGTH,
             )
             assert np.allclose(
                 [alpha, beta, gamma],
                 [angle, angle, angle],
-                rtol=EPS_RELATIVE,
+                rtol=EPS_LENGTH,
                 atol=EPS_ANGLE,
             )
 
@@ -266,7 +265,7 @@ def test_TET_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
     st.integers(min_value=0, max_value=n_order),
 )
 def test_BCT_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
-    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH):
         # Prepare cell
         cell = shuffle(rotate(BCT(conv_a, conv_c), r1, r2, r3), order)
         if is_reasonable(cell):
@@ -277,7 +276,7 @@ def test_BCT_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
 
             # Fix cell
             try:
-                S = _BCT_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+                S = _BCT_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             except StandardizationTypeMismatch:
                 return
             cell = np.linalg.inv(S.T) @ cell
@@ -288,12 +287,12 @@ def test_BCT_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
             beta *= TORADIANS
             gamma *= TORADIANS
             assert np.allclose(
-                [a, b, c], [prim, prim, prim], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                [a, b, c], [prim, prim, prim], rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
             assert np.allclose(
                 [alpha, beta, gamma],
                 [angle, angle, angle12],
-                rtol=EPS_RELATIVE,
+                rtol=EPS_LENGTH,
                 atol=EPS_ANGLE,
             )
 
@@ -314,7 +313,7 @@ def test_BCT_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
     st.integers(min_value=0, max_value=n_order),
 )
 def test_ORC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
-    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH):
         # Prepare cell
         cell = shuffle(rotate(ORC(conv_a, conv_b, conv_c), r1, r2, r3), order)
         if is_reasonable(cell):
@@ -324,7 +323,7 @@ def test_ORC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
 
             # Fix cell
             try:
-                S = _ORC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+                S = _ORC_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             except StandardizationTypeMismatch:
                 return
             cell = np.linalg.inv(S.T) @ cell
@@ -332,12 +331,12 @@ def test_ORC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
             # Check results
             a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
-                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
             assert np.allclose(
                 [alpha, beta, gamma],
                 [angle, angle, angle],
-                rtol=EPS_RELATIVE,
+                rtol=EPS_LENGTH,
                 atol=EPS_ANGLE,
             )
 
@@ -358,7 +357,7 @@ def test_ORC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
     st.integers(min_value=0, max_value=n_order),
 )
 def test_ORCF_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
-    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH):
         # Prepare cell
         cell = shuffle(rotate(ORCF(conv_a, conv_b, conv_c), r1, r2, r3), order)
         if is_reasonable(cell):
@@ -376,7 +375,7 @@ def test_ORCF_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
 
             # Fix cell
             try:
-                S = _ORCF_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+                S = _ORCF_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             except StandardizationTypeMismatch:
                 return
 
@@ -385,17 +384,17 @@ def test_ORCF_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
             # Check results
             a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
-                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
             assert np.allclose(
-                alpha, prim_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-            ) or np.allclose(alpha, prim_alpha_twin, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
+                alpha, prim_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
+            ) or np.allclose(alpha, prim_alpha_twin, rtol=EPS_LENGTH, atol=EPS_ANGLE)
             assert np.allclose(
-                beta, prim_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-            ) or np.allclose(beta, prim_beta_twin, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
+                beta, prim_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
+            ) or np.allclose(beta, prim_beta_twin, rtol=EPS_LENGTH, atol=EPS_ANGLE)
             assert np.allclose(
-                gamma, prim_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-            ) or np.allclose(gamma, prim_gamma_twin, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
+                gamma, prim_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
+            ) or np.allclose(gamma, prim_gamma_twin, rtol=EPS_LENGTH, atol=EPS_ANGLE)
 
             # Check that chirality is the same
             assert np.linalg.det(cell) * old_det > 0
@@ -414,7 +413,7 @@ def test_ORCF_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
     st.integers(min_value=0, max_value=n_order),
 )
 def test_ORCI_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
-    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH):
         # Prepare cell
         cell = shuffle(rotate(ORCI(conv_a, conv_b, conv_c), r1, r2, r3), order)
         if is_reasonable(cell):
@@ -436,7 +435,7 @@ def test_ORCI_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
 
             # Fix cell
             try:
-                S = _ORCI_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+                S = _ORCI_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             except StandardizationTypeMismatch:
                 return
             cell = np.linalg.inv(S.T) @ cell
@@ -444,17 +443,17 @@ def test_ORCI_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
             # Check results
             a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
-                [a, b, c], [prim, prim, prim], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                [a, b, c], [prim, prim, prim], rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
             assert np.allclose(
-                alpha, prim_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-            ) or np.allclose(alpha, prim_alpha_twin, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
+                alpha, prim_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
+            ) or np.allclose(alpha, prim_alpha_twin, rtol=EPS_LENGTH, atol=EPS_ANGLE)
             assert np.allclose(
-                beta, prim_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-            ) or np.allclose(beta, prim_beta_twin, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
+                beta, prim_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
+            ) or np.allclose(beta, prim_beta_twin, rtol=EPS_LENGTH, atol=EPS_ANGLE)
             assert np.allclose(
-                gamma, prim_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-            ) or np.allclose(gamma, prim_gamma_twin, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
+                gamma, prim_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
+            ) or np.allclose(gamma, prim_gamma_twin, rtol=EPS_LENGTH, atol=EPS_ANGLE)
 
             # Check that chirality is the same
             assert np.linalg.det(cell) * old_det > 0
@@ -485,7 +484,7 @@ def test_ORCI_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
 )
 def test_ORCC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
     if (
-        not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+        not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH)
         and compare_numerically(conv_a, "!=", conv_b)
         and compare_numerically(conv_a, "!=", conv_c)
         and compare_numerically(conv_b, "!=", conv_c)
@@ -507,7 +506,7 @@ def test_ORCC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
 
             # Fix the cell
             try:
-                S = _ORCC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+                S = _ORCC_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             except StandardizationTypeMismatch:
                 return
             cell = np.linalg.inv(S.T) @ cell
@@ -515,22 +514,20 @@ def test_ORCC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
             # Check results
             a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
-                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
             assert np.allclose(
-                alpha, prim_alpha, rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                alpha, prim_alpha, rtol=EPS_LENGTH, atol=EPS_LENGTH
             ) or np.allclose(
-                alpha, 180.0 - prim_alpha, rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                alpha, 180.0 - prim_alpha, rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
             assert np.allclose(
-                beta, prim_beta, rtol=EPS_RELATIVE, atol=EPS_LENGTH
-            ) or np.allclose(
-                beta, 180.0 - prim_beta, rtol=EPS_RELATIVE, atol=EPS_LENGTH
-            )
+                beta, prim_beta, rtol=EPS_LENGTH, atol=EPS_LENGTH
+            ) or np.allclose(beta, 180.0 - prim_beta, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             assert np.allclose(
-                gamma, prim_gamma, rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                gamma, prim_gamma, rtol=EPS_LENGTH, atol=EPS_LENGTH
             ) or np.allclose(
-                gamma, 180.0 - prim_gamma, rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                gamma, 180.0 - prim_gamma, rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
 
             # Check that chirality is the same
@@ -549,7 +546,7 @@ def test_ORCC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
     st.integers(min_value=0, max_value=n_order),
 )
 def test_HEX_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
-    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH):
         # Prepare cell
         cell = shuffle(rotate(HEX(conv_a, conv_c), r1, r2, r3), order)
         if is_reasonable(cell):
@@ -563,7 +560,7 @@ def test_HEX_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
 
             # Fix cell
             try:
-                S = _HEX_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+                S = _HEX_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             except StandardizationTypeMismatch:
                 return
             cell = np.linalg.inv(S.T) @ cell
@@ -571,11 +568,11 @@ def test_HEX_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
             # Check results
             a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
-                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
-            assert np.allclose(alpha, prim_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
-            assert np.allclose(beta, prim_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
-            assert np.allclose(gamma, prim_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
+            assert np.allclose(alpha, prim_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE)
+            assert np.allclose(beta, prim_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE)
+            assert np.allclose(gamma, prim_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE)
 
             # Check that chirality is the same
             assert np.linalg.det(cell) * old_det > 0
@@ -601,7 +598,7 @@ def test_HEX_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
     st.integers(min_value=0, max_value=n_order),
 )
 def test_RHL_get_S_matrix(r1, r2, r3, conv_a, conv_alpha, order):
-    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH):
         # Prepare cell
         cell = shuffle(rotate(RHL(conv_a, conv_alpha), r1, r2, r3), order)
         if is_reasonable(cell):
@@ -614,17 +611,17 @@ def test_RHL_get_S_matrix(r1, r2, r3, conv_a, conv_alpha, order):
             old_det = np.linalg.det(cell)
 
             # Fix cell
-            S = _RHL_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+            S = _RHL_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
             a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
-                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
-            assert np.allclose(alpha, prim_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
-            assert np.allclose(beta, prim_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
-            assert np.allclose(gamma, prim_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
+            assert np.allclose(alpha, prim_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE)
+            assert np.allclose(beta, prim_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE)
+            assert np.allclose(gamma, prim_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE)
 
             # Check that chirality is the same
             assert np.linalg.det(cell) * old_det > 0
@@ -654,10 +651,8 @@ def test_RHL_get_S_matrix(r1, r2, r3, conv_a, conv_alpha, order):
 )
 def test_MCL_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order):
     if not np.allclose(
-        [r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH
-    ) and compare_numerically(
-        conv_alpha, "!=", 90.0, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-    ):
+        [r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH
+    ) and compare_numerically(conv_alpha, "!=", 90.0, rtol=EPS_LENGTH, atol=EPS_ANGLE):
         # Prepare cell
         cell = shuffle(
             rotate(MCL(conv_a, conv_b, conv_c, conv_alpha), r1, r2, r3),
@@ -676,7 +671,7 @@ def test_MCL_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order)
 
             # Fix cell
             try:
-                S = _MCL_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+                S = _MCL_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             except StandardizationTypeMismatch:
                 return
             cell = np.linalg.inv(S.T) @ cell
@@ -684,11 +679,11 @@ def test_MCL_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order)
             # Check results
             a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
-                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
-            assert np.allclose(alpha, prim_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
-            assert np.allclose(beta, prim_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
-            assert np.allclose(gamma, prim_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE)
+            assert np.allclose(alpha, prim_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE)
+            assert np.allclose(beta, prim_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE)
+            assert np.allclose(gamma, prim_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE)
 
             # Check that chirality is the same
             assert np.linalg.det(cell) * old_det > 0
@@ -718,7 +713,7 @@ def test_MCL_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order)
     st.integers(min_value=0, max_value=n_order),
 )
 def test_MCLC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order):
-    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+    if not np.allclose([r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH):
         # Prepare cell
         cell = shuffle(
             rotate(MCLC(conv_a, conv_b, conv_c, conv_alpha), r1, r2, r3),
@@ -764,7 +759,7 @@ def test_MCLC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order
 
             # Fix cell
             try:
-                S = _MCLC_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+                S = _MCLC_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             except StandardizationTypeMismatch:
                 return
             cell = np.linalg.inv(S.T) @ cell
@@ -772,67 +767,67 @@ def test_MCLC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order
             # Check results
             a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
-                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+                [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_LENGTH, atol=EPS_LENGTH
             )
 
             assert (
                 compare_numerically(
-                    alpha, "==", prim_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    alpha, "==", prim_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    alpha, "==", prim_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    alpha, "==", prim_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    alpha, "==", prim_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    alpha, "==", prim_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    alpha, "==", 180.0 - prim_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    alpha, "==", 180.0 - prim_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    alpha, "==", 180.0 - prim_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    alpha, "==", 180.0 - prim_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    alpha, "==", 180.0 - prim_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    alpha, "==", 180.0 - prim_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
             )
             assert (
                 compare_numerically(
-                    beta, "==", prim_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    beta, "==", prim_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    beta, "==", prim_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    beta, "==", prim_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    beta, "==", prim_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    beta, "==", prim_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    beta, "==", 180.0 - prim_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    beta, "==", 180.0 - prim_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    beta, "==", 180.0 - prim_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    beta, "==", 180.0 - prim_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    beta, "==", 180.0 - prim_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    beta, "==", 180.0 - prim_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
             )
             assert (
                 compare_numerically(
-                    gamma, "==", prim_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    gamma, "==", prim_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    gamma, "==", prim_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    gamma, "==", prim_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    gamma, "==", prim_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    gamma, "==", prim_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    gamma, "==", 180.0 - prim_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    gamma, "==", 180.0 - prim_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    gamma, "==", 180.0 - prim_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    gamma, "==", 180.0 - prim_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    gamma, "==", 180.0 - prim_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    gamma, "==", 180.0 - prim_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
             )
 
@@ -881,7 +876,7 @@ def test_MCLC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order
 )
 def test_TRI_get_S_matrix(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
     if not np.allclose(
-        [r1, r2, r3], [0, 0, 0], rtol=EPS_RELATIVE, atol=EPS_LENGTH
+        [r1, r2, r3], [0, 0, 0], rtol=EPS_LENGTH, atol=EPS_LENGTH
     ) and parallelepiped_check(a, b, c, alpha, beta, gamma):
         # Prepare cell
         cell = shuffle(
@@ -897,7 +892,7 @@ def test_TRI_get_S_matrix(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
 
             # Fix cell
             try:
-                S = _TRI_get_S_matrix(cell, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+                S = _TRI_get_S_matrix(cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             except StandardizationTypeMismatch:
                 return
             cell = np.linalg.inv(S.T) @ cell
@@ -908,117 +903,117 @@ def test_TRI_get_S_matrix(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
             )
 
             # Check that the cell is standardized
-            if np.allclose(s_k_gamma, 90, rtol=EPS_RELATIVE, atol=EPS_ANGLE):
+            if np.allclose(s_k_gamma, 90, rtol=EPS_LENGTH, atol=EPS_ANGLE):
                 assert (
                     compare_numerically(
-                        s_k_alpha, "<=", 90, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                        s_k_alpha, "<=", 90, rtol=EPS_LENGTH, atol=EPS_ANGLE
                     )
                     and compare_numerically(
-                        s_k_beta, "<=", 90, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                        s_k_beta, "<=", 90, rtol=EPS_LENGTH, atol=EPS_ANGLE
                     )
                     or compare_numerically(
-                        s_k_alpha, ">=", 90, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                        s_k_alpha, ">=", 90, rtol=EPS_LENGTH, atol=EPS_ANGLE
                     )
                     and compare_numerically(
-                        s_k_beta, ">=", 90, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                        s_k_beta, ">=", 90, rtol=EPS_LENGTH, atol=EPS_ANGLE
                     )
                 )
             else:
                 assert (
                     compare_numerically(
-                        s_k_alpha, "<=", 90, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                        s_k_alpha, "<=", 90, rtol=EPS_LENGTH, atol=EPS_ANGLE
                     )
                     and compare_numerically(
-                        s_k_beta, "<=", 90, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                        s_k_beta, "<=", 90, rtol=EPS_LENGTH, atol=EPS_ANGLE
                     )
                     and compare_numerically(
-                        s_k_gamma, "<=", 90, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                        s_k_gamma, "<=", 90, rtol=EPS_LENGTH, atol=EPS_ANGLE
                     )
                     or compare_numerically(
-                        s_k_alpha, ">=", 90, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                        s_k_alpha, ">=", 90, rtol=EPS_LENGTH, atol=EPS_ANGLE
                     )
                     and compare_numerically(
-                        s_k_beta, ">=", 90, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                        s_k_beta, ">=", 90, rtol=EPS_LENGTH, atol=EPS_ANGLE
                     )
                     and compare_numerically(
-                        s_k_gamma, ">=", 90, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                        s_k_gamma, ">=", 90, rtol=EPS_LENGTH, atol=EPS_ANGLE
                     )
                 )
 
             # Check that parameters and angles are the same
             assert (
-                compare_numerically(a, "==", s_a, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
-                or compare_numerically(a, "==", s_b, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
-                or compare_numerically(a, "==", s_c, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+                compare_numerically(a, "==", s_a, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+                or compare_numerically(a, "==", s_b, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+                or compare_numerically(a, "==", s_c, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             )
             assert (
-                compare_numerically(b, "==", s_a, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
-                or compare_numerically(b, "==", s_b, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
-                or compare_numerically(b, "==", s_c, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
+                compare_numerically(b, "==", s_a, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+                or compare_numerically(b, "==", s_b, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+                or compare_numerically(b, "==", s_c, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             )
             assert (
-                compare_numerically(c, "==", s_a, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
-                or compare_numerically(c, "==", s_b, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
-                or compare_numerically(c, "==", s_c, rtol=EPS_RELATIVE, atol=EPS_LENGTH)
-            )
-            assert (
-                compare_numerically(
-                    alpha, "==", s_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-                )
-                or compare_numerically(
-                    alpha, "==", s_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-                )
-                or compare_numerically(
-                    alpha, "==", s_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-                )
-                or compare_numerically(
-                    alpha, "==", 180.0 - s_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-                )
-                or compare_numerically(
-                    alpha, "==", 180.0 - s_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-                )
-                or compare_numerically(
-                    alpha, "==", 180.0 - s_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
-                )
+                compare_numerically(c, "==", s_a, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+                or compare_numerically(c, "==", s_b, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+                or compare_numerically(c, "==", s_c, rtol=EPS_LENGTH, atol=EPS_LENGTH)
             )
             assert (
                 compare_numerically(
-                    beta, "==", s_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    alpha, "==", s_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    beta, "==", s_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    alpha, "==", s_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    beta, "==", s_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    alpha, "==", s_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    beta, "==", 180.0 - s_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    alpha, "==", 180.0 - s_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    beta, "==", 180.0 - s_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    alpha, "==", 180.0 - s_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    beta, "==", 180.0 - s_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    alpha, "==", 180.0 - s_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
             )
             assert (
                 compare_numerically(
-                    gamma, "==", s_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    beta, "==", s_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    gamma, "==", s_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    beta, "==", s_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    gamma, "==", s_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    beta, "==", s_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    gamma, "==", 180.0 - s_alpha, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    beta, "==", 180.0 - s_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    gamma, "==", 180.0 - s_beta, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    beta, "==", 180.0 - s_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
                 or compare_numerically(
-                    gamma, "==", 180.0 - s_gamma, rtol=EPS_RELATIVE, atol=EPS_ANGLE
+                    beta, "==", 180.0 - s_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
+                )
+            )
+            assert (
+                compare_numerically(
+                    gamma, "==", s_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
+                )
+                or compare_numerically(
+                    gamma, "==", s_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
+                )
+                or compare_numerically(
+                    gamma, "==", s_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
+                )
+                or compare_numerically(
+                    gamma, "==", 180.0 - s_alpha, rtol=EPS_LENGTH, atol=EPS_ANGLE
+                )
+                or compare_numerically(
+                    gamma, "==", 180.0 - s_beta, rtol=EPS_LENGTH, atol=EPS_ANGLE
+                )
+                or compare_numerically(
+                    gamma, "==", 180.0 - s_gamma, rtol=EPS_LENGTH, atol=EPS_ANGLE
                 )
             )
 
@@ -1028,7 +1023,7 @@ def test_TRI_get_S_matrix(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
                 np.abs(np.linalg.det(cell)),
                 "==",
                 np.abs(old_det),
-                rtol=EPS_RELATIVE,
+                rtol=EPS_LENGTH,
                 atol=EPS_LENGTH,
             )
             # assert np.linalg.det(cell) * old_det > 0

@@ -31,25 +31,21 @@ EPS_LENGTH = 1e-8
 # then they are considered to be the same.
 EPS_ANGLE = 1e-4
 
-# MIN_LENGTH is a direct consequence of the EPS_LENGTH:
-MIN_LENGTH = EPS_LENGTH
 # MAX_LENGTH is a direct consequence of the EPS_LENGTH:
 # Inverse of the MAX_LENGTH in the real space has to be meaningful
 # in the reciprocal space (>= EPS_LENGTH).
 MAX_LENGTH = 1 / EPS_LENGTH
 
-# MIN_ANGLE is a direct consequence of the EPS_ANGLE
-MIN_ANGLE = EPS_ANGLE  # In degrees
 # No need to define MAX_ANGLE, as it is restricted by 2 pi in the context of wulfric.
 
-# Relative and Absolute accuracy for comparison of two float numbers in the sense
+# Relative and absolute accuracy for comparison of two float numbers in the sense
 # of numpy.allclose(). Used almost exclusively for unit tests.
 ATOL = 1e-8
 RTOL = 1e-5
 
 
 ################################################################################
-#                                   Numerical                                  #
+#                               Angle conversion                               #
 ################################################################################
 TODEGREES = 180.0 / pi
 

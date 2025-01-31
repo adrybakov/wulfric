@@ -25,7 +25,7 @@ from wulfric._numerical import compare_numerically
 from wulfric.cell._basic_manipulation import get_params, get_reciprocal
 from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_standardize import get_conventional
-from wulfric.constants._numerical import EPS_ANGLE, EPS_RELATIVE, TORADIANS
+from wulfric.constants._numerical import EPS_ANGLE, EPS_LENGTH, TORADIANS
 from wulfric.geometry._geometry import get_volume
 
 # Save local scope at this moment
@@ -279,7 +279,7 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, eps: float):
         return "TRI"
 
 
-def get_variation(cell, lattice_type=None, eps_rel=EPS_RELATIVE, angle_tol=EPS_ANGLE):
+def get_variation(cell, lattice_type=None, eps_rel=EPS_LENGTH, angle_tol=EPS_ANGLE):
     r"""
     Return variation of the lattice as define in the paper by Setyawan and Curtarolo [1]_.
 

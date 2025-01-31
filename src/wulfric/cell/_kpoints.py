@@ -25,7 +25,7 @@ from wulfric.cell._basic_manipulation import get_params, get_reciprocal
 from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_standardize import get_C_matrix, get_conventional, get_S_matrix
 from wulfric.cell._sc_variation import get_variation
-from wulfric.constants._numerical import EPS_ANGLE, EPS_RELATIVE, TORADIANS
+from wulfric.constants._numerical import EPS_ANGLE, EPS_LENGTH, TORADIANS
 from wulfric.constants._sc_notation import DEFAULT_K_PATHS, HS_PLOT_NAMES
 
 # Save local scope at this moment
@@ -685,7 +685,7 @@ def get_hs_data(
     lattice_variation=None,
     S_matrix=None,
     C_matrix=None,
-    rtol=EPS_RELATIVE,
+    rtol=EPS_LENGTH,
     atol=EPS_ANGLE,
 ):
     r"""

@@ -23,7 +23,7 @@ import numpy as np
 from termcolor import cprint
 
 from wulfric._numerical import compare_numerically
-from wulfric.constants._numerical import EPS_RELATIVE, TODEGREES, TORADIANS
+from wulfric.constants._numerical import RTOL, TODEGREES, TORADIANS
 from wulfric.geometry._geometry import get_volume
 
 # Save local scope at this moment
@@ -38,7 +38,7 @@ def niggli(
     alpha=90,
     beta=90,
     gamma=90,
-    eps_relative=EPS_RELATIVE,
+    eps_relative=RTOL,
     verbose=False,
     return_cell=False,
     max_iter=10000,
@@ -60,7 +60,7 @@ def niggli(
         Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`. In degrees.
     gamma : float, default 90
         Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`. In degrees.
-    eps_relative : float, default ``EPS_RELATIVE``
+    eps_relative : float, default ``RTOL``
         Relative epsilon as defined in [2]_.
     verbose : bool, default False
         Whether to print the steps of an algorithm.

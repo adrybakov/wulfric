@@ -22,14 +22,14 @@ import numpy as np
 from wulfric.cell._basic_manipulation import get_params
 from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_standardize import get_S_matrix, get_standardized
-from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
+from wulfric.constants._numerical import EPS_LENGTH
 
 # Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def standardize(cell, atoms, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
+def standardize(cell, atoms, S_matrix=None, rtol=EPS_LENGTH, atol=EPS_LENGTH):
     R"""
     Standardize cell with respect to the Bravais lattice type as defined in [1]_.
 
@@ -43,7 +43,7 @@ def standardize(cell, atoms, S_matrix=None, rtol=EPS_RELATIVE, atol=EPS_LENGTH):
         Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
     S_matrix : (3,3) |array-like|_, optional
         Transformation matrix S.
-    rtol : float, default ``EPS_RELATIVE``
+    rtol : float, default ``EPS_LENGTH``
         Relative tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
     atol : float, default ``EPS_LENGTH``
         Absolute tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.

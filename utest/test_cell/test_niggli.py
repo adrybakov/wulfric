@@ -24,7 +24,7 @@ import pytest
 from scipy.spatial.transform import Rotation
 
 from wulfric.cell._niggli import niggli
-from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE, TODEGREES
+from wulfric.constants._numerical import EPS_LENGTH, TODEGREES
 
 ################################################################################
 #                               Service functions                              #
@@ -70,7 +70,7 @@ def test_niggli_from_paper():
         np.array([[4, 9, 9], [9 / 2, 3 / 2, 2]]),
         niggli(a, b, c, alpha, beta, gamma),
         atol=EPS_LENGTH,
-        rtol=EPS_RELATIVE,
+        rtol=EPS_LENGTH,
     )
 
 

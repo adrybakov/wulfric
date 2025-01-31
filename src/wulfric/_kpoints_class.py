@@ -25,7 +25,7 @@ import numpy as np
 from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._kpoints import get_hs_data
 from wulfric.cell._lepage import lepage
-from wulfric.constants._numerical import EPS_ANGLE, EPS_RELATIVE
+from wulfric.constants._numerical import EPS_ANGLE, EPS_LENGTH
 from wulfric.geometry._geometry import absolute_to_relative
 
 # Save local scope at this moment
@@ -128,7 +128,7 @@ class Kpoints:
         lattice_variation=None,
         S_matrix=None,
         C_matrix=None,
-        rtol=EPS_RELATIVE,
+        rtol=EPS_LENGTH,
         atol=EPS_ANGLE,
         n=100,
     ):
@@ -149,7 +149,7 @@ class Kpoints:
             Transformation matrix S.
         C_matrix : (3,3) |array-like|_, optional
             Transformation matrix C.
-        rtol : float, default ``EPS_RELATIVE``
+        rtol : float, default ``EPS_LENGTH``
             Relative tolerance for distance. For definition of lattice type and variation.
         atol : float, default ``EPS_ANGLE``
             Absolute tolerance for angles, in degrees. For definition of lattice type and variation.

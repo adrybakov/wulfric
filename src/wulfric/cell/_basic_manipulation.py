@@ -23,13 +23,7 @@ from math import sin, sqrt
 
 import numpy as np
 
-from wulfric.constants._numerical import (
-    EPS_LENGTH,
-    EPS_RELATIVE,
-    MAX_LENGTH,
-    MIN_LENGTH,
-    TORADIANS,
-)
+from wulfric.constants._numerical import MAX_LENGTH, TORADIANS
 from wulfric.geometry._geometry import get_angle, get_volume, parallelepiped_check
 
 # Save local scope at this moment
@@ -221,7 +215,7 @@ def get_scalar_products(cell):
     )
 
 
-def is_reasonable(cell, eps_lengths=EPS_LENGTH, eps_volume=EPS_RELATIVE):
+def is_reasonable(cell, eps_lengths=1e-10, eps_volume=1e-5):
     r"""
     Check if the cell is *reasonable* (not *degenerate*) in the sense of [1]_.
     Routines of wulfric are tested for reasonable cells and should work as expected if the
@@ -238,20 +232,20 @@ def is_reasonable(cell, eps_lengths=EPS_LENGTH, eps_volume=EPS_RELATIVE):
 
     The cell is *reasonable* if it is *not degenerate*.
 
-    As per advise of the paper [1]_ we take default values of
-    :math:`\varepsilon_{lengths} = 10^{-10}` and :math:`\varepsilon_{volume} = 10^{-5}`.
-    Wulfric is tested with those values.
+
+    Wulfric is tested for reasonable cells with default values of ``eps_lengths`` and
+    ``eps_volume``.
 
 
     Parameters
     ----------
     cell : (3,3) |array-like|_
         Rows are vectors.
-    eps_lengths : float, default ``EPS_LENGTH``
+    eps_lengths : float, default 1e-10
         Default value of :math:`\varepsilon_{lengths}`. We leave the option to change it,
         but do not recommend to do it unless you know exactly what you are doing and what
         the result would mean for the functionalities of the whole package.
-    eps_volume : float, default ``EPS_RELATIVE``
+    eps_volume : float, default 1e-5
         Default value of :math:`\varepsilon_{volume}`. We leave the option to change it,
         but do not recommend to do it unless you know exactly what you are doing and what
         the result would mean for the functionalities of the whole package.

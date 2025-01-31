@@ -22,7 +22,7 @@ import pytest
 from wulfric.cell._basic_manipulation import get_params
 from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_examples import get_cell_example
-from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
+from wulfric.constants._numerical import EPS_LENGTH
 from wulfric.constants._sc_notation import BRAVAIS_LATTICE_VARIATIONS
 
 
