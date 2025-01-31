@@ -7,24 +7,19 @@ Contributor`s guide
 
 We welcome the contribution to the package!
 
-If you're interested in seeing who has already contributed to this project,
-please visit our :ref:`Contributors page <contribute_contributors>`.
-We appreciate all contributions and look forward to see your name on that list!
+If you're interested in seeing who has already contributed to this project, please visit
+our :ref:`Contributors page <contribute_contributors>`. We appreciate all contributions
+and look forward to see your name on that list!
 
-It is not necessary to be a programmer to contribute.
-You can help us with the documentation, :ref:`new features <contribute_feature>`
-and :ref:`finding bugs <contribute_bug>`.
+It is not necessary to be a programmer to contribute. You can help us with documentation,
+:ref:`new features <contribute_feature>` and :ref:`finding bugs <contribute_bug>`.
 
 
-Contribution to the source code is summarized below.
-We assume that you have an account on `<https://github.com>`_
-and familiar with `Git <https://git-scm.com/>`_.
+Contribution to the source code is summarized below. We assume that you have an account on
+`<https://github.com>`_ and familiar with `Git <https://git-scm.com/>`_.
 
 Development workflow
 ====================
-
-For the detailed explanation of the development workflow, please visit
-the corresponding links below.
 
 Fork and clone
 --------------
@@ -49,7 +44,7 @@ Fork and clone
 
     git remote add upstream https://github.com/adrybakov/wulfric.git
 
-* Pull the latest changes from the wulfric repository in necessary::
+* Pull the latest changes from the wulfric repository if necessary::
 
     git pull upstream main
 
@@ -63,15 +58,15 @@ you can install requirements:
 
     pip install -r requirements.txt
 
-* For the package development::
+* Development tools::
 
     pip install -r requirements-dev.txt
 
-* For the documentation::
+* Documentation tools::
 
     pip install -r docs/requirements.txt
 
-* For the tests::
+* Testing tools::
 
     pip install -r utest/requirements.txt
 

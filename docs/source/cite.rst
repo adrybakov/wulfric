@@ -4,13 +4,13 @@
 How to cite us?
 ***************
 
-If you use it, please cite in the following form:
+If you use wulfric in a published work, please cite in the following form:
 
 .. code-block::
 
     wulfric v<version>, wulfric.org.
 
-Use the following BibTeX entry:
+BibTeX entry:
 
 .. code-block:: LaTeX
 
@@ -20,10 +20,3 @@ Use the following BibTeX entry:
         year   = {2023},
         url    = {wulfric.org},
     }
-
-You can consult the version and Git hash in the .txt output files or by running
-the following command in the terminal:
-
-.. code-block:: bash
-
-    wulfric -v
