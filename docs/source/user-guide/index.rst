@@ -4,14 +4,13 @@
 Wulfric user guide
 ******************
 
-Getting started
-===============
+Installations and version
+=========================
 .. toctree::
     :maxdepth: 1
 
-    start/installation
-    start/quickstart
-    start/development
+    installation
+    development
 
 Definitions and conventions
 ===========================

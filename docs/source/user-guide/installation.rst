@@ -87,7 +87,7 @@ Installation from source
 
 .. note:: If you check the content of the ``requirements.txt`` file:
 
-  .. literalinclude:: ../../../../requirements.txt
+  .. literalinclude:: ../../../requirements.txt
 
   You'll see that all dependencies - mandatory and optional - are installed. If you prefer
   to install only mandatory dependencies, you can do it manually.

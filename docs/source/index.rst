@@ -6,7 +6,7 @@ Wulfric
     :maxdepth: 1
     :hidden:
 
-    user-guide/start/installation
+    user-guide/installation
     User Guide <user-guide/index>
     api/index
     release-notes/index
@@ -42,76 +42,44 @@ The functional of wulfric includes (but not limited to):
 
 * Standalone :py:func:`.lepage` and :py:func:`.niggli` algorithms.
 
+Installation
+============
 
-.. grid:: 2
+As any other Python package::
 
-    .. grid-item-card::
-        :img-top: _static/index-images/quickstart.svg
+  pip install wulfric
 
-        Getting Started
-        ^^^^^^^^^^^^^^^
+For the full guide on wulfric installation see :ref:`user-guide_start_installation`.
 
-        Check out the Quickstart Guide.
+How to import wulfric
+=====================
 
-        +++
+To use wulfric in your code import it in a following way:
 
-        .. button-ref:: user-guide/start/quickstart
-            :expand:
-            :color: primary
-            :click-parent:
+.. code-block:: python
 
-            To the quickstart guide
+    import wulfric as wulf
 
-    .. grid-item-card::
-        :img-top: _static/index-images/user-guide.svg
+The shorten import name ``wulf`` simplifies the readability of python code.
+It is used in the examples and we encourage you to try it.
 
-        User Guide
-        ^^^^^^^^^^
+Further reading
+===============
 
-        User guide describes two main ways of using wulfric.
+Good starting point is the :ref:`user-guide_usage_key-concepts` page.
+Afterwards we recommend to continue with the :ref:`user-guide_fundamentals`,
+where examples are given.
 
-        +++
+For the full technical reference of the public part of the package see :ref:`api`.
 
-        .. button-ref:: user-guide/index
-            :expand:
-            :color: primary
-            :click-parent:
+Some of the algorithms implemented in wulfric are described in the
+:ref:`user-guide_library`.
 
-            To the user guide
+For the full description of adopted Bravais lattices and high-symmetry K-points
+see :ref:`user-guide_conventions_bravais-lattices`.
 
-    .. grid-item-card::
-        :img-top: _static/index-images/api.svg
-
-        API Reference
-        ^^^^^^^^^^^^^
-
-        Api Reference guide describes all classes and method of the package,
-        how they work and which parameters they support.
-        +++
-
-        .. button-ref:: api/index
-            :expand:
-            :color: primary
-            :click-parent:
-
-            To the API reference
-
-    .. grid-item-card::
-        :img-top: _static/index-images/contributor.svg
-
-        Contributor's Guide
-        ^^^^^^^^^^^^^^^^^^^
-
-        Every kind of contribution is welcomed!
-
-        +++
-
-        .. button-ref:: contribute/index
-            :expand:
-            :color: primary
-            :click-parent:
-
-            To the contributor's guide
+.. note::
+  The images are interactive over there.
 
 .. note::
   The terminal output is colored by default. However, we respect `NO_COLOR <https://no-color.org/>`_.
