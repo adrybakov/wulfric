@@ -8,17 +8,13 @@ API reference
 
 :Release: |version|
 
-The reference manual describes modules and their objects,
-which may be used for the postprocessing.
-The main interface to the package may be imported as
+The main interface to the package should be imported as
 
-.. code-block:: python
+.. doctest::
 
-   import wulfric as wulf
-
-In the examples across the documentation it is expected to be imported in that way.
-
-
+   >>> import wulfric as wulf
+   >>> # or
+   >>> import wulfric
 
 Sub-modules
 ===========
