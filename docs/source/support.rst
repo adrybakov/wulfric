@@ -16,10 +16,6 @@ A few ways to ask for help or give feedback exist:
   You may need to create an account at github to post a question.
   This is a preferred chanel for the discussions about the development of the project.
 
-* `Discord server <https://discord.gg/BhkTdVuG>`_ (inspired by |siesta|_ developers)
-
-  You may need to create an account at discord to join the server.
-
 Choose the one you prefer.
 
 If you've found a bug or want to request (or discuss) a new feature,
