@@ -37,9 +37,9 @@ from wulfric.constants._numerical import (
 )
 from wulfric.geometry._geometry import (
     absolute_to_relative,
-    angle,
+    get_angle,
+    get_volume,
     parallelepiped_check,
-    volume,
 )
 
 ################################################################################
@@ -86,7 +86,7 @@ def rotate(cell, r1, r2, r3):
 )
 def test_absolute_to_relative(cell, absolute, relative):
     new_relative = absolute_to_relative(absolute, cell)
-    assert (new_relative == relative).all()
+    assert np.allclose(new_relative, relative)
 
 
 ################################################################################
@@ -96,24 +96,24 @@ def test_absolute_to_relative(cell, absolute, relative):
     harrays(float, 3, elements=st.floats(allow_infinity=False, allow_nan=False)),
     harrays(float, 3, elements=st.floats(allow_infinity=False, allow_nan=False)),
 )
-def test_angle(v1, v2):
+def test_get_angle(v1, v2):
     if (
         abs(np.linalg.norm(v1)) > np.finfo(float).eps
         and abs(np.linalg.norm(v2)) > np.finfo(float).eps
     ):
-        result_degrees = angle(v1, v2)
-        result_radians = angle(v1, v2, radians=True)
+        result_degrees = get_angle(v1, v2)
+        result_radians = get_angle(v1, v2, radians=True)
         assert 0.0 <= result_degrees <= 180.0
         assert 0.0 <= result_radians <= pi
     else:
         with pytest.raises(ValueError):
-            result_degrees = angle(v1, v2)
+            result_degrees = get_angle(v1, v2)
 
 
 @example(0)
 @example(0.0000000001)
 @given(st.floats(min_value=-360, max_value=360))
-def test_angle_values(alpha):
+def test_get_angle_values(alpha):
     v1 = np.array([1.0, 0.0, 0.0])
     v2 = np.array([cos(alpha * TORADIANS), sin(alpha * TORADIANS), 0.0])
 
@@ -123,14 +123,14 @@ def test_angle_values(alpha):
     if alpha > 180:
         alpha = 360 - alpha
 
-    assert abs(angle(v1, v2) - alpha) < EPS_LENGTH
+    assert abs(get_angle(v1, v2) - alpha) < EPS_LENGTH
 
 
-def test_angle_raises():
+def test_get_angle_raises():
     with pytest.raises(ValueError):
-        angle([0, 0, 0], [0, 0, 0])
+        get_angle([0, 0, 0], [0, 0, 0])
     with pytest.raises(ValueError):
-        angle([0, 0, 0], [1.0, 0, 0])
+        get_angle([0, 0, 0], [1.0, 0, 0])
 
 
 ################################################################################
@@ -140,8 +140,8 @@ def test_angle_raises():
     "args, result, eps",
     [((4, 4.472, 4.583, 79.03, 64.13, 64.15), 66.3840797, EPS_LENGTH)],
 )
-def test_volume_example(args, result, eps):
-    assert volume(*args) - result < eps
+def test_get_volume_example(args, result, eps):
+    assert get_volume(*args) - result < eps
 
 
 # No need to test the vectors - they take the same route as the cell
@@ -154,9 +154,9 @@ def test_volume_example(args, result, eps):
         float, (3, 3), elements=st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH)
     )
 )
-def test_volume_with_cell(cell):
+def test_get_volume_with_cell(cell):
     # Its an "or" condition
-    assert volume(cell) >= 0
+    assert get_volume(cell) >= 0
 
 
 @given(
@@ -176,9 +176,9 @@ def test_volume_with_cell(cell):
     st.floats(min_value=0, max_value=360),
     st.floats(min_value=0, max_value=360),
 )
-def test_volume_parameters(a, b, c, alpha, beta, gamma):
+def test_get_volume_parameters(a, b, c, alpha, beta, gamma):
     if parallelepiped_check(a, b, c, alpha, beta, gamma):
-        assert volume(a, b, c, alpha, beta, gamma) > 0
+        assert get_volume(a, b, c, alpha, beta, gamma) > 0
 
 
 ################################################################################

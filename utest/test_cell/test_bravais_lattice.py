@@ -19,10 +19,11 @@
 
 import pytest
 
-from wulfric.cell._sc_examples import cell_example
+from wulfric.cell._basic_manipulation import get_reciprocal
+from wulfric.cell._sc_examples import get_cell_example
 from wulfric.cell._sc_standardize import get_standardized
-from wulfric.cell._sc_variation import variation as get_variation
-from wulfric.cell._voronoi import voronoi_cell
+from wulfric.cell._sc_variation import get_variation
+from wulfric.cell._voronoi import _get_voronoi_cell
 from wulfric.constants._sc_notation import (
     BRAVAIS_LATTICE_VARIATIONS as lattice_variations,
 )
@@ -30,10 +31,10 @@ from wulfric.constants._sc_notation import (
 
 @pytest.mark.parametrize("name", lattice_variations, ids=lattice_variations)
 def test_examples(name):
-    cell = cell_example(name)
+    cell = get_cell_example(name)
 
 
-cells = [cell_example(i) for i in lattice_variations]
+cells = [get_cell_example(i) for i in lattice_variations]
 n_edges = [
     12,
     36,
@@ -107,7 +108,7 @@ def test_variants(cell, variation):
     ids=lattice_variations,
 )
 def test_edges(cell, n_edge):
-    edges, vertices = voronoi_cell(cell=cell, reciprocal=True)
+    edges, vertices = _get_voronoi_cell(cell=get_reciprocal(cell))
     assert len(edges) == n_edge
 
 
@@ -117,5 +118,5 @@ def test_edges(cell, n_edge):
     ids=lattice_variations,
 )
 def test_vertices(cell, n_vertex):
-    edges, vertices = voronoi_cell(cell=cell, reciprocal=True)
+    edges, vertices = _get_voronoi_cell(cell=get_reciprocal(cell))
     assert len(vertices) == n_vertex

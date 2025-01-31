@@ -19,9 +19,9 @@
 
 import pytest
 
-from wulfric.cell._basic_manipulation import params
+from wulfric.cell._basic_manipulation import get_params
 from wulfric.cell._lepage import lepage
-from wulfric.cell._sc_examples import cell_example
+from wulfric.cell._sc_examples import get_cell_example
 from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
 from wulfric.constants._sc_notation import BRAVAIS_LATTICE_VARIATIONS
 
@@ -33,9 +33,9 @@ from wulfric.constants._sc_notation import BRAVAIS_LATTICE_VARIATIONS
     "variation", BRAVAIS_LATTICE_VARIATIONS, ids=BRAVAIS_LATTICE_VARIATIONS
 )
 def test_lepage(variation):
-    cell = cell_example(variation)
+    cell = get_cell_example(variation)
     type_name = variation.translate(str.maketrans("", "", "12345ab"))
-    assert lepage(*params(cell)) == type_name
+    assert lepage(*get_params(cell)) == type_name
 
 
 @pytest.mark.parametrize(
@@ -55,7 +55,7 @@ def test_lepage(variation):
     ids=["crsbr", "nii2"],
 )
 def test_custom_lepage(cell, name, eps_relative):
-    assert lepage(*params(cell), eps_relative=eps_relative, eps_angle=0.01) == name
+    assert lepage(*get_params(cell), eps_relative=eps_relative, eps_angle=0.01) == name
 
 
 def test_lepage_paper():

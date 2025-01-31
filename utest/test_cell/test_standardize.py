@@ -26,7 +26,7 @@ from scipy.spatial.transform import Rotation
 
 from wulfric._exceptions import StandardizationTypeMismatch
 from wulfric._numerical import compare_numerically
-from wulfric.cell._basic_manipulation import get_reciprocal, is_reasonable, params
+from wulfric.cell._basic_manipulation import get_params, get_reciprocal, is_reasonable
 from wulfric.cell._sc_constructors import (
     BCC,
     BCT,
@@ -117,7 +117,7 @@ def test_CUB_get_S_matrix(r1, r2, r3, conv_a, order):
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose([a, b, c], [a, a, a], rtol=EPS_RELATIVE, atol=EPS_LENGTH)
             assert np.allclose(
                 [alpha, beta, gamma],
@@ -153,7 +153,7 @@ def test_FCC_get_S_matrix(r1, r2, r3, conv_a, order):
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
                 [a, b, c], [prim_a, prim_a, prim_a], rtol=EPS_RELATIVE, atol=EPS_LENGTH
             )
@@ -192,7 +192,7 @@ def test_BCC_get_S_matrix(r1, r2, r3, conv_a, order):
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
                 [a, b, c], [prim_a, prim_a, prim_a], rtol=EPS_RELATIVE, atol=EPS_LENGTH
             )
@@ -236,7 +236,7 @@ def test_TET_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
                 [a, b, c],
                 [prim_a, prim_a, prim_c],
@@ -283,7 +283,7 @@ def test_BCT_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             alpha *= TORADIANS
             beta *= TORADIANS
             gamma *= TORADIANS
@@ -330,7 +330,7 @@ def test_ORC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
                 [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
             )
@@ -383,7 +383,7 @@ def test_ORCF_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
                 [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
             )
@@ -442,7 +442,7 @@ def test_ORCI_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
                 [a, b, c], [prim, prim, prim], rtol=EPS_RELATIVE, atol=EPS_LENGTH
             )
@@ -513,7 +513,7 @@ def test_ORCC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
                 [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
             )
@@ -569,7 +569,7 @@ def test_HEX_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
                 [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
             )
@@ -618,7 +618,7 @@ def test_RHL_get_S_matrix(r1, r2, r3, conv_a, conv_alpha, order):
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
                 [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
             )
@@ -682,7 +682,7 @@ def test_MCL_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order)
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
                 [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
             )
@@ -770,7 +770,7 @@ def test_MCLC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order
             cell = np.linalg.inv(S.T) @ cell
 
             # Check results
-            a, b, c, alpha, beta, gamma = params(cell)
+            a, b, c, alpha, beta, gamma = get_params(cell)
             assert np.allclose(
                 [a, b, c], [prim_a, prim_b, prim_c], rtol=EPS_RELATIVE, atol=EPS_LENGTH
             )
@@ -892,7 +892,7 @@ def test_TRI_get_S_matrix(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
             prev_cell = cell
             prev_rcell = get_reciprocal(cell)
 
-            k_a, k_b, k_c, k_alpha, k_beta, k_gamma = params(get_reciprocal(cell))
+            k_a, k_b, k_c, k_alpha, k_beta, k_gamma = get_params(get_reciprocal(cell))
             old_det = np.linalg.det(cell)
 
             # Fix cell
@@ -902,8 +902,8 @@ def test_TRI_get_S_matrix(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
                 return
             cell = np.linalg.inv(S.T) @ cell
 
-            s_a, s_b, s_c, s_alpha, s_beta, s_gamma = params(cell)
-            s_k_a, s_k_b, s_k_c, s_k_alpha, s_k_beta, s_k_gamma = params(
+            s_a, s_b, s_c, s_alpha, s_beta, s_gamma = get_params(cell)
+            s_k_a, s_k_b, s_k_c, s_k_alpha, s_k_beta, s_k_gamma = get_params(
                 get_reciprocal(cell)
             )
 

@@ -28,10 +28,10 @@ from scipy.spatial.transform import Rotation
 
 from wulfric.cell._basic_manipulation import (
     from_params,
+    get_params,
     get_reciprocal,
     get_scalar_products,
     is_reasonable,
-    params,
 )
 from wulfric.constants._numerical import EPS_LENGTH, EPS_RELATIVE
 from wulfric.geometry._geometry import parallelepiped_check
@@ -169,7 +169,7 @@ def test_cell_from_param(a, b, c, alpha, beta, gamma):
         cell = from_params(a, b, c, alpha, beta, gamma)
         if is_reasonable(cell, eps_volume=1e-7):
 
-            ap, bp, cp, alphap, betap, gammap = params(cell)
+            ap, bp, cp, alphap, betap, gammap = get_params(cell)
             assert np.allclose(
                 [a, b, c], [ap, bp, cp], rtol=EPS_RELATIVE, atol=EPS_LENGTH
             )
@@ -205,6 +205,6 @@ def test_cell_from_params_example(a, b, c, alpha, beta, gamma, cell):
 @given(
     harrays(float, (3, 3), elements=st.floats(allow_infinity=False, allow_nan=False))
 )
-def test_params_from_cell(cell):
+def test_get_params_from_cell(cell):
     if is_reasonable(cell):
         a, b, c, alpha, beta, gamma = params(cell)
