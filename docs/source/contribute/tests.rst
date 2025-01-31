@@ -10,23 +10,19 @@ Unit tests
 ==========
 
 All unit tests are located in the "utest" directory.
-To run the tests, you can use the following command::
+To run the tests use (on Linux and MacOS)::
 
     make test
 
-Structure of the "utest" directory loosely follows the structure of the "src/wulfric" directory.
-
-For example if you've added a new function named "rotate()" to the :py:class:`.Crystal`
-class from the "src/wulfric/crystal.py" file, you should add a new test function named
-"test_rotate()" to the file "utest/test_crystal.py".
+Structure of the "utest" directory loosely follows the structure of the "src/wulfric"
+directory.
 
 Documentation tests
 ===================
 
 Across the documentation there are many examples of how to use wulfric with code snippets.
-These code snippets are tested using |doctest|_, which ensure that the documentation
-correctly reflects an actual behavior of the code. In order to run doctests you need
-to build the :ref:`documentation <contribute_docs>` and then run the doctests using
-the following command::
+These code snippets are tested using |doctest|_ and ensure that the documentation
+correctly reflects an actual behavior of the code. To run doctests you need to build the
+:ref:`documentation <contribute_docs>` and then run the doctests::
 
     make doctest
