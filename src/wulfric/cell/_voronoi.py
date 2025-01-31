@@ -17,10 +17,16 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numpy as np
-from scipy.spatial import Voronoi
 
 from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.geometry._geometry import get_volume
+
+try:
+    from scipy.spatial import Voronoi
+
+    SCIPY_AVAILABLE = True
+except ImportError:
+    SCIPY_AVAILABLE = False
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -75,6 +81,8 @@ def _get_voronoi_cell(cell):
         Each element is a vector :math:`v = (v_x, v_y, v_z)`.
     """
 
+    if not SCIPY_AVAILABLE:
+        raise ImportError('SciPy is not available. Install it with "pip install scipy"')
     voronoi = Voronoi(_lattice_points(cell, relative=False))
     edges_index = set()
     # Thanks ase for the idea. 13 - is the index of (0,0,0) point.
