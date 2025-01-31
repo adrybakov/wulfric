@@ -23,28 +23,29 @@ from math import pi
 old_dir = set(dir())
 old_dir.add("old_dir")
 
-# Length variables
-# For the linear spatial variables.
-EPS_LENGTH = 1e-10
-# For the linear spatial variables. It serves as eps_volume for is_relative()
-EPS_RELATIVE = 1e-5
+# For the linear spatial variables. If two points are closer than EPS_LENGTH,
+# then they are considered to be the same.
+EPS_LENGTH = 1e-8
+
+# For the angular variables, in degrees. If two angles differs less than EPS_ANGLE,
+# then they are considered to be the same.
+EPS_ANGLE = 1e-4
 
 # MIN_LENGTH is a direct consequence of the EPS_LENGTH:
 MIN_LENGTH = EPS_LENGTH
-
 # MAX_LENGTH is a direct consequence of the EPS_LENGTH:
 # Inverse of the MAX_LENGTH in the real space has to be meaningful
 # in the reciprocal space (>= EPS_LENGTH).
 MAX_LENGTH = 1 / EPS_LENGTH
 
-# TODO Think how to connect angle tolerance with spatial tolerance.
-
-EPS_ANGLE = 1e-4  # For the angular variables, in degrees.
-
 # MIN_ANGLE is a direct consequence of the EPS_ANGLE
 MIN_ANGLE = EPS_ANGLE  # In degrees
-
 # No need to define MAX_ANGLE, as it is restricted by 2 pi in the context of wulfric.
+
+# Relative and Absolute accuracy for comparison of two float numbers in the sense
+# of numpy.allclose(). Used almost exclusively for unit tests.
+ATOL = 1e-8
+RTOL = 1e-5
 
 
 ################################################################################
