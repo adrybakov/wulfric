@@ -8,8 +8,8 @@ Requirement for wulfric installation are:
 
 * |Python|_ (>=3.9)
 * |NumPy|_ (~=1.26)
-* |SciPy|_
 * |termcolor|_
+* |SciPy|_ (optional: [visual])
 * |matplotlib|_ (optional: [visual])
 * |plotly|_ (optional: [visual])
 

@@ -25,7 +25,7 @@ import numpy as np
 from wulfric._kpoints_class import Kpoints
 from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._sc_standardize import get_conventional
-from wulfric.cell._voronoi import get_voronoi_cell
+from wulfric.cell._voronoi import _get_voronoi_cell
 from wulfric.constants import HS_PLOT_NAMES
 from wulfric.geometry._geometry import get_volume
 from wulfric.visualization._interface import AbstractBackend
@@ -501,7 +501,7 @@ class MatplotlibBackend(AbstractBackend):
                 # Ghost point to account for the plot range
                 self.artists[artist_group].append(self.ax.scatter(*tuple(vs[i]), s=0))
 
-        edges, _ = get_voronoi_cell(cell)
+        edges, _ = _get_voronoi_cell(cell)
         for p1, p2 in edges:
             self.artists[artist_group].append(
                 self.ax.plot(

@@ -8,7 +8,7 @@ name = "wulfric"
 license = { text = "GPL-3.0 license" }
 dynamic = ["version"]
 description = "Crystal, Lattice, Atoms, K-path."
-dependencies = ["numpy~=1.26", "scipy", "termcolor"]
+dependencies = ["numpy~=1.26", "termcolor"]
 authors = [{ name = "Andrey Rybakov", email = "rybakov.ad@icloud.com" }]
 requires-python = ">=3.9"
 readme = "README.rst"
@@ -40,7 +40,7 @@ Issues = "https://github.com/adrybakov/wulfric/issues"
 Changelog = "https://wulfric.org/en/main/release-notes/index.html"
 
 [project.optional-dependencies]
-visual = ["plotly", "matplotlib"]
+visual = ["plotly", "matplotlib", "scipy"]
 
 [tool.setuptools.dynamic]
 version = { attr = "wulfric.__version__" }

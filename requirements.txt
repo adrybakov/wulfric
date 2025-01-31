@@ -1,8 +1,8 @@
 # Package dependencies
 numpy~=1.26
-scipy
 termcolor
 
 # Optional package dependencies
+scipy
 matplotlib
 plotly

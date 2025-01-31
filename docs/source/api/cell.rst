@@ -92,12 +92,3 @@ Convetional cell (SC)
 
   get_conventional
   get_C_matrix
-
-
-Other
-=====
-
-.. autosummary::
-  :toctree: generated/
-
-  get_voronoi_cell

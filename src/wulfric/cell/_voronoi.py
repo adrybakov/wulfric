@@ -55,7 +55,7 @@ def _lattice_points(cell, relative=False):
     return lattice_points
 
 
-def get_voronoi_cell(cell):
+def _get_voronoi_cell(cell):
     r"""
     Computes Voronoi edges around (0,0,0) point.
 
