@@ -45,3 +45,4 @@ Methods and algorithms
     :maxdepth: 1
 
     library/lepage
+    library/niggli

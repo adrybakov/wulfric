@@ -95,6 +95,7 @@ docs-pictures:
 	@python3 tools/plot-package-scheme.py
 	@python3 tools/plot-cell-relations.py
 	@python3 tools/plot-atom-magnetic-properties.py
+	@python3 tools/plot-niggli-step-4.py
 
 .ONESHELL:
 requirements:
