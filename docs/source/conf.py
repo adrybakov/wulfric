@@ -267,6 +267,8 @@ custom_links = {
         "ReStructuredText",
         "https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html",
     ),
+    "spglib-niggli": ("Niggli-cell", "https://atztogo.github.io/niggli/"),
+    "InTabCrys": ("International Tables for Crystallography", "https://it.iucr.org/"),
 }
 
 

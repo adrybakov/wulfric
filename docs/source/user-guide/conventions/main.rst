@@ -7,8 +7,8 @@ Basic notation
 On this page we introduce formal definition of the vector and cell and how they stored in
 wulfric.
 
-In wulfric both column vectors and row vectors are stored and manipulated as (3,)
-|NumPy|_ arrays (i.e. the code does not explicitly distinguish the row and column vectors):
+Wulfric stores and manipulates both column vectors and row vectors as (3,) |NumPy|_
+arrays (i.e. the code does not explicitly distinguish the row and column vectors)
 
 .. math::
 
@@ -50,8 +50,8 @@ Cell
 ====
 
 Cell of the lattice is defined by the three lattice vectors
-:math:`\boldsymbol{a}_i = (a_i^x, a_i^y, a_i^z)^T`. In wulfric those vectors are stored as
-a matrix of the form:
+:math:`\boldsymbol{a}_i = (a_i^x, a_i^y, a_i^z)^T`. Wulfric stores those vectors as a
+matrix of the form
 
 .. math::
 
@@ -65,62 +65,70 @@ a matrix of the form:
 
 .. code-block:: python
 
-    cell = [
+    import numpy as np
+    cell = np.array([
         [a1_x, a1_y, a1_z],
         [a2_x, a2_y, a2_z],
         [a3_x, a3_y, a3_z],
-    ]
+    ])
 
-Above definition of the cell is the same as in the |spglib-python|_.
+We note that the definition of the cell is a transpose one of the standard definition in
+|InTabCrys|_ or of |spglib|_ (However, it is the same as in |spglib-python|_). We
+deliberatly choose to define the cell in that way for consistency between the math and
+python code. Formally one can substitute
+:math:`\boldsymbol{A} \rightarrow \boldsymbol{A}^T` and recover the same formulas as in
+|InTabCrys|_. As we try to define all transformation and rotation matrices in the same
+way as in |InTabCrys|_.
 
 Atom's positions
 ================
 
 Atoms positions are stored as vectors of the relative coordinates with respect to the
-cell vectors.
+cell vectors
 
 .. math::
 
-    \boldsymbol{r}
+    \boldsymbol{x}
     =
-    (r_1,r_2,r_3)^T
+    (x_1,x_2,x_3)^T
     =
-    \begin{pmatrix} r_1 \\ r_2 \\ r_3 \end{pmatrix}
+    \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix}
 
 .. code-block:: python
 
     import numpy as np
-    position = np.array([r1, r2, r3])
+    x = np.array([x1, x2, x3])
 
-Cartesian (absolute) coordinates of the atoms can be calculated as
+Cartesian (absolute) coordinates of the atoms also called "radius vector" can be
+calculated as
 
 .. math::
 
-    \boldsymbol{x}^T
+    \boldsymbol{r}^T
     &=
-    \boldsymbol{r}^T \boldsymbol{A}\\
+    \boldsymbol{x}^T \boldsymbol{A}\\
     &\text{or}\\
-    \boldsymbol{x}
+    \boldsymbol{r}
     &=
-    \boldsymbol{A}^T \boldsymbol{r}
+    \boldsymbol{A}^T \boldsymbol{x}
 
 .. code-block:: python
 
-    x = r @ cell
+    r = x @ cell
     # or
-    x = cell.T @ r
+    r = cell.T @ x
 
 .. note::
 
-    Remember, that one-dimensional |NumPy|_ arrays do not distinguish between row and
-    column vectors.
+    Remember that one-dimensional |NumPy|_ arrays effectively do not distinguish between
+    row and column vectors in the context of matrix multiplication.
 
 Reciprocal cell
 ===============
 
 Reciprocal cell is defined by the three reciprocal lattice vectors
-:math:`\boldsymbol{b}_i = (b_i^x, b_i^y, b_i^z)^T`. In wulfric those vectors are stored as
-a matrix
+:math:`\boldsymbol{b}_i = (b_i^x, b_i^y, b_i^z)^T`. Wulfric stores those vectors as a
+matrix
 
 .. math::
 
@@ -134,13 +142,14 @@ a matrix
 
 .. code-block:: python
 
-        reciprocal_cell = [
-            [b1_x, b1_y, b1_z],
-            [b2_x, b2_y, b2_z],
-            [b3_x, b3_y, b3_z],
-        ]
+    import numpy as np
+    reciprocal_cell = np.array([
+        [b1_x, b1_y, b1_z],
+        [b2_x, b2_y, b2_z],
+        [b3_x, b3_y, b3_z],
+    ])
 
-Reciprocal cell is connected with the cell of the lattice as follows:
+Reciprocal cell is connected with the direct cell of the lattice as
 
 .. math::
 
@@ -157,7 +166,7 @@ K-points
 ========
 
 K-points are stored as vectors of the fractional coordinates with respect to the
-reciprocal cell vectors.
+vectors of the reciprocal cell
 
 .. math::
 
@@ -170,7 +179,7 @@ reciprocal cell vectors.
 .. code-block:: python
 
     import numpy as np
-    kpoint = np.array([g1, g2, g3])
+    g = np.array([g1, g2, g3])
 
 Cartesian (absolute) coordinates of the k-points can be calculated as
 
@@ -196,75 +205,69 @@ Cartesian (absolute) coordinates of the k-points can be calculated as
 Transformation of the cell
 ==========================
 
-The choice of the cell of the lattice is not unique. Transformation of the original cell
-:math:`\boldsymbol{A}` to the transformed cell :math:`\boldsymbol{\tilde{A}}` is expressed
-with the transformation matrix :math:`\boldsymbol{P}`:
+For the given lattice the choice of the cell is not unique. Transformation *from* the
+original cell :math:`\boldsymbol{A}` *to* the transformed cell
+:math:`\boldsymbol{\tilde{A}}` is expressed with the transformation matrix
+:math:`\boldsymbol{P}` as
 
 .. math::
 
-    \boldsymbol{A}
+    \boldsymbol{\tilde{A}}
     =
-    \boldsymbol{P}^T \boldsymbol{\tilde{A}}
+    \boldsymbol{P}^T \boldsymbol{A}
 
 .. code-block:: python
 
     import numpy as np
-    cell = P.T @ tcell
-    # tcell <- \tilde{A}
-    tcell = np.linalg.inv(P.T) @ cell
+    # t_cell <- \tilde{A}
+    t_cell = P.T @ cell
+    cell = np.linalg.inv(P.T) @ t_cell
 
-Crystal is not affected by the change of the cell, i.e. the atom's Cartesian
-coordinates are not changed (:math:`\boldsymbol{x} = \boldsymbol{\tilde{x}}`). Therefore,
-the atom's relative positions are transformed as
+Note, that we deliberatly define transformation with the transposition sign. Defined in
+that way matrix :math:`\boldsymbol{P}` is the same as the transformation matrix
+:math:`\boldsymbol{P}` in |InTabCrys|_ Volume A, Chapter 5.1.
+
+It is important to understand that the transformation of the cell describe the *choice*
+of the cell for the given *lattice* or *crystal*. In other words while the **cell is
+changed**, the **lattice or crystal remain intact**. Consecutively, the **Cartesian
+coordinates of atoms are not changed** (:math:`\boldsymbol{x} = \boldsymbol{\tilde{x}}`),
+while its **relative coordinates are transformed** as
 
 .. math::
 
     \boldsymbol{\tilde{r}}
     =
-    \boldsymbol{P}\boldsymbol{r}
-
-.. code-block:: python
-
-        tr = P @ r
-
-.. hint::
-
-    .. math::
-
-        \boldsymbol{x}
-        =
-        \boldsymbol{A}^T \boldsymbol{r}
-        =
-        \boldsymbol{\tilde{A}}^T \boldsymbol{P} \boldsymbol{r}
-        =
-        \boldsymbol{\tilde{x}}
-        =
-        \boldsymbol{\tilde{A}}^T \boldsymbol{\tilde{r}}
-
-Reciprocal cell is changed by the transformation as follows:
-
-.. math::
-
-    \boldsymbol{B}
-    =
-    \boldsymbol{P}^{-1} \boldsymbol{\tilde{B}}
+    \boldsymbol{P}^{-1}\boldsymbol{r}
 
 .. code-block:: python
 
     import numpy as np
-    reciprocal_cell = np.linalg.inv(P) @ reciprocal_tcell
-    # reciprocal_tcell <- \tilde{B}
-    reciprocal_tcell = P @ reciprocal_cell
+    t_r = np.linalg.inv(P) @ r
 
-Relative positions of the k-points are transformed as follows:
+Reciprocal cell is changed by the transformation as
+
+.. math::
+
+    \boldsymbol{\tilde{B}}
+    =
+    \boldsymbol{P}^{-1} \boldsymbol{B}
+
+.. code-block:: python
+
+    import numpy as np
+    # t_reciprocal_cell <- \tilde{B}
+    t_reciprocal_cell = np.linalg.inv(P) @ reciprocal_cell
+    reciprocal_cell = P @ t_reciprocal_cell
+
+Relative positions of the k-points are transformed as
 
 .. math::
 
     \boldsymbol{\tilde{g}}
     =
-    (\boldsymbol{P}^{-1})^T\boldsymbol{g}
+    \boldsymbol{P}^T\boldsymbol{g}
 
 .. code-block:: python
 
     import numpy as np
-    tg = np.linalg.inv(P).T @ g
+    tg = P.T @ g
