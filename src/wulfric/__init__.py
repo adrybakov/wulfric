@@ -1,5 +1,5 @@
 # Wulfric - Crystal, Lattice, Atoms, K-path.
-# Copyright (C) 2023-2024 Andrey Rybakov
+# Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -16,13 +16,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+
 __version__ = "0.4.0"
 __doclink__ = "wulfric.org"
 __git_hash__ = "a581649f7c740a326f6be323517e533f921a214a"
 __release_date__ = "15 October 2024"
 
 
-from . import bravais_lattice
+from . import (
+    bravais_lattice,
+)
 from . import cell as Cell
 from . import (
     constants,
