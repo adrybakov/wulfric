@@ -25,7 +25,7 @@ from wulfric._numerical import compare_numerically
 from wulfric.cell._basic_manipulation import get_params, get_reciprocal
 from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_standardize import get_conventional
-from wulfric.constants._numerical import EPS_ANGLE, EPS_LENGTH, TORADIANS
+from wulfric.constants._numerical import TORADIANS
 from wulfric.geometry._geometry import get_volume
 
 # Save local scope at this moment
@@ -279,7 +279,7 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, eps: float):
         return "TRI"
 
 
-def get_variation(cell, lattice_type=None, eps_rel=EPS_LENGTH, angle_tol=EPS_ANGLE):
+def get_variation(cell, lattice_type=None, eps_rel=1e-8, angle_tol=1e-4):
     r"""
     Return variation of the lattice as define in the paper by Setyawan and Curtarolo [1]_.
 
@@ -290,9 +290,9 @@ def get_variation(cell, lattice_type=None, eps_rel=EPS_LENGTH, angle_tol=EPS_ANG
     lattice_type : str, optional
         One of the 14 lattice types that correspond to the provided ``cell``.
         If not provided, then computed automatically. Case-insensitive.
-    eps_rel : float, default 1e-4
+    eps_rel : float, default TODO
         Relative tolerance for distance.
-    angle_tol : float, default 1e-4
+    angle_tol : float, default TODO
         Absolute tolerance for angles, in degrees.
 
     Returns

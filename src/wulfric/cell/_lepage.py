@@ -23,7 +23,7 @@ import numpy as np
 
 from wulfric._decorate_array import print_2d_array
 from wulfric.cell._basic_manipulation import from_params, get_reciprocal
-from wulfric.constants._numerical import EPS_ANGLE, RTOL, TODEGREES
+from wulfric.constants._numerical import TODEGREES
 from wulfric.geometry._geometry import get_volume, parallelepiped_check
 
 # Save local scope at this moment
@@ -271,11 +271,11 @@ def lepage(
     alpha=90,
     beta=90,
     gamma=90,
-    eps_relative=RTOL,
+    eps_relative=1e-4,
     verbose=False,
     very_verbose=False,
     give_all_results=False,
-    eps_angle=EPS_ANGLE,
+    eps_angle=1e-14,
 ):
     r"""
     Le Page algorithm [1]_.
@@ -294,7 +294,7 @@ def lepage(
         Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`. In degrees.
     gamma : float, default 90
         Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`. In degrees.
-    eps_relative : float, default ``RTOL``
+    eps_relative : float, default TODO
         Relative epsilon.
     verbose : bool, default False
         Whether to print the steps of an algorithm.
@@ -302,7 +302,7 @@ def lepage(
         Whether to print the detailed steps of an algorithm.
     give_all_results : bool, default False
         Whether to give the whole list of consecutive results.
-    eps_angle : float, default ``EPS_ANGLE``
+    eps_angle : float, default TODO
         Maximum angle tolerance, in degrees.
 
     Returns

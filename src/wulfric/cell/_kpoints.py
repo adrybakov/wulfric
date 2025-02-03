@@ -25,7 +25,7 @@ from wulfric.cell._basic_manipulation import get_params, get_reciprocal
 from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_standardize import get_C_matrix, get_conventional, get_S_matrix
 from wulfric.cell._sc_variation import get_variation
-from wulfric.constants._numerical import EPS_ANGLE, EPS_LENGTH, TORADIANS
+from wulfric.constants._numerical import TORADIANS
 from wulfric.constants._sc_notation import DEFAULT_K_PATHS, HS_PLOT_NAMES
 
 # Save local scope at this moment
@@ -685,8 +685,8 @@ def get_hs_data(
     lattice_variation=None,
     S_matrix=None,
     C_matrix=None,
-    rtol=EPS_LENGTH,
-    atol=EPS_ANGLE,
+    rtol=1e-8,
+    atol=1e-4,
 ):
     r"""
     Return high symmetry points for the cell as defined in SC paper.
@@ -708,9 +708,9 @@ def get_hs_data(
         Transformation matrix S.
     C_matrix : (3,3) |array-like|_, optional
         Transformation matrix C.
-    eps_rel : float, default 1e-4
+    eps_rel : float, default TODO
         Relative tolerance for distance. For definition of lattice type and variation.
-    angle_tol : float, default 1e-4
+    angle_tol : float, default TODO
         Absolute tolerance for angles, in degrees. For definition of lattice type and variation.
 
     Returns
