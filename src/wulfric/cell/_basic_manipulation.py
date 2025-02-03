@@ -23,7 +23,7 @@ from math import sin, sqrt
 
 import numpy as np
 
-from wulfric.constants._numerical import MAX_LENGTH, TORADIANS
+from wulfric.constants._numerical import TORADIANS
 from wulfric.geometry._geometry import get_angle, get_volume, parallelepiped_check
 
 # Save local scope at this moment
@@ -219,8 +219,7 @@ def is_reasonable(cell, eps_lengths=1e-10, eps_volume=1e-5):
     r"""
     Check if the cell is *reasonable* (not *degenerate*) in the sense of [1]_.
     Routines of wulfric are tested for reasonable cells and should work as expected if the
-    cell is reasonable. Below we recall the definition of *reasonable* cell from [1]_ and
-    extend it:
+    cell is reasonable. Below we recall the definition of *reasonable* cell from [1]_:
 
     The sell is *degenerate* if
 
@@ -228,10 +227,8 @@ def is_reasonable(cell, eps_lengths=1e-10, eps_volume=1e-5):
           smaller than a certain factor :math:`\varepsilon_{lengths}`.
     (ii)  The unit-cell volume divided by the minimum of the cell
           lengths is smaller than a certain factor :math:`\varepsilon_{volume}`.
-    (iii) Any element of the cell is larger than ``MAX_LENGTH``.
 
     The cell is *reasonable* if it is *not degenerate*.
-
 
     Wulfric is tested for reasonable cells with default values of ``eps_lengths`` and
     ``eps_volume``.
@@ -265,9 +262,6 @@ def is_reasonable(cell, eps_lengths=1e-10, eps_volume=1e-5):
 
     cell = np.array(cell, dtype=float)
 
-    if (np.abs(cell) > MAX_LENGTH).any():
-        return False
-
     cell_volume = get_volume(cell)
 
     # To guarantee finite max and min lengths
@@ -277,10 +271,10 @@ def is_reasonable(cell, eps_lengths=1e-10, eps_volume=1e-5):
     min_length = np.linalg.norm(cell, axis=1).min()
     max_length = np.linalg.norm(cell, axis=1).max()
 
-    if min_length / max_length < eps_lengths:
+    if max_length == 0.0 or min_length / max_length < eps_lengths:
         return False
 
-    if cell_volume / min_length < eps_volume:
+    if min_length == 0.0 or cell_volume / min_length < eps_volume:
         return False
 
     return True

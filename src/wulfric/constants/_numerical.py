@@ -23,27 +23,6 @@ from math import pi
 old_dir = set(dir())
 old_dir.add("old_dir")
 
-# For the linear spatial variables. If two points are closer than EPS_LENGTH,
-# then they are considered to be the same.
-EPS_LENGTH = 1e-8
-
-# For the angular variables, in degrees. If two angles differs less than EPS_ANGLE,
-# then they are considered to be the same.
-EPS_ANGLE = 1e-4
-
-# MAX_LENGTH is a direct consequence of the EPS_LENGTH:
-# Inverse of the MAX_LENGTH in the real space has to be meaningful
-# in the reciprocal space (>= EPS_LENGTH).
-MAX_LENGTH = 1 / EPS_LENGTH
-
-# No need to define MAX_ANGLE, as it is restricted by 2 pi in the context of wulfric.
-
-# Relative and absolute accuracy for comparison of two float numbers in the sense
-# of numpy.allclose(). Used almost exclusively for unit tests.
-ATOL = 1e-8
-RTOL = 1e-5
-
-
 ################################################################################
 #                               Angle conversion                               #
 ################################################################################

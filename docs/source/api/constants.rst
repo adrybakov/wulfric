@@ -34,18 +34,11 @@ K-points (SC)
     DEFAULT_K_PATHS
     HS_PLOT_NAMES
 
-Numerical
-=========
+Angle conversion
+================
 
 .. autosummary::
     :toctree: generated/
 
     TODEGREES
     TORADIANS
-    EPS_LENGTH
-    EPS_ANGLE
-    MIN_LENGTH
-    MAX_LENGTH
-    MIN_ANGLE
-    ATOL
-    RTOL

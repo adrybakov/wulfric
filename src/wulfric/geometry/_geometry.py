@@ -22,7 +22,7 @@ from math import cos, sqrt
 import numpy as np
 
 from wulfric._numerical import compare_numerically
-from wulfric.constants._numerical import EPS_ANGLE, EPS_LENGTH, TODEGREES, TORADIANS
+from wulfric.constants._numerical import TODEGREES, TORADIANS
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -165,8 +165,8 @@ def parallelepiped_check(
     beta,
     gamma,
     raise_error=False,
-    eps_length=EPS_LENGTH,
-    eps_angle=EPS_ANGLE,
+    eps_length=1e-8,
+    eps_angle=1e-4,
 ):
     r"""
     Check if parallelepiped is valid.
@@ -199,10 +199,10 @@ def parallelepiped_check(
         Angle between vectors :math:`\boldsymbol{v_1}` and :math:`\boldsymbol{v_2}`. In degrees.
     raise_error : bool, default False
         Whether to raise error if parameters can not form a parallelepiped.
-    eps_length : float, default ``EPS_LENGTH``
+    eps_length : float, default 1e-8
         Numerical tolerance for the length variables.
-    eps_angle : float, default ``EPS_ANGLE``
-        Numerical tolerance for the angle variables.
+    eps_angle : float, default 1e-4
+        Numerical tolerance for the angle variables. In degrees
 
     Returns
     -------

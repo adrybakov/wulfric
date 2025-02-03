@@ -17,14 +17,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from wulfric.constants._numerical import ATOL, RTOL
-
-# Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def compare_numerically(x, condition, y, eps=None, rtol=RTOL, atol=ATOL):
+def compare_numerically(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
     r"""
     Compare two numbers numerically.
 
@@ -56,9 +53,9 @@ def compare_numerically(x, condition, y, eps=None, rtol=RTOL, atol=ATOL):
 
             eps = atol + rtol * abs(y)
 
-    rtol : float, default ``RTOL``
+    rtol : float, default :math:`10^{-5}`
         Relative tolerance.
-    atol : float, default ``ATOL``
+    atol : float, default :math:`10^{-8}`
         Absolute tolerance.
 
     Returns
