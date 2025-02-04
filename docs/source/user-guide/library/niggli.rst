@@ -39,15 +39,15 @@ organized in a metric matrix as
         \eta/2 & \xi/2 & C \\
     \end{pmatrix}
 
-which is transform by the steps of the algorithm as
+which is transform by the transformation matrix as
 
 .. math::
 
     \boldsymbol{\tilde{G}}
     =
-    \boldsymbol{C}^T
+    \boldsymbol{P}^T
     \boldsymbol{G}
-    \boldsymbol{C}
+    \boldsymbol{P}
 
 
 Algorithm
@@ -56,15 +56,20 @@ Algorithm
 Steps of an algorithm from the paper [1]_ with the transformation matrices from the paper
 [2]_.
 
+Each step of the algorithm transforms the metric matrix if the condition is met.
+If the algorithm generates :math:`N` trtansformations with the transformation matrices
+:math:`\boldsymbol{P}_1, ..., \boldsymbol{P}_N`, then the full transformation matrix is
+:math:`\boldsymbol{P} = \boldsymbol{P}_1 \cdot ... \cdot \boldsymbol{P}_N`.
+
 Step 1
 ------
 
-:math:`A > B` or (:math:`A = B` and :math:`|\xi| > |\eta|`), then swap
+If :math:`A > B` or (:math:`A = B` and :math:`|\xi| > |\eta|`), then swap
 :math:`(A, \xi) \leftrightarrow (B,\eta)`.
 
 .. math::
 
-    \boldsymbol{C} =
+    \boldsymbol{P} =
     \begin{pmatrix}
         0 & -1 & 0 \\
         -1 & 0 & 0 \\
@@ -74,17 +79,19 @@ Step 1
 Step 2
 ------
 
-:math:`B > C` or (:math:`B = C` and :math:`|\eta| > |\zeta|`), then swap
-:math:`(B, \eta) \leftrightarrow (C,\zeta)` and go to step 1.
+If :math:`B > C` or (:math:`B = C` and :math:`|\eta| > |\zeta|`), then swap
+:math:`(B, \eta) \leftrightarrow (C,\zeta)`
 
 .. math::
 
-    \boldsymbol{C} =
+    \boldsymbol{P} =
     \begin{pmatrix}
         -1 & 0 & 0 \\
         0 & 0 & -1 \\
         0 & -1 & 0 \\
     \end{pmatrix}
+
+and go to step 1.
 
 Step 3
 ------
@@ -97,7 +104,7 @@ instead of :math:`\xi \eta \zeta > 0`.
 
 .. math::
 
-    \boldsymbol{C} =
+    \boldsymbol{P} =
     \begin{pmatrix}
         i & 0 & 0 \\
         0 & j & 0 \\
@@ -118,7 +125,7 @@ If :math:`\xi \eta \zeta \leq 0`, then put
 
 .. math::
 
-    \boldsymbol{C} =
+    \boldsymbol{P} =
     \begin{pmatrix}
         i & 0 & 0 \\
         0 & j & 0 \\
@@ -167,7 +174,7 @@ Application of transformation matrix to the metric tensor have the general form:
 
 .. math::
 
-    \boldsymbol{C}^T \boldsymbol{G} \boldsymbol{C}
+    \boldsymbol{P}^T \boldsymbol{G} \boldsymbol{P}
     =
     \begin{pmatrix}
         i^2 A & ij \zeta/2 & ik \eta/2 \\
@@ -190,16 +197,16 @@ If :math:`|\xi| > B` or (:math:`\xi = B` and :math:`2\eta < \zeta`) or
     \eta & = \eta - \zeta \,\text{sign}(\xi) \\
     \xi & = \xi - 2B \,\text{sign}(\xi)
 
-and go to 1.
-
 .. math::
 
-    \boldsymbol{C} =
+    \boldsymbol{P} =
     \begin{pmatrix}
         1 & 0 & 0 \\
         0 & 1 & -\text{sign}(\xi) \\
         0 & 0 & 1 \\
     \end{pmatrix}
+
+and go to step 1.
 
 Step 6
 ------
@@ -212,16 +219,16 @@ If :math:`|\eta| > A` or (:math:`\eta = A` and :math:`2\xi < \zeta`) or
     \xi & = \xi - \zeta \,\text{sign}(\eta) \\
     \eta & = \eta - 2A \,\text{sign}(\eta)
 
-and go to 1.
-
 .. math::
 
-    \boldsymbol{C} =
+    \boldsymbol{P} =
     \begin{pmatrix}
         1 & 0 & -\text{sign}(\eta) \\
         0 & 1 & 0 \\
         0 & 0 & 1 \\
     \end{pmatrix}
+
+and go to step 1.
 
 Step 7
 ------
@@ -234,16 +241,16 @@ If :math:`|\zeta| > A` or (:math:`\zeta = A` and :math:`2\xi < \eta`) or
     \xi & = \xi - \eta \,\text{sign}(\zeta) \\
     \zeta & = \zeta - 2A \,\text{sign}(\zeta)
 
-and go to 1.
-
 .. math::
 
-    \boldsymbol{C} =
+    \boldsymbol{P} =
     \begin{pmatrix}
         1 & -\text{sign}(\zeta) & 0 \\
         0 & 1 & 0 \\
         0 & 0 & 1 \\
     \end{pmatrix}
+
+and go to step 1.
 
 Step 8
 ------
@@ -256,16 +263,16 @@ If :math:`\xi + \eta + \zeta + A + B < 0` or (:math:`\xi + \eta + \zeta + A + B 
     \xi & = 2B + \xi + \zeta \\
     \eta & = 2A + \eta + \zeta
 
-and go to 1.
-
 .. math::
 
-    \boldsymbol{C} =
+    \boldsymbol{P} =
     \begin{pmatrix}
         1 & 0 & 1 \\
         0 & 1 & 1 \\
         0 & 0 & 1 \\
     \end{pmatrix}
+
+and go to step 1.
 
 
 Testing procedure
