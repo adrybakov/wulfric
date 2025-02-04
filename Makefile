@@ -54,9 +54,9 @@ clean:
 	-@rm -r wulfric.egg-info
 	-@rm -r build
 	-@rm -r dist
-	-@rm -r .env*/lib/python3.11/site-packages/wulfric*
+	-@rm -r .env*/lib/python*/site-packages/wulfric*
 	-@rm -r .env*/bin/wulfric*
-	-@rm -r .venv*/lib/python3.11/site-packages/wulfric*
+	-@rm -r .venv*/lib/python*/site-packages/wulfric*
 	-@rm -r .venv*/bin/wulfric*
 
 install:
