@@ -64,7 +64,7 @@ Step 1
 
 .. math::
 
-    \boldsymbol{C}_1 =
+    \boldsymbol{C} =
     \begin{pmatrix}
         0 & -1 & 0 \\
         -1 & 0 & 0 \\
@@ -79,7 +79,7 @@ Step 2
 
 .. math::
 
-    \boldsymbol{C}_1 =
+    \boldsymbol{C} =
     \begin{pmatrix}
         -1 & 0 & 0 \\
         0 & 0 & -1 \\
@@ -97,7 +97,7 @@ instead of :math:`\xi \eta \zeta > 0`.
 
 .. math::
 
-    \boldsymbol{C}_1 =
+    \boldsymbol{C} =
     \begin{pmatrix}
         i & 0 & 0 \\
         0 & j & 0 \\
@@ -118,7 +118,7 @@ If :math:`\xi \eta \zeta \leq 0`, then put
 
 .. math::
 
-    \boldsymbol{C}_1 =
+    \boldsymbol{C} =
     \begin{pmatrix}
         i & 0 & 0 \\
         0 & j & 0 \\
@@ -194,7 +194,7 @@ and go to 1.
 
 .. math::
 
-    \boldsymbol{C}_1 =
+    \boldsymbol{C} =
     \begin{pmatrix}
         1 & 0 & 0 \\
         0 & 1 & -\text{sign}(\xi) \\
@@ -216,7 +216,7 @@ and go to 1.
 
 .. math::
 
-    \boldsymbol{C}_1 =
+    \boldsymbol{C} =
     \begin{pmatrix}
         1 & 0 & -\text{sign}(\eta) \\
         0 & 1 & 0 \\
@@ -238,7 +238,7 @@ and go to 1.
 
 .. math::
 
-    \boldsymbol{C}_1 =
+    \boldsymbol{C} =
     \begin{pmatrix}
         1 & -\text{sign}(\zeta) & 0 \\
         0 & 1 & 0 \\
@@ -260,7 +260,7 @@ and go to 1.
 
 .. math::
 
-    \boldsymbol{C}_1 =
+    \boldsymbol{C} =
     \begin{pmatrix}
         1 & 0 & 1 \\
         0 & 1 & 1 \\
