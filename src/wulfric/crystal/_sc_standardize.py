@@ -78,7 +78,9 @@ def standardize(cell, atoms, S_matrix=None, rtol=1e-4, atol=1e-8):
     cell = get_standardized(cell=cell, S_matrix=S_matrix)
 
     # Recalculate atom's relative coordinates.
-    atoms["positions"] = [S_matrix @ position for position in atoms["positions"]]
+    atoms["positions"] = [
+        np.linalg.inv(S_matrix) @ position for position in atoms["positions"]
+    ]
 
     return cell
 

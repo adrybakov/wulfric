@@ -56,15 +56,7 @@ def get_reciprocal(cell):
 
     """
 
-    vol = get_volume(cell)
-    reciprocal_cell = np.array(
-        [
-            2 * PI / vol * np.cross(cell[1], cell[2]),
-            2 * PI / vol * np.cross(cell[2], cell[0]),
-            2 * PI / vol * np.cross(cell[0], cell[1]),
-        ]
-    )
-    return reciprocal_cell
+    return 2 * PI * np.linalv.inv(cell).T
 
 
 def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
