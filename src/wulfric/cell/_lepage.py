@@ -22,6 +22,7 @@ from math import acos, floor, log10
 import numpy as np
 
 from wulfric._decorate_array import print_2d_array
+from wulfric._exceptions import NiggliReductionFailed
 from wulfric.cell._basic_manipulation import from_params, get_reciprocal
 from wulfric.constants._numerical import TODEGREES
 from wulfric.geometry._geometry import get_volume, parallelepiped_check
@@ -344,7 +345,7 @@ def lepage(
             eps_relative=eps_relative,
             return_cell=True,
         )
-    except:
+    except NiggliReductionFailed:
         import warnings
 
         warnings.warn(

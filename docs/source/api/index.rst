@@ -58,3 +58,4 @@ Exceptions
 
     StandardizationTypeMismatch
     FailedToDeduceAtomSpecies
+    NiggliReductionFailed

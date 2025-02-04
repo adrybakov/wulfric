@@ -42,11 +42,23 @@ class StandardizationTypeMismatch(Exception):
 
 class FailedToDeduceAtomSpecies(Exception):
     r"""
-    Raise when the automatic deduction of the atom species from its name fails.
+    Raised when the automatic deduction of the atom species from its name fails.
     """
 
     def __init__(self, name: str):
         self.message = f"Tried to deduce name from '{name}'. Failed."
+
+    def __str__(self):
+        return self.message
+
+
+class NiggliReductionFailed(Exception):
+    r"""
+    Raised when the niggli reduction reaches ``max_iterations``.
+    """
+
+    def __init__(self, max_iterations: int):
+        self.message = f"Niggli reduction algorithm reached maximum amount of iterations: {max_iterations}"
 
     def __str__(self):
         return self.message

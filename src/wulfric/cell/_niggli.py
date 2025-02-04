@@ -22,6 +22,7 @@ from math import acos, cos, floor, log10, sqrt
 import numpy as np
 from termcolor import cprint
 
+from wulfric._exceptions import NiggliReductionFailed
 from wulfric._numerical import compare_numerically
 from wulfric.constants._numerical import TODEGREES
 from wulfric.geometry._geometry import get_volume
@@ -264,7 +265,7 @@ def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix):
 def niggli(
     cell,
     eps_relative=1e-5,
-    max_iter=10000,
+    max_iterations=10000,
     return_transformation_matrix=False,
 ):
     r"""
@@ -278,7 +279,7 @@ def niggli(
         Cell matrix, rows are interpreted as vectors.
     eps_relative : float, default :math:`10^{-5}`
         Relative epsilon as defined in [2]_.
-    max_iter : int, default 100000
+    max_iterations : int, default 100000
         Maximum number of iterations.
     return_transformation_matrix : bool, default False
         Whether to return a transformation matrix from given ``cell`` to the niggi reduced
@@ -294,7 +295,7 @@ def niggli(
     Raises
     ------
     ValueError
-        If the niggli cell is not found in ``max_iter`` iterations.
+        If the niggli cell is not found in ``max_iterations`` iterations.
     ValueError
         If the provided cell`s volume is zero.
 
@@ -361,8 +362,8 @@ def niggli(
     iter_count = 0
     while True:
 
-        if iter_count > max_iter:
-            raise ValueError(f"Niggli cell not found in {max_iter} iterations")
+        if iter_count > max_iterations:
+            raise NiggliReductionFailed(max_iterations=max_iterations)
 
         # Update metric tensor
         # Note : each iteration changes the transformation matrix
