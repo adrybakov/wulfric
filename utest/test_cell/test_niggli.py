@@ -96,27 +96,3 @@ def test_niggli_example():
 def test_niggli_cell_volume_error():
     with pytest.raises(ValueError):
         niggli(1, 1, 1, 0, 0, 0)
-
-
-# TODO implement test suite as in the paper
-# .. [1] Grosse-Kunstleve, R.W., Sauter, N.K. and Adams, P.D., 2004.
-#         Numerically stable algorithms for the computation of reduced unit cells.
-#         Acta Crystallographica Section A: Foundations of Crystallography,
-#         60(1), pp.1-6.
-
-# TODO: Is the finish of niggli guaranteed or not?
-# @given(
-#     st.floats(min_value=0, max_value=2 * pi),
-#     st.floats(min_value=0, max_value=2 * pi),
-#     st.floats(min_value=0, max_value=2 * pi),
-#     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
-#     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
-#     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
-#     st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
-#     st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
-#     st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
-#     st.integers(min_value=0, max_value=N_ORDER),
-# )
-# def test_niggli_finish(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
-#     if parallelepiped_check(a, b, c, alpha, beta, gamma):
-#         niggli(a, b, c, alpha, beta, gamma)
