@@ -56,7 +56,7 @@ def get_reciprocal(cell):
 
     """
 
-    return 2 * PI * np.linalv.inv(cell).T
+    return 2 * PI * np.linalg.inv(cell).T
 
 
 def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
