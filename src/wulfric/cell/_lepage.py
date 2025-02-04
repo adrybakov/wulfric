@@ -24,6 +24,7 @@ import numpy as np
 from wulfric._decorate_array import print_2d_array
 from wulfric._exceptions import NiggliReductionFailed
 from wulfric.cell._basic_manipulation import from_params, get_reciprocal
+from wulfric.cell._niggli import niggli
 from wulfric.constants._numerical import TODEGREES
 from wulfric.geometry._geometry import get_volume, parallelepiped_check
 
