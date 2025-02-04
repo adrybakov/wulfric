@@ -802,7 +802,7 @@ def get_hs_data(
         # Compute relative coordinates with respect to the
         # non-standardized primitive cell
         # here hs_points[point] <- \tilde{g} and coordinates <- g
-        coordinates.append(S_matrix.T @ hs_points[point])
+        coordinates.append(S_matrix.T @ hs_points[point])  # TODO FIXME
 
         # Post-process two edge cases
         if point == "S" and lattice_type == "BCT":
