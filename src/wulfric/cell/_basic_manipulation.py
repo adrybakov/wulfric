@@ -260,8 +260,6 @@ def is_reasonable(cell, eps_lengths=1e-10, eps_volume=1e-5):
         60(1), pp.1-6.
     """
 
-    cell = np.array(cell, dtype=float)
-
     cell_volume = get_volume(cell)
 
     # To guarantee finite max and min lengths
