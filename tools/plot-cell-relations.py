@@ -95,11 +95,59 @@ def cells():
         **text_style,
     )
 
-    quiver(ax, (89, 95), 26, 0)
-    quiver(ax, (140, 63), 0, 20)
-    ax.text(143, 63, R"$\boldsymbol{C}$", ha="left", va="center", size=25)
-    ax.text(89, 98, R"$\boldsymbol{S}$", ha="center", va="bottom", size=25)
+    ax.text(89, 102, R"$\boldsymbol{S}$", ha="center", va="bottom", size=25)
+    ax.quiver(
+        76,
+        98,
+        26,
+        0,
+        angles="xy",
+        scale_units="xy",
+        scale=1,
+        headlength=3,
+        headaxislength=2.7,
+        color="#728EFC",
+    )
+    ax.text(89, 88, R"$\boldsymbol{S}^{-1}$", ha="center", va="top", size=25)
+    ax.quiver(
+        102,
+        92,
+        -26,
+        0,
+        angles="xy",
+        scale_units="xy",
+        scale=1,
+        headlength=3,
+        headaxislength=2.7,
+        color="#728EFC",
+    )
 
+    ax.text(145, 63, R"$\boldsymbol{C}$", ha="left", va="center", size=25)
+    ax.quiver(
+        143,
+        73,
+        0,
+        -20,
+        angles="xy",
+        scale_units="xy",
+        scale=1,
+        headlength=3,
+        headaxislength=2.7,
+        color="#728EFC",
+    )
+    ax.text(135, 63, R"$\boldsymbol{C}^{-1}$", ha="right", va="center", size=25)
+    ax.quiver(
+        137,
+        53,
+        0,
+        20,
+        angles="xy",
+        scale_units="xy",
+        scale=1,
+        headlength=3,
+        headaxislength=2.7,
+        color="#728EFC",
+    )
     ax.quiver(
         40,
         76,

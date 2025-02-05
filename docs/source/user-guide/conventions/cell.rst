@@ -37,9 +37,9 @@ are defined: conventional one and primitive one. We use transformation matrix
 
 .. math::
 
-    \boldsymbol{A}
+    \boldsymbol{A^s}
     =
-    \boldsymbol{S}^T \boldsymbol{A^S}
+    \boldsymbol{S}^T \boldsymbol{A}
 
 and transformation matrix :math:`\boldsymbol{C}` to compute the **standardized
 conventional** cell
@@ -47,9 +47,9 @@ conventional** cell
 .. math::
 
 
-    \boldsymbol{A^s}
+    \boldsymbol{A^{cs}}
     =
-    \boldsymbol{C}^T \boldsymbol{A^{cs}}
+    \boldsymbol{C}^T \boldsymbol{A^s}
 
 Details on the construction of matrices :math:`\boldsymbol{S}` and exact forms of matrices
 :math:`\boldsymbol{C}` are provided in the individual pages for each of the 14
