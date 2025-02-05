@@ -5,7 +5,7 @@ repos:
   rev: 0.2.1
   hooks:
   - id: license-headers
-    exclude: 'docs/source/user-guide/library/bravais-lattices/.*/.*.py'
+    exclude: 'docs/source/user-guide/conventions/bravais-lattices/.*/.*.py'
     args:
       - --license-file
       - L-HEADER
