@@ -81,8 +81,6 @@ No standardization required.
     =
     \boldsymbol{S}^{-1}
     =
-    \boldsymbol{S}^T
-    =
     \begin{pmatrix}
       1 & 0 & 0 \\
       0 & 1 & 0 \\
