@@ -56,6 +56,7 @@ def main():
             f"        {Ci[1][0]:g} & {Ci[1][1]:g} & {Ci[1][2]:g} " R"\\",
             f"        {Ci[2][0]:g} & {Ci[2][1]:g} & {Ci[2][2]:g} " R"\\",
             R"    \end{pmatrix}",
+            "",
         )
 
         with open(os.path.join(OUTPUT_PATH, folder_name, "C_matrix.inc"), "w") as file:
