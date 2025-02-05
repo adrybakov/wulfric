@@ -1083,7 +1083,7 @@ def get_conventional(cell, S_matrix=None, C_matrix=None, rtol=1e-8, atol=1e-8):
     else:
         S_matrix = np.array(S_matrix, dtype=float)
 
-    return np.linalg.inv(C_matrix @ S_matrix).T @ cell
+    return C_matrix.T @ S_matrix.T @ cell
 
 
 # Populate __all__ with objects defined in this file
