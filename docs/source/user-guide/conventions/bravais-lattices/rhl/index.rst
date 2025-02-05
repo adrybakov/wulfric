@@ -8,37 +8,22 @@ Rhombohedral (RHL)
 
 **Constructor**:  :py:func:`.RHL`
 
-It is defined by two parameter: :math:`a` and :math:`\alpha`
-with primitive and conventional cell:
+It is defined by two parameters :math:`a` and :math:`\alpha`. Standardized primitive and
+conventional cells in the default orientation are
 
 .. math::
 
     \begin{matrix}
-    \boldsymbol{a}_1 &=& \boldsymbol{a}_1^c &=& (a\cos(\alpha / 2), &-a\sin(\alpha/2), &0)\\
-    \boldsymbol{a}_2 &=& \boldsymbol{a}_2^c &=& (a\cos(\alpha / 2), &a\sin(\alpha/2), &0)\\
-    \boldsymbol{a}_3 &=& \boldsymbol{a}_3^c &=& \left(\dfrac{\cos\alpha}{\cos(\alpha/2)}\right.,
-    &0, &\left.a\sqrt{1 - \dfrac{\cos^2\alpha}{\cos^2(\alpha/2)}}\right)
+        \boldsymbol{a}_1^s &=& \boldsymbol{a}_1^{cs} &=& (a\cos(\alpha / 2), &-a\sin(\alpha/2), &0)\\
+        \boldsymbol{a}_2^s &=& \boldsymbol{a}_2^{cs} &=& (a\cos(\alpha / 2), &a\sin(\alpha/2), &0)\\
+        \boldsymbol{a}_3^s &=& \boldsymbol{a}_3^{cs} &=& \left(\dfrac{\cos\alpha}{\cos(\alpha/2)}\right.,
+        &0, &\left.a\sqrt{1 - \dfrac{\cos^2\alpha}{\cos^2(\alpha/2)}}\right)
     \end{matrix}
 
-with
+Transformation matrix from standardized primitive cell to standardized conventional cell
+is
 
-.. math::
-
-    \boldsymbol{C}
-    =
-    \begin{pmatrix}
-      1 & 0 & 0 \\
-      0 & 1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{C}^{-1}
-    =
-    \begin{pmatrix}
-      1 & 0 & 0 \\
-      0 & 1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
+.. include:: C_matrix.inc
 
 K-path
 ======
@@ -55,22 +40,22 @@ RHL\ :sub:`1`
     \nu = \dfrac{3-2\eta}{4}
     \end{matrix}
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{B}`         :math:`\eta`                    :math:`1/2`                     :math:`1 - \eta`
-:math:`\mathrm{B_1}`       :math:`1/2`                     :math:`1-\eta`                  :math:`\eta - 1`
-:math:`\mathrm{F}`         :math:`1/2`                     :math:`1/2`                     :math:`0`
-:math:`\mathrm{L}`         :math:`1/2`                     :math:`0`                       :math:`0`
-:math:`\mathrm{L_1}`       :math:`0`                       :math:`0`                       :math:`-1/2`
-:math:`\mathrm{P}`         :math:`\eta`                    :math:`\nu`                     :math:`\nu`
-:math:`\mathrm{P_1}`       :math:`1-\nu`                   :math:`1-\nu`                   :math:`1-\eta`
-:math:`\mathrm{P_2}`       :math:`\nu`                     :math:`\nu`                     :math:`\eta - 1`
-:math:`\mathrm{Q}`         :math:`1-\nu`                   :math:`\nu`                     :math:`0`
-:math:`\mathrm{X}`         :math:`\nu`                     :math:`0`                       :math:`-\nu`
-:math:`\mathrm{Z}`         :math:`1/2`                     :math:`1/2`                     :math:`1/2`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{B}`         :math:`\eta`                      :math:`1/2`                       :math:`1 - \eta`
+:math:`\mathrm{B_1}`       :math:`1/2`                       :math:`1-\eta`                    :math:`\eta - 1`
+:math:`\mathrm{F}`         :math:`1/2`                       :math:`1/2`                       :math:`0`
+:math:`\mathrm{L}`         :math:`1/2`                       :math:`0`                         :math:`0`
+:math:`\mathrm{L_1}`       :math:`0`                         :math:`0`                         :math:`-1/2`
+:math:`\mathrm{P}`         :math:`\eta`                      :math:`\nu`                       :math:`\nu`
+:math:`\mathrm{P_1}`       :math:`1-\nu`                     :math:`1-\nu`                     :math:`1-\eta`
+:math:`\mathrm{P_2}`       :math:`\nu`                       :math:`\nu`                       :math:`\eta - 1`
+:math:`\mathrm{Q}`         :math:`1-\nu`                     :math:`\nu`                       :math:`0`
+:math:`\mathrm{X}`         :math:`\nu`                       :math:`0`                         :math:`-\nu`
+:math:`\mathrm{Z}`         :math:`1/2`                       :math:`1/2`                       :math:`1/2`
+=========================  ================================  ================================  ================================
 
 RHL\ :sub:`2`
 -------------

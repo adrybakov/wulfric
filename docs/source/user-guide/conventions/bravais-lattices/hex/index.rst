@@ -8,46 +8,37 @@ Hexagonal (HEX)
 
 **Constructor**:  :py:func:`.HEX`
 
-It is defined by two parameter: :math:`a` and :math:`c`
-with primitive and conventional cell:
+It is defined by two parameters :math:`a` and :math:`c`. Standardized primitive and
+conventional cells in the default orientation are
 
 .. math::
 
-    \begin{matrix}
-    \boldsymbol{a}_1 &=& \boldsymbol{a}_1^c &=& (\frac{a}{2}, &\frac{-a\sqrt{3}}{2}, &0)\\
-    \boldsymbol{a}_2 &=& \boldsymbol{a}_2^c &=& (\frac{a}{2}, &\frac{a\sqrt{3}}{2}, &0)\\
-    \boldsymbol{a}_3 &=& \boldsymbol{a}_3^c &=& (0, &0, &c)
-    \end{matrix}
+  \begin{matrix}
+    \boldsymbol{a}_1^s &=& \boldsymbol{a}_1^{cs} &=& (\frac{a}{2}, &\frac{-a\sqrt{3}}{2}, &0)\\
+    \boldsymbol{a}_2^s &=& \boldsymbol{a}_2^{cs} &=& (\frac{a}{2}, &\frac{a\sqrt{3}}{2}, &0)\\
+    \boldsymbol{a}_3^s &=& \boldsymbol{a}_3^{cs} &=& (0, &0, &c)
+  \end{matrix}
 
-with
+Transformation matrix from standardized primitive cell to standardized conventional cell
+is
 
-.. math::
-
-    \boldsymbol{C}
-    =
-    \boldsymbol{C}^{-1}
-    =
-    \begin{pmatrix}
-      1 & 0 & 0 \\
-      0 & 1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
+.. include:: C_matrix.inc
 
 K-path
 ======
 
 :math:`\mathrm{\Gamma-M-K-\Gamma-A-L-H-A\vert L-M\vert K-H}`
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{A}`         :math:`0`                       :math:`0`                       :math:`1/2`
-:math:`\mathrm{H}`         :math:`1/3`                     :math:`1/3`                     :math:`1/2`
-:math:`\mathrm{K}`         :math:`1/3`                     :math:`1/3`                     :math:`0`
-:math:`\mathrm{L}`         :math:`1/2`                     :math:`0`                       :math:`1/2`
-:math:`\mathrm{M}`         :math:`1/2`                     :math:`0`                       :math:`0`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{A}`         :math:`0`                         :math:`0`                         :math:`1/2`
+:math:`\mathrm{H}`         :math:`1/3`                       :math:`1/3`                       :math:`1/2`
+:math:`\mathrm{K}`         :math:`1/3`                       :math:`1/3`                       :math:`0`
+:math:`\mathrm{L}`         :math:`1/2`                       :math:`0`                         :math:`1/2`
+:math:`\mathrm{M}`         :math:`1/2`                       :math:`0`                         :math:`0`
+=========================  ================================  ================================  ================================
 
 Variations
 ==========

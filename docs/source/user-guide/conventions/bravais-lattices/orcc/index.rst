@@ -8,49 +8,31 @@ Base-centred orthorhombic (ORCC)
 
 **Constructor**:  :py:func:`.ORCC`
 
-It is defined by three parameter: :math:`a`, :math:`b` and :math:`c`
-with conventional cell:
+It is defined by three parameters :math:`a`, :math:`b` and :math:`c` with
+:math:`a < b`. Standardized primitive and conventional cells in the default
+orientation are
 
 .. math::
 
-    \begin{matrix}
-    \boldsymbol{a}_1 &=& (a, &0, &0)\\
-    \boldsymbol{a}_2 &=& (0, &b, &0)\\
-    \boldsymbol{a}_3 &=& (0, &0, &c)
-    \end{matrix}
-
-And primitive cell:
+  \begin{matrix}
+    \boldsymbol{a}_1^s &=& (a/2, &-b/2, &0)\\
+    \boldsymbol{a}_2^s &=& (a/2, &b/2, &0)\\
+    \boldsymbol{a}_3^s &=& (0, &0, &c)
+  \end{matrix}
 
 .. math::
 
-    \begin{matrix}
-        \boldsymbol{a}_1 &=& (a/2, &-b/2, &0)\\
-        \boldsymbol{a}_2 &=& (a/2, &b/2, &0)\\
-        \boldsymbol{a}_3 &=& (0, &0, &c)
-    \end{matrix}
+  \begin{matrix}
+    \boldsymbol{a}_1^{cs} &=& (a, &0, &0)\\
+    \boldsymbol{a}_2^{cs} &=& (0, &b, &0)\\
+    \boldsymbol{a}_3^{cs} &=& (0, &0, &c)
+  \end{matrix}
 
-with
+Transformation matrix from standardized primitive cell to standardized conventional cell
+is
 
-.. math::
+.. include:: C_matrix.inc
 
-    \boldsymbol{C}
-    =
-    \dfrac{1}{2}
-    \begin{pmatrix}
-      1 & 1 & 0 \\
-      -1 & 1 & 0 \\
-      0 & 0 & 2
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{C}^{-1}
-    =
-    \begin{pmatrix}
-      1 & -1 & 0 \\
-      1 & 1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
-
-Order of parameters: :math:`a < b`
 
 K-path
 ======
@@ -59,22 +41,22 @@ K-path
 
 .. math::
 
-    \zeta = \dfrac{1 + a^2/b^2}{4}
+  \zeta = \dfrac{1 + a^2/b^2}{4}
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{A}`         :math:`\zeta`                   :math:`\zeta`                   :math:`1/2`
-:math:`\mathrm{A_1}`       :math:`-\zeta`                  :math:`1-\zeta`                 :math:`1/2`
-:math:`\mathrm{R}`         :math:`0`                       :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{S}`         :math:`0`                       :math:`1/2`                     :math:`0`
-:math:`\mathrm{T}`         :math:`-1/2`                    :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{X}`         :math:`\zeta`                   :math:`\zeta`                   :math:`0`
-:math:`\mathrm{X_1}`       :math:`-\zeta`                  :math:`1-\zeta`                 :math:`0`
-:math:`\mathrm{Y}`         :math:`-1/2`                    :math:`1/2`                     :math:`0`
-:math:`\mathrm{Z}`         :math:`0`                       :math:`0`                       :math:`1/2`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{A}`         :math:`\zeta`                     :math:`\zeta`                     :math:`1/2`
+:math:`\mathrm{A_1}`       :math:`-\zeta`                    :math:`1-\zeta`                   :math:`1/2`
+:math:`\mathrm{R}`         :math:`0`                         :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{S}`         :math:`0`                         :math:`1/2`                       :math:`0`
+:math:`\mathrm{T}`         :math:`-1/2`                      :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{X}`         :math:`\zeta`                     :math:`\zeta`                     :math:`0`
+:math:`\mathrm{X_1}`       :math:`-\zeta`                    :math:`1-\zeta`                   :math:`0`
+:math:`\mathrm{Y}`         :math:`-1/2`                      :math:`1/2`                       :math:`0`
+:math:`\mathrm{Z}`         :math:`0`                         :math:`0`                         :math:`1/2`
+=========================  ================================  ================================  ================================
 
 
 Variations

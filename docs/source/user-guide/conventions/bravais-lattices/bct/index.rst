@@ -8,49 +8,30 @@ Body-centred tetragonal (BCT)
 
 **Constructor**:  :py:func:`.BCT`
 
-It is defined by two parameters: :math:`a` and :math:`c` with
-conventional cell:
+It is defined by two parameters :math:`a` and :math:`c` with :math:`a \ne c`.
+Standardized primitive and conventional cells in the default orientation are
 
 .. math::
 
     \begin{matrix}
-    \boldsymbol{a}_1^c &=& (a, &0, &0)\\
-    \boldsymbol{a}_2^c &=& (0, &a, &0)\\
-    \boldsymbol{a}_3^c &=& (0, &0, &c)
+    \boldsymbol{a}_1^s &=& (-a/2, &a/2, &c/2)\\
+    \boldsymbol{a}_2^s &=& (a/2, &-a/2, &c/2)\\
+    \boldsymbol{a}_3^s &=& (a/2, &a/2, &-c/2)
     \end{matrix}
-
-And primitive cell:
 
 .. math::
 
     \begin{matrix}
-    \boldsymbol{a}_1 &=& (-a/2, &a/2, &c/2)\\
-    \boldsymbol{a}_2 &=& (a/2, &-a/2, &c/2)\\
-    \boldsymbol{a}_3 &=& (a/2, &a/2, &-c/2)
+    \boldsymbol{a}_1^{cs} &=& (a, &0, &0)\\
+    \boldsymbol{a}_2^{cs} &=& (0, &a, &0)\\
+    \boldsymbol{a}_3^{cs} &=& (0, &0, &c)
     \end{matrix}
 
-with
+Transformation matrix from standardized primitive cell to standardized conventional cell
+is
 
-.. math::
+.. include:: C_matrix.inc
 
-    \boldsymbol{C}
-    =
-    \dfrac{1}{2}
-    \begin{pmatrix}
-      -1 & 1 & 1 \\
-      1 & -1 & 1 \\
-      1 & 1 & -1
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{C}^{-1}
-    =
-    \begin{pmatrix}
-      0 & 1 & 1 \\
-      1 & 0 & 1 \\
-      1 & 1 & 0
-    \end{pmatrix}
-
-Order of parameters: :math:`a \ne c`
 
 K-path
 ======
@@ -64,17 +45,17 @@ BCT\ :sub:`1`
 
     \eta = \dfrac{1 + c^2/a^2}{4}
 
-=======================  ==============================  ==============================  ==============================
-Point                    :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=======================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`  :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{M}`       :math:`-1/2`                    :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{N}`       :math:`0`                       :math:`1/2`                     :math:`0`
-:math:`\mathrm{P}`       :math:`1/4`                     :math:`1/4`                     :math:`1/4`
-:math:`\mathrm{X}`       :math:`0`                       :math:`0`                       :math:`1/2`
-:math:`\mathrm{Z}`       :math:`\eta`                    :math:`\eta`                    :math:`-\eta`
-:math:`\mathrm{Z}_1`     :math:`-\eta`                   :math:`1-\eta`                  :math:`\eta`
-=======================  ==============================  ==============================  ==============================
+=======================  ================================  ================================  ================================
+Point                    :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=======================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`  :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{M}`       :math:`-1/2`                      :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{N}`       :math:`0`                         :math:`1/2`                       :math:`0`
+:math:`\mathrm{P}`       :math:`1/4`                       :math:`1/4`                       :math:`1/4`
+:math:`\mathrm{X}`       :math:`0`                         :math:`0`                         :math:`1/2`
+:math:`\mathrm{Z}`       :math:`\eta`                      :math:`\eta`                      :math:`-\eta`
+:math:`\mathrm{Z}_1`     :math:`-\eta`                     :math:`1-\eta`                    :math:`\eta`
+=======================  ================================  ================================  ================================
 
 BCT\ :sub:`2`
 -------------
@@ -88,19 +69,19 @@ BCT\ :sub:`2`
     \zeta = \dfrac{a^2}{2c^2}
     \end{matrix}
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{N}`         :math:`0`                       :math:`1/2`                     :math:`0`
-:math:`\mathrm{P}`         :math:`1/4`                     :math:`1/4`                     :math:`1/4`
-:math:`\mathrm{\Sigma}`    :math:`-\eta`                   :math:`\eta`                    :math:`\eta`
-:math:`\mathrm{\Sigma_1}`  :math:`\eta`                    :math:`1-\eta`                  :math:`-\eta`
-:math:`\mathrm{X}`         :math:`0`                       :math:`0`                       :math:`1/2`
-:math:`\mathrm{Y}`         :math:`-\zeta`                  :math:`\zeta`                   :math:`1/2`
-:math:`\mathrm{Y}_1`       :math:`1/2`                     :math:`1/2`                     :math:`-\zeta`
-:math:`\mathrm{Z}`         :math:`1/2`                     :math:`1/2`                     :math:`-1/2`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{N}`         :math:`0`                         :math:`1/2`                       :math:`0`
+:math:`\mathrm{P}`         :math:`1/4`                       :math:`1/4`                       :math:`1/4`
+:math:`\mathrm{\Sigma}`    :math:`-\eta`                     :math:`\eta`                      :math:`\eta`
+:math:`\mathrm{\Sigma_1}`  :math:`\eta`                      :math:`1-\eta`                    :math:`-\eta`
+:math:`\mathrm{X}`         :math:`0`                         :math:`0`                         :math:`1/2`
+:math:`\mathrm{Y}`         :math:`-\zeta`                    :math:`\zeta`                     :math:`1/2`
+:math:`\mathrm{Y}_1`       :math:`1/2`                       :math:`1/2`                       :math:`-\zeta`
+:math:`\mathrm{Z}`         :math:`1/2`                       :math:`1/2`                       :math:`-1/2`
+=========================  ================================  ================================  ================================
 
 
 Variations

@@ -8,31 +8,23 @@ Triclinic (TRI)
 
 **Constructor**:  :py:func:`.TRI`
 
-It is defined by six parameters: :math:`a`, :math:`b`, :math:`c` and
-:math:`\alpha`, :math:`\beta`, :math:`\gamma`.
-with primitive and conventional cell:
+It is defined by six parameters: :math:`a`, :math:`b`, :math:`c` and :math:`\alpha`,
+:math:`\beta`, :math:`\gamma`. Standardized primitive and conventional cells in the
+default orientation are
 
 .. math::
 
-    \begin{matrix}
-    \boldsymbol{a}_1 = (a, 0, 0)\\
-    \boldsymbol{a}_2 = (b\cos\gamma, b\sin\gamma, 0)\\
-    \boldsymbol{a}_3 = (c\cos\beta, \dfrac{c(\cos\alpha - \cos\beta\cos\gamma)}{\sin\gamma}, \dfrac{c}{\sin\gamma}\sqrt{\sin^2\gamma - \cos^2\alpha - \cos^2\beta + 2\cos\alpha\cos\beta\cos\gamma})
-    \end{matrix}
+  \begin{matrix}
+    \boldsymbol{a}_1^s &=& \boldsymbol{a}_1^{cs} &=& (a, &0, &0)\\
+    \boldsymbol{a}_2^s &=& \boldsymbol{a}_2^{cs} &=& (b\cos\gamma, &b\sin\gamma, &0)\\
+    \boldsymbol{a}_3^s &=& \boldsymbol{a}_3^{cs} &=& (c\cos\beta, &\dfrac{c(\cos\alpha - \cos\beta\cos\gamma)}{\sin\gamma}, &\dfrac{c}{\sin\gamma}\sqrt{\sin^2\gamma - \cos^2\alpha - \cos^2\beta + 2\cos\alpha\cos\beta\cos\gamma})
+  \end{matrix}
 
-with
+Transformation matrix from standardized primitive cell to standardized conventional cell
+is
 
-.. math::
+.. include:: C_matrix.inc
 
-    \boldsymbol{C}
-    =
-    \boldsymbol{C}^{-1}
-    =
-    \begin{pmatrix}
-      1 & 0 & 0 \\
-      0 & 1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
 
 K-path
 ======
@@ -42,72 +34,72 @@ TRI\ :sub:`1a`
 
 :math:`\mathrm{X-\Gamma-Y\vert L-\Gamma-Z\vert N-\Gamma-M\vert R-\Gamma}`
 
-=======================  ==============================  ==============================  ==============================
-Point                    :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=======================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`  :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{L}`       :math:`1/2`                     :math:`1/2`                     :math:`0`
-:math:`\mathrm{M}`       :math:`0`                       :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{N}`       :math:`1/2`                     :math:`0`                       :math:`1/2`
-:math:`\mathrm{R}`       :math:`1/2`                     :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{X}`       :math:`1/2`                     :math:`0`                       :math:`0`
-:math:`\mathrm{Y}`       :math:`0`                       :math:`1/2`                     :math:`0`
-:math:`\mathrm{Z}`       :math:`0`                       :math:`0`                       :math:`1/2`
-=======================  ==============================  ==============================  ==============================
+=======================  ================================  ================================  ================================
+Point                    :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=======================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`  :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{L}`       :math:`1/2`                       :math:`1/2`                       :math:`0`
+:math:`\mathrm{M}`       :math:`0`                         :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{N}`       :math:`1/2`                       :math:`0`                         :math:`1/2`
+:math:`\mathrm{R}`       :math:`1/2`                       :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{X}`       :math:`1/2`                       :math:`0`                         :math:`0`
+:math:`\mathrm{Y}`       :math:`0`                         :math:`1/2`                       :math:`0`
+:math:`\mathrm{Z}`       :math:`0`                         :math:`0`                         :math:`1/2`
+=======================  ================================  ================================  ================================
 
 TRI\ :sub:`2a`
 --------------
 
 :math:`\mathrm{X-\Gamma-Y\vert L-\Gamma-Z\vert N-\Gamma-M\vert R-\Gamma}`
 
-=======================  ==============================  ==============================  ==============================
-Point                    :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=======================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`  :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{L}`       :math:`1/2`                     :math:`1/2`                     :math:`0`
-:math:`\mathrm{M}`       :math:`0`                       :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{N}`       :math:`1/2`                     :math:`0`                       :math:`1/2`
-:math:`\mathrm{R}`       :math:`1/2`                     :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{X}`       :math:`1/2`                     :math:`0`                       :math:`0`
-:math:`\mathrm{Y}`       :math:`0`                       :math:`1/2`                     :math:`0`
-:math:`\mathrm{Z}`       :math:`0`                       :math:`0`                       :math:`1/2`
-=======================  ==============================  ==============================  ==============================
+=======================  ================================  ================================  ================================
+Point                    :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=======================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`  :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{L}`       :math:`1/2`                       :math:`1/2`                       :math:`0`
+:math:`\mathrm{M}`       :math:`0`                         :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{N}`       :math:`1/2`                       :math:`0`                         :math:`1/2`
+:math:`\mathrm{R}`       :math:`1/2`                       :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{X}`       :math:`1/2`                       :math:`0`                         :math:`0`
+:math:`\mathrm{Y}`       :math:`0`                         :math:`1/2`                       :math:`0`
+:math:`\mathrm{Z}`       :math:`0`                         :math:`0`                         :math:`1/2`
+=======================  ================================  ================================  ================================
 
 TRI\ :sub:`1b`
 --------------
 
 :math:`\mathrm{X-\Gamma-Y\vert L-\Gamma-Z\vert N-\Gamma-M\vert R-\Gamma}`
 
-=======================  ==============================  ==============================  ==============================
-Point                    :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=======================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`  :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{L}`       :math:`1/2`                     :math:`-1/2`                    :math:`0`
-:math:`\mathrm{M}`       :math:`0`                       :math:`0`                       :math:`1/2`
-:math:`\mathrm{N}`       :math:`-1/2`                    :math:`-1/2`                    :math:`1/2`
-:math:`\mathrm{R}`       :math:`0`                       :math:`-1/2`                    :math:`1/2`
-:math:`\mathrm{X}`       :math:`0`                       :math:`-1/2`                    :math:`0`
-:math:`\mathrm{Y}`       :math:`1/2`                     :math:`0`                       :math:`0`
-:math:`\mathrm{Z}`       :math:`-1/2`                    :math:`0`                       :math:`1/2`
-=======================  ==============================  ==============================  ==============================
+=======================  ================================  ================================  ================================
+Point                    :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=======================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`  :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{L}`       :math:`1/2`                       :math:`-1/2`                      :math:`0`
+:math:`\mathrm{M}`       :math:`0`                         :math:`0`                         :math:`1/2`
+:math:`\mathrm{N}`       :math:`-1/2`                      :math:`-1/2`                      :math:`1/2`
+:math:`\mathrm{R}`       :math:`0`                         :math:`-1/2`                      :math:`1/2`
+:math:`\mathrm{X}`       :math:`0`                         :math:`-1/2`                      :math:`0`
+:math:`\mathrm{Y}`       :math:`1/2`                       :math:`0`                         :math:`0`
+:math:`\mathrm{Z}`       :math:`-1/2`                      :math:`0`                         :math:`1/2`
+=======================  ================================  ================================  ================================
 
 TRI\ :sub:`2b`
 --------------
 
 :math:`\mathrm{X-\Gamma-Y\vert L-\Gamma-Z\vert N-\Gamma-M\vert R-\Gamma}`
 
-=======================  ==============================  ==============================  ==============================
-Point                    :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=======================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`  :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{L}`       :math:`1/2`                     :math:`-1/2`                    :math:`0`
-:math:`\mathrm{M}`       :math:`0`                       :math:`0`                       :math:`1/2`
-:math:`\mathrm{N}`       :math:`-1/2`                    :math:`-1/2`                    :math:`1/2`
-:math:`\mathrm{R}`       :math:`0`                       :math:`-1/2`                    :math:`1/2`
-:math:`\mathrm{X}`       :math:`0`                       :math:`-1/2`                    :math:`0`
-:math:`\mathrm{Y}`       :math:`1/2`                     :math:`0`                       :math:`0`
-:math:`\mathrm{Z}`       :math:`-1/2`                    :math:`0`                       :math:`1/2`
-=======================  ==============================  ==============================  ==============================
+=======================  ================================  ================================  ================================
+Point                    :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=======================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`  :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{L}`       :math:`1/2`                       :math:`-1/2`                      :math:`0`
+:math:`\mathrm{M}`       :math:`0`                         :math:`0`                         :math:`1/2`
+:math:`\mathrm{N}`       :math:`-1/2`                      :math:`-1/2`                      :math:`1/2`
+:math:`\mathrm{R}`       :math:`0`                         :math:`-1/2`                      :math:`1/2`
+:math:`\mathrm{X}`       :math:`0`                         :math:`-1/2`                      :math:`0`
+:math:`\mathrm{Y}`       :math:`1/2`                       :math:`0`                         :math:`0`
+:math:`\mathrm{Z}`       :math:`-1/2`                      :math:`0`                         :math:`1/2`
+=======================  ================================  ================================  ================================
 
 Variations
 ==========

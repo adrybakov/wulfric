@@ -8,49 +8,30 @@ Face-centred orthorhombic (ORCF)
 
 **Constructor**:  :py:func:`.ORCF`
 
-It is defined by three parameters: :math:`a`, :math:`b` and :math:`c`
-with conventional cell:
+It is defined by three parameters :math:`a`, :math:`b` and :math:`c` with
+:math:`a < b < c`. Standardized primitive and conventional cells in the default
+orientation are
 
 .. math::
 
-    \begin{matrix}
-    \boldsymbol{a}_1^c &=& (a, &0, &0)\\
-    \boldsymbol{a}_2^c &=& (0, &b, &0)\\
-    \boldsymbol{a}_3^c &=& (0, &0, &c)
-    \end{matrix}
-
-And primitive cell:
+  \begin{matrix}
+    \boldsymbol{a}_1^s &=& (0, &b/2, &c/2)\\
+    \boldsymbol{a}_2^s &=& (a/2, &0, &c/2)\\
+    \boldsymbol{a}_3^s &=& (a/2, &b/2, &0)
+  \end{matrix}
 
 .. math::
 
-    \begin{matrix}
-    \boldsymbol{a}_1 &=& (0, &b/2, &c/2)\\
-    \boldsymbol{a}_2 &=& (a/2, &0, &c/2)\\
-    \boldsymbol{a}_3 &=& (a/2, &b/2, &0)
-    \end{matrix}
+  \begin{matrix}
+    \boldsymbol{a}_1^{cs} &=& (a, &0, &0)\\
+    \boldsymbol{a}_2^{cs} &=& (0, &b, &0)\\
+    \boldsymbol{a}_3^{cs} &=& (0, &0, &c)
+  \end{matrix}
 
-with
+Transformation matrix from standardized primitive cell to standardized conventional cell
+is
 
-.. math::
-
-    \boldsymbol{C}
-    =
-    \dfrac{1}{2}
-    \begin{pmatrix}
-      0 & 1 & 1 \\
-      1 & 0 & 1 \\
-      1 & 1 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{C}^{-1}
-    =
-    \begin{pmatrix}
-      -1 & 1 & 1 \\
-      1 & -1 & 1 \\
-      1 & 1 & -1
-    \end{pmatrix}
-
-Order of parameters: :math:`a < b < c`
+.. include:: C_matrix.inc
 
 
 K-path
@@ -68,19 +49,19 @@ ORCF\ :sub:`1`
     \eta = \dfrac{1 + a^2/b^2 + a^2/c^2}{4}
     \end{matrix}
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{A}`         :math:`1/2`                     :math:`1/2 + \zeta`             :math:`\zeta`
-:math:`\mathrm{A_1}`       :math:`1/2`                     :math:`1/2 - \zeta`             :math:`1-\zeta`
-:math:`\mathrm{L}`         :math:`1/2`                     :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{T}`         :math:`1`                       :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{X}`         :math:`0`                       :math:`\eta`                    :math:`\eta`
-:math:`\mathrm{X_1}`       :math:`1`                       :math:`1-\eta`                  :math:`1-\eta`
-:math:`\mathrm{Y}`         :math:`1/2`                     :math:`0`                       :math:`1/2`
-:math:`\mathrm{Z}`         :math:`1/2`                     :math:`1/2`                     :math:`0`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{A}`         :math:`1/2`                       :math:`1/2 + \zeta`               :math:`\zeta`
+:math:`\mathrm{A_1}`       :math:`1/2`                       :math:`1/2 - \zeta`               :math:`1-\zeta`
+:math:`\mathrm{L}`         :math:`1/2`                       :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{T}`         :math:`1`                         :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{X}`         :math:`0`                         :math:`\eta`                      :math:`\eta`
+:math:`\mathrm{X_1}`       :math:`1`                         :math:`1-\eta`                    :math:`1-\eta`
+:math:`\mathrm{Y}`         :math:`1/2`                       :math:`0`                         :math:`1/2`
+:math:`\mathrm{Z}`         :math:`1/2`                       :math:`1/2`                       :math:`0`
+=========================  ================================  ================================  ================================
 
 ORCF\ :sub:`2`
 --------------
@@ -95,21 +76,21 @@ ORCF\ :sub:`2`
     \phi = \dfrac{1 + c^2/b^2 - c^2/a^2}{4}
     \end{matrix}
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{C}`         :math:`1/2`                     :math:`1/2 - \eta`              :math:`1 - \eta`
-:math:`\mathrm{C_1}`       :math:`1/2`                     :math:`1/2 + \eta`              :math:`\eta`
-:math:`\mathrm{D}`         :math:`1/2-\delta`              :math:`1/2`                     :math:`1 - \delta`
-:math:`\mathrm{D_1}`       :math:`1/2+\delta`              :math:`1/2`                     :math:`\delta`
-:math:`\mathrm{L}`         :math:`1/2`                     :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{H}`         :math:`1 - \phi`                :math:`1/2 - \phi`              :math:`1/2`
-:math:`\mathrm{H_1}`       :math:`\phi`                    :math:`1/2 + \phi`              :math:`1/2`
-:math:`\mathrm{X}`         :math:`0`                       :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{Y}`         :math:`1/2`                     :math:`0`                       :math:`1/2`
-:math:`\mathrm{Z}`         :math:`1/2`                     :math:`1/2`                     :math:`0`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{C}`         :math:`1/2`                       :math:`1/2 - \eta`                :math:`1 - \eta`
+:math:`\mathrm{C_1}`       :math:`1/2`                       :math:`1/2 + \eta`                :math:`\eta`
+:math:`\mathrm{D}`         :math:`1/2-\delta`                :math:`1/2`                       :math:`1 - \delta`
+:math:`\mathrm{D_1}`       :math:`1/2+\delta`                :math:`1/2`                       :math:`\delta`
+:math:`\mathrm{L}`         :math:`1/2`                       :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{H}`         :math:`1 - \phi`                  :math:`1/2 - \phi`                :math:`1/2`
+:math:`\mathrm{H_1}`       :math:`\phi`                      :math:`1/2 + \phi`                :math:`1/2`
+:math:`\mathrm{X}`         :math:`0`                         :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{Y}`         :math:`1/2`                       :math:`0`                         :math:`1/2`
+:math:`\mathrm{Z}`         :math:`1/2`                       :math:`1/2`                       :math:`0`
+=========================  ================================  ================================  ================================
 
 ORCF\ :sub:`3`
 --------------
@@ -123,19 +104,19 @@ ORCF\ :sub:`3`
     \eta = \dfrac{1 + a^2/b^2 + a^2/c^2}{4}
     \end{matrix}
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{A}`         :math:`1/2`                     :math:`1/2 + \zeta`             :math:`\zeta`
-:math:`\mathrm{A_1}`       :math:`1/2`                     :math:`1/2 - \zeta`             :math:`1-\zeta`
-:math:`\mathrm{L}`         :math:`1/2`                     :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{T}`         :math:`1`                       :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{X}`         :math:`0`                       :math:`\eta`                    :math:`\eta`
-:math:`\mathrm{X_1}`       :math:`1`                       :math:`1-\eta`                  :math:`1-\eta`
-:math:`\mathrm{Y}`         :math:`1/2`                     :math:`0`                       :math:`1/2`
-:math:`\mathrm{Z}`         :math:`1/2`                     :math:`1/2`                     :math:`0`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{A}`         :math:`1/2`                       :math:`1/2 + \zeta`               :math:`\zeta`
+:math:`\mathrm{A_1}`       :math:`1/2`                       :math:`1/2 - \zeta`               :math:`1-\zeta`
+:math:`\mathrm{L}`         :math:`1/2`                       :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{T}`         :math:`1`                         :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{X}`         :math:`0`                         :math:`\eta`                      :math:`\eta`
+:math:`\mathrm{X_1}`       :math:`1`                         :math:`1-\eta`                    :math:`1-\eta`
+:math:`\mathrm{Y}`         :math:`1/2`                       :math:`0`                         :math:`1/2`
+:math:`\mathrm{Z}`         :math:`1/2`                       :math:`1/2`                       :math:`0`
+=========================  ================================  ================================  ================================
 
 Variations
 ==========

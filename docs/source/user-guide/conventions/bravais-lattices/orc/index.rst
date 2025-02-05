@@ -8,57 +8,41 @@ Orthorhombic (ORC)
 
 **Constructor**:  :py:func:`.ORC`
 
-
-It is defined by three parameter: :math:`a`, :math:`b` and :math:`c`
-with primitive and conventional cell:
+It is defined by three parameters :math:`a`, :math:`b` and :math:`c` with
+:math:`a < b < c`. Standardized primitive and conventional cells in the default
+orientation are
 
 .. math::
 
   \begin{matrix}
-  \boldsymbol{a}_1 &=& \boldsymbol{a}_1^c &=& (a, &0, &0)\\
-  \boldsymbol{a}_2 &=& \boldsymbol{a}_2^c &=& (0, &b, &0)\\
-  \boldsymbol{a}_3 &=& \boldsymbol{a}_3^c &=& (0, &0, &c)
+  \boldsymbol{a}_1^s &=& \boldsymbol{a}_1^{cs} &=& (a, &0, &0)\\
+  \boldsymbol{a}_2^s &=& \boldsymbol{a}_2^{cs} &=& (0, &b, &0)\\
+  \boldsymbol{a}_3^s &=& \boldsymbol{a}_3^{cs} &=& (0, &0, &c)
   \end{matrix}
 
-with
+Transformation matrix from standardized primitive cell to standardized conventional cell
+is
 
-.. math::
+.. include:: C_matrix.inc
 
-  \boldsymbol{C}
-  =
-  \begin{pmatrix}
-    1 & 0 & 0 \\
-    0 & 1 & 0 \\
-    0 & 0 & 1
-  \end{pmatrix}
-  \qquad
-  \boldsymbol{C}^{-1}
-  =
-  \begin{pmatrix}
-    1 & 0 & 0 \\
-    0 & 1 & 0 \\
-    0 & 0 & 1
-  \end{pmatrix}
-
-Order of parameters: :math:`a < b < c`
 
 K-path
 ======
 
 :math:`\mathrm{\Gamma-X-S-Y-\Gamma-Z-U-R-T-Z\vert Y-T\vert U-X\vert S-R}`
 
-=======================  ==============================  ==============================  ==============================
-Point                    :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=======================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`  :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{R}`       :math:`1/2`                     :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{S}`       :math:`1/2`                     :math:`1/2`                     :math:`0`
-:math:`\mathrm{T}`       :math:`0`                       :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{U}`       :math:`1/2`                     :math:`0`                       :math:`1/2`
-:math:`\mathrm{X}`       :math:`1/2`                     :math:`0`                       :math:`0`
-:math:`\mathrm{Y}`       :math:`0`                       :math:`1/2`                     :math:`0`
-:math:`\mathrm{Z}`       :math:`0`                       :math:`0`                       :math:`1/2`
-=======================  ==============================  ==============================  ==============================
+=======================  ================================  ================================  ================================
+Point                    :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=======================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`  :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{R}`       :math:`1/2`                       :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{S}`       :math:`1/2`                       :math:`1/2`                       :math:`0`
+:math:`\mathrm{T}`       :math:`0`                         :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{U}`       :math:`1/2`                       :math:`0`                         :math:`1/2`
+:math:`\mathrm{X}`       :math:`1/2`                       :math:`0`                         :math:`0`
+:math:`\mathrm{Y}`       :math:`0`                         :math:`1/2`                       :math:`0`
+:math:`\mathrm{Z}`       :math:`0`                         :math:`0`                         :math:`1/2`
+=======================  ================================  ================================  ================================
 
 Variations
 ==========

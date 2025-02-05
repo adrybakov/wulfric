@@ -8,49 +8,40 @@ Cubic (CUB)
 
 **Constructor**:  :py:func:`.CUB`
 
-It is defined by one parameter: :math:`a` with primitive and conventional cell:
+It is defined by one parameter: :math:`a`. Standardized primitive and conventional cells
+in the default orientation are
 
 .. math::
 
     \begin{matrix}
-    \boldsymbol{a}_1 &=& \boldsymbol{a}_1^c &=& (a, &0, &0)\\
-    \boldsymbol{a}_2 &=& \boldsymbol{a}_2^c &=& (0, &a, &0)\\
-    \boldsymbol{a}_3 &=& \boldsymbol{a}_3^c &=& (0, &0, &a)
+    \boldsymbol{a}_1^s &=& \boldsymbol{a}_1^{cs} &=& (a, &0, &0)\\
+    \boldsymbol{a}_2^s &=& \boldsymbol{a}_2^{cs} &=& (0, &a, &0)\\
+    \boldsymbol{a}_3^s &=& \boldsymbol{a}_3^{cs} &=& (0, &0, &a)
     \end{matrix}
 
-with
+Transformation matrix from standardized primitive cell to standardized conventional cell is
 
-.. math::
-
-    \boldsymbol{C}
-    =
-    \boldsymbol{C}^{-1}
-    =
-    \begin{pmatrix}
-      1 & 0 & 0 \\
-      0 & 1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
-
-Variations
-==========
-
-There are no variations for cubic lattice.
-One example is predefined: ``cub`` with :math:`a = \pi`.
+.. include:: C_matrix.inc
 
 K-path
 ======
 
 :math:`\mathrm{\Gamma-X-M-\Gamma-R-X\vert M-R}`.
 
-=======================  ==============================  ==============================  ==============================
-Point                    :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=======================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`  :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{M}`       :math:`1/2`                     :math:`1/2`                     :math:`0`
-:math:`\mathrm{R}`       :math:`1/2`                     :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{X}`       :math:`0`                       :math:`1/2`                     :math:`0`
-=======================  ==============================  ==============================  ==============================
+=======================  ================================  ================================  ================================
+Point                    :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=======================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`  :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{M}`       :math:`1/2`                       :math:`1/2`                       :math:`0`
+:math:`\mathrm{R}`       :math:`1/2`                       :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{X}`       :math:`0`                         :math:`1/2`                       :math:`0`
+=======================  ================================  ================================  ================================
+
+Variations
+==========
+
+There are no variations for cubic lattice.
+One example is predefined: ``cub`` with :math:`a = \pi`.
 
 Examples
 ========

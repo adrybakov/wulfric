@@ -8,49 +8,30 @@ Body-centred orthorhombic (ORCI)
 
 **Constructor**:  :py:func:`.ORCI`
 
-It is defined by three parameter: :math:`a`, :math:`b` and :math:`c`
-with conventional cell:
+It is defined by three parameters :math:`a`, :math:`b` and :math:`c` with
+:math:`a < b < c`. Standardized primitive and conventional cells in the default
+orientation are
 
 .. math::
 
-    \begin{matrix}
-    \boldsymbol{a}_1^c &=& (a, &0, &0)\\
-    \boldsymbol{a}_2^c &=& (0, &b, &0)\\
-    \boldsymbol{a}_3^c &=& (0, &0, &c)
-    \end{matrix}
-
-And primitive cell:
+  \begin{matrix}
+    \boldsymbol{a}_1^s &=& (-a/2, &b/2, &c/2)\\
+    \boldsymbol{a}_2^s &=& (a/2, &-b/2, &c/2)\\
+    \boldsymbol{a}_3^s &=& (a/2, &b/2, &-c/2)
+  \end{matrix}
 
 .. math::
 
-    \begin{matrix}
-    \boldsymbol{a}_1 &=& (-a/2, &b/2, &c/2)\\
-    \boldsymbol{a}_2 &=& (a/2, &-b/2, &c/2)\\
-    \boldsymbol{a}_3 &=& (a/2, &b/2, &-c/2)
-    \end{matrix}
+  \begin{matrix}
+    \boldsymbol{a}_1^{cs} &=& (a, &0, &0)\\
+    \boldsymbol{a}_2^{cs} &=& (0, &b, &0)\\
+    \boldsymbol{a}_3^{cs} &=& (0, &0, &c)
+  \end{matrix}
 
-with
+Transformation matrix from standardized primitive cell to standardized conventional cell
+is
 
-.. math::
-
-    \boldsymbol{C}
-    =
-    \dfrac{1}{2}
-    \begin{pmatrix}
-      -1 & 1 & 1 \\
-      1 & -1 & 1 \\
-      1 & 1 & -1
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{C}^{-1}
-    =
-    \begin{pmatrix}
-      0 & 1 & 1 \\
-      1 & 0 & 1 \\
-      1 & 1 & 0
-    \end{pmatrix}
-
-Order of parameters: :math:`a < b < c`
+.. include:: C_matrix.inc
 
 K-path
 ======
@@ -66,23 +47,23 @@ K-path
     \mu = \dfrac{a^2 + b^2}{4c^2}
     \end{matrix}
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{L}`         :math:`-\mu`                    :math:`\mu`                     :math:`1/2 - \delta`
-:math:`\mathrm{L_1}`       :math:`\mu`                     :math:`-\mu`                    :math:`1/2 + \delta`
-:math:`\mathrm{L_2}`       :math:`1/2-\delta`              :math:`1/2+\delta`              :math:`-\mu`
-:math:`\mathrm{R}`         :math:`0`                       :math:`1/2`                     :math:`0`
-:math:`\mathrm{S}`         :math:`1/2`                     :math:`0`                       :math:`0`
-:math:`\mathrm{T}`         :math:`0`                       :math:`0`                       :math:`1/2`
-:math:`\mathrm{W}`         :math:`1/4`                     :math:`1/4`                     :math:`1/4`
-:math:`\mathrm{X}`         :math:`-\zeta`                  :math:`\zeta`                   :math:`\zeta`
-:math:`\mathrm{X_1}`       :math:`\zeta`                   :math:`1-\zeta`                 :math:`-\zeta`
-:math:`\mathrm{Y}`         :math:`\eta`                    :math:`-\eta`                   :math:`\eta`
-:math:`\mathrm{Y_1}`       :math:`1-\eta`                  :math:`\eta`                    :math:`-\eta`
-:math:`\mathrm{Z}`         :math:`1/2`                     :math:`1/2`                     :math:`-1/2`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{L}`         :math:`-\mu`                      :math:`\mu`                       :math:`1/2 - \delta`
+:math:`\mathrm{L_1}`       :math:`\mu`                       :math:`-\mu`                      :math:`1/2 + \delta`
+:math:`\mathrm{L_2}`       :math:`1/2-\delta`                :math:`1/2+\delta`                :math:`-\mu`
+:math:`\mathrm{R}`         :math:`0`                         :math:`1/2`                       :math:`0`
+:math:`\mathrm{S}`         :math:`1/2`                       :math:`0`                         :math:`0`
+:math:`\mathrm{T}`         :math:`0`                         :math:`0`                         :math:`1/2`
+:math:`\mathrm{W}`         :math:`1/4`                       :math:`1/4`                       :math:`1/4`
+:math:`\mathrm{X}`         :math:`-\zeta`                    :math:`\zeta`                     :math:`\zeta`
+:math:`\mathrm{X_1}`       :math:`\zeta`                     :math:`1-\zeta`                   :math:`-\zeta`
+:math:`\mathrm{Y}`         :math:`\eta`                      :math:`-\eta`                     :math:`\eta`
+:math:`\mathrm{Y_1}`       :math:`1-\eta`                    :math:`\eta`                      :math:`-\eta`
+:math:`\mathrm{Z}`         :math:`1/2`                       :math:`1/2`                       :math:`-1/2`
+=========================  ================================  ================================  ================================
 
 
 Variations

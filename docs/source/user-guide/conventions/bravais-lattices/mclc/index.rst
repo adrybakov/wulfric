@@ -8,49 +8,30 @@ Base-centred monoclinic (MCLC)
 
 **Constructor**:  :py:func:`.MCLC`
 
-It is defined by four parameter: :math:`a`, :math:`b`, :math:`c` and :math:`\alpha`
-with conventional cell:
+It is defined by four parameter: :math:`a`, :math:`b`, :math:`c` and :math:`\alpha` with
+:math:`b \le c`, :math:`\alpha < 90^{\circ}`. Standardized primitive and conventional
+cells in the default orientation are
 
 .. math::
 
-    \begin{matrix}
-    \boldsymbol{a}_1 &=& (a, &0, &0)\\
-    \boldsymbol{a}_2 &=& (0, &b, &0)\\
-    \boldsymbol{a}_3 &=& (0, &c\cos\alpha, &c\sin\alpha)
-    \end{matrix}
-
-And primitive cell:
+  \begin{matrix}
+    \boldsymbol{a}_1^s &=& (a/2, &b/2, &0)\\
+    \boldsymbol{a}_2^s &=& (-a/2, &b/2, &0)\\
+    \boldsymbol{a}_3^s &=& (0, &c\cos\alpha, &c\sin\alpha)
+  \end{matrix}
 
 .. math::
 
-    \begin{matrix}
-    \boldsymbol{a}_1 &=& (a/2, &b/2, &0)\\
-    \boldsymbol{a}_2 &=& (-a/2, &b/2, &0)\\
-    \boldsymbol{a}_3 &=& (0, &c\cos\alpha, &c\sin\alpha)
-    \end{matrix}
+  \begin{matrix}
+    \boldsymbol{a}_1^{cs} &=& (a, &0, &0)\\
+    \boldsymbol{a}_2^{cs} &=& (0, &b, &0)\\
+    \boldsymbol{a}_3^{cs} &=& (0, &c\cos\alpha, &c\sin\alpha)
+  \end{matrix}
 
-with
+Transformation matrix from standardized primitive cell to standardized conventional cell
+is
 
-.. math::
-
-    \boldsymbol{C}
-    =
-    \dfrac{1}{2}
-    \begin{pmatrix}
-      1 & -1 & 0 \\
-      1 & 1 & 0 \\
-      0 & 0 & 2
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{C}^{-1}
-    =
-    \begin{pmatrix}
-      1 & 1 & 0 \\
-      -1 & 1 & 0 \\
-      0 & 0 & 1
-    \end{pmatrix}
-
-Order of parameters: :math:`b \le c`, :math:`\alpha < 90^{\circ}`.
+.. include:: C_matrix.inc
 
 
 K-path
@@ -70,27 +51,27 @@ MCLC\ :sub:`1`
     \phi = \psi + \dfrac{(3/4-\psi)b\cos\alpha}{c}
     \end{matrix}
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{N}`         :math:`1/2`                     :math:`0`                       :math:`0`
-:math:`\mathrm{N_1}`       :math:`0`                       :math:`-1/2`                    :math:`0`
-:math:`\mathrm{F}`         :math:`1-\zeta`                 :math:`1-\zeta`                 :math:`1-\eta`
-:math:`\mathrm{F_1}`       :math:`\zeta`                   :math:`\zeta`                   :math:`\eta`
-:math:`\mathrm{F_2}`       :math:`-\zeta`                  :math:`-\zeta`                  :math:`1-\eta`
-:math:`\mathrm{F_3}`       :math:`1-\zeta`                 :math:`-\zeta`                  :math:`1-\eta`
-:math:`\mathrm{I}`         :math:`\phi`                    :math:`1-\phi`                  :math:`1/2`
-:math:`\mathrm{I_1}`       :math:`1-\phi`                  :math:`\phi-1`                  :math:`1/2`
-:math:`\mathrm{L}`         :math:`1/2`                     :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{M}`         :math:`1/2`                     :math:`0`                       :math:`1/2`
-:math:`\mathrm{X}`         :math:`1-\psi`                  :math:`\psi-1`                  :math:`0`
-:math:`\mathrm{X_1}`       :math:`\psi`                    :math:`1-\psi`                  :math:`0`
-:math:`\mathrm{X_2}`       :math:`\psi-1`                  :math:`-\psi`                   :math:`0`
-:math:`\mathrm{Y}`         :math:`1/2`                     :math:`1/2`                     :math:`0`
-:math:`\mathrm{Y_1}`       :math:`-1/2`                    :math:`-1/2`                    :math:`0`
-:math:`\mathrm{Z}`         :math:`0`                       :math:`0`                       :math:`1/2`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{N}`         :math:`1/2`                       :math:`0`                         :math:`0`
+:math:`\mathrm{N_1}`       :math:`0`                         :math:`-1/2`                      :math:`0`
+:math:`\mathrm{F}`         :math:`1-\zeta`                   :math:`1-\zeta`                   :math:`1-\eta`
+:math:`\mathrm{F_1}`       :math:`\zeta`                     :math:`\zeta`                     :math:`\eta`
+:math:`\mathrm{F_2}`       :math:`-\zeta`                    :math:`-\zeta`                    :math:`1-\eta`
+:math:`\mathrm{F_3}`       :math:`1-\zeta`                   :math:`-\zeta`                    :math:`1-\eta`
+:math:`\mathrm{I}`         :math:`\phi`                      :math:`1-\phi`                    :math:`1/2`
+:math:`\mathrm{I_1}`       :math:`1-\phi`                    :math:`\phi-1`                    :math:`1/2`
+:math:`\mathrm{L}`         :math:`1/2`                       :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{M}`         :math:`1/2`                       :math:`0`                         :math:`1/2`
+:math:`\mathrm{X}`         :math:`1-\psi`                    :math:`\psi-1`                    :math:`0`
+:math:`\mathrm{X_1}`       :math:`\psi`                      :math:`1-\psi`                    :math:`0`
+:math:`\mathrm{X_2}`       :math:`\psi-1`                    :math:`-\psi`                     :math:`0`
+:math:`\mathrm{Y}`         :math:`1/2`                       :math:`1/2`                       :math:`0`
+:math:`\mathrm{Y_1}`       :math:`-1/2`                      :math:`-1/2`                      :math:`0`
+:math:`\mathrm{Z}`         :math:`0`                         :math:`0`                         :math:`1/2`
+=========================  ================================  ================================  ================================
 
 
 MCLC\ :sub:`2`
@@ -107,27 +88,27 @@ MCLC\ :sub:`2`
     \phi = \psi + \dfrac{(3/4-\psi)b\cos\alpha}{c}
     \end{matrix}
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{N}`         :math:`1/2`                     :math:`0`                       :math:`0`
-:math:`\mathrm{N_1}`       :math:`0`                       :math:`-1/2`                    :math:`0`
-:math:`\mathrm{F}`         :math:`1-\zeta`                 :math:`1-\zeta`                 :math:`1-\eta`
-:math:`\mathrm{F_1}`       :math:`\zeta`                   :math:`\zeta`                   :math:`\eta`
-:math:`\mathrm{F_2}`       :math:`-\zeta`                  :math:`-\zeta`                  :math:`1-\eta`
-:math:`\mathrm{F_3}`       :math:`1-\zeta`                 :math:`-\zeta`                  :math:`1-\eta`
-:math:`\mathrm{I}`         :math:`\phi`                    :math:`1-\phi`                  :math:`1/2`
-:math:`\mathrm{I_1}`       :math:`1-\phi`                  :math:`\phi-1`                  :math:`1/2`
-:math:`\mathrm{L}`         :math:`1/2`                     :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{M}`         :math:`1/2`                     :math:`0`                       :math:`1/2`
-:math:`\mathrm{X}`         :math:`1-\psi`                  :math:`\psi-1`                  :math:`0`
-:math:`\mathrm{X_1}`       :math:`\psi`                    :math:`1-\psi`                  :math:`0`
-:math:`\mathrm{X_2}`       :math:`\psi-1`                  :math:`-\psi`                   :math:`0`
-:math:`\mathrm{Y}`         :math:`1/2`                     :math:`1/2`                     :math:`0`
-:math:`\mathrm{Y_1}`       :math:`-1/2`                    :math:`-1/2`                    :math:`0`
-:math:`\mathrm{Z}`         :math:`0`                       :math:`0`                       :math:`1/2`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{N}`         :math:`1/2`                       :math:`0`                         :math:`0`
+:math:`\mathrm{N_1}`       :math:`0`                         :math:`-1/2`                      :math:`0`
+:math:`\mathrm{F}`         :math:`1-\zeta`                   :math:`1-\zeta`                   :math:`1-\eta`
+:math:`\mathrm{F_1}`       :math:`\zeta`                     :math:`\zeta`                     :math:`\eta`
+:math:`\mathrm{F_2}`       :math:`-\zeta`                    :math:`-\zeta`                    :math:`1-\eta`
+:math:`\mathrm{F_3}`       :math:`1-\zeta`                   :math:`-\zeta`                    :math:`1-\eta`
+:math:`\mathrm{I}`         :math:`\phi`                      :math:`1-\phi`                    :math:`1/2`
+:math:`\mathrm{I_1}`       :math:`1-\phi`                    :math:`\phi-1`                    :math:`1/2`
+:math:`\mathrm{L}`         :math:`1/2`                       :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{M}`         :math:`1/2`                       :math:`0`                         :math:`1/2`
+:math:`\mathrm{X}`         :math:`1-\psi`                    :math:`\psi-1`                    :math:`0`
+:math:`\mathrm{X_1}`       :math:`\psi`                      :math:`1-\psi`                    :math:`0`
+:math:`\mathrm{X_2}`       :math:`\psi-1`                    :math:`-\psi`                     :math:`0`
+:math:`\mathrm{Y}`         :math:`1/2`                       :math:`1/2`                       :math:`0`
+:math:`\mathrm{Y_1}`       :math:`-1/2`                      :math:`-1/2`                      :math:`0`
+:math:`\mathrm{Z}`         :math:`0`                         :math:`0`                         :math:`1/2`
+=========================  ================================  ================================  ================================
 
 MCLC\ :sub:`3`
 --------------
@@ -145,27 +126,27 @@ MCLC\ :sub:`3`
     \psi = \eta - 2\delta
     \end{matrix}
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{F}`         :math:`1-\phi`                  :math:`1-\phi`                  :math:`1-\psi`
-:math:`\mathrm{F_1}`       :math:`\phi`                    :math:`\phi-1`                  :math:`\psi`
-:math:`\mathrm{F_2}`       :math:`1-\phi`                  :math:`-\phi`                   :math:`1-\psi`
-:math:`\mathrm{H}`         :math:`\zeta`                   :math:`\zeta`                   :math:`\eta`
-:math:`\mathrm{H_1}`       :math:`1-\zeta`                 :math:`-\zeta`                  :math:`1-\eta`
-:math:`\mathrm{H_2}`       :math:`-\zeta`                  :math:`-\zeta`                  :math:`1-\eta`
-:math:`\mathrm{I}`         :math:`1/2`                     :math:`-1/2`                    :math:`1/2`
-:math:`\mathrm{M}`         :math:`1/2`                     :math:`0`                       :math:`1/2`
-:math:`\mathrm{N}`         :math:`1/2`                     :math:`0`                       :math:`0`
-:math:`\mathrm{N_1}`       :math:`0`                       :math:`-1/2`                    :math:`0`
-:math:`\mathrm{X}`         :math:`1/2`                     :math:`-1/2`                    :math:`0`
-:math:`\mathrm{Y}`         :math:`\mu`                     :math:`\mu`                     :math:`\delta`
-:math:`\mathrm{Y_1}`       :math:`1-\mu`                   :math:`-\mu`                    :math:`-\delta`
-:math:`\mathrm{Y_2}`       :math:`-\mu`                    :math:`-\mu`                    :math:`-\delta`
-:math:`\mathrm{Y_3}`       :math:`\mu`                     :math:`\mu-1`                   :math:`\delta`
-:math:`\mathrm{Z}`         :math:`0`                       :math:`0`                       :math:`1/2`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{F}`         :math:`1-\phi`                    :math:`1-\phi`                    :math:`1-\psi`
+:math:`\mathrm{F_1}`       :math:`\phi`                      :math:`\phi-1`                    :math:`\psi`
+:math:`\mathrm{F_2}`       :math:`1-\phi`                    :math:`-\phi`                     :math:`1-\psi`
+:math:`\mathrm{H}`         :math:`\zeta`                     :math:`\zeta`                     :math:`\eta`
+:math:`\mathrm{H_1}`       :math:`1-\zeta`                   :math:`-\zeta`                    :math:`1-\eta`
+:math:`\mathrm{H_2}`       :math:`-\zeta`                    :math:`-\zeta`                    :math:`1-\eta`
+:math:`\mathrm{I}`         :math:`1/2`                       :math:`-1/2`                      :math:`1/2`
+:math:`\mathrm{M}`         :math:`1/2`                       :math:`0`                         :math:`1/2`
+:math:`\mathrm{N}`         :math:`1/2`                       :math:`0`                         :math:`0`
+:math:`\mathrm{N_1}`       :math:`0`                         :math:`-1/2`                      :math:`0`
+:math:`\mathrm{X}`         :math:`1/2`                       :math:`-1/2`                      :math:`0`
+:math:`\mathrm{Y}`         :math:`\mu`                       :math:`\mu`                       :math:`\delta`
+:math:`\mathrm{Y_1}`       :math:`1-\mu`                     :math:`-\mu`                      :math:`-\delta`
+:math:`\mathrm{Y_2}`       :math:`-\mu`                      :math:`-\mu`                      :math:`-\delta`
+:math:`\mathrm{Y_3}`       :math:`\mu`                       :math:`\mu-1`                     :math:`\delta`
+:math:`\mathrm{Z}`         :math:`0`                         :math:`0`                         :math:`1/2`
+=========================  ================================  ================================  ================================
 
 
 MCLC\ :sub:`4`
@@ -184,27 +165,27 @@ MCLC\ :sub:`4`
     \psi = \eta - 2\delta
     \end{matrix}
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{F}`         :math:`1-\phi`                  :math:`1-\phi`                  :math:`1-\psi`
-:math:`\mathrm{F_1}`       :math:`\phi`                    :math:`\phi-1`                  :math:`\psi`
-:math:`\mathrm{F_2}`       :math:`1-\phi`                  :math:`-\phi`                   :math:`1-\psi`
-:math:`\mathrm{H}`         :math:`\zeta`                   :math:`\zeta`                   :math:`\eta`
-:math:`\mathrm{H_1}`       :math:`1-\zeta`                 :math:`-\zeta`                  :math:`1-\eta`
-:math:`\mathrm{H_2}`       :math:`-\zeta`                  :math:`-\zeta`                  :math:`1-\eta`
-:math:`\mathrm{I}`         :math:`1/2`                     :math:`-1/2`                    :math:`1/2`
-:math:`\mathrm{M}`         :math:`1/2`                     :math:`0`                       :math:`1/2`
-:math:`\mathrm{N}`         :math:`1/2`                     :math:`0`                       :math:`0`
-:math:`\mathrm{N_1}`       :math:`0`                       :math:`-1/2`                    :math:`0`
-:math:`\mathrm{X}`         :math:`1/2`                     :math:`-1/2`                    :math:`0`
-:math:`\mathrm{Y}`         :math:`\mu`                     :math:`\mu`                     :math:`\delta`
-:math:`\mathrm{Y_1}`       :math:`1-\mu`                   :math:`-\mu`                    :math:`-\delta`
-:math:`\mathrm{Y_2}`       :math:`-\mu`                    :math:`-\mu`                    :math:`-\delta`
-:math:`\mathrm{Y_3}`       :math:`\mu`                     :math:`\mu-1`                   :math:`\delta`
-:math:`\mathrm{Z}`         :math:`0`                       :math:`0`                       :math:`1/2`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{F}`         :math:`1-\phi`                    :math:`1-\phi`                    :math:`1-\psi`
+:math:`\mathrm{F_1}`       :math:`\phi`                      :math:`\phi-1`                    :math:`\psi`
+:math:`\mathrm{F_2}`       :math:`1-\phi`                    :math:`-\phi`                     :math:`1-\psi`
+:math:`\mathrm{H}`         :math:`\zeta`                     :math:`\zeta`                     :math:`\eta`
+:math:`\mathrm{H_1}`       :math:`1-\zeta`                   :math:`-\zeta`                    :math:`1-\eta`
+:math:`\mathrm{H_2}`       :math:`-\zeta`                    :math:`-\zeta`                    :math:`1-\eta`
+:math:`\mathrm{I}`         :math:`1/2`                       :math:`-1/2`                      :math:`1/2`
+:math:`\mathrm{M}`         :math:`1/2`                       :math:`0`                         :math:`1/2`
+:math:`\mathrm{N}`         :math:`1/2`                       :math:`0`                         :math:`0`
+:math:`\mathrm{N_1}`       :math:`0`                         :math:`-1/2`                      :math:`0`
+:math:`\mathrm{X}`         :math:`1/2`                       :math:`-1/2`                      :math:`0`
+:math:`\mathrm{Y}`         :math:`\mu`                       :math:`\mu`                       :math:`\delta`
+:math:`\mathrm{Y_1}`       :math:`1-\mu`                     :math:`-\mu`                      :math:`-\delta`
+:math:`\mathrm{Y_2}`       :math:`-\mu`                      :math:`-\mu`                      :math:`-\delta`
+:math:`\mathrm{Y_3}`       :math:`\mu`                       :math:`\mu-1`                     :math:`\delta`
+:math:`\mathrm{Z}`         :math:`0`                         :math:`0`                         :math:`1/2`
+=========================  ================================  ================================  ================================
 
 
 
@@ -225,29 +206,29 @@ MCLC\ :sub:`5`
     \rho = 1 - \dfrac{\zeta a^2}{b^2}
     \end{matrix}
 
-=========================  ==============================  ==============================  ==============================
-Point                      :math:`\times\boldsymbol{b}_1`  :math:`\times\boldsymbol{b}_2`  :math:`\times\boldsymbol{b}_3`
-=========================  ==============================  ==============================  ==============================
-:math:`\mathrm{\Gamma}`    :math:`0`                       :math:`0`                       :math:`0`
-:math:`\mathrm{F}`         :math:`\nu`                     :math:`\nu`                     :math:`\omega`
-:math:`\mathrm{F_1}`       :math:`1-\nu`                   :math:`-\nu`                    :math:`1-\omega`
-:math:`\mathrm{F_2}`       :math:`\nu`                     :math:`\nu-1`                   :math:`\omega`
-:math:`\mathrm{H}`         :math:`\zeta`                   :math:`\zeta`                   :math:`\eta`
-:math:`\mathrm{H_1}`       :math:`1-\zeta`                 :math:`-\zeta`                  :math:`1-\eta`
-:math:`\mathrm{H_2}`       :math:`-\zeta`                  :math:`-\zeta`                  :math:`1-\eta`
-:math:`\mathrm{I}`         :math:`\rho`                    :math:`1-\rho`                  :math:`1/2`
-:math:`\mathrm{I_1}`       :math:`1-\rho`                  :math:`\rho-1`                  :math:`1/2`
-:math:`\mathrm{L}`         :math:`1/2`                     :math:`1/2`                     :math:`1/2`
-:math:`\mathrm{M}`         :math:`1/2`                     :math:`0`                       :math:`1/2`
-:math:`\mathrm{N}`         :math:`1/2`                     :math:`0`                       :math:`0`
-:math:`\mathrm{N_1}`       :math:`0`                       :math:`-1/2`                    :math:`0`
-:math:`\mathrm{X}`         :math:`1/2`                     :math:`-1/2`                    :math:`0`
-:math:`\mathrm{Y}`         :math:`\mu`                     :math:`\mu`                     :math:`\delta`
-:math:`\mathrm{Y_1}`       :math:`1-\mu`                   :math:`-\mu`                    :math:`-\delta`
-:math:`\mathrm{Y_2}`       :math:`-\mu`                    :math:`-\mu`                    :math:`-\delta`
-:math:`\mathrm{Y_3}`       :math:`\mu`                     :math:`\mu-1`                   :math:`\delta`
-:math:`\mathrm{Z}`         :math:`0`                       :math:`0`                       :math:`1/2`
-=========================  ==============================  ==============================  ==============================
+=========================  ================================  ================================  ================================
+Point                      :math:`\times\boldsymbol{b}_1^s`  :math:`\times\boldsymbol{b}_2^s`  :math:`\times\boldsymbol{b}_3^s`
+=========================  ================================  ================================  ================================
+:math:`\mathrm{\Gamma}`    :math:`0`                         :math:`0`                         :math:`0`
+:math:`\mathrm{F}`         :math:`\nu`                       :math:`\nu`                       :math:`\omega`
+:math:`\mathrm{F_1}`       :math:`1-\nu`                     :math:`-\nu`                      :math:`1-\omega`
+:math:`\mathrm{F_2}`       :math:`\nu`                       :math:`\nu-1`                     :math:`\omega`
+:math:`\mathrm{H}`         :math:`\zeta`                     :math:`\zeta`                     :math:`\eta`
+:math:`\mathrm{H_1}`       :math:`1-\zeta`                   :math:`-\zeta`                    :math:`1-\eta`
+:math:`\mathrm{H_2}`       :math:`-\zeta`                    :math:`-\zeta`                    :math:`1-\eta`
+:math:`\mathrm{I}`         :math:`\rho`                      :math:`1-\rho`                    :math:`1/2`
+:math:`\mathrm{I_1}`       :math:`1-\rho`                    :math:`\rho-1`                    :math:`1/2`
+:math:`\mathrm{L}`         :math:`1/2`                       :math:`1/2`                       :math:`1/2`
+:math:`\mathrm{M}`         :math:`1/2`                       :math:`0`                         :math:`1/2`
+:math:`\mathrm{N}`         :math:`1/2`                       :math:`0`                         :math:`0`
+:math:`\mathrm{N_1}`       :math:`0`                         :math:`-1/2`                      :math:`0`
+:math:`\mathrm{X}`         :math:`1/2`                       :math:`-1/2`                      :math:`0`
+:math:`\mathrm{Y}`         :math:`\mu`                       :math:`\mu`                       :math:`\delta`
+:math:`\mathrm{Y_1}`       :math:`1-\mu`                     :math:`-\mu`                      :math:`-\delta`
+:math:`\mathrm{Y_2}`       :math:`-\mu`                      :math:`-\mu`                      :math:`-\delta`
+:math:`\mathrm{Y_3}`       :math:`\mu`                       :math:`\mu-1`                     :math:`\delta`
+:math:`\mathrm{Z}`         :math:`0`                         :math:`0`                         :math:`1/2`
+=========================  ================================  ================================  ================================
 
 
 Variations
