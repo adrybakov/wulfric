@@ -37,7 +37,7 @@ def test_lattice_example(lattice_variation: str):
     lattice_type = lattice_variation.translate(str.maketrans("", "", "12345ab"))
     cell = get_cell_example(lattice_variation)
     cell = get_standardized(cell)
-    assert lepage(*get_params(cell)) == lattice_type
+    assert lepage(cell) == lattice_type
     assert get_variation(cell) == lattice_variation
 
 

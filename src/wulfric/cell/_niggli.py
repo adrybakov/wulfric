@@ -32,7 +32,7 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def _niggli_step_1(A, B, C, xi, eta, zeta, trans_matrix):
+def _niggli_step_1(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = compare_numerically(A, ">", B, eps=eps) or (
         compare_numerically(A, "==", B, eps=eps)
         and compare_numerically(abs(xi), ">", abs(eta), eps=eps)
@@ -52,7 +52,7 @@ def _niggli_step_1(A, B, C, xi, eta, zeta, trans_matrix):
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
-def _niggli_step_2(A, B, C, xi, eta, zeta, trans_matrix):
+def _niggli_step_2(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = compare_numerically(B, ">", C, eps=eps) or (
         compare_numerically(B, "==", C, eps=eps)
         and compare_numerically(abs(eta), ">", abs(zeta), eps=eps)
@@ -71,7 +71,7 @@ def _niggli_step_2(A, B, C, xi, eta, zeta, trans_matrix):
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
-def _niggli_step_3(A, B, C, xi, eta, zeta, trans_matrix):
+def _niggli_step_3(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = compare_numerically(xi * eta * zeta, ">", 0.0, eps=eps)
     if condition:
         xi, eta, zeta = abs(xi), abs(eta), abs(zeta)
@@ -103,7 +103,7 @@ def _niggli_step_3(A, B, C, xi, eta, zeta, trans_matrix):
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
-def _niggli_step_4(A, B, C, xi, eta, zeta, trans_matrix):
+def _niggli_step_4(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = compare_numerically(xi * eta * zeta, "<=", 0.0, eps=eps)
     if condition:
         xi, eta, zeta = -abs(xi), -abs(eta), -abs(zeta)
@@ -151,7 +151,7 @@ def _niggli_step_4(A, B, C, xi, eta, zeta, trans_matrix):
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
-def _niggli_step_5(A, B, C, xi, eta, zeta, trans_matrix):
+def _niggli_step_5(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = (
         compare_numerically(abs(xi), ">", B, eps=eps)
         or (
@@ -181,7 +181,7 @@ def _niggli_step_5(A, B, C, xi, eta, zeta, trans_matrix):
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
-def _niggli_step_6(A, B, C, xi, eta, zeta, trans_matrix):
+def _niggli_step_6(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = (
         compare_numerically(abs(eta), ">", A, eps=eps)
         or (
@@ -210,7 +210,7 @@ def _niggli_step_6(A, B, C, xi, eta, zeta, trans_matrix):
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
-def _niggli_step_7(A, B, C, xi, eta, zeta, trans_matrix):
+def _niggli_step_7(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = (
         compare_numerically(abs(zeta), ">", A, eps=eps)
         or (
@@ -240,7 +240,7 @@ def _niggli_step_7(A, B, C, xi, eta, zeta, trans_matrix):
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
-def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix):
+def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = compare_numerically(xi + eta + zeta + A + B, "<", 0.0, eps=eps) or (
         compare_numerically(xi + eta + zeta + A + B, "==", 0.0, eps=eps)
         and compare_numerically(2.0 * (A + eta) + zeta, ">", 0.0, eps=eps)
@@ -339,7 +339,7 @@ def niggli(
 
     """
 
-    volume = get_volume(a, b, c, alpha, beta, gamma)
+    volume = get_volume(cell)
     if volume == 0:
         raise ValueError("Cell volume is zero")
 
@@ -357,7 +357,7 @@ def niggli(
         2 * metric_tensor[0][1],
     )
 
-    trans_matrix = np.eye(dtype=int)
+    trans_matrix = np.eye(3, dtype=int)
 
     iter_count = 0
     while True:
@@ -370,36 +370,36 @@ def niggli(
 
         iter_count += 1
         # 1
-        condition, params, trans_matrix = _niggli_step_1(*params, trans_matrix)
+        condition, params, trans_matrix = _niggli_step_1(*params, trans_matrix, eps=eps)
 
         # 2
-        condition, params, trans_matrix = _niggli_step_2(*params, trans_matrix)
+        condition, params, trans_matrix = _niggli_step_2(*params, trans_matrix, eps=eps)
         if condition:
             continue
 
         # 3
-        condition, params, trans_matrix = _niggli_step_3(*params, trans_matrix)
+        condition, params, trans_matrix = _niggli_step_3(*params, trans_matrix, eps=eps)
 
         # 4
-        condition, params, trans_matrix = _niggli_step_4(*params, trans_matrix)
+        condition, params, trans_matrix = _niggli_step_4(*params, trans_matrix, eps=eps)
 
         # 5
-        condition, params, trans_matrix = _niggli_step_5(*params, trans_matrix)
+        condition, params, trans_matrix = _niggli_step_5(*params, trans_matrix, eps=eps)
         if condition:
             continue
 
         # 6
-        condition, params, trans_matrix = _niggli_step_6(*params, trans_matrix)
+        condition, params, trans_matrix = _niggli_step_6(*params, trans_matrix, eps=eps)
         if condition:
             continue
 
         # 7
-        condition, params, trans_matrix = _niggli_step_7(*params, trans_matrix)
+        condition, params, trans_matrix = _niggli_step_7(*params, trans_matrix, eps=eps)
         if condition:
             continue
 
         # 8
-        condition, params, trans_matrix = _niggli_step_8(*params, trans_matrix)
+        condition, params, trans_matrix = _niggli_step_8(*params, trans_matrix, eps=eps)
         if condition:
             continue
 

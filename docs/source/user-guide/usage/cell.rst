@@ -104,7 +104,7 @@ Type of the Bravail lattice might be computed via the :ref:`library_lepage` as
 .. doctest::
 
   >>> # Note wulf.cell.lepage accept lattice parameters as input.
-  >>> lattice_type = wulf.cell.lepage(*wulf.cell.get_params(cell))
+  >>> lattice_type = wulf.cell.lepage(cell)
   >>> lattice_type
   'ORC'
 

@@ -35,7 +35,7 @@ from wulfric.constants._sc_notation import BRAVAIS_LATTICE_VARIATIONS
 def test_lepage(variation):
     cell = get_cell_example(variation)
     type_name = variation.translate(str.maketrans("", "", "12345ab"))
-    assert lepage(*get_params(cell)) == type_name
+    assert lepage(cell) == type_name
 
 
 @pytest.mark.parametrize(
@@ -55,7 +55,7 @@ def test_lepage(variation):
     ids=["crsbr", "nii2"],
 )
 def test_custom_lepage(cell, name, eps_relative):
-    assert lepage(*get_params(cell), eps_relative=eps_relative, eps_angle=0.01) == name
+    assert lepage(cell, eps_relative=eps_relative, eps_angle=0.01) == name
 
 
 def test_lepage_paper():

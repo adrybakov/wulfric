@@ -23,10 +23,10 @@ import numpy as np
 
 from wulfric._decorate_array import print_2d_array
 from wulfric._exceptions import NiggliReductionFailed
-from wulfric.cell._basic_manipulation import from_params, get_reciprocal
+from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._niggli import niggli
 from wulfric.constants._numerical import TODEGREES
-from wulfric.geometry._geometry import get_volume, parallelepiped_check
+from wulfric.geometry._geometry import get_volume
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -267,12 +267,7 @@ def _check_mcl(angles: np.ndarray, axes: np.ndarray, eps, cell):
 #                                    LePage                                    #
 ################################################################################
 def lepage(
-    a=1,
-    b=1,
-    c=1,
-    alpha=90,
-    beta=90,
-    gamma=90,
+    cell,
     eps_relative=1e-4,
     verbose=False,
     very_verbose=False,
@@ -284,18 +279,8 @@ def lepage(
 
     Parameters
     ----------
-    a : float, default 1
-        Length of the :math:`\boldsymbol{a_1}` vector.
-    b : float, default 1
-        Length of the :math:`\boldsymbol{a_2}` vector.
-    c : float, default 1
-        Length of the :math:`\boldsymbol{a_3}` vector.
-    alpha : float, default 90
-        Angle between vectors :math:`\boldsymbol{a_2}` and :math:`\boldsymbol{a_3}`. In degrees.
-    beta : float, default 90
-        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`. In degrees.
-    gamma : float, default 90
-        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`. In degrees.
+    cell : (3,3) |array-like|_
+        Cell matrix, rows are interpreted as vectors.
     eps_relative : float, default TODO
         Relative epsilon.
     verbose : bool, default False
@@ -324,10 +309,7 @@ def lepage(
     if very_verbose:
         verbose = True
 
-    # Check if provided parameters can form a parallelepiped
-    parallelepiped_check(a, b, c, alpha, beta, gamma, raise_error=True)
-
-    eps_volume = eps_relative * get_volume(a, b, c, alpha, beta, gamma) ** (1 / 3.0)
+    eps_volume = eps_relative * get_volume(cell) ** (1 / 3.0)
 
     # Limit value for the condition on keeping the axis
     limit = max(1.5, eps_angle * 1.1)
@@ -336,25 +318,15 @@ def lepage(
 
     # Niggli reduction
     try:
-        a, b, c, alpha, beta, gamma = niggli(
-            a=a,
-            b=b,
-            c=c,
-            alpha=alpha,
-            beta=beta,
-            gamma=gamma,
-            eps_relative=eps_relative,
-            return_cell=True,
-        )
+        cell = niggli(cell=cell, eps_relative=eps_relative)
     except NiggliReductionFailed:
         import warnings
 
         warnings.warn(
-            "LePage algorithm: Niggli reduction failed, using input parameters",
+            "LePage algorithm: Niggli reduction failed, using input cell",
             RuntimeWarning,
         )
 
-    cell = from_params(a, b, c, alpha, beta, gamma)
     rcell = get_reciprocal(cell)
     if very_verbose:
         print("Cell:")

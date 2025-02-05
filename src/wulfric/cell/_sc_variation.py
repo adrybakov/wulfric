@@ -311,11 +311,7 @@ def get_variation(cell, lattice_type=None, eps_rel=1e-8, angle_tol=1e-4):
     cell = np.array(cell, dtype=float)
 
     if lattice_type is None:
-        lattice_type = lepage(
-            *get_params(cell),
-            eps_relative=eps_rel,
-            eps_angle=angle_tol,
-        )
+        lattice_type = lepage(cell, eps_relative=eps_rel, eps_angle=angle_tol)
 
     lattice_type = lattice_type.upper()
 

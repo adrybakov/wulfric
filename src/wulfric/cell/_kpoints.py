@@ -732,11 +732,7 @@ def get_hs_data(
     cell = np.array(cell, dtype=float)
 
     if lattice_type is None:
-        lattice_type = lepage(
-            *get_params(cell),
-            eps_relative=rtol,
-            eps_angle=atol,
-        )
+        lattice_type = lepage(cell, eps_relative=rtol, eps_angle=atol)
 
     lattice_type = lattice_type.upper()
 

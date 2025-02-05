@@ -948,11 +948,7 @@ def get_S_matrix(cell, lattice_type=None, rtol=1e-8, atol=1e-8):
     cell = np.array(cell, dtype=float)
 
     if lattice_type is None:
-        lattice_type = lepage(
-            *get_params(cell),
-            eps_relative=rtol,
-            eps_angle=atol,
-        )
+        lattice_type = lepage(cell, eps_relative=rtol, eps_angle=atol)
 
     lattice_type = lattice_type.upper()
 
@@ -1030,11 +1026,7 @@ def get_standardized(cell, S_matrix=None, rtol=1e-8, atol=1e-8):
     cell = np.array(cell, dtype=float)
 
     if S_matrix is None:
-        lattice_type = lepage(
-            *get_params(cell),
-            eps_relative=rtol,
-            eps_angle=atol,
-        )
+        lattice_type = lepage(cell, eps_relative=rtol, eps_angle=atol)
 
         S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
     else:
@@ -1079,11 +1071,7 @@ def get_conventional(cell, S_matrix=None, C_matrix=None, rtol=1e-8, atol=1e-8):
     cell = np.array(cell, dtype=float)
 
     if S_matrix is None or C_matrix is None:
-        lattice_type = lepage(
-            *get_params(cell),
-            eps_relative=rtol,
-            eps_angle=atol,
-        )
+        lattice_type = lepage(cell, eps_relative=rtol, eps_angle=atol)
 
     if C_matrix is None:
         C_matrix = get_C_matrix(lattice_type)
