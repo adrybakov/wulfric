@@ -5,21 +5,29 @@ LePage algorithm
 ****************
 
 The algorithm for the Bravais lattice type identification is bases on the search for the
-twofold rotation axes and described in details in [1]_.
-Here we recall the algorithm from Table 1 of the publication with minor modifications as
-implemented in :py:func:`.lepage` function.
+twofold rotation axes and described in details in [1]_. The algorithm is implemented in
+:py:func:`.lepage` function. On this page we recall the algorithm with comments.
 
-3D Lattice
-==========
 
-Relative coordinates are given with respect to the primitive direct unit cell
-as defined in [2]_ unless specified directly.
+Accuracy
+========
 
+Result of an algorithm outcome for a given cell might depend on two parameters ``limit``
+and ``angle_tolerance``. First is used for the construction of the set of possible
+symmetry axes. The second one is used for the search of the actual symmetry axis in that
+set. We recommend to vary ``angle_tolerance`` if the computed lattice type does not match
+your expectations. Roughly this parameter can be understood as the accuracy with which the
+angles of the given cell are defined.
+
+
+Algorithm
+=========
+
+Any cell passed to the :py:func:`.lepage` function is understood as a primitive one.
 
 Step I
 ------
 Compute niggli reduced cell via the call to the :py:func:`.niggli` function.
-Define cell and reciprocal cell as Niggli cell and it's reciprocal pair.
 
 Step II
 --------
@@ -201,9 +209,9 @@ with the following angle matrix:
 
 If ``angles`` is the same as the tetragonal angle matrix,
 then find one axes with the following set of angles:
-:math:`(0^{\circ} \times 1, 90^{\circ}\times 4)`. Take two axes with minimal length form the remaining four.
-Make a matrix from the Miller indices of the three axes
-and compute its determinant :math:`\Delta`.
+:math:`(0^{\circ} \times 1, 90^{\circ}\times 4)`. Take two axes with minimal length from
+the remaining four. Make a matrix from the Miller indices of the three axes and compute
+its determinant :math:`\Delta`.
 
 * If :math:`\vert\Delta\vert  = 1`, then set system type to :ref:`"TET" <guide_tet>`.
 * If :math:`\vert\Delta\vert  = 2`, then set system type to :ref:`"BCT" <guide_bct>`.

@@ -17,16 +17,14 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from math import acos, floor, log10
+from math import acos
 
 import numpy as np
 
-from wulfric._decorate_array import print_2d_array
 from wulfric._exceptions import NiggliReductionFailed
 from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._niggli import niggli
 from wulfric.constants._numerical import TODEGREES
-from wulfric.geometry._geometry import get_volume
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -36,7 +34,7 @@ old_dir.add("old_dir")
 ################################################################################
 #                                  LePage CUB                                  #
 ################################################################################
-def _check_cub(angles: np.ndarray, axes: np.ndarray, eps_angle):
+def _check_cub(angles, axes, angle_tolerance):
     target_angles = np.array(
         [
             [0, 45, 45, 45, 45, 90, 90, 90, 90],
@@ -60,12 +58,12 @@ def _check_cub(angles: np.ndarray, axes: np.ndarray, eps_angle):
         sub_axes = axes[:9]
         if (
             np.abs(np.sort(sub_angles.flatten()) - np.sort(target_angles.flatten()))
-            < eps_angle
+            < angle_tolerance
         ).all():
             xyz = []
             for i in range(9):
                 if (
-                    np.abs(np.sort(sub_angles[i]) - conventional_axis) < eps_angle
+                    np.abs(np.sort(sub_angles[i]) - conventional_axis) < angle_tolerance
                 ).all():
                     xyz.append(sub_axes[i])
             det = np.abs(np.linalg.det(xyz))
@@ -83,7 +81,7 @@ def _check_cub(angles: np.ndarray, axes: np.ndarray, eps_angle):
 ################################################################################
 #                                  LePage HEX                                  #
 ################################################################################
-def _check_hex(angles: np.ndarray, eps_angle):
+def _check_hex(angles, angle_tolerance):
     target_angles = np.array(
         [
             [0, 90, 90, 90, 90, 90, 90],
@@ -99,7 +97,7 @@ def _check_hex(angles: np.ndarray, eps_angle):
         sub_angles = angles[:7, :7]
         if (
             np.abs(np.sort(sub_angles.flatten()) - np.sort(target_angles.flatten()))
-            < eps_angle
+            < angle_tolerance
         ).all():
             return "HEX", False
         return None, True
@@ -109,7 +107,7 @@ def _check_hex(angles: np.ndarray, eps_angle):
 ################################################################################
 #                                  LePage TET                                  #
 ################################################################################
-def _check_tet(angles: np.ndarray, axes: np.ndarray, eps_angle, cell):
+def _check_tet(angles, axes, angle_tolerance, cell):
     target_angles = np.array(
         [
             [0, 90, 90, 90, 90],
@@ -129,12 +127,12 @@ def _check_tet(angles: np.ndarray, axes: np.ndarray, eps_angle, cell):
         sub_axes = axes[:5]
         if (
             np.abs(np.sort(sub_angles.flatten()) - np.sort(target_angles.flatten()))
-            < eps_angle
+            < angle_tolerance
         ).all():
             xy = []
             for i in range(5):
                 if (
-                    np.abs(np.sort(sub_angles[i]) - conventional_axis) < eps_angle
+                    np.abs(np.sort(sub_angles[i]) - conventional_axis) < angle_tolerance
                 ).all():
                     z = sub_axes[i]
                 else:
@@ -156,7 +154,7 @@ def _check_tet(angles: np.ndarray, axes: np.ndarray, eps_angle, cell):
 ################################################################################
 #                                  LePage RHL                                  #
 ################################################################################
-def _check_rhl(angles: np.ndarray, eps_angle):
+def _check_rhl(angles, angle_tolerance):
     target_angles = np.array(
         [
             [0, 60, 60],
@@ -169,7 +167,7 @@ def _check_rhl(angles: np.ndarray, eps_angle):
         sub_angles = angles[:3, :3]
         if (
             np.abs(np.sort(sub_angles.flatten()) - np.sort(target_angles.flatten()))
-            < eps_angle
+            < angle_tolerance
         ).all():
             return "RHL", False
         return None, True
@@ -179,7 +177,7 @@ def _check_rhl(angles: np.ndarray, eps_angle):
 ################################################################################
 #                                  LePage ORC                                  #
 ################################################################################
-def _check_orc(angles: np.ndarray, axes: np.ndarray, eps_angle):
+def _check_orc(angles, axes, angle_tolerance):
     target_angles = np.array(
         [
             [0, 90, 90],
@@ -194,7 +192,7 @@ def _check_orc(angles: np.ndarray, axes: np.ndarray, eps_angle):
         sub_axes = axes[:3]
         if (
             np.abs(np.sort(sub_angles.flatten()) - np.sort(target_angles.flatten()))
-            < eps_angle
+            < angle_tolerance
         ).all():
             C = np.array(sub_axes, dtype=float).T
             det = np.abs(np.linalg.det(C))
@@ -226,14 +224,14 @@ def _check_orc(angles: np.ndarray, axes: np.ndarray, eps_angle):
 ################################################################################
 #                                  LePage MCL                                  #
 ################################################################################
-def _get_perpendicular_shortest(v, cell, eps):
+def _get_perpendicular_shortest(v, cell, angle_tolerance):
     perp_axes = []
 
     miller_indices = (np.indices((3, 3, 3)) - 1).transpose((1, 2, 3, 0)).reshape(27, 3)
 
     for index in miller_indices:
         if (index != [0, 0, 0]).any():
-            if abs((index @ cell) @ (v @ cell)) < eps:
+            if abs((index @ cell) @ (v @ cell)) < angle_tolerance:
                 perp_axes.append(index)
 
     perp_axes.sort(key=lambda x: np.linalg.norm(x @ cell))
@@ -242,7 +240,7 @@ def _get_perpendicular_shortest(v, cell, eps):
     return perp_axes[0], perp_axes[2]
 
 
-def _check_mcl(angles: np.ndarray, axes: np.ndarray, eps, cell):
+def _check_mcl(angles, axes, angle_tolerance, cell):
     axes = np.array([i[0] for i in axes])
     angles = angles[:1]
     if 1 <= angles.shape[0]:
@@ -250,7 +248,7 @@ def _check_mcl(angles: np.ndarray, axes: np.ndarray, eps, cell):
 
         # If we are here by mistake it can fail
         try:
-            a, c = _get_perpendicular_shortest(b, cell, eps)
+            a, c = _get_perpendicular_shortest(b, cell, angle_tolerance)
         except IndexError:
             return None, True
         C = np.array([a, b, c], dtype=float).T
@@ -266,14 +264,7 @@ def _check_mcl(angles: np.ndarray, axes: np.ndarray, eps, cell):
 ################################################################################
 #                                    LePage                                    #
 ################################################################################
-def lepage(
-    cell,
-    eps_relative=1e-4,
-    verbose=False,
-    very_verbose=False,
-    give_all_results=False,
-    eps_angle=1e-14,
-):
+def lepage(cell, angle_tolerance=1e-4, give_all_results=False, limit=3.0):
     r"""
     Le Page algorithm [1]_.
 
@@ -281,22 +272,24 @@ def lepage(
     ----------
     cell : (3,3) |array-like|_
         Cell matrix, rows are interpreted as vectors.
-    eps_relative : float, default TODO
-        Relative epsilon.
-    verbose : bool, default False
-        Whether to print the steps of an algorithm.
-    very_verbose : bool, default False
-        Whether to print the detailed steps of an algorithm.
+    angle_tolerance : float, default 1e-4
+        Angle tolerance for the search of the actual symmetry axes. Given in degrees.
+        Modulus is used. It is recommended to reduce ``angle_tolerance`` and do not change
+        ``limit`` to obtain ``lattice_type`` with higher symmetry.
     give_all_results : bool, default False
-        Whether to give the whole list of consecutive results.
-    eps_angle : float, default TODO
-        Maximum angle tolerance, in degrees.
+        Whether to return the list of Bravais lattice types identified during the
+        process of exclusion of the pseudosymmetry axes. Last element is the computed
+        Bravais lattice type.
+    limit : float, default 3.0
+        Tolerance parameter for the construction of the list of potential symmetry axes.
+        Given in degrees.
 
     Returns
     -------
-    result : str
-        Bravais lattice type. If give_all_results == True, then return list of all
-        consecutive results.
+    lattice_type : str
+        Bravais lattice type.
+    intermediate_types : list of str
+        Returned if ``give_all_results`` is ``True``.
 
     References
     ----------
@@ -306,19 +299,12 @@ def lepage(
         Journal of Applied Crystallography, 15(3), pp.255-259.
     """
 
-    if very_verbose:
-        verbose = True
-
-    eps_volume = eps_relative * get_volume(cell) ** (1 / 3.0)
-
-    # Limit value for the condition on keeping the axis
-    limit = max(1.5, eps_angle * 1.1)
-
-    decimals = abs(floor(log10(abs(eps_volume))))
+    # Safeguard to avoid infinite loops
+    angle_tolerance = abs(angle_tolerance)
 
     # Niggli reduction
     try:
-        cell = niggli(cell=cell, eps_relative=eps_relative)
+        cell = niggli(cell=cell)
     except NiggliReductionFailed:
         import warnings
 
@@ -328,13 +314,8 @@ def lepage(
         )
 
     rcell = get_reciprocal(cell)
-    if very_verbose:
-        print("Cell:")
-        print_2d_array(cell, fmt=f"{4+decimals}.{1+decimals}f")
-        print("Reciprocal cell:")
-        print_2d_array(rcell, fmt=f"{4+decimals}.{1+decimals}f")
 
-    # Find all axes with twins
+    # Find all potential axes, including twins
     miller_indices = (np.indices((5, 5, 5)) - 2).transpose((1, 2, 3, 0)).reshape(125, 3)
     axes = []
     for U in miller_indices:
@@ -371,18 +352,7 @@ def lepage(
             new_axes.append(axes[i])
     axes = new_axes
 
-    if very_verbose:
-        print(f"Axes with delta < {limit}:")
-        print(f"       U     {'delta':>{4+decimals}}")
-        for ax in axes:
-            print(
-                f"  ({ax[0][0]:2.0f} "
-                + f"{ax[0][1]:2.0f} "
-                + f"{ax[0][2]:2.0f}) "
-                + f"{ax[-1]:{4+decimals}.{1+decimals}f}"
-            )
-
-    # Compute angles matrix
+    # Compute matrix of pair-wise angles
     n = len(axes)
     angles = np.zeros((n, n), dtype=float)
     for i in range(n):
@@ -393,87 +363,60 @@ def lepage(
             )
     angles += angles.T
 
-    # Main check cycle
+    # Main cycle
     delta = None
-    separator = lambda x: "=" * 20 + f" Cycle {x} " + "=" * 20
-    cycle = 0
+
     if give_all_results:
         results = []
-    while delta is None or delta > eps_angle:
-        if verbose:
-            cycle += 1
-            print(separator(cycle))
 
-        try:
-            delta = max(axes, key=lambda x: x[-1])[-1]
-        except ValueError:
+    while delta is None or delta > angle_tolerance:
+
+        if len(axes) == 0:
             delta = 0
-        eps = max(eps_volume, delta)
-        decimals = abs(floor(log10(abs(eps))))
-        if very_verbose:
-            decimals = abs(floor(log10(abs(eps))))
-            print(
-                f"Epsilon = {eps:{4+decimals}.{1+decimals}f}\n"
-                + f"delta   = {delta:{4+decimals}.{1+decimals}f}"
-            )
-            print("Axes:")
-            print(f"       U     {'delta':>{4+decimals}}")
-            for ax in axes:
-                print(
-                    f"  ({ax[0][0]:2.0f} "
-                    + f"{ax[0][1]:2.0f} "
-                    + f"{ax[0][2]:2.0f}) "
-                    + f"{ax[-1]:{4+decimals}.{1+decimals}f}"
-                )
-            print("Angles:")
-            print_2d_array(angles, fmt=f"{4+decimals}.{1+decimals}f")
+        else:
+            delta = max(axes, key=lambda x: x[-1])[-1]
 
         continue_search = True
         n = len(axes)
         result = None
 
         # CUB
-        result, continue_search = _check_cub(angles, axes, eps)
+        result, continue_search = _check_cub(angles, axes, angle_tolerance)
 
         # HEX
         if continue_search:
-            result, continue_search = _check_hex(angles, eps)
+            result, continue_search = _check_hex(angles, angle_tolerance)
 
         # TET
         if continue_search:
-            result, continue_search = _check_tet(angles, axes, eps, cell)
+            result, continue_search = _check_tet(angles, axes, angle_tolerance, cell)
 
         # RHL
         if continue_search:
-            result, continue_search = _check_rhl(angles, eps)
+            result, continue_search = _check_rhl(angles, angle_tolerance)
 
         # ORC
         if continue_search:
-            result, continue_search = _check_orc(angles, axes, eps)
+            result, continue_search = _check_orc(angles, axes, angle_tolerance)
 
         # MCL
         if continue_search:
-            result, continue_search = _check_mcl(angles, axes, eps, cell)
+            result, continue_search = _check_mcl(angles, axes, angle_tolerance, cell)
 
         # TRI
         if continue_search:
             result = "TRI"
 
-        if verbose:
-            print(
-                f"System {result} with the worst delta = {delta:{4+decimals}.{1+decimals}f}"
-            )
-
         if len(axes) > 0:
             # remove worst axes
             while len(axes) >= 2 and axes[-1][-1] == axes[-2][-1]:
                 axes = axes[:-1]
-                angles = np.delete(angles, -1, -1)[:-1]
+                angles = angles[:-1, :-1]
             axes = axes[:-1]
-            angles = np.delete(angles, -1, -1)[:-1]
+            angles = angles[:-1, :-1]
 
         if give_all_results:
-            results.append((result, delta))
+            results.append(result)
 
     if give_all_results:
         return results
