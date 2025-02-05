@@ -53,7 +53,11 @@ conventional** cell
 
 Details on the construction of matrices :math:`\boldsymbol{S}` and exact forms of matrices
 :math:`\boldsymbol{C}` are provided in the individual pages for each of the 14
-:ref:`user-guide_conventions_bravais-lattices`.
+:ref:`user-guide_conventions_bravais-lattices`. We note that
+:math:`\boldsymbol{C} = (\boldsymbol{P^{\prime}})^{-1}` from Table 2 of [2]_. An inverse
+is present as we define the transformation matrix :math:`\boldsymbol{C}` as *from
+primitive to conventional* and transformation matrix :math:`\boldsymbol{P^{\prime}}` in
+[2]_ is defined as *from conventional to primitive*.
 
 Matrix :math:`\boldsymbol{S}` is orthonormal for all Bravais lattices, except for
 the :ref:`guide_mclc`. All matrices satisfy :math:`\det(\boldsymbol{S}) = 1`.
@@ -76,3 +80,6 @@ References
 .. [1] Setyawan, W. and Curtarolo, S., 2010.
     High-throughput electronic band structure calculations: Challenges and tools.
     Computational materials science, 49(2), pp.299-312.
+.. [2] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
+    Band structure diagram paths based on crystallography.
+    Computational Materials Science, 128, pp.140-184.
