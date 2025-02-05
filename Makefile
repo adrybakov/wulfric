@@ -35,13 +35,14 @@ help:
 
 # $(O) is meant as a shortcut for $(SPHINXOPTS).
 html:
+	@python3 tools/produce-C-matrix-includes.py
 	@$(SPHINXBUILD) -M html "docs/$(SOURCEDIR)" "docs/$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 clean-html: clean install html
 	@echo "Done"
 
-html-examples: bravais-pictures
-	@$(SPHINXBUILD) -M html "docs/$(SOURCEDIR)" "docs/$(BUILDDIR)" $(SPHINXOPTS) $(O)
+html-from-zero: clean install bravais-pictures docs-prerequisites html
+	@echo "Done"
 
 doctest:
 	@$(SPHINXBUILD) -b doctest "docs/$(SOURCEDIR)" "docs/$(BUILDDIR)" $(SPHINXOPTS) $(O)
@@ -83,14 +84,14 @@ pip: prepare-release
 	@git commit -m "Post-release commit"
 	@git push
 
+prepare-release:
+	@python3 -u tools/prepare-release.py -v $(VERSION) -rd $(ROOT_DIR) -r
+
 
 bravais-pictures:
 	@python3 tools/plot-bravais-lattices.py
 
-prepare-release:
-	@python3 -u tools/prepare-release.py -v $(VERSION) -rd $(ROOT_DIR) -r
-
-docs-pictures:
+docs-prerequisites:
 	@python3 tools/plot-repositories.py
 	@python3 tools/plot-package-scheme.py
 	@python3 tools/plot-cell-relations.py
