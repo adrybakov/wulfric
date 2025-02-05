@@ -17,13 +17,12 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from math import acos, cos, floor, log10, sqrt
-
 import numpy as np
 from termcolor import cprint
 
 from wulfric._exceptions import NiggliReductionFailed
 from wulfric._numerical import compare_numerically
+from wulfric.cell._basic_manipulation import get_params
 from wulfric.constants._numerical import TODEGREES
 from wulfric.geometry._geometry import get_volume
 
@@ -37,8 +36,8 @@ def _niggli_step_1(A, B, C, xi, eta, zeta, trans_matrix, eps):
         compare_numerically(A, "==", B, eps=eps)
         and compare_numerically(abs(xi), ">", abs(eta), eps=eps)
     )
+    print("Step 1", condition, A, B, C, xi, eta, zeta)
     if condition:
-        A, xi, B, eta = B, eta, A, xi
 
         trans_matrix = trans_matrix @ np.array(
             [
@@ -48,6 +47,8 @@ def _niggli_step_1(A, B, C, xi, eta, zeta, trans_matrix, eps):
             ],
             dtype=int,
         )
+
+        A, xi, B, eta = B, eta, A, xi
 
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
@@ -57,8 +58,9 @@ def _niggli_step_2(A, B, C, xi, eta, zeta, trans_matrix, eps):
         compare_numerically(B, "==", C, eps=eps)
         and compare_numerically(abs(eta), ">", abs(zeta), eps=eps)
     )
+    print("Step 2", condition, A, B, C, xi, eta, zeta)
     if condition:
-        B, eta, C, zeta = C, zeta, B, eta
+
         trans_matrix = trans_matrix @ np.array(
             [
                 [-1, 0, 0],
@@ -68,25 +70,27 @@ def _niggli_step_2(A, B, C, xi, eta, zeta, trans_matrix, eps):
             dtype=int,
         )
 
+        B, eta, C, zeta = C, zeta, B, eta
+
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
 def _niggli_step_3(A, B, C, xi, eta, zeta, trans_matrix, eps):
-    condition = compare_numerically(xi * eta * zeta, ">", 0.0, eps=eps)
+    condition = compare_numerically(xi * eta * zeta, ">", 0, eps=eps)
+    print("Step 3", condition, A, B, C, xi, eta, zeta)
     if condition:
-        xi, eta, zeta = abs(xi), abs(eta), abs(zeta)
 
-        if compare_numerically(xi, ">", 0.0, eps=eps):
+        if compare_numerically(xi, ">", 0, eps=eps):
             i = 1
         else:
             i = -1
 
-        if compare_numerically(eta, ">", 0.0, eps=eps):
+        if compare_numerically(eta, ">", 0, eps=eps):
             j = 1
         else:
             j = -1
 
-        if compare_numerically(zeta, ">", 0.0, eps=eps):
+        if compare_numerically(zeta, ">", 0, eps=eps):
             k = 1
         else:
             k = -1
@@ -100,38 +104,40 @@ def _niggli_step_3(A, B, C, xi, eta, zeta, trans_matrix, eps):
             dtype=int,
         )
 
+        xi, eta, zeta = abs(xi), abs(eta), abs(zeta)
+
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
 def _niggli_step_4(A, B, C, xi, eta, zeta, trans_matrix, eps):
-    condition = compare_numerically(xi * eta * zeta, "<=", 0.0, eps=eps)
+    condition = compare_numerically(xi * eta * zeta, "<=", 0, eps=eps)
+    print("Step 4", condition, A, B, C, xi, eta, zeta)
     if condition:
-        xi, eta, zeta = -abs(xi), -abs(eta), -abs(zeta)
 
         # Step 1
         i, j, k = 1, 1, 1
         p = None
 
         # Step 2
-        if compare_numerically(xi, ">", 0.0):
+        if compare_numerically(xi, ">", 0):
             i = -1
-        elif not compare_numerically(xi, "<", 0.0):
+        elif not compare_numerically(xi, "<", 0):
             p = "i"
 
         # Step 3
-        if compare_numerically(eta, ">", 0.0):
+        if compare_numerically(eta, ">", 0):
             j = -1
-        elif not compare_numerically(eta, "<", 0.0):
+        elif not compare_numerically(eta, "<", 0):
             p = "j"
 
         # Step 4
-        if compare_numerically(zeta, ">", 0.0):
+        if compare_numerically(zeta, ">", 0):
             k = -1
-        elif not compare_numerically(zeta, "<", 0.0):
+        elif not compare_numerically(zeta, "<", 0):
             p = "k"
 
         # Step 5
-        if i * j * k < 0.0 and p is not None:
+        if i * j * k < 0 and p is not None:
             if p == "i":
                 i = -1
             elif p == "j":
@@ -148,6 +154,8 @@ def _niggli_step_4(A, B, C, xi, eta, zeta, trans_matrix, eps):
             dtype=int,
         )
 
+        xi, eta, zeta = -abs(xi), -abs(eta), -abs(zeta)
+
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
@@ -160,14 +168,11 @@ def _niggli_step_5(A, B, C, xi, eta, zeta, trans_matrix, eps):
         )
         or (
             compare_numerically(xi, "==", -B, eps=eps)
-            and compare_numerically(zeta, "<", 0.0, eps=eps)
+            and compare_numerically(zeta, "<", 0, eps=eps)
         )
     )
+    print("Step 5", condition, A, B, C, xi, eta, zeta)
     if condition:
-
-        C = B + C - xi * np.sign(xi)
-        eta = eta - zeta * np.sign(xi)
-        xi = xi - 2.0 * B * np.sign(xi)
 
         trans_matrix = trans_matrix @ np.array(
             [
@@ -177,6 +182,10 @@ def _niggli_step_5(A, B, C, xi, eta, zeta, trans_matrix, eps):
             ],
             dtype=int,
         )
+
+        C = B + C - xi * np.sign(xi)
+        eta = eta - zeta * np.sign(xi)
+        xi = xi - 2 * B * np.sign(xi)
 
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
@@ -190,13 +199,11 @@ def _niggli_step_6(A, B, C, xi, eta, zeta, trans_matrix, eps):
         )
         or (
             compare_numerically(eta, "==", -A, eps=eps)
-            and compare_numerically(zeta, "<", 0.0, eps=eps)
+            and compare_numerically(zeta, "<", 0, eps=eps)
         )
     )
+    print("Step 6", condition, A, B, C, xi, eta, zeta)
     if condition:
-        C = A + C - eta * np.sign(eta)
-        xi = xi - zeta * np.sign(eta)
-        eta = eta - 2.0 * A * np.sign(eta)
 
         trans_matrix = trans_matrix @ np.array(
             [
@@ -207,6 +214,10 @@ def _niggli_step_6(A, B, C, xi, eta, zeta, trans_matrix, eps):
             dtype=int,
         )
 
+        C = A + C - eta * np.sign(eta)
+        xi = xi - zeta * np.sign(eta)
+        eta = eta - 2 * A * np.sign(eta)
+
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
@@ -215,18 +226,15 @@ def _niggli_step_7(A, B, C, xi, eta, zeta, trans_matrix, eps):
         compare_numerically(abs(zeta), ">", A, eps=eps)
         or (
             compare_numerically(zeta, "==", A, eps=eps)
-            and compare_numerically(2.0 * xi, "<", eta, eps=eps)
+            and compare_numerically(2 * xi, "<", eta, eps=eps)
         )
         or (
             compare_numerically(zeta, "==", -A, eps=eps)
-            and compare_numerically(eta, "<", 0.0, eps=eps)
+            and compare_numerically(eta, "<", 0, eps=eps)
         )
     )
+    print("Step 7", condition, A, B, C, xi, eta, zeta)
     if condition:
-
-        B = A + B - zeta * np.sign(zeta)
-        xi = xi - eta * np.sign(zeta)
-        zeta = zeta - 2.0 * A * np.sign(zeta)
 
         trans_matrix = trans_matrix @ np.array(
             [
@@ -237,18 +245,20 @@ def _niggli_step_7(A, B, C, xi, eta, zeta, trans_matrix, eps):
             dtype=int,
         )
 
+        B = A + B - zeta * np.sign(zeta)
+        xi = xi - eta * np.sign(zeta)
+        zeta = zeta - 2 * A * np.sign(zeta)
+
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
 def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix, eps):
-    condition = compare_numerically(xi + eta + zeta + A + B, "<", 0.0, eps=eps) or (
-        compare_numerically(xi + eta + zeta + A + B, "==", 0.0, eps=eps)
-        and compare_numerically(2.0 * (A + eta) + zeta, ">", 0.0, eps=eps)
+    condition = compare_numerically(xi + eta + zeta + A + B, "<", 0, eps=eps) or (
+        compare_numerically(xi + eta + zeta + A + B, "==", 0, eps=eps)
+        and compare_numerically(2 * (A + eta) + zeta, ">", 0, eps=eps)
     )
+    print("Step 8", condition, A, B, C, xi, eta, zeta)
     if condition:
-        C = A + B + C + xi + eta + zeta
-        xi = 2.0 * B + xi + zeta
-        eta = 2.0 * A + eta + zeta
 
         trans_matrix = trans_matrix @ np.array(
             [
@@ -258,6 +268,10 @@ def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix, eps):
             ],
             dtype=int,
         )
+
+        C = A + B + C + xi + eta + zeta
+        xi = 2 * B + xi + zeta
+        eta = 2 * A + eta + zeta
 
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
@@ -346,7 +360,7 @@ def niggli(
     eps = eps_relative * volume ** (1 / 3.0)
 
     # 0
-    metric_tensor = np.matmul(cell, cell)
+    metric_tensor = np.matmul(cell, np.transpose(cell))
 
     params = (
         metric_tensor[0][0],
@@ -365,7 +379,6 @@ def niggli(
         if iter_count > max_iterations:
             raise NiggliReductionFailed(max_iterations=max_iterations)
 
-        # Update metric tensor
         # Note : each iteration changes the transformation matrix
 
         iter_count += 1
@@ -418,3 +431,11 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
+
+
+if __name__ == "__main__":
+    from wulfric.cell._sc_examples import get_cell_example
+
+    cell = get_cell_example("ORCC")
+
+    niggli(cell)
