@@ -19,6 +19,7 @@
 
 from random import choices
 from string import ascii_lowercase
+from typing import Iterable
 
 import numpy as np
 
@@ -83,15 +84,22 @@ class PlotlyBackend(AbstractBackend):
             fig = go.Figure()
         self.fig = fig
 
-    def show(self, **kwargs):
+    def show(self, axes_visible=True, **kwargs):
         r"""
         Show the figure in the interactive mode.
 
         Parameters
         ----------
+        axes_visible : bool, default True
+            Whether to show axes.
         **kwargs
             Passed directly to the |plotly-update-layout|_.
         """
+
+        if not axes_visible:
+            self.fig.update_scenes(
+                xaxis_visible=False, yaxis_visible=False, zaxis_visible=False
+            )
 
         # Set up defaults
         if "width" not in kwargs:
@@ -113,6 +121,7 @@ class PlotlyBackend(AbstractBackend):
         output_name="lattice_graph.png",
         kwargs_update_layout=None,
         kwargs_write_html=None,
+        axes_visible=True,
     ):
         r"""
         Save the figure in the html file.
@@ -125,6 +134,8 @@ class PlotlyBackend(AbstractBackend):
             Passed directly to the |plotly-update-layout|_.
         kwargs_write_html : dict, optional
             Passed directly to the |plotly-write-html|_.
+        axes_visible : bool, default True
+            Whether to show axes.
         """
 
         if kwargs_update_layout is None:
@@ -133,8 +144,13 @@ class PlotlyBackend(AbstractBackend):
             kwargs_write_html = {}
 
         self.fig.update_scenes(aspectmode="data")
+        if not axes_visible:
+            self.fig.update_scenes(
+                xaxis_visible=False, yaxis_visible=False, zaxis_visible=False
+            )
 
         self.fig.update_layout(**kwargs_update_layout)
+
         self.fig.write_html(output_name, **kwargs_write_html)
 
     def plot_unit_cell(
