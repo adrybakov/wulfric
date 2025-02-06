@@ -77,8 +77,7 @@ Cell standardization
 ====================
 
 Length of third lattice vector has to be different from the first two.
-If this condition is not satisfied,
-then the lattice is transformed to the standard form:
+If this condition is not satisfied, then the lattice is transformed to the standard form:
 
 
 * If
