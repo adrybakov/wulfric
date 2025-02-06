@@ -19,7 +19,6 @@
 
 import numpy as np
 
-from wulfric.cell._basic_manipulation import get_params
 from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_standardize import get_S_matrix, get_standardized
 
