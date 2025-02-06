@@ -164,8 +164,11 @@ def dump_poscar(
     cell : (3,3) |array-like|_,
         Primitive unit cell.
     atoms : dict
-        Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
-        Optionally might have ``names`` key with value of ``list`` of ``str`` of length N.
+        Dictionary with atoms. Must have a ``"position"`` with value of (N,3)
+        |array-like|_. Must have either ``"names"`` key with value of ``list`` of ``str``
+        of length N or ``"species"`` key with value of ``list`` of ``str`` of length N.
+        If ``"species"`` key is not present, try to deduce atom's species from
+        ``"names"``, raise error on fail.
     file_object : str of file-like object, optional
         File to be written. If str, then file is opened with the given name.
         Otherwise it has to have ``.write()`` method.
@@ -198,19 +201,20 @@ def dump_poscar(
     # Prepare atoms
     atoms_list = []
     for i in range(len(atoms["positions"])):
-        atom_type = get_atom_species(atoms["names"][i])
-        if atom_type == "X":
-            raise ValueError(
-                f"Can not deduce atom's type from the name '{atoms['name'][i]}'"
-            )
+        if "species" in atoms:
+            atom_type = atoms["species"][i]
+        else:
+            atom_type = get_atom_species(atoms["names"][i])
+            if atom_type == "X":
+                raise ValueError(
+                    f"Can not deduce atom's type from the name '{atoms['name'][i]}', while dumping to POSCAR."
+                )
         if mode == "Direct":
             atom_position = atoms["positions"][i]
         else:
             atom_position = atoms["positions"][i] @ cell
 
         atoms_list.append((atom_type, atom_position))
-
-    print(atoms_list)
 
     # Sort atoms by type
     atoms_list = sorted(atoms_list, key=lambda x: x[0])
@@ -232,7 +236,6 @@ def dump_poscar(
     # Write
     file_object.write(comment + "\n")
     file_object.write("1.0\n")
-    print(print_2d_array(cell, fmt=f".{decimals}f", print_result=False, borders=False))
     file_object.write(
         print_2d_array(cell, fmt=f".{decimals}f", print_result=False, borders=False)
         + "\n"
