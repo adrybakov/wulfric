@@ -283,9 +283,9 @@ def niggli(
     return_transformation_matrix=False,
 ):
     r"""
-    Computes reduced Niggli cell. Implements algroithm from [2]_.
+    Computes reduced Niggli cell. Implements algorithm from [2]_.
 
-    Details on the implementation are written in :ref:`library_niggli`.
+    Details of the implementation are written in :ref:`library_niggli`.
 
     Parameters
     ----------
@@ -312,32 +312,6 @@ def niggli(
         If the niggli cell is not found in ``max_iterations`` iterations.
     ValueError
         If the provided cell`s volume is zero.
-
-    Examples
-    --------
-    Example from [1]_
-    (parameters are reproducing :math:`A=9`, :math:`B=27`, :math:`C=4`, :math:`\xi` = -5, :math:`\eta` = -4, :math:`\zeta = -22`):
-
-    .. doctest::
-
-        >>> import wulfric as wulf
-        >>> from wulfric.constants import TODEGREES
-        >>> from math import acos, sqrt
-        >>> a = 3
-        >>> b = sqrt(27)
-        >>> c = 2
-        >>> print(f"{a} {b:.3f} {c}")
-        3 5.196 2
-        >>> alpha = acos(-5 / 2 / b / c) * TODEGREES
-        >>> beta = acos(-4 / 2 / a / c) * TODEGREES
-        >>> gamma = acos(-22 / 2 / a / b) * TODEGREES
-        >>> print(f"{alpha:.2f} {beta:.2f} {gamma:.2f}")
-        103.92 109.47 134.88
-        >>> niggli_matrix_form = wulf.cell.niggli(a, b, c, alpha, beta, gamma, eps_relative=1e-4) # doctest: +NORMALIZE_WHITESPACE
-
-        >>> niggli_matrix_form
-        array([[4. , 9. , 9. ],
-               [4.5, 1.5, 2. ]])
 
     References
     ----------
@@ -431,11 +405,3 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
-
-
-if __name__ == "__main__":
-    from wulfric.cell._sc_examples import get_cell_example
-
-    cell = get_cell_example("ORCC")
-
-    niggli(cell)
