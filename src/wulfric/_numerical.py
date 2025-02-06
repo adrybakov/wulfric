@@ -25,7 +25,7 @@ def compare_numerically(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
     r"""
     Compare two numbers numerically.
 
-    The approach is taken from [1]_:
+    The formal definition is taken from [1]_:
 
     .. math::
 
