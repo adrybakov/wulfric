@@ -412,10 +412,14 @@ def _ORCI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Completely ignored by this
+        function, the arguments are defined only for the homogeneity of the input for all
+        14 Bravais lattice types.
 
     Returns
     -------
@@ -480,10 +484,14 @@ def _ORCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Completely ignored by this
+        function, the arguments are defined only for the homogeneity of the input for all
+        14 Bravais lattice types.
 
     Returns
     -------
@@ -561,10 +569,14 @@ def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Completely ignored by this
+        function, the arguments are defined only for the homogeneity of the input for all
+        14 Bravais lattice types.
 
     Returns
     -------
@@ -671,10 +683,14 @@ def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Completely ignored by this
+        function, the arguments are defined only for the homogeneity of the input for all
+        14 Bravais lattice types.
 
     Returns
     -------
@@ -755,10 +771,14 @@ def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Completely ignored by this
+        function, the arguments are defined only for the homogeneity of the input for all
+        14 Bravais lattice types.
 
     Returns
     -------
@@ -835,10 +855,14 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Completely ignored by this
+        function, the arguments are defined only for the homogeneity of the input for all
+        14 Bravais lattice types.
 
     Returns
     -------
