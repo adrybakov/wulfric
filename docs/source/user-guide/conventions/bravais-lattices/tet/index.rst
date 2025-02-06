@@ -97,9 +97,13 @@ then the lattice is transformed to the standard form:
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -124,19 +128,17 @@ then the lattice is transformed to the standard form:
     \boldsymbol{S}
     =
     \begin{pmatrix}
-      0 & 1 & 0 \\
       0 & 0 & 1 \\
-      1 & 0 & 0
+      1 & 0 & 0 \\
+      0 & 1 & 0
     \end{pmatrix}
     \qquad
     \boldsymbol{S}^{-1}
     =
-    \boldsymbol{S}^T
-    =
     \begin{pmatrix}
+      0 & 1 & 0 \\
       0 & 0 & 1 \\
-      1 & 0 & 0 \\
-      0 & 1 & 0
+      1 & 0 & 0
     \end{pmatrix}
 
 * If
@@ -156,19 +158,17 @@ then the lattice is transformed to the standard form:
     \boldsymbol{S}
     =
     \begin{pmatrix}
+      0 & 1 & 0 \\
       0 & 0 & 1 \\
-      1 & 0 & 0 \\
-      0 & 1 & 0
+      1 & 0 & 0
     \end{pmatrix}
     \qquad
     \boldsymbol{S}^{-1}
     =
-    \boldsymbol{S}^T
-    =
     \begin{pmatrix}
-      0 & 1 & 0 \\
       0 & 0 & 1 \\
-      1 & 0 & 0
+      1 & 0 & 0 \\
+      0 & 1 & 0
     \end{pmatrix}
 
 Edge cases

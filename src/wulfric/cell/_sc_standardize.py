@@ -34,7 +34,7 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def _CUB_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _CUB_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary cubic cell returns matrix S that transforms it to the standardized form.
 
@@ -47,12 +47,14 @@ def _CUB_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-        Ignored here, but preserved for the unification of input.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
-        Ignored here, but preserved for the unification of input.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Completely ignored by this
+        function, the arguments are defined only for the homogeneity of the input for all
+        14 Bravais lattice types.
 
     Returns
     -------
@@ -68,7 +70,7 @@ def _CUB_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return np.eye(3, dtype=float)
 
 
-def _FCC_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _FCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary face-centered cubic cell returns matrix S that transforms it to the
     standardized form.
@@ -82,12 +84,14 @@ def _FCC_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-        Ignored here, but preserved for the unification of input.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
-        Ignored here, but preserved for the unification of input.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Completely ignored by this
+        function, the arguments are defined only for the homogeneity of the input for all
+        14 Bravais lattice types.
 
     Returns
     -------
@@ -103,7 +107,7 @@ def _FCC_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return np.eye(3, dtype=float)
 
 
-def _BCC_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _BCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary body-centered cubic cell returns matrix S that transforms it to the
     standardized form.
@@ -117,12 +121,14 @@ def _BCC_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-        Ignored here, but preserved for the unification of input.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
-        Ignored here, but preserved for the unification of input.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Completely ignored by this
+        function, the arguments are defined only for the homogeneity of the input for all
+        14 Bravais lattice types.
 
     Returns
     -------
@@ -138,7 +144,7 @@ def _BCC_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return np.eye(3, dtype=float)
 
 
-def _TET_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _TET_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary tetragonal cell returns matrix S that transforms it to the
     standardized form.
@@ -152,10 +158,12 @@ def _TET_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors).
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Completely ignored by this
+        function, the arguments are defined only for the homogeneity of the input for all
+        14 Bravais lattice types.
 
     Returns
     -------
@@ -173,27 +181,27 @@ def _TET_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
         If none of the tetragonal conditions are satisfied.
     """
 
-    a, b, c, alpha, beta, gamma = get_params(cell)
+    a, b, c, _, _, _ = get_params(cell)
 
-    if compare_numerically(a, "==", b, rtol=rtol, atol=atol) and compare_numerically(
-        b, "!=", c, rtol=rtol, atol=atol
+    if compare_numerically(a, "==", b, eps=length_tolerance) and compare_numerically(
+        b, "!=", c, eps=length_tolerance
     ):
         S = np.eye(3, dtype=float)
-    elif compare_numerically(b, "==", c, rtol=rtol, atol=atol) and compare_numerically(
-        c, "!=", a, rtol=rtol, atol=atol
-    ):
-        S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
-    elif compare_numerically(a, "==", c, rtol=rtol, atol=atol) and compare_numerically(
-        c, "!=", b, rtol=rtol, atol=atol
+    elif compare_numerically(b, "==", c, eps=length_tolerance) and compare_numerically(
+        c, "!=", a, eps=length_tolerance
     ):
         S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    elif compare_numerically(a, "==", c, eps=length_tolerance) and compare_numerically(
+        c, "!=", b, eps=length_tolerance
+    ):
+        S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     else:
         raise StandardizationTypeMismatch("tetragonal")
 
     return S
 
 
-def _BCT_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _BCT_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary body-centered tetragonal cell returns matrix S that transforms it to the
     standardized form.
@@ -249,7 +257,7 @@ def _BCT_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return S
 
 
-def _ORC_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _ORC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary orthorhombic cell returns matrix S that transforms it to the
     standardized form.
@@ -316,7 +324,7 @@ def _ORC_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return S
 
 
-def _ORCF_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _ORCF_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary face-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
@@ -384,7 +392,7 @@ def _ORCF_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return S
 
 
-def _ORCI_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _ORCI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary body-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
@@ -452,7 +460,7 @@ def _ORCI_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return S
 
 
-def _ORCC_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _ORCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary base-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
@@ -533,7 +541,7 @@ def _ORCC_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return S
 
 
-def _HEX_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary hexagonal cell returns matrix S that transforms it to the standardized
     form.
@@ -606,7 +614,7 @@ def _HEX_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return S2 @ S1
 
 
-def _RHL_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _RHL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary rhombohedral cell returns matrix S that transforms it to the standardized
     form.
@@ -620,12 +628,14 @@ def _RHL_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-        Ignored here, but preserved for the unification of input.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
-        Ignored here, but preserved for the unification of input.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Completely ignored by this
+        function, the arguments are defined only for the homogeneity of the input for all
+        14 Bravais lattice types.
 
     Returns
     -------
@@ -641,7 +651,7 @@ def _RHL_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return np.eye(3, dtype=float)
 
 
-def _MCL_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary monoclinic cell returns matrix S that transforms it to the standardized
     form.
@@ -725,7 +735,7 @@ def _MCL_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return S3 @ S2 @ S1
 
 
-def _MCLC_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary base-centered monoclinic cell returns matrix S that transforms it to the
     standardized form.
@@ -805,7 +815,7 @@ def _MCLC_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return S3 @ S2 @ S1
 
 
-def _TRI_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
+def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary triclinic cell returns matrix S that transforms it to the
     standardized form.
@@ -919,7 +929,7 @@ def _TRI_get_S_matrix(cell, rtol=1e-8, atol=1e-8):
     return S2 @ S1
 
 
-def get_S_matrix(cell, lattice_type=None, rtol=1e-8, atol=1e-8):
+def get_S_matrix(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     Analyse arbitrary cell and redefine it
     if required to ensure the unique choice of lattice vectors.
@@ -935,10 +945,14 @@ def get_S_matrix(cell, lattice_type=None, rtol=1e-8, atol=1e-8):
     lattice_type : str, optional
         One of the 14 lattice types that correspond to the provided ``cell``.
         If not provided, then computed automatically. Case-insensitive.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Default values
+        are chosen for the contexts of condense matter physics, where Angstroms are used.
+        Please choose appropriate tolerance for your problem.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Default values are chosen
+        for the contexts of condense matter physics, where Angstroms are used. Please
+        choose appropriate tolerance for your problem.
 
     Returns
     -------
