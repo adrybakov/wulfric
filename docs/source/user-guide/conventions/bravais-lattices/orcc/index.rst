@@ -98,21 +98,13 @@ Wigner-Seitz cell
 Cell standardization
 ====================
 
-Length of third vector of the primitive cell has to be different from
-the lengths of the first two vectors of the primitive cell. Together with the
-:math:`a < b` we arrive at the following condition of the angles of the primitive cell in
-a standard form: :math:`\alpha = \beta = 90^{\circ}` and :math:`\gamma > 90^{\circ}`.
-In practice this condition simplifies to
-:math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_3  = 0`
-and
-:math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_2 < 0`. We use angles of the primitive cell
-for standardization.
+Length of third vector of the primitive cell has to be different from the lengths of the
+first two vectors of the primitive cell. Together with the :math:`a < b` we arrive at the
+following condition of the angles of the primitive cell in a standard form:
+:math:`\alpha^s = \beta^s = 90^{\circ}` and :math:`\gamma^s > 90^{\circ}`. Wulfric uses angles
+of the primitive cell for standardization.
 
-* If :math:`\alpha = \beta = \frac{\pi}{2}` and :math:`\gamma > \frac{\pi}{2}` (i.e.
-  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_3  = 0`
-  and
-  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_2 < 0`),
-  then
+* If :math:`\alpha = \beta = \frac{\pi}{2}` and :math:`\gamma > \frac{\pi}{2}` then
 
   .. math::
 
@@ -126,9 +118,13 @@ for standardization.
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -136,11 +132,7 @@ for standardization.
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\alpha = \beta = \frac{\pi}{2}` and :math:`\gamma < \frac{\pi}{2}` (i.e.
-  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_3  = 0`
-  and
-  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_2 > 0`),
-  then
+* If :math:`\alpha = \beta = \frac{\pi}{2}` and :math:`\gamma < \frac{\pi}{2}` then
 
   .. math::
 
@@ -155,26 +147,20 @@ for standardization.
     \boldsymbol{S}
     =
     \begin{pmatrix}
-      0 & 1 & 0 \\
-      -1 & 0 & 0 \\
+      0 & -1 & 0 \\
+      1 & 0 & 0 \\
       0 & 0 & 1
     \end{pmatrix}
     \qquad
     \boldsymbol{S}^{-1}
     =
-    \boldsymbol{S}^T
-    =
     \begin{pmatrix}
-      0 & -1 & 0 \\
-      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      -1 & 0 & 0 \\
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\beta = \gamma = \frac{\pi}{2}` and :math:`\alpha > \frac{\pi}{2}` (i.e.
-  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_2  = 0`
-  and
-  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 < 0`),
-  then
+* If :math:`\beta = \gamma = \frac{\pi}{2}` and :math:`\alpha > \frac{\pi}{2}` then
 
   .. math::
 
@@ -189,26 +175,20 @@ for standardization.
     \boldsymbol{S}
     =
     \begin{pmatrix}
-      0 & 1 & 0 \\
-      0 & 0 & 1 \\
-      1 & 0 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
-    =
-    \begin{pmatrix}
       0 & 0 & 1 \\
       1 & 0 & 0 \\
       0 & 1 & 0
     \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
 
-* If :math:`\beta = \gamma = \frac{\pi}{2}` and :math:`\alpha < \frac{\pi}{2}` (i.e.
-  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_2  = 0`
-  and
-  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 > 0`),
-  then
+* If :math:`\beta = \gamma = \frac{\pi}{2}` and :math:`\alpha < \frac{\pi}{2}` then
 
   .. math::
 
@@ -222,9 +202,13 @@ for standardization.
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      0 & -1 & 0 \\
+      1 & 0 & 0
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       0 & 0 & 1 \\
@@ -232,11 +216,7 @@ for standardization.
       1 & 0 & 0
     \end{pmatrix}
 
-* If :math:`\alpha = \gamma = \frac{\pi}{2}` and :math:`\beta > \frac{\pi}{2}` (i.e.
-  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_2  = 0`
-  and
-  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_3 < 0`),
-  then
+* If :math:`\alpha = \gamma = \frac{\pi}{2}` and :math:`\beta > \frac{\pi}{2}` then
 
   .. math::
 
@@ -251,26 +231,20 @@ for standardization.
     \boldsymbol{S}
     =
     \begin{pmatrix}
-      0 & 0 & 1 \\
-      1 & 0 & 0 \\
-      0 & 1 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
-    =
-    \begin{pmatrix}
       0 & 1 & 0 \\
       0 & 0 & 1 \\
       1 & 0 & 0
     \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix}
 
-* If :math:`\alpha = \gamma = \frac{\pi}{2}` and :math:`\beta < \frac{\pi}{2}` (i.e.
-  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_2  = 0`
-  and
-  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_3 > 0`),
-  then
+* If :math:`\alpha = \gamma = \frac{\pi}{2}` and :math:`\beta < \frac{\pi}{2}` then
 
   .. math::
 
@@ -286,18 +260,16 @@ for standardization.
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
-      0 & 0 & -1 \\
-      0 & 1 & 0
+      0 & 0 & 1 \\
+      0 & -1 & 0
     \end{pmatrix}
     \qquad
     \boldsymbol{S}^{-1}
     =
-    \boldsymbol{S}^T
-    =
     \begin{pmatrix}
       1 & 0 & 0 \\
-      0 & 0 & 1 \\
-      0 & -1 & 0
+      0 & 0 & -1 \\
+      0 & 1 & 0
     \end{pmatrix}
 
 .. note::
