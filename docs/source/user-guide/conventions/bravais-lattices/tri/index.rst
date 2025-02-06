@@ -8,7 +8,7 @@ Triclinic (TRI)
 
 **Constructor**:  :py:func:`.TRI`
 
-It is defined by six parameters: :math:`a`, :math:`b`, :math:`c` and :math:`\alpha`,
+It is defined by six parameters :math:`a`, :math:`b`, :math:`c` and :math:`\alpha`,
 :math:`\beta`, :math:`\gamma`. Standardized primitive and conventional cells in the
 default orientation are
 

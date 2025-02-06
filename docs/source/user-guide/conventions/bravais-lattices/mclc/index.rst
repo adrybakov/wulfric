@@ -8,7 +8,7 @@ Base-centred monoclinic (MCLC)
 
 **Constructor**:  :py:func:`.MCLC`
 
-It is defined by four parameter: :math:`a`, :math:`b`, :math:`c` and :math:`\alpha` with
+It is defined by four parameters :math:`a`, :math:`b`, :math:`c` and :math:`\alpha` with
 :math:`b \le c`, :math:`\alpha < 90^{\circ}`. Standardized primitive and conventional
 cells in the default orientation are
 
