@@ -167,15 +167,11 @@ Cell standardization
 ====================
 
 Condition :math:`a \ne c` result in the condition :math:`\alpha = \beta \ne \gamma` for
-the primitive cell in a standard form, in practice this condition simplifies to
-:math:`\boldsymbol{a}_2^s\cdot\boldsymbol{a}_3^s = \boldsymbol{a}_1^s\cdot\boldsymbol{a}_3^s \ne \boldsymbol{a}_1^s\cdot\boldsymbol{a}_2^s`
-for the primitive cell in a standard form. We use angles of the primitive cell for
+the primitive cell in a standard form. Therefore, we use angles of the primitive cell for
 standardization.
 
 * If
-  :math:`\alpha = \beta \ne \gamma` (i.e.
-  :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 = \boldsymbol{a}_1\cdot\boldsymbol{a}_3 \ne \boldsymbol{a}_1\cdot\boldsymbol{a}_2`),
-  then
+  :math:`\alpha = \beta \ne \gamma` then
 
   .. math::
 
@@ -189,9 +185,13 @@ standardization.
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -200,9 +200,7 @@ standardization.
     \end{pmatrix}
 
 * If
-  :math:`\beta = \gamma \ne \alpha` (i.e.
-  :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3 = \boldsymbol{a}_1\cdot\boldsymbol{a}_2 \ne \boldsymbol{a}_2\cdot\boldsymbol{a}_3`),
-  then
+  :math:`\beta = \gamma \ne \alpha` then
 
   .. math::
 
@@ -217,25 +215,21 @@ standardization.
     \boldsymbol{S}
     =
     \begin{pmatrix}
-      0 & 1 & 0 \\
-      0 & 0 & 1 \\
-      1 & 0 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
-    =
-    \begin{pmatrix}
       0 & 0 & 1 \\
       1 & 0 & 0 \\
       0 & 1 & 0
     \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
 
 * If
-  :math:`\alpha = \gamma \ne \beta` (i.e.
-  :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 = \boldsymbol{a}_1\cdot\boldsymbol{a}_2 \ne \boldsymbol{a}_1\cdot\boldsymbol{a}_3`),
-  then
+  :math:`\alpha = \gamma \ne \beta` then
 
   .. math::
 
@@ -250,19 +244,17 @@ standardization.
     \boldsymbol{S}
     =
     \begin{pmatrix}
+      0 & 1 & 0 \\
       0 & 0 & 1 \\
-      1 & 0 & 0 \\
-      0 & 1 & 0
+      1 & 0 & 0
     \end{pmatrix}
     \qquad
     \boldsymbol{S}^{-1}
     =
-    \boldsymbol{S}^T
-    =
     \begin{pmatrix}
-      0 & 1 & 0 \\
       0 & 0 & 1 \\
-      1 & 0 & 0
+      1 & 0 & 0 \\
+      0 & 1 & 0
     \end{pmatrix}
 
 Edge cases

@@ -215,10 +215,12 @@ def _BCT_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     ----------
     cell : (3,3) :numpy:`ndarray`
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice).
 
     Returns
     -------
@@ -237,20 +239,20 @@ def _BCT_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     """
     cell = np.array(cell)
 
-    a, b, c, alpha, beta, gamma = get_params(cell)
+    _, _, _, alpha, beta, gamma = get_params(cell)
 
     if compare_numerically(
-        alpha, "==", beta, rtol=rtol, atol=atol
-    ) and compare_numerically(beta, "!=", gamma, rtol=rtol, atol=atol):
+        alpha, "==", beta, eps=angle_tolerance
+    ) and compare_numerically(beta, "!=", gamma, eps=angle_tolerance):
         S = np.eye(3, dtype=float)
     elif compare_numerically(
-        beta, "==", gamma, rtol=rtol, atol=atol
-    ) and compare_numerically(gamma, "!=", alpha, rtol=rtol, atol=atol):
-        S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
-    elif compare_numerically(
-        alpha, "==", gamma, rtol=rtol, atol=atol
-    ) and compare_numerically(gamma, "!=", beta, rtol=rtol, atol=atol):
+        beta, "==", gamma, eps=angle_tolerance
+    ) and compare_numerically(gamma, "!=", alpha, eps=angle_tolerance):
         S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    elif compare_numerically(
+        alpha, "==", gamma, eps=angle_tolerance
+    ) and compare_numerically(gamma, "!=", beta, eps=angle_tolerance):
+        S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     else:
         raise StandardizationTypeMismatch("body-centered tetragonal")
 
