@@ -485,11 +485,11 @@ def _ORCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     cell : (3,3) |array-like|_
         Primitive unit cell.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors).
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Completely ignored by this
-        function, the arguments are defined only for the homogeneity of the input for all
-        14 Bravais lattice types.
+        Tolerance for angle variables (angles of the lattice).
 
     Returns
     -------
@@ -572,9 +572,7 @@ def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
         ignored by this function, the arguments are defined only for the homogeneity of
         the input for all 14 Bravais lattice types.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Completely ignored by this
-        function, the arguments are defined only for the homogeneity of the input for all
-        14 Bravais lattice types.
+        Tolerance for angle variables (angles of the lattice).
 
     Returns
     -------
@@ -593,41 +591,35 @@ def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     """
 
     # Step 1
-    sp23, sp13, sp12 = get_scalar_products(cell)
+    _, _, _, alpha, beta, gamma = get_params(cell)
 
-    if (
-        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, "!=", 0.0, rtol=rtol, atol=atol)
-    ):
+    if compare_numerically(
+        alpha, "==", PI / 2, eps=angle_tolerance
+    ) and compare_numerically(beta, "==", PI / 2, eps=angle_tolerance):
         S1 = np.eye(3, dtype=float)
-    elif (
-        compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp23, "!=", 0.0, rtol=rtol, atol=atol)
-    ):
-        S1 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
-    elif (
-        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, "!=", 0.0, rtol=rtol, atol=atol)
-    ):
+    elif compare_numerically(
+        beta, "==", PI / 2, eps=angle_tolerance
+    ) and compare_numerically(gamma, "==", PI / 2, eps=angle_tolerance):
         S1 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    elif compare_numerically(
+        alpha, "==", PI / 2, eps=angle_tolerance
+    ) and compare_numerically(gamma, "==", PI / 2, eps=angle_tolerance):
+        S1 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     else:
         raise StandardizationTypeMismatch("hexagonal", step="first")
 
     # Step 2
-    cell1 = np.linalg.inv(S1.T) @ cell
-    sp23, sp13, sp12 = get_scalar_products(cell1)
+    cell1 = S1.T @ cell
+    _, _, _, _, _, gamma = get_params(cell)
 
-    if compare_numerically(sp12, "<", 0.0, rtol=rtol, atol=atol):
+    if compare_numerically(gamma, "==", 2 * PI / 3, eps=angle_tolerance):
         S2 = np.eye(3, dtype=float)
-    elif compare_numerically(sp12, ">", 0.0, rtol=rtol, atol=atol):
-        S2 = np.array([[0, 1, 0], [-1, 0, 0], [0, 0, 1]], dtype=float)
+    elif compare_numerically(gamma, "==", PI / 3, eps=angle_tolerance):
+        S2 = np.array([[0, -1, 0], [1, 0, 0], [0, 0, 1]], dtype=float)
     else:
         raise StandardizationTypeMismatch("hexagonal", step="second")
 
-    return S2 @ S1
+    return S1 @ S2
 
 
 def _RHL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):

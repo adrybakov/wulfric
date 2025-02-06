@@ -78,26 +78,20 @@ Cell standardization
 ====================
 
 Since parameters :math:`a` and :math:`c` are not restricted (i.e. :math:`a = c` is
-allowed), we use angles :math:`\alpha`, :math:`\beta` and :math:`\gamma` to
+allowed), wulfric uses angles :math:`\alpha`, :math:`\beta` and :math:`\gamma` to
 determine the standard form of the cell. For the primitive cell in a standard form
-:math:`\alpha = \beta = 90^{\circ}` and :math:`\gamma = 120^{\circ}`. In practice these
-conditions are equivalent to :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_3 = 0`
-and :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_2 \ne 0`.
+:math:`\alpha^s = \beta^s = 90^{\circ}` and :math:`\gamma^s = 120^{\circ}`.
 
 Matrix :math:`\boldsymbol{S}` is constructed in two steps.
 
 Step 1
 ^^^^^^
 
-* If :math:`\alpha = \beta = \pi` and :math:`\gamma = \frac{2\pi}{3}` (i.e.
-  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_3 = 0`
-  and
-  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_2 < 0`),
-  then
+* If :math:`\alpha = \beta = \dfrac{\pi}{2}` then
 
   .. math::
 
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_2^{(1)}, \boldsymbol{a}_3^{(1)})
     =
     (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
 
@@ -107,9 +101,13 @@ Step 1
 
     \boldsymbol{S}_1
     =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}_1^{-1}
-    =
-    \boldsymbol{S}_1^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -117,15 +115,11 @@ Step 1
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\beta = \gamma = \pi` and :math:`\alpha = \frac{2\pi}{3}` (i.e.
-  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_2 = 0`
-  and
-  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 < 0`),
-  then
+* If :math:`\beta = \gamma = \dfrac{\pi}{2}` then
 
   .. math::
 
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_2^{(1)}, \boldsymbol{a}_3^{(1)})
     =
     (\boldsymbol{a}_2, \boldsymbol{a}_3, \boldsymbol{a}_1)
 
@@ -136,30 +130,24 @@ Step 1
     \boldsymbol{S}_1
     =
     \begin{pmatrix}
-      0 & 1 & 0 \\
-      0 & 0 & 1 \\
-      1 & 0 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}_1^{-1}
-    =
-    \boldsymbol{S}_1^T
-    =
-    \begin{pmatrix}
       0 & 0 & 1 \\
       1 & 0 & 0 \\
       0 & 1 & 0
     \end{pmatrix}
+    \qquad
+    \boldsymbol{S}_1^{-1}
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
 
-* If :math:`\alpha = \gamma = \pi` and :math:`\beta = \frac{2\pi}{3}` (i.e.
-  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 = \boldsymbol{a}_1 \cdot \boldsymbol{a}_2 = 0`
-  and
-  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_3 < 0`),
-  then
+* If :math:`\alpha = \gamma = \dfrac{\pi}{2}` then
 
   .. math::
 
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_2^{(1)}, \boldsymbol{a}_3^{(1)})
     =
     (\boldsymbol{a}_3, \boldsymbol{a}_1, \boldsymbol{a}_2)
 
@@ -170,33 +158,29 @@ Step 1
     \boldsymbol{S}_1
     =
     \begin{pmatrix}
+      0 & 1 & 0 \\
       0 & 0 & 1 \\
-      1 & 0 & 0 \\
-      0 & 1 & 0
+      1 & 0 & 0
     \end{pmatrix}
     \qquad
     \boldsymbol{S}_1^{-1}
     =
-    \boldsymbol{S}_1^T
-    =
     \begin{pmatrix}
-      0 & 1 & 0 \\
       0 & 0 & 1 \\
-      1 & 0 & 0
+      1 & 0 & 0 \\
+      0 & 1 & 0
     \end{pmatrix}
 
 Step 2
 ^^^^^^
 
-* If :math:`\gamma =  \dfrac{2\pi}{3}` (i.e.
-  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_2 < 0`),
-  then
+* If :math:`\gamma^{(1)} =  \dfrac{2}{3}\pi` then
 
   .. math::
 
     (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
     =
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_2^{(1)}, \boldsymbol{a}_3^{(1)})
 
   and
 
@@ -204,9 +188,13 @@ Step 2
 
     \boldsymbol{S}_2
     =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}_2^{-1}
-    =
-    \boldsymbol{S}_2^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -214,15 +202,13 @@ Step 2
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\gamma =  \dfrac{\pi}{3}` (i.e.
-  :math:`\boldsymbol{a}_1 \cdot \boldsymbol{a}_2 > 0`),
-  then
+* If :math:`\gamma^{(1)} =  \dfrac{\pi}{3}` then
 
   .. math::
 
     (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
     =
-    (\boldsymbol{a}_2^1, -\boldsymbol{a}_1^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_2^{(1)}, -\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_3^{(1)})
 
   and
 
@@ -231,30 +217,27 @@ Step 2
     \boldsymbol{S}_2
     =
     \begin{pmatrix}
-      0  & 1 & 0 \\
-      -1 & 0 & 0 \\
-      0  & 0 & 1
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}_2^{-1}
-    =
-    \boldsymbol{S}_2^T
-    =
-    \begin{pmatrix}
       0 & -1 & 0 \\
       1 &  0 & 0 \\
       0 &  0 & 1
     \end{pmatrix}
+    \qquad
+    \boldsymbol{S}_2^{-1}
+    =
+    \begin{pmatrix}
+      0  & 1 & 0 \\
+      -1 & 0 & 0 \\
+      0  & 0 & 1
+    \end{pmatrix}
 
 Finally
 ^^^^^^^
-
 .. math::
 
     \boldsymbol{S}
     =
-    \boldsymbol{S}_2 \boldsymbol{S}_1
+    \boldsymbol{S}_1 \boldsymbol{S}_2
     \qquad
     \boldsymbol{S}^{-1}
     =
-    \boldsymbol{S}_1^{-1} \boldsymbol{S}_2^{-1}
+    \boldsymbol{S}_2^{-1} \boldsymbol{S}_1^{-1}
