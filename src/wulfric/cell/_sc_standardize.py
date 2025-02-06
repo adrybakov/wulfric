@@ -441,28 +441,28 @@ def _ORCI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     _, _, _, alpha, beta, gamma = get_params(cell)
 
     if compare_numerically(
-        gamma, "<", beta, eps=length_tolerance
-    ) and compare_numerically(beta, "<", alpha, eps=length_tolerance):
+        gamma, "<", beta, eps=angle_tolerance
+    ) and compare_numerically(beta, "<", alpha, eps=angle_tolerance):
         S = np.eye(3, dtype=float)
     elif compare_numerically(
-        gamma, "<", alpha, eps=length_tolerance
-    ) and compare_numerically(alpha, "<", beta, eps=length_tolerance):
+        gamma, "<", alpha, eps=angle_tolerance
+    ) and compare_numerically(alpha, "<", beta, eps=angle_tolerance):
         S = np.array([[0, -1, 0], [-1, 0, 0], [0, 0, -1]], dtype=float)
     elif compare_numerically(
-        beta, "<", gamma, eps=length_tolerance
-    ) and compare_numerically(gamma, "<", alpha, eps=length_tolerance):
+        beta, "<", gamma, eps=angle_tolerance
+    ) and compare_numerically(gamma, "<", alpha, eps=angle_tolerance):
         S = np.array([[-1, 0, 0], [0, 0, -1], [0, -1, 0]], dtype=float)
     elif compare_numerically(
-        beta, "<", alpha, eps=length_tolerance
-    ) and compare_numerically(alpha, "<", gamma, eps=length_tolerance):
+        beta, "<", alpha, eps=angle_tolerance
+    ) and compare_numerically(alpha, "<", gamma, eps=angle_tolerance):
         S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     elif compare_numerically(
-        alpha, "<", gamma, eps=length_tolerance
-    ) and compare_numerically(gamma, "<", beta, eps=length_tolerance):
+        alpha, "<", gamma, eps=angle_tolerance
+    ) and compare_numerically(gamma, "<", beta, eps=angle_tolerance):
         S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     elif compare_numerically(
-        alpha, "<", beta, eps=length_tolerance
-    ) and compare_numerically(beta, "<", gamma, eps=length_tolerance):
+        alpha, "<", beta, eps=angle_tolerance
+    ) and compare_numerically(beta, "<", gamma, eps=angle_tolerance):
         S = np.array([[0, 0, -1], [0, -1, 0], [-1, 0, 0]], dtype=float)
     else:
         raise StandardizationTypeMismatch("body-centered orthorhombic")
