@@ -253,8 +253,8 @@ Cell standardization
 
 Condition :math:`a < b < c` implies
 :math:`\vert\boldsymbol{a}_1^s\vert > \vert\boldsymbol{a}_2^s\vert > \vert\boldsymbol{a}_3^s\vert`
-for the lattice vectors of the primitive cell in a standard form.
-We use the primitive lattice vectors for the standardization:
+for the lattice vectors of the primitive cell in a standard form. Therefore, wulfric uses
+the primitive lattice vectors for the standardization:
 
 
 * If :math:`\vert \boldsymbol{a}_3\vert < \vert \boldsymbol{a}_2\vert < \vert \boldsymbol{a}_1\vert`,
@@ -272,9 +272,13 @@ We use the primitive lattice vectors for the standardization:
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -297,9 +301,13 @@ We use the primitive lattice vectors for the standardization:
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      0 & -1 & 0 \\
+      -1 & 0 & 0 \\
+      0 & 0 & -1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       0 & -1 & 0 \\
@@ -322,9 +330,13 @@ We use the primitive lattice vectors for the standardization:
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      -1 & 0 & 0 \\
+      0 & 0 & -1 \\
+      0 & -1 & 0
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       -1 & 0 & 0 \\
@@ -345,21 +357,20 @@ We use the primitive lattice vectors for the standardization:
 
   .. math::
 
-    \boldsymbol{S} =
-    \begin{pmatrix}
-      0 & 0 & 1 \\
-      1 & 0 & 0 \\
-      0 & 1 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
+    \boldsymbol{S}
     =
     \begin{pmatrix}
       0 & 1 & 0 \\
       0 & 0 & 1 \\
       1 & 0 & 0
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
     \end{pmatrix}
 
 * If :math:`\vert \boldsymbol{a}_1\vert < \vert \boldsymbol{a}_3\vert < \vert \boldsymbol{a}_2\vert`,
@@ -375,21 +386,20 @@ We use the primitive lattice vectors for the standardization:
 
   .. math::
 
-    \boldsymbol{S} =
-    \begin{pmatrix}
-      0 & 1 & 0 \\
-      0 & 0 & 1 \\
-      1 & 0 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
+    \boldsymbol{S}
     =
     \begin{pmatrix}
       0 & 0 & 1 \\
       1 & 0 & 0 \\
       0 & 1 & 0
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
     \end{pmatrix}
 
 
@@ -408,9 +418,13 @@ We use the primitive lattice vectors for the standardization:
 
     \boldsymbol{S}
     =
-    \boldsymbol{S}^{-1}
+    \begin{pmatrix}
+      0 & 0 & -1 \\
+      0 & -1 & 0 \\
+      -1 & 0 & 0
+    \end{pmatrix}
     =
-    \boldsymbol{S}^T
+    \boldsymbol{S}^{-1}
     =
     \begin{pmatrix}
       0 & 0 & -1 \\
