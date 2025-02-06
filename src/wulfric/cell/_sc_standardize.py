@@ -273,10 +273,14 @@ def _ORC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     ----------
     cell : (3,3) |array-like|_
         Primitive unit cell.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Completely
+        ignored by this function, the arguments are defined only for the homogeneity of
+        the input for all 14 Bravais lattice types.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Completely ignored by this
+        function, the arguments are defined only for the homogeneity of the input for all
+        14 Bravais lattice types.
 
     Returns
     -------
@@ -294,30 +298,30 @@ def _ORC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
         If none of the orthorhombic conditions are satisfied.
     """
 
-    a, b, c, alpha, beta, gamma = get_params(cell)
+    a, b, c, _, _, _ = get_params(cell)
 
-    if compare_numerically(c, ">", b, rtol=rtol, atol=atol) and compare_numerically(
-        b, ">", a, rtol=rtol, atol=atol
+    if compare_numerically(c, ">", b, eps=length_tolerance) and compare_numerically(
+        b, ">", a, eps=length_tolerance
     ):
         S = np.eye(3, dtype=float)
-    elif compare_numerically(c, ">", a, rtol=rtol, atol=atol) and compare_numerically(
-        a, ">", b, rtol=rtol, atol=atol
+    elif compare_numerically(c, ">", a, eps=length_tolerance) and compare_numerically(
+        a, ">", b, eps=length_tolerance
     ):
         S = np.array([[0, -1, 0], [-1, 0, 0], [0, 0, -1]], dtype=float)
-    elif compare_numerically(b, ">", c, rtol=rtol, atol=atol) and compare_numerically(
-        c, ">", a, rtol=rtol, atol=atol
+    elif compare_numerically(b, ">", c, eps=length_tolerance) and compare_numerically(
+        c, ">", a, eps=length_tolerance
     ):
         S = np.array([[-1, 0, 0], [0, 0, -1], [0, -1, 0]], dtype=float)
-    elif compare_numerically(b, ">", a, rtol=rtol, atol=atol) and compare_numerically(
-        a, ">", c, rtol=rtol, atol=atol
-    ):
-        S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
-    elif compare_numerically(a, ">", c, rtol=rtol, atol=atol) and compare_numerically(
-        c, ">", b, rtol=rtol, atol=atol
+    elif compare_numerically(b, ">", a, eps=length_tolerance) and compare_numerically(
+        a, ">", c, eps=length_tolerance
     ):
         S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
-    elif compare_numerically(a, ">", b, rtol=rtol, atol=atol) and compare_numerically(
-        b, ">", c, rtol=rtol, atol=atol
+    elif compare_numerically(a, ">", c, eps=length_tolerance) and compare_numerically(
+        c, ">", b, eps=length_tolerance
+    ):
+        S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    elif compare_numerically(a, ">", b, eps=length_tolerance) and compare_numerically(
+        b, ">", c, eps=length_tolerance
     ):
         S = np.array([[0, 0, -1], [0, -1, 0], [-1, 0, 0]], dtype=float)
     else:

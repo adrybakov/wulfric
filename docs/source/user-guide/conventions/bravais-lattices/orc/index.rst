@@ -83,7 +83,7 @@ Cell standardization
 
 Lengths of the lattice vectors have to satisfy
 :math:`\vert\boldsymbol{a}_1^s\vert < \vert\boldsymbol{a}_2^s\vert < \vert\boldsymbol{a}_3^s\vert`
-for the primitive cell in a standard form.
+for the primitive cell in the standard form.
 
 
 * If :math:`\vert \boldsymbol{a}_3\vert > \vert \boldsymbol{a}_2\vert > \vert \boldsymbol{a}_1\vert`,
@@ -101,9 +101,13 @@ for the primitive cell in a standard form.
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -126,9 +130,13 @@ for the primitive cell in a standard form.
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      0 & -1 & 0 \\
+      -1 & 0 & 0 \\
+      0 & 0 & -1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       0 & -1 & 0 \\
@@ -151,9 +159,13 @@ for the primitive cell in a standard form.
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      -1 & 0 & 0 \\
+      0 & 0 & -1 \\
+      0 & -1 & 0
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       -1 & 0 & 0 \\
@@ -174,21 +186,20 @@ for the primitive cell in a standard form.
 
   .. math::
 
-    \boldsymbol{S} =
-    \begin{pmatrix}
-      0 & 0 & 1 \\
-      1 & 0 & 0 \\
-      0 & 1 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
+    \boldsymbol{S}
     =
     \begin{pmatrix}
       0 & 1 & 0 \\
       0 & 0 & 1 \\
       1 & 0 & 0
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
     \end{pmatrix}
 
 * If :math:`\vert \boldsymbol{a}_1\vert > \vert \boldsymbol{a}_3\vert > \vert \boldsymbol{a}_2\vert`,
@@ -204,21 +215,20 @@ for the primitive cell in a standard form.
 
   .. math::
 
-    \boldsymbol{S} =
-    \begin{pmatrix}
-      0 & 1 & 0 \\
-      0 & 0 & 1 \\
-      1 & 0 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
+    \boldsymbol{S}
     =
     \begin{pmatrix}
       0 & 0 & 1 \\
       1 & 0 & 0 \\
       0 & 1 & 0
+    \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
     \end{pmatrix}
 
 
@@ -237,9 +247,13 @@ for the primitive cell in a standard form.
 
     \boldsymbol{S}
     =
-    \boldsymbol{S}^{-1}
+    \begin{pmatrix}
+      0 & 0 & -1 \\
+      0 & -1 & 0 \\
+      -1 & 0 & 0
+    \end{pmatrix}
     =
-    \boldsymbol{S}^T
+    \boldsymbol{S}^{-1}
     =
     \begin{pmatrix}
       0 & 0 & -1 \\
@@ -249,7 +263,7 @@ for the primitive cell in a standard form.
 
 .. note::
 
-    All six changes of the cell preserve handiness of the original one.
+    All six changes of the cell preserve the handiness of the original one.
 
 Edge cases
 ==========
