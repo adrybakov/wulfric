@@ -167,7 +167,7 @@ Cell standardization
 ====================
 
 Condition :math:`a \ne c` result in the condition :math:`\alpha^s = \beta^s \ne \gamma^s`
-for the primitive cell in a standard form. Therefore, we use angles of the primitive cell
+for the primitive cell in a standard form. Therefore, wulfric uses angles of the primitive cell
 for standardization.
 
 * If
