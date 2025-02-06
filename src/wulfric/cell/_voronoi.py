@@ -19,9 +19,6 @@
 
 import numpy as np
 
-from wulfric.cell._basic_manipulation import get_reciprocal
-from wulfric.geometry._geometry import get_volume
-
 try:
     from scipy.spatial import Voronoi
 
