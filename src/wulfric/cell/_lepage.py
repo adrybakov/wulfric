@@ -264,9 +264,9 @@ def _check_mcl(angles, axes, angle_tolerance, cell):
 ################################################################################
 #                                    LePage                                    #
 ################################################################################
-def lepage(cell, angle_tolerance=1e-4, give_all_results=False, limit=3.0):
+def lepage(cell, angle_tolerance=1e-4, give_all_results=False, _limit=3.0):
     r"""
-    Le Page algorithm [1]_.
+    Le Page algorithm [1]_. More details are described in :ref:`library_lepage`.
 
     Parameters
     ----------
@@ -274,15 +274,16 @@ def lepage(cell, angle_tolerance=1e-4, give_all_results=False, limit=3.0):
         Cell matrix, rows are interpreted as vectors.
     angle_tolerance : float, default 1e-4
         Angle tolerance for the search of the actual symmetry axes. Given in degrees.
-        Modulus is used. It is recommended to reduce ``angle_tolerance`` and do not change
-        ``limit`` to obtain ``lattice_type`` with higher symmetry.
+        Modulus is used. It is recommended to reduce ``angle_tolerance`` to account for
+        the finite precision of the given cell's angles.
     give_all_results : bool, default False
         Whether to return the list of Bravais lattice types identified during the
         process of exclusion of the pseudosymmetry axes. Last element is the computed
         Bravais lattice type.
-    limit : float, default 3.0
+    _limit : float, default 3.0
         Tolerance parameter for the construction of the list of potential symmetry axes.
-        Given in degrees.
+        Given in degrees. Change with caution and only if you understand what this
+        parameter means and read [1]_.
 
     Returns
     -------
@@ -327,7 +328,7 @@ def lepage(cell, angle_tolerance=1e-4, give_all_results=False, limit=3.0):
                     np.arctan(np.linalg.norm(np.cross(t, tau)) / abs(t @ tau))
                     * TODEGREES
                 )
-                if delta < limit:
+                if delta < _limit:
                     axes.append([U, t / np.linalg.norm(t), abs(U @ h), delta])
 
     # Sort and filter
