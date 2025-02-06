@@ -5,8 +5,9 @@ Niggli reduction
 ****************
 
 This page describe the algorithm implemented in the :py:func:`wulfric.cell.niggli`.
-An implementation directly follows the papers [1]_, [2]_. If you use this function of
-wulfric, please cite them as the original source of the algorithm.
+An implementation directly follows the papers [1]_, [2]_. If you use results obtain with
+this function of wulfric, please acknowledge those papers as the original source of the
+algorithm.
 
 For an alternative implementation, that was available long before wulfric and is not
 associated with wulfric package or its authors see |spglib-niggli|_.
