@@ -94,20 +94,18 @@ Wigner-Seitz cell
 
 Cell standardization
 ====================
-
-Conditions :math:`b \le c` and :math:`\alpha < 90^{\circ}` are checked directly.
-Matrix :math:`\boldsymbol{S}` is constructed in three steps.
+First wulfric find two angles of :math:`90^{\circ}`, then conditions :math:`b \le c` and
+:math:`\alpha < 90^{\circ}` are checked directly. Matrix :math:`\boldsymbol{S}` is
+constructed in three steps.
 
 Step 1
 ------
 
-* If :math:`\beta = \gamma = \frac{\pi}{2}` and :math:`\alpha \ne \frac{\pi}{2}` (i.e.
-  :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3 = \boldsymbol{a}_1\cdot\boldsymbol{a}_2 = 0`
-  and :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 \ne 0`, then
+* If :math:`\beta = \gamma = \frac{\pi}{2}` and :math:`\alpha \ne \frac{\pi}{2}` then
 
   .. math::
 
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_2^{(1)}, \boldsymbol{a}_3^{(1)})
     =
     (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
 
@@ -117,9 +115,13 @@ Step 1
 
     \boldsymbol{S}_1
     =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}_1^{-1}
-    =
-    \boldsymbol{S}_1^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -127,13 +129,11 @@ Step 1
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\alpha = \gamma = \frac{\pi}{2}` and :math:`\beta \ne \frac{\pi}{2}` (i.e.
-  :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 = \boldsymbol{a}_1\cdot\boldsymbol{a}_2 = 0`
-  and :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3 \ne 0`, then
+* If :math:`\alpha = \gamma = \frac{\pi}{2}` and :math:`\beta \ne \frac{\pi}{2}` then
 
   .. math::
 
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_2^{(1)}, \boldsymbol{a}_3^{(1)})
     =
     (\boldsymbol{a}_2, \boldsymbol{a}_3, \boldsymbol{a}_1)
 
@@ -144,28 +144,24 @@ Step 1
     \boldsymbol{S}_1
     =
     \begin{pmatrix}
-      0 & 1 & 0 \\
-      0 & 0 & 1 \\
-      1 & 0 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}_1^{-1}
-    =
-    \boldsymbol{S}_1^T
-    =
-    \begin{pmatrix}
       0 & 0 & 1 \\
       1 & 0 & 0 \\
       0 & 1 & 0
     \end{pmatrix}
+    \qquad
+    \boldsymbol{S}_1^{-1}
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
 
-* If :math:`\alpha = \beta = \frac{\pi}{2}` and :math:`\gamma \ne \frac{\pi}{2}` (i.e.
-  :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 = \boldsymbol{a}_1\cdot\boldsymbol{a}_3 = 0`
-  and :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_2 \ne 0`, then
+* If :math:`\alpha = \beta = \frac{\pi}{2}` and :math:`\gamma \ne \frac{\pi}{2}` then
 
   .. math::
 
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_2^{(1)}, \boldsymbol{a}_3^{(1)})
     =
     (\boldsymbol{a}_3, \boldsymbol{a}_1, \boldsymbol{a}_2)
 
@@ -176,30 +172,28 @@ Step 1
     \boldsymbol{S}_1
     =
     \begin{pmatrix}
-      0 & 0 & 1 \\
-      1 & 0 & 0 \\
-      0 & 1 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}_1^{-1}
-    =
-    \boldsymbol{S}_1^T
-    =
-    \begin{pmatrix}
       0 & 1 & 0 \\
       0 & 0 & 1 \\
       1 & 0 & 0
     \end{pmatrix}
+    \qquad
+    \boldsymbol{S}_1^{-1}
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix}
 
 Step 2
 ------
-* If :math:`\vert \boldsymbol{a}_2^1 \vert  \le \vert \boldsymbol{a}_3^1 \vert`, then
+* If :math:`b^{(1)} \le c^{(1)}`, then
 
   .. math::
 
-    (\boldsymbol{a}_1^2, \boldsymbol{a}_2^2, \boldsymbol{a}_3^2)
+    (\boldsymbol{a}_1^{(2)}, \boldsymbol{a}_2^{(2)}, \boldsymbol{a}_3^{(2)})
     =
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_2^{(1)}, \boldsymbol{a}_3^{(1)})
 
   and
 
@@ -207,9 +201,13 @@ Step 2
 
     \boldsymbol{S}_2
     =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}_2^{-1}
-    =
-    \boldsymbol{S}_2^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -217,13 +215,13 @@ Step 2
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\vert \boldsymbol{a}_2^1 \vert  > \vert \boldsymbol{a}_3^1 \vert`, then
+* If :math:`b^{(1)} > c^{(1)}` then
 
   .. math::
 
-    (\boldsymbol{a}_1^2, \boldsymbol{a}_2^2, \boldsymbol{a}_3^2)
+    (\boldsymbol{a}_1^{(2)}, \boldsymbol{a}_2^{(2)}, \boldsymbol{a}_3^{(2)})
     =
-    (-\boldsymbol{a}_1^1, \boldsymbol{a}_3^1, \boldsymbol{a}_2^1)
+    (-\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_3^{(1)}, \boldsymbol{a}_2^{(1)})
 
   and
 
@@ -238,8 +236,6 @@ Step 2
     \end{pmatrix}
     \qquad
     \boldsymbol{S}_2^{-1}
-    =
-    \boldsymbol{S}_2^T
     =
     \begin{pmatrix}
       -1 & 0 & 0 \\
@@ -250,14 +246,13 @@ Step 2
 Step 3
 ------
 
-* If :math:`\alpha^2 < \frac{\pi}{2}` (i.e
-  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 > 0`), then
+* If :math:`\alpha^{(2)} < \frac{\pi}{2}` then
 
   .. math::
 
     (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
     =
-    (\boldsymbol{a}_1^2, \boldsymbol{a}_2^2, \boldsymbol{a}_3^2)
+    (\boldsymbol{a}_1^{(2)}, \boldsymbol{a}_2^{(2)}, \boldsymbol{a}_3^{(2)})
 
   and
 
@@ -265,9 +260,13 @@ Step 3
 
     \boldsymbol{S}_3
     =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}_3^{-1}
-    =
-    \boldsymbol{S}_3^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -275,14 +274,13 @@ Step 3
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\alpha^2 > \frac{\pi}{2}` (i.e
-  :math:`\boldsymbol{a}_2 \cdot \boldsymbol{a}_3 < 0`), then
+* If :math:`\alpha^{(2)} > \frac{\pi}{2}` then
 
   .. math::
 
     (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
     =
-    (-\boldsymbol{a}_1^2, -\boldsymbol{a}_2^2, \boldsymbol{a}_3^2)
+    (-\boldsymbol{a}_1^{(2)}, -\boldsymbol{a}_2^{(2)}, \boldsymbol{a}_3^{(2)})
 
   and
 
@@ -297,8 +295,6 @@ Step 3
     \end{pmatrix}
     \qquad
     \boldsymbol{S}_3^{-1}
-    =
-    \boldsymbol{S}_3^T
     =
     \begin{pmatrix}
       -1 & 0 & 0 \\
@@ -313,11 +309,11 @@ Finally
 
     \boldsymbol{S}
     =
-    \boldsymbol{S}_3 \boldsymbol{S}_2 \boldsymbol{S}_1
+    \boldsymbol{S}_1 \boldsymbol{S}_2 \boldsymbol{S}_3
     \qquad
     \boldsymbol{S}^{-1}
     =
-    \boldsymbol{S}_1^{-1} \boldsymbol{S}_2^{-1} \boldsymbol{S}_3^{-1}
+    \boldsymbol{S}_3^{-1} \boldsymbol{S}_2^{-1} \boldsymbol{S}_1^{-1}
 
 .. note::
 

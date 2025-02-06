@@ -674,13 +674,9 @@ def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     cell : (3,3) |array-like|_
         Primitive unit cell.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors). Completely
-        ignored by this function, the arguments are defined only for the homogeneity of
-        the input for all 14 Bravais lattice types.
+        Tolerance for length variables (lengths of the lattice vectors).
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Completely ignored by this
-        function, the arguments are defined only for the homogeneity of the input for all
-        14 Bravais lattice types.
+        Tolerance for angle variables (angles of the lattice).
 
     Returns
     -------
@@ -699,52 +695,52 @@ def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     """
 
     # Step 1
-
-    sp23, sp13, sp12 = get_scalar_products(cell)
+    _, _, _, alpha, beta, gamma = get_params(cell)
 
     if (
-        compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp23, "!=", 0.0, rtol=rtol, atol=atol)
+        compare_numerically(beta, "==", PI / 2, eps=angle_tolerance)
+        and compare_numerically(gamma, "==", PI / 2, eps=angle_tolerance)
+        and compare_numerically(alpha, "!=", PI / 2, eps=angle_tolerance)
     ):
         S1 = np.eye(3, dtype=float)
     elif (
-        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, "!=", 0.0, rtol=rtol, atol=atol)
-    ):
-        S1 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
-    elif (
-        compare_numerically(sp23, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp13, "==", 0.0, rtol=rtol, atol=atol)
-        and compare_numerically(sp12, "!=", 0.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, "==", PI / 2, eps=angle_tolerance)
+        and compare_numerically(gamma, "==", PI / 2, eps=angle_tolerance)
+        and compare_numerically(beta, "!=", PI / 2, eps=angle_tolerance)
     ):
         S1 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    elif (
+        compare_numerically(beta, "==", PI / 2, eps=angle_tolerance)
+        and compare_numerically(alpha, "==", PI / 2, eps=angle_tolerance)
+        and compare_numerically(gamma, "!=", PI / 2, eps=angle_tolerance)
+    ):
+        S1 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     else:
         raise StandardizationTypeMismatch("monoclinic", step="First")
 
     # Step 2
-    cell1 = np.linalg.inv(S1.T) @ cell
-    a, b, c, alpha, beta, gamma = get_params(cell1)
+    cell1 = S1.T @ cell
+    _, b, c, _, _, _ = get_params(cell1)
 
-    if b < c:
+    if compare_numerically(b, "<=", c, eps=length_tolerance):
         S2 = np.eye(3, dtype=float)
-    elif b > c:
+    elif compare_numerically(b, ">", c, eps=length_tolerance):
         S2 = np.array([[-1, 0, 0], [0, 0, 1], [0, 1, 0]], dtype=float)
     else:
         raise StandardizationTypeMismatch("monoclinic", step="Second")
 
     # Step 3
-    cell2 = np.linalg.inv(S2.T) @ cell1
-    sp23, sp13, sp12 = get_scalar_products(cell2)
-    if compare_numerically(sp23, ">", 0, rtol=rtol, atol=atol):
+    cell2 = S2.T @ cell1
+    _, _, _, alpha, _, _ = get_params(cell1)
+
+    if compare_numerically(alpha, "<", PI / 2, eps=angle_tolerance):
         S3 = np.eye(3, dtype=float)
-    elif compare_numerically(sp23, "<", 0, rtol=rtol, atol=atol):
+    elif compare_numerically(alpha, ">", PI / 2, eps=angle_tolerance):
         S3 = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
     else:
         raise StandardizationTypeMismatch("monoclinic", step="Third")
 
-    return S3 @ S2 @ S1
+    return S1 @ S2 @ S3
 
 
 def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
