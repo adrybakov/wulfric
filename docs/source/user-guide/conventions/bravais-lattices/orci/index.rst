@@ -104,20 +104,12 @@ Wigner-Seitz cell
 Cell standardization
 ====================
 
-Condition :math:`a < b < c` implies condition :math:`\gamma < \beta < \alpha` for
-the primitive cell in a standard form, in practice this condition simplifies to
-:math:`\boldsymbol{a}_1^s\cdot\boldsymbol{a}_2^s > \boldsymbol{a}_1^s\cdot\boldsymbol{a}_3^s > \boldsymbol{a}_2^s\cdot\boldsymbol{a}_3^s`
-for the primitive cell in a standard form. We use angles of the primitive cell for
-standardization.
-
-.. note::
-  Note the change from :math:`<` to :math:`>` between the condition on the angles and on
-  the scalar products. It reflects from the fact that all three angles are bound to the
-  interval :math:`[0, \pi]` and scalar product is proportional to the cosine of the angle.
+Condition :math:`a < b < c` implies :math:`\gamma^s < \beta^s < \alpha^s` for the
+primitive cell in a standard form. Therefore, wulfric uses angles of the primitive cell
+for standardization.
 
 
-* If :math:`\gamma < \beta < \alpha` (i.e.
-  :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_2 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3 > \boldsymbol{a}_2\cdot\boldsymbol{a}_3`),
+* If :math:`\gamma < \beta < \alpha`,
   then
 
   .. math::
@@ -132,9 +124,13 @@ standardization.
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -142,8 +138,7 @@ standardization.
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\gamma < \alpha < \beta` (i.e.
-  :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_2 > \boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3`),
+* If :math:`\gamma < \alpha < \beta`,
   then
 
   .. math::
@@ -158,9 +153,13 @@ standardization.
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      0 & -1 & 0 \\
+      -1 & 0 & 0 \\
+      0 & 0 & -1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       0 & -1 & 0 \\
@@ -168,8 +167,7 @@ standardization.
       0 & 0 & -1
     \end{pmatrix}
 
-* If :math:`\beta < \gamma < \alpha` (i.e.
-  :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_2 > \boldsymbol{a}_2\cdot\boldsymbol{a}_3`),
+* If :math:`\beta < \gamma < \alpha`,
   then
 
   .. math::
@@ -184,9 +182,13 @@ standardization.
 
     \boldsymbol{S}
     =
+    \begin{pmatrix}
+      -1 & 0 & 0 \\
+      0 & 0 & -1 \\
+      0 & -1 & 0
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
     =
     \begin{pmatrix}
       -1 & 0 & 0 \\
@@ -194,8 +196,7 @@ standardization.
       0 & -1 & 0
     \end{pmatrix}
 
-* If :math:`\beta < \alpha < \gamma` (i.e.
-  :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3 > \boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_2`),
+* If :math:`\beta < \alpha < \gamma`,
   then
 
   .. math::
@@ -208,25 +209,23 @@ standardization.
 
   .. math::
 
-    \boldsymbol{S} =
-    \begin{pmatrix}
-      0 & 0 & 1 \\
-      1 & 0 & 0 \\
-      0 & 1 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
+    \boldsymbol{S}
     =
     \begin{pmatrix}
       0 & 1 & 0 \\
       0 & 0 & 1 \\
       1 & 0 & 0
     \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \begin{pmatrix}
+      0 & 0 & 1 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix}
 
-* If :math:`\alpha < \gamma < \beta` (i.e.
-  :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_2 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3`),
+* If :math:`\alpha < \gamma < \beta`,
   then
 
   .. math::
@@ -239,25 +238,24 @@ standardization.
 
   .. math::
 
-    \boldsymbol{S} =
-    \begin{pmatrix}
-      0 & 1 & 0 \\
-      0 & 0 & 1 \\
-      1 & 0 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}^T
+    \boldsymbol{S}
     =
     \begin{pmatrix}
       0 & 0 & 1 \\
       1 & 0 & 0 \\
       0 & 1 & 0
     \end{pmatrix}
+    \qquad
+    \boldsymbol{S}^{-1}
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
 
-* If :math:`\alpha < \beta < \gamma` (i.e.
-  :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_3 > \boldsymbol{a}_1\cdot\boldsymbol{a}_2`),
+
+* If :math:`\alpha < \beta < \gamma`,
   then
 
   .. math::
@@ -272,9 +270,13 @@ standardization.
 
     \boldsymbol{S}
     =
-    \boldsymbol{S}^{-1}
+    \begin{pmatrix}
+      0 & 0 & -1 \\
+      0 & -1 & 0 \\
+      -1 & 0 & 0
+    \end{pmatrix}
     =
-    \boldsymbol{S}^T
+    \boldsymbol{S}^{-1}
     =
     \begin{pmatrix}
       0 & 0 & -1 \\

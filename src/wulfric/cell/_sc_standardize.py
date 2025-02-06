@@ -417,9 +417,7 @@ def _ORCI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
         ignored by this function, the arguments are defined only for the homogeneity of
         the input for all 14 Bravais lattice types.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Completely ignored by this
-        function, the arguments are defined only for the homogeneity of the input for all
-        14 Bravais lattice types.
+        Tolerance for angle variables (angles of the lattice).
 
     Returns
     -------
@@ -438,31 +436,31 @@ def _ORCI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
         If none of the body-centered orthorhombic conditions are satisfied.
     """
 
-    sp23, sp13, sp12 = get_scalar_products(cell)
+    _, _, _, alpha, beta, gamma = get_params(cell)
 
     if compare_numerically(
-        sp12, ">", sp13, rtol=rtol, atol=atol
-    ) and compare_numerically(sp13, ">", sp23, rtol=rtol, atol=atol):
+        gamma, "<", beta, eps=length_tolerance
+    ) and compare_numerically(beta, "<", alpha, eps=length_tolerance):
         S = np.eye(3, dtype=float)
     elif compare_numerically(
-        sp12, ">", sp23, rtol=rtol, atol=atol
-    ) and compare_numerically(sp23, ">", sp13, rtol=rtol, atol=atol):
+        gamma, "<", alpha, eps=length_tolerance
+    ) and compare_numerically(alpha, "<", beta, eps=length_tolerance):
         S = np.array([[0, -1, 0], [-1, 0, 0], [0, 0, -1]], dtype=float)
     elif compare_numerically(
-        sp13, ">", sp12, rtol=rtol, atol=atol
-    ) and compare_numerically(sp12, ">", sp23, rtol=rtol, atol=atol):
+        beta, "<", gamma, eps=length_tolerance
+    ) and compare_numerically(gamma, "<", alpha, eps=length_tolerance):
         S = np.array([[-1, 0, 0], [0, 0, -1], [0, -1, 0]], dtype=float)
     elif compare_numerically(
-        sp13, ">", sp23, rtol=rtol, atol=atol
-    ) and compare_numerically(sp23, ">", sp12, rtol=rtol, atol=atol):
-        S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
-    elif compare_numerically(
-        sp23, ">", sp12, rtol=rtol, atol=atol
-    ) and compare_numerically(sp12, ">", sp13, rtol=rtol, atol=atol):
+        beta, "<", alpha, eps=length_tolerance
+    ) and compare_numerically(alpha, "<", gamma, eps=length_tolerance):
         S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     elif compare_numerically(
-        sp23, ">", sp13, rtol=rtol, atol=atol
-    ) and compare_numerically(sp13, ">", sp12, rtol=rtol, atol=atol):
+        alpha, "<", gamma, eps=length_tolerance
+    ) and compare_numerically(gamma, "<", beta, eps=length_tolerance):
+        S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    elif compare_numerically(
+        alpha, "<", beta, eps=length_tolerance
+    ) and compare_numerically(beta, "<", gamma, eps=length_tolerance):
         S = np.array([[0, 0, -1], [0, -1, 0], [-1, 0, 0]], dtype=float)
     else:
         raise StandardizationTypeMismatch("body-centered orthorhombic")
