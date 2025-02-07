@@ -460,8 +460,8 @@ matrix :math:`\boldsymbol{C}`).
 Step 1
 ------
 
-First step ensures that the first two lattice vectors of the primitive cell are
-orthogonal to each other. We use lattice vectors of the primitive cell.
+First step ensures that the first two lattice vectors of the primitive cell have equal
+lengths. Wulfric uses lattice vectors of the primitive cell for this step.
 
 
 * If :math:`\vert \boldsymbol{a}_1\vert = \vert \boldsymbol{a}_2\vert \ne \vert \boldsymbol{a}_3\vert`,
