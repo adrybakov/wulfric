@@ -20,8 +20,6 @@
 import os
 from argparse import ArgumentParser
 
-import matplotlib.pyplot as plt
-
 import wulfric as wulf
 
 ROOT_DIR = "."
@@ -238,7 +236,7 @@ def plot():
     }
 
     for i, name in enumerate(names):
-        print(f"Start to plot {name} ...", end="")
+        print(f"Start to plot {name} ", end="")
         output_subname = (name.translate(str.maketrans("", "", "12345ab"))).lower()
         cell = wulf.cell.get_cell_example(name)
         for j, wtp in enumerate(wtps[name]):
@@ -253,13 +251,14 @@ def plot():
                 "\n".join(
                     [
                         f"import wulfric as wulf\n",
-                        'cell = wulf.cell.get_cell_example("{name}")',
+                        f'cell = wulf.cell.get_cell_example("{name}")',
                         "backend = wulf.visualization.PlotlyBackend()\n",
                     ]
                 )
             )
             backend = wulf.visualization.PlotlyBackend()
             for data in wtp:
+                print(data, end=" ", flush=True)
                 if len(wtp) == 1:
                     backend.plot(cell, kind=data)
                     py_file.write(f'backend.plot(cell, kind="{data}")\n')
@@ -274,6 +273,7 @@ def plot():
                         py_file.write(
                             f'backend.plot(cell, kind="{data}", label="{data}")\n'
                         )
+
             backend.save(
                 os.path.join(
                     OUTPUT_PATH, output_subname, f"{name.lower()}_{names[name][j]}.html"
@@ -283,15 +283,16 @@ def plot():
                     width=600,
                     height=600,
                 ),
+                axes_visible=False,
             )
-            plt.close()
+
             py_file.write(
                 "# Save an image:\n"
                 + f'backend.save("{name.lower()}_{names[name][j]}.png")\n'
             )
             py_file.write("# Interactive plot:\n" + f"backend.show()\n")
-            del backend
             py_file.close()
+            del backend
         print(f" done")
 
 
