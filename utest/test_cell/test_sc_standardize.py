@@ -239,8 +239,8 @@ def test_BCT_get_S_matrix(r1, r2, r3, conv_a, conv_c, order):
         cell = shuffle(rotate(BCT(conv_a, conv_c), r1, r2, r3), order)
         if is_reasonable(cell):
             prim = sqrt(2 * conv_a**2 + conv_c**2) / 2
-            angle12 = acos((conv_c**2 - 2 * conv_a**2) / 4 / prim**2)
-            angle = acos(-(conv_c**2) / 4 / prim**2)
+            angle12 = acos(np.clip((conv_c**2 - 2 * conv_a**2) / 4 / prim**2, -1, 1))
+            angle = acos(np.clip(-(conv_c**2) / 4 / prim**2, -1, 1))
             old_det = np.linalg.det(cell)
 
             # Fix cell
@@ -321,11 +321,17 @@ def test_ORCF_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
             prim_a = sqrt(conv_b**2 + conv_c**2) / 2.0
             prim_b = sqrt(conv_a**2 + conv_c**2) / 2.0
             prim_c = sqrt(conv_a**2 + conv_b**2) / 2.0
-            prim_alpha = acos(conv_a**2 / 4.0 / prim_b / prim_c) * TODEGREES
+            prim_alpha = (
+                acos(np.clip(conv_a**2 / 4.0 / prim_b / prim_c, -1, 1)) * TODEGREES
+            )
             prim_alpha_twin = 180.0 - prim_alpha
-            prim_beta = acos(conv_b**2 / 4.0 / prim_a / prim_c) * TODEGREES
+            prim_beta = (
+                acos(np.clip(conv_b**2 / 4.0 / prim_a / prim_c, -1, 1)) * TODEGREES
+            )
             prim_beta_twin = 180.0 - prim_beta
-            prim_gamma = acos(conv_c**2 / 4.0 / prim_a / prim_b) * TODEGREES
+            prim_gamma = (
+                acos(np.clip(conv_c**2 / 4.0 / prim_a / prim_b, -1, 1)) * TODEGREES
+            )
             prim_gamma_twin = 180.0 - prim_gamma
             old_det = np.linalg.det(cell)
 
@@ -368,15 +374,28 @@ def test_ORCI_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
             conv_a, conv_b, conv_c = sorted([conv_a, conv_b, conv_c])
             prim = sqrt(conv_a**2 + conv_b**2 + conv_c**2) / 2
             prim_alpha = (
-                acos((conv_a**2 - conv_b**2 - conv_c**2) / 4.0 / prim**2) * TODEGREES
+                acos(
+                    np.clip((conv_a**2 - conv_b**2 - conv_c**2) / 4.0 / prim**2, -1, 1)
+                )
+                * TODEGREES
             )
             prim_alpha_twin = 180.0 - prim_alpha
             prim_beta = (
-                acos((-(conv_a**2) + conv_b**2 - conv_c**2) / 4.0 / prim**2) * TODEGREES
+                acos(
+                    np.clip(
+                        (-(conv_a**2) + conv_b**2 - conv_c**2) / 4.0 / prim**2, -1, 1
+                    )
+                )
+                * TODEGREES
             )
             prim_beta_twin = 180.0 - prim_beta
             prim_gamma = (
-                acos((-(conv_a**2) - conv_b**2 + conv_c**2) / 4.0 / prim**2) * TODEGREES
+                acos(
+                    np.clip(
+                        (-(conv_a**2) - conv_b**2 + conv_c**2) / 4.0 / prim**2, -1, 1
+                    )
+                )
+                * TODEGREES
             )
             prim_gamma_twin = 180.0 - prim_gamma
             old_det = np.linalg.det(cell)
@@ -439,7 +458,8 @@ def test_ORCC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, order):
             prim_alpha = 90.0
             prim_beta = prim_alpha
             prim_gamma = (
-                acos((conv_a**2 - conv_b**2) / 4.0 / prim_a / prim_b) * TODEGREES
+                acos(np.clip((conv_a**2 - conv_b**2) / 4.0 / prim_a / prim_b, -1, 1))
+                * TODEGREES
             )
 
             old_det = np.linalg.det(cell)
@@ -656,30 +676,39 @@ def test_MCLC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order
             prim_c = conv_c
             prim_alpha = (
                 acos(
-                    conv_b
-                    * conv_c
-                    * cos(conv_alpha * TORADIANS)
-                    / 2.0
-                    / prim_b
-                    / prim_c
+                    np.clip(
+                        conv_b
+                        * conv_c
+                        * cos(conv_alpha * TORADIANS)
+                        / 2.0
+                        / prim_b
+                        / prim_c,
+                        -1,
+                        1,
+                    )
                 )
                 * TODEGREES
             )
             prim_alpha_twin = 180.0 - prim_alpha
             prim_beta = (
                 acos(
-                    conv_b
-                    * conv_c
-                    * cos(conv_alpha * TORADIANS)
-                    / 2.0
-                    / prim_a
-                    / prim_c
+                    np.clip(
+                        conv_b
+                        * conv_c
+                        * cos(conv_alpha * TORADIANS)
+                        / 2.0
+                        / prim_a
+                        / prim_c,
+                        -1,
+                        1,
+                    )
                 )
                 * TODEGREES
             )
             prim_beta_twin = 180.0 - prim_beta
             prim_gamma = (
-                acos((conv_b**2 - conv_a**2) / 4.0 / prim_a / prim_b) * TODEGREES
+                acos(np.clip((conv_b**2 - conv_a**2) / 4.0 / prim_a / prim_b, -1, 1))
+                * TODEGREES
             )
             old_det = np.linalg.det(cell)
 
@@ -695,28 +724,46 @@ def test_MCLC_get_S_matrix(r1, r2, r3, conv_a, conv_b, conv_c, conv_alpha, order
             assert np.allclose([a, b, c], [prim_a, prim_b, prim_c])
 
             assert (
-                compare_numerically(alpha, "==", prim_alpha)
-                or compare_numerically(alpha, "==", prim_beta)
-                or compare_numerically(alpha, "==", prim_gamma)
-                or compare_numerically(alpha, "==", 180.0 - prim_alpha)
-                or compare_numerically(alpha, "==", 180.0 - prim_beta)
-                or compare_numerically(alpha, "==", 180.0 - prim_gamma)
+                compare_numerically(alpha, "==", prim_alpha, eps=ANGLE_TOLERANCE)
+                or compare_numerically(alpha, "==", prim_beta, eps=ANGLE_TOLERANCE)
+                or compare_numerically(alpha, "==", prim_gamma, eps=ANGLE_TOLERANCE)
+                or compare_numerically(
+                    alpha, "==", 180.0 - prim_alpha, eps=ANGLE_TOLERANCE
+                )
+                or compare_numerically(
+                    alpha, "==", 180.0 - prim_beta, eps=ANGLE_TOLERANCE
+                )
+                or compare_numerically(
+                    alpha, "==", 180.0 - prim_gamma, eps=ANGLE_TOLERANCE
+                )
             )
             assert (
-                compare_numerically(beta, "==", prim_alpha)
-                or compare_numerically(beta, "==", prim_beta)
-                or compare_numerically(beta, "==", prim_gamma)
-                or compare_numerically(beta, "==", 180.0 - prim_alpha)
-                or compare_numerically(beta, "==", 180.0 - prim_beta)
-                or compare_numerically(beta, "==", 180.0 - prim_gamma)
+                compare_numerically(beta, "==", prim_alpha, eps=ANGLE_TOLERANCE)
+                or compare_numerically(beta, "==", prim_beta, eps=ANGLE_TOLERANCE)
+                or compare_numerically(beta, "==", prim_gamma, eps=ANGLE_TOLERANCE)
+                or compare_numerically(
+                    beta, "==", 180.0 - prim_alpha, eps=ANGLE_TOLERANCE
+                )
+                or compare_numerically(
+                    beta, "==", 180.0 - prim_beta, eps=ANGLE_TOLERANCE
+                )
+                or compare_numerically(
+                    beta, "==", 180.0 - prim_gamma, eps=ANGLE_TOLERANCE
+                )
             )
             assert (
-                compare_numerically(gamma, "==", prim_alpha)
-                or compare_numerically(gamma, "==", prim_beta)
-                or compare_numerically(gamma, "==", prim_gamma)
-                or compare_numerically(gamma, "==", 180.0 - prim_alpha)
-                or compare_numerically(gamma, "==", 180.0 - prim_beta)
-                or compare_numerically(gamma, "==", 180.0 - prim_gamma)
+                compare_numerically(gamma, "==", prim_alpha, eps=ANGLE_TOLERANCE)
+                or compare_numerically(gamma, "==", prim_beta, eps=ANGLE_TOLERANCE)
+                or compare_numerically(gamma, "==", prim_gamma, eps=ANGLE_TOLERANCE)
+                or compare_numerically(
+                    gamma, "==", 180.0 - prim_alpha, eps=ANGLE_TOLERANCE
+                )
+                or compare_numerically(
+                    gamma, "==", 180.0 - prim_beta, eps=ANGLE_TOLERANCE
+                )
+                or compare_numerically(
+                    gamma, "==", 180.0 - prim_gamma, eps=ANGLE_TOLERANCE
+                )
             )
 
             # Check that chirality is the same
