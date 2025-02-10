@@ -28,13 +28,18 @@ from scipy.spatial.transform import Rotation
 
 from wulfric._numerical import compare_numerically
 from wulfric.cell._basic_manipulation import is_reasonable
-from wulfric.constants._numerical import EPS_LENGTH, MAX_LENGTH, MIN_LENGTH, TORADIANS
+from wulfric.constants._numerical import TORADIANS
 from wulfric.geometry._geometry import (
     absolute_to_relative,
     get_angle,
     get_volume,
     parallelepiped_check,
 )
+
+ANGLE_TOLERANCE = 1e-4
+LENGTH_TOLERANCE = 1e-8
+MIN_LENGTH = 0.0
+MAX_LENGTH = 1e20
 
 ################################################################################
 #                               Service functions                              #
@@ -117,7 +122,7 @@ def test_get_angle_values(alpha):
     if alpha > 180:
         alpha = 360 - alpha
 
-    assert abs(get_angle(v1, v2) - alpha) < EPS_LENGTH
+    assert abs(get_angle(v1, v2) - alpha) < ANGLE_TOLERANCE
 
 
 def test_get_angle_raises():
@@ -132,7 +137,7 @@ def test_get_angle_raises():
 ################################################################################
 @pytest.mark.parametrize(
     "args, result, eps",
-    [((4, 4.472, 4.583, 79.03, 64.13, 64.15), 66.3840797, EPS_LENGTH)],
+    [((4, 4.472, 4.583, 79.03, 64.13, 64.15), 66.3840797, LENGTH_TOLERANCE)],
 )
 def test_get_volume_example(args, result, eps):
     assert get_volume(*args) - result < eps
@@ -149,7 +154,6 @@ def test_get_volume_example(args, result, eps):
     )
 )
 def test_get_volume_with_cell(cell):
-    # Its an "or" condition
     assert get_volume(cell) >= 0
 
 
@@ -188,31 +192,19 @@ def test_get_volume_parameters(a, b, c, alpha, beta, gamma):
 )
 def test_parallelepiped_check(a, b, c, alpha, beta, gamma):
     assert parallelepiped_check(a, b, c, alpha, beta, gamma) == (
-        compare_numerically(a, ">", 0.0, rtol=EPS_LENGTH, atol=EPS_LENGTH)
-        and compare_numerically(b, ">", 0.0, rtol=EPS_LENGTH, atol=EPS_LENGTH)
-        and compare_numerically(c, ">", 0.0, rtol=EPS_LENGTH, atol=EPS_LENGTH)
-        and compare_numerically(alpha, "<", 180.0, rtol=EPS_LENGTH, atol=EPS_LENGTH)
-        and compare_numerically(beta, "<", 180.0, rtol=EPS_LENGTH, atol=EPS_LENGTH)
-        and compare_numerically(gamma, "<", 180.0, rtol=EPS_LENGTH, atol=EPS_LENGTH)
-        and compare_numerically(alpha, ">", 0.0, rtol=EPS_LENGTH, atol=EPS_LENGTH)
-        and compare_numerically(beta, ">", 0.0, rtol=EPS_LENGTH, atol=EPS_LENGTH)
-        and compare_numerically(gamma, ">", 0.0, rtol=EPS_LENGTH, atol=EPS_LENGTH)
-        and compare_numerically(
-            gamma, "<", alpha + beta, rtol=EPS_LENGTH, atol=EPS_LENGTH
-        )
-        and compare_numerically(
-            alpha + beta, "<", 360.0 - gamma, rtol=EPS_LENGTH, atol=EPS_LENGTH
-        )
-        and compare_numerically(
-            beta, "<", alpha + gamma, rtol=EPS_LENGTH, atol=EPS_LENGTH
-        )
-        and compare_numerically(
-            alpha + gamma, "<", 360.0 - beta, rtol=EPS_LENGTH, atol=EPS_LENGTH
-        )
-        and compare_numerically(
-            alpha, "<", beta + gamma, rtol=EPS_LENGTH, atol=EPS_LENGTH
-        )
-        and compare_numerically(
-            beta + gamma, "<", 360.0 - alpha, rtol=EPS_LENGTH, atol=EPS_LENGTH
-        )
+        compare_numerically(a, ">", 0.0, eps=LENGTH_TOLERANCE)
+        and compare_numerically(b, ">", 0.0, eps=LENGTH_TOLERANCE)
+        and compare_numerically(c, ">", 0.0, eps=LENGTH_TOLERANCE)
+        and compare_numerically(alpha, "<", 180.0, eps=ANGLE_TOLERANCE)
+        and compare_numerically(beta, "<", 180.0, eps=ANGLE_TOLERANCE)
+        and compare_numerically(gamma, "<", 180.0, eps=ANGLE_TOLERANCE)
+        and compare_numerically(alpha, ">", 0.0, eps=ANGLE_TOLERANCE)
+        and compare_numerically(beta, ">", 0.0, eps=ANGLE_TOLERANCE)
+        and compare_numerically(gamma, ">", 0.0, eps=ANGLE_TOLERANCE)
+        and compare_numerically(gamma, "<", alpha + beta, eps=ANGLE_TOLERANCE)
+        and compare_numerically(alpha + beta, "<", 360.0 - gamma, eps=ANGLE_TOLERANCE)
+        and compare_numerically(beta, "<", alpha + gamma, eps=ANGLE_TOLERANCE)
+        and compare_numerically(alpha + gamma, "<", 360.0 - beta, eps=ANGLE_TOLERANCE)
+        and compare_numerically(alpha, "<", beta + gamma, eps=ANGLE_TOLERANCE)
+        and compare_numerically(beta + gamma, "<", 360.0 - alpha, eps=ANGLE_TOLERANCE)
     )
