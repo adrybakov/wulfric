@@ -36,7 +36,6 @@ def _niggli_step_1(A, B, C, xi, eta, zeta, trans_matrix, eps):
         compare_numerically(A, "==", B, eps=eps)
         and compare_numerically(abs(xi), ">", abs(eta), eps=eps)
     )
-    print("Step 1", condition, A, B, C, xi, eta, zeta)
     if condition:
 
         trans_matrix = trans_matrix @ np.array(
@@ -58,7 +57,6 @@ def _niggli_step_2(A, B, C, xi, eta, zeta, trans_matrix, eps):
         compare_numerically(B, "==", C, eps=eps)
         and compare_numerically(abs(eta), ">", abs(zeta), eps=eps)
     )
-    print("Step 2", condition, A, B, C, xi, eta, zeta)
     if condition:
 
         trans_matrix = trans_matrix @ np.array(
@@ -77,7 +75,6 @@ def _niggli_step_2(A, B, C, xi, eta, zeta, trans_matrix, eps):
 
 def _niggli_step_3(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = compare_numerically(xi * eta * zeta, ">", 0, eps=eps)
-    print("Step 3", condition, A, B, C, xi, eta, zeta)
     if condition:
 
         if compare_numerically(xi, ">", 0, eps=eps):
@@ -111,7 +108,6 @@ def _niggli_step_3(A, B, C, xi, eta, zeta, trans_matrix, eps):
 
 def _niggli_step_4(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = compare_numerically(xi * eta * zeta, "<=", 0, eps=eps)
-    print("Step 4", condition, A, B, C, xi, eta, zeta)
     if condition:
 
         # Step 1
@@ -171,7 +167,6 @@ def _niggli_step_5(A, B, C, xi, eta, zeta, trans_matrix, eps):
             and compare_numerically(zeta, "<", 0, eps=eps)
         )
     )
-    print("Step 5", condition, A, B, C, xi, eta, zeta)
     if condition:
 
         trans_matrix = trans_matrix @ np.array(
@@ -202,7 +197,6 @@ def _niggli_step_6(A, B, C, xi, eta, zeta, trans_matrix, eps):
             and compare_numerically(zeta, "<", 0, eps=eps)
         )
     )
-    print("Step 6", condition, A, B, C, xi, eta, zeta)
     if condition:
 
         trans_matrix = trans_matrix @ np.array(
@@ -233,7 +227,6 @@ def _niggli_step_7(A, B, C, xi, eta, zeta, trans_matrix, eps):
             and compare_numerically(eta, "<", 0, eps=eps)
         )
     )
-    print("Step 7", condition, A, B, C, xi, eta, zeta)
     if condition:
 
         trans_matrix = trans_matrix @ np.array(
@@ -257,7 +250,6 @@ def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix, eps):
         compare_numerically(xi + eta + zeta + A + B, "==", 0, eps=eps)
         and compare_numerically(2 * (A + eta) + zeta, ">", 0, eps=eps)
     )
-    print("Step 8", condition, A, B, C, xi, eta, zeta)
     if condition:
 
         trans_matrix = trans_matrix @ np.array(
