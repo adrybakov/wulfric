@@ -455,21 +455,50 @@ Cell standardization
 Standardization of the MCLC cell involves three steps and the second step had to be based
 on the conventional and not primitive cell. As a result the matrix :math:`\boldsymbol{S}`
 is not orthonormal in a general case (direct consequence of the non-orthogonality of the
-matrix :math:`\boldsymbol{C}`).
+matrix :math:`\boldsymbol{C}`). Length of the lattice vectors for the primitive cell are:
+
+.. math::
+
+  \begin{matrix}
+  \vert \boldsymbol{a}_1 \vert = \dfrac{\sqrt{a^2 + b^2}}{2} &
+  \vert \boldsymbol{a}_2 \vert = \dfrac{\sqrt{a^2 + b^2}}{2} &
+  \vert \boldsymbol{a}_3 \vert = c
+  \end{matrix}
+
+angles between the lattice vectors for the primitive cell are:
+
+.. math::
+
+  \begin{matrix}
+  \cos(\boldsymbol{a}_2\boldsymbol{a}_3) = \dfrac{2b}{\sqrt{a^2 + b^2}}\cos\alpha &
+  \cos(\boldsymbol{a}_1\boldsymbol{a}_3) = \dfrac{2b}{\sqrt{a^2 + b^2}}\cos\alpha &
+  \cos(\boldsymbol{a}_1\boldsymbol{a}_2) = \dfrac{b^2 - a^2}{b^2 + a^2}
+  \end{matrix}
+
+Therefore, no simple condition can be formulated for the primitive cell, that will be
+equivalent to the conditions :math:`b \le c` and :math:`\alpha < \pi/2` for the
+conventional cell. The actual conditions would be
+:math:`2\vert \boldsymbol{a}_1^s \vert^2 (1 + \cos(\boldsymbol{a}_1^s\boldsymbol{a}_2^s)) \le \vert \boldsymbol{a}_3^s \vert^2`
+and :math:`\boldsymbol{a}_1^s \cdot \boldsymbol{a}_2^s > 0`.
+
+Therefore, wulfric uses lattice vectors of the conventional cell to check for those two
+conditions (steps 2 and 3). However,  before the transformation matrix :math:`\boldsymbol{C}`
+can be used we have to identify the first two vectors of the given primitive cell (step 1).
 
 Step 1
 ------
 
 First step ensures that the first two lattice vectors of the primitive cell have equal
-lengths. Wulfric uses lattice vectors of the primitive cell for this step.
+lengths. Wulfric uses lattice vectors of the primitive cell for this step. Note that
+wulfric does not check whether the third vector is different.
 
 
-* If :math:`\vert \boldsymbol{a}_1\vert = \vert \boldsymbol{a}_2\vert \ne \vert \boldsymbol{a}_3\vert`,
+* If :math:`\vert \boldsymbol{a}_1\vert = \vert \boldsymbol{a}_2\vert`,
   then
 
   .. math::
 
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_2^{(1)}, \boldsymbol{a}_3^{(1)})
     =
     (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
 
@@ -479,9 +508,13 @@ lengths. Wulfric uses lattice vectors of the primitive cell for this step.
 
     \boldsymbol{S}_1
     =
+    \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0 & 1
+    \end{pmatrix}
+    \qquad
     \boldsymbol{S}_1^{-1}
-    =
-    \boldsymbol{S}_1^T
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -489,12 +522,12 @@ lengths. Wulfric uses lattice vectors of the primitive cell for this step.
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\vert \boldsymbol{a}_2 \vert = \vert \boldsymbol{a}_3 \vert \ne \vert \boldsymbol{a}_1 \vert`,
+* If :math:`\vert \boldsymbol{a}_2 \vert = \vert \boldsymbol{a}_3 \vert`,
   then
 
   .. math::
 
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_2^{(1)}, \boldsymbol{a}_3^{(1)})
     =
     (\boldsymbol{a}_2, \boldsymbol{a}_3, \boldsymbol{a}_1)
 
@@ -505,27 +538,25 @@ lengths. Wulfric uses lattice vectors of the primitive cell for this step.
     \boldsymbol{S}_1
     =
     \begin{pmatrix}
-      0 & 1 & 0 \\
-      0 & 0 & 1 \\
-      1 & 0 & 0
-    \end{pmatrix}
-    \qquad
-    \boldsymbol{S}_1^{-1}
-    =
-    \boldsymbol{S}_1^T
-    =
-    \begin{pmatrix}
       0 & 0 & 1 \\
       1 & 0 & 0 \\
       0 & 1 & 0
     \end{pmatrix}
+    \qquad
+    \boldsymbol{S}_1^{-1}
+    =
+    \begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 1 \\
+      1 & 0 & 0
+    \end{pmatrix}
 
-* If :math:`\vert \boldsymbol{a}_3 \vert = \vert \boldsymbol{a}_1 \vert \ne \vert \boldsymbol{a}_2 \vert`,
+* If :math:`\vert \boldsymbol{a}_3 \vert = \vert \boldsymbol{a}_1 \vert`,
   then
 
   .. math::
 
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_2^{(1)}, \boldsymbol{a}_3^{(1)})
     =
     (\boldsymbol{a}_3, \boldsymbol{a}_1, \boldsymbol{a}_2)
 
@@ -536,110 +567,47 @@ lengths. Wulfric uses lattice vectors of the primitive cell for this step.
     \boldsymbol{S}_1
     =
     \begin{pmatrix}
+      0 & 1 & 0 \\
       0 & 0 & 1 \\
-      1 & 0 & 0 \\
-      0 & 1 & 0
+      1 & 0 & 0
     \end{pmatrix}
     \qquad
     \boldsymbol{S}_1^{-1}
     =
-    \boldsymbol{S}_1^T
-    =
     \begin{pmatrix}
-      0 & 1 & 0 \\
       0 & 0 & 1 \\
-      1 & 0 & 0
+      1 & 0 & 0 \\
+      0 & 1 & 0
     \end{pmatrix}
 
 Step 2
 ------
 
-Second step ensures the condition :math:`b \le c`.  We use lattice vectors of the
-primitive cell.
+Second step ensures the condition :math:`b \le c`. For this step we have to use the
+conventional cell. Fortunately, after the first step we can use the transformation matrix
+:math:`\boldsymbol{C}`.
 
-.. dropdown:: Details
+.. math::
 
-  Length of the lattice vectors for the primitive cell are:
+  (\boldsymbol{a}_1^{(1), c}, \boldsymbol{a}_2^{(1), c}, \boldsymbol{a}_3^{(1), c})
+  =
+  \boldsymbol{C}^T
+  (\boldsymbol{a}_1^{(1)}, \boldsymbol{a}_2^{(1)}, \boldsymbol{a}_3^{(1)})
 
-  .. math::
-
-    \begin{matrix}
-    \vert \boldsymbol{a}_1 \vert = \dfrac{\sqrt{a^2 + b^2}}{2} &
-    \vert \boldsymbol{a}_2 \vert = \dfrac{\sqrt{a^2 + b^2}}{2} &
-    \vert \boldsymbol{a}_3 \vert = c
-    \end{matrix}
-
-  angles between the lattice vectors for the primitive cell are:
-
-  .. math::
-
-    \begin{matrix}
-    \cos(\boldsymbol{a}_2\boldsymbol{a}_3) = \dfrac{2b}{\sqrt{a^2 + b^2}}\cos\alpha &
-    \cos(\boldsymbol{a}_1\boldsymbol{a}_3) = \dfrac{2b}{\sqrt{a^2 + b^2}}\cos\alpha &
-    \cos(\boldsymbol{a}_1\boldsymbol{a}_2) = \dfrac{b^2 - a^2}{b^2 + a^2}
-    \end{matrix}
-
-  Therefore, no simple condition can be formulated for the primitive cell, that will be
-  equivalent to the condition :math:`b \le c` for the conventional cell. The actual
-  condition is
-  :math:`2\vert \boldsymbol{a}_1 \vert^2 (1 + \cos(\boldsymbol{a}_1\boldsymbol{a}_2)) \le \vert \boldsymbol{a}_3 \vert^2`.
-  As a result, when this condition is not satisfied, simple reordering of vectors of the
-  primitive cell will not be enough. The recipe, that we follow instead is to
-
-  * Calculate conventional cell as
-
-    .. math::
-
-      (\boldsymbol{a}_1, \boldsymbol{a}_2, \boldsymbol{a}_3)
-      =
-      (\boldsymbol{a}_1^c, \boldsymbol{a}_2^c, \boldsymbol{a}_3^c) \boldsymbol{C}
-
-  * Find a standardization matrix for the **conventional** cell
-
-    .. math::
-
-      (\boldsymbol{a}_1^c, \boldsymbol{a}_2^c, \boldsymbol{a}_3^c)
-      =
-      (\boldsymbol{a}_1^{cs}, \boldsymbol{a}_2^{cs}, \boldsymbol{a}_3^{cs}) \boldsymbol{S^c}
-
-  * Calculate standardized primitive cell as
-
-    .. math::
-
-      (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
-      =
-      (\boldsymbol{a}_1^{cs}, \boldsymbol{a}_2^{cs}, \boldsymbol{a}_3^{cs}) \boldsymbol{C}
-
-  Then the standardization matrix for the primitive cell is
-
-  .. math::
-
-    \boldsymbol{S}
-    =
-    \boldsymbol{C}^{-1}
-    \boldsymbol{S^c}
-    \boldsymbol{C}
-
-
-
-* If :math:`2\vert \boldsymbol{a}_1 \vert^2 (1 + \cos(\boldsymbol{a}_1\boldsymbol{a}_2)) \le \vert \boldsymbol{a}_3 \vert^2`,
+* If :math:`\vert \boldsymbol{a}_2^{(1), c} \vert \le \vert \boldsymbol{a}_3^{(1), c} \vert`
   then
 
   .. math::
 
-    (\boldsymbol{a}_1^2, \boldsymbol{a}_2^2, \boldsymbol{a}_3^2)
+    (\boldsymbol{a}_1^{(2), c}, \boldsymbol{a}_2^{(2), c}, \boldsymbol{a}_3^{(2), c})
     =
-    (\boldsymbol{a}_1^1, \boldsymbol{a}_2^1, \boldsymbol{a}_3^1)
+    (\boldsymbol{a}_1^{(1), c}, \boldsymbol{a}_2^{(1), c}, \boldsymbol{a}_3^{(1), c})
 
   and
 
   .. math::
 
-    \boldsymbol{S}_2
-    =
-    \boldsymbol{S}_2^{-1}
-    =
-    \boldsymbol{S}_2^T
+    \boldsymbol{S}_{2,c}
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -647,20 +615,22 @@ primitive cell.
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`2\vert \boldsymbol{a}_1 \vert^2 (1 + \cos(\boldsymbol{a}_1\boldsymbol{a}_2)) > \vert \boldsymbol{a}_3 \vert^2`,
+
+
+* If :math:`\vert \boldsymbol{a}_2^{(1), c} \vert > \vert \boldsymbol{a}_3^{(1), c} \vert`
   then
 
   .. math::
 
-    (\boldsymbol{a}_1^{c,2}, \boldsymbol{a}_2^{c,2}, \boldsymbol{a}_3^{c,2})
+    (\boldsymbol{a}_1^{(2), c}, \boldsymbol{a}_2^{(2), c}, \boldsymbol{a}_3^{(2), c})
     =
-    (-\boldsymbol{a}_1^{c,1}, \boldsymbol{a}_3^{c,1}, \boldsymbol{a}_2^{c,1})
+    (-\boldsymbol{a}_1^{(1), c}, \boldsymbol{a}_3^{(1), c}, \boldsymbol{a}_2^{(1), c})
+
+  and
 
   .. math::
 
-    \boldsymbol{S^s}_2
-    =
-    (\boldsymbol{S^s}_2)^{-1}
+    \boldsymbol{S}_{2,c}
     =
     \begin{pmatrix}
       -1 & 0 & 0 \\
@@ -668,54 +638,26 @@ primitive cell.
       0 & 1 & 0
     \end{pmatrix}
 
-
-  and
-
-  .. math::
-
-    \boldsymbol{S}_2
-    =
-    \boldsymbol{S}_2^{-1}
-    =
-    \boldsymbol{C}^{-1}
-    \boldsymbol{S^s}_2
-    \boldsymbol{C}
-    =
-    \begin{pmatrix}
-      -0.5 & 0.5 & 1 \\
-      0.5 & -0.5 & 1 \\
-      0.5 & 0.5 & 0
-    \end{pmatrix}
-
-  .. note::
-
-    :math:`\boldsymbol{S}_2^T \ne \boldsymbol{S}_2^{-1}`
-
 Step 3
 ------
 
-Last step ensures that :math:`\alpha < \frac{\pi}{2}`. Translated to the primitive cell,
-this condition reads as :math:`\boldsymbol{a}_2\boldsymbol{a}_3 > 0`. We use lattice
-vectors of the primitive cell.
+Last step ensures that :math:`\alpha < \frac{\pi}{2}`. For this step we have to use the
+conventional cell as well.
 
-* If :math:`\alpha < \frac{\pi}{2}` (i.e. :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 > 0`),
+* If :math:`\alpha^{(2),c} < \frac{\pi}{2}` (i.e. :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 > 0`),
   then
 
   .. math::
 
-    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    (\boldsymbol{a}_1^{cs}, \boldsymbol{a}_2^{cs}, \boldsymbol{a}_3^{cs})
     =
-    (\boldsymbol{a}_1^2, \boldsymbol{a}_2^2, \boldsymbol{a}_3^2)
+    (\boldsymbol{a}_1^{(2), c}, \boldsymbol{a}_2^{(2), c}, \boldsymbol{a}_3^{(2), c})
 
   and
 
   .. math::
 
-    \boldsymbol{S}_3
-    =
-    \boldsymbol{S}_3^{-1}
-    =
-    \boldsymbol{S}_3^T
+    \boldsymbol{S}_{3,c}
     =
     \begin{pmatrix}
       1 & 0 & 0 \\
@@ -723,24 +665,20 @@ vectors of the primitive cell.
       0 & 0 & 1
     \end{pmatrix}
 
-* If :math:`\alpha > \frac{\pi}{2}` (i.e. :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 < 0`),
+* If :math:`\alpha^{(2),c} > \frac{\pi}{2}` (i.e. :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3 < 0`),
   then
 
   .. math::
 
-    (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+    (\boldsymbol{a}_1^{cs}, \boldsymbol{a}_2^{cs}, \boldsymbol{a}_3^{cs})
     =
-    (-\boldsymbol{a}_1^2, -\boldsymbol{a}_2^2, \boldsymbol{a}_3^2)
+    (-\boldsymbol{a}_1^{(2), c}, -\boldsymbol{a}_2^{(2), c}, \boldsymbol{a}_3^{(2), c})
 
   and
 
   .. math::
 
-    \boldsymbol{S}_3
-    =
-    \boldsymbol{S}_3^{-1}
-    =
-    \boldsymbol{S}_3^T
+    \boldsymbol{S}_{3,c}
     =
     \begin{pmatrix}
       -1 & 0 & 0 \\
@@ -748,15 +686,31 @@ vectors of the primitive cell.
       0 & 0 & 1
     \end{pmatrix}
 
-Finally
--------
+
+
+Primitive lattice after is restored as
 
 .. math::
 
-    \boldsymbol{S}
-    =
-    \boldsymbol{S}_3 \boldsymbol{S}_2 \boldsymbol{S}_1
-    \qquad
-    \boldsymbol{S}^{-1}
-    =
-    \boldsymbol{S}_1^{-1} \boldsymbol{S}_2^{-1} \boldsymbol{S}_3^{-1}
+  (\boldsymbol{a}_1^s, \boldsymbol{a}_2^s, \boldsymbol{a}_3^s)
+  =
+  (\boldsymbol{C}^T)^{-1}
+  (\boldsymbol{a}_1^{cs}, \boldsymbol{a}_2^{cs}, \boldsymbol{a}_3^{cs})
+
+
+Finally
+-------
+.. math::
+
+  \boldsymbol{S}
+  =
+  \boldsymbol{S}_1 \boldsymbol{C} \boldsymbol{S}_{2,c} \boldsymbol{S}_{3,c} \boldsymbol{C}^{-1}
+  \qquad
+  \boldsymbol{S}^{-1}
+  =
+  \boldsymbol{C} \boldsymbol{S}_{3,c}^{-1} \boldsymbol{S}_{2,c}^{-1} \boldsymbol{C}^{-1} \boldsymbol{S}_1^{-1}
+
+.. note::
+
+  As :math:`\boldsymbol{C}^T \ne \boldsymbol{C}^{-1}`, then
+  :math:`\boldsymbol{S}^T \ne \boldsymbol{S}^{-1}`

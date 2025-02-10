@@ -779,48 +779,42 @@ def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
         If none of the base-centered monoclinic conditions are satisfied.
     """
 
+    C = get_C_matrix("MCLC")
+
     # Step 1
+    a, b, c, _, _, _ = get_params(cell)
 
-    a, b, c, alpha, beta, gamma = get_params(cell)
-
-    if compare_numerically(a, "==", b, rtol=rtol, atol=atol) and compare_numerically(
-        b, "!=", c, rtol=rtol, atol=atol
-    ):
+    if compare_numerically(a, "==", b, eps=length_tolerance):
         S1 = np.eye(3, dtype=float)
-    elif compare_numerically(b, "==", c, rtol=rtol, atol=atol) and compare_numerically(
-        c, "!=", a, rtol=rtol, atol=atol
-    ):
-        S1 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
-    elif compare_numerically(c, "==", a, rtol=rtol, atol=atol) and compare_numerically(
-        a, "!=", b, rtol=rtol, atol=atol
-    ):
+    elif compare_numerically(b, "==", c, eps=length_tolerance):
         S1 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    elif compare_numerically(c, "==", a, eps=length_tolerance):
+        S1 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     else:
         raise StandardizationTypeMismatch("base-centered monoclinic", step="First")
 
     # Step 2
-    cell1 = np.linalg.inv(S1.T) @ cell
-    a, b, c, alpha, beta, gamma = get_params(cell1)
-    sp23, sp13, sp12 = get_scalar_products(cell1)
+    cell1 = S1.T @ cell
+    cell1_c = C.T @ cell1
+    _, b, c, _, _, _ = get_params(cell1_c)
 
-    if compare_numerically(
-        2 * a**2 * (1 + sp12 / a / b), "<=", c**2, rtol=rtol, atol=atol
-    ):
-        S2 = np.eye(3, dtype=float)
+    if compare_numerically(b, "<=", c, eps=length_tolerance):
+        S2_c = np.eye(3, dtype=float)
     else:
-        S2 = np.array([[-0.5, 0.5, 1], [0.5, -0.5, 1], [0.5, 0.5, 0]], dtype=float)
+        S2_c = np.array([[-1, 0, 0], [0, 0, 1], [0, 1, 0]], dtype=float)
 
     # Step 3
-    cell2 = np.linalg.inv(S2.T) @ cell1
-    sp23, sp13, sp12 = get_scalar_products(cell2)
-    if compare_numerically(sp23, ">", 0, rtol=rtol, atol=atol):
-        S3 = np.eye(3, dtype=float)
-    elif compare_numerically(sp23, "<", 0, rtol=rtol, atol=atol):
-        S3 = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
+    cell2_c = S2_c.T @ cell1_c
+    _, _, _, alpha, _, _ = get_params(cell2_c)
+
+    if compare_numerically(alpha, "<", PI / 2, eps=length_tolerance):
+        S3_c = np.eye(3, dtype=float)
+    elif compare_numerically(alpha, ">", PI / 2, eps=length_tolerance):
+        S3_c = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
     else:
         raise StandardizationTypeMismatch("base-centered monoclinic", step="Third")
 
-    return S3 @ S2 @ S1
+    return S1 @ C @ S2_c @ S3_c @ np.linalg.inv(C)
 
 
 def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
