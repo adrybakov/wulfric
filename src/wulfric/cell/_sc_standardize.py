@@ -971,7 +971,7 @@ def get_S_matrix(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance
     cell = np.array(cell, dtype=float)
 
     if lattice_type is None:
-        lattice_type = lepage(cell, eps_relative=rtol, eps_angle=atol)
+        lattice_type = lepage(cell, angle_tolerance=angle_tolerance)
 
     lattice_type = lattice_type.upper()
 
@@ -992,7 +992,9 @@ def get_S_matrix(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance
         "TRI": _TRI_get_S_matrix,
     }
 
-    return functions[lattice_type](cell, rtol=rtol, atol=atol)
+    return functions[lattice_type](
+        cell, length_tolerance=length_tolerance, angle_tolerance=angle_tolerance
+    )
 
 
 def get_C_matrix(lattice_type):
@@ -1016,7 +1018,7 @@ def get_C_matrix(lattice_type):
     return C_MATRICES[lattice_type.upper()]
 
 
-def get_standardized(cell, S_matrix=None, rtol=1e-8, atol=1e-8):
+def get_standardized(cell, S_matrix=None, length_tolerance=1e-8, angle_tolerance=1e-4):
     R"""
     Standardize cell with respect to the Bravais lattice type as defined in [1]_.
 
@@ -1028,10 +1030,14 @@ def get_standardized(cell, S_matrix=None, rtol=1e-8, atol=1e-8):
         Primitive unit cell.
     S_matrix : (3,3) |array-like|_, optional
         Transformation matrix S.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Default values
+        are chosen for the contexts of condense matter physics, where Angstroms are used.
+        Please choose appropriate tolerance for your problem.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Default values are chosen
+        for the contexts of condense matter physics, where Angstroms are used. Please
+        choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -1049,16 +1055,23 @@ def get_standardized(cell, S_matrix=None, rtol=1e-8, atol=1e-8):
     cell = np.array(cell, dtype=float)
 
     if S_matrix is None:
-        lattice_type = lepage(cell, eps_relative=rtol, eps_angle=atol)
+        lattice_type = lepage(cell, angle_tolerance=angle_tolerance)
 
-        S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
+        S_matrix = get_S_matrix(
+            cell,
+            lattice_type,
+            length_tolerance=length_tolerance,
+            angle_tolerance=angle_tolerance,
+        )
     else:
         S_matrix = np.array(S_matrix, dtype=float)
 
-    return np.linalg.inv(S_matrix.T) @ cell
+    return S_matrix.T @ cell
 
 
-def get_conventional(cell, S_matrix=None, C_matrix=None, rtol=1e-8, atol=1e-8):
+def get_conventional(
+    cell, S_matrix=None, C_matrix=None, length_tolerance=1e-8, angle_tolerance=1e-4
+):
     r"""
     Conventional cell.
 
@@ -1081,10 +1094,14 @@ def get_conventional(cell, S_matrix=None, C_matrix=None, rtol=1e-8, atol=1e-8):
         Transformation matrix S.
     C_matrix : (3,3) |array-like|_, optional
         Transformation matrix C.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Default values
+        are chosen for the contexts of condense matter physics, where Angstroms are used.
+        Please choose appropriate tolerance for your problem.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Default values are chosen
+        for the contexts of condense matter physics, where Angstroms are used. Please
+        choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -1094,7 +1111,7 @@ def get_conventional(cell, S_matrix=None, C_matrix=None, rtol=1e-8, atol=1e-8):
     cell = np.array(cell, dtype=float)
 
     if S_matrix is None or C_matrix is None:
-        lattice_type = lepage(cell, eps_relative=rtol, eps_angle=atol)
+        lattice_type = lepage(cell, angle_tolerance=angle_tolerance)
 
     if C_matrix is None:
         C_matrix = get_C_matrix(lattice_type)
@@ -1102,7 +1119,12 @@ def get_conventional(cell, S_matrix=None, C_matrix=None, rtol=1e-8, atol=1e-8):
         C_matrix = np.array(C_matrix, dtype=float)
 
     if S_matrix is None:
-        S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
+        S_matrix = get_S_matrix(
+            cell,
+            lattice_type,
+            length_tolerance=length_tolerance,
+            angle_tolerance=angle_tolerance,
+        )
     else:
         S_matrix = np.array(S_matrix, dtype=float)
 

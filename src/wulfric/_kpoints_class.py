@@ -127,8 +127,8 @@ class Kpoints:
         lattice_variation=None,
         S_matrix=None,
         C_matrix=None,
-        rtol=1e-8,
-        atol=1e-4,
+        length_tolerance=1e-8,
+        angle_tolerance=1e-4,
         n=100,
     ):
         r"""
@@ -148,10 +148,14 @@ class Kpoints:
             Transformation matrix S.
         C_matrix : (3,3) |array-like|_, optional
             Transformation matrix C.
-        rtol : float, default TODO
-            Relative tolerance for distance. For definition of lattice type and variation.
-        atol : float, default TODO
-            Absolute tolerance for angles, in degrees. For definition of lattice type and variation.
+        length_tolerance : float, default :math:`10^{-8}`
+            Tolerance for length variables (lengths of the lattice vectors). Default values
+            are chosen for the contexts of condense matter physics, where Angstroms are used.
+            Please choose appropriate tolerance for your problem.
+        angle_tolerance : float, default :math:`10^{-4}`
+            Tolerance for angle variables (angles of the lattice). Default values are chosen
+            for the contexts of condense matter physics, where Angstroms are used. Please
+            choose appropriate tolerance for your problem.
         n : int, default 100
             Number of points between each pair of the high symmetry points
             (high symmetry points excluded).
@@ -167,8 +171,8 @@ class Kpoints:
             lattice_variation=lattice_variation,
             S_matrix=S_matrix,
             C_matrix=C_matrix,
-            rtol=rtol,
-            atol=atol,
+            length_tolerance=length_tolerance,
+            angle_tolerance=angle_tolerance,
         )
 
         b1, b2, b3 = get_reciprocal(cell)

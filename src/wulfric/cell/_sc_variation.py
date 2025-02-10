@@ -279,7 +279,7 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, eps: float):
         return "TRI"
 
 
-def get_variation(cell, lattice_type=None, eps_rel=1e-8, angle_tol=1e-4):
+def get_variation(cell, lattice_type=None, angle_tolerance=1e-4):
     r"""
     Return variation of the lattice as define in the paper by Setyawan and Curtarolo [1]_.
 
@@ -290,10 +290,10 @@ def get_variation(cell, lattice_type=None, eps_rel=1e-8, angle_tol=1e-4):
     lattice_type : str, optional
         One of the 14 lattice types that correspond to the provided ``cell``.
         If not provided, then computed automatically. Case-insensitive.
-    eps_rel : float, default TODO
-        Relative tolerance for distance.
-    angle_tol : float, default TODO
-        Absolute tolerance for angles, in degrees.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Default values are chosen
+        for the contexts of condense matter physics, where Angstroms are used. Please
+        choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -311,7 +311,7 @@ def get_variation(cell, lattice_type=None, eps_rel=1e-8, angle_tol=1e-4):
     cell = np.array(cell, dtype=float)
 
     if lattice_type is None:
-        lattice_type = lepage(cell, eps_relative=eps_rel, eps_angle=angle_tol)
+        lattice_type = lepage(cell, angle_tolerance=angle_tolerance)
 
     lattice_type = lattice_type.upper()
 

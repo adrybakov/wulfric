@@ -685,8 +685,8 @@ def get_hs_data(
     lattice_variation=None,
     S_matrix=None,
     C_matrix=None,
-    rtol=1e-8,
-    atol=1e-4,
+    length_tolerance=1e-8,
+    angle_tolerance=1e-4,
 ):
     r"""
     Return high symmetry points for the cell as defined in SC paper.
@@ -708,10 +708,14 @@ def get_hs_data(
         Transformation matrix S.
     C_matrix : (3,3) |array-like|_, optional
         Transformation matrix C.
-    eps_rel : float, default TODO
-        Relative tolerance for distance. For definition of lattice type and variation.
-    angle_tol : float, default TODO
-        Absolute tolerance for angles, in degrees. For definition of lattice type and variation.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Default values
+        are chosen for the contexts of condense matter physics, where Angstroms are used.
+        Please choose appropriate tolerance for your problem.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Default values are chosen
+        for the contexts of condense matter physics, where Angstroms are used. Please
+        choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -732,13 +736,13 @@ def get_hs_data(
     cell = np.array(cell, dtype=float)
 
     if lattice_type is None:
-        lattice_type = lepage(cell, eps_relative=rtol, eps_angle=atol)
+        lattice_type = lepage(cell, angle_tolerance=angle_tolerance)
 
     lattice_type = lattice_type.upper()
 
     if lattice_variation is None:
         lattice_variation = get_variation(
-            cell=cell, lattice_type=lattice_type, eps_rel=rtol, angle_tol=atol
+            cell=cell, lattice_type=lattice_type, angle_tolerance=angle_tolerance
         )
 
     lattice_variation = lattice_variation.upper()
@@ -749,7 +753,12 @@ def get_hs_data(
         C_matrix = np.array(C_matrix, dtype=float)
 
     if S_matrix is None:
-        S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
+        S_matrix = get_S_matrix(
+            cell,
+            lattice_type,
+            length_tolerance=length_tolerance,
+            angle_tolerance=angle_tolerance,
+        )
     else:
         S_matrix = np.array(S_matrix, dtype=float)
 

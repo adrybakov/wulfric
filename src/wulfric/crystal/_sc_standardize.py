@@ -27,7 +27,9 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def standardize(cell, atoms, S_matrix=None, rtol=1e-4, atol=1e-8):
+def standardize(
+    cell, atoms, S_matrix=None, length_tolerance=1e-8, angle_tolerance=1e-4
+):
     R"""
     Standardize cell with respect to the Bravais lattice type as defined in [1]_.
 
@@ -41,10 +43,14 @@ def standardize(cell, atoms, S_matrix=None, rtol=1e-4, atol=1e-8):
         Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
     S_matrix : (3,3) |array-like|_, optional
         Transformation matrix S.
-    rtol : float, default TODO
-        Relative tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
-    atol : float, default TODO
-        Absolute tolerance for numerical comparison. Ignored if ``S_matrix`` is provided.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Default values
+        are chosen for the contexts of condense matter physics, where Angstroms are used.
+        Please choose appropriate tolerance for your problem.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice). Default values are chosen
+        for the contexts of condense matter physics, where Angstroms are used. Please
+        choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -63,9 +69,14 @@ def standardize(cell, atoms, S_matrix=None, rtol=1e-4, atol=1e-8):
 
     # Get S matrix before cell standardization
     if S_matrix is None:
-        lattice_type = lepage(cell, eps_relative=rtol, eps_angle=atol)
+        lattice_type = lepage(cell, angle_tolerance=angle_tolerance)
 
-        S_matrix = get_S_matrix(cell, lattice_type, rtol=rtol, atol=atol)
+        S_matrix = get_S_matrix(
+            cell,
+            lattice_type,
+            length_tolerance=length_tolerance,
+            angle_tolerance=angle_tolerance,
+        )
     else:
         S_matrix = np.array(S_matrix, dtype=float)
 
