@@ -33,10 +33,11 @@ from wulfric.cell._basic_manipulation import (
     get_scalar_products,
     is_reasonable,
 )
-from wulfric.constants._numerical import EPS_LENGTH
 from wulfric.geometry._geometry import parallelepiped_check
 
 N_ORDER = 5
+MIN_LENGTH = 0.0
+MAX_LENGTH = 1e8
 
 
 ################################################################################
@@ -97,9 +98,9 @@ def rotate(cell, r1, r2, r3):
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
     st.floats(min_value=0, max_value=2 * pi),
-    st.floats(allow_infinity=False, allow_nan=False),
-    st.floats(allow_infinity=False, allow_nan=False),
-    st.floats(allow_infinity=False, allow_nan=False),
+    st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
+    st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
+    st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.floats(min_value=0, max_value=360.0),
     st.floats(min_value=0, max_value=360.0),
     st.floats(min_value=0, max_value=360.0),
@@ -120,7 +121,7 @@ def test_get_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
             product = np.abs(np.diag(rcell @ cell.T))
             correct_product = np.ones(3) * 2 * pi
             # Non  diagonal terms are close to zero.
-            assert np.allclose(product, correct_product, rtol=1e-5, atol=EPS_LENGTH)
+            assert np.allclose(product, correct_product)
 
 
 @pytest.mark.parametrize(
@@ -134,7 +135,7 @@ def test_get_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
 )
 def test_reciprocal_cell_examples(cell, rec_cell):
     rcell = get_reciprocal(cell)
-    assert np.allclose(rcell, np.array(rec_cell), rtol=EPS_LENGTH, atol=EPS_LENGTH)
+    assert np.allclose(rcell, np.array(rec_cell))
 
 
 ################################################################################
@@ -157,9 +158,9 @@ def test_reciprocal_cell_examples(cell, rec_cell):
     gamma=1.0,
 )
 @given(
-    st.floats(allow_infinity=False, allow_nan=False),
-    st.floats(allow_infinity=False, allow_nan=False),
-    st.floats(allow_infinity=False, allow_nan=False),
+    st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
+    st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
+    st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.floats(min_value=0.0, max_value=360.0),
     st.floats(min_value=0.0, max_value=360.0),
     st.floats(min_value=0.0, max_value=360.0),
@@ -170,15 +171,8 @@ def test_cell_from_param(a, b, c, alpha, beta, gamma):
         if is_reasonable(cell, eps_volume=1e-7):
 
             ap, bp, cp, alphap, betap, gammap = get_params(cell)
-            assert np.allclose(
-                [a, b, c], [ap, bp, cp], rtol=EPS_LENGTH, atol=EPS_LENGTH
-            )
-            assert np.allclose(
-                [alpha, beta, gamma],
-                [alphap, betap, gammap],
-                rtol=EPS_LENGTH,
-                atol=EPS_LENGTH,
-            )
+            assert np.allclose([a, b, c], [ap, bp, cp])
+            assert np.allclose([alpha, beta, gamma], [alphap, betap, gammap])
     else:
         with pytest.raises(ValueError):
             from_params(a, b, c, alpha, beta, gamma)
@@ -189,12 +183,7 @@ def test_cell_from_param(a, b, c, alpha, beta, gamma):
     [(1, 1, 1, 90, 90, 90, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])],
 )
 def test_cell_from_params_example(a, b, c, alpha, beta, gamma, cell):
-    assert np.allclose(
-        from_params(a, b, c, alpha, beta, gamma),
-        np.array(cell),
-        rtol=EPS_LENGTH,
-        atol=EPS_LENGTH,
-    )
+    assert np.allclose(from_params(a, b, c, alpha, beta, gamma), np.array(cell))
 
 
 ################################################################################
@@ -203,8 +192,10 @@ def test_cell_from_params_example(a, b, c, alpha, beta, gamma, cell):
 
 
 @given(
-    harrays(float, (3, 3), elements=st.floats(allow_infinity=False, allow_nan=False))
+    harrays(
+        float, (3, 3), elements=st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH)
+    )
 )
 def test_get_params_from_cell(cell):
     if is_reasonable(cell):
-        a, b, c, alpha, beta, gamma = params(cell)
+        a, b, c, alpha, beta, gamma = get_params(cell)
