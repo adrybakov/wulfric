@@ -184,6 +184,7 @@ custom_links = {
     "SciPy": ("SciPy", "https://scipy.org/"),
     "matplotlib": ("matplotlib", "https://matplotlib.org/"),
     "termcolor": ("termcolor", "https://pypi.org/project/termcolor/"),
+    "NO_COLOR": ("NO_COLOR", "https://no-color.org/"),
     "Python-installation": (
         "Python installation",
         "https://wiki.python.org/moin/BeginnersGuide/Download",

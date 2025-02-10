@@ -42,8 +42,9 @@ The functional of wulfric includes (but not limited to):
 
 * Standalone :py:func:`.lepage` and :py:func:`.niggli` algorithms.
 
+************
 Installation
-============
+************
 
 As any other Python package::
 
@@ -51,20 +52,9 @@ As any other Python package::
 
 For the full guide on wulfric installation see :ref:`user-guide_start_installation`.
 
-How to import wulfric
-=====================
-
-To use wulfric in your code import it in a following way:
-
-.. code-block:: python
-
-    import wulfric as wulf
-
-The shorten import name ``wulf`` simplifies the readability of python code.
-It is used in the examples and we encourage you to try it.
-
+***************
 Further reading
-===============
+***************
 
 Good starting point is the :ref:`user-guide_usage_key-concepts` page.
 Afterwards we recommend to continue with the :ref:`user-guide_fundamentals`,
@@ -79,7 +69,5 @@ For the full description of adopted Bravais lattices and high-symmetry K-points
 see :ref:`user-guide_conventions_bravais-lattices`.
 
 .. note::
-  The images are interactive over there.
-
-.. note::
-  The terminal output is colored by default. However, we respect `NO_COLOR <https://no-color.org/>`_.
+  The terminal output is colored by default. However, we respect
+  |NO_COLOR|_ through |termcolor|_

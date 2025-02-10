@@ -29,6 +29,9 @@ However, it is the user's responsibility to track whether the given cell is *pri
 The k-points will be computed even if the cell is not primitive, but the Bravais lattice
 type will be defined by *interpreting* the given cell as primitive.
 
+.. note::
+  The images are interactive.
+
 
 Cubic lattice system
 --------------------
