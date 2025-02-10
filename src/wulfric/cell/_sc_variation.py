@@ -66,7 +66,7 @@ def _BCT_variation(conv_a: float, conv_c: float):
         raise ValueError("a == c")
 
 
-def _ORCF_variation(conv_a: float, conv_b: float, conv_c: float, eps: float):
+def _ORCF_variation(conv_a: float, conv_b: float, conv_c: float, length_tolerance=1e-8):
     r"""
     Three variations of the ORCF lattice.
 
@@ -84,8 +84,8 @@ def _ORCF_variation(conv_a: float, conv_b: float, conv_c: float, eps: float):
         Length of the :math:`a_2` vector of the conventional cell.
     conv_c : float
         Length of the :math:`a_3` vector of the conventional cell.
-    eps : float
-        Tolerance for numerical comparison.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors).
 
     Returns
     -------
@@ -97,21 +97,23 @@ def _ORCF_variation(conv_a: float, conv_b: float, conv_c: float, eps: float):
     ValueError
         If :math:`a < b < c` is not satisfied.
     """
-    if compare_numerically(conv_a, ">=", conv_b, eps) or compare_numerically(
-        conv_b, ">=", conv_c, eps
-    ):
-        raise ValueError(f"a < b < c is not satisfied with {eps} tolerance.")
+    if compare_numerically(
+        conv_a, ">=", conv_b, eps=length_tolerance
+    ) or compare_numerically(conv_b, ">=", conv_c, eps=length_tolerance):
+        raise ValueError(
+            f"a < b < c is not satisfied with {length_tolerance} tolerance."
+        )
 
     expression = 1 / conv_a**2 - 1 / conv_b**2 - 1 / conv_c**2
-    if compare_numerically(expression, "==", 0, eps):
+    if compare_numerically(expression, "==", 0, eps=length_tolerance):
         return "ORCF3"
-    elif compare_numerically(expression, ">", 0, eps):
+    elif compare_numerically(expression, ">", 0, eps=length_tolerance):
         return "ORCF1"
-    elif compare_numerically(expression, "<", 0, eps):
+    elif compare_numerically(expression, "<", 0, eps=length_tolerance):
         return "ORCF2"
 
 
-def _RHL_variation(conv_alpha: float, eps: float):
+def _RHL_variation(conv_alpha: float, angle_tolerance=1e-4):
     r"""
     Two variations of the RHL lattice.
 
@@ -124,8 +126,8 @@ def _RHL_variation(conv_alpha: float, eps: float):
     ----------
     conv_alpha : float
         Angle between vectors :math:`a_1` and :math:`a_2` of the conventional cell. In degrees.
-    eps : float
-        Tolerance for numerical comparison.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice).
 
     Returns
     -------
@@ -137,12 +139,12 @@ def _RHL_variation(conv_alpha: float, eps: float):
     ValueError
         If :math:`\alpha == 90^{\circ}` with given tolerance ``eps``.
     """
-    if compare_numerically(conv_alpha, "<", 90, eps):
+    if compare_numerically(conv_alpha, "<", 90, eps=angle_tolerance):
         return "RHL1"
-    elif compare_numerically(conv_alpha, ">", 90, eps):
+    elif compare_numerically(conv_alpha, ">", 90, eps=angle_tolerance):
         return "RHL2"
     else:
-        raise ValueError(f"alpha == 90 with {eps} tolerance.")
+        raise ValueError(f"alpha == 90 with {angle_tolerance} tolerance.")
 
 
 def _MCLC_variation(
@@ -151,7 +153,8 @@ def _MCLC_variation(
     conv_c: float,
     conv_alpha: float,
     k_gamma: float,
-    eps: float,
+    length_tolerance=1e-8,
+    angle_tolerance=1e-4,
 ):
     r"""
     Five variation of the MCLC lattice.
@@ -176,8 +179,10 @@ def _MCLC_variation(
         Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell. In degrees.
     k_gamma : float
         Angle between reciprocal vectors :math:`b_1` and :math:`b_2`. In degrees.
-    eps : float
-        Tolerance for numerical comparison.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors).
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice).
 
     Returns
     -------
@@ -191,9 +196,9 @@ def _MCLC_variation(
         If :math:`\alpha > 90^{\circ}` or :math:`a > c` or :math:`b > c` with given tolerance ``eps``.
     """
 
-    if compare_numerically(conv_alpha, ">", 90, eps) or compare_numerically(
-        conv_b, ">", conv_c, eps
-    ):
+    if compare_numerically(
+        conv_alpha, ">", 90, eps=angle_tolerance
+    ) or compare_numerically(conv_b, ">", conv_c, eps=length_tolerance):
         raise ValueError(
             f"alpha > 90 or  or b > c with {eps} tolerance:\n"
             + f"  alpha = {conv_alpha}\n"
@@ -203,24 +208,24 @@ def _MCLC_variation(
 
     conv_alpha *= TORADIANS
 
-    if compare_numerically(k_gamma, "==", 90, eps):
+    if compare_numerically(k_gamma, "==", 90, eps=angle_tolerance):
         return "MCLC2"
-    elif compare_numerically(k_gamma, ">", 90, eps):
+    elif compare_numerically(k_gamma, ">", 90, eps=angle_tolerance):
         return "MCLC1"
-    elif compare_numerically(k_gamma, "<", 90, eps):
+    elif compare_numerically(k_gamma, "<", 90, eps=angle_tolerance):
         expression = (
             conv_b * cos(conv_alpha) / conv_c
             + conv_b**2 * sin(conv_alpha) ** 2 / conv_a**2
         )
-        if compare_numerically(expression, "==", 1, eps):
+        if compare_numerically(expression, "==", 1, eps=length_tolerance):
             return "MCLC4"
-        elif compare_numerically(expression, "<", 1, eps):
+        elif compare_numerically(expression, "<", 1, eps=length_tolerance):
             return "MCLC3"
-        elif compare_numerically(expression, ">", 1, eps):
+        elif compare_numerically(expression, ">", 1, eps=length_tolerance):
             return "MCLC5"
 
 
-def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, eps: float):
+def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, angle_tolerance=1e-4):
     r"""
     Four variations of the TRI lattice.
 
@@ -242,8 +247,8 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, eps: float):
         Angle between reciprocal vectors :math:`b_1` and :math:`b_3`. In degrees.
     k_gamma : float
         Angle between reciprocal vectors :math:`b_1` and :math:`b_2`. In degrees.
-    eps : float
-        Tolerance for numerical comparison.
+    angle_tolerance : float, default :math:`10^{-4}`
+        Tolerance for angle variables (angles of the lattice).
 
     Returns
     -------
@@ -257,29 +262,35 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, eps: float):
         If :math:`k_{\alpha} == 90^{\circ}` or :math:`k_{\beta} == 90^{\circ}` with given tolerance ``eps``.
     """
 
-    if compare_numerically(k_alpha, "==", 90, eps) or compare_numerically(
-        k_beta, "==", 90, eps
-    ):
-        raise ValueError(f"k_alpha == 90 or k_beta == 90 with {eps} tolerance.")
+    if compare_numerically(
+        k_alpha, "==", 90, eps=angle_tolerance
+    ) or compare_numerically(k_beta, "==", 90, eps=angle_tolerance):
+        raise ValueError(
+            f"k_alpha == 90 or k_beta == 90 with {angle_tolerance} tolerance."
+        )
 
-    if compare_numerically(k_gamma, "==", 90, eps):
-        if compare_numerically(k_alpha, ">", 90, eps) and compare_numerically(
-            k_beta, ">", 90, eps
-        ):
+    if compare_numerically(k_gamma, "==", 90, eps=angle_tolerance):
+        if compare_numerically(
+            k_alpha, ">", 90, eps=angle_tolerance
+        ) and compare_numerically(k_beta, ">", 90, eps=angle_tolerance):
             return "TRI2a"
-        elif compare_numerically(k_alpha, "<", 90, eps) and compare_numerically(
-            k_beta, "<", 90, eps
-        ):
+        elif compare_numerically(
+            k_alpha, "<", 90, eps=angle_tolerance
+        ) and compare_numerically(k_beta, "<", 90, eps=angle_tolerance):
             return "TRI2b"
-    elif compare_numerically(min(k_gamma, k_beta, k_alpha), ">", 90, eps):
+    elif compare_numerically(
+        min(k_gamma, k_beta, k_alpha), ">", 90, eps=angle_tolerance
+    ):
         return "TRI1a"
-    elif compare_numerically(max(k_gamma, k_beta, k_alpha), "<", 90, eps):
+    elif compare_numerically(
+        max(k_gamma, k_beta, k_alpha), "<", 90, eps=angle_tolerance
+    ):
         return "TRI1b"
     else:
         return "TRI"
 
 
-def get_variation(cell, lattice_type=None, angle_tolerance=1e-4):
+def get_variation(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     Return variation of the lattice as define in the paper by Setyawan and Curtarolo [1]_.
 
@@ -290,6 +301,10 @@ def get_variation(cell, lattice_type=None, angle_tolerance=1e-4):
     lattice_type : str, optional
         One of the 14 lattice types that correspond to the provided ``cell``.
         If not provided, then computed automatically. Case-insensitive.
+    length_tolerance : float, default :math:`10^{-8}`
+        Tolerance for length variables (lengths of the lattice vectors). Default values
+        are chosen for the contexts of condense matter physics, where Angstroms are used.
+        Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
         Tolerance for angle variables (angles of the lattice). Default values are chosen
         for the contexts of condense matter physics, where Angstroms are used. Please
@@ -315,9 +330,6 @@ def get_variation(cell, lattice_type=None, angle_tolerance=1e-4):
 
     lattice_type = lattice_type.upper()
 
-    if lattice_type in ["BCT", "ORCF", "RHL", "MCLC", "TRI"]:
-        eps = eps_rel * abs(get_volume(cell)) ** (1 / 3.0)
-
     if lattice_type in ["BCT", "ORCF", "RHL", "MCLC"]:
         conv_a, conv_b, conv_c, conv_alpha, conv_beta, conv_gamma = get_params(
             get_conventional(cell)
@@ -326,9 +338,11 @@ def get_variation(cell, lattice_type=None, angle_tolerance=1e-4):
     if lattice_type == "BCT":
         result = _BCT_variation(conv_a, conv_c)
     elif lattice_type == "ORCF":
-        result = _ORCF_variation(conv_a, conv_b, conv_c, eps)
+        result = _ORCF_variation(
+            conv_a, conv_b, conv_c, length_tolerance=length_tolerance
+        )
     elif lattice_type == "RHL":
-        result = _RHL_variation(conv_alpha, eps)
+        result = _RHL_variation(conv_alpha, angle_tolerance=angle_tolerance)
     elif lattice_type == "MCLC":
         _, _, _, _, _, k_gamma = get_params(get_reciprocal(cell))
         result = _MCLC_variation(
@@ -337,11 +351,17 @@ def get_variation(cell, lattice_type=None, angle_tolerance=1e-4):
             conv_c,
             conv_alpha,
             k_gamma,
-            eps,
+            length_tolerance=length_tolerance,
+            angle_tolerance=angle_tolerance,
         )
     elif lattice_type == "TRI":
         _, _, _, k_alpha, k_beta, k_gamma = get_params(get_reciprocal(cell))
-        result = _TRI_variation(k_alpha, k_beta, k_gamma, eps)
+        result = _TRI_variation(
+            k_alpha,
+            k_beta,
+            k_gamma,
+            angle_tolerance=angle_tolerance,
+        )
     else:
         result = lattice_type
 
