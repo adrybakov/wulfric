@@ -856,8 +856,7 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     rcell = get_reciprocal(cell)
 
     # Step 1
-    sp23, sp13, sp12 = get_scalar_products(rcell)
-    a, b, c, alpha, beta, gamma = get_params(rcell)
+    _, _, _, alpha, beta, gamma = get_params(rcell)
 
     if (
         compare_numerically(alpha, ">=", 90.0, eps=angle_tolerance)
@@ -903,32 +902,40 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
         raise StandardizationTypeMismatch("triclinic", step="First")
 
     # Step 2
-    rcell1 = np.linalg.inv(S1.T) @ rcell
-    sp23, sp13, sp12 = get_scalar_products(rcell1)
-    a, b, c, alpha, beta, gamma = get_params(rcell1)
+    rcell1 = S1.T @ rcell
+    _, _, _, alpha, beta, gamma = get_params(rcell1)
 
     if (
         gamma == min(alpha, beta, gamma)
-        and compare_numerically(gamma, ">=", 90.0)
-        or (gamma == max(alpha, beta, gamma) and compare_numerically(gamma, "<=", 90.0))
+        and compare_numerically(gamma, ">=", 90.0, eps=angle_tolerance)
+        or (
+            gamma == max(alpha, beta, gamma)
+            and compare_numerically(gamma, "<=", 90.0, eps=angle_tolerance)
+        )
     ):
         S2 = np.eye(3, dtype=float)
     elif (
         beta == min(alpha, beta, gamma)
-        and compare_numerically(beta, ">=", 90.0)
-        or (beta == max(alpha, beta, gamma) and compare_numerically(beta, "<=", 90.0))
-    ):
-        S2 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
-    elif (
-        alpha == min(alpha, beta, gamma)
-        and compare_numerically(alpha, ">=", 90.0)
-        or (alpha == max(alpha, beta, gamma) and compare_numerically(alpha, "<=", 90.0))
+        and compare_numerically(beta, ">=", 90.0, eps=angle_tolerance)
+        or (
+            beta == max(alpha, beta, gamma)
+            and compare_numerically(beta, "<=", 90.0, eps=angle_tolerance)
+        )
     ):
         S2 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+    elif (
+        alpha == min(alpha, beta, gamma)
+        and compare_numerically(alpha, ">=", 90.0, eps=angle_tolerance)
+        or (
+            alpha == max(alpha, beta, gamma)
+            and compare_numerically(alpha, "<=", 90.0, eps=angle_tolerance)
+        )
+    ):
+        S2 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     else:
         raise StandardizationTypeMismatch("triclinic", step="Second")
 
-    return S2 @ S1
+    return np.linalg.inv(S1 @ S2).T
 
 
 def get_S_matrix(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance=1e-4):
