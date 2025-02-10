@@ -40,32 +40,27 @@ from wulfric.cell._sc_constructors import (
     TET,
     TRI,
 )
-from wulfric.constants._numerical import EPS_LENGTH, MIN_ANGLE, TORADIANS
+from wulfric.constants._numerical import TORADIANS
+
+ANGLE_TOLERANCE = 1e-4
 
 
 @given(st.floats(min_value=0, allow_infinity=False, allow_nan=False))
 def test_CUB(a):
     cell = CUB(a)
-    assert np.allclose(cell, np.eye(3) * a, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+    assert np.allclose(cell, np.eye(3) * a)
 
 
 @given(st.floats(min_value=0, allow_infinity=False, allow_nan=False))
 def test_FCC(a):
     cell = FCC(a)
-    assert np.allclose(
-        cell, (np.ones((3, 3)) - np.eye(3)) * a / 2, rtol=EPS_LENGTH, atol=EPS_LENGTH
-    )
+    assert np.allclose(cell, (np.ones((3, 3)) - np.eye(3)) * a / 2)
 
 
 @given(st.floats(min_value=0, allow_infinity=False, allow_nan=False))
 def test_BCC(a):
     cell = BCC(a)
-    assert np.allclose(
-        cell,
-        (np.ones((3, 3)) - 2 * np.eye(3)) * a / 2,
-        rtol=EPS_LENGTH,
-        atol=EPS_LENGTH,
-    )
+    assert np.allclose(cell, (np.ones((3, 3)) - 2 * np.eye(3)) * a / 2)
 
 
 @given(
@@ -74,7 +69,7 @@ def test_BCC(a):
 )
 def test_TET(a, c):
     cell = TET(a, c)
-    assert np.allclose(cell, np.diag([a, a, c]), rtol=EPS_LENGTH, atol=EPS_LENGTH)
+    assert np.allclose(cell, np.diag([a, a, c]))
 
 
 @given(
@@ -86,7 +81,7 @@ def test_BCT(a, c):
     correct_cell = (np.ones((3, 3)) - 2 * np.eye(3)) / 2
     correct_cell[:, :2] *= a
     correct_cell[:, 2] *= c
-    assert np.allclose(cell, correct_cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+    assert np.allclose(cell, correct_cell)
 
 
 @given(
@@ -97,7 +92,7 @@ def test_BCT(a, c):
 def test_ORC(a, b, c):
     cell = ORC(a, b, c)
     a, b, c = sorted([a, b, c])
-    assert np.allclose(cell, np.diag([a, b, c]), rtol=EPS_LENGTH, atol=EPS_LENGTH)
+    assert np.allclose(cell, np.diag([a, b, c]))
 
 
 @given(
@@ -112,7 +107,7 @@ def test_ORCF(a, b, c):
     correct_cell[:, 0] *= a
     correct_cell[:, 1] *= b
     correct_cell[:, 2] *= c
-    assert np.allclose(cell, correct_cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+    assert np.allclose(cell, correct_cell)
 
 
 @given(
@@ -127,7 +122,7 @@ def test_ORCI(a, b, c):
     correct_cell[:, 0] *= a
     correct_cell[:, 1] *= b
     correct_cell[:, 2] *= c
-    assert np.allclose(cell, correct_cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+    assert np.allclose(cell, correct_cell)
 
 
 @given(
@@ -142,7 +137,7 @@ def test_ORCC(a, b, c):
     correct_cell[:, 0] *= a
     correct_cell[:, 1] *= b
     correct_cell[:, 2] *= c
-    assert np.allclose(cell, correct_cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+    assert np.allclose(cell, correct_cell)
 
 
 @given(
@@ -154,12 +149,12 @@ def test_HEX(a, c):
     correct_cell = np.array(
         [[a / 2, -a * sqrt(3) / 2, 0], [a / 2, a * sqrt(3) / 2, 0], [0, 0, c]]
     )
-    assert np.allclose(cell, correct_cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+    assert np.allclose(cell, correct_cell)
 
 
 @given(
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
-    st.floats(min_value=MIN_ANGLE, max_value=120.0 - MIN_ANGLE),
+    st.floats(min_value=ANGLE_TOLERANCE, max_value=120.0 - ANGLE_TOLERANCE),
 )
 def test_RHL(a, alpha):
     cell = RHL(a, alpha)
@@ -175,7 +170,7 @@ def test_RHL(a, alpha):
             ],
         ]
     )
-    assert np.allclose(cell, correct_cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+    assert np.allclose(cell, correct_cell)
 
     with pytest.raises(ValueError):
         RHL(a, 120)
@@ -185,7 +180,7 @@ def test_RHL(a, alpha):
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
-    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
+    st.floats(min_value=ANGLE_TOLERANCE, max_value=180.0),
 )
 def test_MCL(a, b, c, alpha):
     cell = MCL(a, b, c, alpha)
@@ -200,14 +195,14 @@ def test_MCL(a, b, c, alpha):
             [0, c * cos(alpha), c * sin(alpha)],
         ]
     )
-    assert np.allclose(cell, correct_cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+    assert np.allclose(cell, correct_cell)
 
 
 @given(
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
-    st.floats(min_value=MIN_ANGLE, max_value=180.0 - MIN_ANGLE),
+    st.floats(min_value=ANGLE_TOLERANCE, max_value=180.0),
 )
 def test_MCLC(a, b, c, alpha):
     cell = MCLC(a, b, c, alpha)
@@ -222,7 +217,7 @@ def test_MCLC(a, b, c, alpha):
             [0, c * cos(alpha), c * sin(alpha)],
         ]
     )
-    assert np.allclose(cell, correct_cell, rtol=EPS_LENGTH, atol=EPS_LENGTH)
+    assert np.allclose(cell, correct_cell)
 
 
 # # TODO Test trigonal
