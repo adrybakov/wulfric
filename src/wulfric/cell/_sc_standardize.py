@@ -17,8 +17,6 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from math import pi as PI
-
 import numpy as np
 
 from wulfric._exceptions import StandardizationTypeMismatch
@@ -511,40 +509,40 @@ def _ORCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     _, _, _, alpha, beta, gamma = get_params(cell)
 
     if (
-        compare_numerically(alpha, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(beta, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(gamma, ">", PI / 2, eps=angle_tolerance)
+        compare_numerically(alpha, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, ">", 90.0, eps=angle_tolerance)
     ):
         S = np.eye(3, dtype=float)
     elif (
-        compare_numerically(alpha, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(beta, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(gamma, "<", PI / 2, eps=angle_tolerance)
+        compare_numerically(alpha, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, "<", 90.0, eps=angle_tolerance)
     ):
         S = np.array([[0, -1, 0], [1, 0, 0], [0, 0, 1]], dtype=float)
     elif (
-        compare_numerically(beta, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(gamma, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(alpha, ">", PI / 2, eps=angle_tolerance)
+        compare_numerically(beta, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(alpha, ">", 90.0, eps=angle_tolerance)
     ):
         S = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     elif (
-        compare_numerically(beta, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(gamma, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(alpha, "<", PI / 2, eps=angle_tolerance)
+        compare_numerically(beta, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(alpha, "<", 90.0, eps=angle_tolerance)
     ):
         S = np.array([[0, 0, 1], [0, -1, 0], [1, 0, 0]], dtype=float)
 
     elif (
-        compare_numerically(alpha, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(gamma, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(beta, ">", PI / 2, eps=angle_tolerance)
+        compare_numerically(alpha, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, ">", 90.0, eps=angle_tolerance)
     ):
         S = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     elif (
-        compare_numerically(alpha, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(gamma, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(beta, "<", PI / 2, eps=angle_tolerance)
+        compare_numerically(alpha, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, "<", 90.0, eps=angle_tolerance)
     ):
         S = np.array([[1, 0, 0], [0, 0, 1], [0, -1, 0]], dtype=float)
     else:
@@ -594,16 +592,16 @@ def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     _, _, _, alpha, beta, gamma = get_params(cell)
 
     if compare_numerically(
-        alpha, "==", PI / 2, eps=angle_tolerance
-    ) and compare_numerically(beta, "==", PI / 2, eps=angle_tolerance):
+        alpha, "==", 90.0, eps=angle_tolerance
+    ) and compare_numerically(beta, "==", 90.0, eps=angle_tolerance):
         S1 = np.eye(3, dtype=float)
     elif compare_numerically(
-        beta, "==", PI / 2, eps=angle_tolerance
-    ) and compare_numerically(gamma, "==", PI / 2, eps=angle_tolerance):
+        beta, "==", 90.0, eps=angle_tolerance
+    ) and compare_numerically(gamma, "==", 90.0, eps=angle_tolerance):
         S1 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     elif compare_numerically(
-        alpha, "==", PI / 2, eps=angle_tolerance
-    ) and compare_numerically(gamma, "==", PI / 2, eps=angle_tolerance):
+        alpha, "==", 90.0, eps=angle_tolerance
+    ) and compare_numerically(gamma, "==", 90.0, eps=angle_tolerance):
         S1 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     else:
         raise StandardizationTypeMismatch("hexagonal", step="first")
@@ -612,9 +610,9 @@ def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     cell1 = S1.T @ cell
     _, _, _, _, _, gamma = get_params(cell)
 
-    if compare_numerically(gamma, "==", 2 * PI / 3, eps=angle_tolerance):
+    if compare_numerically(gamma, "==", 120.0, eps=angle_tolerance):
         S2 = np.eye(3, dtype=float)
-    elif compare_numerically(gamma, "==", PI / 3, eps=angle_tolerance):
+    elif compare_numerically(gamma, "==", 60.0, eps=angle_tolerance):
         S2 = np.array([[0, -1, 0], [1, 0, 0], [0, 0, 1]], dtype=float)
     else:
         raise StandardizationTypeMismatch("hexagonal", step="second")
@@ -698,21 +696,21 @@ def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     _, _, _, alpha, beta, gamma = get_params(cell)
 
     if (
-        compare_numerically(beta, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(gamma, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(alpha, "!=", PI / 2, eps=angle_tolerance)
+        compare_numerically(beta, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(alpha, "!=", 90.0, eps=angle_tolerance)
     ):
         S1 = np.eye(3, dtype=float)
     elif (
-        compare_numerically(alpha, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(gamma, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(beta, "!=", PI / 2, eps=angle_tolerance)
+        compare_numerically(alpha, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, "!=", 90.0, eps=angle_tolerance)
     ):
         S1 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     elif (
-        compare_numerically(beta, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(alpha, "==", PI / 2, eps=angle_tolerance)
-        and compare_numerically(gamma, "!=", PI / 2, eps=angle_tolerance)
+        compare_numerically(beta, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(alpha, "==", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, "!=", 90.0, eps=angle_tolerance)
     ):
         S1 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
     else:
@@ -733,9 +731,9 @@ def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     cell2 = S2.T @ cell1
     _, _, _, alpha, _, _ = get_params(cell1)
 
-    if compare_numerically(alpha, "<", PI / 2, eps=angle_tolerance):
+    if compare_numerically(alpha, "<", 90.0, eps=angle_tolerance):
         S3 = np.eye(3, dtype=float)
-    elif compare_numerically(alpha, ">", PI / 2, eps=angle_tolerance):
+    elif compare_numerically(alpha, ">", 90.0, eps=angle_tolerance):
         S3 = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
     else:
         raise StandardizationTypeMismatch("monoclinic", step="Third")
@@ -807,9 +805,9 @@ def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     cell2_c = S2_c.T @ cell1_c
     _, _, _, alpha, _, _ = get_params(cell2_c)
 
-    if compare_numerically(alpha, "<", PI / 2, eps=angle_tolerance):
+    if compare_numerically(alpha, "<", 90.0, eps=angle_tolerance):
         S3_c = np.eye(3, dtype=float)
-    elif compare_numerically(alpha, ">", PI / 2, eps=angle_tolerance):
+    elif compare_numerically(alpha, ">", 90.0, eps=angle_tolerance):
         S3_c = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
     else:
         raise StandardizationTypeMismatch("base-centered monoclinic", step="Third")
@@ -862,43 +860,43 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     a, b, c, alpha, beta, gamma = get_params(rcell)
 
     if (
-        compare_numerically(alpha, ">=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(beta, ">=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(gamma, ">=", 90.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, ">=", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, ">=", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, ">=", 90.0, eps=angle_tolerance)
     ) or (
-        compare_numerically(alpha, "<=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(beta, "<=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(gamma, "<=", 90.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, "<=", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, "<=", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, "<=", 90.0, eps=angle_tolerance)
     ):
         S1 = np.eye(3, dtype=float)
     elif (
-        compare_numerically(alpha, ">=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(beta, ">=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(gamma, "<=", 90.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, ">=", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, ">=", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, "<=", 90.0, eps=angle_tolerance)
     ) or (
-        compare_numerically(alpha, "<=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(beta, "<=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(gamma, ">=", 90.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, "<=", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, "<=", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, ">=", 90.0, eps=angle_tolerance)
     ):
         S1 = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
     elif (
-        compare_numerically(alpha, ">=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(beta, "<=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(gamma, ">=", 90.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, ">=", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, "<=", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, ">=", 90.0, eps=angle_tolerance)
     ) or (
-        compare_numerically(alpha, "<=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(beta, ">=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(gamma, "<=", 90.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, "<=", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, ">=", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, "<=", 90.0, eps=angle_tolerance)
     ):
         S1 = np.array([[-1, 0, 0], [0, 1, 0], [0, 0, -1]], dtype=float)
     elif (
-        compare_numerically(alpha, "<=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(beta, ">=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(gamma, ">=", 90.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, "<=", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, ">=", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, ">=", 90.0, eps=angle_tolerance)
     ) or (
-        compare_numerically(alpha, ">=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(beta, "<=", 90.0, rtol=rtol, atol=atol)
-        and compare_numerically(gamma, "<=", 90.0, rtol=rtol, atol=atol)
+        compare_numerically(alpha, ">=", 90.0, eps=angle_tolerance)
+        and compare_numerically(beta, "<=", 90.0, eps=angle_tolerance)
+        and compare_numerically(gamma, "<=", 90.0, eps=angle_tolerance)
     ):
         S1 = np.array([[1, 0, 0], [0, -1, 0], [0, 0, -1]], dtype=float)
     else:
