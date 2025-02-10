@@ -807,9 +807,9 @@ def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     cell2_c = S2_c.T @ cell1_c
     _, _, _, alpha, _, _ = get_params(cell2_c)
 
-    if compare_numerically(alpha, "<", PI / 2, eps=length_tolerance):
+    if compare_numerically(alpha, "<", PI / 2, eps=angle_tolerance):
         S3_c = np.eye(3, dtype=float)
-    elif compare_numerically(alpha, ">", PI / 2, eps=length_tolerance):
+    elif compare_numerically(alpha, ">", PI / 2, eps=angle_tolerance):
         S3_c = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]], dtype=float)
     else:
         raise StandardizationTypeMismatch("base-centered monoclinic", step="Third")
@@ -836,9 +836,7 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
         ignored by this function, the arguments are defined only for the homogeneity of
         the input for all 14 Bravais lattice types.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Completely ignored by this
-        function, the arguments are defined only for the homogeneity of the input for all
-        14 Bravais lattice types.
+        Tolerance for angle variables (angles of the lattice).
 
     Returns
     -------
