@@ -17,8 +17,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from wulfric.constants._numerical import EPS_LENGTH, TODEGREES, TORADIANS
+from wulfric.constants._numerical import TODEGREES, TORADIANS
 
 
 def test_radians_degrees():
-    assert abs(TODEGREES * TORADIANS - 1) < EPS_LENGTH
+    assert abs(TODEGREES * TORADIANS - 1) < 1e-8
