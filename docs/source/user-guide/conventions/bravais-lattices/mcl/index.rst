@@ -69,27 +69,22 @@ Examples
 ========
 Brillouin zone and default kpath
 --------------------------------
-.. literalinclude:: mcl_brillouin.py
+.. literalinclude:: mcl_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: mcl_brillouin.html
+    :file: mcl_reciprocal.html
 
-Primitive and conventional cell
--------------------------------
+Primitive and Wigner-Seitz cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: mcl_real.py
     :language: py
 
 .. raw:: html
     :file: mcl_real.html
-
-Wigner-Seitz cell
------------------
-.. literalinclude:: mcl_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: mcl_wigner-seitz.html
 
 
 Cell standardization

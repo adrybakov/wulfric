@@ -51,27 +51,22 @@ Examples
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: tet_brillouin.py
+.. literalinclude:: tet_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: tet_brillouin.html
+    :file: tet_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive and Wigner-Seitz cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: tet_real.py
     :language: py
 
 .. raw:: html
     :file: tet_real.html
-
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: tet_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: tet_wigner-seitz.html
 
 Cell standardization
 ====================

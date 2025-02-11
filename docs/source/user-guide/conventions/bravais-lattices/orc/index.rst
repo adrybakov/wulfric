@@ -56,27 +56,22 @@ Examples
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: orc_brillouin.py
+.. literalinclude:: orc_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: orc_brillouin.html
+    :file: orc_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive and Wigner-Seitz cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: orc_real.py
     :language: py
 
 .. raw:: html
     :file: orc_real.html
-
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: orc_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: orc_wigner-seitz.html
 
 Cell standardization
 ====================

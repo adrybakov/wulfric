@@ -136,108 +136,88 @@ TRI\ :sub:`1a`
 
 Brillouin zone and default kpath
 --------------------------------
-.. literalinclude:: tri1a_brillouin.py
+.. literalinclude:: tri1a_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: tri1a_brillouin.html
+    :file: tri1a_reciprocal.html
 
-Primitive and conventional cell
--------------------------------
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: tri1a_real.py
     :language: py
 
 .. raw:: html
     :file: tri1a_real.html
 
-Wigner-Seitz cell
------------------
-.. literalinclude:: tri1a_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: tri1a_wigner-seitz.html
-
 TRI\ :sub:`2a`
 --------------
 
 Brillouin zone and default kpath
 --------------------------------
-.. literalinclude:: tri2a_brillouin.py
+.. literalinclude:: tri2a_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: tri2a_brillouin.html
+    :file: tri2a_reciprocal.html
 
-Primitive and conventional cell
--------------------------------
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: tri2a_real.py
     :language: py
 
 .. raw:: html
     :file: tri2a_real.html
 
-Wigner-Seitz cell
------------------
-.. literalinclude:: tri2a_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: tri2a_wigner-seitz.html
-
 TRI\ :sub:`1b`
 --------------
 
 Brillouin zone and default kpath
 --------------------------------
-.. literalinclude:: tri1b_brillouin.py
+.. literalinclude:: tri1b_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: tri1b_brillouin.html
+    :file: tri1b_reciprocal.html
 
-Primitive and conventional cell
--------------------------------
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: tri1b_real.py
     :language: py
 
 .. raw:: html
     :file: tri1b_real.html
 
-Wigner-Seitz cell
------------------
-.. literalinclude:: tri1b_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: tri1b_wigner-seitz.html
-
 TRI\ :sub:`2b`
 --------------
 
 Brillouin zone and default kpath
 --------------------------------
-.. literalinclude:: tri2b_brillouin.py
+.. literalinclude:: tri2b_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: tri2b_brillouin.html
+    :file: tri2b_reciprocal.html
 
-Primitive and conventional cell
--------------------------------
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: tri2b_real.py
     :language: py
 
 .. raw:: html
     :file: tri2b_real.html
-
-Wigner-Seitz cell
------------------
-.. literalinclude:: tri2b_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: tri2b_wigner-seitz.html
 
 
 

@@ -171,81 +171,66 @@ ORCF\ :sub:`1`
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: orcf1_brillouin.py
+.. literalinclude:: orcf1_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: orcf1_brillouin.html
+    :file: orcf1_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: orcf1_real.py
     :language: py
 
 .. raw:: html
     :file: orcf1_real.html
 
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: orcf1_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: orcf1_wigner-seitz.html
-
 ORCF\ :sub:`2`
 --------------
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: orcf2_brillouin.py
+.. literalinclude:: orcf2_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: orcf2_brillouin.html
+    :file: orcf2_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: orcf2_real.py
     :language: py
 
 .. raw:: html
     :file: orcf2_real.html
 
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: orcf2_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: orcf2_wigner-seitz.html
-
 ORCF\ :sub:`3`
 --------------
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: orcf3_brillouin.py
+.. literalinclude:: orcf3_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: orcf3_brillouin.html
+    :file: orcf3_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: orcf3_real.py
     :language: py
 
 .. raw:: html
     :file: orcf3_real.html
-
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: orcf3_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: orcf3_wigner-seitz.html
 
 
 Cell standardization

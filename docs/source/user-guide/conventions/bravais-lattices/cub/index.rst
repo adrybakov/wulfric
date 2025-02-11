@@ -8,7 +8,7 @@ Cubic (CUB)
 
 **Constructor**:  :py:func:`.CUB`
 
-It is defined by one parameter: :math:`a`. Standardized primitive and conventional cells
+It is defined by one parameter :math:`a`. Standardized primitive and conventional cells
 in the default orientation are
 
 .. math::
@@ -48,27 +48,22 @@ Examples
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: cub_brillouin.py
+.. literalinclude:: cub_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: cub_brillouin.html
+    :file: cub_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive and Wigner-Seitz cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: cub_real.py
     :language: py
 
 .. raw:: html
     :file: cub_real.html
-
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: cub_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: cub_wigner-seitz.html
 
 Cell standardization
 ====================

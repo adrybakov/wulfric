@@ -51,27 +51,22 @@ Examples
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: hex_brillouin.py
+.. literalinclude:: hex_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: hex_brillouin.html
+    :file: hex_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: hex_real.py
     :language: py
 
 .. raw:: html
     :file: hex_real.html
-
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: hex_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: hex_wigner-seitz.html
 
 
 Cell standardization

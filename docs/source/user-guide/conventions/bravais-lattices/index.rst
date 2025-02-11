@@ -11,23 +11,24 @@ For the full technical reference see :ref:`api_cell`
 Bravais lattice notation and standardization follows Setyawan and Curtarolo [1]_.
 
 For each Bravais lattice type wulfric can compute the standard form of the primitive:
-:math:`\boldsymbol{A}^s` and the conventional :math:`\boldsymbol{A}^{cs}` cell as defined
+:math:`\boldsymbol{A}^s` and the conventional :math:`\boldsymbol{A}^{cs}` cells as defined
 in the reference paper [1]_.
 
-In practice the cell can be given to wulfric in any Cartesian coordinate system.
-Standardization procedure does not change the orientation of the lattice/crystal, but
-redefine the lattice vectors. For instance, the ``cell`` and relative positions of
-``atoms`` might change, but the underlying lattice and positions of ``atoms`` in the real
-space are not modified.
+The cell can be given to wulfric in any orientation. Standardization procedure does not
+change the orientation of the lattice/crystal, but redefine the lattice vectors. For
+instance, the ``cell`` and relative positions of ``atoms`` might change, but the
+underlying lattice and positions of ``atoms`` in the real space are not modified. The
+K-points are computed for the original (given) unit cell, using the transformation matrix
+:math:`\boldsymbol{S}` from given to standardized cell.
 
 In each individual page, relative positions of the high symmetry k-points are written for
 the *standardized primitive* cell in the *default* orientation. The actual relative
-coordinates of the k-points that wulfric computes are specific to the ``cell`` that the
-user provides and might differ from the ones written in those pages.
+coordinates of the k-points that wulfric computes are specific to the ``cell`` that user
+provides (original cell) and may differ from the ones written in those pages.
 
 There is no need for the user to standardize the cell to have access to the k-points.
 However, it is the user's responsibility to track whether the given cell is *primitive*.
-The k-points will be computed even if the cell is not primitive, but the Bravais lattice
+The k-points will be computed even if the cell is not primitive and the Bravais lattice
 type will be defined by *interpreting* the given cell as primitive.
 
 .. note::

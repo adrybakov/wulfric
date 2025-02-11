@@ -112,27 +112,22 @@ BCT\ :sub:`1`
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: bct1_brillouin.py
+.. literalinclude:: bct1_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: bct1_brillouin.html
+    :file: bct1_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: bct1_real.py
     :language: py
 
 .. raw:: html
     :file: bct1_real.html
-
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: bct1_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: bct1_wigner-seitz.html
 
 BCT\ :sub:`2`
 -------------
@@ -140,27 +135,22 @@ BCT\ :sub:`2`
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: bct2_brillouin.py
+.. literalinclude:: bct2_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: bct2_brillouin.html
+    :file: bct2_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: bct2_real.py
     :language: py
 
 .. raw:: html
     :file: bct2_real.html
-
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: bct2_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: bct2_wigner-seitz.html
 
 
 Cell standardization

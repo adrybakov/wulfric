@@ -57,28 +57,23 @@ Examples
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: bcc_brillouin.py
+.. literalinclude:: bcc_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: bcc_brillouin.html
+    :file: bcc_reciprocal.html
 
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: bcc_real.py
     :language: py
 
 .. raw:: html
     :file: bcc_real.html
-
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: bcc_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: bcc_wigner-seitz.html
 
 Cell standardization
 ====================

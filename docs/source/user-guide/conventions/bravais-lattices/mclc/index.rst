@@ -318,135 +318,110 @@ MCLC\ :sub:`1`
 
 Brillouin zone and default kpath
 --------------------------------
-.. literalinclude:: mclc1_brillouin.py
+.. literalinclude:: mclc1_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: mclc1_brillouin.html
+    :file: mclc1_reciprocal.html
 
-Primitive and conventional cell
--------------------------------
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: mclc1_real.py
     :language: py
 
 .. raw:: html
     :file: mclc1_real.html
 
-Wigner-Seitz cell
------------------
-.. literalinclude:: mclc1_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: mclc1_wigner-seitz.html
-
 MCLC\ :sub:`2`
 --------------
 
 Brillouin zone and default kpath
 --------------------------------
-.. literalinclude:: mclc2_brillouin.py
+.. literalinclude:: mclc2_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: mclc2_brillouin.html
+    :file: mclc2_reciprocal.html
 
-Primitive and conventional cell
--------------------------------
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: mclc2_real.py
     :language: py
 
 .. raw:: html
     :file: mclc2_real.html
 
-Wigner-Seitz cell
------------------
-.. literalinclude:: mclc2_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: mclc2_wigner-seitz.html
-
 MCLC\ :sub:`3`
 --------------
 
 Brillouin zone and default kpath
 --------------------------------
-.. literalinclude:: mclc3_brillouin.py
+.. literalinclude:: mclc3_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: mclc3_brillouin.html
+    :file: mclc3_reciprocal.html
 
-Primitive and conventional cell
--------------------------------
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: mclc3_real.py
     :language: py
 
 .. raw:: html
     :file: mclc3_real.html
 
-Wigner-Seitz cell
------------------
-.. literalinclude:: mclc3_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: mclc3_wigner-seitz.html
-
 MCLC\ :sub:`4`
 --------------
 
 Brillouin zone and default kpath
 --------------------------------
-.. literalinclude:: mclc4_brillouin.py
+.. literalinclude:: mclc4_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: mclc4_brillouin.html
+    :file: mclc4_reciprocal.html
 
-Primitive and conventional cell
--------------------------------
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: mclc4_real.py
     :language: py
 
 .. raw:: html
     :file: mclc4_real.html
 
-Wigner-Seitz cell
------------------
-.. literalinclude:: mclc4_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: mclc4_wigner-seitz.html
-
 MCLC\ :sub:`5`
 --------------
 
 Brillouin zone and default kpath
 --------------------------------
-.. literalinclude:: mclc5_brillouin.py
+.. literalinclude:: mclc5_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: mclc5_brillouin.html
+    :file: mclc5_reciprocal.html
 
-Primitive and conventional cell
--------------------------------
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: mclc5_real.py
     :language: py
 
 .. raw:: html
     :file: mclc5_real.html
-
-Wigner-Seitz cell
------------------
-.. literalinclude:: mclc5_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: mclc5_wigner-seitz.html
 
 
 Cell standardization

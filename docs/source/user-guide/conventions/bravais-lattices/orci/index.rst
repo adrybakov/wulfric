@@ -78,27 +78,22 @@ Examples
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: orci_brillouin.py
+.. literalinclude:: orci_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: orci_brillouin.html
+    :file: orci_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: orci_real.py
     :language: py
 
 .. raw:: html
     :file: orci_real.html
-
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: orci_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: orci_wigner-seitz.html
 
 
 Cell standardization

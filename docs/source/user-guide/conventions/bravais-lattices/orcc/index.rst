@@ -71,27 +71,22 @@ Examples
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: orcc_brillouin.py
+.. literalinclude:: orcc_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: orcc_brillouin.html
+    :file: orcc_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive, Wigner-Seitz and conventional cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: orcc_real.py
     :language: py
 
 .. raw:: html
     :file: orcc_real.html
-
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: orcc_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: orcc_wigner-seitz.html
 
 
 

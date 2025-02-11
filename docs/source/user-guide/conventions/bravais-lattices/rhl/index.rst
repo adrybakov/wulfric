@@ -109,54 +109,44 @@ RHL\ :sub:`1`
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: rhl1_brillouin.py
+.. literalinclude:: rhl1_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: rhl1_brillouin.html
+    :file: rhl1_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive and Wigner-Seitz cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: rhl1_real.py
     :language: py
 
 .. raw:: html
     :file: rhl1_real.html
 
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: rhl1_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: rhl1_wigner-seitz.html
-
 RHL\ :sub:`2`
 -------------
 
 Brillouin zone and default kpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: rhl2_brillouin.py
+.. literalinclude:: rhl2_reciprocal.py
     :language: py
 
 .. raw:: html
-    :file: rhl2_brillouin.html
+    :file: rhl2_reciprocal.html
 
-Primitive and conventional cell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Primitive and Wigner-Seitz cells
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click on the legend to hide a cell.
+
 .. literalinclude:: rhl2_real.py
     :language: py
 
 .. raw:: html
     :file: rhl2_real.html
-
-Wigner-Seitz cell
-^^^^^^^^^^^^^^^^^
-.. literalinclude:: rhl2_wigner-seitz.py
-    :language: py
-
-.. raw:: html
-    :file: rhl2_wigner-seitz.html
 
 Cell standardization
 ====================
