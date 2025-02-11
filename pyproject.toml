@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 name = "wulfric"
 license = { text = "GPL-3.0 license" }
 dynamic = ["version"]
-description = "Crystal, Lattice, Atoms, K-path."
+description = "Cell, Atoms, K-path."
 dependencies = ["numpy~=1.26", "termcolor"]
 authors = [{ name = "Andrey Rybakov", email = "rybakov.ad@icloud.com" }]
 requires-python = ">=3.9"

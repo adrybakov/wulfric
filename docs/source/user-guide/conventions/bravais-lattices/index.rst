@@ -10,14 +10,15 @@ For the full technical reference see :ref:`api_cell`
 
 Bravais lattice notation and standardization follows Setyawan and Curtarolo [1]_.
 
-For each Bravais lattice type we provide the standard form of the primitive:
-:math:`\boldsymbol{A}{s}` and the conventional :math:`\boldsymbol{A}^{cs}` cell in the
-same Cartesian coordinate system as in the reference paper [1]_.
+For each Bravais lattice type wulfric can compute the standard form of the primitive:
+:math:`\boldsymbol{A}^s` and the conventional :math:`\boldsymbol{A}^{cs}` cell as defined
+in the reference paper [1]_.
 
 In practice the cell can be given to wulfric in any Cartesian coordinate system.
-Standardization procedure does not change the crystal, but redefine the lattice vectors.
-For instance, the ``cell`` and relative positions of ``atoms`` might change, but
-the underlying lattice and positions of ``atoms`` in the real space are not modified.
+Standardization procedure does not change the orientation of the lattice/crystal, but
+redefine the lattice vectors. For instance, the ``cell`` and relative positions of
+``atoms`` might change, but the underlying lattice and positions of ``atoms`` in the real
+space are not modified.
 
 In each individual page, relative positions of the high symmetry k-points are written for
 the *standardized primitive* cell in the *default* orientation. The actual relative
