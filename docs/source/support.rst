@@ -4,12 +4,12 @@
 Support
 *******
 
-A few ways to ask for help or give feedback exist:
+There are a few ways to ask for help or give feedback:
 
 * `Forum at google groups <https://groups.google.com/g/wulfric>`_
 
   You may send email directly to wulfric@googlegroups.com
-  This is a preferred chanel for the discussions about the user experience and question.
+  This is a preferred chanel for the discussions about the user experience and questions.
 
 * `Github discussions <https://github.com/adrybakov/wulfric/discussions>`_
 

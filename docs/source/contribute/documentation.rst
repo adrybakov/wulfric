@@ -30,16 +30,19 @@ Majority of the documentation belongs
   the structure of API.
 
 * User guide ("user-guide" folder)
+
   Hand-written |ReStructuredText-Sphinx|_ files with usage examples and explanation of
   the wulfric's functionality. It is located in the "docs/source/user-guide" directory.
 
   We separate the user guide into several parts:
 
   - "usage" folder
+
     The usage guide is a detailed explanation of the functionality of wulfric, grouped by
     the concepts. The majority of examples (and doctests) are written there.
 
   - "library" folder
+
     Description of theory and algorithms behind wulfric. Individual documents/folders
     are located there, however in the toctrees they are placed directly under the
     "user-guide" for better visibility (as opposed to be served from within "library"
@@ -49,6 +52,7 @@ The rest of the documentation is located in the "docs/source" directory and it i
 among other things:
 
 * "conf.py" file
+
   The configuration file for the |sphinx|_.
 
 * "index.rst" file

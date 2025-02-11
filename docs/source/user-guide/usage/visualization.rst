@@ -7,9 +7,9 @@ Visualization
 
 .. note::
 
-    There are much better visualization software exist and wulfric is not intended to be used
-    as one. simple visualization capabilities were written historically for the quick debugging
-    and later on used for the automatic creation of the examples in the
+    There are much better visualization software exist and wulfric is not intended to be
+    used as one. simple visualization capabilities were written historically for quick
+    debugging and later on used for the automatic creation of the examples in the
     :ref:`user-guide_conventions_bravais-lattices` pages.
 
 For the full technical reference see :ref:`api_visualization`

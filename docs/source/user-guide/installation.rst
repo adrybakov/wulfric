@@ -13,17 +13,17 @@ Requirement for wulfric installation are:
 * |matplotlib|_ (optional: [visual])
 * |plotly|_ (optional: [visual])
 
-Most likely Python is already installed on your machine (if not check these links:
-|Python-installation|_).
-
 Wulfric can be installed with :ref:`pip <installation-pip>` or from
 :ref:`source <installation-source>`.
 
-Check Python
-============
+Do you have Python?
+===================
 
-The easiest way to check if you have python installed
-is to run the following command in your terminal::
+Most likely Python is already installed on your machine (if not check these links:
+|Python-installation|_).
+
+The easiest way to check if you have python installed is to run the following command in
+your terminal::
 
   python
 
@@ -33,11 +33,10 @@ If you see something like::
   Type "help", "copyright", "credits" or "license" for more information.
   >>>
 
-then you have python installed.
+then you have it.
 
 In most cases ``python`` command launches python3, however if it launches python2, then
-you may need to use ``python3`` instead (and ``pip3`` instead of ``pip`` in the following
-commands).
+you may need to use ``python3`` instead (and ``pip3`` instead of ``pip`` in the following).
 
 .. hint::
   Use ``exit()`` or press ``ctrl+D`` to close python console.
@@ -47,7 +46,7 @@ commands).
 Installation with pip
 =====================
 
-To install wulfric, run (you may need to use ``pip3``)::
+To install wulfric use the command (you may need to use ``pip3``)::
 
   pip install wulfric
 
@@ -58,9 +57,8 @@ by yourself or install them with wulfric::
   pip install wulfric[visual]
 
 .. note::
-  You may need to escape the ``[`` and ``]`` characters from your shell, because they are
-  special characters in most shells. For example, in bash you can use backslash to escape
-  them::
+  You may need to escape the ``[`` and ``]`` characters, because they are special
+  characters in most shells. For example, in bash you can use backslash to escape them::
 
     pip install wulfric\[visual\]
 
@@ -90,16 +88,16 @@ Installation from source
   .. literalinclude:: ../../../requirements.txt
 
   You'll see that all dependencies - mandatory and optional - are installed. If you prefer
-  to install only mandatory dependencies, you can do it manually.
+  to install only mandatory dependencies, then you can do it manually.
 
 * To install wulfric, run (you may need to use ``pip3``)::
 
-    pip install wulfric
+    pip install .
 
 Update
 ======
 
-If you want to update the package to the latest available version (|version|)
-type the following in your terminal (you may need to use ``pip3``)::
+If you want to update the package to the latest available version (|version|),
+then use the command (you may need to use ``pip3``)::
 
   pip install wulfric --upgrade

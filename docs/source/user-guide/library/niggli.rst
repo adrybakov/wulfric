@@ -13,11 +13,11 @@ For an alternative implementation, that was available long before wulfric and is
 associated with wulfric package or its authors see |spglib-niggli|_.
 
 The algorithm is given a cell :math:`\boldsymbol{A}`, that is properly defined in
-:ref:`user-guide_conventions_main`.
+:ref:`user-guide_conventions_basic-notation`.
 
 Niggli reduction algorithm is implemented and tested exactly as in [1]_. On this page we
 recall the algorithm itself and the testing procedure with the notation of wulfric. We
-advise you to read the original papers for better understanding of it.
+advise you to read the original papers for better understanding of it. Parameters
 
 .. math::
     A & = a^2 \\
@@ -27,7 +27,7 @@ advise you to read the original papers for better understanding of it.
     \eta & = 2ac \cos(\beta) \\
     \zeta & = 2ab \cos(\gamma)
 
-that are derived from standard cell parameters :math:`a,b,c,\alpha,\beta,\gamma` and
+are derived from standard cell parameters :math:`a,b,c,\alpha,\beta,\gamma` and
 organized in a metric matrix as
 
 .. math::
@@ -40,7 +40,7 @@ organized in a metric matrix as
         \eta/2 & \xi/2 & C \\
     \end{pmatrix}
 
-which is transform by the transformation matrix as
+which is transformed by the transformation matrix as
 
 .. math::
 

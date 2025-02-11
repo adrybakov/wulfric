@@ -5,8 +5,10 @@ LePage algorithm
 ****************
 
 The algorithm for the Bravais lattice type identification is bases on the search for the
-twofold rotation axes and described in details in [1]_. The algorithm is implemented in
-:py:func:`.lepage` function. On this page we recall the algorithm with comments.
+twofold rotation axes and described in details in [1]_. If you use results obtain with
+this function of wulfric, please acknowledge that paper as the original source of the
+algorithm. The algorithm is implemented in :py:func:`wulfric.cell.lepage` function. On
+this page we recall the algorithm with comments.
 
 
 Accuracy
@@ -16,8 +18,8 @@ Result of an algorithm outcome for a given cell might depend on two parameters `
 and ``angle_tolerance``. First is used for the construction of the set of possible
 symmetry axes. The second one is used for the search of the actual symmetry axis in that
 set. We recommend to vary ``angle_tolerance`` if the computed lattice type does not match
-your expectations. Roughly this parameter can be understood as the accuracy with which the
-angles of the given cell are defined.
+your expectations. This parameter can be understood as the accuracy with which the angles
+of the given cell are defined.
 
 
 Algorithm

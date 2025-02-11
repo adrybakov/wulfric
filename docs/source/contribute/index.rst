@@ -11,7 +11,7 @@ If you're interested in seeing who has already contributed to this project, plea
 our :ref:`Contributors page <contribute_contributors>`. We appreciate all contributions
 and look forward to see your name on that list!
 
-It is not necessary to be a programmer to contribute. You can help us with documentation,
+It is not necessary to be a programmer to contribute. You can help with documentation,
 :ref:`new features <contribute_feature>` and :ref:`finding bugs <contribute_bug>`.
 
 
@@ -51,8 +51,8 @@ Fork and clone
 Set up the environment
 ----------------------
 
-We recommend to use virtual environment. Once the virtual environment is created,
-you can install requirements:
+We recommend to use virtual environment (with |venv|_, for example). Once the virtual
+environment is created, you can install requirements:
 
 * Package dependencies::
 

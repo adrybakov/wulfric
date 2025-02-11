@@ -47,8 +47,8 @@ Wulfric recognizes two keywords in the ``atoms`` dictionary: "names" and "specie
 Both are lists of strings. Names of atoms are not restricted in any way and user is free
 to name atoms as they please (however, it is a common practice to include atom's species
 in the name). On contrary the "species" are interpreted having a set of special values in
-mind. Correct strings for possible species are hard-coded and available in the
-``wulf.constants.ATOM_SPECIES`` constant.
+mind. Correct strings for possible species are hard-coded and available under the
+:py:const:`wulfric.constants.ATOM_SPECIES` constant.
 
 Wulfric implements two functions to automatically guess the atom's species from its name
 
@@ -83,7 +83,7 @@ Pair of atoms
 =============
 
 Often a distance between a pair of atoms is required. Wulfric has two functions for that.
-It assumed that first atom is located in the reference unit cell with indices
+It assumes that first atom is located in the reference unit cell with indices
 :math:`(0, 0, 0)` and second atom is located in any unit cell of the crystal with indices
 :math:`(i, j, k)`.
 
@@ -102,10 +102,10 @@ Standardization
 Please read :ref:`similar section for the cell <user-guide_usage_cell_standardization>`
 first.
 
-When ``cell`` is standardized. Standardization of the cell does not change neither the
-lattice defined by this cell nor absolute coordinates of atoms. Therefore, *relative*
-coordinates, stored in ``atoms["positions"]`` should change. Wulfric defines a function,
-which standardize the cell and update relative coordinated of atoms.
+Standardization of the ``cell`` does not change neither the lattice defined by this cell
+nor absolute coordinates of atoms. Therefore, *relative* coordinates, stored in
+``atoms["positions"]`` should change. Wulfric defines a function, which standardizes the
+cell and updates relative coordinated of atoms.
 
 .. doctest::
 

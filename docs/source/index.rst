@@ -27,11 +27,11 @@ Wulfric
 What is wulfric?
 ****************
 
-Wulfric is a python package for the description and symmetries of crystal structures.
-It uses a simple concepts of ``cell`` and ``atoms`` and provides a simple skeleton for
-other codes to built on. (see :ref:`user-guide_usage_key-concepts`)
+Wulfric is a python package for the crystal structures. It uses a simple concepts of
+``cell`` and ``atoms`` and provides a simple skeleton for other codes to built on (see
+:ref:`user-guide_usage_key-concepts`).
 
-The functional of wulfric includes (but not limited to):
+The functionality of wulfric includes (but not limited to):
 
 * Calculation of Bravais lattice type and variation.
 
@@ -50,15 +50,14 @@ As any other Python package::
 
   pip install wulfric
 
-For the full guide on wulfric installation see :ref:`user-guide_start_installation`.
+For the full guide see :ref:`user-guide_start_installation`.
 
 ***************
 Further reading
 ***************
 
-Good starting point is the :ref:`user-guide_usage_key-concepts` page.
-Afterwards we recommend to continue with the :ref:`user-guide_fundamentals`,
-where examples are given.
+Good starting point is the :ref:`user-guide_usage_key-concepts` page. Afterwards, we
+recommend to continue with the :ref:`user-guide_fundamentals`, where examples are given.
 
 For the full technical reference of the public part of the package see :ref:`api`.
 

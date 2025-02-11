@@ -40,7 +40,7 @@ def _CUB_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``CUB_standardize_cell``
 
-    See :ref:`guide_cub` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_cub` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -77,7 +77,7 @@ def _FCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``FCC_standardize_cell``
 
-    See :ref:`guide_fcc` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_fcc` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -114,7 +114,7 @@ def _BCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``BCC_standardize_cell``
 
-    See :ref:`guide_fcc` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_fcc` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -151,7 +151,7 @@ def _TET_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``TET_standardize_cell``
 
-    See :ref:`guide_tet` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_tet` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -208,7 +208,7 @@ def _BCT_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``BCT_standardize_cell``
 
-    See :ref:`guide_bct` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_bct` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -266,7 +266,7 @@ def _ORC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``ORC_standardize_cell``
 
-    See :ref:`guide_orc` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_orc` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -335,7 +335,7 @@ def _ORCF_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``ORCF_standardize_cell``
 
-    See :ref:`guide_orcf` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_orcf` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -405,7 +405,7 @@ def _ORCI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``ORCI_standardize_cell``
 
-    See :ref:`guide_orci` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_orci` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -475,7 +475,7 @@ def _ORCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``ORCC_standardize_cell``
 
-    See :ref:`guide_orcc` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_orcc` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -558,7 +558,7 @@ def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``HEX_standardize_cell``
 
-    See :ref:`guide_hex` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_hex` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -627,7 +627,7 @@ def _RHL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``RHL_standardize_cell``
 
-    See :ref:`guide_rhl` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_rhl` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -664,7 +664,7 @@ def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``MCL_standardize_cell``
 
-    See :ref:`guide_mcl` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_mcl` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -748,7 +748,7 @@ def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``MCLC_standardize_cell``
 
-    See :ref:`guide_mclc` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_mclc` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -822,7 +822,7 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     .. versionchanged:: 0.4.0  Renamed from ``TRI_standardize_cell``
 
-    See :ref:`guide_tri` and :ref:`user-guide_conventions_cell_standardization` for the
+    See :ref:`guide_tri` and :ref:`user-guide_conventions_which-cell_standardization` for the
     details.
 
     Parameters
@@ -1002,7 +1002,7 @@ def get_C_matrix(lattice_type):
     Transformation matrix that transforms primitive cell
     to the **conventional standardized** cell.
 
-    See :ref:`user-guide_conventions_cell_standardization` for details.
+    See :ref:`user-guide_conventions_which-cell_standardization` for details.
 
     Parameters
     ----------

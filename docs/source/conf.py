@@ -270,6 +270,7 @@ custom_links = {
     ),
     "spglib-niggli": ("Niggli-cell", "https://atztogo.github.io/niggli/"),
     "InTabCrys": ("International Tables for Crystallography", "https://it.iucr.org/"),
+    "venv": ("venv", "https://docs.python.org/3/library/venv.html"),
 }
 
 

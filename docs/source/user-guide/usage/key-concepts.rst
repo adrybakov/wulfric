@@ -4,16 +4,17 @@
 Key concepts
 ************
 
-Several concepts and data structures are essential for understanding of wulfric's scope.
+On this page we list concepts and data structures, that are essential for understanding of
+wulfric's scope, with code examples.
 
 .. _user-guide_usage_key-concepts_cell:
 
 Cell
 ====
 
-``cell`` is a two-dimensianal :math:`3\times3` matrix, that describe three lattice vectors.
-The rows of the ``cell`` are the vectors, while the columns give the cartesian coordinates.
-Here is an example of a simple orthorhombic cell
+``cell`` is a two-dimensianal :math:`3\times3` matrix, that defines three lattice
+vectors. The rows of the ``cell`` are vectors, while the columns are cartesian
+coordinates. Here is an example of a simple orthorhombic cell
 
 .. doctest::
 
@@ -90,10 +91,9 @@ Keys recognized by wulfric:
     ``list`` of *relative* coordinates of atoms. Each element is an |array-like|_ of the
     length :math:`3`.
 
-As you can see wulfric recognize only a few of the keys, however, we invite you to extend
-the ``atoms`` to your needs. Below we list a few of the potential keys that are not used
-by any of wulfric's functions, but might be useful or might be used by wulfric in the
-future.
+Wulfric recognize only a few keys, however, we invite you to extend the ``atoms``
+to your needs. Here is a list a few of the potential keys that are not used by any of
+wulfric's functions, but might be useful or might be used by wulfric in the future.
 
 
 * "spin_vectors"
@@ -110,12 +110,12 @@ the user-defined ones intact.
 Crystal
 =======
 
-Crystal is a just a pairt of ``cell`` and ``atoms``. We do not introduce any new structure
-for the crystal (not even a tuple ``(cell, atoms)``). When necessary the user must provide
-two variables: ``cell`` and ``atoms``. ``atoms["positions"]`` are interpreted as relative
-with respect to ``cell``.
+Crystal is a simply a pair of ``cell`` and ``atoms``. We do not introduce any new
+structure for the crystal (not even a tuple ``(cell, atoms)``). If necessary the user must
+provide two variables: ``cell`` and ``atoms``. ``atoms["positions"]`` are always
+interpreted by wulfric as relative with respect to ``cell``.
 
-For example, ``cell`` and ``atoms`` from the two sections above describe a crystal of
+For example, ``cell`` and ``atoms`` from the above two sections describe a crystal of
 |CrSBr-materials-cloud|_.
 
 .. _user-guide_usage_key-concepts_kpath:
@@ -123,14 +123,14 @@ For example, ``cell`` and ``atoms`` from the two sections above describe a cryst
 K-path
 ======
 
-Wulfric understands kpath of the format: "G-K-X|R-S".
+Wulfric understands kpath of the format like "G-K-X|R-S".
 
 * K-points are identified by their names. Name can not contain "-".
 * ``|`` separates subpaths. Each subpath has to contain at least two points. Path has to
   have at least one subpath.
 * ``-`` separates high symmetry points in each subpath.
 
-The concept of subpaths allow to "jump" from one k-point to another, without following a
+The concept of subpaths allows to "jump" from one k-point to another, without following a
 path in between. For instance, in the path "G-K-X|R-S" for the band structure
 calculation/plots some amount of intermediate points is implied between "G" and "K",
 between "K" and "X" and between "R" and "S". However, there is no intermediate points
@@ -139,7 +139,7 @@ between "X" and "R".
 Internally it stores the path as ``list`` of ``list`` of ``str``, i.e. as list of subpaths,
 where each subpath is a list of names of high symmetry points.
 
-Below we give a table of examples
+Below we give a table with examples
 
 ========= ==================================
 As string As ``list`` of ``list`` of ``str``

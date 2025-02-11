@@ -63,7 +63,7 @@ vector in the :math:`xy` plain. The cell can only be constructed from the set of
 that can form parallelepiped (see :py:func:`.geometry.parallelepiped_check`).
 
 Note ``wulf.cell.from_params(wulf.cell.get_params(cell))`` is not guaranteed to recover
-of the original ``cell``, as the information about the orientation of lattice vectors in
+the original ``cell``, as the information about the orientation of lattice vectors in
 Cartesian reference frame is lost after the call of the first function.
 
 
@@ -103,7 +103,6 @@ Type of the Bravail lattice might be computed via the :ref:`library_lepage` as
 
 .. doctest::
 
-  >>> # Note wulf.cell.lepage accept lattice parameters as input.
   >>> lattice_type = wulf.cell.lepage(cell)
   >>> lattice_type
   'ORC'
@@ -158,9 +157,9 @@ An original goal of wulfric was to obtain high symmetry k paths in an automatic 
 for any given cell. We follow the convention of the Setyawan and Curtarolo [1]_ for the
 Bravais lattice types and high symmetry k points, where the definition of high symmetry
 points is given for the standardized primitive cells. In wulfric the standardization is
-represented by the :ref:`transformation matrix <user-guide_conventions_main_transformation>`
+represented by the :ref:`transformation matrix <user-guide_conventions_basic-notation_transformation>`
 :math:`\boldsymbol{S}`. Actual transformation of the cell rarely needed if the matrix
-:math:`\boldsymbol{S}` is knows. It allows to compute the high symmetry points for
+:math:`\boldsymbol{S}` is known. It allows to compute the high symmetry points for
 arbitrary cell.
 
 To obtain the transformation matrix :math:`\boldsymbol{S}` use
@@ -190,7 +189,7 @@ Conventional cell
 
 If the standardized primitive cell is knows, then standardized convectional cell can be
 computed. The transformation is described by the
-:ref:`transformation matrix <user-guide_conventions_main_transformation>`
+:ref:`transformation matrix <user-guide_conventions_basic-notation_transformation>`
 :math:`\boldsymbol{C}`. This matrix is specific to the lattice type and does not depend
 on the specific cell
 
@@ -212,12 +211,12 @@ To get the conventional cell from the standardized primitive cell use
 
 For the Orthorhombic lattice conventional and primitive cells are the same.
 
-Note that wulfric *interprets* the input cell as the standardized primitive one. It is the
-responsibility of the user to ensure that it is indeed the standardized primitive cell.
+Note that wulfric *interprets* the input cell as a primitive one. It is the
+responsibility of the user to ensure that it is indeed a primitive cell.
 
 
 
-To read more about the conventional cells see :ref:`user-guide_conventions_cell` and
+To read more about the conventional cells see :ref:`user-guide_conventions_which-cell` and
 :ref:`user-guide_conventions_bravais-lattices`.
 
 

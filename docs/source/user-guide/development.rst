@@ -1,32 +1,30 @@
 .. _user-guide_start_development:
 
-**************************
-Versioning and development
-**************************
+*************************
+Development and stability
+*************************
 
-Versioning of wulfric follows standard conventions and can be described as
-``major.minor.patch``. For example version ``0.4.0`` is decoded as ``0`` major version,
-``4`` minor version and ``0`` patch version.
+Versions of wulfric are labeled in a standard way as ``major.minor.patch``. For example,
+version ``0.4.0`` is decoded as ``0`` major version, ``4`` minor version and ``0`` patch
+version.
 
-The development of wulfric will proceed in two stages, that would be reflected in the
-versioning of the package. The principles listed above were formulated with the
-release ``0.5.0``.
-
+The development of wulfric proceeds in two stages, that are reflected in the versions of
+the package. The principles listed here were formulated with the release ``0.5.0``.
 
 Beta stage (0.*.*)
 ==================
 
-At this stage of development change of the ``minor`` does not guarantee backward
-compatibility, might introduce change of interface, might introduce change of the public
+Unstable stage of development. Change of the ``minor`` version does not guarantee backward
+compatibility and may introduce changes of interface, may introduce changes of the public
 data-structure.
 
-This stage allows the code to mature and reflect the best approaches for the problems
-that it is aimed for.
+This stage allows the code to mature and reflect the best approaches for the problems that
+it is aimed for.
 
-No timeline is expected for the Beta stage. It might be going on for a long time.
+No timeline is set for the Beta stage.
 
-It is recommended to fix the minor version at this stage (i.e. use ``wulfric==0.4.*`` to
-fix 4th minor version).
+It is recommended to fix the minor version at this stage (i.e. use ``wulfric==0.5.*`` to
+fix 5th minor version).
 
 Stable stage (>=1.*.*)
 ======================

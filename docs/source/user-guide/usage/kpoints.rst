@@ -57,7 +57,7 @@ Kpoints class
 =============
 
 A convenient way to manage kpoints and kpath for calculations or for plotting is
-implemented with the :py:class:`.Kpoints`.
+implemented with the :py:class:`.Kpoints` class.
 
 Creation
 --------
@@ -137,7 +137,7 @@ Getting summary of high-symmetry points
 ---------------------------------------
 
 In order to have a summary of the high symmetry pints the predefined method
-:py:meth:`.Kpoints.hs_table` might be used:
+:py:meth:`.Kpoints.hs_table` may be used:
 
 .. doctest::
 
@@ -158,7 +158,7 @@ Path
 
 The path is the route in the reciprocal space, defined by the high symmetry points.
 
-We use a specific format in the package that is describe in
+We use a specific format in the package that is described in
 :ref:`user-guide_usage_key-concepts_kpath`.
 
 .. doctest::
@@ -200,7 +200,7 @@ We use a specific format in the package that is describe in
 
     Internally wulfric stores the path as a list of subpaths, where each subpath
     is a list of high symmetry point's names. This format is also correct for assigning
-    the :py:attr:`.Kpoints.path`` attribute.
+    the :py:attr:`.Kpoints.path` attribute.
 
 Configuration
 -------------
@@ -218,14 +218,14 @@ is controlled by the :py:attr:`.Kpoints.n` property.
     10
 
 
-Once the configuration of the Kpoints are done, it can be used for calculation or plotting.
+Once the configuration of the Kpoints is done, it can be used for calculation or plotting.
 
 Calculation
 -----------
 
-There is one property suitable for calculation: :py:attr:`Kpoints.points`. It is an array
+There is one method suitable for calculation: :py:meth:`.Kpoints.points`. It is an array
 of all generated kpoints. For each pair of high symmetry points it generates
-:py:attr:`Kpoints.n` points between them. The first and the last points are always
+:py:attr:`.Kpoints.n` points between them. The first and the last points are always
 the high symmetry points of this section of the path.
 
 .. doctest::
@@ -271,8 +271,9 @@ the high symmetry points of this section of the path.
 Plotting
 --------
 
-For plotting there are three properties. Two of them are for the high symmetry points
-and describe the labels and position of ticks on the x-axis:
+For plotting there is one property :py:attr:`.Kpoints.labels` and two methods
+(:py:meth:`.Kpoints.ticks`, :py:meth:`.Kpoints.flatten_points`). Two of them are for the
+high symmetry points and describe the labels and position of ticks on the x-axis:
 
 .. doctest::
 
@@ -282,7 +283,7 @@ and describe the labels and position of ticks on the x-axis:
     >>> np.around(kp.ticks(), decimals=4)
     array([0.    , 0.7071, 1.2071])
 
-The third property gives the coordinates of the :py:attr:`.Kpoints.points` for the plot:
+The third property gives the coordinates of the :py:meth:`.Kpoints.points` for the plot:
 
 .. doctest::
 
@@ -322,5 +323,5 @@ The third property gives the coordinates of the :py:attr:`.Kpoints.points` for t
 
 .. hint::
 
-    Repeated :py:attr:`.Kpoints.points` or :py:attr:`.Kpoints.flatten_points`
-    can be used to restore the position of high symmetry points in the path.
+    Repeated :py:meth:`.Kpoints.points` or :py:meth:`.Kpoints.flatten_points` can be used
+    to restore the position of high symmetry points in the path.

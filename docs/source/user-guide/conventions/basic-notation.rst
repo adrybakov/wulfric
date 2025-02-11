@@ -1,11 +1,11 @@
-.. _user-guide_conventions_main:
+.. _user-guide_conventions_basic-notation:
 
 **************
 Basic notation
 **************
 
-On this page we introduce formal definition of the vector and cell and how they stored in
-wulfric.
+On this page we introduce formal definition of the vector and cell and describe how they
+are stored in wulfric.
 
 Wulfric stores and manipulates both column vectors and row vectors as (3,) |NumPy|_
 arrays (i.e. the code does not explicitly distinguish the row and column vectors)
@@ -42,7 +42,7 @@ formulas.
     vector = np.array([vx, vy, vz])
 
 One-dimensional |NumPy|_ arrays do not distinguish between row and column vectors.
-Therefore, if the code example use a vector ``r``, it might mean either
+Therefore, if the code example contains a vector ``r``, it may mean either
 :math:`\boldsymbol{r}` or :math:`\boldsymbol{r}^T`.
 
 
@@ -72,19 +72,18 @@ matrix of the form
         [a3_x, a3_y, a3_z],
     ])
 
-We note that the definition of the cell is a transpose one of the standard definition in
-|InTabCrys|_ or of |spglib|_ (However, it is the same as in |spglib-python|_). We
-deliberatly choose to define the cell in that way for consistency between the math and
-python code. Formally one can substitute
-:math:`\boldsymbol{A} \rightarrow \boldsymbol{A}^T` and recover the same formulas as in
-|InTabCrys|_. As we try to define all transformation and rotation matrices in the same
-way as in |InTabCrys|_.
+Note that cell is defined as a transpose of the standard definition in |InTabCrys|_ or of
+|spglib|_ (However, it is the same as in |spglib-python|_). We deliberatly choose to
+define the cell in that way for consistency between the math and python code. Formally
+one can substitute :math:`\boldsymbol{A} \rightarrow \boldsymbol{A}^T` and recover the
+same formulas as in |InTabCrys|_. We try to define all transformation and rotation
+matrices in the same way as in |InTabCrys|_.
 
-Atom's positions
-================
+Positions of atoms
+==================
 
-Atoms positions are stored as vectors of the relative coordinates with respect to the
-cell vectors
+Atom's positions are stored as vectors of coordinates, that are **relative** with respect
+to the cell vectors
 
 .. math::
 
@@ -99,7 +98,7 @@ cell vectors
     import numpy as np
     x = np.array([x1, x2, x3])
 
-Cartesian (absolute) coordinates of the atoms also called "radius vector" can be
+Cartesian (absolute) coordinates of the atoms (also called "radius vector") can be
 calculated as
 
 .. math::
@@ -126,7 +125,7 @@ calculated as
 Reciprocal cell
 ===============
 
-Reciprocal cell is defined by the three reciprocal lattice vectors
+Reciprocal cell is defined by three reciprocal lattice vectors
 :math:`\boldsymbol{b}_i = (b_i^x, b_i^y, b_i^z)^T`. Wulfric stores those vectors as a
 matrix
 
@@ -200,7 +199,7 @@ Cartesian (absolute) coordinates of the k-points can be calculated as
 
 
 
-.. _user-guide_conventions_main_transformation:
+.. _user-guide_conventions_basic-notation_transformation:
 
 Transformation of the cell
 ==========================
@@ -227,7 +226,7 @@ Note, that we deliberatly define transformation with the transposition sign. Def
 that way matrix :math:`\boldsymbol{P}` is the same as the transformation matrix
 :math:`\boldsymbol{P}` in |InTabCrys|_ Volume A, Chapter 5.1.
 
-It is important to understand that the transformation of the cell describe the *choice*
+It is important to understand that the transformation of the cell describes the *choice*
 of the cell for the given *lattice* or *crystal*. In other words while the **cell is
 changed**, the **lattice or crystal remain intact**. Consecutively, the **Cartesian
 coordinates of atoms are not changed** (:math:`\boldsymbol{x} = \boldsymbol{\tilde{x}}`),

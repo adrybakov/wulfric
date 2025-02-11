@@ -5,7 +5,7 @@ Other functions
 ***************
 
 On this page we describe formally unrelated functions and modules of wulfric that were not
-mentioned in the previous pages. It does not describe all of them. To see full list of
+mentioned in the previous pages. We do not describe all of them. To see full list of
 wulfric capabilities see :ref:`api`.
 
 In the examples of this page we assume that wulfric is imported as
@@ -64,8 +64,8 @@ function to check if the set of parameters is correct
 Volume and angle
 ================
 
-It is often required to compute angle between two vectors of a volume of the cell.
-Wulfric implements two function just for that.
+It is often required to compute angle between two vectors or a volume of the cell.
+Wulfric implements two functions just for that.
 
 To compute an angle between two vectors use
 
@@ -144,7 +144,7 @@ Pretty array printing
 
 It just looks nice and easier to debug for the human eye, when printed to the console.
 This function can take any numerical 2D or 1D array and print it in a nice
-format. It provides custom formatting and color highlight:
+format. It provides custom formatting and color highlights:
 
 .. hint::
 
