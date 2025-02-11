@@ -20,6 +20,7 @@ help:
 	@echo "    help - show this message"
 	@echo "    html - build the html docs"
 	@echo "    clean-html - clean all files from docs and build html docs from scrutch"
+	@echo "    html-from-zero - html from absolute zero (replot everything)"
 	@echo "    html-examples - update examples and build html docs"
 	@echo "    doctest - run doctests"
 	@echo "    clean - clean all files from docs and pip routines"
@@ -66,7 +67,7 @@ install:
 test:
 	@pytest -s
 
-test-all: clean install test bravais-pictures html doctest
+test-all: html-from-zero test doctest
 	@echo "Done"
 
 
