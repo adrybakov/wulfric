@@ -37,7 +37,7 @@ The functionality of wulfric includes (but not limited to):
 
 * Implementation of LePage and Niggli reduction algorithms.
 
-Please visit an extensive documentation on `https://wulfric.org`_ to find out more.
+Please visit an extensive documentation on `wulfric.org <https://wulfric.org>`_ to find out more.
 
 
 Installation
