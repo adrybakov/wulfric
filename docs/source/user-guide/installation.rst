@@ -7,11 +7,11 @@ Installation
 Requirement for wulfric installation are:
 
 * |Python|_ (>=3.9)
-* |NumPy|_ (~=1.26)
-* |termcolor|_
-* |SciPy|_ (optional: [visual])
-* |matplotlib|_ (optional: [visual])
-* |plotly|_ (optional: [visual])
+
+And several libraries:
+
+.. literalinclude:: ../../../requirements.txt
+
 
 Wulfric can be installed with :ref:`pip <installation-pip>` or from
 :ref:`source <installation-source>`.
@@ -82,10 +82,6 @@ Installation from source
 * Install the requirements::
 
     pip install -r requirements.txt
-
-.. note:: If you check the content of the ``requirements.txt`` file:
-
-  .. literalinclude:: ../../../requirements.txt
 
   You'll see that all dependencies - mandatory and optional - are installed. If you prefer
   to install only mandatory dependencies, then you can do it manually.
