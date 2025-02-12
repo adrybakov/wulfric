@@ -292,7 +292,7 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, angle_toleranc
 
 def get_variation(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
-    Return variation of the lattice as define in the paper by Setyawan and Curtarolo [1]_.
+    Return variation of the lattice as defined in the paper by Setyawan and Curtarolo [1]_.
 
     Parameters
     ----------

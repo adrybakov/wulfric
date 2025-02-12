@@ -61,7 +61,7 @@ def get_reciprocal(cell):
 
 def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
     r"""
-    Construct cell from lattice parameters.
+    Constructs cell from lattice parameters.
 
     *   Lattice vector :math:`\boldsymbol{a_1}` has the length ``a`` and oriented along
         :math:`{\cal x}` axis.
@@ -135,7 +135,7 @@ def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
 
 def get_params(cell):
     r"""
-    Computes lattice parameters from cell.
+    Computes lattice parameters of the cell.
 
     Parameters
     ----------
@@ -162,6 +162,16 @@ def get_params(cell):
         Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`. In degrees.
     gamma : float
         Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`. In degrees.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> cell = [[1,0,0],[0,2,0],[0,0,3]]
+        >>> wulf.cell.get_params(cell)
+        (1.0, 2.0, 3.0, 90.0, 90.0, 90.0)
     """
 
     return (
