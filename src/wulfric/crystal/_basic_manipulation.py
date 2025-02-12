@@ -176,13 +176,20 @@ def get_distance(cell, atoms, atom1, atom2, R=(0, 0, 0)):
 
     Returns
     -------
-    distance : floats
+    distance : float
         Distance between atom1 in (0,0,0) cell and atom2 in R cell.
     """
 
-    return np.linalg.norm(
-        get_vector(
-            cell=cell, atoms=atoms, atom1=atom1, atom2=atom2, R=R, return_relative=False
+    return float(
+        np.linalg.norm(
+            get_vector(
+                cell=cell,
+                atoms=atoms,
+                atom1=atom1,
+                atom2=atom2,
+                R=R,
+                return_relative=False,
+            )
         )
     )
 

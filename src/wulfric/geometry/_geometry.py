@@ -107,7 +107,7 @@ def get_volume(*args):
             + "Supported: one (3,3) array-like, or three (3,) array-like, or 6 floats."
         )
 
-    return abs(np.linalg.det(cell))
+    return float(abs(np.linalg.det(cell)))
 
 
 def get_angle(v1, v2, radians=False):
@@ -153,8 +153,9 @@ def get_angle(v1, v2, radians=False):
 
     alpha = np.arccos(np.clip(np.dot(v1, v2), -1.0, 1.0))
     if radians:
-        return alpha
-    return alpha * TODEGREES
+        return float(alpha)
+
+    return float(alpha * TODEGREES)
 
 
 def parallelepiped_check(

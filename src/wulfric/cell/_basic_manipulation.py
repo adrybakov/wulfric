@@ -175,9 +175,9 @@ def get_params(cell):
     """
 
     return (
-        np.linalg.norm(cell[0]),
-        np.linalg.norm(cell[1]),
-        np.linalg.norm(cell[2]),
+        float(np.linalg.norm(cell[0])),
+        float(np.linalg.norm(cell[1])),
+        float(np.linalg.norm(cell[2])),
         get_angle(cell[1], cell[2]),
         get_angle(cell[0], cell[2]),
         get_angle(cell[0], cell[1]),
@@ -211,9 +211,9 @@ def get_scalar_products(cell):
     """
 
     return (
-        np.dot(cell[1], cell[2]),
-        np.dot(cell[0], cell[2]),
-        np.dot(cell[0], cell[1]),
+        float(np.dot(cell[1], cell[2])),
+        float(np.dot(cell[0], cell[2])),
+        float(np.dot(cell[0], cell[1])),
     )
 
 

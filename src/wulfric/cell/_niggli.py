@@ -295,7 +295,7 @@ def niggli(
     -------
     cell : (3,3) :numpy:`ndarray`
         Niggli cell.
-    transformation_matrix : (3,3)
+    transformation_matrix : (3,3) :numpy:`ndarray`
         Returned only if ``return_transformation_matrix`` is ``True``.
 
     Raises
