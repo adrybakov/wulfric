@@ -37,8 +37,8 @@ def _lattice_points(cell, relative=False):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors.
     relative : bool, default False
         Whether to return relative or absolute coordinates.
 
@@ -65,8 +65,8 @@ def _get_voronoi_cell(cell):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors.
 
     Returns
     -------

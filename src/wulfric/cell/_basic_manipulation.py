@@ -38,21 +38,30 @@ def get_reciprocal(cell):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Cell matrix, rows are interpreted as vectors.
+        Matrix of a direct cell, rows are interpreted as vectors.
 
     Returns
     -------
     reciprocal_cell : (3, 3) :numpy:`ndarray`
-        Reciprocal cell matrix, rows are interpreted as vectors.
-        :math:`cell = (\boldsymbol{v}_1, \boldsymbol{v}_2, \boldsymbol{v}_3)^T`, where
+        Matrix of a reciprocal cell.
 
-        .. math::
+        .. code-block:: python
 
-            \begin{matrix}
-                \boldsymbol{b}_1 = \dfrac{2\pi}{V}\boldsymbol{a}_2\times\boldsymbol{a}_3 \\
-                \boldsymbol{b}_2 = \dfrac{2\pi}{V}\boldsymbol{a}_3\times\boldsymbol{a}_1 \\
-                \boldsymbol{b}_3 = \dfrac{2\pi}{V}\boldsymbol{a}_1\times\boldsymbol{a}_2 \\
-            \end{matrix}
+            cell = [[b1_x, b1_y, b1_z],
+                    [b2_x, b2_y, b2_z],
+                    [b3_x, b3_y, b3_z]]
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> cell = [[1, 1, 0], [0, 1, 0], [0, 0, 1]]
+        >>> wulf.cell.get_reciprocal(cell)
+        array([[ 6.28318531,  0.        ,  0.        ],
+               [-6.28318531,  6.28318531,  0.        ],
+               [ 0.        ,  0.        ,  6.28318531]])
 
     """
 
@@ -61,11 +70,13 @@ def get_reciprocal(cell):
 
 def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
     r"""
-    Constructs cell from lattice parameters.
+    Constructs the cell from lattice parameters.
+
+    The spatial orientation of the cell is decided as
 
     *   Lattice vector :math:`\boldsymbol{a_1}` has the length ``a`` and oriented along
         :math:`{\cal x}` axis.
-    *   Lattice vector :math:`\boldsymbol{a_2}` has the length ``b`` and is placed in
+    *   Lattice vector :math:`\boldsymbol{a_2}` has the length ``b``, is placed in
         :math:`{\cal xy}` plane and form an angle ``gamma`` with vector
         :math:`\boldsymbol{a_1}`, positive in a mathematical sense.
     *   Lattice vector :math:`\boldsymbol{a_3}` has the length ``c`` and form an angle
@@ -74,23 +85,26 @@ def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
 
     Parameters
     ----------
-    a : float, default 1
+    a : float, default 1.0
         Length of the :math:`\boldsymbol{a_1}` vector.
-    b : float, default 1
+    b : float, default 1.0
         Length of the :math:`\boldsymbol{a_2}` vector.
-    c : float, default 1
+    c : float, default 1.0
         Length of the :math:`\boldsymbol{a_3}` vector.
-    alpha : float, default 90
-        Angle between vectors :math:`\boldsymbol{a_2}` and :math:`\boldsymbol{a_3}`. In degrees.
-    beta : float, default 90
-        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`. In degrees.
-    gamma : float, default 90
-        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`. In degrees.
+    alpha : float, default 90.0
+        Angle between vectors :math:`\boldsymbol{a_2}` and :math:`\boldsymbol{a_3}` given
+        in degrees.
+    beta : float, default 90.0
+        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}` given
+        in degrees.
+    gamma : float, default 90.0
+        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}` given
+        in degrees.
 
     Returns
     -------
     cell : (3, 3) :numpy:`ndarray`
-        Cell matrix.
+        Matrix of a direct cell, rows are interpreted as vectors.
 
         .. code-block:: python
 
@@ -105,7 +119,35 @@ def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
 
     See Also
     --------
-    parallelepiped_check : Check if parameters could form a parallelepiped.
+    get_params
+    wulfric.geometry.parallelepiped_check : Check if parameters can form a parallelepiped.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> import numpy as np
+        >>> np.around(wulf.cell.from_params(1, 2, 3, 90, 90, 60), 6)
+        array([[1.      , 0.      , 0.      ],
+               [1.      , 1.732051, 0.      ],
+               [0.      , 0.      , 3.      ]])
+
+    .. doctest::
+
+        >>> wulf.cell.from_params(1, 2, 3, 60, 60, 130)
+        Traceback (most recent call last):
+        ...
+        ValueError: Parameters could not form a parallelepiped:
+        a = 1
+        b = 2
+        c = 3
+        alpha = 60
+        beta = 60
+        gamma = 130
+        Inequality gamma < alpha + beta is not satisfied with numerical tolerance: 0.0001
+
     """
     parallelepiped_check(a, b, c, alpha, beta, gamma, raise_error=True)
     alpha = alpha * TORADIANS
@@ -139,14 +181,8 @@ def get_params(cell):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Cell matrix, rows are interpreted as vectors.
-
-        .. code-block:: python
-
-            cell = [[a1x, a1y, a1z],
-                    [a2x, a2y, a2z],
-                    [a3x, a3y, a3z]]
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors.
 
     Returns
     -------
@@ -157,11 +193,18 @@ def get_params(cell):
     c : float
         Length of the :math:`\boldsymbol{a_3}` vector.
     alpha : float
-        Angle between vectors :math:`\boldsymbol{a_2}` and :math:`\boldsymbol{a_3}`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_2}` and :math:`\boldsymbol{a_3}`
+        in degrees.
     beta : float
-        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_3}`
+        in degrees.
     gamma : float
-        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`. In degrees.
+        Angle between vectors :math:`\boldsymbol{a_1}` and :math:`\boldsymbol{a_2}`
+        in degrees.
+
+    See Also
+    --------
+    from_params
 
     Examples
     --------
@@ -188,26 +231,29 @@ def get_scalar_products(cell):
     r"""
     Returns pairwise scalar products of the lattice vectors:
 
-    * :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3`
-    * :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3`
-    * :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_2`
-
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Cell matrix, rows are interpreted as vectors.
+        Matrix of a cell, rows are interpreted as vectors.
 
     Returns
     -------
     sp_23 : float
-        Scalar product of the vectors :math:`\boldsymbol{a}_2` and
-        :math:`\boldsymbol{a}_3`.
+        Scalar product of the vectors :math:`\boldsymbol{a}_2\cdot\boldsymbol{a}_3`.
     sp_13 : float
-        Scalar product of the vectors :math:`\boldsymbol{a}_1` and
-        :math:`\boldsymbol{a}_3`.
+        Scalar product of the vectors :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_3`.
     sp_12 : float
-        Scalar product of the vectors :math:`\boldsymbol{a}_1` and
-        :math:`\boldsymbol{a}_2`.
+        Scalar product of the vectors :math:`\boldsymbol{a}_1\cdot\boldsymbol{a}_2`.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> cell = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+        >>> wulf.cell.get_scalar_products(cell)
+        (0.0, 0.0, 0.0)
     """
 
     return (
@@ -219,9 +265,7 @@ def get_scalar_products(cell):
 
 def is_reasonable(cell, eps_lengths=1e-10, eps_volume=1e-5):
     r"""
-    Check if the cell is *reasonable* (not *degenerate*) in the sense of [1]_.
-    Routines of wulfric are tested for reasonable cells and should work as expected if the
-    cell is reasonable. Below we recall the definition of *reasonable* cell from [1]_:
+    Check if the cell is *reasonable* (not *degenerate*) as defined in [1]_.
 
     The sell is *degenerate* if
 
@@ -232,22 +276,14 @@ def is_reasonable(cell, eps_lengths=1e-10, eps_volume=1e-5):
 
     The cell is *reasonable* if it is *not degenerate*.
 
-    Wulfric is tested for reasonable cells with default values of ``eps_lengths`` and
-    ``eps_volume``.
-
-
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Rows are vectors.
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors.
     eps_lengths : float, default 1e-10
-        Default value of :math:`\varepsilon_{lengths}`. We leave the option to change it,
-        but do not recommend to do it unless you know exactly what you are doing and what
-        the result would mean for the functionalities of the whole package.
+        Default value of :math:`\varepsilon_{lengths}`.
     eps_volume : float, default 1e-5
-        Default value of :math:`\varepsilon_{volume}`. We leave the option to change it,
-        but do not recommend to do it unless you know exactly what you are doing and what
-        the result would mean for the functionalities of the whole package.
+        Default value of :math:`\varepsilon_{volume}`.
 
     Returns
     -------

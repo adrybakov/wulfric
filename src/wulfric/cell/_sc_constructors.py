@@ -43,7 +43,7 @@ def CUB(a: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -63,7 +63,7 @@ def FCC(a: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -83,7 +83,7 @@ def BCC(a: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -107,7 +107,7 @@ def TET(a: float, c: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -129,7 +129,7 @@ def BCT(a: float, c: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -157,7 +157,7 @@ def ORC(a: float, b: float, c: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -185,7 +185,7 @@ def ORCF(a: float, b: float, c: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -213,7 +213,7 @@ def ORCI(a: float, b: float, c: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -243,7 +243,7 @@ def ORCC(a: float, b: float, c: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -267,7 +267,7 @@ def HEX(a: float, c: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -293,7 +293,7 @@ def RHL(a: float, alpha: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -335,7 +335,7 @@ def MCL(a: float, b: float, c: float, alpha: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -368,7 +368,7 @@ def MCLC(a: float, b: float, c: float, alpha: float):
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 
@@ -419,7 +419,7 @@ def TRI(
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 

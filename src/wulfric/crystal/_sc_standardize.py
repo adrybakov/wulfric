@@ -37,11 +37,11 @@ def standardize(
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     atoms : dict
         Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
-    S_matrix : (3,3) |array-like|_, optional
+    S_matrix : (3, 3) |array-like|_, optional
         Transformation matrix S.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Default values
@@ -54,7 +54,7 @@ def standardize(
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Standardized cell. Rows are lattice vectors. Independent from the initial cell,
         safe to modify.
 

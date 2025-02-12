@@ -67,7 +67,7 @@ def get_cell_example(
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Rows are lattice vectors.
     """
 

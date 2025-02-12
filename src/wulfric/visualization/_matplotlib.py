@@ -163,8 +163,8 @@ class MatplotlibBackend(AbstractBackend):
 
         Parameters
         ----------
-        cell : (3,3) |array-like|_
-            Primitive unit cell.
+        cell : (3, 3) |array-like|_
+            Matrix of a cell, rows are interpreted as vectors.
         kind : str or list od str
             Type of the plot to be plotted. Supported plots:
 
@@ -279,8 +279,8 @@ class MatplotlibBackend(AbstractBackend):
 
         Parameters
         ----------
-        cell : (3,3) |array-like|_
-            Primitive unit cell.
+        cell : (3, 3) |array-like|_
+            Matrix of a cell, rows are interpreted as vectors.
         vectors : bool, default True
             Whether to plot lattice vectors.
         color : str, default "#274DD1"
@@ -409,8 +409,8 @@ class MatplotlibBackend(AbstractBackend):
 
         Parameters
         ----------
-        cell : (3,3) |array-like|_
-            Primitive unit cell.
+        cell : (3, 3) |array-like|_
+            Matrix of a cell, rows are interpreted as vectors.
         vectors : bool, default True
             Whether to plot lattice vectors.
         color : str, default "black"
@@ -518,8 +518,8 @@ class MatplotlibBackend(AbstractBackend):
 
         Parameters
         ----------
-        cell : (3,3) |array-like|_
-            Primitive unit cell.
+        cell : (3, 3) |array-like|_
+            Matrix of a cell, rows are interpreted as vectors.
         color : str, default "black"
             Colour for the plot. Any format supported by the used backend.
         label : str, optional

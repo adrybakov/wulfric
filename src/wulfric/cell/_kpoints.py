@@ -693,8 +693,8 @@ def get_hs_data(
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Unit cell of the lattice. Rows define lattice vectors.
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors.
     return_relative : bool, default True
         Whether to return coordinates as relative to the reciprocal cell or in absolute
         coordinates in the reciprocal Cartesian space.
@@ -704,9 +704,9 @@ def get_hs_data(
     lattice_variation : str, optional
         One of the lattice variations that correspond to the provided ``cell`` and
         ``lattice_type``. If not provided, then computed automatically. Case-insensitive.
-    S_matrix : (3,3) |array-like|_, optional
+    S_matrix : (3, 3) |array-like|_, optional
         Transformation matrix S.
-    C_matrix : (3,3) |array-like|_, optional
+    C_matrix : (3, 3) |array-like|_, optional
         Transformation matrix C.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Default values

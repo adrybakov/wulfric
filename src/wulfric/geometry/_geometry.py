@@ -63,8 +63,8 @@ def get_volume(*args):
         Second vector.
     v3 : (3,) |array-like|_
         Third vector.
-    cell : (3,3) |array-like|_
-        Cell matrix, rows are interpreted as vectors.
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors.
     a : float, default 1
         Length of the :math:`v_1` vector.
     b : float, default 1
@@ -104,7 +104,7 @@ def get_volume(*args):
     else:
         raise ValueError(
             "Unable to identify input. "
-            + "Supported: one (3,3) array-like, or three (3,) array-like, or 6 floats."
+            + "Supported: one (3, 3) array-like, or three (3,) array-like, or 6 floats."
         )
 
     return float(abs(np.linalg.det(cell)))

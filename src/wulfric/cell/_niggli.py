@@ -271,7 +271,7 @@ def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix, eps):
 def niggli(
     cell,
     eps_relative=1e-5,
-    max_iterations=10000,
+    max_iterations=100000,
     return_transformation_matrix=False,
 ):
     r"""
@@ -281,29 +281,29 @@ def niggli(
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Cell matrix, rows are interpreted as vectors.
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors.
     eps_relative : float, default :math:`10^{-5}`
         Relative epsilon as defined in [2]_.
     max_iterations : int, default 100000
         Maximum number of iterations.
     return_transformation_matrix : bool, default False
-        Whether to return a transformation matrix from given ``cell`` to the niggi reduced
-        cell.
+        Whether to return a transformation matrix from given ``cell`` to the
+        ``niggli_cell``.
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
-        Niggli cell.
-    transformation_matrix : (3,3) :numpy:`ndarray`
+    niggli_cell : (3, 3) :numpy:`ndarray`
+        Matrix of a niggli reduced cell, rows are interpreted as vectors.
+    transformation_matrix : (3, 3) :numpy:`ndarray`
         Returned only if ``return_transformation_matrix`` is ``True``.
 
     Raises
     ------
-    ValueError
+    wulfric.exceptions.NiggliReductionFailed
         If the niggli cell is not found in ``max_iterations`` iterations.
     ValueError
-        If the provided cell`s volume is zero.
+        If the volume of ``cell`` is zero.
 
     References
     ----------
@@ -316,6 +316,38 @@ def niggli(
         Numerically stable algorithms for the computation of reduced unit cells.
         Acta Crystallographica Section A: Foundations of Crystallography,
         60(1), pp.1-6.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.niggli([[1, -0.5, 0],[-0.5, 1, 0],[0, 0, 1]])
+        array([[ 0.5,  0.5,  0. ],
+               [ 0. ,  0. , -1. ],
+               [-1. ,  0.5,  0. ]])
+
+    Example from [1]_ (parameters are reproducing :math:`A=9`, :math:`B=27`, :math:`C=4`,
+    :math:`\xi` = -5, :math:`\eta` = -4, :math:`\zeta = -22`):
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> from wulfric.constants import TODEGREES
+        >>> from math import sqrt, acos
+        >>> a = 3
+        >>> b = sqrt(27)
+        >>> c = 2
+        >>> alpha = acos(-5 / 2 / b / c) * TODEGREES
+        >>> beta = acos(-4 / 2 / a / c) * TODEGREES
+        >>> gamma = acos(-22 / 2 / a / b) * TODEGREES
+        >>> cell = wulf.cell.from_params(a, b, c, alpha, beta, gamma)
+        >>> niggli_cell = wulf.cell.niggli(cell)
+        >>> niggli_cell @ niggli_cell.T
+        array([[4. , 2. , 1.5],
+               [2. , 9. , 4.5],
+               [1.5, 4.5, 9. ]])
 
     """
 

@@ -136,17 +136,17 @@ class Kpoints:
 
         Parameters
         ----------
-        cell : (3,3) |array-like|_
-            Unit cell of the lattice. Rows define lattice vectors.
+        cell : (3, 3) |array-like|_
+            Matrix of a cell, rows are interpreted as vectors.
         lattice_type : str, optional
             One of the 14 lattice types that correspond to the provided ``cell``.
             If not provided, then computed automatically. Case-insensitive.
         lattice_variation : str, optional
             One of the lattice variations that correspond to the provided ``cell`` and
             ``lattice_type``. If not provided, then computed automatically. Case-insensitive.
-        S_matrix : (3,3) |array-like|_, optional
+        S_matrix : (3, 3) |array-like|_, optional
             Transformation matrix S.
-        C_matrix : (3,3) |array-like|_, optional
+        C_matrix : (3, 3) |array-like|_, optional
             Transformation matrix C.
         length_tolerance : float, default :math:`10^{-8}`
             Tolerance for length variables (lengths of the lattice vectors). Default values

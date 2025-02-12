@@ -45,8 +45,8 @@ def _CUB_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -58,7 +58,7 @@ def _CUB_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`.
 
     Notes
@@ -82,8 +82,8 @@ def _FCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -95,7 +95,7 @@ def _FCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`.
 
     Notes
@@ -119,8 +119,8 @@ def _BCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -132,7 +132,7 @@ def _BCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`.
 
     Notes
@@ -156,8 +156,8 @@ def _TET_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors).
     angle_tolerance : float, default :math:`10^{-4}`
@@ -167,7 +167,7 @@ def _TET_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
 
     Notes
@@ -213,8 +213,8 @@ def _BCT_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) :numpy:`ndarray`
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -224,7 +224,7 @@ def _BCT_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
 
     Notes
@@ -271,8 +271,8 @@ def _ORC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors).
     angle_tolerance : float, default :math:`10^{-4}`
@@ -282,7 +282,7 @@ def _ORC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
 
     Notes
@@ -340,8 +340,8 @@ def _ORCF_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors).
     angle_tolerance : float, default :math:`10^{-4}`
@@ -351,7 +351,7 @@ def _ORCF_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
 
     Notes
@@ -410,8 +410,8 @@ def _ORCI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -421,7 +421,7 @@ def _ORCI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
 
     Notes
@@ -480,8 +480,8 @@ def _ORCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -491,7 +491,7 @@ def _ORCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
 
     Notes
@@ -563,8 +563,8 @@ def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -574,7 +574,7 @@ def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
 
     Notes
@@ -632,8 +632,8 @@ def _RHL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -645,7 +645,7 @@ def _RHL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
 
     Notes
@@ -669,8 +669,8 @@ def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors).
     angle_tolerance : float, default :math:`10^{-4}`
@@ -678,7 +678,7 @@ def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
 
     Notes
@@ -753,8 +753,8 @@ def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors).
     angle_tolerance : float, default :math:`10^{-4}`
@@ -762,7 +762,7 @@ def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
 
     Notes
@@ -827,8 +827,8 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -838,7 +838,7 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
 
     Notes
@@ -949,8 +949,8 @@ def get_S_matrix(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
     lattice_type : str, optional
         One of the 14 lattice types that correspond to the provided ``cell``.
         If not provided, then computed automatically. Case-insensitive.
@@ -965,7 +965,7 @@ def get_S_matrix(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance
 
     Returns
     -------
-    S : (3,3) :numpy:`ndarray`
+    S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
     """
     cell = np.array(cell, dtype=float)
@@ -1012,7 +1012,7 @@ def get_C_matrix(lattice_type):
 
     Returns
     -------
-    C_matrix : (3,3) :numpy:`ndarray`
+    C_matrix : (3, 3) :numpy:`ndarray`
     """
 
     return C_MATRICES[lattice_type.upper()]
@@ -1026,9 +1026,9 @@ def get_standardized(cell, S_matrix=None, length_tolerance=1e-8, angle_tolerance
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
-    S_matrix : (3,3) |array-like|_, optional
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
+    S_matrix : (3, 3) |array-like|_, optional
         Transformation matrix S.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Default values
@@ -1041,7 +1041,7 @@ def get_standardized(cell, S_matrix=None, length_tolerance=1e-8, angle_tolerance
 
     Returns
     -------
-    cell : (3,3) :numpy:`ndarray`
+    cell : (3, 3) :numpy:`ndarray`
         Standardized cell. Rows are lattice vectors. Independent from the initial cell,
         safe to modify.
 
@@ -1088,11 +1088,11 @@ def get_conventional(
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Primitive unit cell.
-    S_matrix : (3,3) |array-like|_, optional
+    cell : (3, 3) |array-like|_
+        Matrix of a primitive cell, rows are interpreted as vectors.
+    S_matrix : (3, 3) |array-like|_, optional
         Transformation matrix S.
-    C_matrix : (3,3) |array-like|_, optional
+    C_matrix : (3, 3) |array-like|_, optional
         Transformation matrix C.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Default values

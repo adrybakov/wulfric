@@ -161,8 +161,8 @@ def dump_poscar(
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_,
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_,
+        Matrix of a cell, rows are interpreted as vectors.
     atoms : dict
         Dictionary with atoms. Must have a ``"position"`` with value of (N,3)
         |array-like|_. Must have either ``"names"`` key with value of ``list`` of ``str``

@@ -264,22 +264,28 @@ def _check_mcl(angles, axes, angle_tolerance, cell):
 ################################################################################
 #                                    LePage                                    #
 ################################################################################
-def lepage(cell, angle_tolerance=1e-4, give_all_results=False, _limit=3.0):
+def lepage(
+    cell, angle_tolerance=1e-4, give_all_results=False, no_niggli=False, _limit=3.0
+):
     r"""
-    Le Page algorithm [1]_. More details are described in :ref:`library_lepage`.
+    Detect Bravais lattice type with the Le Page algorithm [1]_.
+
+    Details of the implementation are written in :ref:`library_lepage`.
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_
-        Cell matrix, rows are interpreted as vectors.
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors.
     angle_tolerance : float, default 1e-4
-        Angle tolerance for the search of the actual symmetry axes. Given in degrees.
-        Modulus is used. It is recommended to reduce ``angle_tolerance`` to account for
-        the finite precision of the given cell's angles.
+        Angle tolerance for the search of the actual symmetry axes in degrees.
+        It is recommended to reduce ``angle_tolerance`` to account for the finite
+        precision of the angles of the ``cell``.
     give_all_results : bool, default False
         Whether to return the list of Bravais lattice types identified during the
         process of exclusion of the pseudosymmetry axes. Last element is the computed
         Bravais lattice type.
+    no_niggli : bool, default False
+        Whether to skip niggli reduction.
     _limit : float, default 3.0
         Tolerance parameter for the construction of the list of potential symmetry axes.
         Given in degrees. Change with caution and only if you understand what this
@@ -298,21 +304,35 @@ def lepage(cell, angle_tolerance=1e-4, give_all_results=False, _limit=3.0):
         The derivation of the axes of the conventional unit cell from
         the dimensions of the Buerger-reduced cell.
         Journal of Applied Crystallography, 15(3), pp.255-259.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.lepage([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+        'CUB'
+        >>> wulf.cell.lepage([[1, 0, 0], [0, 1, 0], [0, 0, 2]])
+        'TET'
+        >>> wulf.cell.lepage([[1, 0, 0], [0, 2, 0], [0, 0, 3]])
+        'ORC'
     """
 
     # Safeguard to avoid infinite loops
     angle_tolerance = abs(angle_tolerance)
 
-    # Niggli reduction
-    try:
-        cell = niggli(cell=cell)
-    except NiggliReductionFailed:
-        import warnings
+    if not no_niggli:
+        # Niggli reduction
+        try:
+            cell = niggli(cell=cell)
+        except NiggliReductionFailed:
+            import warnings
 
-        warnings.warn(
-            "LePage algorithm: Niggli reduction failed, using input cell",
-            RuntimeWarning,
-        )
+            warnings.warn(
+                "LePage algorithm: Niggli reduction failed, using input cell",
+                RuntimeWarning,
+            )
 
     rcell = get_reciprocal(cell)
 

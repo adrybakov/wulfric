@@ -43,8 +43,9 @@ def shift_atoms(atoms, gravity_point=(0.5, 0.5, 0.5), cell=None, gp_is_relative=
         Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
     gravity_point : (3,) |array-like|_, default (0.5, 0.5, 0.5)
         Relative coordinates of the gravity point.
-    cell : (3,3) |array-like|_, optional
-        Primitive unit cell. Required if ``gp_is_relative = False``.
+    cell : (3, 3) |array-like|_, optional
+        Matrix of a cell, rows are interpreted as vectors. Required if
+        ``gp_is_relative = False``.
     gp_is_relative : bool, default True
         Whether the ``gravity_point`` is given in relative coordinates.
 
@@ -128,8 +129,8 @@ def get_vector(cell, atoms, atom1, atom2, R=(0, 0, 0), return_relative=False):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_,
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_,
+        Matrix of a cell, rows are interpreted as vectors.
     atoms : dict
         Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
     atom1 : int
@@ -163,8 +164,8 @@ def get_distance(cell, atoms, atom1, atom2, R=(0, 0, 0)):
 
     Parameters
     ----------
-    cell : (3,3) |array-like|_,
-        Primitive unit cell.
+    cell : (3, 3) |array-like|_,
+        Matrix of a cell, rows are interpreted as vectors.
     atoms : dict
         Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
     atom1 : int

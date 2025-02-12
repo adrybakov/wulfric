@@ -167,8 +167,8 @@ class PlotlyBackend(AbstractBackend):
 
         Parameters
         ----------
-        cell : (3,3) |array-like|_
-            Primitive unit cell.
+        cell : (3, 3) |array-like|_
+            Matrix of a cell, rows are interpreted as vectors.
         vectors : bool, default True
             Whether to plot lattice vectors.
         color : str, default "#274DD1"
@@ -300,8 +300,8 @@ class PlotlyBackend(AbstractBackend):
 
         Parameters
         ----------
-        cell : (3,3) |array-like|_
-            Primitive unit cell.
+        cell : (3, 3) |array-like|_
+            Matrix of a cell, rows are interpreted as vectors.
         vectors : bool, default True
             Whether to plot lattice vectors.
         label : str, optional
@@ -410,8 +410,8 @@ class PlotlyBackend(AbstractBackend):
 
         Parameters
         ----------
-        cell : (3,3) |array-like|_
-            Primitive unit cell.
+        cell : (3, 3) |array-like|_
+            Matrix of a cell, rows are interpreted as vectors.
         color : str, default "#000000"
             Colour for the plot. Any format supported by the used backend.
         label : str, optional
