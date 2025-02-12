@@ -40,7 +40,7 @@ The functionality of wulfric includes (but not limited to):
 
 * Set of useful functions for :ref:`user-guide_usage_cell`, :ref:`user-guide_usage_crystal`.
 
-* Standalone :py:func:`.lepage` and :py:func:`.niggli` algorithms.
+* Implementation of the :py:func:`.lepage` and :py:func:`.niggli` algorithms.
 
 ************
 Installation
