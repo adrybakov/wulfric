@@ -29,9 +29,7 @@ old_dir.add("old_dir")
 
 def logo(info=None, line_length=None, flat=False, date_time=False, comment=None):
     """
-    Logo generator for wulfric package.
-
-    Returns the logo and information about the package.
+    Generates logo of wulfric with some information about the package
 
     Parameters
     ----------
@@ -52,10 +50,25 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
         Whether to use some character at the end of each string. If bool and
         True, then "# " is used. If str, then this string is used. If None, then
         no character is used.
+
     Returns
     -------
     logo_info : str
         Logo and information about the package.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> print(wulf.logo(info=[]))
+        ██╗      ██╗ ██╗   ██╗ ██╗      ███████╗ ██████╗  ██╗  ██████╗
+        ██║      ██║ ██║   ██║ ██║      ██╔════╝ ██╔══██╗ ██║ ██╔════╝
+        ██║  █╗  ██║ ██║   ██║ ██║      █████╗   ██████╔╝ ██║ ██║
+        ██║ ███╗ ██║ ██║   ██║ ██║      ██╔══╝   ██╔══██╗ ██║ ██║
+        ╚███╔══███╔╝ ╚██████╔╝ ███████╗ ██║      ██║  ██║ ██║ ╚██████╗
+        ╚══╝  ╚══╝   ╚═════╝  ╚══════╝ ╚═╝      ╚═╝  ╚═╝ ╚═╝  ╚═════╝
     """
     if info is None:
         info = [
@@ -134,9 +147,9 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
     return "".join(logo_info)[:-1]
 
 
-def copyright():
+def _copyright():
     r"""
-    Output short license summary for terminal interactions
+    Outputs short license summary for terminal interactions
     """
 
     return f"""Wulfric Copyright (C) 2023-{datetime.now().year}  Andrey Rybakov
@@ -145,7 +158,7 @@ This is free software, and you are welcome to redistribute it
 under certain conditions; type 'wulfric conditions' for details."""
 
 
-def warranty():
+def _warranty():
     r"""
     Output short warranty summary for terminal interactions
     """

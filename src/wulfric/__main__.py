@@ -50,7 +50,7 @@ def main():
     elif args.command == "logo":
         print(logo())
     elif args.command == "warranty":
-        print("\n" + warranty() + "\n")
+        print("\n" + _warranty() + "\n")
     elif args.command is None:
         parser.print_help()
     else:

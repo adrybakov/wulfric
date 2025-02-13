@@ -24,9 +24,8 @@ old_dir.add("old_dir")
 class StandardizationTypeMismatch(Exception):
     r"""
     Raised if standardization functions is called on the cell that does not match the
-    expected lattice type (i.e. :py:func:`.TET_get_S_matrix` is called on the cubic cell).
-
-    .. versionadded:: 0.4.0
+    expected lattice type. It is not guaranteed to be raised if the lattice type is
+    incorrect.
     """
 
     def __init__(self, expected_lattice_type, step=None):
@@ -54,7 +53,7 @@ class FailedToDeduceAtomSpecies(Exception):
 
 class NiggliReductionFailed(Exception):
     r"""
-    Raised when the niggli reduction reaches ``max_iterations``.
+    Raised when niggli reduction reaches ``max_iterations``.
     """
 
     def __init__(self, max_iterations: int):

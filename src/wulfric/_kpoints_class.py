@@ -177,12 +177,8 @@ class Kpoints:
             angle_tolerance=angle_tolerance,
         )
 
-        b1, b2, b3 = get_reciprocal(cell)
-
         return Kpoints(
-            b1=b1,
-            b2=b2,
-            b3=b3,
+            get_reciprocal(cell),
             coordinates=coordinates,
             names=names,
             labels=labels,

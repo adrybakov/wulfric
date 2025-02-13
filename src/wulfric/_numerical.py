@@ -23,7 +23,7 @@ old_dir.add("old_dir")
 
 def compare_numerically(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
     r"""
-    Compare two numbers numerically.
+    Compares two numbers with given accuracy.
 
     The formal definition is taken from [1]_:
 
@@ -61,7 +61,7 @@ def compare_numerically(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
     Returns
     -------
     result: bool
-        Whether the condition is satisfied.
+        Whether the ``condition`` is satisfied within given tolerance.
 
     Raises
     ------
@@ -74,6 +74,17 @@ def compare_numerically(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
         Numerically stable algorithms for the computation of reduced unit cells.
         Acta Crystallographica Section A: Foundations of Crystallography,
         60(1), pp.1-6.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.compare_numerically(1, "==", 1.0000001, eps=1e-6)
+        True
+        >>> wulf.compare_numerically(1, "==", 1.0000001, eps=1e-8)
+        False
     """
 
     if eps is None:

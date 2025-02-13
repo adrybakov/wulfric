@@ -38,12 +38,12 @@ def print_2d_array(
     footer_column=None,
 ):
     r"""
-    Print 1D and 2D arrays in the terminal.
+    Decorates 1D and 2D arrays.
 
     Parameters
     ----------
     array : (N,) or (N, M) |array-like|_
-        Array to be printed.
+        Array to be decorated.
     fmt : str, default ">.2f"
         Format string.
     highlight : bool, default False
@@ -71,6 +71,50 @@ def print_2d_array(
     string : str
         String representation of the array.
         Returned only if ``print_result`` is False.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> array = [[1, 2], [3, 4], [5, 6]]
+        >>> wulf.print_2d_array(array)
+        ┌──────┬──────┐
+        │ 1.00 │ 2.00 │
+        ├──────┼──────┤
+        │ 3.00 │ 4.00 │
+        ├──────┼──────┤
+        │ 5.00 │ 6.00 │
+        └──────┴──────┘
+        >>> wulf.print_2d_array(array, header_column=["a", "B", "c"], header_row = ["", "A", "B"])
+        ┌───┬──────┬──────┐
+        │   │    A │    B │
+        ├───┼──────┼──────┤
+        │ a │ 1.00 │ 2.00 │
+        ├───┼──────┼──────┤
+        │ B │ 3.00 │ 4.00 │
+        ├───┼──────┼──────┤
+        │ c │ 5.00 │ 6.00 │
+        └───┴──────┴──────┘
+        >>> array[1][1] = None
+        >>> wulf.print_2d_array(array)
+        ┌──────┬──────┐
+        │ 1.00 │ 2.00 │
+        ├──────┼──────┤
+        │ 3.00 │      │
+        ├──────┼──────┤
+        │ 5.00 │ 6.00 │
+        └──────┴──────┘
+        >>> array = [[1, 2 + 1j], [3, 4], [52, 6]]
+        >>> wulf.print_2d_array(array)
+        ┌───────┬──────────────┐
+        │  1.00 │ 2.00 + i1.00 │
+        ├───────┼──────────────┤
+        │  3.00 │ 4.00         │
+        ├───────┼──────────────┤
+        │ 52.00 │ 6.00         │
+        └───────┴──────────────┘
     """
 
     top_border = ("┌", "┬", "┐")
