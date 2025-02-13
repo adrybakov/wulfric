@@ -34,30 +34,47 @@ old_dir.add("old_dir")
 
 def load_poscar(file_object=None, return_comment=False):
     r"""
-    Read the crystal structure from the |POSCAR|_ file.
+    Reads crystal structure from the |POSCAR|_ file.
 
     Parameters
     ----------
     file_object : str of file-like object, optional
         File to be read. If str, then file is opened with the given name.
-        Otherwise it has to have ``.readlines()`` method.
-        By default it looks for the "POSCAR" file in the current directory.
-        Behaviour for ``str``:
+        Otherwise it has to have ``.readlines()`` method. By default it looks for the
+        "POSCAR" file in the current directory. Behaviour for ``str``:
 
-        * Tries to open the file with the name given by the ``file_object``.
-        * Tries to open the file with the name "POSCAR" in the directory given by the ``file_object``.
+        * Tries to open the file with the name  ``file_object``.
+        * Tries to open the file with the name "POSCAR" in the directory ``file_object``.
+
     return_comment : bool, default False
-        Whether to return the comment from the first line of the file.
+        Whether to return the comment from the first line of the POSCAR file.
 
     Returns
     -------
     cell : (3, 3) :numpy:`ndarray`
-        Cell of the crystal structure.
+        Cell of a crystal structure, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
     atoms : dict
         Atoms of the crystal structure.
         Positions are always relative to the cell.
     comment : str
         Comment from the first line of the file. If ``return_comment`` is ``True``.
+
+    Examples
+    --------
+
+    .. doctest::
+
+    >>> # Load a POSCAR file
+    >>> cell, atoms = wulf.io.load_poscar('POSCAR') # doctest: +SKIP
+    >>> # It can return the comment from the file as well:
+    >>> cell, atoms, comment = wulf.io.load_poscar('POSCAR', return_comment=True) # doctest: +SKIP
+
     """
 
     # Open file if needed
@@ -157,14 +174,14 @@ def dump_poscar(
     mode: str = "Direct",
 ):
     r"""
-    Write crystal structure to the |POSCAR|_ file.
+    Writes crystal structure to the |POSCAR|_ file.
 
     Parameters
     ----------
     cell : (3, 3) |array-like|_,
         Matrix of a cell, rows are interpreted as vectors.
     atoms : dict
-        Dictionary with atoms. Must have a ``"position"`` with value of (N,3)
+        Dictionary with atoms. Must have a ``"positions"`` with value of (N,3)
         |array-like|_. Must have either ``"names"`` key with value of ``list`` of ``str``
         of length N or ``"species"`` key with value of ``list`` of ``str`` of length N.
         If ``"species"`` key is not present, try to deduce atom's species from
@@ -179,6 +196,21 @@ def dump_poscar(
         Number of decimals to be written.
     mode : str, default "Direct"
         Mode of the coordinates to be written. Can be "Direct" or "Cartesian".
+
+    Examples
+    --------
+
+    .. doctest::
+
+    >>> # Dump a POSCAR file
+    >>> wulf.io.dump_poscar(cell, atoms, 'POSCAR') # doctest: +SKIP
+    >>> # If you want to write a comment as well:
+    >>> wulf.io.dump_poscar(cell, atoms, 'POSCAR', comment='This is a comment') # doctest: +SKIP
+    >>> # You can control the amount of decimals in the output:
+    >>> wulf.io.dump_poscar(cell, atoms, 'POSCAR', decimals=6) # doctest: +SKIP
+    >>> # You can switch the mode of coordinates between 'Cartesian' and 'Direct' (default):
+    >>> wulf.io.dump_poscar(cell, atoms, 'POSCAR', mode="Cartesian") # doctest: +SKIP
+
     """
 
     cell = np.array(cell, dtype=float)
