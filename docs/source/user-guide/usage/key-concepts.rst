@@ -91,9 +91,9 @@ Keys recognized by wulfric:
     ``list`` of *relative* coordinates of atoms. Each element is an |array-like|_ of the
     length :math:`3`.
 
-Wulfric recognize only a few keys, however, we invite you to extend the ``atoms``
+Wulfric recognizes only a few keys, however, we invite you to extend the ``atoms``
 to your needs. Here is a list a few of the potential keys that are not used by any of
-wulfric's functions, but might be useful or might be used by wulfric in the future.
+wulfric's functions, but may be useful or be used by wulfric in the future.
 
 
 * "spin_vectors"
@@ -110,7 +110,7 @@ the user-defined ones intact.
 Crystal
 =======
 
-Crystal is a simply a pair of ``cell`` and ``atoms``. We do not introduce any new
+Crystal is simply a pair of ``cell`` and ``atoms``. We do not introduce any new
 structure for the crystal (not even a tuple ``(cell, atoms)``). If necessary the user must
 provide two variables: ``cell`` and ``atoms``. ``atoms["positions"]`` are always
 interpreted by wulfric as relative with respect to ``cell``.
