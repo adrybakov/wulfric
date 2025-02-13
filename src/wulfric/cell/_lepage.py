@@ -277,9 +277,11 @@ def lepage(
     cell : (3, 3) |array-like|_
         Matrix of a cell, rows are interpreted as vectors.
     angle_tolerance : float, default 1e-4
-        Angle tolerance for the search of the actual symmetry axes in degrees.
-        It is recommended to reduce ``angle_tolerance`` to account for the finite
-        precision of the angles of the ``cell``.
+        Angle tolerance for the search of the actual symmetry axes. It is recommended to
+        reduce ``angle_tolerance`` to account for the finite precision of the angles of
+        the ``cell``. Default value is chosen in the contexts of condense matter physics,
+        assuming that angles are in degrees. Please choose appropriate tolerance for your
+        problem.
     give_all_results : bool, default False
         Whether to return the list of Bravais lattice types identified during the
         process of exclusion of the pseudosymmetry axes. Last element is the computed

@@ -85,7 +85,9 @@ def _ORCF_variation(conv_a: float, conv_b: float, conv_c: float, length_toleranc
     conv_c : float
         Length of the :math:`a_3` vector of the conventional cell.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors).
+        Tolerance for length variables (lengths of the lattice vectors). Default value is
+        chosen in the contexts of condense matter physics, assuming that length is given
+        in Angstroms. Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -125,9 +127,12 @@ def _RHL_variation(conv_alpha: float, angle_tolerance=1e-4):
     Parameters
     ----------
     conv_alpha : float
-        Angle between vectors :math:`a_1` and :math:`a_2` of the conventional cell. In degrees.
+        Angle between vectors :math:`a_1` and :math:`a_2` of the conventional cell in
+        degrees.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice).
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -176,13 +181,18 @@ def _MCLC_variation(
     conv_c : float
         Length of the :math:`a_3` vector of the conventional cell.
     conv_alpha : float
-        Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell. In degrees.
+        Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell in
+        degrees.
     k_gamma : float
         Angle between reciprocal vectors :math:`b_1` and :math:`b_2`. In degrees.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors).
+        Tolerance for length variables (lengths of the lattice vectors). Default value is
+        chosen in the contexts of condense matter physics, assuming that length is given
+        in Angstroms. Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice).
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -193,17 +203,18 @@ def _MCLC_variation(
     Raises
     ------
     ValueError
-        If :math:`\alpha > 90^{\circ}` or :math:`a > c` or :math:`b > c` with given tolerance ``eps``.
+        If :math:`\alpha > 90^{\circ}` or :math:`a > c` or :math:`b > c` with given
+        tolerance ``eps``.
     """
 
     if compare_numerically(
         conv_alpha, ">", 90, eps=angle_tolerance
     ) or compare_numerically(conv_b, ">", conv_c, eps=length_tolerance):
         raise ValueError(
-            f"alpha > 90 or  or b > c with {eps} tolerance:\n"
+            f"alpha > 90 or or b > c with {angle_tolerance} or {length_tolerance} tolerance:\n"
             + f"  alpha = {conv_alpha}\n"
             + f"  b = {conv_b}\n"
-            + f"  c = {conv_c}\n"
+            + f"  c = {conv_c}"
         )
 
     conv_alpha *= TORADIANS
@@ -248,7 +259,9 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, angle_toleranc
     k_gamma : float
         Angle between reciprocal vectors :math:`b_1` and :math:`b_2`. In degrees.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice).
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -259,7 +272,8 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, angle_toleranc
     Raises
     ------
     ValueError
-        If :math:`k_{\alpha} == 90^{\circ}` or :math:`k_{\beta} == 90^{\circ}` with given tolerance ``eps``.
+        If :math:`k_{\alpha} == 90^{\circ}` or :math:`k_{\beta} == 90^{\circ}` with given
+        tolerance ``eps``.
     """
 
     if compare_numerically(
@@ -299,28 +313,54 @@ def get_variation(cell, lattice_type=None, length_tolerance=1e-8, angle_toleranc
     cell : (3, 3) |array-like|_
         Matrix of a primitive cell, rows are interpreted as vectors.
     lattice_type : str, optional
-        One of the 14 lattice types that correspond to the provided ``cell``.
-        If not provided, then computed automatically. Case-insensitive.
+        One of the 14 lattice types that correspond to the provided ``cell``,
+        case-insensitive. If not provided, then computed automatically from ``cell``. If
+        provided, then it user's responsibility to ensure that ``lattice_type`` is
+        correct.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors). Default values
-        are chosen for the contexts of condense matter physics, where Angstroms are used.
-        Please choose appropriate tolerance for your problem.
+        Tolerance for length variables (lengths of the lattice vectors). Default value is
+        chosen in the contexts of condense matter physics, assuming that length is given
+        in Angstroms. Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Default values are chosen
-        for the contexts of condense matter physics, where Angstroms are used. Please
-        choose appropriate tolerance for your problem.
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
     variation : str
         Variation of the lattice defined by the ``cell``.
 
-
     References
     ----------
     .. [1] Setyawan, W. and Curtarolo, S., 2010.
         High-throughput electronic band structure calculations: Challenges and tools.
-        Computational materials science, 49(2), pp.299-312.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> # There is no variation of cubic lattice, therefore, just lattice type is
+        >>> # returned
+        >>> wulf.cell.get_variation([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+        'CUB'
+        >>> cell = wulf.cell.get_cell_example("bct")
+        >>> wulf.cell.get_variation(cell)
+        'BCT1'
+        >>> # If lattice type is given and it is incorrect, then the behaviour is undefined.abs
+        >>> # It may return wrong result
+        >>> wulf.cell.get_variation(cell, lattice_type="cub")
+        'CUB'
+        >>> # Or give an error
+        >>> wulf.cell.get_variation(cell, lattice_type="mclc")
+        Traceback (most recent call last):
+        ...
+        ValueError: alpha > 90 or or b > c with 0.0001 or 1e-08 tolerance:
+        ...
+
     """
 
     cell = np.array(cell, dtype=float)

@@ -295,6 +295,13 @@ def niggli(
     -------
     niggli_cell : (3, 3) :numpy:`ndarray`
         Matrix of a niggli reduced cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            niggli_cell = [[a1_x, a1_y, a1_z],
+                           [a2_x, a2_y, a2_z],
+                           [a3_x, a3_y, a3_z]]
+
     transformation_matrix : (3, 3) :numpy:`ndarray`
         Returned only if ``return_transformation_matrix`` is ``True``.
 

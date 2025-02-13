@@ -37,6 +37,17 @@ def get_name(lattice_type):
     -------
     name : str
         Name of the Bravais lattice type.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.get_name("CUB")
+        'Cubic'
+        >>> wulf.cell.get_name("MCLC")
+        'C-centered monoclinic'
     """
 
     return BRAVAIS_LATTICE_NAMES[lattice_type.upper()]
@@ -59,6 +70,21 @@ def get_pearson_symbol(lattice_type):
     Notes
     -----
     See: |PearsonSymbol|_
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.get_pearson_symbol("CUB")
+        'cP'
+        >>> wulf.cell.get_pearson_symbol("MCLC")
+        'mS'
+        >>> wulf.cell.get_pearson_symbol("Tri")
+        'aP'
+        >>> wulf.cell.get_pearson_symbol("ORCC")
+        'oS'
     """
 
     return PEARSON_SYMBOLS[lattice_type.upper()]
@@ -81,6 +107,21 @@ def get_crystal_family(lattice_type):
     Notes
     -----
     See: |PearsonSymbol|_
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.get_crystal_family("CUB")
+        'c'
+        >>> wulf.cell.get_crystal_family("MCLC")
+        'm'
+        >>> wulf.cell.get_crystal_family("Tri")
+        'a'
+        >>> wulf.cell.get_crystal_family("ORCC")
+        'o'
     """
 
     return PEARSON_SYMBOLS[lattice_type.upper()][0]
@@ -103,6 +144,23 @@ def get_centring_type(lattice_type):
     Notes
     -----
     See: |PearsonSymbol|_
+
+
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.get_centring_type("CUB")
+        'P'
+        >>> wulf.cell.get_centring_type("MCLC")
+        'S'
+        >>> wulf.cell.get_centring_type("Tri")
+        'P'
+        >>> wulf.cell.get_centring_type("ORCC")
+        'S'
     """
 
     return PEARSON_SYMBOLS[lattice_type.upper()][1]

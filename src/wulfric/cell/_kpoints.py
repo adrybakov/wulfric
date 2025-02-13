@@ -127,9 +127,9 @@ def _BCT_hs_points(variation, conv_a, conv_c):
     variation : str
         BCT variation. Case-insensitive.
     conv_a : float
-        Length of the lattice vector of the conventional cell.
+        Length of the first two lattice vectors of the conventional cell.
     conv_c : float
-        Length of the lattice vector of the conventional cell.
+        Length of the third lattice vector of the conventional cell.
 
     Returns
     -------
@@ -202,11 +202,11 @@ def _ORCF_hs_points(variation, conv_a, conv_b, conv_c):
     variation : str
         ORCF variation. Case-insensitive.
     conv_a : float
-        Length of the lattice vector of the conventional cell.
+        Length of the first lattice vector of the conventional cell.
     conv_b : float
-        Length of the lattice vector of the conventional cell.
+        Length of the second lattice vector of the conventional cell.
     conv_c : float
-        Length of the lattice vector of the conventional cell.
+        Length of the third lattice vector of the conventional cell.
 
     Returns
     -------
@@ -276,11 +276,11 @@ def _ORCI_hs_points(conv_a, conv_b, conv_c):
     Parameters
     ----------
     conv_a : float
-        Length of the lattice vector of the conventional cell.
+        Length of the first lattice vector of the conventional cell.
     conv_b : float
-        Length of the lattice vector of the conventional cell.
+        Length of the second lattice vector of the conventional cell.
     conv_c : float
-        Length of the lattice vector of the conventional cell.
+        Length of the third lattice vector of the conventional cell.
 
     Returns
     -------
@@ -319,9 +319,9 @@ def _ORCC_hs_points(conv_a, conv_b):
     Parameters
     ----------
     conv_a : float
-        Length of the lattice vector of the conventional cell.
+        Length of the first lattice vector of the conventional cell.
     conv_b : float
-        Length of the lattice vector of the conventional cell.
+        Length of the second lattice vector of the conventional cell.
 
     Returns
     -------
@@ -434,9 +434,9 @@ def _MCL_hs_points(conv_b, conv_c, conv_alpha):
     Parameters
     ----------
     conv_b : float
-        Length of the lattice vector of the conventional cell.
+        Length of the second lattice vector of the conventional cell.
     conv_c : float
-        Length of the lattice vector of the conventional cell.
+        Length of the third lattice vector of the conventional cell.
     conv_alpha : float
         Angle between the lattice vectors.
 
@@ -481,11 +481,11 @@ def _MCLC_hs_points(variation, conv_a, conv_b, conv_c, conv_alpha):
     variation : str
         MCLC variation.  Case-insensitive.
     conv_a : float
-        Length of the lattice vector of the conventional cell.
+        Length of the first lattice vector of the conventional cell.
     conv_b : float
-        Length of the lattice vector of the conventional cell.
+        Length of the second lattice vector of the conventional cell.
     conv_c : float
-        Length of the lattice vector of the conventional cell.
+        Length of the third lattice vector of the conventional cell.
     conv_alpha : float
         Angle between the lattice vectors.
 
@@ -689,7 +689,8 @@ def get_hs_data(
     angle_tolerance=1e-4,
 ):
     r"""
-    Return high symmetry points for the cell as defined in SC paper.
+    Return information about high symmetry points and path as defined in the paper by
+    Setyawan and Curtarolo [1]_.
 
     Parameters
     ----------
@@ -699,37 +700,70 @@ def get_hs_data(
         Whether to return coordinates as relative to the reciprocal cell or in absolute
         coordinates in the reciprocal Cartesian space.
     lattice_type : str, optional
-        One of the 14 lattice types that correspond to the provided ``cell``.
-        If not provided, then computed automatically. Case-insensitive.
+        One of the 14 lattice types that correspond to the provided ``cell``,
+        case-insensitive. If not provided, then computed automatically from ``cell``. If
+        provided, then it user's responsibility to ensure that ``lattice_type`` is
+        correct.
     lattice_variation : str, optional
         One of the lattice variations that correspond to the provided ``cell`` and
         ``lattice_type``. If not provided, then computed automatically. Case-insensitive.
     S_matrix : (3, 3) |array-like|_, optional
-        Transformation matrix S.
+        Transformation matrix S. If not provided, then computed automatically from
+        ``cell``. If provided, then it is user's responsibility to ensure that the matrix
+        is the correct one for the given ``cell``.
     C_matrix : (3, 3) |array-like|_, optional
-        Transformation matrix C.
+        Transformation matrix C. If not provided, then computed automatically from
+        ``cell``. If provided, then it is user's responsibility to ensure that the matrix
+        is the correct one for the given ``cell``.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors). Default values
-        are chosen for the contexts of condense matter physics, where Angstroms are used.
-        Please choose appropriate tolerance for your problem.
+        Tolerance for length variables (lengths of the lattice vectors).  Default value is
+        chosen in the contexts of condense matter physics, assuming that length is given
+        in Angstroms. Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Default values are chosen
-        for the contexts of condense matter physics, where Angstroms are used. Please
-        choose appropriate tolerance for your problem.
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
-    coordinates : list, optional
-        Coordinates are given in relative coordinates in reciprocal space.
-    names: list, optional
-        Names of the high symmetry points. Used for programming, not for plotting.
-    labels : list, optional
-        List of the high symmetry points labels for plotting.
-        Has to have the same length as ``coordinates``. Labels are not necessary equal
-        to the names.
+    coordinates : list of (3, 3) :numpy:`ndarray`
+        Coordinates of the high symmetry points in reciprocal space. Relative to the
+        reciprocal cell.
+    names: list of str
+        Names of the high symmetry points. Used for programming, not for plotting. Have
+        the same length as ``coordinates``.
+    labels : list of str
+        List of the high symmetry points labels for plotting. Have the same length as
+        ``coordinates``. Labels are not necessary equal to the names.
     path : str
-        K path.
+        K path. High symmetry points are referenced by elements of ``names``.
 
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    See Also
+    --------
+    wulfric.Kpoints : Class with a convenient interface for the same information.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> cell = wulf.cell.get_cell_example("hex")
+        >>> coordinates, names, labels, kpath = wulf.cell.get_hs_data(cell)
+        >>> kpath
+        'G-M-K-G-A-L-H-A|L-M|K-H'
+        >>> labels
+        ['$\\Gamma$', 'A', 'H', 'K', 'L', 'M']
+        >>> names
+        ['G', 'A', 'H', 'K', 'L', 'M']
+        >>> coordinates
+        [array([0., 0., 0.]), array([0. , 0. , 0.5]), array([0.33333333, 0.33333333, 0.5       ]), array([0.33333333, 0.33333333, 0.        ]), array([0.5, 0. , 0.5]), array([0.5, 0. , 0. ])]
 
     """
 

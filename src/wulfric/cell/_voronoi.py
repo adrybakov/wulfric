@@ -40,7 +40,7 @@ def _lattice_points(cell, relative=False):
     cell : (3, 3) |array-like|_
         Matrix of a cell, rows are interpreted as vectors.
     relative : bool, default False
-        Whether to return relative or absolute coordinates.
+        Whether to return relative coordinates.
 
     Returns
     -------
@@ -71,12 +71,11 @@ def _get_voronoi_cell(cell):
     Returns
     -------
     edges : (N, 2, 3) :numpy:`ndarray`
-        N edges of the Voronoi cell around (0,0,0) point.
-        Each elements contains two vectors of the points
-        of the voronoi vertices forming an edge.
+        N edges of the Voronoi cell around (0,0,0) point. Each elements contains two
+        vectors of the points of the voronoi vertices forming an edge.
     vertices : (M, 3) :numpy:`ndarray`
-        M vertices of the Voronoi cell around (0,0,0) point.
-        Each element is a vector :math:`v = (v_x, v_y, v_z)`.
+        M vertices of the Voronoi cell around (0,0,0) point. Each element is a vector
+        :math:`v = (v_x, v_y, v_z)`.
     """
 
     if not SCIPY_AVAILABLE:

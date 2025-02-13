@@ -43,33 +43,66 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def get_cell_example(
-    lattice_variation: str = None,
-    convention: str = None,
-):
+def get_cell_example(lattice_variation: str = None, convention: str = "sc"):
     r"""
-    Return an example of the lattice.
+    Examples of the Bravais lattices as defined in the paper by Setyawan and Curtarolo [1]_.
 
     Parameters
     ----------
     lattice_variation : str, optional
-        Name of the lattice type or variation to be returned.
-        For available names see documentation of each Bravais lattice class.
+        Name of the lattice type or variation to be returned. For available names see
+        documentation of each :ref:`user-guide_conventions_bravais-lattices`.
         Case-insensitive.
-    convention : str, optional
-        Name of the convention that is used for cell standardization.
-        Supported conventions are:
-        * "sc" - for Setyawan and Curtarolo standardization.
+    convention : str, default "sc"
+        Name of the convention that is used for cell standardization. Case-insensitive.
+        Supported conventions are
 
-        By default the lattice is not standardized.
-
-        .. versionadded:: 0.3.1
+        * "sc" - for Setyawan and Curtarolo [1]_.
 
     Returns
     -------
     cell : (3, 3) :numpy:`ndarray`
-        Rows are lattice vectors.
+        Matrix of a direct cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    Raises
+    ------
+    ValueError
+        If ``convention`` is not supported.
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.get_cell_example("cub")
+        array([[3.14159265, 0.        , 0.        ],
+               [0.        , 3.14159265, 0.        ],
+               [0.        , 0.        , 3.14159265]])
+        >>> wulf.cell.get_cell_example("ORCF3")
+        array([[0.        , 1.96349541, 2.61799388],
+               [1.57079633, 0.        , 2.61799388],
+               [1.57079633, 1.96349541, 0.        ]])
     """
+
+    convention = convention.lower()
+
+    if convention != "sc":
+        raise ValueError(
+            f'"{convention}" convention is not supported. Supported is "sc".'
+        )
 
     correct_inputs = set(map(lambda x: x.lower(), BRAVAIS_LATTICE_VARIATIONS)).union(
         set(

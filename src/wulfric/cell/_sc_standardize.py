@@ -38,9 +38,7 @@ def _CUB_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
     For arbitrary cubic cell returns matrix S that transforms it to the standardized form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``CUB_standardize_cell``
-
-    See :ref:`guide_cub` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_cub` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -75,9 +73,7 @@ def _FCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary face-centered cubic cell returns matrix S that transforms it to the
     standardized form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``FCC_standardize_cell``
-
-    See :ref:`guide_fcc` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_fcc` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -112,9 +108,7 @@ def _BCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary body-centered cubic cell returns matrix S that transforms it to the
     standardized form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``BCC_standardize_cell``
-
-    See :ref:`guide_fcc` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_fcc` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -149,9 +143,7 @@ def _TET_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary tetragonal cell returns matrix S that transforms it to the
     standardized form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``TET_standardize_cell``
-
-    See :ref:`guide_tet` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_tet` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -159,7 +151,9 @@ def _TET_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     cell : (3, 3) |array-like|_
         Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors).
+        Tolerance for length variables (lengths of the lattice vectors). Default value is
+        chosen in the contexts of condense matter physics, assuming that length is given
+        in Angstroms. Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
         Tolerance for angle variables (angles of the lattice). Completely ignored by this
         function, the arguments are defined only for the homogeneity of the input for all
@@ -177,7 +171,7 @@ def _TET_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Raises
     ------
-    :py:class:`.StandardizationTypeMismatch`
+    wulfric.exceptions.StandardizationTypeMismatch
         If none of the tetragonal conditions are satisfied.
     """
 
@@ -206,9 +200,7 @@ def _BCT_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary body-centered tetragonal cell returns matrix S that transforms it to the
     standardized form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``BCT_standardize_cell``
-
-    See :ref:`guide_bct` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_bct` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -220,7 +212,9 @@ def _BCT_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
         ignored by this function, the arguments are defined only for the homogeneity of
         the input for all 14 Bravais lattice types.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice).
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -230,11 +224,12 @@ def _BCT_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Notes
     -----
     It is assumed that the ``cell`` has the symmetries of the body-centered tetragonal
-    lattice. If the cell is not body-centered tetragonal, the function will not work correctly.
+    lattice. If the cell is not body-centered tetragonal, the function will not work
+    correctly.
 
     Raises
     ------
-    :py:class:`.StandardizationTypeMismatch`
+    wulfric.exceptions.StandardizationTypeMismatch
         If none of the body-centered tetragonal conditions are satisfied.
     """
     cell = np.array(cell)
@@ -264,9 +259,7 @@ def _ORC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary orthorhombic cell returns matrix S that transforms it to the
     standardized form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``ORC_standardize_cell``
-
-    See :ref:`guide_orc` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_orc` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -274,7 +267,9 @@ def _ORC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     cell : (3, 3) |array-like|_
         Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors).
+        Tolerance for length variables (lengths of the lattice vectors). Default value is
+        chosen in the contexts of condense matter physics, assuming that length is given
+        in Angstroms. Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
         Tolerance for angle variables (angles of the lattice). Completely ignored by this
         function, the arguments are defined only for the homogeneity of the input for all
@@ -292,7 +287,7 @@ def _ORC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Raises
     ------
-    :py:class:`.StandardizationTypeMismatch`
+    wulfric.exceptions.StandardizationTypeMismatch
         If none of the orthorhombic conditions are satisfied.
     """
 
@@ -333,9 +328,7 @@ def _ORCF_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary face-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``ORCF_standardize_cell``
-
-    See :ref:`guide_orcf` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_orcf` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -343,7 +336,9 @@ def _ORCF_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     cell : (3, 3) |array-like|_
         Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors).
+        Tolerance for length variables (lengths of the lattice vectors). Default value is
+        chosen in the contexts of condense matter physics, assuming that length is given
+        in Angstroms. Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
         Tolerance for angle variables (angles of the lattice). Completely ignored by this
         function, the arguments are defined only for the homogeneity of the input for all
@@ -362,7 +357,7 @@ def _ORCF_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Raises
     ------
-    :py:class:`.StandardizationTypeMismatch`
+    wulfric.exceptions.StandardizationTypeMismatch
         If none of the face-centered orthorhombic conditions are satisfied.
     """
 
@@ -403,9 +398,7 @@ def _ORCI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary body-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``ORCI_standardize_cell``
-
-    See :ref:`guide_orci` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_orci` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -417,7 +410,9 @@ def _ORCI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
         ignored by this function, the arguments are defined only for the homogeneity of
         the input for all 14 Bravais lattice types.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice).
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -432,7 +427,7 @@ def _ORCI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Raises
     ------
-    :py:class:`.StandardizationTypeMismatch`
+    wulfric.exceptions.StandardizationTypeMismatch
         If none of the body-centered orthorhombic conditions are satisfied.
     """
 
@@ -473,9 +468,7 @@ def _ORCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary base-centered orthorhombic cell returns matrix S that transforms it to
     the standardized form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``ORCC_standardize_cell``
-
-    See :ref:`guide_orcc` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_orcc` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -487,7 +480,9 @@ def _ORCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
         ignored by this function, the arguments are defined only for the homogeneity of
         the input for all 14 Bravais lattice types.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice).
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -502,7 +497,7 @@ def _ORCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Raises
     ------
-    :py:class:`.StandardizationTypeMismatch`
+    wulfric.exceptions.StandardizationTypeMismatch
         If none of the base-centered orthorhombic conditions are satisfied.
     """
 
@@ -556,9 +551,7 @@ def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary hexagonal cell returns matrix S that transforms it to the standardized
     form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``HEX_standardize_cell``
-
-    See :ref:`guide_hex` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_hex` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -570,7 +563,9 @@ def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
         ignored by this function, the arguments are defined only for the homogeneity of
         the input for all 14 Bravais lattice types.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice).
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -584,7 +579,7 @@ def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Raises
     ------
-    :py:class:`.StandardizationTypeMismatch`
+    wulfric.exceptions.StandardizationTypeMismatch
         If none of the hexagonal conditions are satisfied.
     """
 
@@ -625,9 +620,7 @@ def _RHL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary rhombohedral cell returns matrix S that transforms it to the standardized
     form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``RHL_standardize_cell``
-
-    See :ref:`guide_rhl` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_rhl` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -662,9 +655,7 @@ def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary monoclinic cell returns matrix S that transforms it to the standardized
     form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``MCL_standardize_cell``
-
-    See :ref:`guide_mcl` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_mcl` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -672,9 +663,13 @@ def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     cell : (3, 3) |array-like|_
         Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors).
+        Tolerance for length variables (lengths of the lattice vectors). Default value is
+        chosen in the contexts of condense matter physics, assuming that length is given
+        in Angstroms. Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice).
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -688,7 +683,7 @@ def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Raises
     ------
-    :py:class:`.StandardizationTypeMismatch`
+    wulfric.exceptions.StandardizationTypeMismatch
         If none of the monoclinic conditions are satisfied.
     """
 
@@ -746,9 +741,7 @@ def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary base-centered monoclinic cell returns matrix S that transforms it to the
     standardized form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``MCLC_standardize_cell``
-
-    See :ref:`guide_mclc` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_mclc` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -756,9 +749,13 @@ def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     cell : (3, 3) |array-like|_
         Matrix of a primitive cell, rows are interpreted as vectors.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors).
+        Tolerance for length variables (lengths of the lattice vectors). Default value is
+        chosen in the contexts of condense matter physics, assuming that length is given
+        in Angstroms. Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice).
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -773,7 +770,7 @@ def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Raises
     ------
-    :py:class:`.StandardizationTypeMismatch`
+    wulfric.exceptions.StandardizationTypeMismatch
         If none of the base-centered monoclinic conditions are satisfied.
     """
 
@@ -820,9 +817,7 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     For arbitrary triclinic cell returns matrix S that transforms it to the
     standardized form.
 
-    .. versionchanged:: 0.4.0  Renamed from ``TRI_standardize_cell``
-
-    See :ref:`guide_tri` and :ref:`user-guide_conventions_which-cell_standardization` for the
+    See :ref:`guide_tri` and :ref:`user-guide_conventions_which-cell_standardization` for
     details.
 
     Parameters
@@ -834,7 +829,9 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
         ignored by this function, the arguments are defined only for the homogeneity of
         the input for all 14 Bravais lattice types.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice).
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -848,7 +845,7 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
     Raises
     ------
-    :py:class:`.StandardizationTypeMismatch`
+    wulfric.exceptions.StandardizationTypeMismatch
         If none of the triclinic conditions are satisfied.
     """
 
@@ -940,33 +937,51 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
 
 def get_S_matrix(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance=1e-4):
     r"""
-    Analyse arbitrary cell and redefine it
-    if required to ensure the unique choice of lattice vectors.
+    Computes standardization matrix :math:`\boldsymbol{S}` as defined in [1]_.
 
-    .. versionchanged:: 0.4.0  Renamed from ``standardize_cell``
-
-    See :ref:`docs for each Bravais lattice <user-guide_conventions_bravais-lattices>` for the details.
+    See :ref:`docs for each Bravais lattice <user-guide_conventions_bravais-lattices>` for
+    the details.
 
     Parameters
     ----------
     cell : (3, 3) |array-like|_
         Matrix of a primitive cell, rows are interpreted as vectors.
     lattice_type : str, optional
-        One of the 14 lattice types that correspond to the provided ``cell``.
-        If not provided, then computed automatically. Case-insensitive.
+        One of the 14 lattice types that correspond to the provided ``cell``,
+        case-insensitive. If not provided, then computed automatically from ``cell``. If
+        provided, then it user's responsibility to ensure that ``lattice_type`` is
+        correct.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors). Default values
-        are chosen for the contexts of condense matter physics, where Angstroms are used.
-        Please choose appropriate tolerance for your problem.
+        Tolerance for length variables (lengths of the lattice vectors).  Default value is
+        chosen in the contexts of condense matter physics, assuming that length is given
+        in Angstroms. Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Default values are chosen
-        for the contexts of condense matter physics, where Angstroms are used. Please
-        choose appropriate tolerance for your problem.
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
     S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> cell = [[3, 0, 0],[0, 1, 0],[0, 0, 2]]
+        >>> wulf.cell.get_S_matrix(cell)
+        array([[0., 0., 1.],
+               [1., 0., 0.],
+               [0., 1., 0.]])
     """
     cell = np.array(cell, dtype=float)
 
@@ -999,20 +1014,36 @@ def get_S_matrix(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance
 
 def get_C_matrix(lattice_type):
     r"""
-    Transformation matrix that transforms primitive cell
-    to the **conventional standardized** cell.
+    Computes transformation matrix from standardized primitive to standardized
+    conventional cell :math:`\boldsymbol{S}` as defined in [1]_.
 
     See :ref:`user-guide_conventions_which-cell_standardization` for details.
 
     Parameters
     ----------
     lattice_type : str
-        One of the 14 lattice types that correspond to the provided ``cell``.
-        If not provided, then computed automatically. Case-insensitive.
+        One of the 14 lattice types. Case-insensitive.
 
     Returns
     -------
     C_matrix : (3, 3) :numpy:`ndarray`
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.get_C_matrix("ORCF")
+        array([[-1.,  1.,  1.],
+               [ 1., -1.,  1.],
+               [ 1.,  1., -1.]])
     """
 
     return C_MATRICES[lattice_type.upper()]
@@ -1020,36 +1051,54 @@ def get_C_matrix(lattice_type):
 
 def get_standardized(cell, S_matrix=None, length_tolerance=1e-8, angle_tolerance=1e-4):
     R"""
-    Standardize cell with respect to the Bravais lattice type as defined in [1]_.
-
-    .. versionadded:: 0.3.0
+    Computes standardizes primitive cell as defined in [1]_.
 
     Parameters
     ----------
     cell : (3, 3) |array-like|_
         Matrix of a primitive cell, rows are interpreted as vectors.
     S_matrix : (3, 3) |array-like|_, optional
-        Transformation matrix S.
+        Transformation matrix S. If not provided, then computed automatically from
+        ``cell``. If provided, then it is user's responsibility to ensure that the matrix
+        is the correct one for the given ``cell``.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors). Default values
-        are chosen for the contexts of condense matter physics, where Angstroms are used.
-        Please choose appropriate tolerance for your problem.
+        Tolerance for length variables (lengths of the lattice vectors).  Default value is
+        chosen in the contexts of condense matter physics, assuming that length is given
+        in Angstroms. Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Default values are chosen
-        for the contexts of condense matter physics, where Angstroms are used. Please
-        choose appropriate tolerance for your problem.
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
     cell : (3, 3) :numpy:`ndarray`
-        Standardized cell. Rows are lattice vectors. Independent from the initial cell,
-        safe to modify.
+        Standardized cell. Rows are interpreted as vectors. Independent from the initial
+        cell, safe to modify.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
 
     References
     ----------
     .. [1] Setyawan, W. and Curtarolo, S., 2010.
         High-throughput electronic band structure calculations: Challenges and tools.
-        Computational materials science, 49(2), pp.299-312.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> cell = [[3, 0, 0],[0, 1, 0],[0, 0, 2]]
+        >>> wulf.cell.get_standardized(cell)
+        array([[0., 1., 0.],
+               [0., 0., 2.],
+               [3., 0., 0.]])
     """
 
     cell = np.array(cell, dtype=float)
@@ -1073,40 +1122,58 @@ def get_conventional(
     cell, S_matrix=None, C_matrix=None, length_tolerance=1e-8, angle_tolerance=1e-4
 ):
     r"""
-    Conventional cell.
-
-    .. math::
-
-        (\boldsymbol{a_1}, \boldsymbol{a_2}, \boldsymbol{a_3})
-        =
-        (\boldsymbol{a^{cs}}_1, \boldsymbol{a^{cs}}_2, \boldsymbol{a^{cs}}_3)
-        (\boldsymbol{C}\boldsymbol{S})
-
-    .. code-block:: python
-
-        conv_cell = np.linalg.inv(C @ S).T @ cell
+    Computes standardizes conventional cell as defined in [1]_.
 
     Parameters
     ----------
     cell : (3, 3) |array-like|_
         Matrix of a primitive cell, rows are interpreted as vectors.
     S_matrix : (3, 3) |array-like|_, optional
-        Transformation matrix S.
+        Transformation matrix S. If not provided, then computed automatically from
+        ``cell``. If provided, then it is user's responsibility to ensure that the matrix
+        is the correct one for the given ``cell``.
     C_matrix : (3, 3) |array-like|_, optional
-        Transformation matrix C.
+        Transformation matrix C. If not provided, then computed automatically from
+        ``cell``. If provided, then it is user's responsibility to ensure that the matrix
+        is the correct one for the given ``cell``.
     length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors). Default values
-        are chosen for the contexts of condense matter physics, where Angstroms are used.
-        Please choose appropriate tolerance for your problem.
+        Tolerance for length variables (lengths of the lattice vectors).  Default value is
+        chosen in the contexts of condense matter physics, assuming that length is given
+        in Angstroms. Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Default values are chosen
-        for the contexts of condense matter physics, where Angstroms are used. Please
-        choose appropriate tolerance for your problem.
+        Tolerance for angle variables (angles of the lattice). Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
     conv_cell : (3, 3) :numpy:`ndarray`
-        Conventional cell, rows are vectors, columns are coordinates.
+        Conventional cell, rows are interpreted as vectors, columns - as coordinates.
+        Independent from the initial cell, safe to modify.
+
+        .. code-block:: python
+
+            conv_cell = [[a1_x, a1_y, a1_z],
+                         [a2_x, a2_y, a2_z],
+                         [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> orcf = wulf.cell.ORCF(a=1,b=2,c=3)
+        >>> wulf.cell.get_conventional(orcf)
+        array([[1., 0., 0.],
+               [0., 2., 0.],
+               [0., 0., 3.]])
     """
     cell = np.array(cell, dtype=float)
 
