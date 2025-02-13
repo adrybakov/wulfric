@@ -111,7 +111,7 @@ def get_atom_species(name: str, raise_on_fail=False) -> str:
     return atom_type
 
 
-def populate_atom_species(atoms, raise_on_fail=False):
+def populate_atom_species(atoms, raise_on_fail=False) -> None:
     r"""
     Populate atom species, based on their names.
     If atom species are already present in the ``atoms``, then they will be overwritten.
@@ -133,6 +133,20 @@ def populate_atom_species(atoms, raise_on_fail=False):
     --------
     If ``raise_on_fail = True`` and automatic species deduction fails, then
     ``RuntimeWarning`` is issued, and atom species is set to "X".
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> atoms = {"names" : ["Cr1", "cr2", "Br3", "S4", "fe5", "Fe6"]}
+        >>> atoms
+        {'names': ['Cr1', 'cr2', 'Br3', 'S4', 'fe5', 'Fe6']}
+        >>> wulf.crystal.populate_atom_species(atoms)
+        >>> atoms
+        {'names': ['Cr1', 'cr2', 'Br3', 'S4', 'fe5', 'Fe6'], 'species': ['Cr', 'Cr', 'Br', 'S', 'Fe', 'Fe']}
+
     """
 
     atoms["species"] = []

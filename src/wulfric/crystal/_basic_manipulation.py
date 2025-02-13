@@ -26,7 +26,9 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def shift_atoms(atoms, gravity_point=(0.5, 0.5, 0.5), cell=None, gp_is_relative=True):
+def shift_atoms(
+    atoms, gravity_point=(0.5, 0.5, 0.5), cell=None, gp_is_relative=True
+) -> None:
     R"""
     Shifts all atoms with the same vector in a way
     that the ``gravity_point`` is located in the middle between minimum and maximum
@@ -40,7 +42,7 @@ def shift_atoms(atoms, gravity_point=(0.5, 0.5, 0.5), cell=None, gp_is_relative=
     Parameters
     ----------
     atoms : dict
-        Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
+        Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
     gravity_point : (3,) |array-like|_, default (0.5, 0.5, 0.5)
         Relative coordinates of the gravity point.
     cell : (3, 3) |array-like|_, optional
@@ -86,7 +88,7 @@ def shift_atoms(atoms, gravity_point=(0.5, 0.5, 0.5), cell=None, gp_is_relative=
     ]
 
 
-def cure_negative(atoms):
+def cure_negative(atoms) -> None:
     R"""
     Shifts all atoms with the same vector in a way
     that all relative coordinates becomes non-negative.
@@ -96,7 +98,7 @@ def cure_negative(atoms):
     Parameters
     ----------
     atoms : dict
-        Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
+        Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
 
     Examples
     --------
@@ -123,16 +125,65 @@ def cure_negative(atoms):
     atoms["positions"] = [position + shift for position in atoms["positions"]]
 
 
-def get_vector(cell, atoms, atom1, atom2, R=(0, 0, 0), return_relative=False):
+def ensure_000(atoms) -> None:
     r"""
-    Getter for vector from atom1 to atom2.
+    Ensures that all atoms are from (0,0,0) unit cell.
+
+    In other word ensures that all relative coordinates of all atoms are :math:`\in [0,1]`.input
+
+    Parameters
+    ----------
+    atoms : dict
+        Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> atoms = {"positions" : [[0, 0.5, 0], [1.25, 0, -0.52], [0.25, -0.65, 2.375]]}
+        >>> for p in atoms["positions"]:
+        ...        print(p)
+        ...
+        [0, 0.5, 0]
+        [1.25, 0, -0.52]
+        [0.25, -0.65, 2.375]
+        >>> wulf.crystal.ensure_000(atoms)
+        >>> for p in atoms["positions"]:
+        ...        print(p)
+        ...
+        [0, 0.5, 0]
+        [0.25, 0, 0.48]
+        [0.25, 0.35, 0.375]
+    """
+
+    for i in range(len(atoms["positions"])):
+        for j in range(3):
+            poscomp = atoms["positions"][i][j]
+
+            # Ensure -1 < poscomp < 1
+            poscomp -= int(poscomp)
+
+            # Ensure 0 <= poscomp <= 1
+            if poscomp < 0:
+                poscomp += 1
+
+            atoms["positions"][i][j] = poscomp
+
+
+def get_vector(
+    cell, atoms, atom1, atom2, R=(0, 0, 0), return_relative=False
+) -> np.ndarray:
+    r"""
+    Computes a vector from atom1 (from (0,0,0)) to atom2 (from (i,j,k)).
 
     Parameters
     ----------
     cell : (3, 3) |array-like|_,
         Matrix of a cell, rows are interpreted as vectors.
     atoms : dict
-        Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
+        Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
     atom1 : int
         Index of the first atom in ``atoms["positions"]``.
     atom2 : int
@@ -146,6 +197,23 @@ def get_vector(cell, atoms, atom1, atom2, R=(0, 0, 0), return_relative=False):
     -------
     v : (3,) :numpy:`ndarray`
         Vector from atom1 in (0,0,0) cell to atom2 in R cell.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> cell = [[1, 0, 0], [0, 2, 0], [0, 0, 3]]
+        >>> atoms = {"positions" : [[0.5, 0, 0], [0, 0, 0.5]]}
+        >>> wulf.crystal.get_vector(cell, atoms, atom1=0, atom2=1, R=(0, 0, 0))
+        array([-0.5,  0. ,  1.5])
+        >>> wulf.crystal.get_vector(cell, atoms, atom1=0, atom2=1, R=(1, 0, 0))
+        array([0.5, 0. , 1.5])
+        >>> wulf.crystal.get_vector(cell, atoms, atom1=0, atom2=1, R=(1, 0, -3))
+        array([ 0.5,  0. , -7.5])
+        >>> wulf.crystal.get_vector(cell, atoms, atom1=0, atom2=1, R=(1, 0, -3), return_relative=True)
+        array([ 0.5,  0. , -2.5])
     """
 
     relative_vector = (
@@ -158,16 +226,16 @@ def get_vector(cell, atoms, atom1, atom2, R=(0, 0, 0), return_relative=False):
     return relative_vector @ cell
 
 
-def get_distance(cell, atoms, atom1, atom2, R=(0, 0, 0)):
+def get_distance(cell, atoms, atom1, atom2, R=(0, 0, 0)) -> float:
     r"""
-    Getter for distance between the atom1 and atom2.
+    Computes distance between atom1 (from (0,0,0)) and atom2 (from (i,j,k)).
 
     Parameters
     ----------
     cell : (3, 3) |array-like|_,
         Matrix of a cell, rows are interpreted as vectors.
     atoms : dict
-        Dictionary with atoms. Must have a ``position`` with value of (N,3) |array-like|_.
+        Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
     atom1 : int
         Index of the first atom in ``atoms["positions"]``.
     atom2 : int
@@ -179,6 +247,21 @@ def get_distance(cell, atoms, atom1, atom2, R=(0, 0, 0)):
     -------
     distance : float
         Distance between atom1 in (0,0,0) cell and atom2 in R cell.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> cell = [[1, 0, 0], [0, 2, 0], [0, 0, 3]]
+        >>> atoms = {"positions" : [[0.5, 0, 0], [0, 0, 0.5]]}
+        >>> round(wulf.crystal.get_distance(cell, atoms, atom1=0, atom2=1, R=(0, 0, 0)), 8)
+        1.58113883
+        >>> round(wulf.crystal.get_distance(cell, atoms, atom1=0, atom2=1, R=(1, 0, 0)), 8)
+        1.58113883
+        >>> round(wulf.crystal.get_distance(cell, atoms, atom1=0, atom2=1, R=(1, 0, -3)), 8)
+        7.51664819
     """
 
     return float(
