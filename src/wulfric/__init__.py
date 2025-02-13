@@ -19,8 +19,8 @@
 
 __version__ = "0.5.0"
 __doclink__ = "wulfric.org"
-__git_hash__ = "undefined"
-__release_date__ = "undefined"
+__git_hash__ = "7a8a7555144dbfead377dfe86dee6498e70f64af"
+__release_date__ = "13 February 2025"
 
 
 from . import cell, constants, crystal, geometry, io, visualization
