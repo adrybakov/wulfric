@@ -33,7 +33,7 @@ def get_volume(*args):
     r"""
     Computes volume.
 
-    Three type of arguments are expected:
+    Three types of arguments are expected:
 
     * One argument.
         Matrix ``cell``.
@@ -42,7 +42,7 @@ def get_volume(*args):
         .. math::
             V = \boldsymbol{v_1} \cdot (\boldsymbol{v_2} \times \boldsymbol{v_3})
     * Three arguments.
-        Vectors ``\boldsymbol{v_1}``, ``\boldsymbol{v_2}``, ``\boldsymbol{v_3}``.
+        Vectors ``v1``, ``v2``, ``v3``.
         Volume is computed as:
 
         .. math::
@@ -82,6 +82,19 @@ def get_volume(*args):
     -------
     volume : float
         Volume of corresponding region in space.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.geometry.get_volume([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+        1.0
+        >>> wulf.geometry.get_volume([1, 0, 0], [0, 1, 0], [0, 0, 1])
+        1.0
+        >>> wulf.geometry.get_volume(1, 1, 1, 90, 90, 90)
+        1.0
     """
 
     if len(args) == 1:
@@ -112,7 +125,7 @@ def get_volume(*args):
 
 def get_angle(v1, v2, radians=False):
     r"""
-    Angle between two vectors.
+    Computes angle between two vectors.
 
     .. math::
 
@@ -140,6 +153,19 @@ def get_angle(v1, v2, radians=False):
     ValueError
         If one of the vectors is zero vector (or both). Norm is compared against
         :numpy:`finfo`\ (float).eps.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.geometry.get_angle([1, 0, 0], [0, 0, 1])
+        90.0
+        >>> wulf.geometry.get_angle([1, 0, 0], [1, 0, 0])
+        0.0
+        >>> round(wulf.geometry.get_angle([1, 0, 0], [1, 1, 1]), 4)
+        54.7356
     """
 
     # Normalize vectors
@@ -170,9 +196,9 @@ def parallelepiped_check(
     angle_tolerance=1e-4,
 ):
     r"""
-    Check if parallelepiped is valid.
+    Checks if parallelepiped is valid.
 
-    The following checks are performed:
+    The conditions are
 
     * :math:`a > 0`
     * :math:`b > 0`
@@ -201,9 +227,13 @@ def parallelepiped_check(
     raise_error : bool, default False
         Whether to raise error if parameters can not form a parallelepiped.
     length_tolerance : float, default :math:`10^{-8}`
-        Numerical tolerance for the length variables.
+        Numerical tolerance for the length variables. Default value is chosen in the
+        contexts of condense matter physics, assuming that length is given in Angstroms.
+        Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
-        Numerical tolerance for the angle variables. In degrees
+        Numerical tolerance for the angle variables. Default value is chosen in
+        the contexts of condense matter physics, assuming that angles are in degrees.
+        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -213,8 +243,26 @@ def parallelepiped_check(
     Raises
     ------
     ValueError
-        If parameters could not form a parallelepiped.
+        If parameters can not form a parallelepiped.
         Only raised if ``raise_error`` is ``True`` (it is ``False`` by default).
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.geometry.parallelepiped_check(1, 1, 1, 90, 90, 90)
+        True
+        >>> wulf.geometry.parallelepiped_check(1, 1, 1, 30, 20, 110)
+        False
+        >>> wulf.geometry.parallelepiped_check(1, -1, 1, 90, 90, 90)
+        False
+        >>> wulf.geometry.parallelepiped_check(1, 0, 1, 90, 90, 90)
+        False
+        >>> wulf.geometry.parallelepiped_check(1, 1, 1, 90, 199, 90)
+        False
+
     """
 
     result = (
@@ -289,12 +337,12 @@ def parallelepiped_check(
 
 def absolute_to_relative(vector, basis):
     r"""
-    Compute relative coordinates of the vector with respect to the basis.
+    Computes relative coordinates of the vector with respect to the basis.
 
     .. math::
         \boldsymbol{v} = v^1 \boldsymbol{e_1} + v^2 \boldsymbol{e_2} + v^3 \boldsymbol{e_3}
 
-    We compute scalar products of the vector with the basis vectors:
+    First scalar products of the vector with the basis vectors are computed
 
     .. math::
         \begin{matrix}
@@ -321,7 +369,7 @@ def absolute_to_relative(vector, basis):
         v^3\, \boldsymbol{e_3} \cdot \boldsymbol{e_3}
         \end{matrix}
 
-    Which leads to the system of linear equations for :math:`v^1`, :math:`v^2`, :math:`v^3`.
+    Then, system of linear equations for :math:`v^1`, :math:`v^2`, :math:`v^3` is solved.
 
     Parameters
     ----------
@@ -336,6 +384,18 @@ def absolute_to_relative(vector, basis):
     relative : (3,) :numpy:`ndarray`
         Relative coordinates of the ``vector`` with respect to the ``basis``.
         :math:`(v^1, v^2, v^3)`.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.geometry.absolute_to_relative([1, 0, 0], [[0, 1, 1], [1, 0, 1], [1, 1, 0]])
+        array([-0.5,  0.5,  0.5])
+        >>> wulf.geometry.absolute_to_relative([1, 0, 2.3241], [[0, 1, 1], [1, 0, 1], [1, 1, 0]])
+        array([ 0.66205,  1.66205, -0.66205])
+
     """
 
     # Three vectors of the basis
