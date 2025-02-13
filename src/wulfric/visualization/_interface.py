@@ -35,7 +35,7 @@ class AbstractBackend:
     # Backend-independent functions
     def plot(self, *args, kind, **kwargs):
         r"""
-        Main plotting entry point.
+        Main plotting method.
 
         Actual list of supported kinds can be check with:
 
@@ -59,6 +59,23 @@ class AbstractBackend:
             Passed directly to the plotting functions.
         **kwargs
             Passed directly to the plotting functions.
+
+        Raises
+        ------
+        ValueError
+            If the plot kind is not supported.
+
+        See Also
+        --------
+        plot_conventional : "conventional" plot.
+        plot_primitive : "primitive" plot.
+        plot_brillouin : "brillouin" plot.
+        plot_kpath : "kpath" plot.
+        plot_brillouin_kpath : "brillouin_kpath" plot.
+        plot_wigner_seitz : "wigner-seitz" plot.
+        plot_unit_cell : "unit-cell" plot.
+        show : Shows the plot.
+        save : Save the figure in the file.
         """
         if isinstance(kind, str):
             kinds = [kind]
@@ -102,7 +119,7 @@ class AbstractBackend:
 
         See Also
         --------
-        plot_unit_cell : for the list of parameters
+        plot_wigner_seitz : for the list of parameters
         """
 
         self.plot_wigner_seitz(*args, reciprocal=True, color="#FF4D67", **kwargs)

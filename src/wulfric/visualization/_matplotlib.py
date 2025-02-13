@@ -66,7 +66,7 @@ old_dir.add("old_dir")
 
 class MatplotlibBackend(AbstractBackend):
     r"""
-    Plotting engine for the cell with |matplotlib|_.
+    Plotting engine based on |matplotlib|_.
 
     Parameters
     ----------
@@ -75,7 +75,7 @@ class MatplotlibBackend(AbstractBackend):
     ax : matplotlib axis, optional
         Axis to plot on. If not provided, a new axis is created.
     background : bool, default True
-        Whether to keep the axis on the plot.
+        Whether to keep the axis in the plot.
     focal_length : float, default 0.2
         See: |matplotlibFocalLength|_
 
@@ -87,6 +87,10 @@ class MatplotlibBackend(AbstractBackend):
         Axis to plot on.
     artists : dict
         Dictionary of the artists. Keys are the plot kinds, values are the lists of artists.
+
+    Notes
+    -----
+    This class is a part of ``wulfric[visual]``
     """
 
     def __init__(self, fig=None, ax=None, background=True, focal_length=0.2):
@@ -121,7 +125,7 @@ class MatplotlibBackend(AbstractBackend):
 
     def remove(self, kind="primitive"):
         r"""
-        Remove a set of artists from the plot.
+        Removes a set of artists from the plot.
 
         Parameters
         ----------
@@ -134,9 +138,6 @@ class MatplotlibBackend(AbstractBackend):
             * "kpath"
             * "brillouin_kpath"
             * "wigner_seitz"
-
-        ax : axis, optional
-            3D matplotlib axis for the plot.
         """
 
         if kind == "brillouin_kpath":
@@ -159,7 +160,13 @@ class MatplotlibBackend(AbstractBackend):
 
     def plot(self, cell, kind="primitive", **kwargs):
         r"""
-        Main plotting function of the Lattice.
+        Main plotting method.
+
+        Actual list of supported kinds can be check with:
+
+        .. doctest::
+
+            >>> self.kinds.keys() # doctest: +SKIP
 
         Parameters
         ----------
@@ -177,14 +184,13 @@ class MatplotlibBackend(AbstractBackend):
             * "unit-cell"
 
         **kwargs
-            Parameters to be passed to the plotting function.
+            Parameters to be passed to the specialized plotting function.
             See each function for the list of supported parameters.
 
         Raises
         ------
         ValueError
             If the plot kind is not supported.
-
 
         See Also
         --------
@@ -205,7 +211,7 @@ class MatplotlibBackend(AbstractBackend):
 
     def show(self, elev=30, azim=-60):
         r"""
-        Show the figure in the interactive mode.
+        Shows the figure in the interactive mode.
 
         Parameters
         ----------
@@ -223,9 +229,7 @@ class MatplotlibBackend(AbstractBackend):
 
     def save(self, output_name="cell_graph.png", elev=30, azim=-60, **kwargs):
         r"""
-        Save the figure in the file.
-
-        .. versionchanged:: 0.8.5 Renamed from ``savefig``
+        Saves the figure in the file.
 
         Parameters
         ----------
@@ -245,7 +249,7 @@ class MatplotlibBackend(AbstractBackend):
 
     def clear(self):
         r"""
-        Clear the axis.
+        Clears the axis.
         """
 
         if self.ax is not None:
@@ -253,7 +257,7 @@ class MatplotlibBackend(AbstractBackend):
 
     def legend(self, **kwargs):
         r"""
-        Add legend to the figure.
+        Adds legend to the figure.
 
         Parameters
         ----------
@@ -275,7 +279,7 @@ class MatplotlibBackend(AbstractBackend):
         normalize=False,
     ):
         r"""
-        Plot real or reciprocal space unit cell.
+        Plots real or reciprocal unit cell.
 
         Parameters
         ----------
@@ -284,19 +288,18 @@ class MatplotlibBackend(AbstractBackend):
         vectors : bool, default True
             Whether to plot lattice vectors.
         color : str, default "#274DD1"
-            Colour for the plot. Any format supported by matplotlib. See |matplotlibColor|_.
+            Colour for the plot. Any format supported by matplotlib (see |matplotlibColor|_).
         label : str, optional
             Label for the plot.
         vector_pad : float, default 1.1
             Multiplier for the position of the vectors labels. 1 = position of the vector.
         conventional : bool, default False
-            Whether to plot conventional cell. Affects result only for the
-            Bravais lattice classes. Ignored for the general :py:class:`.Lattice`.
+            Whether to plot conventional cell.
             Only primitive unit cell is supported for reciprocal space.
         reciprocal : bool, default False
             Whether to plot reciprocal or real unit cell.
         normalize : bool, default False
-            Whether to normalize corresponding vectors to have the volume equal to one.
+            Whether to normalize volume of the cell to one.
         """
         if reciprocal and conventional:
             raise ValueError("Conventional cell is not supported in reciprocal space.")
@@ -405,7 +408,7 @@ class MatplotlibBackend(AbstractBackend):
         normalize=False,
     ):
         r"""
-        Plot Wigner-Seitz unit cell.
+        Plots Wigner-Seitz cell.
 
         Parameters
         ----------
@@ -414,7 +417,7 @@ class MatplotlibBackend(AbstractBackend):
         vectors : bool, default True
             Whether to plot lattice vectors.
         color : str, default "black"
-            Colour for the plot. Any format supported by the used backend.
+            Colour for the plot. Any format supported by matplotlib (see |matplotlibColor|_).
         label : str, optional
             Label for the plot.
         vector_pad : float, default 1.1
@@ -422,7 +425,7 @@ class MatplotlibBackend(AbstractBackend):
         reciprocal : bool, default False
             Whether to plot reciprocal or real Wigner-Seitz cell.
         normalize : bool, default False
-            Whether to normalize corresponding vectors to have the volume equal to one.
+            Whether to normalize volume of the cell to one.
         """
 
         if reciprocal:
@@ -514,18 +517,18 @@ class MatplotlibBackend(AbstractBackend):
 
     def plot_kpath(self, cell, color="black", label=None, normalize=False):
         r"""
-        Plot k path in the reciprocal space.
+        Plots k path in the reciprocal space.
 
         Parameters
         ----------
         cell : (3, 3) |array-like|_
             Matrix of a cell, rows are interpreted as vectors.
         color : str, default "black"
-            Colour for the plot. Any format supported by the used backend.
+            Colour for the plot. Any format supported by matplotlib (see |matplotlibColor|_).
         label : str, optional
             Label for the plot.
         normalize : bool, default False
-            Whether to normalize corresponding vectors to have the volume equal to one.
+            Whether to normalize volume of the cell to one.
         """
 
         artist_group = "kpath"

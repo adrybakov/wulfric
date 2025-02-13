@@ -44,7 +44,7 @@ old_dir.add("old_dir")
 
 class PlotlyBackend(AbstractBackend):
     r"""
-    Plotting engine for the lattice with |plotly|_.
+    Plotting engine based on |plotly|_.
 
     Parameters
     ----------
@@ -58,19 +58,7 @@ class PlotlyBackend(AbstractBackend):
 
     Notes
     -----
-    Plotly is not in the dependencies of the package.
-    To use this backend, install it with ``pip``:
-
-    .. code-block:: bash
-
-        pip install plotly
-
-    or ``pip3``
-
-    .. code-block:: bash
-
-        pip3 install plotly
-
+    This class is a part of ``wulfric[visual]``
     """
 
     def __init__(self, fig=None):
@@ -85,7 +73,7 @@ class PlotlyBackend(AbstractBackend):
 
     def show(self, axes_visible=True, **kwargs):
         r"""
-        Show the figure in the interactive mode.
+        Shows the figure in the interactive mode.
 
         Parameters
         ----------
@@ -123,7 +111,7 @@ class PlotlyBackend(AbstractBackend):
         axes_visible=True,
     ):
         r"""
-        Save the figure in the html file.
+        Saves the figure in the html file.
 
         Parameters
         ----------
@@ -163,7 +151,7 @@ class PlotlyBackend(AbstractBackend):
         normalize=False,
     ):
         r"""
-        Plot real or reciprocal space unit cell.
+        Plots real or reciprocal unit cell.
 
         Parameters
         ----------
@@ -172,17 +160,16 @@ class PlotlyBackend(AbstractBackend):
         vectors : bool, default True
             Whether to plot lattice vectors.
         color : str, default "#274DD1"
-            Colour for the plot. Any format supported by matplotlib. See |matplotlibColor|_.
+            Colour for the plot. Any value supported Plotly.
         label : str, optional
             Label for the plot.
         conventional : bool, default False
-            Whether to plot conventional cell. Affects result only for the
-            Bravais lattice classes. Ignored for the general :py:class:`.Lattice`.
+            Whether to plot conventional cell.
             Only primitive unit cell is supported for reciprocal space.
         reciprocal : bool, default False
             Whether to plot reciprocal or real unit cell.
         normalize : bool, default False
-            Whether to normalize corresponding vectors to have the volume equal to one.
+            Whether to normalize volume of the cell to one.
         """
         if reciprocal and conventional:
             raise ValueError("Conventional cell is not supported in reciprocal space.")
@@ -296,7 +283,7 @@ class PlotlyBackend(AbstractBackend):
         normalize=False,
     ):
         r"""
-        Plot Wigner-Seitz unit cell.
+        Plots Wigner-Seitz cell.
 
         Parameters
         ----------
@@ -307,11 +294,11 @@ class PlotlyBackend(AbstractBackend):
         label : str, optional
             Label for the plot.
         color : str, default "black" or "#FF4D67"
-            Colour for the plot. Any format supported by matplotlib. See |matplotlibColor|_.
+            Colour for the plot. Any value supported Plotly.
         reciprocal : bool, default False
             Whether to plot reciprocal or real Wigner-Seitz cell.
         normalize : bool, default False
-            Whether to normalize corresponding vectors to have the volume equal to one.
+            Whether to normalize volume of the cell to one.
         """
 
         if reciprocal:
@@ -406,18 +393,18 @@ class PlotlyBackend(AbstractBackend):
 
     def plot_kpath(self, cell, color="#000000", label=None, normalize=False, **kwargs):
         r"""
-        Plot k path in the reciprocal space.
+        Plots k path in the reciprocal space.
 
         Parameters
         ----------
         cell : (3, 3) |array-like|_
             Matrix of a cell, rows are interpreted as vectors.
         color : str, default "#000000"
-            Colour for the plot. Any format supported by the used backend.
+            Colour for the plot. Any value supported Plotly.
         label : str, optional
             Label for the plot.
         normalize : bool, default False
-            Whether to normalize corresponding vectors to have the volume equal to one.
+            Whether to normalize volume of the cell to one.
         """
 
         if normalize:
