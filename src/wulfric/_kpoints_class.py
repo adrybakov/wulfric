@@ -34,38 +34,35 @@ old_dir.add("old_dir")
 
 class Kpoints:
     r"""
-    K-points.
+    Interface for convenient manipulation with the high symmetry kpoints and K-path in
+    reciprocal space.
 
     Parameters
     ----------
-    b1 : (3,) array-like
-        First reciprocal lattice vector :math:`\mathbf{b_1}`.
-    b2 : (3,) array-like
-        Second reciprocal lattice vector :math:`\mathbf{b_2}`.
-    b3 : (3,) array-like
-        Third reciprocal lattice vector :math:`\mathbf{b_3}`.
+    rcell : (3, 3) |array-like|_
+        Reciprocal cell. Rows are interpreted as vectors.
     coordinates : list, optional
-        Coordinates are given in relative coordinates in reciprocal space.
+        Coordinates of high symmetry points given in relative coordinates in reciprocal
+        space.
     names: list, optional
-        Names of the high symmetry points. Used for programming, not for plotting.
+        Names of the high symmetry points. Used in ``path``. Has to have the same length
+        as ``coordinates``. If ``None``, then use "K1", ... "KN", where
+        ``N = len(coordinates)``.
     labels : list, optional
-        List of the high symmetry points labels for plotting.
-        Has to have the same length as ``coordinates``.
+        List of the high symmetry point's labels. Used for plotting. Has to have the same
+        length as ``coordinates``. If ``None``, then use "K$_1$", ... "K$_N$", where
+        ``N = len(coordinates)``.
     path : str, optional
-        K points path. Use elements of ``names`` to specify the path. If no names given,
-        then use "K1", ... "KN". N is a length of ``coordinates``.
+        K-path. Use elements of ``names`` to specify the path. If no names given, then use
+        "K1", ... "KN", where ``N = len(coordinates)``.
     n : int
-        Number of points between each pair of the high symmetry points
-        (high symmetry points excluded).
+        Number of intermediate points between each pair of the high symmetry points (high
+        symmetry points excluded).
 
     Attributes
     ----------
-    b1 : (3,) :numpy:`ndarray`
-        First reciprocal lattice vector :math:`\mathbf{b_1}`.
-    b2 : (3,) :numpy:`ndarray`
-        Second reciprocal lattice vector :math:`\mathbf{b_2}`.
-    b3 : (3,) :numpy:`ndarray`
-        Third reciprocal lattice vector :math:`\mathbf{b_3}`.
+    rcell : (3, 3) :numpy:`ndarray`
+        Reciprocal cell. Rows are interpreted as vectors.
     hs_names : list
         Names of the high symmetry points. Used for programming, not for plotting.
     hs_coordinates : dict
@@ -84,11 +81,9 @@ class Kpoints:
     """
 
     def __init__(
-        self, b1, b2, b3, coordinates=None, names=None, labels=None, path=None, n=100
+        self, rcell, coordinates=None, names=None, labels=None, path=None, n=100
     ) -> None:
-        self.b1 = np.array(b1)
-        self.b2 = np.array(b2)
-        self.b3 = np.array(b3)
+        self.rcell = np.array(rcell)
 
         if coordinates is None:
             coordinates = []
@@ -132,30 +127,37 @@ class Kpoints:
         n=100,
     ):
         r"""
-        Create an instance of the :py:class:`wulf.Kpoints` from ``cell``.
+        Creates an instance of the :py:class:`wulf.Kpoints` from ``cell``.
 
         Parameters
         ----------
         cell : (3, 3) |array-like|_
             Matrix of a cell, rows are interpreted as vectors.
         lattice_type : str, optional
-            One of the 14 lattice types that correspond to the provided ``cell``.
-            If not provided, then computed automatically. Case-insensitive.
+            One of the 14 lattice types that correspond to the provided ``cell``,
+            case-insensitive. If not provided, then computed automatically from ``cell``.
+            If provided, then it user's responsibility to ensure that ``lattice_type`` is
+            correct.
         lattice_variation : str, optional
             One of the lattice variations that correspond to the provided ``cell`` and
             ``lattice_type``. If not provided, then computed automatically. Case-insensitive.
         S_matrix : (3, 3) |array-like|_, optional
-            Transformation matrix S.
+            Transformation matrix S. If not provided, then computed automatically from
+            ``cell``. If provided, then it is user's responsibility to ensure that the matrix
+            is the correct one for the given ``cell``.
         C_matrix : (3, 3) |array-like|_, optional
-            Transformation matrix C.
+            Transformation matrix C. If not provided, then computed automatically from
+            ``cell``. If provided, then it is user's responsibility to ensure that the matrix
+            is the correct one for the given ``cell``.
         length_tolerance : float, default :math:`10^{-8}`
-            Tolerance for length variables (lengths of the lattice vectors). Default values
-            are chosen for the contexts of condense matter physics, where Angstroms are used.
-            Please choose appropriate tolerance for your problem.
+            Tolerance for length variables (lengths of the lattice vectors). Default
+            value is chosen in the contexts of condense matter physics, assuming that
+            length is given in Angstroms. Please choose appropriate tolerance for your
+            problem.
         angle_tolerance : float, default :math:`10^{-4}`
-            Tolerance for angle variables (angles of the lattice). Default values are chosen
-            for the contexts of condense matter physics, where Angstroms are used. Please
-            choose appropriate tolerance for your problem.
+            Tolerance for angle variables (angles of the lattice). Default value is chosen
+            in the contexts of condense matter physics, assuming that angles are in
+            degrees. Please choose appropriate tolerance for your problem.
         n : int, default 100
             Number of points between each pair of the high symmetry points
             (high symmetry points excluded).
@@ -191,16 +193,16 @@ class Kpoints:
     ################################################################################
     #                            High symmetry points                              #
     ################################################################################
-    def add_hs_point(self, name, coordinates, label, relative=True) -> None:
+    def add_hs_point(self, name, coordinate, label, relative=True) -> None:
         r"""
-        Add high symmetry point.
+        Adds high symmetry point.
 
         Parameters
         ----------
         name : str
             Name of the high symmetry point.
-        coordinates : (3,) array-like
-            Coordinates of the high symmetry point.
+        coordinate : (3,) array-like
+            Coordinate of the high symmetry point.
         label : str
             Label of the high symmetry point, ready to be plotted.
         relative : bool, optional
@@ -211,17 +213,15 @@ class Kpoints:
             raise ValueError(f"Point '{name}' already defined.")
 
         if not relative:
-            coordinates = absolute_to_relative(
-                coordinates, np.array([self.b1, self.b2, self.b3])
-            )
+            coordinate = absolute_to_relative(coordinate, self.rcell)
 
         self.hs_names.append(name)
-        self.hs_coordinates[name] = np.array(coordinates)
+        self.hs_coordinates[name] = np.array(coordinate)
         self.hs_labels[name] = label
 
     def remove_hs_point(self, name) -> None:
         r"""
-        Remove high symmetry point.
+        Removes high symmetry point.
 
         Parameters
         ----------
@@ -366,8 +366,6 @@ class Kpoints:
         r"""
         Tick's positions of the high symmetry points, ready to be plotted.
 
-        .. versionchanged:: 0.1.2 Renamed from ``coordinates``
-
         Parameters
         ----------
         relative : bool, optional
@@ -382,7 +380,7 @@ class Kpoints:
         if relative:
             cell = np.eye(3)
         else:
-            cell = np.array([self.b1, self.b2, self.b3])
+            cell = self.rcell
 
         ticks = []
         for s_i, subpath in enumerate(self.path):
@@ -421,7 +419,7 @@ class Kpoints:
         if relative:
             cell = np.eye(3)
         else:
-            cell = np.array([self.b1, self.b2, self.b3])
+            cell = self.rcell
 
         points = None
         for subpath in self.path:
@@ -461,7 +459,7 @@ class Kpoints:
         if relative:
             cell = np.eye(3)
         else:
-            cell = np.array([self.b1, self.b2, self.b3])
+            cell = self.rcell
 
         flatten_points = None
         for s_i, subpath in enumerate(self.path):
@@ -490,9 +488,7 @@ class Kpoints:
 
     def copy(self):
         r"""
-        Create a copy of the kpoints.
-
-        .. versionadded:: 0.3.0
+        Creates a copy of the kpoints.
 
         Returns
         -------
@@ -500,7 +496,7 @@ class Kpoints:
             Copy of the kpoints.
         """
 
-        deepcopy(self)
+        return deepcopy(self)
 
     ################################################################################
     #                                Human readables                               #
@@ -509,8 +505,6 @@ class Kpoints:
     def hs_table(self, decimals=8) -> str:
         r"""
         Table of the high symmetry points.
-
-        .. versionadded:: 0.3.1
 
         Parameters
         ----------
@@ -548,7 +542,7 @@ class Kpoints:
             i = f"{relative[0]: {d+3}.{d}f}"
             j = f"{relative[1]: {d+3}.{d}f}"
             k = f"{relative[2]: {d+3}.{d}f}"
-            absolute = self.hs_coordinates[name] @ np.array([self.b1, self.b2, self.b3])
+            absolute = self.hs_coordinates[name] @ self.rcell
             k_x = f"{absolute[0]: {d+3}.{d}f}"
             k_y = f"{absolute[1]: {d+3}.{d}f}"
             k_z = f"{absolute[2]: {d+3}.{d}f}"
