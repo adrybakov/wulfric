@@ -79,7 +79,7 @@ References
 ==========
 .. [1] Setyawan, W. and Curtarolo, S., 2010.
     High-throughput electronic band structure calculations: Challenges and tools.
-    Computational materials science, 49(2), pp.299-312.
+    Computational materials science, 49(2), pp. 299-312.
 .. [2] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
     Band structure diagram paths based on crystallography.
     Computational Materials Science, 128, pp.140-184.

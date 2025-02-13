@@ -76,6 +76,10 @@ def _get_voronoi_cell(cell):
     vertices : (M, 3) :numpy:`ndarray`
         M vertices of the Voronoi cell around (0,0,0) point. Each element is a vector
         :math:`v = (v_x, v_y, v_z)`.
+
+    Notes
+    -----
+    This function is a part of ``wulfric[visual]``
     """
 
     if not SCIPY_AVAILABLE:

@@ -42,7 +42,7 @@ def shift_atoms(
     Parameters
     ----------
     atoms : dict
-        Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
+        Dictionary with atoms. Must have a ``"positions"`` with value of (N,3) |array-like|_.
     gravity_point : (3,) |array-like|_, default (0.5, 0.5, 0.5)
         Relative coordinates of the gravity point.
     cell : (3, 3) |array-like|_, optional
@@ -98,7 +98,7 @@ def cure_negative(atoms) -> None:
     Parameters
     ----------
     atoms : dict
-        Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
+        Dictionary with atoms. Must have a ``"positions"`` with value of (N,3) |array-like|_.
 
     Examples
     --------
@@ -134,7 +134,7 @@ def ensure_000(atoms) -> None:
     Parameters
     ----------
     atoms : dict
-        Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
+        Dictionary with atoms. Must have a ``"positions"`` with value of (N,3) |array-like|_.
 
     Examples
     --------
@@ -183,7 +183,7 @@ def get_vector(
     cell : (3, 3) |array-like|_,
         Matrix of a cell, rows are interpreted as vectors.
     atoms : dict
-        Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
+        Dictionary with atoms. Must have a ``"positions"`` with value of (N,3) |array-like|_.
     atom1 : int
         Index of the first atom in ``atoms["positions"]``.
     atom2 : int
@@ -235,7 +235,7 @@ def get_distance(cell, atoms, atom1, atom2, R=(0, 0, 0)) -> float:
     cell : (3, 3) |array-like|_,
         Matrix of a cell, rows are interpreted as vectors.
     atoms : dict
-        Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
+        Dictionary with atoms. Must have a ``"positions"`` with value of (N,3) |array-like|_.
     atom1 : int
         Index of the first atom in ``atoms["positions"]``.
     atom2 : int

@@ -39,7 +39,7 @@ def standardize(
     cell : (3, 3) |array-like|_
         Matrix of a primitive cell, rows are interpreted as vectors.
     atoms : dict
-        Dictionary with atoms. Must have a ``positions`` with value of (N,3) |array-like|_.
+        Dictionary with atoms. Must have a ``"positions"`` with value of (N,3) |array-like|_.
     S_matrix : (3, 3) |array-like|_, optional
         Transformation matrix S. If not provided, then computed automatically from
         ``cell``. If provided, then it is user's responsibility to ensure that the matrix

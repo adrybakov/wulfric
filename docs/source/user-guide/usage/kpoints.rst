@@ -75,11 +75,11 @@ However, it could be created explicitly as well:
 
 .. doctest::
 
-    >>> b1, b2, b3 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+    >>> rcell = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
     >>> names = ["G", "X"]
     >>> coordinates = [[0, 0, 0], [0.5, 0, 0]]
     >>> labels = [R"$\Gamma$", "X"]
-    >>> kp = wulf.Kpoints(b1, b2, b3, names=names, coordinates=coordinates, labels=labels)
+    >>> kp = wulf.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels)
     >>> kp.hs_names
     ['G', 'X']
 
@@ -125,7 +125,7 @@ Adding a point
 
 .. doctest::
 
-    >>> kp.add_hs_point(name="M", coordinates=[0.5, 0.5, 0], label="M")
+    >>> kp.add_hs_point(name="M", coordinate=[0.5, 0.5, 0], label="M")
     >>> kp.hs_names
     ['G', 'X', 'M']
     >>> kp.hs_coordinates
@@ -164,11 +164,11 @@ We use a specific format in the package that is described in
 .. doctest::
 
     >>> # Create a Kpoints instance
-    >>> b1, b2, b3 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+    >>> rcell = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
     >>> names = ["G", "K", "X", "R"]
     >>> coordinates = [[0, 0, 0], [0.5, 0.5, 0], [0.5, 0, 0], [0.5, 0.5, 0.5]]
     >>> labels = ["$\Gamma$", "K", "X", "R"]
-    >>> kp = wulf.Kpoints(b1, b2, b3, names=names, coordinates=coordinates, labels=labels)
+    >>> kp = wulf.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels)
     >>> # Default path is constructed from the list of high symmetry points
     >>> kp.path
     [['G', 'K', 'X', 'R']]
@@ -187,7 +187,7 @@ We use a specific format in the package that is described in
     >>> kp.path
     [['G', 'K', 'X'], ['R', 'G']]
     >>> # We can add a point to de used in the path
-    >>> kp.add_hs_point(name="S", coordinates=[0.5, 0.5, 0.5], label="S")
+    >>> kp.add_hs_point(name="S", coordinate=[0.5, 0.5, 0.5], label="S")
     >>> # Now it is possible to use "S" it in the path
     >>> kp.path = "G-K-X|R-S"
     >>> kp.path
@@ -230,11 +230,11 @@ the high symmetry points of this section of the path.
 
 .. doctest::
 
-    >>> b1, b2, b3 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+    >>> rcell = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
     >>> names = ["G", "K", "X"]
     >>> coordinates = [[0, 0, 0], [0.5, 0.5, 0], [0.5, 0, 0]]
     >>> labels = ["$\Gamma$", "K", "X"]
-    >>> kp = wulf.Kpoints(b1, b2, b3, names=names, coordinates=coordinates, labels=labels, n=4)
+    >>> kp = wulf.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels, n=4)
     >>> kp.points()
     array([[0. , 0. , 0. ],
            [0.1, 0.1, 0. ],

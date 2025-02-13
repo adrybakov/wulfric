@@ -23,19 +23,19 @@ In the examples we use crystall with six atoms and orthorhombic cell.
 .. doctest::
 
   >>> cell = np.array([
-  ...     [0.000000, 0.000000, 8.760497],
-  ...     [3.553350, 0.000000, 0.000000],
   ...     [0.000000, 4.744935, 0.000000],
+  ...     [3.553350, 0.000000, 0.000000],
+  ...     [0.000000, 0.000000, 8.760497],
   ... ])
   >>> atoms = {
   ...     "names": ["Cr1", "Br1", "S1", "Cr2", "Br2", "S2"],
   ...     "positions": [
-  ...         [0.882382, 0.500000, 0.000000],
-  ...         [0.677322, 0.000000, 0.000000],
-  ...         [0.935321, 0.500000, 0.500000],
-  ...         [0.117618, 0.000000, 0.500000],
-  ...         [0.322678, 0.500000, 0.500000],
-  ...         [0.064679, 0.000000, 0.000000],
+  ...         [0.000000, 0.500000,  0.882382],
+  ...         [0.000000, 0.000000,  0.677322],
+  ...         [0.500000, 0.500000,  0.935321],
+  ...         [0.500000, 0.000000,  0.117618],
+  ...         [0.500000, 0.500000,  0.322678],
+  ...         [0.000000, 0.000000,  0.064679],
   ...     ],
   ... }
 
@@ -111,21 +111,55 @@ cell and updates relative coordinated of atoms.
 
   >>> # Position of the first atom relative to the non-standardized cell
   >>> atoms["positions"][0]
-  [0.882382, 0.5, 0.0]
+  [0.0, 0.5, 0.882382]
   >>> # Position of the same atom in the real space, in absolute coordinates
   >>> atoms["positions"][0] @ cell
   array([1.776675  , 0.        , 7.73010486])
   >>> # This function return new cell, but update passes atoms dictionary
   >>> cell = wulf.crystal.standardize(cell=cell, atoms=atoms)
+  >>> # Now the cell is a standard primitive one
+  >>> cell
+  array([[-3.55335 ,  0.      ,  0.      ],
+         [ 0.      , -4.744935,  0.      ],
+         [ 0.      ,  0.      , -8.760497]])
   >>> # Note how the relative positions changed
   >>> atoms["positions"][0]
-  array([0.5     , 0.      , 0.882382])
+  array([-0.5     ,  0.      , -0.882382])
   >>> # But absolute position is the same
   >>> atoms["positions"][0] @ cell
   array([1.776675  , 0.        , 7.73010486])
-  >>> # It reflects a reordering of the lattice vectors
-  >>> # For ORC lattice a < b < c
-  >>> cell
-  array([[3.55335 , 0.      , 0.      ],
-         [0.      , 4.744935, 0.      ],
-         [0.      , 0.      , 8.760497]])
+
+Translation equivalence
+=======================
+
+After standardization relative coordinates of atoms may become negative. It means that the
+atoms are located outside of the unit cell in real space. The crystal that is defined by
+the new part of cell and atoms is still the same as before standardization.
+
+One may want to ensure that all atoms are located within the volume of :math:`(0, 0, 0)`
+unit cell. In that way the atoms would be changed to their translational equivalent images.
+To do so use
+
+.. doctest::
+
+  >>> for p in atoms["positions"]:
+  ...     print(p)
+  ...
+  [-0.5       0.       -0.882382]
+  [ 0.        0.       -0.677322]
+  [-0.5      -0.5      -0.935321]
+  [ 0.       -0.5      -0.117618]
+  [-0.5      -0.5      -0.322678]
+  [ 0.        0.       -0.064679]
+  >>> wulf.crystal.ensure_000(atoms)
+  >>> for p in atoms["positions"]:
+  ...     print(p)
+  ...
+  [0.5      0.       0.117618]
+  [0.       0.       0.322678]
+  [0.5      0.5      0.064679]
+  [0.       0.5      0.882382]
+  [0.5      0.5      0.677322]
+  [0.       0.       0.935321]
+
+Resulting pair of atoms and cell still describe the same crystal as at the beginning.

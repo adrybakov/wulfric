@@ -6,14 +6,17 @@ wulfric.crystal
 
 .. currentmodule:: wulfric.crystal
 
+Basic manipulations
+===================
+
 .. autosummary::
     :toctree: generated/
 
     get_vector
     get_distance
+    ensure_000
     shift_atoms
     cure_negative
-    standardize
 
 Atoms
 =====
@@ -23,3 +26,10 @@ Atoms
 
     get_atom_species
     populate_atom_species
+
+Standardization
+===============
+.. autosummary::
+    :toctree: generated/
+
+    standardize

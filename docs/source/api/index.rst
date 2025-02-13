@@ -46,8 +46,6 @@ Top-level functions
     compare_numerically
     print_2d_array
     logo
-    copyright
-    warranty
 
 Exceptions
 ==========

@@ -134,14 +134,11 @@ use dedicated functions:
   array([[1, 0, 0],
          [0, 1, 0],
          [0, 0, 1]])
-  >>> mcl = wulf.cell.MCL(a=1, b=4, c=5, alpha=110)
+  >>> mcl = wulf.cell.MCL(a=1, b=4, c=5, alpha=70)
   >>> mcl
   array([[1.        , 0.        , 0.        ],
          [0.        , 4.        , 0.        ],
          [0.        , 1.71010072, 4.6984631 ]])
-  >>> # Note that alpha is 70, as the standardized primitive cell is returned
-  >>> wulf.cell.get_params(mcl)
-  (1.0, 4.0, 5.0, 70.0, 90.0, 90.0)
 
 Required lattice parameters are different for each Bravias lattice type. Wulfric has
 functions for all 14 Bravais lattice types, see :ref:`API <api_cell_bravais-lattice>` for
@@ -225,4 +222,4 @@ References
 ==========
 .. [1] Setyawan, W. and Curtarolo, S., 2010.
     High-throughput electronic band structure calculations: Challenges and tools.
-    Computational materials science, 49(2), pp.299-312.
+    Computational materials science, 49(2), pp. 299-312.
