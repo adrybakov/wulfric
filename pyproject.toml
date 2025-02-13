@@ -37,7 +37,7 @@ Homepage = "https://wulfric.org"
 Documentation = "https://wulfric.org"
 Repository = "https://github.com/adrybakov/wulfric.git"
 Issues = "https://github.com/adrybakov/wulfric/issues"
-Changelog = "https://wulfric.org/en/main/release-notes/index.html"
+Changelog = "https://wulfric.org/en/latest/release-notes/index.html"
 
 [project.optional-dependencies]
 visual = ["plotly", "matplotlib", "scipy"]
