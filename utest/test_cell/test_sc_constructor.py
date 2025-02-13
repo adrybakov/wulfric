@@ -91,7 +91,6 @@ def test_BCT(a, c):
 )
 def test_ORC(a, b, c):
     cell = ORC(a, b, c)
-    a, b, c = sorted([a, b, c])
     assert np.allclose(cell, np.diag([a, b, c]))
 
 
@@ -102,7 +101,6 @@ def test_ORC(a, b, c):
 )
 def test_ORCF(a, b, c):
     cell = ORCF(a, b, c)
-    a, b, c = sorted([a, b, c])
     correct_cell = (np.ones((3, 3)) - np.eye(3)) / 2
     correct_cell[:, 0] *= a
     correct_cell[:, 1] *= b
@@ -117,7 +115,6 @@ def test_ORCF(a, b, c):
 )
 def test_ORCI(a, b, c):
     cell = ORCI(a, b, c)
-    a, b, c = sorted([a, b, c])
     correct_cell = (np.ones((3, 3)) - 2 * np.eye(3)) / 2
     correct_cell[:, 0] *= a
     correct_cell[:, 1] *= b
@@ -132,7 +129,6 @@ def test_ORCI(a, b, c):
 )
 def test_ORCC(a, b, c):
     cell = ORCC(a, b, c)
-    a, b = sorted([a, b])
     correct_cell = np.array([[1, -1, 0], [1, 1, 0], [0, 0, 2]]) / 2
     correct_cell[:, 0] *= a
     correct_cell[:, 1] *= b
@@ -172,9 +168,6 @@ def test_RHL(a, alpha):
     )
     assert np.allclose(cell, correct_cell)
 
-    with pytest.raises(ValueError):
-        RHL(a, 120)
-
 
 @given(
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
@@ -184,10 +177,8 @@ def test_RHL(a, alpha):
 )
 def test_MCL(a, b, c, alpha):
     cell = MCL(a, b, c, alpha)
-    if alpha > 90:
-        alpha = 180 - alpha
+
     alpha *= TORADIANS
-    b, c = sorted([b, c])
     correct_cell = np.array(
         [
             [a, 0, 0],
@@ -206,10 +197,9 @@ def test_MCL(a, b, c, alpha):
 )
 def test_MCLC(a, b, c, alpha):
     cell = MCLC(a, b, c, alpha)
-    if alpha > 90:
-        alpha = 180.0 - alpha
+
     alpha *= TORADIANS
-    b, c = sorted([b, c])
+
     correct_cell = np.array(
         [
             [a / 2, b / 2, 0],
