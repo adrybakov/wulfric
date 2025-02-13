@@ -136,7 +136,7 @@ calculation/plots some amount of intermediate points is implied between "G" and 
 between "K" and "X" and between "R" and "S". However, there is no intermediate points
 between "X" and "R".
 
-Internally it stores the path as ``list`` of ``list`` of ``str``, i.e. as list of subpaths,
+Internally the path is stored as ``list`` of ``list`` of ``str``, i.e. as list of subpaths,
 where each subpath is a list of names of high symmetry points.
 
 Below we give a table with examples
