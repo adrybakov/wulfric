@@ -57,3 +57,8 @@ The changes that are described and
   exploration of the package in the interactive python console.
 - Relax dependency from ``numpy~=1.26`` to ``numpy``. It was initially restricted because
   of problems with doctests. The problems are resolved.
+
+0.5.1
+-----
+
+Add :py:func:`wulfric.crystal.ensure_unique_names`.
