@@ -24,7 +24,7 @@ from hypothesis import strategies as st
 from hypothesis.extra.numpy import arrays as harrays
 
 from wulfric.constants._atoms import ATOM_SPECIES
-from wulfric.crystal._atoms import get_atom_species
+from wulfric.crystal._atoms import ensure_unique_names, get_atom_species
 
 
 @given(
@@ -39,7 +39,15 @@ from wulfric.crystal._atoms import get_atom_species
         alphabet=[i for i in "0123456789_-#$%!"],
     ),
 )
-def test_Atom_type(prefix, suffix):
+def test_get_atom_species(prefix, suffix):
     for atom_type in ATOM_SPECIES:
         name = prefix + atom_type + suffix
         assert get_atom_species(name) == atom_type
+
+
+@given(st.lists(elements=st.text()))
+def test_ensure_unique_names(names):
+    atoms = {"names": names}
+    ensure_unique_names(atoms)
+
+    assert len(atoms["names"]) == len(set(atoms["names"]))

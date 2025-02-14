@@ -157,6 +157,95 @@ def populate_atom_species(atoms, raise_on_fail=False) -> None:
         )
 
 
+def ensure_unique_names(atoms, strategy: str = "all") -> None:
+    r"""
+    Ensures that atoms have unique ``"names"``.
+
+    If atom names are already unique, then this function does nothing.
+
+    .. versionadded:: 0.5.1
+
+    Parameters
+    ----------
+    atoms : dict
+        Dictionary with atoms. Must have a ``"names"`` keyword with the value of
+        ``list`` of N ``str``.
+    strategy : str, default "all"
+        Strategy for the modification of atom names. Supported strategies are
+
+        * "all"
+
+          Add an index to the end of every atom, starting from 1.
+        * "repeated-only"
+
+          Add an index only to the repeated names, index starts with 1, independently for
+          each repeated grooup. (See examples)
+
+        Case-insensitive.
+
+    Raises
+    ------
+    ValueError
+        If ``strategy`` is not supported.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> atoms = {"names" : ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
+        >>> # Default strategy is "all"
+        >>> wulf.crystal.ensure_unique_names(atoms)
+        >>> atoms
+        {'names': ['Cr11', 'Cr22', 'Br3', 'Br4', 'S5', 'S6']}
+        >>> atoms = {"names" : ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
+        >>> wulf.crystal.ensure_unique_names(atoms, strategy="repeated-only")
+        >>> atoms
+        {'names': ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']}
+        >>> # Nothing happens if atom names are already unique
+        >>> wulf.crystal.ensure_unique_names(atoms)
+        >>> atoms
+        {'names': ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']}
+        >>> wulf.crystal.ensure_unique_names(atoms, strategy="repeated-only")
+        >>> atoms
+        {'names': ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']}
+
+    """
+
+    SUPPORTED_STRATEGIES = ["all", "repeated-only"]
+    strategy = strategy.lower()
+
+    if strategy not in SUPPORTED_STRATEGIES:
+        raise ValueError(
+            f"{strategy} strategy is not supported. Supported are:\n"
+            + ("\n").join([f"  * {i}" for i in SUPPORTED_STRATEGIES])
+        )
+
+    names_unique = len(atoms["names"]) == len(set(atoms["names"]))
+
+    if not names_unique and strategy == "all":
+
+        for i in range(len(atoms["names"])):
+            atoms["names"][i] += f"{i + 1}"
+
+    if not names_unique and strategy == "repeated-only":
+        counter = {}
+        for name in atoms["names"]:
+            if name not in counter:
+                counter[name] = [1, 1]
+            else:
+                counter[name][1] += 1
+
+        for i in range(len(atoms["names"])):
+            name = atoms["names"][i]
+            total = counter[name][1]
+            met = counter[name][0]
+            if total > 1:
+                atoms["names"][i] += str(counter[name][0])
+                counter[name][0] += 1
+
+
 # Populate __all__ with objects defined in this file
 __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects

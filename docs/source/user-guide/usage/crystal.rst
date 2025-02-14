@@ -39,6 +39,25 @@ In the examples we use crystall with six atoms and orthorhombic cell.
   ...     ],
   ... }
 
+Atom's names
+============
+
+There are no rules specified by wulfric for the atom names. Any non-empty string is a
+valid name. Wulfric can modify names to ensure their uniqueness with
+:py:func:`wulfric.crystal.ensure_unique_names`
+
+.. doctest::
+
+  >>> import wulfric as wulf
+  >>> atoms1 = {"names" : ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
+  >>> # Default strategy is "all"
+  >>> wulf.crystal.ensure_unique_names(atoms1)
+  >>> atoms1
+  {'names': ['Cr11', 'Cr22', 'Br3', 'Br4', 'S5', 'S6']}
+  >>> atoms1 = {"names" : ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
+  >>> wulf.crystal.ensure_unique_names(atoms1, strategy="repeated-only")
+  >>> atoms1
+  {'names': ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']}
 
 Atom's species
 ==============
