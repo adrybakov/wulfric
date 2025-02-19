@@ -105,6 +105,20 @@ wulfric's functions, but may be useful or be used by wulfric in the future.
 Functions of wulfric will only modify the key-values that are recognized by it and leave
 the user-defined ones intact.
 
+.. hint::
+
+    If you want to have an attribute-like access to the ``atoms`` properties, then you can
+    add some |Syntactic-sugar|_ to any dictionary with
+
+    .. doctest::
+
+        >>> atoms = wulf.add_sugar(atoms)
+        >>> atoms.names
+        ['Cr1', 'Br1', 'S1', 'Cr2', 'Br2', 'S2']
+
+    See :py:func:`wulfric.add_sugar` and :py:func:`wulfric.remove_sugar` for
+    more.
+
 .. _user-guide_usage_key-concepts_crystal:
 
 Crystal

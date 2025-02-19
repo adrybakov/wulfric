@@ -17,10 +17,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 __doclink__ = "wulfric.org"
-__git_hash__ = "e7e5e4fe2fe0af85093974cf773868175e3aa76b"
-__release_date__ = "14 February 2025"
+__git_hash__ = "177a5dcdb8ed8b20d4c1db670f1609f7206efdd0"
+__release_date__ = "19 February 2025"
 
 
 from . import cell, constants, crystal, geometry, io, visualization
@@ -29,3 +29,4 @@ from ._exceptions import *
 from ._kpoints_class import *
 from ._numerical import *
 from ._package_info import *
+from ._syntax_sugar import *

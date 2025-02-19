@@ -44,6 +44,8 @@ Top-level functions
     :toctree: generated/
 
     compare_numerically
+    add_sugar
+    remove_sugar
     print_2d_array
     logo
 

@@ -62,3 +62,12 @@ The changes that are described and
 -----
 
 Add :py:func:`wulfric.crystal.ensure_unique_names`.
+
+
+0.5.2
+-----
+
+Add optional |Syntactic-sugar|_ for the dictionaries:
+
+* :py:func:`wulfric.add_sugar`
+* :py:func:`wulfric.remove_sugar`
