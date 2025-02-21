@@ -32,6 +32,7 @@ from wulfric.constants._numerical import TORADIANS
 from wulfric.geometry._geometry import (
     absolute_to_relative,
     get_angle,
+    get_spherical,
     get_volume,
     parallelepiped_check,
 )
@@ -39,33 +40,7 @@ from wulfric.geometry._geometry import (
 ANGLE_TOLERANCE = 1e-4
 LENGTH_TOLERANCE = 1e-8
 MIN_LENGTH = 0.0
-MAX_LENGTH = 1e20
-
-################################################################################
-#                               Service functions                              #
-################################################################################
-
-n_order = 5
-
-
-def shuffle(cell, order):
-    if order == 0:
-        return [cell[2], cell[0], cell[1]]
-    if order == 1:
-        return [cell[1], cell[2], cell[0]]
-    if order == 2:
-        return cell
-    if order == 3:
-        return [cell[1], cell[0], cell[2]]
-    if order == 4:
-        return [cell[2], cell[1], cell[0]]
-    if order == 5:
-        return [cell[0], cell[2], cell[1]]
-
-
-def rotate(cell, r1, r2, r3):
-    R = Rotation.from_rotvec([r1, r2, r3]).as_matrix()
-    return R.T @ cell
+MAX_LENGTH = 1e7
 
 
 ################################################################################
@@ -208,3 +183,28 @@ def test_parallelepiped_check(a, b, c, alpha, beta, gamma):
         and compare_numerically(alpha, "<", beta + gamma, eps=ANGLE_TOLERANCE)
         and compare_numerically(beta + gamma, "<", 360.0 - alpha, eps=ANGLE_TOLERANCE)
     )
+
+
+################################################################################
+#                             Spherical coordinates                            #
+################################################################################
+@given(
+    st.floats(min_value=MIN_LENGTH + LENGTH_TOLERANCE, max_value=MAX_LENGTH),
+    st.floats(min_value=0.1, max_value=180 - 0.1),
+    st.floats(min_value=0.1, max_value=360),
+)
+def test_get_spherical(r, theta, phi):
+
+    vector = r * np.array(
+        [
+            np.cos(phi * TORADIANS) * np.sin(theta * TORADIANS),
+            np.sin(phi * TORADIANS) * np.sin(theta * TORADIANS),
+            np.cos(theta * TORADIANS),
+        ]
+    )
+
+    c_r, c_theta, c_phi = get_spherical(vector, in_degrees=True)
+
+    assert compare_numerically(theta, "==", c_theta, eps=ANGLE_TOLERANCE)
+    assert compare_numerically(phi, "==", c_phi, eps=ANGLE_TOLERANCE)
+    assert compare_numerically(r, "==", c_r, eps=LENGTH_TOLERANCE)

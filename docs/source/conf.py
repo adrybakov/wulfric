@@ -275,6 +275,10 @@ custom_links = {
         "Syntactic sugar",
         "https://en.wikipedia.org/wiki/Syntactic_sugar",
     ),
+    "spherical-coordinates": (
+        "spherical coordinates",
+        "https://en.wikipedia.org/wiki/Spherical_coordinate_system",
+    ),
 }
 
 

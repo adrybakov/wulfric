@@ -138,6 +138,27 @@ non-degenerate ``basis``.
     >>> wulf.geometry.absolute_to_relative(vector, basis)
     array([0.5  , 0.25 , 0.125])
 
+Spherical coordinates
+=====================
+
+.. doctest::
+
+    >>> import wulfric as wulf
+    >>> wulf.geometry.get_spherical([1, 0, 0])
+    (1.0, 90.0, 0.0)
+    >>> wulf.geometry.get_spherical([-1, 0, 0])
+    (1.0, 90.0, 180.0)
+    >>> wulf.geometry.get_spherical([0, 1, 0])
+    (1.0, 90.0, 90.0)
+    >>> wulf.geometry.get_spherical([0, -1, 0])
+    (1.0, 90.0, 270.0)
+    >>> wulf.geometry.get_spherical([0, 0, 1])
+    (1.0, 0.0, 0.0)
+    >>> wulf.geometry.get_spherical([0, 0, -1])
+    (1.0, 180.0, 180.0)
+    >>> wulf.geometry.get_spherical([1, 0, 0], polar_axis = [1, 0, 0])
+    (1.0, 0.0, 0.0)
+
 
 Pretty array printing
 =====================

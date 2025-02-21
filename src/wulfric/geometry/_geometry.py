@@ -421,6 +421,105 @@ def absolute_to_relative(vector, basis):
     return np.linalg.solve(A, B)
 
 
+def get_spherical(
+    vector, in_degrees=True, polar_axis=[0, 0, 1], radial_line_zero=[1, 0, 0]
+):
+    R"""
+    Compute |spherical-coordinates|_ of a vector.
+
+    :math:`(v^x, v^y, v^z) \rightarrow (r, \theta, \phi)`
+
+    Parameters
+    ----------
+    vector : (3,) |array-like|_
+        Vector to be converted.
+    in_degrees : bool, default True
+        Whether to return angles in degrees or radians. If ``True``, then angles are
+        returned in degrees.
+    polar_axis : (3,) |array-like|_
+        Polar axis (see notes). By default oriented along :math:`+z`.
+    radial_line_zero : (3,) |array-like|_
+        Zero of the radial line (see notes). By default oriented along :math:`+x`.
+
+    Returns
+    -------
+    r : float
+        Length of the ``vector``.
+    polar_angle : float
+        Polar angle. Returned in degrees if ``in_degrees = True``, in radians otherwise.
+    azimuthal_angle : float
+        Azimuthal angle. Returned in degrees if ``in_degrees = True``, in radians
+        otherwise.
+
+    Notes
+    -----
+    ``polar_angle`` is defined as the angle between the polar axis and the given
+    ``vector`` with :math:`0 \le \alpha_{polar} \le \pi`.
+
+    Azimuthal angle is defined as the angle of the rotation of the radial line around the
+    polar axis. This angle is measured from the ``radial_line_zero`` in accordance to the
+    right-hand rule. :math:`0 \le \alpha_{azimuthal} \le 2\pi`.
+
+    Radial line is the projection of the ``vector`` on the plane perpendicular to the
+    ``polar_axis``.
+
+    If azimuthal angle is ill-defined, then wulfric returns
+
+    * :math:`0` if polar angle is :math:`0`.
+    * :math:`\pi` if polar angle is :math:`\pi`.
+
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.geometry.get_spherical([1, 0, 0])
+        (1.0, 90.0, 0.0)
+        >>> wulf.geometry.get_spherical([-1, 0, 0])
+        (1.0, 90.0, 180.0)
+        >>> wulf.geometry.get_spherical([0, 1, 0])
+        (1.0, 90.0, 90.0)
+        >>> wulf.geometry.get_spherical([0, -1, 0])
+        (1.0, 90.0, 270.0)
+        >>> wulf.geometry.get_spherical([0, 0, 1])
+        (1.0, 0.0, 0.0)
+        >>> wulf.geometry.get_spherical([0, 0, -1])
+        (1.0, 180.0, 180.0)
+        >>> wulf.geometry.get_spherical([1, 0, 0], polar_axis = [1, 0, 0])
+        (1.0, 0.0, 0.0)
+
+    """
+    polar_axis = np.array(polar_axis) / np.linalg.norm(polar_axis)
+    radial_line_zero = np.array(radial_line_zero) / np.linalg.norm(radial_line_zero)
+    r = float(np.linalg.norm(vector))
+    vector = np.array(vector) / r
+
+    if np.allclose(vector, polar_axis):
+        polar, azimuthal = 0.0, 0.0
+    elif np.allclose(vector, -polar_axis):
+        polar, azimuthal = np.pi, np.pi
+    else:
+        polar = float(np.arccos(np.clip(np.dot(vector, polar_axis), -1, 1)))
+
+        vector = vector - polar_axis * np.dot(vector, polar_axis)
+        vector /= np.linalg.norm(vector)
+
+        # This one is more complex, as it is from 0 to 360
+        azimuthal = float(np.arccos(np.clip(np.dot(vector, radial_line_zero), -1, 1)))
+
+        if np.linalg.det([polar_axis, radial_line_zero, vector]) >= 0:
+            pass
+        else:
+            azimuthal = 2 * np.pi - azimuthal
+
+    if in_degrees:
+        return r, polar * TODEGREES, azimuthal * TODEGREES
+    else:
+        return r, polar, azimuthal
+
+
 # Populate __all__ with objects defined in this file
 __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects

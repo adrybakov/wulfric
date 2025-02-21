@@ -43,7 +43,7 @@ Now wulfric uses well know structure to store data:
 -----
 The changes that are described and
 
-- Unified and improve handling of finite precision. Starting from this version there are
+- Unified and improved handling of finite precision. Starting from this version there are
   two conceptual tolerance parameters: ``angle_tolerance`` and ``length_tolerance``.
   The former describe accuracy of angular variables (in degrees), the latter describe
   accuracy for the length variables (length of lattice vectors, for example). Default
@@ -71,3 +71,8 @@ Add optional |Syntactic-sugar|_ for the dictionaries:
 
 * :py:func:`wulfric.add_sugar`
 * :py:func:`wulfric.remove_sugar`
+
+0.5.3
+-----
+
+Add optional :py:func:`wulfric.geometry.get_spherical`.
