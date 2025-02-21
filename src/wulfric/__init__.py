@@ -19,7 +19,7 @@
 
 __version__ = "0.5.3"
 __doclink__ = "wulfric.org"
-__git_hash__ = "9dc2df1980285fb9465f38a47192da6a9955d76f"
+__git_hash__ = "06270333792b04e9d915c7d3b8f42d95cd35e968"
 __release_date__ = "21 February 2025"
 
 
