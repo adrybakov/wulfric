@@ -82,3 +82,4 @@ Add optional :py:func:`wulfric.geometry.get_spherical`.
 
 * Fix a bug with the ``wulfric -v``
 * Refine value of ``_limit`` in :py:func:`.lepage`
+* Fix :issue:`7`

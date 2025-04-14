@@ -64,7 +64,12 @@ class _SyntacticSugar(dict):
 
     """
 
-    __getattr__ = dict.__getitem__
+    def __getattr__(self, key):
+        try:
+            return self[key]
+        except KeyError:
+            raise AttributeError(key)
+
     __setattr__ = dict.__setitem__
     __delattr__ = dict.__delitem__
 
