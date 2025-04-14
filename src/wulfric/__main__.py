@@ -21,7 +21,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 from wulfric import __version__
 from wulfric._osfix import _winwait
-from wulfric._package_info import logo, warranty
+from wulfric._package_info import _warranty, logo
 
 
 def main():
