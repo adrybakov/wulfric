@@ -38,7 +38,7 @@ The functionality of wulfric includes (but not limited to):
 * Automatic choice of the :ref:`Kpoints <user-guide_usage_kpoints>`
   and K-path for all :ref:`Bravais lattice types <user-guide_conventions_bravais-lattices>`.
 
-* Set of useful functions for :ref:`user-guide_usage_cell`, :ref:`user-guide_usage_crystal`.
+* Set functions for :ref:`user-guide_usage_cell`, :ref:`user-guide_usage_crystal`.
 
 * Implementation of the :py:func:`.lepage` and :py:func:`.niggli` algorithms.
 
