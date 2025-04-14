@@ -76,3 +76,9 @@ Add optional |Syntactic-sugar|_ for the dictionaries:
 -----
 
 Add optional :py:func:`wulfric.geometry.get_spherical`.
+
+0.5.4
+-----
+
+* Fix a bug with the ``wulfric -v``
+* Refine value of ``_limit`` in :py:func:`.lepage`

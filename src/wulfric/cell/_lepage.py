@@ -265,7 +265,7 @@ def _check_mcl(angles, axes, angle_tolerance, cell):
 #                                    LePage                                    #
 ################################################################################
 def lepage(
-    cell, angle_tolerance=1e-4, give_all_results=False, no_niggli=False, _limit=3.0
+    cell, angle_tolerance=1e-4, give_all_results=False, no_niggli=False, _limit=2.0
 ):
     r"""
     Detect Bravais lattice type with the Le Page algorithm [1]_.
@@ -288,7 +288,7 @@ def lepage(
         Bravais lattice type.
     no_niggli : bool, default False
         Whether to skip niggli reduction.
-    _limit : float, default 3.0
+    _limit : float, default 2.0
         Tolerance parameter for the construction of the list of potential symmetry axes.
         Given in degrees. Change with caution and only if you understand what this
         parameter means and read [1]_.

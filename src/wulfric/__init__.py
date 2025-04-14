@@ -17,10 +17,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-__version__ = "0.5.3"
+__version__ = "0.5.4"
 __doclink__ = "wulfric.org"
-__git_hash__ = "06270333792b04e9d915c7d3b8f42d95cd35e968"
-__release_date__ = "21 February 2025"
+__git_hash__ = "68251f1f281c03b5d0c3057f97a39c7af3361d74"
+__release_date__ = "14 April 2025"
 
 
 from . import cell, constants, crystal, geometry, io, visualization
