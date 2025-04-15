@@ -229,14 +229,14 @@ that way matrix :math:`\boldsymbol{P}` is the same as the transformation matrix
 It is important to understand that the transformation of the cell describes the *choice*
 of the cell for the given *lattice* or *crystal*. In other words while the **cell is
 changed**, the **lattice or crystal remain intact**. Consecutively, the **Cartesian
-coordinates of atoms are not changed** (:math:`\boldsymbol{x} = \boldsymbol{\tilde{x}}`),
+coordinates of atoms are not changed** (:math:`\boldsymbol{r} = \boldsymbol{\tilde{r}}`),
 while its **relative coordinates are transformed** as
 
 .. math::
 
-    \boldsymbol{\tilde{r}}
+    \boldsymbol{\tilde{x}}
     =
-    \boldsymbol{P}^{-1}\boldsymbol{r}
+    \boldsymbol{P}^{-1}\boldsymbol{x}
 
 .. code-block:: python
 
