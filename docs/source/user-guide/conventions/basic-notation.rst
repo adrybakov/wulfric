@@ -241,7 +241,7 @@ while its **relative coordinates are transformed** as
 .. code-block:: python
 
     import numpy as np
-    t_r = np.linalg.inv(P) @ r
+    t_x = np.linalg.inv(P) @ x
 
 Reciprocal cell is changed by the transformation as
 
