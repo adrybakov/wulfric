@@ -96,29 +96,6 @@ def envelope(message: str):
     return wrapper
 
 
-@envelope(message="Checking git branch")
-def check_active_branch(repo: git.Repo, release_branch="main"):
-    """
-    Check if the active branch is the release_branch.
-
-    Parameters
-    ----------
-    repo : git.Repo
-        Git repository object.
-    """
-
-    if repo.active_branch.name != release_branch:
-        sys.tracebacklimit = 0
-        return "".join(
-            [
-                colored("\nYou are not on {release_branch} branch\n", "red"),
-                f"You are on '{repo.active_branch.name}' branch.\n",
-                f"Please checkout to the {release_branch} branch by running\n\n",
-                f"    git checkout {release_branch}\n",
-            ]
-        )
-
-
 @envelope(message="Updating __init__.py")
 def update_init(version, root_dir: str):
     """
@@ -297,7 +274,10 @@ def check_git_status(repo: git.Repo):
                 status,
             ]
         )
-    if "Your branch is up to date with" not in status:
+    if (
+        "Your branch is up to date with" not in status
+        and "HEAD detached at v" not in status
+    ):
         sys.tracebacklimit = 0
         return "".join(
             [
@@ -335,8 +315,6 @@ def main(version: str, root_dir: str, relax: bool = False):
     rtd = check_release_notes(version=version, root_dir=root_dir, relax=relax) and rtd
 
     rtd = update_init(version=version, root_dir=root_dir, relax=relax) and rtd
-
-    rtd = check_active_branch(repo, relax=relax) and rtd
 
     rtd = check_git_status(repo, relax=relax) and rtd
     if rtd:
