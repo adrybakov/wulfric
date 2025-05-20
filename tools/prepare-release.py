@@ -324,22 +324,16 @@ def main(version: str, root_dir: str, relax: bool = False):
     print(f"{'':=^{N}}\n{f'Preparing {version} release':^{N}}\n{'':=^{N}}")
     repo = git.Repo(search_parent_directories=True)
 
-    # the order of checks is important, for example,
-    # if the update_init() is called before check_active_branch()
-    # it will never pass the check_active_branch() because the
-    # update_init() will change the __init__.py file and there
-    # will be uncommitted changes
-
     # rtd - ready to deploy
     rtd = True
-    rtd = check_active_branch(repo, relax=relax) and rtd
 
     rtd = check_release_notes(version=version, root_dir=root_dir, relax=relax) and rtd
 
-    rtd = check_git_status(repo, relax=relax) and rtd
-
     rtd = update_init(version=version, root_dir=root_dir, relax=relax) and rtd
 
+    rtd = check_active_branch(repo, relax=relax) and rtd
+
+    rtd = check_git_status(repo, relax=relax) and rtd
     if rtd:
         print(colored(f"{f'{version} ready to deploy':^{N}}", "green"))
     else:
