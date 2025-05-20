@@ -9,10 +9,6 @@ Whats new?
 Wulfric was separated from `RAD-tools <https://rad-tools.org>`_. It is now a
 standalone project, which can be used in any Python project.
 
-0.1.0
-=====
-
-Initial release
 
 0.1.1
 =====

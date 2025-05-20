@@ -28,10 +28,6 @@ Therefore version 0.3 introduce some breaking changes:
   - If method or property requires standardization, it will raise a ``ValueError`` if the object is not standardized.
   - Standardization can be called explicitly via :py:meth:`.Lattice.standardize` and :py:meth:`.Crystal.standardize`
 
-0.3.0
------
-The changes are described above and:
-
 * Add :py:meth:`.Crystal.copy()`, :py:meth:`.Lattice.copy()`,
   :py:meth:`.Atom.copy()` and :py:meth:`.Kpoints.copy()` methods.
 

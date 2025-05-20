@@ -74,16 +74,8 @@ test-all: html-from-zero test doctest
 .ONESHELL:
 pip: prepare-release
 	@read -p "Press Enter to publish to PyPI"
-	-@rm -r dist
-	-@rm -r build
-	-@rm -r wulfric.egg-info
-	@python3 -m build
-	@python3 -m twine upload --repository pypi dist/* --verbose
 	@git tag -a "v$(VERSION)" -m "Version $(VERSION)"
 	@git push origin "v$(VERSION)"
-	@git add src/wulfric/__init__.py
-	@git commit -m "Post-release commit"
-	@git push
 
 prepare-release:
 	@python3 -u tools/prepare-release.py -v $(VERSION) -rd $(ROOT_DIR) -r

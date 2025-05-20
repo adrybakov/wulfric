@@ -61,36 +61,6 @@ class ERROR(Exception):
     pass
 
 
-def only_githash_in_init(repo: git.Repo):
-    data = repo.git.diff(repo.head.commit.tree).split("\n")
-    a_files = []
-    b_files = []
-    minus_lines = []
-    plus_lines = []
-    for line in data:
-        if line.startswith("+++"):
-            b_files.append(line[6:])
-        elif line.startswith("---"):
-            a_files.append(line[6:])
-        elif line.startswith("-"):
-            minus_lines.append(line[1:])
-        elif line.startswith("+"):
-            plus_lines.append(line[1:])
-    if (
-        len(a_files) == 1
-        and len(b_files) == 1
-        and b_files[0] == "src/wulfric/__init__.py"
-        and a_files[0] == "src/wulfric/__init__.py"
-        and len(minus_lines) == 1
-        and len(plus_lines) == 1
-        and minus_lines[0].startswith("__git_hash__")
-        and plus_lines[0].startswith("__git_hash__")
-    ):
-        return True
-
-    return False
-
-
 def envelope(message: str):
     """
     Decorator for printing a message before and "Done" after a function.
@@ -150,7 +120,7 @@ def check_active_branch(repo: git.Repo, release_branch="main"):
 
 
 @envelope(message="Updating __init__.py")
-def update_init(repo: git.Repo, version, root_dir: str):
+def update_init(version, root_dir: str):
     """
     Update __init__.py file.
 
@@ -158,17 +128,14 @@ def update_init(repo: git.Repo, version, root_dir: str):
 
     Parameters
     ----------
-    repo : git.Repo
-        Git repository object.
     version : str
         Target version for the release.
     """
     cd = datetime.now()
-    sha = repo.head.object.hexsha
 
-    variables = ["__git_hash__", "__release_date__", "__version__"]
-    values = [sha, f"{cd.day} {month_name[cd.month]} {cd.year}", version]
-    good = [False, False, False]
+    variables = ["__release_date__", "__version__"]
+    values = [f"{cd.day} {month_name[cd.month]} {cd.year}", version]
+    good = [False, False]
     good_message = {False: "not updated", True: "updated"}
 
     # Read __init__.py
@@ -269,8 +236,8 @@ def check_release_notes(version: str, root_dir: str):
     found_note = False
     for line in file:
         line = line.translate(str.maketrans("", "", " \n"))
-        if re.fullmatch(f"{major}.{minor}.{rest}", line) or (
-            re.fullmatch(R"Whats new\?", line) and rest == 0
+        if re.fullmatch(f"{major}" R"\." f"{minor}" R"\." f"{rest}", line) or (
+            re.fullmatch(R"Whatsnew\?", line) and rest == 0
         ):
             found_note = True
             break
@@ -322,15 +289,14 @@ def check_git_status(repo: git.Repo):
     """
     status = repo.git.status()
     if "nothing to commit, working tree clean" not in status:
-        if not only_githash_in_init(repo):
-            sys.tracebacklimit = 0
-            return "".join(
-                [
-                    colored("\nThere are uncommitted changes\n", "red"),
-                    "Please commit them:\n\n",
-                    status,
-                ]
-            )
+        sys.tracebacklimit = 0
+        return "".join(
+            [
+                colored("\nThere are uncommitted changes\n", "red"),
+                "Please commit them:\n\n",
+                status,
+            ]
+        )
     if "Your branch is up to date with" not in status:
         sys.tracebacklimit = 0
         return "".join(
@@ -372,7 +338,7 @@ def main(version: str, root_dir: str, relax: bool = False):
 
     rtd = check_git_status(repo, relax=relax) and rtd
 
-    rtd = update_init(repo, version=version, root_dir=root_dir, relax=relax) and rtd
+    rtd = update_init(version=version, root_dir=root_dir, relax=relax) and rtd
 
     if rtd:
         print(colored(f"{f'{version} ready to deploy':^{N}}", "green"))

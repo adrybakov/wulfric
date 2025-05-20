@@ -24,12 +24,6 @@ Therefore version 0.2 introduce some breaking changes:
 
   - :py:meth:`.Lattice.type` - add ``delta_max`` parameter.
 
-
-
-0.2.0
-=====
-Changes mentioned at the beginning of the page, plus:
-
 * Fix issues with the test suite of the lattice standardization.
 * Add :py:meth:`.Kpoints.remove_hs_point` method.
 * Fix bug in the lattice standardization in the context of the :py:class:`.Crystal` class.

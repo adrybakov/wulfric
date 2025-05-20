@@ -19,11 +19,6 @@ drastically improved. Please visit the user guide to see the changes.
 Support for Python 3.8 was removed. Minimal version of Python used for automatic testing
 is 3.9.
 
-
-0.4.0
------
-The changes are described above and:
-
 * Add :py:class:`.StandardizationTypeMismatch` exception.
 * Function ``Kpoints.coordinates()`` is removed, use :py:meth:`.Kpoints.ticks()` instead.
 * Setter for the :py:meth:`.Lattice.kpoints` is removed to avoid confusion.
