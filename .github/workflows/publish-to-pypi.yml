@@ -25,7 +25,7 @@ jobs:
     name: Unit and documentation tests
     needs:
     - check-release-metadata
-    uses: adrybakov/wulfric/.github/workflows/run-tests.yml@stable
+    uses: adrybakov/wulfric/.github/workflows/run-tests.yml@main
     with:
       python-version: "3.x"
 
