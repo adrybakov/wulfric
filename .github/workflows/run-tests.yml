@@ -12,30 +12,30 @@ on:
 jobs:
 
   test-39:
-    name: With Python3.9 test
+    name: (3.9) test
     uses: adrybakov/wulfric/.github/workflows/tests.yml@main
     with:
       python-version: '3.9'
 
   test-310:
-    name: With Python3.10 test
+    name: (3.10) test
     uses: adrybakov/wulfric/.github/workflows/tests.yml@main
     with:
       python-version: '3.10'
 
   test-311:
-    name: With Python3.11 test
+    name: (3.11) test
     uses: adrybakov/wulfric/.github/workflows/tests.yml@main
     with:
       python-version: '3.11'
 
   test-312:
-    name: With Python3.12 test
+    name: (3.12) test
     uses: adrybakov/wulfric/.github/workflows/tests.yml@main
     with:
       python-version: '3.12'
   test-313:
-    name: With Python3.13 test
+    name: (3.13) test
     uses: adrybakov/wulfric/.github/workflows/tests.yml@main
     with:
       python-version: '3.13'
