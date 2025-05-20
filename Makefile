@@ -78,7 +78,7 @@ pip: prepare-release
 	@git push origin "v$(VERSION)"
 
 prepare-release:
-	@python3 -u tools/prepare-release.py -v $(VERSION) -rd $(ROOT_DIR) -r
+	@python3 -u tools/prepare-release.py -v $(VERSION) -rd $(ROOT_DIR)
 
 
 bravais-pictures:
