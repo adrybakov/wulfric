@@ -6,7 +6,25 @@ on:
       - 'v[0-9].*.*'
 
 jobs:
+  check-release-metadata:
+    name: Check release metadata
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.x"
+
+    - name: Install dev tools
+      run: pip install gitpython termcolor
+
+    - name: Inspect metadata
+      run: python3 -u tools/prepare-release.py -v ${{  github.ref_name }} -rd .
+
   test:
+    name: Unit and documentation tests
+    needs:
+    - check-release-metadata
     uses: adrybakov/wulfric/.github/workflows/run-tests.yml@stable
     with:
       python-version: "3.x"
