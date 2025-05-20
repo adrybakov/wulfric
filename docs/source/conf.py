@@ -85,7 +85,7 @@ html_theme = "pydata_sphinx_theme"
 html_static_path = ["_static"]
 html_css_files = ["wulfric.css"]
 
-html_title = f"{project} v{version}"
+html_title = f"{project}"
 html_favicon = "img/favicon.png"
 
 # Theme specific options
