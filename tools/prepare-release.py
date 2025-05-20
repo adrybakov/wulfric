@@ -316,10 +316,15 @@ def main(version: str, root_dir: str, relax: bool = False):
                 [
                     colored("\nVersion is undefined\n", "red"),
                     "For the make command use the syntax:\n\n",
-                    "    make prepare-release VERSION=x.x.x\n",
+                    "    make prepare-release VERSION=vx.x.x\n",
                 ]
             )
         )
+    elif version[0] != "v":
+        sys.tracebacklimit = 0
+        raise ERROR(colored("\n VERSION should start with lowercase 'v'.", "red"))
+
+    version = version[1:]
 
     print(f"{'':=^{N}}\n{f'Preparing {version} release':^{N}}\n{'':=^{N}}")
     repo = git.Repo(search_parent_directories=True)
@@ -346,7 +351,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-v",
         "--version",
-        metavar="x.x.x",
+        metavar="vx.x.x",
         type=str,
         required=True,
         help="Version to release",
