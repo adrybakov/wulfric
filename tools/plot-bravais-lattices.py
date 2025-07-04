@@ -193,10 +193,10 @@ def plot():
                     OUTPUT_PATH, output_subname, f"{name.lower()}_{names[name][j]}.html"
                 ),
                 kwargs_write_html=dict(full_html=False, include_plotlyjs=False),
-                kwargs_update_layout=dict(
-                    width=600,
-                    height=600,
-                ),
+                # kwargs_update_layout=dict(
+                #     width=600,
+                #     height=600,
+                # ),
                 axes_visible=False,
             )
 
