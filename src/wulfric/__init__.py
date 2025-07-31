@@ -17,9 +17,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-__version__ = "0.5.4"
+__version__ = "0.6.0"
 __doclink__ = "wulfric.org"
-__release_date__ = "14 April 2025"
+__release_date__ = "Undefined"
 
 
 from . import cell, constants, crystal, geometry, io, visualization
