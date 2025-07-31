@@ -36,7 +36,7 @@ from wulfric.cell._basic_manipulation import (
 from wulfric.geometry._geometry import parallelepiped_check
 
 N_ORDER = 5
-MIN_LENGTH = 0.0
+MIN_LENGTH = 1e-4
 MAX_LENGTH = 1e8
 
 
@@ -191,11 +191,7 @@ def test_cell_from_params_example(a, b, c, alpha, beta, gamma, cell):
 ################################################################################
 
 
-@given(
-    harrays(
-        float, (3, 3), elements=st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH)
-    )
-)
+@given(harrays(float, (3, 3), elements=st.floats(min_value=0, max_value=MAX_LENGTH)))
 def test_get_params_from_cell(cell):
     if is_reasonable(cell):
         a, b, c, alpha, beta, gamma = get_params(cell)
