@@ -48,14 +48,18 @@ def _lattice_points(cell, relative=False):
         N lattice points. Each element is a vector :math:`v = (v_x, v_y, v_z)`.
     """
 
-    lattice_points = np.zeros((27, 3), dtype=float)
-    for i in [-1, 0, 1]:
-        for j in [-1, 0, 1]:
-            for k in [-1, 0, 1]:
+    n = 10
+
+    lattice_points = np.zeros(((2 * n + 1) ** 3, 3), dtype=float)
+    for i in range(-n, n + 1):
+        for j in range(-n, n + 1):
+            for k in range(-n, n + 1):
                 point = np.array([i, j, k])
                 if not relative:
                     point = point @ cell
-                lattice_points[9 * (i + 1) + 3 * (j + 1) + (k + 1)] = point
+                lattice_points[
+                    (2 * n + 1) ** 2 * (i + n) + (2 * n + 1) * (j + n) + (k + n)
+                ] = point
     return lattice_points
 
 
@@ -82,13 +86,17 @@ def _get_voronoi_cell(cell):
     This function is a part of ``wulfric[visual]``
     """
 
+    n = 10
+
     if not SCIPY_AVAILABLE:
         raise ImportError('SciPy is not available. Install it with "pip install scipy"')
     voronoi = Voronoi(_lattice_points(cell, relative=False))
     edges_index = set()
-    # Thanks ase for the idea. 13 - is the index of (0,0,0) point.
+    # Thanks ASE for the general idea. 62 - is the index of (0,0,0) point.
+    # Note that more than -1 0 1 range is required for the lattice points to correctly
+    # produce the Voronoi decomposition of the lattice
     for rv, rp in zip(voronoi.ridge_vertices, voronoi.ridge_points):
-        if -1 not in rv and 13 in rp:
+        if -1 not in rv and (((2 * n + 1) ** 3 - 1) // 2) in rp:
             for j in range(0, len(rv)):
                 if (rv[j - 1], rv[j]) not in edges_index and (
                     rv[j],
@@ -108,3 +116,24 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
+
+
+if __name__ == "__main__":
+
+    import numpy as np
+
+    from wulfric.visualization import PlotlyBackend
+
+    cell = np.array(
+        [
+            [2.8480, 0.0000, 0.0000],
+            [0.0000, 2.8480, 0.0000],
+            [1.4240, 1.4240, 1.4240],
+        ]
+    )
+
+    be = PlotlyBackend()
+    be.plot_lattice(cell, repetitions=(2, 2, 10))
+    be.plot_wigner_seitz(cell)
+    be.plot_brillouin(cell)
+    be.show()
