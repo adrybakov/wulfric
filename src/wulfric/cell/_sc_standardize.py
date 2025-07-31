@@ -44,7 +44,8 @@ def _CUB_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -79,7 +80,8 @@ def _FCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -114,7 +116,8 @@ def _BCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -149,7 +152,8 @@ def _TET_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Default value is
         chosen in the contexts of condense matter physics, assuming that length is given
@@ -206,7 +210,8 @@ def _BCT_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -265,7 +270,8 @@ def _ORC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Default value is
         chosen in the contexts of condense matter physics, assuming that length is given
@@ -334,7 +340,8 @@ def _ORCF_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Default value is
         chosen in the contexts of condense matter physics, assuming that length is given
@@ -404,7 +411,8 @@ def _ORCI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -474,7 +482,8 @@ def _ORCC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -557,7 +566,8 @@ def _HEX_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -626,7 +636,8 @@ def _RHL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -661,7 +672,8 @@ def _MCL_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Default value is
         chosen in the contexts of condense matter physics, assuming that length is given
@@ -747,7 +759,8 @@ def _MCLC_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Default value is
         chosen in the contexts of condense matter physics, assuming that length is given
@@ -823,7 +836,8 @@ def _TRI_get_S_matrix(cell, length_tolerance=1e-8, angle_tolerance=1e-4):
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors). Completely
         ignored by this function, the arguments are defined only for the homogeneity of
@@ -945,7 +959,8 @@ def get_S_matrix(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
     lattice_type : str, optional
         One of the 14 lattice types that correspond to the provided ``cell``,
         case-insensitive. If not provided, then computed automatically from ``cell``. If
@@ -983,6 +998,7 @@ def get_S_matrix(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance
                [1., 0., 0.],
                [0., 1., 0.]])
     """
+    # TODO do the niggli cell here and it al should work nicely
     cell = np.array(cell, dtype=float)
 
     if lattice_type is None:
@@ -1049,18 +1065,22 @@ def get_C_matrix(lattice_type):
     return C_MATRICES[lattice_type.upper()]
 
 
-def get_standardized(cell, S_matrix=None, length_tolerance=1e-8, angle_tolerance=1e-4):
+def get_standardized(
+    cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance=1e-4
+):
     R"""
     Computes standardizes primitive cell as defined in [1]_.
 
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
-    S_matrix : (3, 3) |array-like|_, optional
-        Transformation matrix S. If not provided, then computed automatically from
-        ``cell``. If provided, then it is user's responsibility to ensure that the matrix
-        is the correct one for the given ``cell``.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
+    lattice_type : str, optional
+        One of the 14 lattice types that correspond to the provided ``cell``,
+        case-insensitive. If not provided, then computed automatically from ``cell``. If
+        provided, then it user's responsibility to ensure that ``lattice_type`` is
+        correct.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors).  Default value is
         chosen in the contexts of condense matter physics, assuming that length is given
@@ -1103,23 +1123,21 @@ def get_standardized(cell, S_matrix=None, length_tolerance=1e-8, angle_tolerance
 
     cell = np.array(cell, dtype=float)
 
-    if S_matrix is None:
+    if lattice_type is None:
         lattice_type = lepage(cell, angle_tolerance=angle_tolerance)
 
-        S_matrix = get_S_matrix(
-            cell,
-            lattice_type,
-            length_tolerance=length_tolerance,
-            angle_tolerance=angle_tolerance,
-        )
-    else:
-        S_matrix = np.array(S_matrix, dtype=float)
+    S_matrix = get_S_matrix(
+        cell,
+        lattice_type,
+        length_tolerance=length_tolerance,
+        angle_tolerance=angle_tolerance,
+    )
 
     return S_matrix.T @ cell
 
 
 def get_conventional(
-    cell, S_matrix=None, C_matrix=None, length_tolerance=1e-8, angle_tolerance=1e-4
+    cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance=1e-4
 ):
     r"""
     Computes standardizes conventional cell as defined in [1]_.
@@ -1127,15 +1145,13 @@ def get_conventional(
     Parameters
     ----------
     cell : (3, 3) |array-like|_
-        Matrix of a primitive cell, rows are interpreted as vectors.
-    S_matrix : (3, 3) |array-like|_, optional
-        Transformation matrix S. If not provided, then computed automatically from
-        ``cell``. If provided, then it is user's responsibility to ensure that the matrix
-        is the correct one for the given ``cell``.
-    C_matrix : (3, 3) |array-like|_, optional
-        Transformation matrix C. If not provided, then computed automatically from
-        ``cell``. If provided, then it is user's responsibility to ensure that the matrix
-        is the correct one for the given ``cell``.
+        Matrix of a primitive cell, rows are interpreted as vectors. It is recommended to
+        use niggli cell.
+    lattice_type : str, optional
+        One of the 14 lattice types that correspond to the provided ``cell``,
+        case-insensitive. If not provided, then computed automatically from ``cell``. If
+        provided, then it user's responsibility to ensure that ``lattice_type`` is
+        correct.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors).  Default value is
         chosen in the contexts of condense matter physics, assuming that length is given
@@ -1177,23 +1193,17 @@ def get_conventional(
     """
     cell = np.array(cell, dtype=float)
 
-    if S_matrix is None or C_matrix is None:
+    if lattice_type is None:
         lattice_type = lepage(cell, angle_tolerance=angle_tolerance)
 
-    if C_matrix is None:
-        C_matrix = get_C_matrix(lattice_type)
-    else:
-        C_matrix = np.array(C_matrix, dtype=float)
+    C_matrix = get_C_matrix(lattice_type)
 
-    if S_matrix is None:
-        S_matrix = get_S_matrix(
-            cell,
-            lattice_type,
-            length_tolerance=length_tolerance,
-            angle_tolerance=angle_tolerance,
-        )
-    else:
-        S_matrix = np.array(S_matrix, dtype=float)
+    S_matrix = get_S_matrix(
+        cell,
+        lattice_type,
+        length_tolerance=length_tolerance,
+        angle_tolerance=angle_tolerance,
+    )
 
     return C_matrix.T @ S_matrix.T @ cell
 
