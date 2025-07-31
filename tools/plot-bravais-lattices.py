@@ -85,31 +85,73 @@ def plot():
     }
 
     wtps = {
-        "CUB": [["brillouin-kpath"], ["primitive", "wigner-seitz"]],
-        "FCC": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "BCC": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "TET": [["brillouin-kpath"], ["primitive", "wigner-seitz"]],
-        "BCT1": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "BCT2": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "ORC": [["brillouin-kpath"], ["primitive", "wigner-seitz"]],
-        "ORCF1": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "ORCF2": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "ORCF3": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "ORCI": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "ORCC": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "HEX": [["brillouin-kpath"], ["primitive", "wigner-seitz"]],
-        "RHL1": [["brillouin-kpath"], ["primitive", "wigner-seitz"]],
-        "RHL2": [["brillouin-kpath"], ["primitive", "wigner-seitz"]],
-        "MCL": [["brillouin-kpath"], ["primitive", "wigner-seitz"]],
-        "MCLC1": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "MCLC2": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "MCLC3": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "MCLC4": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "MCLC5": [["brillouin-kpath"], ["primitive", "conventional", "wigner-seitz"]],
-        "TRI1a": [["brillouin-kpath"], ["primitive", "wigner-seitz"]],
-        "TRI2a": [["brillouin-kpath"], ["primitive", "wigner-seitz"]],
-        "TRI1b": [["brillouin-kpath"], ["primitive", "wigner-seitz"]],
-        "TRI2b": [["brillouin-kpath"], ["primitive", "wigner-seitz"]],
+        "CUB": [["brillouin-kpath"], ["primitive", "wigner-seitz", "lattice"]],
+        "FCC": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "BCC": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "TET": [["brillouin-kpath"], ["primitive", "wigner-seitz", "lattice"]],
+        "BCT1": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "BCT2": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "ORC": [["brillouin-kpath"], ["primitive", "wigner-seitz", "lattice"]],
+        "ORCF1": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "ORCF2": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "ORCF3": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "ORCI": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "ORCC": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "HEX": [["brillouin-kpath"], ["primitive", "wigner-seitz", "lattice"]],
+        "RHL1": [["brillouin-kpath"], ["primitive", "wigner-seitz", "lattice"]],
+        "RHL2": [["brillouin-kpath"], ["primitive", "wigner-seitz", "lattice"]],
+        "MCL": [["brillouin-kpath"], ["primitive", "wigner-seitz", "lattice"]],
+        "MCLC1": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "MCLC2": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "MCLC3": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "MCLC4": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "MCLC5": [
+            ["brillouin-kpath"],
+            ["primitive", "conventional", "wigner-seitz", "lattice"],
+        ],
+        "TRI1a": [["brillouin-kpath"], ["primitive", "wigner-seitz", "lattice"]],
+        "TRI2a": [["brillouin-kpath"], ["primitive", "wigner-seitz", "lattice"]],
+        "TRI1b": [["brillouin-kpath"], ["primitive", "wigner-seitz", "lattice"]],
+        "TRI2b": [["brillouin-kpath"], ["primitive", "wigner-seitz", "lattice"]],
     }
     names = {
         "CUB": ["reciprocal", "real"],
@@ -181,6 +223,11 @@ def plot():
                         backend.plot(cell, kind=data, label=data, color="black")
                         py_file.write(
                             f'backend.plot(cell, kind="{data}", label="{data}", color="black")\n'
+                        )
+                    elif data == "lattice":
+                        backend.plot(cell, kind=data, label=data, repetitions=(1, 1, 1))
+                        py_file.write(
+                            f'backend.plot(cell, kind="{data}", label="{data}", repetitions=(1, 1, 1))\n'
                         )
                     else:
                         backend.plot(cell, kind=data, label=data)

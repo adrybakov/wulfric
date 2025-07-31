@@ -459,6 +459,32 @@ class PlotlyBackend(AbstractBackend):
                 ),
             )
 
+    def plot_lattice(self, cell, label=None, repetitions=(1, 1, 1)):
+        r"""
+        TODO
+        """
+
+        points = []
+        for i in range(-repetitions[0], repetitions[0] + 1):
+            for j in range(-repetitions[1], repetitions[1] + 1):
+                for k in range(-repetitions[2], repetitions[2] + 1):
+                    points.append(i * cell[0] + j * cell[1] + k * cell[2])
+
+        points = np.array(points).T
+        self.fig.add_traces(
+            data=go.Scatter3d(
+                mode="markers",
+                x=points[0],
+                y=points[1],
+                z=points[2],
+                marker=dict(size=2, color="Black"),
+                hoverinfo="none",
+                showlegend=label is not None,
+                legendgroup=label,
+                name=label,
+            ),
+        )
+
 
 # Populate __all__ with objects defined in this file
 __all__ = list(set(dir()) - old_dir)

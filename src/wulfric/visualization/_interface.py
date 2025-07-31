@@ -30,6 +30,7 @@ class AbstractBackend:
             "wigner_seitz": self.plot_wigner_seitz,
             "unit-cell": self.plot_unit_cell,
             "unit_cell": self.plot_unit_cell,
+            "lattice": self.plot_lattice,
         }
 
     # Backend-independent functions
@@ -185,4 +186,7 @@ class AbstractBackend:
         raise NotImplementedError
 
     def plot_kpath(self, *args, **kwargs):
+        raise NotImplementedError
+
+    def plot_lattice(self, *args, **kwargs):
         raise NotImplementedError
