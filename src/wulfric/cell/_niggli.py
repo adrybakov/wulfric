@@ -31,9 +31,6 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-# TODO reformulate with the get_N_matrix() and get_niggli() (same idea as with get_S_matrix and get_standardized)
-
-
 def _niggli_step_1(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = compare_numerically(A, ">", B, eps=eps) or (
         compare_numerically(A, "==", B, eps=eps)
