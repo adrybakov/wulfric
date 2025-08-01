@@ -459,7 +459,7 @@ class PlotlyBackend(AbstractBackend):
                 ),
             )
 
-    def plot_lattice(self, cell, label=None, repetitions=(1, 1, 1)):
+    def plot_lattice(self, cell, label=None, color="#000000", repetitions=(1, 1, 1)):
         r"""
         TODO
         """
@@ -477,7 +477,7 @@ class PlotlyBackend(AbstractBackend):
                 x=points[0],
                 y=points[1],
                 z=points[2],
-                marker=dict(size=2, color="Black"),
+                marker=dict(size=2, color=color),
                 hoverinfo="none",
                 showlegend=label is not None,
                 legendgroup=label,

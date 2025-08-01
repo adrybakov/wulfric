@@ -123,7 +123,7 @@ class AbstractBackend:
         plot_wigner_seitz : for the list of parameters
         """
 
-        self.plot_wigner_seitz(*args, reciprocal=True, color="#FF4D67", **kwargs)
+        self.plot_wigner_seitz(*args, reciprocal=True, color=color, **kwargs)
 
     def plot_brillouin_kpath(
         self, *args, zone_color="#FF4D67", path_color="black", **kwargs
