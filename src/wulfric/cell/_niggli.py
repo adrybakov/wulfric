@@ -31,6 +31,9 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
+# TODO reformulate with the get_N_matrix() and get_niggli() (same idea as with get_S_matrix and get_standardized)
+
+
 def _niggli_step_1(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = compare_numerically(A, ">", B, eps=eps) or (
         compare_numerically(A, "==", B, eps=eps)
@@ -268,16 +271,14 @@ def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix, eps):
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
-def niggli(
-    cell,
-    eps_relative=1e-5,
-    max_iterations=100000,
-    return_transformation_matrix=False,
-):
+def get_N_matrix(cell, eps_relative=1e-5, max_iterations=100000):
     r"""
-    Computes reduced Niggli cell. Implements algorithm from [2]_.
+    Computes the transformation  matrix from the given cell to the corresponding
+    reduced Niggli cell. Implements algorithm from [2]_.
 
     Details of the implementation are written in :ref:`library_niggli`.
+
+    .. versionadded:: 0.6.0
 
     Parameters
     ----------
@@ -287,23 +288,11 @@ def niggli(
         Relative epsilon as defined in [2]_.
     max_iterations : int, default 100000
         Maximum number of iterations.
-    return_transformation_matrix : bool, default False
-        Whether to return a transformation matrix from given ``cell`` to the
-        ``niggli_cell``.
 
     Returns
     -------
-    niggli_cell : (3, 3) :numpy:`ndarray`
-        Matrix of a niggli reduced cell, rows are interpreted as vectors.
-
-        .. code-block:: python
-
-            niggli_cell = [[a1_x, a1_y, a1_z],
-                           [a2_x, a2_y, a2_z],
-                           [a3_x, a3_y, a3_z]]
-
     transformation_matrix : (3, 3) :numpy:`ndarray`
-        Returned only if ``return_transformation_matrix`` is ``True``.
+        Transformation matrix from the given ``cell`` to its corresponding niggli cell.
 
     Raises
     ------
@@ -311,6 +300,11 @@ def niggli(
         If the niggli cell is not found in ``max_iterations`` iterations.
     ValueError
         If the volume of ``cell`` is zero.
+
+    See Also
+    --------
+    get_niggli
+    :ref:`user-guide_conventions_basic-notation_transformation`
 
     References
     ----------
@@ -330,7 +324,159 @@ def niggli(
     .. doctest::
 
         >>> import wulfric as wulf
-        >>> wulf.cell.niggli([[1, -0.5, 0],[-0.5, 1, 0],[0, 0, 1]])
+        >>> wulf.cell.get_N_matrix([[1, -0.5, 0],[-0.5, 1, 0],[0, 0, 1]])
+        array([[ 1,  0, -1],
+               [ 1,  0,  0],
+               [ 0, -1,  0]])
+
+    Example from [1]_ (parameters are reproducing :math:`A=9`, :math:`B=27`, :math:`C=4`,
+    :math:`\xi` = -5, :math:`\eta` = -4, :math:`\zeta = -22`):
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> from wulfric.constants import TODEGREES
+        >>> from math import sqrt, acos
+        >>> a = 3
+        >>> b = sqrt(27)
+        >>> c = 2
+        >>> alpha = acos(-5 / 2 / b / c) * TODEGREES
+        >>> beta = acos(-4 / 2 / a / c) * TODEGREES
+        >>> gamma = acos(-22 / 2 / a / b) * TODEGREES
+        >>> cell = wulf.cell.from_params(a, b, c, alpha, beta, gamma)
+        >>> wulf.cell.get_N_matrix(cell)
+        array([[0, 1, 2],
+               [0, 0, 1],
+               [1, 1, 2]])
+
+    """
+
+    volume = get_volume(cell)
+    if volume == 0:
+        raise ValueError("Cell volume is zero")
+
+    eps = eps_relative * volume ** (1 / 3.0)
+
+    # 0
+    metric_tensor = np.matmul(cell, np.transpose(cell))
+
+    params = (
+        metric_tensor[0][0],
+        metric_tensor[1][1],
+        metric_tensor[2][2],
+        2 * metric_tensor[1][2],
+        2 * metric_tensor[0][2],
+        2 * metric_tensor[0][1],
+    )
+
+    trans_matrix = np.eye(3, dtype=int)
+
+    iter_count = 0
+    while True:
+
+        if iter_count > max_iterations:
+            raise NiggliReductionFailed(max_iterations=max_iterations)
+
+        # Note : each iteration changes the transformation matrix
+
+        iter_count += 1
+        # 1
+        condition, params, trans_matrix = _niggli_step_1(*params, trans_matrix, eps=eps)
+
+        # 2
+        condition, params, trans_matrix = _niggli_step_2(*params, trans_matrix, eps=eps)
+        if condition:
+            continue
+
+        # 3
+        condition, params, trans_matrix = _niggli_step_3(*params, trans_matrix, eps=eps)
+
+        # 4
+        condition, params, trans_matrix = _niggli_step_4(*params, trans_matrix, eps=eps)
+
+        # 5
+        condition, params, trans_matrix = _niggli_step_5(*params, trans_matrix, eps=eps)
+        if condition:
+            continue
+
+        # 6
+        condition, params, trans_matrix = _niggli_step_6(*params, trans_matrix, eps=eps)
+        if condition:
+            continue
+
+        # 7
+        condition, params, trans_matrix = _niggli_step_7(*params, trans_matrix, eps=eps)
+        if condition:
+            continue
+
+        # 8
+        condition, params, trans_matrix = _niggli_step_8(*params, trans_matrix, eps=eps)
+        if condition:
+            continue
+
+        break
+
+    return trans_matrix
+
+
+def get_niggli(cell, eps_relative=1e-5, max_iterations=100000):
+    r"""
+    Computes reduced Niggli cell. Implements algorithm from [2]_.
+
+    Details of the implementation are written in :ref:`library_niggli`.
+
+    .. versionchanged:: 0.6.0 Renamed from ``niggli``
+
+    Parameters
+    ----------
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors.
+    eps_relative : float, default :math:`10^{-5}`
+        Relative epsilon as defined in [2]_.
+    max_iterations : int, default 100000
+        Maximum number of iterations.
+
+    Returns
+    -------
+    niggli_cell : (3, 3) :numpy:`ndarray`
+        Matrix of a niggli reduced cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            niggli_cell = [[a1_x, a1_y, a1_z],
+                           [a2_x, a2_y, a2_z],
+                           [a3_x, a3_y, a3_z]]
+
+    Raises
+    ------
+    wulfric.exceptions.NiggliReductionFailed
+        If the niggli cell is not found in ``max_iterations`` iterations.
+    ValueError
+        If the volume of ``cell`` is zero.
+
+    See Also
+    --------
+    get_N_matrix
+
+    References
+    ----------
+    .. [1] Křivý, I. and Gruber, B., 1976.
+        A unified algorithm for determining the reduced (Niggli) cell.
+        Acta Crystallographica Section A: Crystal Physics, Diffraction,
+        Theoretical and General Crystallography,
+        32(2), pp.297-298.
+    .. [2] Grosse-Kunstleve, R.W., Sauter, N.K. and Adams, P.D., 2004.
+        Numerically stable algorithms for the computation of reduced unit cells.
+        Acta Crystallographica Section A: Foundations of Crystallography,
+        60(1), pp.1-6.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.get_niggli([[1, -0.5, 0],[-0.5, 1, 0],[0, 0, 1]])
         array([[ 0.5,  0.5,  0. ],
                [ 0. ,  0. , -1. ],
                [-1. ,  0.5,  0. ]])
@@ -350,7 +496,7 @@ def niggli(
         >>> beta = acos(-4 / 2 / a / c) * TODEGREES
         >>> gamma = acos(-22 / 2 / a / b) * TODEGREES
         >>> cell = wulf.cell.from_params(a, b, c, alpha, beta, gamma)
-        >>> niggli_cell = wulf.cell.niggli(cell)
+        >>> niggli_cell = wulf.cell.get_niggli(cell)
         >>> niggli_cell @ niggli_cell.T
         array([[4. , 2. , 1.5],
                [2. , 9. , 4.5],
@@ -423,12 +569,7 @@ def niggli(
 
         break
 
-    niggli_cell = trans_matrix.T @ cell
-
-    if return_transformation_matrix:
-        return niggli_cell, trans_matrix
-
-    return niggli_cell
+    return trans_matrix.T @ cell
 
 
 # Populate __all__ with objects defined in this file

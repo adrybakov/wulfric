@@ -25,7 +25,8 @@ Cell reduction
 .. autosummary::
   :toctree: generated/
 
-  niggli
+  get_N_matrix
+  get_niggli
 
 
 Bravais lattice type

@@ -24,7 +24,7 @@ import pytest
 from scipy.spatial.transform import Rotation
 
 from wulfric.cell._basic_manipulation import from_params, get_params
-from wulfric.cell._niggli import niggli
+from wulfric.cell._niggli import get_niggli
 from wulfric.constants._numerical import TODEGREES
 
 ################################################################################
@@ -60,7 +60,7 @@ def rotate(cell, r1, r2, r3):
 # A unified algorithm for determining the reduced (Niggli) cell.
 # Acta Crystallographica Section A: Crystal Physics, Diffraction, Theoretical and General
 # Crystallography, 32(2), pp.297-298.
-# def test_niggli_from_paper():
+# def test_get_niggli_from_paper():
 #     a = 3
 #     b = sqrt(27)
 #     c = 2
@@ -70,13 +70,13 @@ def rotate(cell, r1, r2, r3):
 #     cell = from_params(a,b,c,alpha,beta,gamma)
 #     assert np.allclose(
 #         np.array([[4, 9, 9], [9 / 2, 3 / 2, 2]]),
-#         niggli(cell),
+#         get_niggli(cell),
 #         atol=EPS_LENGTH,
 #         rtol=EPS_LENGTH,
 #     )
 
 
-def test_niggli_example():
+def test_get_niggli_example():
     alpha = 79.030
     beta = 64.130
     gamma = 64.150
@@ -84,7 +84,7 @@ def test_niggli_example():
     b = 4.472
     c = 4.583
     ap, bp, cp, alphap, betap, gammap = get_params(
-        niggli(from_params(a, b, c, alpha, beta, gamma))
+        get_niggli(from_params(a, b, c, alpha, beta, gamma))
     )
 
     assert abs(a - ap) < 1e-3
@@ -95,6 +95,6 @@ def test_niggli_example():
     assert abs(gamma - gammap) < 1e-3
 
 
-def test_niggli_cell_volume_error():
+def test_get_niggli_cell_volume_error():
     with pytest.raises(ValueError):
-        niggli([[0, 0, 0], [0, 1, 0], [0, 0, 1]])
+        get_niggli([[0, 0, 0], [0, 1, 0], [0, 0, 1]])

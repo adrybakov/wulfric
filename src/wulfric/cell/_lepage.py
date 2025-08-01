@@ -23,7 +23,7 @@ import numpy as np
 
 from wulfric._exceptions import NiggliReductionFailed
 from wulfric.cell._basic_manipulation import get_reciprocal
-from wulfric.cell._niggli import niggli
+from wulfric.cell._niggli import get_niggli
 from wulfric.constants._numerical import TODEGREES
 
 # Save local scope at this moment
@@ -327,7 +327,7 @@ def lepage(
     if not no_niggli:
         # Niggli reduction
         try:
-            cell = niggli(cell=cell)
+            cell = get_niggli(cell=cell)
         except NiggliReductionFailed:
             import warnings
 
