@@ -17,10 +17,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+from copy import deepcopy
+
 import numpy as np
 
-from wulfric.cell._lepage import lepage
-from wulfric.cell._sc_standardize import get_S_matrix, get_standardized
+from wulfric.cell._sc_standardize import get_S_matrix
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -28,7 +29,7 @@ old_dir.add("old_dir")
 
 
 def standardize(
-    cell, atoms, S_matrix=None, length_tolerance=1e-8, angle_tolerance=1e-4
+    cell, atoms, lattice_type=None, length_tolerance=1e-8, angle_tolerance=1e-4
 ):
     R"""
     Standardize cell with respect to the Bravais lattice type as defined in [1]_ and
@@ -40,10 +41,11 @@ def standardize(
         Matrix of a primitive cell, rows are interpreted as vectors.
     atoms : dict
         Dictionary with atoms. Must have a ``"positions"`` with value of (N,3) |array-like|_.
-    S_matrix : (3, 3) |array-like|_, optional
-        Transformation matrix S. If not provided, then computed automatically from
-        ``cell``. If provided, then it is user's responsibility to ensure that the matrix
-        is the correct one for the given ``cell``.
+    lattice_type : str, optional
+        One of the 14 lattice types that correspond to the provided ``cell``,
+        case-insensitive. If not provided, then computed automatically from ``cell``. If
+        provided, then it user's responsibility to ensure that ``lattice_type`` is
+        correct.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors).  Default value is
         chosen in the contexts of condense matter physics, assuming that length is given
@@ -64,6 +66,8 @@ def standardize(
             cell = [[a1_x, a1_y, a1_z],
                     [a2_x, a2_y, a2_z],
                     [a3_x, a3_y, a3_z]]
+    atoms : dict
+        Dictionary with atoms. Independent from the given one.
 
     Notes
     -----
@@ -87,7 +91,7 @@ def standardize(
         >>> atoms = {"names" : ["Cr1", "Cr2"], "positions" : [[0.7, 0, 0], [0, 0.2, 0]]}
         >>> atoms["positions"][0] @ cell, atoms["positions"][1] @ cell
         (array([1.4, 0. , 0. ]), array([0. , 0.2, 0. ]))
-        >>> cell = wulf.crystal.standardize(cell, atoms)
+        >>> cell, atoms = wulf.crystal.standardize(cell, atoms)
         >>> cell
         array([[ 0., -1.,  0.],
                [-2.,  0.,  0.],
@@ -101,29 +105,24 @@ def standardize(
     """
 
     cell = np.array(cell, dtype=float)
+    atoms = deepcopy(atoms)
 
-    # Get S matrix before cell standardization
-    if S_matrix is None:
-        lattice_type = lepage(cell, angle_tolerance=angle_tolerance)
-
-        S_matrix = get_S_matrix(
-            cell,
-            lattice_type,
-            length_tolerance=length_tolerance,
-            angle_tolerance=angle_tolerance,
-        )
-    else:
-        S_matrix = np.array(S_matrix, dtype=float)
+    S_matrix = get_S_matrix(
+        cell,
+        lattice_type=lattice_type,
+        length_tolerance=length_tolerance,
+        angle_tolerance=angle_tolerance,
+    )
 
     # Standardize cell
-    cell = get_standardized(cell=cell, S_matrix=S_matrix)
+    cell = S_matrix.T @ cell
 
     # Recalculate atom's relative coordinates.
     atoms["positions"] = [
         np.linalg.inv(S_matrix) @ position for position in atoms["positions"]
     ]
 
-    return cell
+    return cell, atoms
 
 
 # Populate __all__ with objects defined in this file

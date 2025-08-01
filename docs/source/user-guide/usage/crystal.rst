@@ -135,7 +135,7 @@ cell and updates relative coordinated of atoms.
   >>> atoms["positions"][0] @ cell
   array([1.776675  , 0.        , 7.73010486])
   >>> # This function return new cell, but update passes atoms dictionary
-  >>> cell = wulf.crystal.standardize(cell=cell, atoms=atoms)
+  >>> cell, atoms = wulf.crystal.standardize(cell=cell, atoms=atoms)
   >>> # Now the cell is a standard primitive one
   >>> cell
   array([[-3.55335 ,  0.      ,  0.      ],

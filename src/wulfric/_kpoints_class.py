@@ -120,8 +120,6 @@ class Kpoints:
         cell,
         lattice_type=None,
         lattice_variation=None,
-        S_matrix=None,
-        C_matrix=None,
         length_tolerance=1e-8,
         angle_tolerance=1e-4,
         n=100,
@@ -141,14 +139,6 @@ class Kpoints:
         lattice_variation : str, optional
             One of the lattice variations that correspond to the provided ``cell`` and
             ``lattice_type``. If not provided, then computed automatically. Case-insensitive.
-        S_matrix : (3, 3) |array-like|_, optional
-            Transformation matrix S. If not provided, then computed automatically from
-            ``cell``. If provided, then it is user's responsibility to ensure that the matrix
-            is the correct one for the given ``cell``.
-        C_matrix : (3, 3) |array-like|_, optional
-            Transformation matrix C. If not provided, then computed automatically from
-            ``cell``. If provided, then it is user's responsibility to ensure that the matrix
-            is the correct one for the given ``cell``.
         length_tolerance : float, default :math:`10^{-8}`
             Tolerance for length variables (lengths of the lattice vectors). Default
             value is chosen in the contexts of condense matter physics, assuming that
@@ -171,8 +161,6 @@ class Kpoints:
             cell,
             lattice_type=lattice_type,
             lattice_variation=lattice_variation,
-            S_matrix=S_matrix,
-            C_matrix=C_matrix,
             length_tolerance=length_tolerance,
             angle_tolerance=angle_tolerance,
         )

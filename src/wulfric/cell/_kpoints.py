@@ -23,7 +23,7 @@ import numpy as np
 
 from wulfric.cell._basic_manipulation import get_params, get_reciprocal
 from wulfric.cell._lepage import lepage
-from wulfric.cell._sc_standardize import get_C_matrix, get_conventional, get_S_matrix
+from wulfric.cell._sc_standardize import get_C_matrix, get_S_matrix
 from wulfric.cell._sc_variation import get_variation
 from wulfric.constants._numerical import TORADIANS
 from wulfric.constants._sc_notation import DEFAULT_K_PATHS, HS_PLOT_NAMES
@@ -683,8 +683,6 @@ def get_hs_data(
     return_relative=True,
     lattice_type=None,
     lattice_variation=None,
-    S_matrix=None,
-    C_matrix=None,
     length_tolerance=1e-8,
     angle_tolerance=1e-4,
 ):
@@ -707,14 +705,6 @@ def get_hs_data(
     lattice_variation : str, optional
         One of the lattice variations that correspond to the provided ``cell`` and
         ``lattice_type``. If not provided, then computed automatically. Case-insensitive.
-    S_matrix : (3, 3) |array-like|_, optional
-        Transformation matrix S. If not provided, then computed automatically from
-        ``cell``. If provided, then it is user's responsibility to ensure that the matrix
-        is the correct one for the given ``cell``.
-    C_matrix : (3, 3) |array-like|_, optional
-        Transformation matrix C. If not provided, then computed automatically from
-        ``cell``. If provided, then it is user's responsibility to ensure that the matrix
-        is the correct one for the given ``cell``.
     length_tolerance : float, default :math:`10^{-8}`
         Tolerance for length variables (lengths of the lattice vectors).  Default value is
         chosen in the contexts of condense matter physics, assuming that length is given
@@ -781,24 +771,18 @@ def get_hs_data(
 
     lattice_variation = lattice_variation.upper()
 
-    if C_matrix is None:
-        C_matrix = get_C_matrix(lattice_type)
-    else:
-        C_matrix = np.array(C_matrix, dtype=float)
+    C_matrix = get_C_matrix(lattice_type)
 
-    if S_matrix is None:
-        S_matrix = get_S_matrix(
-            cell,
-            lattice_type,
-            length_tolerance=length_tolerance,
-            angle_tolerance=angle_tolerance,
-        )
-    else:
-        S_matrix = np.array(S_matrix, dtype=float)
+    S_matrix = get_S_matrix(
+        cell,
+        lattice_type=lattice_type,
+        length_tolerance=length_tolerance,
+        angle_tolerance=angle_tolerance,
+    )
 
     if lattice_type in ["BCT", "ORCF", "ORCI", "ORCC", "RHL", "MCL", "MCLC"]:
-        conv_a, conv_b, conv_c, conv_alpha, conv_beta, conv_gamma = get_params(
-            get_conventional(cell, S_matrix=S_matrix, C_matrix=C_matrix)
+        conv_a, conv_b, conv_c, conv_alpha, _, _ = get_params(
+            C_matrix.T @ S_matrix.T @ cell
         )
 
     if lattice_type == "CUB":

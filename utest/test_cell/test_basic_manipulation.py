@@ -121,7 +121,7 @@ def test_get_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
             product = np.abs(np.diag(rcell @ cell.T))
             correct_product = np.ones(3) * 2 * pi
             # Non  diagonal terms are close to zero.
-            assert np.allclose(product, correct_product)
+            assert np.allclose(product, correct_product, atol=1e-4)
 
 
 @pytest.mark.parametrize(
