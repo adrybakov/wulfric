@@ -23,7 +23,6 @@ from wulfric._exceptions import StandardizationTypeMismatch
 from wulfric._numerical import compare_numerically
 from wulfric.cell._basic_manipulation import get_params, get_reciprocal
 from wulfric.cell._lepage import lepage
-from wulfric.cell._niggli import get_N_matrix
 from wulfric.constants._sc_notation import C_MATRICES
 
 # Save local scope at this moment
@@ -976,10 +975,6 @@ def get_S_matrix(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance
     S : (3, 3) :numpy:`ndarray`
         Transformation matrix :math:`S`
 
-    Notes
-    -----
-    Note that standardization includes transformation to the niggli cell as a first step.
-
     References
     ----------
     .. [1] Setyawan, W. and Curtarolo, S., 2010.
@@ -998,10 +993,8 @@ def get_S_matrix(cell, lattice_type=None, length_tolerance=1e-8, angle_tolerance
                [1., 0., 0.],
                [0., 1., 0.]])
     """
-    # This cell can not be the niggli one. It has to be something else.
-    cell = np.array(cell, dtype=float)
 
-    N_matrix = get_N_matrix(cell)
+    cell = np.array(cell, dtype=float)
 
     if lattice_type is None:
         lattice_type = lepage(cell, angle_tolerance=angle_tolerance)
