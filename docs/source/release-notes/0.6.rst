@@ -13,12 +13,15 @@ Whats new?
 
 - Rename several public functions
 
-  ====================================== ======================================
+  ======================================= =======================================
   Previous name                          New name
-  ====================================== ======================================
-  ``wulfric.cell.niggli``                ``wulfric.cell.get_niggli``
-  ====================================== ======================================
+  ======================================= =======================================
+  ``wulfric.cell.niggli``                 ``wulfric.cell.get_niggli``
+  ``wulfric.visualization.PlotlyBackend`` ``wulfric.visualization.PlotlyEngine``
+  ======================================= =======================================
 
   and a number of the private ones. The renaming is aimed at the unification of the code
   from one side and at the simplification of the possible addition of other conventions in
   the future.
+
+- Remove ``MatplotlibBackend``. Improve, simplify and extend ``PlotlyEngine``.
