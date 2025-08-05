@@ -1,5 +1,5 @@
-Sphinx
-numpydoc
-sphinx-copybutton
-pydata-sphinx-theme
-sphinx-design
+Sphinx==8.2.3
+numpydoc==1.9.0
+sphinx-copybutton==0.5.2
+pydata-sphinx-theme==0.16.1
+sphinx-design==0.6.1
