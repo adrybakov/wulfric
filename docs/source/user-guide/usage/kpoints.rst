@@ -24,7 +24,7 @@ use
 
 .. doctest::
 
-    >>> cell = wulf.cell.get_cell_example("BCT")
+    >>> cell = wulf.cell.get_example_cell_SC("BCT")
     >>> coordinates, names, labels, path = wulf.cell.get_hs_data(cell)
     >>> path
     'G-X-M-G-Z-P-N-Z1-M|X-P'
@@ -66,7 +66,7 @@ Usually it is created from some ``cell``:
 
 .. doctest::
 
-    >>> cell = wulf.cell.get_cell_example("CUB")
+    >>> cell = wulf.cell.get_example_cell_SC("CUB")
     >>> kp = wulf.Kpoints.from_cell(cell)
     >>> kp.hs_names
     ['G', 'M', 'R', 'X']
@@ -141,7 +141,7 @@ In order to have a summary of the high symmetry pints the predefined method
 
 .. doctest::
 
-    >>> kp = wulf.Kpoints.from_cell(wulf.cell.get_cell_example("FCC"))
+    >>> kp = wulf.Kpoints.from_cell(wulf.cell.get_example_cell_SC("FCC"))
     >>> print(kp.hs_table())
     Name       rel_b1      rel_b2      rel_b3          k_x         k_y         k_z
     G      0.00000000  0.00000000  0.00000000   0.00000000  0.00000000  0.00000000

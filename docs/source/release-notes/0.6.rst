@@ -8,8 +8,12 @@ Version 0.6
 Whats new?
 ----------
 
-- Simplify cell's standardization and what follows: remove optional ``S_matrix`` and
-  ``C_matrix`` parameters from the majority of functions that used them.
+Wulfric was redesigned to rely on |seek-kpath|_ for the definition of the recommended
+k-path and on the |spglib|_ for the definition of symmetries. This change invoked a huge
+number of modifications both of the internal structure and public API. Below part of the
+changes are listed explicitly.
+
+
 
 - Rename several public functions
 
@@ -18,10 +22,58 @@ Whats new?
   ======================================= =======================================
   ``wulfric.cell.niggli``                 ``wulfric.cell.get_niggli``
   ``wulfric.visualization.PlotlyBackend`` ``wulfric.PlotlyEngine``
+  ``wulfric.cell.lepage``                 ``wulfric.lepage``
+  ``wulfric.cell.get_cell_example``       ``wulfric.cell.get_example_cell_SC``
+  ``wulfric.cell.CUB``                    ``wulfric.cell.CUB_SC``
+  ``wulfric.cell.FCC``                    ``wulfric.cell.FCC_SC``
+  ``wulfric.cell.BCC``                    ``wulfric.cell.BCC_SC``
+  ``wulfric.cell.TET``                    ``wulfric.cell.TET_SC``
+  ``wulfric.cell.BCT``                    ``wulfric.cell.BCT_SC``
+  ``wulfric.cell.ORC``                    ``wulfric.cell.ORC_SC``
+  ``wulfric.cell.ORCF``                   ``wulfric.cell.ORCF_SC``
+  ``wulfric.cell.ORCI``                   ``wulfric.cell.ORCI_SC``
+  ``wulfric.cell.ORCC``                   ``wulfric.cell.ORCC_SC``
+  ``wulfric.cell.HEX``                    ``wulfric.cell.HEX_SC``
+  ``wulfric.cell.RHL``                    ``wulfric.cell.RHL_SC``
+  ``wulfric.cell.MCL``                    ``wulfric.cell.MCL_SC``
+  ``wulfric.cell.MCLC``                   ``wulfric.cell.MCLC_SC``
+  ``wulfric.cell.TRI``                    ``wulfric.cell.TRI_SC``
   ======================================= =======================================
 
   and a number of the private ones. The renaming is aimed at the unification of the code
   from one side and at the simplification of the possible addition of other conventions in
   the future.
+
+- Remove several public functions/classes
+
+  =========================================== ===========================================
+  Name                                        Reason
+  =========================================== ===========================================
+  ``wulfric.visualization.MatplotlibBackend`` Support of two visualization backends
+                                              slowed down their improvement, debugging
+                                              and inclusion of new features. As of 0.6
+                                              |plotly|_ is the only visualization engine
+                                              use by wulfric.
+  ``wulfric.cell.get_standardized``           Due to the transition to |seek-kpath|_ and
+                                              |spglib|_.
+  ``wulfric.cell.get_S_matrix``               Due to the transition to |seek-kpath|_ and
+                                              |spglib|_.
+  ``wulfric.cell.get_C_matrix``               Due to the transition to |seek-kpath|_ and
+                                              |spglib|_.
+  ``wulfric.cell.get_conventional``           Due to the transition to |seek-kpath|_ and
+                                              |spglib|_.
+  ``wulfric.cell.get_variation``              Due to the transition to |seek-kpath|_ and
+                                              |spglib|_.
+  ``wulfric.cell.get_name``                   Due to the transition to |seek-kpath|_ and
+                                              |spglib|_.
+  ``wulfric.cell.get_centring_type``          Due to the transition to |seek-kpath|_ and
+                                              |spglib|_.
+  ``wulfric.cell.get_crystal_family``         Due to the transition to |seek-kpath|_ and
+                                              |spglib|_.
+  ``wulfric.cell.get_pearson_symbol``         Due to the transition to |seek-kpath|_ and
+                                              |spglib|_.
+  ``wulfric.crystall.standardize``            Due to the transition to |seek-kpath|_ and
+                                              |spglib|_.
+  =========================================== ===========================================
 
 - Remove ``MatplotlibBackend``. Improve, simplify and extend ``PlotlyEngine``.

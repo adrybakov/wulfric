@@ -20,21 +20,13 @@
 import pytest
 
 from wulfric.cell._basic_manipulation import get_reciprocal
-from wulfric.cell._sc_examples import get_cell_example
-from wulfric.cell._sc_standardize import get_standardized
-from wulfric.cell._sc_variation import get_variation
+from wulfric.cell._sc_examples import get_example_cell_SC
 from wulfric.cell._voronoi import _get_voronoi_cell
 from wulfric.constants._sc_notation import (
     BRAVAIS_LATTICE_VARIATIONS as lattice_variations,
 )
 
-
-@pytest.mark.parametrize("name", lattice_variations, ids=lattice_variations)
-def test_examples(name):
-    cell = get_cell_example(name)
-
-
-cells = [get_cell_example(i) for i in lattice_variations]
+cells = [get_example_cell_SC(i) for i in lattice_variations]
 n_edges = [
     12,
     36,
@@ -90,16 +82,6 @@ n_vertices = [
     24,
     18,
 ]
-
-
-@pytest.mark.parametrize(
-    "cell, variation",
-    list(zip(cells, lattice_variations)),
-    ids=lattice_variations,
-)
-def test_variants(cell, variation):
-    cell = get_standardized(cell)
-    assert get_variation(cell) == variation
 
 
 @pytest.mark.parametrize(

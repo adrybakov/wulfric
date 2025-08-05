@@ -44,5 +44,4 @@ Methods and algorithms
 .. toctree::
     :maxdepth: 1
 
-    library/lepage
     library/niggli

@@ -115,54 +115,24 @@ class Kpoints:
         self.path = path
 
     @staticmethod
-    def from_cell(
-        cell,
-        lattice_type=None,
-        lattice_variation=None,
-        length_tolerance=1e-8,
-        angle_tolerance=1e-4,
-        n=100,
-    ):
+    def from_cell(cell, n=100):
         r"""
-        Creates an instance of the :py:class:`wulf.Kpoints` from ``cell``.
+        Creates an instance of the :py:class:`.Kpoints` based on the given ``cell``.
 
         Parameters
         ----------
         cell : (3, 3) |array-like|_
             Matrix of a cell, rows are interpreted as vectors.
-        lattice_type : str, optional
-            One of the 14 lattice types that correspond to the provided ``cell``,
-            case-insensitive. If not provided, then computed automatically from ``cell``.
-            If provided, then it user's responsibility to ensure that ``lattice_type`` is
-            correct.
-        lattice_variation : str, optional
-            One of the lattice variations that correspond to the provided ``cell`` and
-            ``lattice_type``. If not provided, then computed automatically. Case-insensitive.
-        length_tolerance : float, default :math:`10^{-8}`
-            Tolerance for length variables (lengths of the lattice vectors). Default
-            value is chosen in the contexts of condense matter physics, assuming that
-            length is given in Angstroms. Please choose appropriate tolerance for your
-            problem.
-        angle_tolerance : float, default :math:`10^{-4}`
-            Tolerance for angle variables (angles of the lattice). Default value is chosen
-            in the contexts of condense matter physics, assuming that angles are in
-            degrees. Please choose appropriate tolerance for your problem.
         n : int, default 100
             Number of points between each pair of the high symmetry points
             (high symmetry points excluded).
 
         Returns
         -------
-        kp : :py:class:`wulf.Kpoints`
+        kp : :py:class:`.Kpoints`
         """
 
-        coordinates, names, labels, path = get_hs_data(
-            cell,
-            lattice_type=lattice_type,
-            lattice_variation=lattice_variation,
-            length_tolerance=length_tolerance,
-            angle_tolerance=angle_tolerance,
-        )
+        coordinates, names, labels, path = get_hs_data(cell)
 
         return Kpoints(
             get_reciprocal(cell),

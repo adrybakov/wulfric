@@ -19,9 +19,9 @@
 
 import pytest
 
-from wulfric.cell._basic_manipulation import from_params, get_params
-from wulfric.cell._lepage import lepage
-from wulfric.cell._sc_examples import get_cell_example
+from wulfric._lepage import lepage
+from wulfric.cell._basic_manipulation import from_params
+from wulfric.cell._sc_examples import get_example_cell_SC
 from wulfric.constants._sc_notation import BRAVAIS_LATTICE_VARIATIONS
 
 
@@ -32,7 +32,7 @@ from wulfric.constants._sc_notation import BRAVAIS_LATTICE_VARIATIONS
     "variation", BRAVAIS_LATTICE_VARIATIONS, ids=BRAVAIS_LATTICE_VARIATIONS
 )
 def test_lepage(variation):
-    cell = get_cell_example(variation)
+    cell = get_example_cell_SC(variation)
     type_name = variation.translate(str.maketrans("", "", "12345ab"))
     assert lepage(cell) == type_name
 

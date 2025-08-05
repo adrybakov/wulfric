@@ -14,25 +14,14 @@ Atoms
 
     ATOM_SPECIES
 
-Bravais Lattices (SC)
-=====================
+Bravais Lattices (by SC)
+========================
 
 .. autosummary::
     :toctree: generated/
 
-    PEARSON_SYMBOLS
     BRAVAIS_LATTICE_NAMES
     BRAVAIS_LATTICE_VARIATIONS
-    C_MATRICES
-
-K-points (SC)
-=============
-
-.. autosummary::
-    :toctree: generated/
-
-    DEFAULT_K_PATHS
-    HS_PLOT_NAMES
 
 Angle conversion
 ================

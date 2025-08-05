@@ -253,6 +253,7 @@ custom_links = {
         "spherical coordinates",
         "https://en.wikipedia.org/wiki/Spherical_coordinate_system",
     ),
+    "seek-kpath": ("seek-kpath", "https://github.com/giovannipizzi/seekpath/tree/main"),
 }
 
 

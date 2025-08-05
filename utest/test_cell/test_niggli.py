@@ -17,40 +17,15 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from math import acos, sqrt
-
-import numpy as np
 import pytest
-from scipy.spatial.transform import Rotation
 
 from wulfric.cell._basic_manipulation import from_params, get_params
 from wulfric.cell._niggli import get_niggli
-from wulfric.constants._numerical import TODEGREES
 
 ################################################################################
 #                               Service functions                              #
 ################################################################################
 N_ORDER = 5
-
-
-def shuffle(cell, order):
-    if order == 0:
-        return [cell[2], cell[0], cell[1]]
-    if order == 1:
-        return [cell[1], cell[2], cell[0]]
-    if order == 2:
-        return cell
-    if order == 3:
-        return [cell[1], cell[0], cell[2]]
-    if order == 4:
-        return [cell[2], cell[1], cell[0]]
-    if order == 5:
-        return [cell[0], cell[2], cell[1]]
-
-
-def rotate(cell, r1, r2, r3):
-    R = Rotation.from_rotvec([r1, r2, r3]).as_matrix()
-    return R.T @ cell
 
 
 ################################################################################

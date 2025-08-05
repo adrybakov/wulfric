@@ -270,7 +270,11 @@ def lepage(
     r"""
     Detect Bravais lattice type with the Le Page algorithm [1]_.
 
-    Details of the implementation are written in :ref:`library_lepage`.
+    .. warning:: This function is left in the package as a legacy function.
+        It is not used in any of the internal routines, it is not used to identify the
+        Bravais lattice type. Use with caution. There is no guarantee of the correct
+        behavior for this function.
+
 
     Parameters
     ----------
@@ -313,11 +317,11 @@ def lepage(
     .. doctest::
 
         >>> import wulfric as wulf
-        >>> wulf.cell.lepage([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+        >>> wulf.lepage([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
         'CUB'
-        >>> wulf.cell.lepage([[1, 0, 0], [0, 1, 0], [0, 0, 2]])
+        >>> wulf.lepage([[1, 0, 0], [0, 1, 0], [0, 0, 2]])
         'TET'
-        >>> wulf.cell.lepage([[1, 0, 0], [0, 2, 0], [0, 0, 3]])
+        >>> wulf.lepage([[1, 0, 0], [0, 2, 0], [0, 0, 3]])
         'ORC'
     """
 

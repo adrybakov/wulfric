@@ -17,24 +17,13 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from math import cos, pi, sin
+from math import cos
+from math import pi as PI
+from math import sin, sqrt
 
-from wulfric.cell._sc_constructors import (
-    BCC,
-    BCT,
-    CUB,
-    FCC,
-    HEX,
-    MCL,
-    MCLC,
-    ORC,
-    ORCC,
-    ORCF,
-    ORCI,
-    RHL,
-    TET,
-    TRI,
-)
+import numpy as np
+
+from wulfric.cell._basic_manipulation import from_params, get_reciprocal
 from wulfric.constants._numerical import TORADIANS
 from wulfric.constants._sc_notation import BRAVAIS_LATTICE_VARIATIONS
 
@@ -43,37 +32,28 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def get_cell_example(lattice_variation: str = None, convention: str = "sc"):
+# Primitive cell`s construction
+def CUB_SC(a: float):
     r"""
-    Examples of the Bravais lattices as defined in the paper by Setyawan and Curtarolo [1]_.
+    Constructs primitive cubic cell as defined in [1]_.
+
+    See :ref:`guide_cub` for the definition of primitive and conventional cells.
 
     Parameters
     ----------
-    lattice_variation : str, optional
-        Name of the lattice type or variation to be returned. For available names see
-        documentation of each :ref:`user-guide_conventions_bravais-lattices`.
-        Case-insensitive.
-    convention : str, default "sc"
-        Name of the convention that is used for cell standardization. Case-insensitive.
-        Supported conventions are
-
-        * "sc" - for Setyawan and Curtarolo [1]_.
+    a : float or int
+        Length of the three lattice vectors of the conventional cell.
 
     Returns
     -------
     cell : (3, 3) :numpy:`ndarray`
-        Matrix of a direct cell, rows are interpreted as vectors.
+        Matrix of a primitive cell, rows are interpreted as vectors.
 
         .. code-block:: python
 
             cell = [[a1_x, a1_y, a1_z],
                     [a2_x, a2_y, a2_z],
                     [a3_x, a3_y, a3_z]]
-
-    Raises
-    ------
-    ValueError
-        If ``convention`` is not supported.
 
     References
     ----------
@@ -87,22 +67,734 @@ def get_cell_example(lattice_variation: str = None, convention: str = "sc"):
     .. doctest::
 
         >>> import wulfric as wulf
-        >>> wulf.cell.get_cell_example("cub")
+        >>> wulf.cell.CUB_SC(a=2)
+        array([[2, 0, 0],
+               [0, 2, 0],
+               [0, 0, 2]])
+    """
+
+    return np.array([[a, 0, 0], [0, a, 0], [0, 0, a]])
+
+
+def FCC_SC(a: float):
+    r"""
+    Constructs primitive face-centred cubic cell as defined in [1]_.
+
+    See :ref:`guide_fcc` for the definition of primitive and conventional cells.
+
+    Parameters
+    ----------
+    a : float
+        Length of the three lattice vectors of the conventional cell.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.FCC_SC(a=2)
+        array([[0., 1., 1.],
+               [1., 0., 1.],
+               [1., 1., 0.]])
+    """
+
+    return np.array([[0, a / 2, a / 2], [a / 2, 0, a / 2], [a / 2, a / 2, 0]])
+
+
+def BCC_SC(a: float):
+    r"""
+    Constructs primitive body-centred cubic cell as defined in [1]_.
+
+    See :ref:`guide_bcc` for the definition of primitive and conventional cells.
+
+    Parameters
+    ----------
+    a : float
+        Length of the three lattice vectors of the conventional cell.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.BCC_SC(a=2)
+        array([[-1.,  1.,  1.],
+               [ 1., -1.,  1.],
+               [ 1.,  1., -1.]])
+    """
+
+    return np.array(
+        [[-a / 2, a / 2, a / 2], [a / 2, -a / 2, a / 2], [a / 2, a / 2, -a / 2]]
+    )
+
+
+def TET_SC(a: float, c: float):
+    r"""
+    Constructs primitive tetragonal cell as defined in [1]_.
+
+    See :ref:`guide_tet` for the definition of primitive and conventional cells.
+
+    Parameters
+    ----------
+    a : float
+        Length of the first two lattice vectors of the conventional cell.
+    c : float
+        Length of the third lattice vector of the conventional cell.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.TET_SC(a=2, c=5)
+        array([[2, 0, 0],
+               [0, 2, 0],
+               [0, 0, 5]])
+    """
+
+    return np.array([[a, 0, 0], [0, a, 0], [0, 0, c]])
+
+
+def BCT_SC(a: float, c: float):
+    r"""
+    Constructs primitive body-centred tetragonal cell as defined in [1]_.
+
+    See :ref:`guide_bct` for the definition of primitive and conventional cells.
+
+    Parameters
+    ----------
+    a : float
+        Length of the first two lattice vectors of the conventional cell.
+    c : float
+        Length of the third lattice vector of the conventional cell.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.BCT_SC(a=2, c=5)
+        array([[-1. ,  1. ,  2.5],
+               [ 1. , -1. ,  2.5],
+               [ 1. ,  1. , -2.5]])
+    """
+
+    return np.array(
+        [[-a / 2, a / 2, c / 2], [a / 2, -a / 2, c / 2], [a / 2, a / 2, -c / 2]]
+    )
+
+
+def ORC_SC(a: float, b: float, c: float):
+    r"""
+    Constructs primitive orthorhombic cell as defined in [1]_.
+
+    See :ref:`guide_orc` for the definition of primitive and conventional cells.
+
+    Input values are used as they are, therefore, the cell might not be a standard
+    primitive one.
+
+    Parameters
+    ----------
+    a : float
+        Length of the first lattice vector of the conventional cell.
+    b : float
+        Length of the second lattice vector of the conventional cell.
+    c : float
+        Length of the third lattice vector of the conventional cell.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.ORC_SC(a=3, b=5, c=7)
+        array([[3, 0, 0],
+               [0, 5, 0],
+               [0, 0, 7]])
+    """
+
+    return np.array([[a, 0, 0], [0, b, 0], [0, 0, c]])
+
+
+def ORCF_SC(a: float, b: float, c: float):
+    r"""
+    Constructs primitive face-centred orthorhombic cell as defined in [1]_.
+
+    See :ref:`guide_orcf` for the definition of primitive and conventional cells.
+
+    Input values are used as they are, therefore, the cell might not be a standard
+    primitive one.
+
+    Parameters
+    ----------
+    a : float
+        Length of the first lattice vector of the conventional cell.
+    b : float
+        Length of the second lattice vector of the conventional cell.
+    c : float
+        Length of the third lattice vector of the conventional cell.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.ORCF_SC(a=3, b=5, c=7)
+        array([[0. , 2.5, 3.5],
+               [1.5, 0. , 3.5],
+               [1.5, 2.5, 0. ]])
+    """
+
+    return np.array([[0, b / 2, c / 2], [a / 2, 0, c / 2], [a / 2, b / 2, 0]])
+
+
+def ORCI_SC(a: float, b: float, c: float):
+    r"""
+    Constructs primitive body-centred orthorhombic cell as defined in [1]_.
+
+    See :ref:`guide_orci` for the definition of primitive and conventional cells.
+
+    Input values are used as they are, therefore, the cell might not be a standard
+    primitive one.
+
+    Parameters
+    ----------
+    a : float
+        Length of the first lattice vector of the conventional cell.
+    b : float
+        Length of the second lattice vector of the conventional cell.
+    c : float
+        Length of the third lattice vector of the conventional cell.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.ORCI_SC(a=3, b=5, c=7)
+        array([[-1.5,  2.5,  3.5],
+               [ 1.5, -2.5,  3.5],
+               [ 1.5,  2.5, -3.5]])
+    """
+
+    return np.array(
+        [[-a / 2, b / 2, c / 2], [a / 2, -b / 2, c / 2], [a / 2, b / 2, -c / 2]]
+    )
+
+
+def ORCC_SC(a: float, b: float, c: float):
+    r"""
+    Constructs primitive base-centred orthorhombic cell as defined in [1]_.
+
+    See :ref:`guide_orcc` for the definition of primitive and conventional cells.
+
+    Input values are used as they are, therefore, the cell might not be a standard
+    primitive one.
+
+    Parameters
+    ----------
+    a : float
+        Length of the first lattice vector of the conventional cell.
+    b : float
+        Length of the second lattice vector of the conventional cell.
+    c : float
+        Length of the third lattice vector of the conventional cell.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.ORCC_SC(a=3, b=5, c=7)
+        array([[ 1.5, -2.5,  0. ],
+               [ 1.5,  2.5,  0. ],
+               [ 0. ,  0. ,  7. ]])
+    """
+
+    return np.array([[a / 2, -b / 2, 0], [a / 2, b / 2, 0], [0, 0, c]])
+
+
+def HEX_SC(a: float, c: float):
+    r"""
+    Constructs primitive hexagonal cell as defined in [1]_.
+
+    See :ref:`guide_hex` for the definition of primitive and conventional cells.
+
+    Parameters
+    ----------
+    a : float
+        Length of the first two lattice vectors of the conventional cell.
+    c : float
+        Length of the third lattice vector of the conventional cell.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.HEX_SC(a=3, c=5)
+        array([[ 1.5       , -2.59807621,  0.        ],
+               [ 1.5       ,  2.59807621,  0.        ],
+               [ 0.        ,  0.        ,  5.        ]])
+    """
+
+    return np.array(
+        [[a / 2, -a * sqrt(3) / 2, 0], [a / 2, a * sqrt(3) / 2, 0], [0, 0, c]]
+    )
+
+
+def RHL_SC(a: float, alpha: float):
+    r"""
+    Constructs primitive rhombohedral cell as defined in [1]_.
+
+    See :ref:`guide_rhl` for the definition of primitive and conventional cells.
+
+    Input values are used as they are, therefore, the cell might not be a standard
+    primitive one.
+
+    Parameters
+    ----------
+    a : float
+        Length of the lattice vectors of the conventional cell.
+    alpha : float
+        Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell in
+        degrees.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.RHL_SC(a=3, alpha=40)
+        array([[ 2.81907786, -1.02606043,  0.        ],
+               [ 2.81907786,  1.02606043,  0.        ],
+               [ 2.44562241,  0.        ,  1.73750713]])
+    """
+
+    alpha *= TORADIANS
+    return np.array(
+        [
+            [a * cos(alpha / 2), -a * sin(alpha / 2), 0],
+            [a * cos(alpha / 2), a * sin(alpha / 2), 0],
+            [
+                a * cos(alpha) / cos(alpha / 2),
+                0,
+                a * sqrt(1 - cos(alpha) ** 2 / cos(alpha / 2) ** 2),
+            ],
+        ]
+    )
+
+
+def MCL_SC(a: float, b: float, c: float, alpha: float):
+    r"""
+    Constructs primitive monoclinic cell as defined in [1]_.
+
+    See :ref:`guide_mcl` for the definition of primitive and conventional cells.
+
+    Input values are used as they are, therefore, the cell might not be a standard
+    primitive one.
+
+    Parameters
+    ----------
+    a : float
+        Length of the first lattice vector of the conventional cell.
+    b : float
+        Length of the second of the two remaining lattice vectors of the conventional
+        cell.
+    c : float
+        Length of the third of the two remaining lattice vectors of the conventional cell.
+    alpha : float
+        Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell in
+        degrees.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.MCL_SC(a=3, b=5, c=7, alpha = 45)
+        array([[3.        , 0.        , 0.        ],
+               [0.        , 5.        , 0.        ],
+               [0.        , 4.94974747, 4.94974747]])
+    """
+
+    alpha *= TORADIANS
+    return np.array([[a, 0, 0], [0, b, 0], [0, c * cos(alpha), c * sin(alpha)]])
+
+
+def MCLC_SC(a: float, b: float, c: float, alpha: float):
+    r"""
+    Constructs primitive base-centred monoclinic cell as defined in [1]_.
+
+    See :ref:`guide_mclc` for the definition of primitive and conventional cells.
+
+    Input values are used as they are, therefore, the cell might not be a standard
+    primitive one.
+
+    Parameters
+    ----------
+    a : float
+        Length of the first lattice vector of the conventional cell.
+    b : float
+        Length of the second of the two remaining lattice vectors of the conventional
+        cell.
+    c : float
+        Length of the third of the two remaining lattice vectors of the conventional
+        cell.
+    alpha : float
+        Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell in
+        degrees.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.MCLC_SC(a=3, b=5, c=7, alpha = 45)
+        array([[ 1.5       ,  2.5       ,  0.        ],
+               [-1.5       ,  2.5       ,  0.        ],
+               [ 0.        ,  4.94974747,  4.94974747]])
+    """
+
+    alpha *= TORADIANS
+    return np.array(
+        [
+            [a / 2, b / 2, 0],
+            [-a / 2, b / 2, 0],
+            [0, c * cos(alpha), c * sin(alpha)],
+        ]
+    )
+
+
+def TRI_SC(
+    a: float,
+    b: float,
+    c: float,
+    alpha: float,
+    beta: float,
+    gamma: float,
+    input_reciprocal=False,
+):
+    r"""
+    Constructs primitive triclinic cell as defined in [1]_.
+
+    See :ref:`guide_tri` for the definition of primitive and conventional cells.
+
+    Parameters
+    ----------
+    a : float
+        Length of the first lattice vector of the conventional cell.
+    b : float
+        Length of the second lattice vector of the conventional cell.
+    c : float
+        Length of the third lattice vector of the conventional cell.
+    alpha : float
+        Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell in
+        degrees.
+    beta : float
+        Angle between vectors :math:`a_1` and :math:`a_3` of the conventional cell in
+        degrees.
+    gamma : float
+        Angle between vectors :math:`a_1` and :math:`a_2` of the conventional cell in
+        degrees.
+    input_reciprocal : bool, default False
+        Whether to interpret input as reciprocal parameters.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a primitive cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.TRI_SC(a=3, b=5, c=7, alpha = 45, beta = 33, gamma = 21)
+        array([[ 3.        ,  0.        ,  0.        ],
+               [ 4.66790213,  1.79183975,  0.        ],
+               [ 5.87069398, -1.48176621,  3.51273699]])
+    """
+
+    cell = from_params(a, b, c, alpha, beta, gamma)
+    if input_reciprocal:
+        cell = get_reciprocal(cell)
+
+    return cell
+
+
+def get_example_cell_SC(lattice_variation: str = None):
+    r"""
+    Examples of the Bravais lattices as defined in the paper by Setyawan and Curtarolo [1]_.
+
+    Parameters
+    ----------
+    lattice_variation : str, optional
+        Name of the lattice type or variation to be returned. For available names see
+        documentation of each :ref:`user-guide_conventions_bravais-lattices`.
+        Case-insensitive.
+
+    Returns
+    -------
+    cell : (3, 3) :numpy:`ndarray`
+        Matrix of a direct cell, rows are interpreted as vectors.
+
+        .. code-block:: python
+
+            cell = [[a1_x, a1_y, a1_z],
+                    [a2_x, a2_y, a2_z],
+                    [a3_x, a3_y, a3_z]]
+
+    References
+    ----------
+    .. [1] Setyawan, W. and Curtarolo, S., 2010.
+        High-throughput electronic band structure calculations: Challenges and tools.
+        Computational materials science, 49(2), pp. 299-312.
+
+    Examples
+    --------
+
+    .. doctest::
+
+        >>> import wulfric as wulf
+        >>> wulf.cell.get_example_cell_SC("cub")
         array([[3.14159265, 0.        , 0.        ],
                [0.        , 3.14159265, 0.        ],
                [0.        , 0.        , 3.14159265]])
-        >>> wulf.cell.get_cell_example("ORCF3")
+        >>> wulf.cell.get_example_cell_SC("ORCF3")
         array([[0.        , 1.96349541, 2.61799388],
                [1.57079633, 0.        , 2.61799388],
                [1.57079633, 1.96349541, 0.        ]])
     """
-
-    convention = convention.lower()
-
-    if convention != "sc":
-        raise ValueError(
-            f'"{convention}" convention is not supported. Supported is "sc".'
-        )
 
     correct_inputs = set(map(lambda x: x.lower(), BRAVAIS_LATTICE_VARIATIONS)).union(
         set(
@@ -117,82 +809,85 @@ def get_cell_example(lattice_variation: str = None, convention: str = "sc"):
         not isinstance(lattice_variation, str)
         or lattice_variation.lower() not in correct_inputs
     ):
-        message = f"There is no {lattice_variation} Bravais lattice. Available examples are:\n"
-        for name in BRAVAIS_LATTICE_VARIATIONS:
+        message = (
+            f'There is no example of "{lattice_variation}" Bravais lattice. '
+            "Available examples are:\n"
+        )
+        for name in correct_inputs:
             message += f"  * {name}\n"
         raise ValueError(message)
 
     lattice_variation = lattice_variation.lower()
 
     if lattice_variation == "cub":
-        cell = CUB(pi)
+        cell = CUB_SC(PI)
     elif lattice_variation == "fcc":
-        cell = FCC(pi)
+        cell = FCC_SC(PI)
     elif lattice_variation == "bcc":
-        cell = BCC(pi)
+        cell = BCC_SC(PI)
     elif lattice_variation == "tet":
-        cell = TET(pi, 1.5 * pi)
+        cell = TET_SC(PI, 1.5 * PI)
     elif lattice_variation in ["bct1", "bct"]:
-        cell = BCT(1.5 * pi, pi)
+        cell = BCT_SC(1.5 * PI, PI)
     elif lattice_variation == "bct2":
-        cell = BCT(pi, 1.5 * pi)
+        cell = BCT_SC(PI, 1.5 * PI)
     elif lattice_variation == "orc":
-        cell = ORC(pi, 1.5 * pi, 2 * pi)
+        cell = ORC_SC(PI, 1.5 * PI, 2 * PI)
     elif lattice_variation in ["orcf1", "orcf"]:
-        cell = ORCF(0.7 * pi, 5 / 4 * pi, 5 / 3 * pi)
+        cell = ORCF_SC(0.7 * PI, 5 / 4 * PI, 5 / 3 * PI)
     elif lattice_variation == "orcf2":
-        cell = ORCF(1.2 * pi, 5 / 4 * pi, 5 / 3 * pi)
+        cell = ORCF_SC(1.2 * PI, 5 / 4 * PI, 5 / 3 * PI)
     elif lattice_variation == "orcf3":
-        cell = ORCF(pi, 5 / 4 * pi, 5 / 3 * pi)
+        cell = ORCF_SC(PI, 5 / 4 * PI, 5 / 3 * PI)
     elif lattice_variation == "orci":
-        return ORCI(pi, 1.3 * pi, 1.7 * pi)
+        return ORCI_SC(PI, 1.3 * PI, 1.7 * PI)
     elif lattice_variation == "orcc":
-        cell = ORCC(pi, 1.3 * pi, 1.7 * pi)
+        cell = ORCC_SC(PI, 1.3 * PI, 1.7 * PI)
     elif lattice_variation == "hex":
-        cell = HEX(pi, 2 * pi)
+        cell = HEX_SC(PI, 2 * PI)
     elif lattice_variation in ["rhl1", "rhl"]:
         # If alpha = 60 it is effectively FCC!
-        cell = RHL(pi, 70)
+        cell = RHL_SC(PI, 70)
     elif lattice_variation == "rhl2":
-        cell = RHL(pi, 110)
+        cell = RHL_SC(PI, 110)
     elif lattice_variation == "mcl":
-        cell = MCL(pi, 1.3 * pi, 1.6 * pi, alpha=75)
+        cell = MCL_SC(PI, 1.3 * PI, 1.6 * PI, alpha=75)
     elif lattice_variation in ["mclc1", "mclc"]:
-        cell = MCLC(pi, 1.4 * pi, 1.7 * pi, 80)
+        cell = MCLC_SC(PI, 1.4 * PI, 1.7 * PI, 80)
     elif lattice_variation == "mclc2":
-        cell = MCLC(1.4 * pi * sin(75 * TORADIANS), 1.4 * pi, 1.7 * pi, 75)
+        cell = MCLC_SC(1.4 * PI * sin(75 * TORADIANS), 1.4 * PI, 1.7 * PI, 75)
     elif lattice_variation == "mclc3":
-        b = pi
+        b = PI
         x = 1.1
         alpha = 78
         ralpha = alpha * TORADIANS
         c = b * (x**2) / (x**2 - 1) * cos(ralpha) * 1.8
         a = x * b * sin(ralpha)
-        cell = MCLC(a, b, c, alpha)
+        cell = MCLC_SC(a, b, c, alpha)
     elif lattice_variation == "mclc4":
-        b = pi
+        b = PI
         x = 1.2
         alpha = 65
         ralpha = alpha * TORADIANS
         c = b * (x**2) / (x**2 - 1) * cos(ralpha)
         a = x * b * sin(ralpha)
-        cell = MCLC(a, b, c, alpha)
+        cell = MCLC_SC(a, b, c, alpha)
     elif lattice_variation == "mclc5":
-        b = pi
+        b = PI
         x = 1.4
         alpha = 53
         ralpha = alpha * TORADIANS
         c = b * (x**2) / (x**2 - 1) * cos(ralpha) * 0.9
         a = x * b * sin(ralpha)
-        cell = MCLC(a, b, c, alpha)
+        cell = MCLC_SC(a, b, c, alpha)
     elif lattice_variation in ["tri1a", "tri1", "tri", "tria"]:
-        cell = TRI(1, 1.5, 2, 120, 110, 100, input_reciprocal=True)
+        cell = TRI_SC(1, 1.5, 2, 120, 110, 100, input_reciprocal=True)
     elif lattice_variation in ["tri2a", "tri2"]:
-        cell = TRI(1, 1.5, 2, 120, 110, 90, input_reciprocal=True)
+        cell = TRI_SC(1, 1.5, 2, 120, 110, 90, input_reciprocal=True)
     elif lattice_variation in ["tri1b", "trib"]:
-        cell = TRI(1, 1.5, 2, 60, 70, 80, input_reciprocal=True)
+        cell = TRI_SC(1, 1.5, 2, 60, 70, 80, input_reciprocal=True)
     elif lattice_variation == "tri2b":
-        cell = TRI(1, 1.5, 2, 60, 70, 90, input_reciprocal=True)
+        cell = TRI_SC(1, 1.5, 2, 60, 70, 90, input_reciprocal=True)
 
     return cell
 

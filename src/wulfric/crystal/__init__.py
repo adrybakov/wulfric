@@ -19,4 +19,3 @@
 
 from ._atoms import *
 from ._basic_manipulation import *
-from ._sc_standardize import *

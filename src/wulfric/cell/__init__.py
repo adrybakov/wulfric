@@ -19,10 +19,5 @@
 
 from ._basic_manipulation import *
 from ._kpoints import *
-from ._lepage import *
-from ._names import *
 from ._niggli import *
-from ._sc_constructors import *
 from ._sc_examples import *
-from ._sc_standardize import *
-from ._sc_variation import *

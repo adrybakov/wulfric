@@ -58,3 +58,13 @@ Exceptions
     StandardizationTypeMismatch
     FailedToDeduceAtomSpecies
     NiggliReductionFailed
+
+
+Legacy code
+===========
+
+
+.. autosummary::
+  :toctree: generated/
+
+  lepage

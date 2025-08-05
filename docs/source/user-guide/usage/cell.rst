@@ -92,49 +92,16 @@ lattice just use the same function again:
          [0.      , 4.744935, 0.      ],
          [0.      , 0.      , 8.760497]])
 
-Bravais lattices
-================
-
-There is a full description of the :ref:`user-guide_conventions_bravais-lattices` with
-their variations, examples, creation functions, details of standardizations. Please
-consult it to learn more.
-
-Type of the Bravail lattice might be computed via the :ref:`library_lepage` as
-
-.. doctest::
-
-  >>> lattice_type = wulf.cell.lepage(cell)
-  >>> lattice_type
-  'ORC'
-
-Some of the Bravais lattices have variations, to check the variation of the lattice use
-
-.. doctest::
-
-  >>> # Note there is no variation for the Orthorhombic lattice.
-  >>> wulf.cell.get_variation(cell)
-  'ORC'
-
-Some of the characteristics of the Bravais lattice can be accessed from its type:
-
-.. doctest::
-
-  >>> # Note lattice_type = "ORC"
-  >>> wulf.cell.get_name(lattice_type)
-  'Orthorhombic'
-  >>> wulf.cell.get_pearson_symbol(lattice_type)
-  'oP'
-
 To construct the cell for the one of the :ref:`user-guide_conventions_bravais-lattices`
 use dedicated functions:
 
 .. doctest::
 
-  >>> wulf.cell.CUB(a=1)
+  >>> wulf.cell.CUB_SC(a=1)
   array([[1, 0, 0],
          [0, 1, 0],
          [0, 0, 1]])
-  >>> mcl = wulf.cell.MCL(a=1, b=4, c=5, alpha=70)
+  >>> mcl = wulf.cell.MCL_SC(a=1, b=4, c=5, alpha=70)
   >>> mcl
   array([[1.        , 0.        , 0.        ],
          [0.        , 4.        , 0.        ],
@@ -143,83 +110,3 @@ use dedicated functions:
 Required lattice parameters are different for each Bravias lattice type. Wulfric has
 functions for all 14 Bravais lattice types, see :ref:`API <api_cell_bravais-lattice>` for
 details.
-
-
-.. _user-guide_usage_cell_standardization:
-
-Standardization
-===============
-
-An original goal of wulfric was to obtain high symmetry k paths in an automatic fashion
-for any given cell. We follow the convention of the Setyawan and Curtarolo [1]_ for the
-Bravais lattice types and high symmetry k points, where the definition of high symmetry
-points is given for the standardized primitive cells. In wulfric the standardization is
-represented by the :ref:`transformation matrix <user-guide_conventions_basic-notation_transformation>`
-:math:`\boldsymbol{S}`. Actual transformation of the cell rarely needed if the matrix
-:math:`\boldsymbol{S}` is known. It allows to compute the high symmetry points for
-arbitrary cell.
-
-To obtain the transformation matrix :math:`\boldsymbol{S}` use
-
-.. doctest::
-
-  >>> wulf.cell.get_S_matrix(cell)
-  array([[1., 0., 0.],
-         [0., 1., 0.],
-         [0., 0., 1.]])
-
-If you need to compute standardized cell use:
-
-.. doctest::
-
-  >>> wulf.cell.get_standardized(cell)
-  array([[3.55335 , 0.      , 0.      ],
-         [0.      , 4.744935, 0.      ],
-         [0.      , 0.      , 8.760497]])
-
-For the example cell the matrix is an identity, indicated that it is already the standard
-one.
-
-
-Conventional cell
-=================
-
-If the standardized primitive cell is knows, then standardized convectional cell can be
-computed. The transformation is described by the
-:ref:`transformation matrix <user-guide_conventions_basic-notation_transformation>`
-:math:`\boldsymbol{C}`. This matrix is specific to the lattice type and does not depend
-on the specific cell
-
-.. doctest::
-
-  >>> wulf.cell.get_C_matrix(lattice_type)
-  array([[1., 0., 0.],
-         [0., 1., 0.],
-         [0., 0., 1.]])
-
-To get the conventional cell from the standardized primitive cell use
-
-.. doctest::
-
-  >>> wulf.cell.get_conventional(cell)
-  array([[3.55335 , 0.      , 0.      ],
-         [0.      , 4.744935, 0.      ],
-         [0.      , 0.      , 8.760497]])
-
-For the Orthorhombic lattice conventional and primitive cells are the same.
-
-Note that wulfric *interprets* the input cell as a primitive one. It is the
-responsibility of the user to ensure that it is indeed a primitive cell.
-
-
-
-To read more about the conventional cells see :ref:`user-guide_conventions_which-cell` and
-:ref:`user-guide_conventions_bravais-lattices`.
-
-
-
-References
-==========
-.. [1] Setyawan, W. and Curtarolo, S., 2010.
-    High-throughput electronic band structure calculations: Challenges and tools.
-    Computational materials science, 49(2), pp. 299-312.

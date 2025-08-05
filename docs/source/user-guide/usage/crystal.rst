@@ -29,14 +29,14 @@ In the examples we use crystall with six atoms and orthorhombic cell.
   ... ])
   >>> atoms = {
   ...     "names": ["Cr1", "Br1", "S1", "Cr2", "Br2", "S2"],
-  ...     "positions": [
-  ...         [0.000000, 0.500000,  0.882382],
+  ...     "positions": np.array([
+  ...         [0.000000, -0.500000,  0.882382],
   ...         [0.000000, 0.000000,  0.677322],
-  ...         [0.500000, 0.500000,  0.935321],
+  ...         [-0.500000, -0.500000,  0.935321],
   ...         [0.500000, 0.000000,  0.117618],
   ...         [0.500000, 0.500000,  0.322678],
   ...         [0.000000, 0.000000,  0.064679],
-  ...     ],
+  ...     ]),
   ... }
 
 Atom's names
@@ -115,39 +115,6 @@ To get the vector from atom 1 to atom 2 and distance between them use
   >>> wulf.crystal.get_distance(cell, atoms, atom1=0, atom2=0, R=(0,1,0))
   3.55335
 
-Standardization
-===============
-
-Please read :ref:`similar section for the cell <user-guide_usage_cell_standardization>`
-first.
-
-Standardization of the ``cell`` does not change neither the lattice defined by this cell
-nor absolute coordinates of atoms. Therefore, *relative* coordinates, stored in
-``atoms["positions"]`` should change. Wulfric defines a function, which standardizes the
-cell and updates relative coordinated of atoms.
-
-.. doctest::
-
-  >>> # Position of the first atom relative to the non-standardized cell
-  >>> atoms["positions"][0]
-  [0.0, 0.5, 0.882382]
-  >>> # Position of the same atom in the real space, in absolute coordinates
-  >>> atoms["positions"][0] @ cell
-  array([1.776675  , 0.        , 7.73010486])
-  >>> # This function return new cell, but update passes atoms dictionary
-  >>> cell, atoms = wulf.crystal.standardize(cell=cell, atoms=atoms)
-  >>> # Now the cell is a standard primitive one
-  >>> cell
-  array([[-3.55335 ,  0.      ,  0.      ],
-         [ 0.      , -4.744935,  0.      ],
-         [ 0.      ,  0.      , -8.760497]])
-  >>> # Note how the relative positions changed
-  >>> atoms["positions"][0]
-  array([-0.5     ,  0.      , -0.882382])
-  >>> # But absolute position is the same
-  >>> atoms["positions"][0] @ cell
-  array([1.776675  , 0.        , 7.73010486])
-
 Translation equivalence
 =======================
 
@@ -164,21 +131,21 @@ To do so use
   >>> for p in atoms["positions"]:
   ...     print(p)
   ...
-  [-0.5       0.       -0.882382]
-  [ 0.        0.       -0.677322]
-  [-0.5      -0.5      -0.935321]
-  [ 0.       -0.5      -0.117618]
-  [-0.5      -0.5      -0.322678]
-  [ 0.        0.       -0.064679]
+  [ 0.       -0.5       0.882382]
+  [0.       0.       0.677322]
+  [-0.5      -0.5       0.935321]
+  [0.5      0.       0.117618]
+  [0.5      0.5      0.322678]
+  [0.       0.       0.064679]
   >>> wulf.crystal.ensure_000(atoms)
   >>> for p in atoms["positions"]:
   ...     print(p)
   ...
-  [0.5      0.       0.117618]
-  [0.       0.       0.322678]
-  [0.5      0.5      0.064679]
   [0.       0.5      0.882382]
-  [0.5      0.5      0.677322]
-  [0.       0.       0.935321]
+  [0.       0.       0.677322]
+  [0.5      0.5      0.935321]
+  [0.5      0.       0.117618]
+  [0.5      0.5      0.322678]
+  [0.       0.       0.064679]
 
 Resulting pair of atoms and cell still describe the same crystal as at the beginning.

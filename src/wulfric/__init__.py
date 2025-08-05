@@ -25,6 +25,7 @@ __release_date__ = "Undefined"
 from . import cell, constants, crystal, geometry, io
 from ._exceptions import *
 from ._kpoints_class import *
+from ._lepage import *
 from ._numerical import *
 from ._package_info import *
 from ._plotly_engine import *
