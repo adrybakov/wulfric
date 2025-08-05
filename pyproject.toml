@@ -8,7 +8,7 @@ name = "wulfric"
 license = { text = "GPL-3.0 license" }
 dynamic = ["version"]
 description = "Cell, Atoms, K-path."
-dependencies = ["numpy", "termcolor"]
+dependencies = ["numpy"]
 authors = [{ name = "Andrey Rybakov", email = "rybakov.ad@icloud.com" }]
 requires-python = ">=3.9"
 readme = "README.rst"

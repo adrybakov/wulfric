@@ -26,7 +26,6 @@ from wulfric.cell._basic_manipulation import get_params, get_reciprocal
 from wulfric.cell._lepage import lepage
 from wulfric.cell._sc_standardize import get_conventional
 from wulfric.constants._numerical import TORADIANS
-from wulfric.geometry._geometry import get_volume
 
 # Save local scope at this moment
 old_dir = set(dir())

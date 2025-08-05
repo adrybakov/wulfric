@@ -17,8 +17,6 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from random import choices
-from string import ascii_lowercase
 from typing import Iterable
 
 import numpy as np

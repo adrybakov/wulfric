@@ -1,6 +1,5 @@
 # Package dependencies
 numpy
-termcolor
 
 # Optional package dependencies [visual]
 scipy

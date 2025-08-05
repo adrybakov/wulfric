@@ -52,7 +52,3 @@ For the full technical reference of the public part of the package see :ref:`api
 
 Some of the algorithms implemented in wulfric are described in the
 :ref:`user-guide_library`.
-
-.. note::
-  The terminal output is colored by default. However, we respect
-  |NO_COLOR|_ through |termcolor|_

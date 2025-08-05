@@ -18,12 +18,9 @@
 
 
 import numpy as np
-from termcolor import cprint
 
 from wulfric._exceptions import NiggliReductionFailed
 from wulfric._numerical import compare_numerically
-from wulfric.cell._basic_manipulation import get_params
-from wulfric.constants._numerical import TODEGREES
 from wulfric.geometry._geometry import get_volume
 
 # Save local scope at this moment

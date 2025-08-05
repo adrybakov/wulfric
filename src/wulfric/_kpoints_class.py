@@ -24,7 +24,6 @@ import numpy as np
 
 from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._kpoints import get_hs_data
-from wulfric.cell._lepage import lepage
 from wulfric.geometry._geometry import absolute_to_relative
 
 # Save local scope at this moment

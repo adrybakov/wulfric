@@ -15,7 +15,7 @@ jobs:
       with:
         python-version: "3.x"
     - name: Install dev tools
-      run: pip install gitpython termcolor
+      run: pip install -r requirements-dev.txt
     - name: Inspect metadata
       run: python3 -u tools/prepare-release.py -v ${{  github.ref_name }} -rd .
 

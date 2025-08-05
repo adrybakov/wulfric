@@ -183,7 +183,6 @@ custom_links = {
     "NumPy": ("NumPy", "https://numpy.org/"),
     "SciPy": ("SciPy", "https://scipy.org/"),
     "matplotlib": ("matplotlib", "https://matplotlib.org/"),
-    "termcolor": ("termcolor", "https://pypi.org/project/termcolor/"),
     "NO_COLOR": ("NO_COLOR", "https://no-color.org/"),
     "Python-installation": (
         "Python installation",
@@ -201,7 +200,6 @@ custom_links = {
         "array-like",
         "https://numpy.org/doc/stable/glossary.html#term-array_like",
     ),
-    "termcolor": ("termcolor", "https://github.com/termcolor/termcolor"),
     "PearsonSymbol": ("Pearson symbol", "https://en.wikipedia.org/wiki/Pearson_symbol"),
     "matplotlibFocalLength": (
         "3D plot projection types",

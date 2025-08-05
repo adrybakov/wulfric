@@ -23,7 +23,6 @@ from datetime import datetime
 
 import numpy as np
 
-from wulfric._decorate_array import print_2d_array
 from wulfric.crystal._atoms import get_atom_species
 from wulfric.geometry._geometry import absolute_to_relative, get_volume
 
@@ -268,10 +267,12 @@ def dump_poscar(
     # Write
     file_object.write(comment + "\n")
     file_object.write("1.0\n")
-    file_object.write(
-        print_2d_array(cell, fmt=f".{decimals}f", print_result=False, borders=False)
-        + "\n"
-    )
+    for vector_index in range(3):
+        for component_index in range(3):
+            file_object.write(
+                f"{cell[vector_index][component_index]:{decimals + 5}.{decimals}f} "
+            )
+        file_object.write("\n")
 
     for species in atom_species:
         file_object.write(f"{species} ")
@@ -281,12 +282,13 @@ def dump_poscar(
     file_object.write("\n")
 
     file_object.write(mode + "\n")
-    file_object.write(
-        print_2d_array(
-            atom_coordinates, fmt=f".{decimals}f", print_result=False, borders=False
-        )
-        + "\n"
-    )
+
+    for atom_index in range(3):
+        for component_index in range(3):
+            file_object.write(
+                f"{atom_coordinates[atom_index][component_index]:{decimals + 5}.{decimals}f} "
+            )
+        file_object.write("\n")
 
 
 # Populate __all__ with objects defined in this file
