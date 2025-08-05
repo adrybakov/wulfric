@@ -5,7 +5,7 @@
 __pycache__
 
 # Virtual environment
-.venv
+.venv*
 .env*
 
 # Unit tests
@@ -30,3 +30,7 @@ tmp*
 
 # Other
 logos
+
+# Notebooks
+
+.ipynb*
