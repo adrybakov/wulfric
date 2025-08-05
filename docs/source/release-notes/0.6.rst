@@ -14,7 +14,7 @@ Whats new?
 - Rename several public functions
 
   ======================================= =======================================
-  Previous name                          New name
+  Previous name                           New name
   ======================================= =======================================
   ``wulfric.cell.niggli``                 ``wulfric.cell.get_niggli``
   ``wulfric.visualization.PlotlyBackend`` ``wulfric.PlotlyEngine``
