@@ -20,7 +20,6 @@
 import os
 
 import matplotlib.pyplot as plt
-import numpy as np
 
 ROOT_DIR = "."
 OUTPUT_PATH = os.path.join(ROOT_DIR, "docs", "source", "img")

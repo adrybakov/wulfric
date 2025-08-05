@@ -17,7 +17,7 @@ Whats new?
   Previous name                          New name
   ======================================= =======================================
   ``wulfric.cell.niggli``                 ``wulfric.cell.get_niggli``
-  ``wulfric.visualization.PlotlyBackend`` ``wulfric.visualization.PlotlyEngine``
+  ``wulfric.visualization.PlotlyBackend`` ``wulfric.PlotlyEngine``
   ======================================= =======================================
 
   and a number of the private ones. The renaming is aimed at the unification of the code

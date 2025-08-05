@@ -40,7 +40,7 @@ Issues = "https://github.com/adrybakov/wulfric/issues"
 Changelog = "https://wulfric.org/en/latest/release-notes/index.html"
 
 [project.optional-dependencies]
-visual = ["plotly", "matplotlib", "scipy"]
+visual = ["plotly", "scipy"]
 
 [tool.setuptools.dynamic]
 version = { attr = "wulfric.__version__" }

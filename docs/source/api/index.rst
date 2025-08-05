@@ -25,7 +25,6 @@ Sub-modules
     constants
     crystal
     io
-    visualization
     geometry
 
 Classes
@@ -35,6 +34,7 @@ Classes
     :toctree: generated/
 
     Kpoints
+    PlotlyEngine
 
 Top-level functions
 ===================

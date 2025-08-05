@@ -51,8 +51,8 @@ To install wulfric use the command (you may need to use ``pip3``)::
   pip install wulfric
 
 Optionally, if you want to use :ref:`visualization <user-guide_usage_visualization>`
-capabilities of wulfric, you can install |matplotlib|_ and/or |plotly|_
-by yourself or install them with wulfric::
+capabilities of wulfric, you can install |plotly|_ by yourself or install them with
+wulfric::
 
   pip install wulfric[visual]
 

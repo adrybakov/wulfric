@@ -156,10 +156,6 @@ extlinks = {
         "https://numpy.org/doc/stable/reference/generated/numpy.%s.html",
         "numpy.%s",
     ),
-    "matplotlib": (
-        "https://matplotlib.org/stable/api/%s_api.html",
-        "matplotlib.%s",
-    ),
     "issue": ("https://github.com/adrybakov/wulfric/issues/%s", "issue #%s"),
 }
 
@@ -201,26 +197,6 @@ custom_links = {
         "https://numpy.org/doc/stable/glossary.html#term-array_like",
     ),
     "PearsonSymbol": ("Pearson symbol", "https://en.wikipedia.org/wiki/Pearson_symbol"),
-    "matplotlibFocalLength": (
-        "3D plot projection types",
-        "https://matplotlib.org/stable/gallery/mplot3d/projections.html",
-    ),
-    "matplotlibSavefig": (
-        "plt.savefig()",
-        "https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html",
-    ),
-    "matplotlibViewInit": (
-        "view_init",
-        "https://matplotlib.org/stable/api/_as_gen/mpl_toolkits.mplot3d.axes3d.Axes3D.view_init.html",
-    ),
-    "matplotlibLegend": (
-        "legend()",
-        "https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.legend.html",
-    ),
-    "matplotlibColor": (
-        "matplotlib colors",
-        "https://matplotlib.org/stable/tutorials/colors/colors.html",
-    ),
     "array_interface": (
         "Array interface",
         "https://numpy.org/doc/stable/reference/arrays.interface.html#object.__array_interface__",

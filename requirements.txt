@@ -3,5 +3,4 @@ numpy
 
 # Optional package dependencies [visual]
 scipy
-matplotlib
 plotly
