@@ -89,7 +89,9 @@ def _get_voronoi_cell(cell):
     n = 10
 
     if not SCIPY_AVAILABLE:
-        raise ImportError('SciPy is not available. Install it with "pip install scipy"')
+        raise ImportError(
+            'SciPy is not available. Please install it with "pip install scipy"'
+        )
     voronoi = Voronoi(_lattice_points(cell, relative=False))
     edges_index = set()
     # Thanks ASE for the general idea. 62 - is the index of (0,0,0) point.
