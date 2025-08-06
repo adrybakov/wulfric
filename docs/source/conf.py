@@ -191,7 +191,6 @@ custom_links = {
         "https://www.sphinx-doc.org/en/master/usage/extensions/doctest.html",
     ),
     "latex": ("LaTeX", "https://www.latex-project.org/"),
-    "black": ("black", "https://black.readthedocs.io"),
     "array-like": (
         "array-like",
         "https://numpy.org/doc/stable/glossary.html#term-array_like",
