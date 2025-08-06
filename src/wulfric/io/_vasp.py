@@ -70,9 +70,11 @@ def load_poscar(file_object=None, return_comment=False):
     .. doctest::
 
         >>> # Load a POSCAR file
-        >>> cell, atoms = wulf.io.load_poscar('POSCAR') # doctest: +SKIP
+        >>> cell, atoms = wulf.io.load_poscar("POSCAR")  # doctest: +SKIP
         >>> # It can return the comment from the file as well:
-        >>> cell, atoms, comment = wulf.io.load_poscar('POSCAR', return_comment=True) # doctest: +SKIP
+        >>> cell, atoms, comment = wulf.io.load_poscar(
+        ...     "POSCAR", return_comment=True
+        ... )  # doctest: +SKIP
 
     """
 
@@ -153,7 +155,7 @@ def load_poscar(file_object=None, return_comment=False):
                 coordinates *= scale_factor
                 coordinates = absolute_to_relative(coordinates, cell)
             if species_names is None:
-                atoms["names"].append(f"X{i+1}")
+                atoms["names"].append(f"X{i + 1}")
                 atoms["positions"].append(coordinates)
             else:
                 atoms["names"].append(species_names[i])
@@ -202,13 +204,17 @@ def dump_poscar(
     .. doctest::
 
         >>> # Dump a POSCAR file
-        >>> wulf.io.dump_poscar(cell, atoms, 'POSCAR') # doctest: +SKIP
+        >>> wulf.io.dump_poscar(cell, atoms, "POSCAR")  # doctest: +SKIP
         >>> # If you want to write a comment as well:
-        >>> wulf.io.dump_poscar(cell, atoms, 'POSCAR', comment='This is a comment') # doctest: +SKIP
+        >>> wulf.io.dump_poscar(
+        ...     cell, atoms, "POSCAR", comment="This is a comment"
+        ... )  # doctest: +SKIP
         >>> # You can control the amount of decimals in the output:
-        >>> wulf.io.dump_poscar(cell, atoms, 'POSCAR', decimals=6) # doctest: +SKIP
+        >>> wulf.io.dump_poscar(cell, atoms, "POSCAR", decimals=6)  # doctest: +SKIP
         >>> # You can switch the mode of coordinates between 'Cartesian' and 'Direct' (default):
-        >>> wulf.io.dump_poscar(cell, atoms, 'POSCAR', mode="Cartesian") # doctest: +SKIP
+        >>> wulf.io.dump_poscar(
+        ...     cell, atoms, "POSCAR", mode="Cartesian"
+        ... )  # doctest: +SKIP
 
     """
 

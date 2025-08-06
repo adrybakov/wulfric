@@ -34,7 +34,6 @@ def _niggli_step_1(A, B, C, xi, eta, zeta, trans_matrix, eps):
         and compare_numerically(abs(xi), ">", abs(eta), eps=eps)
     )
     if condition:
-
         trans_matrix = trans_matrix @ np.array(
             [
                 [0, -1, 0],
@@ -55,7 +54,6 @@ def _niggli_step_2(A, B, C, xi, eta, zeta, trans_matrix, eps):
         and compare_numerically(abs(eta), ">", abs(zeta), eps=eps)
     )
     if condition:
-
         trans_matrix = trans_matrix @ np.array(
             [
                 [-1, 0, 0],
@@ -73,7 +71,6 @@ def _niggli_step_2(A, B, C, xi, eta, zeta, trans_matrix, eps):
 def _niggli_step_3(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = compare_numerically(xi * eta * zeta, ">", 0, eps=eps)
     if condition:
-
         if compare_numerically(xi, ">", 0, eps=eps):
             i = 1
         else:
@@ -106,7 +103,6 @@ def _niggli_step_3(A, B, C, xi, eta, zeta, trans_matrix, eps):
 def _niggli_step_4(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = compare_numerically(xi * eta * zeta, "<=", 0, eps=eps)
     if condition:
-
         # Step 1
         i, j, k = 1, 1, 1
         p = None
@@ -165,7 +161,6 @@ def _niggli_step_5(A, B, C, xi, eta, zeta, trans_matrix, eps):
         )
     )
     if condition:
-
         trans_matrix = trans_matrix @ np.array(
             [
                 [1, 0, 0],
@@ -195,7 +190,6 @@ def _niggli_step_6(A, B, C, xi, eta, zeta, trans_matrix, eps):
         )
     )
     if condition:
-
         trans_matrix = trans_matrix @ np.array(
             [
                 [1, 0, -np.sign(eta)],
@@ -225,7 +219,6 @@ def _niggli_step_7(A, B, C, xi, eta, zeta, trans_matrix, eps):
         )
     )
     if condition:
-
         trans_matrix = trans_matrix @ np.array(
             [
                 [1, -np.sign(zeta), 0],
@@ -248,7 +241,6 @@ def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix, eps):
         and compare_numerically(2 * (A + eta) + zeta, ">", 0, eps=eps)
     )
     if condition:
-
         trans_matrix = trans_matrix @ np.array(
             [
                 [1, 0, 1],
@@ -318,7 +310,7 @@ def get_N_matrix(cell, eps_relative=1e-5, max_iterations=100000):
     .. doctest::
 
         >>> import wulfric as wulf
-        >>> wulf.cell.get_N_matrix([[1, -0.5, 0],[-0.5, 1, 0],[0, 0, 1]])
+        >>> wulf.cell.get_N_matrix([[1, -0.5, 0], [-0.5, 1, 0], [0, 0, 1]])
         array([[ 1,  0, -1],
                [ 1,  0,  0],
                [ 0, -1,  0]])
@@ -367,7 +359,6 @@ def get_N_matrix(cell, eps_relative=1e-5, max_iterations=100000):
 
     iter_count = 0
     while True:
-
         if iter_count > max_iterations:
             raise NiggliReductionFailed(max_iterations=max_iterations)
 
@@ -437,9 +428,7 @@ def get_niggli(cell, eps_relative=1e-5, max_iterations=100000):
 
         .. code-block:: python
 
-            niggli_cell = [[a1_x, a1_y, a1_z],
-                           [a2_x, a2_y, a2_z],
-                           [a3_x, a3_y, a3_z]]
+            niggli_cell = [[a1_x, a1_y, a1_z], [a2_x, a2_y, a2_z], [a3_x, a3_y, a3_z]]
 
     Raises
     ------
@@ -470,7 +459,7 @@ def get_niggli(cell, eps_relative=1e-5, max_iterations=100000):
     .. doctest::
 
         >>> import wulfric as wulf
-        >>> wulf.cell.get_niggli([[1, -0.5, 0],[-0.5, 1, 0],[0, 0, 1]])
+        >>> wulf.cell.get_niggli([[1, -0.5, 0], [-0.5, 1, 0], [0, 0, 1]])
         array([[ 0.5,  0.5,  0. ],
                [ 0. ,  0. , -1. ],
                [-1. ,  0.5,  0. ]])
@@ -520,7 +509,6 @@ def get_niggli(cell, eps_relative=1e-5, max_iterations=100000):
 
     iter_count = 0
     while True:
-
         if iter_count > max_iterations:
             raise NiggliReductionFailed(max_iterations=max_iterations)
 

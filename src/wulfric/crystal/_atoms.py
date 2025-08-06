@@ -140,7 +140,7 @@ def populate_atom_species(atoms, raise_on_fail=False) -> None:
     .. doctest::
 
         >>> import wulfric as wulf
-        >>> atoms = {"names" : ["Cr1", "cr2", "Br3", "S4", "fe5", "Fe6"]}
+        >>> atoms = {"names": ["Cr1", "cr2", "Br3", "S4", "fe5", "Fe6"]}
         >>> atoms
         {'names': ['Cr1', 'cr2', 'Br3', 'S4', 'fe5', 'Fe6']}
         >>> wulf.crystal.populate_atom_species(atoms)
@@ -194,12 +194,12 @@ def ensure_unique_names(atoms, strategy: str = "all") -> None:
     .. doctest::
 
         >>> import wulfric as wulf
-        >>> atoms = {"names" : ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
+        >>> atoms = {"names": ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
         >>> # Default strategy is "all"
         >>> wulf.crystal.ensure_unique_names(atoms)
         >>> atoms
         {'names': ['Cr11', 'Cr22', 'Br3', 'Br4', 'S5', 'S6']}
-        >>> atoms = {"names" : ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
+        >>> atoms = {"names": ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
         >>> wulf.crystal.ensure_unique_names(atoms, strategy="repeated-only")
         >>> atoms
         {'names': ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']}
@@ -225,7 +225,6 @@ def ensure_unique_names(atoms, strategy: str = "all") -> None:
     names_unique = len(atoms["names"]) == len(set(atoms["names"]))
 
     if not names_unique and strategy == "all":
-
         for i in range(len(atoms["names"])):
             atoms["names"][i] += f"{i + 1}"
 
@@ -240,7 +239,6 @@ def ensure_unique_names(atoms, strategy: str = "all") -> None:
         for i in range(len(atoms["names"])):
             name = atoms["names"][i]
             total = counter[name][1]
-            met = counter[name][0]
             if total > 1:
                 atoms["names"][i] += str(counter[name][0])
                 counter[name][0] += 1

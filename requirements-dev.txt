@@ -4,12 +4,11 @@ wheel
 setuptools
 build
 
-# code-linters
-black
-isort
+# code quality
+ruff
+pre-commit
 
 # dev-tools
 gitpython
-pre-commit
 termcolor
 matplotlib

@@ -121,7 +121,6 @@ del old_dir
 
 
 if __name__ == "__main__":
-
     import numpy as np
 
     from wulfric.visualization import PlotlyBackend

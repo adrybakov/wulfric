@@ -62,7 +62,7 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
     .. doctest::
 
         >>> import wulfric as wulf
-        >>> print(wulf.logo(info=[])) # doctest: +NORMALIZE_WHITESPACE
+        >>> print(wulf.logo(info=[]))  # doctest: +NORMALIZE_WHITESPACE
         ██╗      ██╗ ██╗   ██╗ ██╗      ███████╗ ██████╗  ██╗  ██████╗
         ██║      ██║ ██║   ██║ ██║      ██╔════╝ ██╔══██╗ ██║ ██╔════╝
         ██║  █╗  ██║ ██║   ██║ ██║      █████╗   ██████╔╝ ██║ ██║
@@ -75,7 +75,7 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
             f"Version: {__version__}",
             f"Documentation: {__doclink__}",
             f"Release date: {__release_date__}",
-            f"Licence: GNU GPLv3",
+            "Licence: GNU GPLv3",
             f"Copyright (C) 2023-{datetime.now().year}  Andrey Rybakov",
         ]
         if date_time:
@@ -131,17 +131,19 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
             after = len(cat) - len(info) - before
             for i in range(len(cat)):
                 if i < before or i >= len(cat) - after:
-                    logo_info.append(f"{' ':{N-n}}{cat[i]:^{n}}")
+                    logo_info.append(f"{' ':{N - n}}{cat[i]:^{n}}")
                 else:
-                    logo_info.append(f"{info[i-before]:^{N-n}}{cat[i]:^{n}}")
+                    logo_info.append(f"{info[i - before]:^{N - n}}{cat[i]:^{n}}")
         else:
             before = (len(info) - len(cat)) // 2
             after = len(info) - len(cat) - before
             for i in range(len(info)):
                 if i < before or i >= len(info) - after:
-                    logo_info.append(f"{info[i-before]:^{N-n}}")
+                    logo_info.append(f"{info[i - before]:^{N - n}}")
                 else:
-                    logo_info.append(f"{info[i-before]:^{N-n}}{cat[i-before]:^{n}}")
+                    logo_info.append(
+                        f"{info[i - before]:^{N - n}}{cat[i - before]:^{n}}"
+                    )
 
     logo_info = [f"{comment}{x:^{line_length}}\n" for x in logo_info]
     return "".join(logo_info)[:-1]
@@ -163,7 +165,7 @@ def _warranty():
     Output short warranty summary for terminal interactions
     """
 
-    return f"""THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
+    return """THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
 APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
 HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
 OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,

@@ -17,12 +17,6 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-import numpy as np
-
-from wulfric.cell._basic_manipulation import get_reciprocal
-from wulfric.constants._sc_notation import DEFAULT_K_PATHS, HS_PLOT_NAMES
-
-# Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
 
@@ -68,29 +62,30 @@ def get_hs_data(
 
     """
 
-    cell = np.array(cell, dtype=float)
+    pass
 
-    names = []
-    labels = []
-    coordinates = []
+    # cell = np.array(cell, dtype=float)
 
-    for point in hs_points:
-        names.append(point)
-        # Compute relative coordinates with respect to the
-        # non-standardized primitive cell
-        # here hs_points[point] <- \tilde{g} and coordinates <- g
-        coordinates.append(np.linalg.inv(S_matrix).T @ hs_points[point])
+    # names = []
+    # labels = []
+    # coordinates = []
 
-        labels.append(HS_PLOT_NAMES[point])
+    # for point in hs_points:
+    #     names.append(point)
+    #     # Compute relative coordinates with respect to the
+    #     # non-standardized primitive cell
+    #     # here hs_points[point] <- \tilde{g} and coordinates <- g
+    #     coordinates.append(np.linalg.inv(S_matrix).T @ hs_points[point])
 
-    if not return_relative:
+    #     labels.append(HS_PLOT_NAMES[point])
 
-        rcell = get_reciprocal(cell)
+    # if not return_relative:
+    #     rcell = get_reciprocal(cell)
 
-        for i in range(len(coordinates)):
-            coordinates[i] = coordinates[i] @ rcell
+    #     for i in range(len(coordinates)):
+    #         coordinates[i] = coordinates[i] @ rcell
 
-    return coordinates, names, labels, DEFAULT_K_PATHS[lattice_variation]
+    # return coordinates, names, labels, DEFAULT_K_PATHS[lattice_variation]
 
 
 # Populate __all__ with objects defined in this file

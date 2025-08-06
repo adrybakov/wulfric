@@ -89,9 +89,9 @@ class Kpoints:
 
         # Fill names and labels with defaults
         if names is None:
-            names = [f"K{i+1}" for i in range(len(coordinates))]
+            names = [f"K{i + 1}" for i in range(len(coordinates))]
             if labels is None:
-                labels = [f"K$_{i+1}$" for i in range(len(coordinates))]
+                labels = [f"K$_{i + 1}$" for i in range(len(coordinates))]
         if labels is None:
             labels = [name for name in names]
         else:
@@ -482,23 +482,23 @@ class Kpoints:
         table = [
             (
                 f"{'Name':4}  "
-                + f"{'rel_b1':>{d+3}} "
-                + f"{'rel_b2':>{d+3}} "
-                + f"{'rel_b3':>{d+3}}  "
-                + f"{'k_x':>{d+3}} "
-                + f"{'k_y':>{d+3}} "
-                + f"{'k_z':>{d+3}}"
+                + f"{'rel_b1':>{d + 3}} "
+                + f"{'rel_b2':>{d + 3}} "
+                + f"{'rel_b3':>{d + 3}}  "
+                + f"{'k_x':>{d + 3}} "
+                + f"{'k_y':>{d + 3}} "
+                + f"{'k_z':>{d + 3}}"
             )
         ]
         for name in self.hs_names:
             relative = self.hs_coordinates[name]
-            i = f"{relative[0]: {d+3}.{d}f}"
-            j = f"{relative[1]: {d+3}.{d}f}"
-            k = f"{relative[2]: {d+3}.{d}f}"
+            i = f"{relative[0]: {d + 3}.{d}f}"
+            j = f"{relative[1]: {d + 3}.{d}f}"
+            k = f"{relative[2]: {d + 3}.{d}f}"
             absolute = self.hs_coordinates[name] @ self.rcell
-            k_x = f"{absolute[0]: {d+3}.{d}f}"
-            k_y = f"{absolute[1]: {d+3}.{d}f}"
-            k_z = f"{absolute[2]: {d+3}.{d}f}"
+            k_x = f"{absolute[0]: {d + 3}.{d}f}"
+            k_y = f"{absolute[1]: {d + 3}.{d}f}"
+            k_z = f"{absolute[2]: {d + 3}.{d}f}"
             table.append(f"{name:4}  {i} {j} {k}  {k_x} {k_y} {k_z}")
         return "\n".join(table)
 

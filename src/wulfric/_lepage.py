@@ -397,7 +397,6 @@ def lepage(
         results = []
 
     while delta is None or delta > angle_tolerance:
-
         if len(axes) == 0:
             delta = 0
         else:

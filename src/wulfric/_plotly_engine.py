@@ -40,7 +40,6 @@ old_dir.add("old_dir")
 
 
 def _strip_latex_label(label):
-
     new_label = ""
 
     for character in label:
@@ -321,12 +320,11 @@ class PlotlyEngine:
         # Plot vectors
         if plot_vectors:
             for i in range(3):
-
                 self.plot_vector(
                     start_point=origin,
                     end_point=origin + cell[i],
                     color=color,
-                    vector_label=f"{vector_label}{i+1}",
+                    vector_label=f"{vector_label}{i + 1}",
                     legend_group=legend_group,
                 )
 
@@ -410,12 +408,11 @@ class PlotlyEngine:
         # Plot vectors
         if plot_vectors:
             for i in range(3):
-
                 self.plot_vector(
                     start_point=origin,
                     end_point=origin + cell[i],
                     color=color,
-                    vector_label=f"{vector_label}{i+1}",
+                    vector_label=f"{vector_label}{i + 1}",
                     legend_group=legend_group,
                 )
 
