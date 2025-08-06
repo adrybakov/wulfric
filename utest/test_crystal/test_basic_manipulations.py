@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,15 +16,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 import numpy as np
-import pytest
-from hypothesis import example, given, settings
+from hypothesis import given
 from hypothesis import strategies as st
 from hypothesis.extra.numpy import arrays as harrays
 
-from wulfric._numerical import compare_numerically
 from wulfric.crystal._basic_manipulation import (
     cure_negative,
     get_distance,
@@ -57,7 +56,6 @@ REL_VECTOR_3 = harrays(
     st.lists(st.integers(min_value=-1e9, max_value=1e9), min_size=3, max_size=3),
 )
 def test_get_vector(position1, position2, R):
-
     atoms = {"positions": [position1, position2]}
     cell = np.eye(3, dtype=float)
 
@@ -77,7 +75,6 @@ def test_get_vector(position1, position2, R):
     st.lists(st.integers(min_value=-1e9, max_value=1e9), min_size=3, max_size=3),
 )
 def test_get_distance(position1, position2, R):
-
     atoms = {"positions": [position1, position2]}
     cell = np.eye(3, dtype=float)
 

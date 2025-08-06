@@ -1,16 +1,6 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
-- repo: https://github.com/adrybakov/pre-commit-hooks
-  rev: 0.2.1
-  hooks:
-  - id: license-headers
-    exclude: 'docs/source/user-guide/conventions/bravais-lattices/.*/.*.py'
-    args:
-      - --license-file
-      - L-HEADER
-      - --update-year
-      - --verbose
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v5.0.0
   hooks:
@@ -18,6 +8,14 @@ repos:
   - id: end-of-file-fixer
   - id: check-yaml
   - id: check-added-large-files
+- repo: https://github.com/adrybakov/pre-commit-hooks
+  rev: 0.3.1
+  hooks:
+  - id: license-headers
+    exclude: 'docs/source/user-guide/conventions/bravais-lattices/.*/.*.py'
+    args:
+      - --license-template
+      - LICENSE.template
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Ruff version.
   rev: v0.12.7

@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,10 +16,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 import os
-from argparse import ArgumentParser
 
 import wulfric as wulf
 
@@ -29,61 +29,6 @@ OUTPUT_PATH = os.path.join(
 
 
 def plot():
-    elev = {
-        "CUB": [28, 28, 28],
-        "FCC": [23, 28, 46],
-        "BCC": [11, 30, 46],
-        "TET": [30, 30, 30],
-        "BCT1": [30, 37, 26],
-        "BCT2": [36, 40, 41],
-        "ORC": [35, 36, 20],
-        "ORCF1": [21, 24, 44],
-        "ORCF2": [15, 25, 38],
-        "ORCF3": [25, 27, 23],
-        "ORCI": [35, 32, 30],
-        "ORCC": [22, 39, 33],
-        "HEX": [19, 35, 32],
-        "RHL1": [-41, 35, 19],
-        "RHL2": [14, 35, 30],
-        "MCL": [12, 25, 11],
-        "MCLC1": [21, 29, 45],
-        "MCLC2": [11, 30, 13],
-        "MCLC3": [23, 39, 41],
-        "MCLC4": [19, 25, 5],
-        "MCLC5": [-5, 20, 13],
-        "TRI1a": [45, 31, 9],
-        "TRI2a": [10, 39, 30],
-        "TRI1b": [30, 12, 21],
-        "TRI2b": [40, 17, 19],
-    }
-    azim = {
-        "CUB": [23, 23, 23],
-        "FCC": [28, 23, 19],
-        "BCC": [25, -180, 19],
-        "TET": [23, 30, 30],
-        "BCT1": [28, 72, 59],
-        "BCT2": [28, 85, 59],
-        "ORC": [34, 35, 30],
-        "ORCF1": [49, 38, 28],
-        "ORCF2": [36, 28, 14],
-        "ORCF3": [62, 36, 38],
-        "ORCI": [23, -12, 12],
-        "ORCC": [57, 15, -40],
-        "HEX": [20, 23, 10],
-        "RHL1": [-13, 52, -19],
-        "RHL2": [-85, 52, -29],
-        "MCL": [25, 40, 37],
-        "MCLC1": [53, 83, 67],
-        "MCLC2": [64, 62, 29],
-        "MCLC3": [34, 68, 61],
-        "MCLC4": [45, 70, 66],
-        "MCLC5": [59, 56, 66],
-        "TRI1a": [-55, -20, 18],
-        "TRI2a": [32, 44, 62],
-        "TRI1b": [42, 11, 39],
-        "TRI2b": [1, 54, 13],
-    }
-
     wtps = {
         "CUB": [["brillouin-kpath"], ["primitive", "wigner-seitz", "lattice"]],
         "FCC": [
@@ -196,7 +141,7 @@ def plot():
             py_file.write(
                 "\n".join(
                     [
-                        f"import wulfric as wulf\n",
+                        "import wulfric as wulf\n",
                         f'cell = wulf.cell.get_cell_example("{name}")',
                         "backend = wulf.visualization.PlotlyBackend()\n",
                     ]
@@ -251,10 +196,10 @@ def plot():
                 "# Save an image:\n"
                 + f'backend.save("{name.lower()}_{names[name][j]}.png")\n'
             )
-            py_file.write("# Interactive plot:\n" + f"backend.show()\n")
+            py_file.write("# Interactive plot:\n" + "backend.show()\n")
             py_file.close()
             del backend
-        print(f" done")
+        print(" done")
 
 
 if __name__ == "__main__":

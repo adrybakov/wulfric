@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,7 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 from ._atoms import *
 from ._basic_manipulation import *

@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,8 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 from math import cos, sqrt
 
 import numpy as np
@@ -487,7 +488,7 @@ def get_spherical(
         (1.0, 0.0, 0.0)
         >>> wulf.geometry.get_spherical([0, 0, -1])
         (1.0, 180.0, 180.0)
-        >>> wulf.geometry.get_spherical([1, 0, 0], polar_axis = [1, 0, 0])
+        >>> wulf.geometry.get_spherical([1, 0, 0], polar_axis=[1, 0, 0])
         (1.0, 0.0, 0.0)
 
     """

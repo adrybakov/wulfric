@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,13 +16,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 import sys
 from datetime import datetime
 from os.path import abspath
 
-from wulfric import __release_date__ as release_date
+
 from wulfric import __version__ as version
 
 sys.path.insert(0, abspath(".."))
@@ -143,7 +144,6 @@ frozen_locals = dict(locals())
 rst_epilog = "\n".join(
     map(lambda x: f".. |{x}| replace:: {frozen_locals[x]}", variables_to_export)
 )
-del frozen_locals
 
 
 ##########################################################################################

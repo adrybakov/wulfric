@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,8 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 import os
 
 import matplotlib.pyplot as plt
@@ -127,7 +128,6 @@ def plot():
 
     for i in range(3):
         for j in range(6):
-
             axs[i][j].set_yticks(
                 [5, 15, 25],
                 [R"$\zeta < 0$", R"$\zeta = 0$", R"$\zeta > 0$"],
@@ -160,7 +160,6 @@ def plot():
             )
 
     def plot_info(step, ijk, p, xi, eta, zeta):
-
         xi += 1
         eta += 1
         zeta += 1
@@ -179,7 +178,6 @@ def plot():
     for xi in [-1, 0, 1]:
         for eta in [-1, 0, 1]:
             for zeta in [-1, 0, 1]:
-
                 if xi * eta * zeta > 0:
                     continue
 

@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,8 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 old_dir = set(dir())
 old_dir.add("old_dir")
 
@@ -103,7 +104,7 @@ def compare_numerically(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
     if condition == "!=":
         return x < y - eps or y < x - eps
 
-    raise ValueError(f'Condition must be one of "<", ">", "<=", ">=", "==", "!=".')
+    raise ValueError('Condition must be one of "<", ">", "<=", ">=", "==", "!=".')
 
 
 # Populate __all__ with objects defined in this file

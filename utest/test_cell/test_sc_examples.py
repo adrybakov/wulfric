@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,8 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 from math import cos, sin, sqrt
 
 import numpy as np
@@ -38,7 +39,7 @@ from wulfric.cell._sc_examples import (
     ORCI_SC,
     RHL_SC,
     TET_SC,
-    TRI_SC,
+    # TRI_SC,
     get_example_cell_SC,
 )
 from wulfric.constants._numerical import TORADIANS

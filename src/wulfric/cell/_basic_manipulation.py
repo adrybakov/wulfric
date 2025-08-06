@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,8 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 from math import cos
 from math import pi as PI
 from math import sin, sqrt
@@ -47,9 +48,11 @@ def get_reciprocal(cell):
 
         .. code-block:: python
 
-            cell = [[b1_x, b1_y, b1_z],
-                    [b2_x, b2_y, b2_z],
-                    [b3_x, b3_y, b3_z]]
+            cell = [
+                [b1_x, b1_y, b1_z],
+                [b2_x, b2_y, b2_z],
+                [b3_x, b3_y, b3_z],
+            ]
 
     Examples
     --------
@@ -108,9 +111,11 @@ def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
 
         .. code-block:: python
 
-            cell = [[a1_x, a1_y, a1_z],
-                    [a2_x, a2_y, a2_z],
-                    [a3_x, a3_y, a3_z]]
+            cell = [
+                [a1_x, a1_y, a1_z],
+                [a2_x, a2_y, a2_z],
+                [a3_x, a3_y, a3_z],
+            ]
 
     Raises
     ------
@@ -212,7 +217,7 @@ def get_params(cell):
     .. doctest::
 
         >>> import wulfric as wulf
-        >>> cell = [[1,0,0],[0,2,0],[0,0,3]]
+        >>> cell = [[1, 0, 0], [0, 2, 0], [0, 0, 3]]
         >>> wulf.cell.get_params(cell)
         (1.0, 2.0, 3.0, 90.0, 90.0, 90.0)
     """

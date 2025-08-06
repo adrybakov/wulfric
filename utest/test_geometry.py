@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,8 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 from math import cos, pi, sin
 
 import numpy as np
@@ -24,10 +25,8 @@ import pytest
 from hypothesis import example, given
 from hypothesis import strategies as st
 from hypothesis.extra.numpy import arrays as harrays
-from scipy.spatial.transform import Rotation
 
 from wulfric._numerical import compare_numerically
-from wulfric.cell._basic_manipulation import is_reasonable
 from wulfric.constants._numerical import TORADIANS
 from wulfric.geometry._geometry import (
     absolute_to_relative,
@@ -194,7 +193,6 @@ def test_parallelepiped_check(a, b, c, alpha, beta, gamma):
     st.floats(min_value=0.1, max_value=360),
 )
 def test_get_spherical(r, theta, phi):
-
     vector = r * np.array(
         [
             np.cos(phi * TORADIANS) * np.sin(theta * TORADIANS),

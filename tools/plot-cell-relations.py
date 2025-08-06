@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,8 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 import os
 
 import matplotlib.pyplot as plt
@@ -25,7 +26,6 @@ ROOT_DIR = "."
 
 
 def quiver(ax, pos, width, height):
-
     ax.quiver(
         pos[0],
         pos[1],
@@ -65,9 +65,6 @@ def cells():
         va="center",
         bbox=bbox,
         size=25,
-    )
-    arrow_style = dict(
-        angles="xy", scale_units="xy", scale=1, headlength=3, headaxislength=2.7
     )
 
     ax.text(

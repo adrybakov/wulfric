@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,8 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 R"""Syntax sugar"""
 
 # Save local scope at this moment
@@ -99,7 +100,7 @@ def add_sugar(dictionary: dict) -> _SyntacticSugar:
     .. doctest::
 
         >>> import wulfric as wulf
-        >>> atoms = {"names" : ["Cr1", "Cr2"]}
+        >>> atoms = {"names": ["Cr1", "Cr2"]}
         >>> atoms.names
         Traceback (most recent call last):
         ...
@@ -159,7 +160,7 @@ def remove_sugar(candy: dict) -> dict:
     .. doctest::
 
         >>> import wulfric as wulf
-        >>> atoms = {"names" : ["Cr1", "Cr2"]}
+        >>> atoms = {"names": ["Cr1", "Cr2"]}
         >>> atoms = wulf.add_sugar(atoms)
         >>> atoms.names
         ['Cr1', 'Cr2']
@@ -176,7 +177,7 @@ def remove_sugar(candy: dict) -> dict:
 
     if not isinstance(candy, dict):
         raise ValueError(
-            f"candy should be an instance of python dict, got {type(dictionary)}."
+            f"candy should be an instance of python dict, got {type(candy)}."
         )
 
     dictionary = {}

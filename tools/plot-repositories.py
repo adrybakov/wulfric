@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,8 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 import os
 from math import atan, pi
 
@@ -80,9 +81,9 @@ def main():
         angles="xy", scale_units="xy", scale=1, headlength=3, headaxislength=2.7
     )
 
-    parent_color = "#EBAE29"
-    used_in_color = "#728EFC"
-    base_for_color = "#BD2A7B"
+    # parent_color = "#EBAE29"
+    # used_in_color = "#728EFC"
+    # base_for_color = "#BD2A7B"
 
     ax.text(25, 10, "Local repository", **text_style)
 

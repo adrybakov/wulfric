@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,13 +16,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
-import numpy as np
-import pytest
+#
+# ================================ END LICENSE =================================
 from hypothesis import given
 from hypothesis import strategies as st
-from hypothesis.extra.numpy import arrays as harrays
 
 from wulfric.constants._atoms import ATOM_SPECIES
 from wulfric.crystal._atoms import ensure_unique_names, get_atom_species

@@ -1,4 +1,5 @@
-# Wulfric - Cell, Atoms, K-path.
+# ================================== LICENSE ===================================
+# Wulfric - Cell, Atoms, K-path, visualization.
 # Copyright (C) 2023-2025 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
@@ -15,8 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+#
+# ================================ END LICENSE =================================
 from math import pi
 
 import numpy as np
@@ -30,7 +31,6 @@ from wulfric.cell._basic_manipulation import (
     from_params,
     get_params,
     get_reciprocal,
-    get_scalar_products,
     is_reasonable,
 )
 from wulfric.geometry._geometry import parallelepiped_check
@@ -169,7 +169,6 @@ def test_cell_from_param(a, b, c, alpha, beta, gamma):
     if parallelepiped_check(a, b, c, alpha, beta, gamma):
         cell = from_params(a, b, c, alpha, beta, gamma)
         if is_reasonable(cell, eps_volume=1e-7):
-
             ap, bp, cp, alphap, betap, gammap = get_params(cell)
             assert np.allclose([a, b, c], [ap, bp, cp])
             assert np.allclose([alpha, beta, gamma], [alphap, betap, gammap])
