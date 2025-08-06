@@ -33,7 +33,7 @@ The functionality of wulfric includes (but not limited to):
 
 * Automatic choice of the Kpoints and K-path based on Bravais lattice types.
 
-* Set of useful functions for manipulations with cells and crystalls (cell + atoms).
+* Set of useful functions for manipulations with cells and crystals (cell + atoms).
 
 * Implementation of LePage and Niggli reduction algorithms.
 
