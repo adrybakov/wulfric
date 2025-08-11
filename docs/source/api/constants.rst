@@ -31,3 +31,12 @@ Angle conversion
 
     TODEGREES
     TORADIANS
+
+
+Space Groups
+============
+
+.. autosummary::
+    :toctree: generated/
+
+    inversion_symmetry
