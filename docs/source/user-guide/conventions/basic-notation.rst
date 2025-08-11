@@ -229,8 +229,8 @@ that way matrix :math:`\boldsymbol{P}` is the same as the transformation matrix
 It is important to understand that the transformation of the cell describes the *choice*
 of the cell for the given *lattice* or *crystal*. In other words while the **cell is
 changed**, the **lattice or crystal remain intact**. Consecutively, the **Cartesian
-coordinates of atoms are not changed** (:math:`\boldsymbol{r} = \boldsymbol{\tilde{r}}`),
-while its **relative coordinates are transformed** as
+coordinates of atoms** are not changed (:math:`\boldsymbol{r} = \boldsymbol{\tilde{r}}`),
+while its **relative coordinates** are transformed as
 
 .. math::
 
@@ -258,7 +258,8 @@ Reciprocal cell is changed by the transformation as
     t_reciprocal_cell = np.linalg.inv(P) @ reciprocal_cell
     reciprocal_cell = P @ t_reciprocal_cell
 
-Relative positions of the k-points are transformed as
+**Cartesian positions** positions of k-points do not change, but **relative positions** of
+the k-points are transformed as
 
 .. math::
 
@@ -270,3 +271,98 @@ Relative positions of the k-points are transformed as
 
     import numpy as np
     tg = P.T @ g
+
+
+
+.. _user-guide_conventions_basic-notation_rotation:
+
+Rotation of the cell
+====================
+
+On contrary to the :ref:`user-guide_conventions_basic-notation_transformation`, rotation
+change the orientation of  the lattice or crystal, while keeping the same choice of the
+cell. Rotation of the cell in the given orientation cell :math:`\boldsymbol{A}` *to* the
+same cell in the new orientation :math:`\boldsymbol{\tilde{A}}` is expressed with the
+rotation matrix :math:`\boldsymbol{R}` as
+
+.. math::
+
+    \boldsymbol{\tilde{A}}
+    =
+    \boldsymbol{A}
+    \boldsymbol{R}^T
+
+.. code-block:: python
+
+    import numpy as np
+    # rotated_cell <- \tilde{A}
+    rotated_cell =  cell @ R.T
+    # Note that inverse of rotation matrix is equivalent to its transpose
+    cell = rotated_cell @ R
+
+Rotation matrix defined in that way act on the column vectors in the usual way:
+
+.. math::
+
+    \boldsymbol{\tilde{v}}_{column}
+    =
+    \boldsymbol{R}
+    \boldsymbol{v}_{column}
+
+.. code-block:: python
+
+    v_column_rotated = R @ v_column
+    # or
+    v_row_rotated = v_row @ R.T
+
+.. note::
+
+    Remember that one-dimensional |NumPy|_ arrays effectively do not distinguish between
+    row and column vectors in the context of matrix multiplication. I.e. in the example
+    above ``v_row == v_column``.
+
+**Relative coordinates of atoms** are not changed, while its **Cartesian
+coordinates of atoms** rotated as (:math:`\boldsymbol{x} = \boldsymbol{\tilde{x}}`)
+
+.. math::
+
+    \boldsymbol{\tilde{r}}
+    =
+    \boldsymbol{R}\boldsymbol{r}
+
+.. code-block:: python
+
+    import numpy as np
+    rotated_r = R @ r
+
+Reciprocal cell is changed by the rotation as
+
+.. math::
+
+    \boldsymbol{\tilde{B}}
+    =
+    \boldsymbol{B}
+    \boldsymbol{R}^T
+
+.. code-block:: python
+
+    import numpy as np
+    # rotated_reciprocal_cell <- \tilde{B}
+    rotated_reciprocal_cell = reciprocal_cell @ R.T
+    # Note that inverse of rotation matrix is equivalent to its transpose
+    reciprocal_cell = rotated_reciprocal_cell @ R
+
+**Relative positions** of the k-points do not change, but **Cartesian positions** of
+k-points are rotated as
+
+.. math::
+
+    \boldsymbol{\tilde{k}}
+    =
+    \boldsymbol{R}
+    \boldsymbol{k}
+
+.. code-block:: python
+
+    import numpy as np
+    rotated_k = R @ k
