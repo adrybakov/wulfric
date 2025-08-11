@@ -254,7 +254,7 @@ inversion_symmetry = {
     230: True,
 }
 
-# Source 1: https://onlinelibrary.wiley.com/iucr/itc/Ac/ch2o3v0001/ as of 11 August 2025
+# Source: https://onlinelibrary.wiley.com/iucr/itc/Ac/ch2o3v0001/ as of 11 August 2025
 crystal_family = {
     1: "a",
     2: "a",
@@ -489,7 +489,7 @@ crystal_family = {
 }
 
 
-# Source 1: https://onlinelibrary.wiley.com/iucr/itc/Ac/ch2o3v0001/ as of 11 August 2025
+# Source: https://onlinelibrary.wiley.com/iucr/itc/Ac/ch2o3v0001/ as of 11 August 2025
 centring_type = {
     1: "P",
     2: "P",
