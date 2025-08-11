@@ -23,7 +23,7 @@ from datetime import datetime
 from os.path import abspath
 
 
-from wulfric import __version__ as version
+from wulfric import __version__ as version, __release_date__ as release_date
 
 sys.path.insert(0, abspath(".."))
 
