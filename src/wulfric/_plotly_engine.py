@@ -80,6 +80,8 @@ class PlotlyEngine:
             fig = go.Figure()
         self.fig = fig
 
+        self.fig.update_layout(template="none")
+
     def show(self, axes_visible=True, **kwargs):
         r"""
         Shows the figure in the interactive mode.
