@@ -1,5 +1,6 @@
 # Package dependencies
 numpy
+spglib>=0.1.15
 
 # Optional package dependencies [visual]
 scipy
