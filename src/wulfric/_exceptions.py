@@ -40,6 +40,24 @@ class StandardizationTypeMismatch(Exception):
         return self.message
 
 
+class ConventionNotSupported(Exception):
+    """
+    Raised when the convention for the cell/crystall is not one of the supported ones.
+    """
+
+    def __init__(self, convention: str, with_spglib=False):
+        self.conventions = ["hpkot", "sc"]
+        if with_spglib:
+            self.conventions += ["spglib"]
+        self.message = (
+            f'Convention "{convention}" is not supported. Supported conventions are\n  * '
+            + "\n  * ".join(self.conventions)
+        )
+
+    def __str__(self):
+        return self.message
+
+
 class FailedToDeduceAtomSpecies(Exception):
     r"""
     Raised when the automatic deduction of the atom species from its name fails.
