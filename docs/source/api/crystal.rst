@@ -27,3 +27,11 @@ Atoms
     get_atom_species
     populate_atom_species
     ensure_unique_names
+
+Validation of the data
+======================
+
+.. autosummary::
+    :toctree: generated/
+
+    validate_atoms

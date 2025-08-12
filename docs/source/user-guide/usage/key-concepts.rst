@@ -84,12 +84,14 @@ an amount of atoms.
 Keys recognized by wulfric:
 
 *   "names" :
-    ``list`` of ``str``
+    ``list`` of ``str``.
 *   "species" :
     ``list`` of ``str``.
 *   "positions" :
     ``list`` of *relative* coordinates of atoms. Each element is an |array-like|_ of the
     length :math:`3`.
+*   "spglib_types" :
+    ``list`` of ``int``. Each element is ``>=1``.
 
 Wulfric recognizes only a few keys, however, we invite you to extend the ``atoms``
 to your needs. Here is a list a few of the potential keys that are not used by any of
