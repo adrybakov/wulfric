@@ -20,6 +20,7 @@
 # ================================ END LICENSE =================================
 from wulfric._exceptions import FailedToDeduceAtomSpecies
 from wulfric.constants._atoms import ATOM_SPECIES
+from wulfric.crystal._crystal_validation import validate_atoms
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -156,6 +157,70 @@ def populate_atom_species(atoms, raise_on_fail=False) -> None:
         atoms["species"].append(
             get_atom_species(atoms["names"][i], raise_on_fail=raise_on_fail)
         )
+
+
+def get_spglib_types(atoms):
+    r"""
+    Construct spglib_types for the given atoms.
+
+    First satisfied rule is applied
+
+    1.  "spglib_types" in atoms
+
+        Return ``atoms["spglib_types"]``.
+
+    2.  "species" in atoms.
+
+        ``spglib_types`` are deduced from ``atoms["species"]``. If two atoms have the same
+        species, then they will have the same integer assigned to them in
+        ``spglib_types``.
+
+    3.  "names" in ``atoms``
+
+        Species are automatically deduced based on atom's names (via
+        :py:func:`wulfric.crystal.get_atom_species`), and then the second rule is
+        applied.
+
+    Parameters
+    ==========
+    atoms : dict
+        Dictionary with N atoms. At least one of the following keys is expected
+
+        *   "names" : (N, ) list of str, optional
+            See Notes
+        *   "species" : (N, ) list of str, optional
+            See Notes
+        *   "spglib_types" : (N, ) list of int, optional
+
+    Returns
+    =======
+    spglib_types : (N, ) list of int
+        List of integer indices ready to be passed to |spglib|_.
+    """
+
+    validate_atoms(atoms=atoms, raise_errors=True)
+
+    if "spglib_types" in atoms:
+        spglib_types = atoms["spglib_types"]
+    else:
+        if "species" not in atoms and "names" in atoms:
+            species = [
+                get_atom_species(name=name, raise_on_fail=False)
+                for name in atoms["names"]
+            ]
+        elif "species" in atoms:
+            species = atoms["species"]
+        else:
+            raise ValueError(
+                'Expected at least one of "spglib_types", "species" or "names" keys in ""atoms, found none.'
+            )
+
+        mapping = {
+            name: index + 1 for index, name in enumerate(sorted(list(set(species))))
+        }
+        spglib_types = [mapping[name] for name in species]
+
+    return spglib_types
 
 
 def ensure_unique_names(atoms, strategy: str = "all") -> None:

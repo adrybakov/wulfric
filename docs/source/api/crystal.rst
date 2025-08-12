@@ -27,6 +27,7 @@ Atoms
     get_atom_species
     populate_atom_species
     ensure_unique_names
+    get_spglib_types
 
 Validation of the data
 ======================

@@ -20,9 +20,14 @@
 # ================================ END LICENSE =================================
 from hypothesis import given
 from hypothesis import strategies as st
+import pytest
 
 from wulfric.constants._atoms import ATOM_SPECIES
-from wulfric.crystal._atoms import ensure_unique_names, get_atom_species
+from wulfric.crystal._atoms import (
+    ensure_unique_names,
+    get_atom_species,
+    get_spglib_types,
+)
 
 
 @given(
@@ -49,3 +54,37 @@ def test_ensure_unique_names(names):
     ensure_unique_names(atoms)
 
     assert len(atoms["names"]) == len(set(atoms["names"]))
+
+
+@pytest.mark.parametrize(
+    "atoms, expected_types",
+    [
+        # Already present
+        (dict(spglib_types=[1, 2, 2, 2, 3]), [1, 2, 2, 2, 3]),
+        # Deduced from species
+        (dict(species=["Cr", "Cr", "Fe"]), [1, 1, 2]),
+        # Deduced from names
+        (dict(names=["Cr1", "Cr2", "Fe"]), [1, 1, 2]),
+        # All present
+        (
+            dict(
+                spglib_types=[1, 1, 2],
+                names=["Cr1", "Fe", "Cr2"],
+                species=["Cr", "Fe", "Cr"],
+            ),
+            [1, 1, 2],
+        ),
+        # Names and species
+        (
+            dict(
+                names=["Cr1", "Fe", "Cr2"],
+                species=["Cr", "Cr", "Fe"],
+            ),
+            [1, 1, 2],
+        ),
+    ],
+)
+def test_get_spglib_types(atoms, expected_types):
+    spglib_types = get_spglib_types(atoms=atoms)
+
+    assert spglib_types == expected_types
