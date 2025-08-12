@@ -22,10 +22,12 @@ import spglib
 import numpy as np
 
 from wulfric.constants._space_groups import CRYSTAL_FAMILY, CENTRING_TYPE
-from wulfric._exceptions import ConventionNotSupported
+from wulfric._exceptions import ConventionNotSupported, UnexpectedError
 from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric.crystal._atoms import get_spglib_types
 from wulfric.crystal._basic_manipulation import get_spatial_mapping
+from wulfric.cell._niggli import get_niggli
+from wulfric.cell._basic_manipulation import get_reciprocal, get_params
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -219,11 +221,13 @@ def get_conventional(
     bravais_lattice = CRYSTAL_FAMILY[dataset.number] + CENTRING_TYPE[dataset.number]
 
     convention = convention.lower()
-    if convention == "spglib" or convention == "hpkot" and bravais_lattice != "aP":
+    if convention == "spglib" or convention == "hpkot":
         # dataset.std_types might be more uniform that actual properties of atoms.
         # Therefor, wulfric need to match the cartesian coordinates of the atoms
         # of the conventional lattice with the cartesian coordinates of the atoms
         # of the original original lattice.
+        #
+        # Get the mapping, before changing the conventional cell in the case aP of hpkot
         mapping = get_spatial_mapping(
             old_cell=cell,
             old_positions=atoms["positions"],
@@ -231,24 +235,144 @@ def get_conventional(
             new_positions=conv_positions,
         )
 
-        conv_atoms = dict(positions=conv_positions)
+        # Change conventional cell and update atom positions from the spglib output in
+        # this special case
+        if convention == "hpkot" and bravais_lattice == "aP":
+            # Step 1 - get cell that is niggli-reduced in reciprocal space
+            r_cell_step_1 = get_niggli(cell=get_reciprocal(conv_cell))
+            cell_step_1 = get_reciprocal(r_cell_step_1)
 
-        # Populate conv_atoms with all keys that have been defined in the original atoms.
-        for key in atoms:
-            if key != "positions":
-                conv_atoms[key] = []
-                for index in mapping:
-                    conv_atoms[key].append(atoms[key][index])
+            # Step 2
+            dot_bc = abs(r_cell_step_1[1] @ r_cell_step_1[2])
+            dot_ac = abs(r_cell_step_1[0] @ r_cell_step_1[2])
+            dot_ab = abs(r_cell_step_1[0] @ r_cell_step_1[1])
 
-        return conv_cell, conv_atoms
+            if dot_bc <= dot_ac and dot_bc <= dot_ab:
+                cell_step_2 = (
+                    np.array(
+                        [
+                            [0, 0, 1],
+                            [1, 0, 0],
+                            [0, 1, 0],
+                        ]
+                    ).T
+                    @ cell_step_1
+                )
+            elif dot_ac <= dot_bc and dot_ac <= dot_ab:
+                cell_step_2 = (
+                    np.array(
+                        [
+                            [0, 1, 0],
+                            [0, 0, 1],
+                            [1, 0, 0],
+                        ]
+                    ).T
+                    @ cell_step_1
+                )
+            elif dot_ab <= dot_ac and dot_ab <= dot_bc:
+                cell_step_2 = (
+                    np.array(
+                        [
+                            [1, 0, 0],
+                            [0, 1, 0],
+                            [0, 0, 1],
+                        ]
+                    ).T
+                    @ cell_step_1
+                )
+            else:
+                raise UnexpectedError(
+                    'get_conventional(convention="hpkot"): aP lattice, step 2 dot product '
+                    "values fall outside of three cases, which should be impossible."
+                )
 
-    if convention == "hpkot" and bravais_lattice == "aP":
+            # Step 3
+            _, _, _, r_alpha, r_beta, r_gamma = get_params(
+                cell=get_reciprocal(cell=cell_step_2)
+            )
+
+            if (r_alpha < 90 and r_beta < 90 and r_gamma < 90) or (
+                r_alpha >= 90 and r_beta >= 90 and r_gamma >= 90
+            ):
+                cell_step_3 = (
+                    np.array(
+                        [
+                            [1, 0, 0],
+                            [0, 1, 0],
+                            [0, 0, 1],
+                        ]
+                    ).T
+                    @ cell_step_2
+                )
+            elif (r_alpha < 90 and r_beta > 90 and r_gamma > 90) or (
+                r_alpha >= 90 and r_beta <= 90 and r_gamma <= 90
+            ):
+                cell_step_3 = (
+                    np.array(
+                        [
+                            [1, 0, 0],
+                            [0, -1, 0],
+                            [0, 0, -1],
+                        ]
+                    ).T
+                    @ cell_step_2
+                )
+
+            elif (r_alpha > 90 and r_beta < 90 and r_gamma > 90) or (
+                r_alpha <= 90 and r_beta >= 90 and r_gamma <= 90
+            ):
+                cell_step_3 = (
+                    np.array(
+                        [
+                            [-1, 0, 0],
+                            [0, 1, 0],
+                            [0, 0, -1],
+                        ]
+                    ).T
+                    @ cell_step_2
+                )
+
+            elif (r_alpha > 90 and r_beta > 90 and r_gamma < 90) or (
+                r_alpha <= 90 and r_beta <= 90 and r_gamma >= 90
+            ):
+                cell_step_3 = (
+                    np.array(
+                        [
+                            [-1, 0, 0],
+                            [0, -1, 0],
+                            [0, 0, 1],
+                        ]
+                    ).T
+                    @ cell_step_2
+                )
+            else:
+                raise UnexpectedError(
+                    'get_conventional(convention="hpkot"): aP lattice, step 3 ordering of reciprocal angles '
+                    "values fall outside of four cases, which should be impossible."
+                )
+
+            # First update atom positions (spglib -> cartesian -> hpkot)
+            conv_positions = conv_positions @ conv_cell @ np.linalg.inv(cell_step_3)
+
+            # Then rewrite the conventional cell
+            conv_cell = cell_step_3
+
+    elif convention == "sc":
         raise NotImplementedError
 
-    if convention == "sc":
-        raise NotImplementedError
+    else:
+        raise ConventionNotSupported(convention, with_spglib=True)
 
-    raise ConventionNotSupported(convention, with_spglib=True)
+    conv_atoms = dict(positions=conv_positions)
+
+    # Populate conv_atoms with all keys that have been defined in the original atoms.
+    for key in atoms:
+        if key != "positions":
+            conv_atoms[key] = []
+            for index in mapping:
+                conv_atoms[key].append(atoms[key][index])
+
+    return conv_cell, conv_atoms
 
 
 # Populate __all__ with objects defined in this file
