@@ -101,6 +101,18 @@ class NiggliReductionFailed(Exception):
         return self.message
 
 
+class UnexpectedError(Exception):
+    def __init__(self, error_summary):
+        self.message = (
+            error_summary
+            + "\nPlease contact developers of wulfric "
+            + "(see https://docs.wulfric.org/en/latest/support.html)."
+        )
+
+    def __str__(self):
+        return self.message
+
+
 # Populate __all__ with objects defined in this file
 __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
