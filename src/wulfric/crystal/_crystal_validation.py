@@ -54,9 +54,9 @@ def validate_atoms(atoms, required_keys=None, raise_errors=True):
 
     *   "spglib_types"
 
-        Check that each element is an integer, that is ``>= 1``.
+        Checks that the value is a list of N ``int`` and each element is ``>= 1``.
 
-    For all other keys the only check on their values is that they all have the same length.
+    For all other keys checks that the values are iterables of the N elements each.
 
     Parameters
     ==========

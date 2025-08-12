@@ -121,8 +121,9 @@ def populate_atom_species(atoms, raise_on_fail=False) -> None:
     Parameters
     ----------
     atoms : dict
-        Dictionary with atoms. Must have a ``names`` with the value of ``list`` of N
-        ``str``.
+        Dictionary with N atoms. Expected keys:
+
+        *   "names" : (N, ) list of str
     raise_on_fail : bool, default False
         Whether to raise an error if the atom type can not be deduced based on its name.
 
@@ -234,8 +235,10 @@ def ensure_unique_names(atoms, strategy: str = "all") -> None:
     Parameters
     ----------
     atoms : dict
-        Dictionary with atoms. Must have a ``"names"`` keyword with the value of
-        ``list`` of N ``str``.
+        Dictionary with N atoms. Expected keys:
+
+        *   "names" : (N, ) list of str
+
     strategy : str, default "all"
         Strategy for the modification of atom names. Supported strategies are
 

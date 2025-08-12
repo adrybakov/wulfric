@@ -44,7 +44,12 @@ def shift_atoms(
     Parameters
     ----------
     atoms : dict
-        Dictionary with atoms. Must have a ``"positions"`` with value of (N,3) |array-like|_.
+        Dictionary with N atoms. Expected keys:
+
+        *   "positions" : (N, 3) |array-like|_
+            Positions of the atoms in the basis of lattice vectors (``cell``). In other
+            words - relative coordinates of atoms.
+
     gravity_point : (3,) |array-like|_, default (0.5, 0.5, 0.5)
         Relative coordinates of the gravity point.
     cell : (3, 3) |array-like|_, optional
@@ -103,7 +108,11 @@ def cure_negative(atoms) -> None:
     Parameters
     ----------
     atoms : dict
-        Dictionary with atoms. Must have a ``"positions"`` with value of (N,3) |array-like|_.
+        Dictionary with N atoms. Expected keys:
+
+        *   "positions" : (N, 3) |array-like|_
+            Positions of the atoms in the basis of lattice vectors (``cell``). In other
+            words - relative coordinates of atoms.
 
     Examples
     --------
@@ -141,7 +150,11 @@ def ensure_000(atoms) -> None:
     Parameters
     ----------
     atoms : dict
-        Dictionary with atoms. Must have a ``"positions"`` with value of (N,3) |array-like|_.
+        Dictionary with N atoms. Expected keys:
+
+        *   "positions" : (N, 3) |array-like|_
+            Positions of the atoms in the basis of lattice vectors (``cell``). In other
+            words - relative coordinates of atoms.
 
     Examples
     --------
@@ -188,7 +201,12 @@ def get_vector(
     cell : (3, 3) |array-like|_,
         Matrix of a cell, rows are interpreted as vectors.
     atoms : dict
-        Dictionary with atoms. Must have a ``"positions"`` with value of (N,3) |array-like|_.
+        Dictionary with N atoms. Expected keys:
+
+        *   "positions" : (N, 3) |array-like|_
+            Positions of the atoms in the basis of lattice vectors (``cell``). In other
+            words - relative coordinates of atoms.
+
     atom1 : int
         Index of the first atom in ``atoms["positions"]``.
     atom2 : int
@@ -242,7 +260,12 @@ def get_distance(cell, atoms, atom1, atom2, R=(0, 0, 0)) -> float:
     cell : (3, 3) |array-like|_,
         Matrix of a cell, rows are interpreted as vectors.
     atoms : dict
-        Dictionary with atoms. Must have a ``"positions"`` with value of (N,3) |array-like|_.
+        Dictionary with N atoms. Expected keys:
+
+        *   "positions" : (N, 3) |array-like|_
+            Positions of the atoms in the basis of lattice vectors (``cell``). In other
+            words - relative coordinates of atoms.
+
     atom1 : int
         Index of the first atom in ``atoms["positions"]``.
     atom2 : int
@@ -362,30 +385,3 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
-
-
-if __name__ == "__main__":
-    old_cell = [[2.848, 0.0, 0.0], [0.0, 2.848, 0.0], [1.424, 1.424, 1.424]]
-    old_positions = [[0, 0, 0], [0.5, 0.5, 0.5]]
-    new_cell = [
-        [2.84800000e00, -2.84800000e00, 0.00000000e00],
-        [2.35246139e-16, 2.84800000e00, 2.84800000e00],
-        [-1.42400000e00, -1.42400000e00, 1.42400000e00],
-    ]
-    new_positions = [
-        [0.0, 0.0, 0.0],
-        [0.0, 0.0, 0.5],
-        [0.66666667, 0.33333333, 0.33333333],
-        [0.66666667, 0.33333333, 0.83333333],
-        [0.33333333, 0.66666667, 0.66666667],
-        [0.33333333, 0.66666667, 0.16666667],
-    ]
-
-    mapping = get_spatial_mapping(
-        old_cell=old_cell,
-        old_positions=old_positions,
-        new_cell=new_cell,
-        new_positions=new_positions,
-    )
-
-    print(mapping)
