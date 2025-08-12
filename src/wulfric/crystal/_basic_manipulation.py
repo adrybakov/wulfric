@@ -21,6 +21,7 @@
 import numpy as np
 
 from wulfric.geometry._geometry import absolute_to_relative
+from wulfric._exceptions import UnexpectedError
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -289,6 +290,61 @@ def get_distance(cell, atoms, atom1, atom2, R=(0, 0, 0)) -> float:
             )
         )
     )
+
+
+def get_spatial_mapping(old_cell, old_positions, new_cell, new_positions):
+    r"""
+    Matches the new atoms with the old atoms, based on their Cartesian positions.
+
+    .. important::
+
+        This function assumes that the pair ``(old_cell, old_positions)`` and the pair
+        ``(new_cell, new_positions)`` describe the same crystal.
+
+    Parameters
+    ==========
+    old_cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors. This is the cell for the
+        ``old_positions``.
+    old_positions : (N, 3) |array-like|_
+        Relative (in the basis of ``old_cell``) of the old atoms.
+    new_cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors. This is the cell for the
+        ``new_positions``.
+    new_positions : (M, 3) |array-like|_
+        Relative (in the basis of ``new_cell``) of the new atoms.
+
+    Returns
+    =======
+    mapping : (M, ) list of int
+        A map from the new atoms to the old atoms. For an atom ``i`` of the new atoms
+        ``mapping[i]`` gives the index of the same atom in the old atoms.
+    """
+
+    # Get cartesian positions of the new atoms
+    new_positions = np.array(new_positions) @ np.array(new_cell)
+    # Get relative positions of the new atoms with respect to the old cell
+    new_positions = new_positions @ np.linalg.inv(old_cell)
+    # Make sure that they lay in the interval [0, 1)
+    new_positions = [[pos[0] % 1, pos[1] % 1, pos[2] % 1] for pos in new_positions]
+
+    # Make sure that old positions lay in the interval [0, 1)
+    old_positions = [[pos[0] % 1, pos[1] % 1, pos[2] % 1] for pos in old_positions]
+
+    mapping = []
+
+    for position in new_positions:
+        for index, old_position in enumerate(old_positions):
+            if np.allclose(position, old_position):
+                mapping.append(index)
+
+        raise UnexpectedError(
+            "get_spatial_mapping(): Mapping from new atoms to old atoms failed."
+            "Note: please make sure that the old atoms and new atoms describe the same "
+            "crystal in the same orientation."
+        )
+
+    return mapping
 
 
 # Populate __all__ with objects defined in this file

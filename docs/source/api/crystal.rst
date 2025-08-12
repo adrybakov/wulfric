@@ -17,6 +17,7 @@ Basic manipulations
     ensure_000
     shift_atoms
     cure_negative
+    get_spatial_mapping
 
 Atoms
 =====
