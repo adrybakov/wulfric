@@ -312,11 +312,13 @@ class PlotlyEngine:
             characters.
         """
 
+        cell = np.array(cell)
+
         if legend_group is None:
             legend_group = "".join(choices(ascii_lowercase, k=10))
 
         if normalize:
-            cell = np.array(cell) / abs(get_volume(cell) ** (1 / 3.0))
+            cell = cell / abs(get_volume(cell) ** (1 / 3.0))
 
         origin = np.array(origin) @ cell
 
@@ -400,11 +402,13 @@ class PlotlyEngine:
             characters.
         """
 
+        cell = np.array(cell)
+
         if legend_group is None:
             legend_group = "".join(choices(ascii_lowercase, k=10))
 
         if normalize:
-            cell = np.array(cell) / abs(get_volume(cell) ** (1 / 3.0))
+            cell = cell / abs(get_volume(cell) ** (1 / 3.0))
 
         origin = np.array(origin) @ cell
 
@@ -614,11 +618,13 @@ class PlotlyEngine:
             characters.
         """
 
+        cell = np.array(cell)
+
         if legend_group is None:
             legend_group = "".join(choices(ascii_lowercase, k=10))
 
         if normalize:
-            cell = np.array(cell) / abs(get_volume(cell) ** (1 / 3.0))
+            cell = cell / abs(get_volume(cell) ** (1 / 3.0))
 
         origin = np.array(origin) @ cell
 
