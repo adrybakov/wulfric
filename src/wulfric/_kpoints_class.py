@@ -25,7 +25,6 @@ import numpy as np
 
 from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._kpoints import get_hs_data
-from wulfric.geometry._geometry import absolute_to_relative
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -167,7 +166,8 @@ class Kpoints:
             raise ValueError(f"Point '{name}' already defined.")
 
         if not relative:
-            coordinate = absolute_to_relative(coordinate, self.rcell)
+            # Transform from Cartesian coordinates to relative coordinates.
+            coordinate = coordinate @ np.linalg.inv(self.rcell)
 
         self.hs_names.append(name)
         self.hs_coordinates[name] = np.array(coordinate)

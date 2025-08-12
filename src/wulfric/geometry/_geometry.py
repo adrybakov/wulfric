@@ -336,92 +336,6 @@ def parallelepiped_check(
     return result
 
 
-def absolute_to_relative(vector, basis):
-    r"""
-    Computes relative coordinates of the vector with respect to the basis.
-
-    .. math::
-        \boldsymbol{v} = v^1 \boldsymbol{e_1} + v^2 \boldsymbol{e_2} + v^3 \boldsymbol{e_3}
-
-    First scalar products of the vector with the basis vectors are computed
-
-    .. math::
-        \begin{matrix}
-        \boldsymbol{v} \cdot \boldsymbol{e_1}
-        =
-        v^1\, \boldsymbol{e_1} \cdot \boldsymbol{e_1}
-        +
-        v^2\, \boldsymbol{e_2} \cdot \boldsymbol{e_1}
-        +
-        v^3\, \boldsymbol{e_3} \cdot \boldsymbol{e_1} \\
-        \boldsymbol{v} \cdot \boldsymbol{e_2}
-        =
-        v^1\, \boldsymbol{e_1} \cdot \boldsymbol{e_2}
-        +
-        v^2\, \boldsymbol{e_2} \cdot \boldsymbol{e_2}
-        +
-        v^3\, \boldsymbol{e_3} \cdot \boldsymbol{e_2} \\
-        \boldsymbol{v} \cdot \boldsymbol{e_3}
-        =
-        v^1\, \boldsymbol{e_1} \cdot \boldsymbol{e_3}
-        +
-        v^2\, \boldsymbol{e_2} \cdot \boldsymbol{e_3}
-        +
-        v^3\, \boldsymbol{e_3} \cdot \boldsymbol{e_3}
-        \end{matrix}
-
-    Then, system of linear equations for :math:`v^1`, :math:`v^2`, :math:`v^3` is solved.
-
-    Parameters
-    ----------
-    vector : (3,) |array-like|_
-        Absolute coordinates of a vector.
-    basis : (3, 3) |array-like|_
-        Basis vectors. Rows are interpreted as vectors.
-        Columns are interpreted as coordinates.
-
-    Returns
-    -------
-    relative : (3,) :numpy:`ndarray`
-        Relative coordinates of the ``vector`` with respect to the ``basis``.
-        :math:`(v^1, v^2, v^3)`.
-
-    Examples
-    --------
-
-    .. doctest::
-
-        >>> import wulfric as wulf
-        >>> wulf.geometry.absolute_to_relative([1, 0, 0], [[0, 1, 1], [1, 0, 1], [1, 1, 0]])
-        array([-0.5,  0.5,  0.5])
-        >>> wulf.geometry.absolute_to_relative([1, 0, 2.3241], [[0, 1, 1], [1, 0, 1], [1, 1, 0]])
-        array([ 0.66205,  1.66205, -0.66205])
-
-    """
-
-    # Three vectors of the basis
-    e1 = np.array(basis[0], dtype=float)
-    e2 = np.array(basis[1], dtype=float)
-    e3 = np.array(basis[2], dtype=float)
-
-    v = np.array(vector, dtype=float)
-    if (v == np.zeros(3)).all():
-        return np.zeros(3)
-
-    # Compose system of linear equations
-    B = np.array([np.dot(e1, v), np.dot(e2, v), np.dot(e3, v)])
-    A = np.array(
-        [
-            [np.dot(e1, e1), np.dot(e1, e2), np.dot(e1, e3)],
-            [np.dot(e2, e1), np.dot(e2, e2), np.dot(e2, e3)],
-            [np.dot(e3, e1), np.dot(e3, e2), np.dot(e3, e3)],
-        ]
-    )
-
-    # Solve and return
-    return np.linalg.solve(A, B)
-
-
 def get_spherical(
     vector, in_degrees=True, polar_axis=[0, 0, 1], radial_line_zero=[1, 0, 0]
 ):
@@ -519,6 +433,18 @@ def get_spherical(
         return r, polar * TODEGREES, azimuthal * TODEGREES
     else:
         return r, polar, azimuthal
+
+
+# Deprecated function
+def absolute_to_relative(vector, basis):
+    import warnings
+
+    warnings.warn(
+        'Function absolute_to_relative will be removed from wulfric, use "vector @ np.linalg.inv(basis)" instead.',
+        DeprecationWarning,
+    )
+
+    return vector @ np.linalg.inv(basis)
 
 
 # Populate __all__ with objects defined in this file

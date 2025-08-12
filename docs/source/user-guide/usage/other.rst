@@ -120,24 +120,6 @@ For the volume wulfric accepts three types of inputs:
       >>> wulf.geometry.get_volume(a, b, c, alpha, beta, gamma)
       1.0
 
-Relative vs absolute
-====================
-
-For the set of ``atoms`` and a reference ``cell`` it is an often task to transform from
-relative to the absolute coordinates and vice versa. The transformation from relative
-to absolute is straightforward and requires nothing but simple matrix multiplication.
-However, the transformation from absolute to the relative is slightly more involved and
-requires a solution of a simple system of linear equations. Wulfric implements a function
-that computes relative coordinates of arbitrary ``vector`` with respect to the arbitrary
-non-degenerate ``basis``.
-
-.. doctest::
-
-    >>> basis = [[2, 0, 0], [0, 4, 0], [0, 0, 8]]
-    >>> vector = [1, 1, 1]
-    >>> wulf.geometry.absolute_to_relative(vector, basis)
-    array([0.5  , 0.25 , 0.125])
-
 Spherical coordinates
 =====================
 

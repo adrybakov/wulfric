@@ -29,7 +29,6 @@ from hypothesis.extra.numpy import arrays as harrays
 from wulfric._numerical import compare_numerically
 from wulfric.constants._numerical import TORADIANS
 from wulfric.geometry._geometry import (
-    absolute_to_relative,
     get_angle,
     get_spherical,
     get_volume,
@@ -40,26 +39,6 @@ ANGLE_TOLERANCE = 1e-4
 LENGTH_TOLERANCE = 1e-8
 MIN_LENGTH = 0.0
 MAX_LENGTH = 1e7
-
-
-################################################################################
-#                             Absolute to relative                             #
-################################################################################
-@pytest.mark.parametrize(
-    "cell, absolute, relative",
-    [
-        ([[1, 0, 0], [0, 1, 0], [0, 0, 1]], [0, 0, 0], [0, 0, 0]),
-        ([[1, 0, 0], [0, 1, 0], [0, 0, 1]], [0, 0, 1], [0, 0, 1]),
-        ([[1, 0, 0], [0, 1, 0], [0, 0, 1]], [0, 1, 0], [0, 1, 0]),
-        ([[1, 0, 0], [0, 1, 0], [0, 0, 1]], [1, 0, 0], [1, 0, 0]),
-        ([[1, 0, 0], [0, 1, 0], [0, 0, 1]], [0.5, 0.5, 0], [0.5, 0.5, 0]),
-        ([[1, 1, 0], [0, 1, 0], [0, 0, 1]], [0.5, 1, 0], [0.5, 0.5, 0]),
-        ([[2, 1, 0], [1, 1, 0], [0, 0, 1]], [0.9, 0.7, 0.4], [0.2, 0.5, 0.4]),
-    ],
-)
-def test_absolute_to_relative(cell, absolute, relative):
-    new_relative = absolute_to_relative(absolute, cell)
-    assert np.allclose(new_relative, relative)
 
 
 ################################################################################

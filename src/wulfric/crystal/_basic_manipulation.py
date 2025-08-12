@@ -20,7 +20,6 @@
 # ================================ END LICENSE =================================
 import numpy as np
 
-from wulfric.geometry._geometry import absolute_to_relative
 from wulfric._exceptions import UnexpectedError
 
 # Save local scope at this moment
@@ -87,7 +86,8 @@ def shift_atoms(
         if cell is None:
             raise ValueError("cell is required if gp_is_relative False")
 
-        gravity_point = absolute_to_relative(gravity_point, cell)
+        # Transform from Cartesian coordinates to relative coordinates
+        gravity_point = gravity_point @ np.linalg.inv(cell)
 
     min_coord = np.min(atoms["positions"], axis=0)
     max_coord = np.max(atoms["positions"], axis=0)

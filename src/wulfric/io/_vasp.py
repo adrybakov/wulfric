@@ -25,7 +25,7 @@ from datetime import datetime
 import numpy as np
 
 from wulfric.crystal._atoms import get_atom_species
-from wulfric.geometry._geometry import absolute_to_relative, get_volume
+from wulfric.geometry._geometry import get_volume
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -154,7 +154,8 @@ def load_poscar(file_object=None, return_comment=False):
             if CARTESIAN:
                 # Both cases (1 or 3 numbers) are covered
                 coordinates *= scale_factor
-                coordinates = absolute_to_relative(coordinates, cell)
+                # Transform from Cartesian coordinates to absolute coordinates
+                coordinates = coordinates @ np.linalg.inv(cell)
             if species_names is None:
                 atoms["names"].append(f"X{i + 1}")
                 atoms["positions"].append(coordinates)
