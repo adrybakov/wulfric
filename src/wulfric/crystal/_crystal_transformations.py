@@ -120,7 +120,7 @@ def get_C_matrix(
         spglib_angle_tolerance=spglib_angle_tolerance,
     )
 
-    return np.linalg.inv(cell).T @ conventional_cell
+    return np.linalg.inv(cell).T @ conventional_cell.T
 
 
 def get_conventional(
