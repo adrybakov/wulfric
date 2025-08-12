@@ -42,6 +42,10 @@ import pytest
         # Not a valid species
         (dict(species=["Cr1", "Cr2"]), None, ValueError),
         (dict(species=["CR", "Cr"]), None, ValueError),
+        # Not an integer
+        (dict(spglib_types=[1, 1.0]), None, ValueError),
+        # Less than 1
+        (dict(spglib_types=[1, 0]), None, ValueError),
     ],
 )
 def test_validate_atoms_fails(atoms, required_keys, error):
@@ -70,6 +74,10 @@ def test_validate_atoms_fails(atoms, required_keys, error):
         (dict(positions=[[0, 0, 0]]), None),
         # Only positions (required)
         (dict(positions=[[0, 0, 0]]), ["positions"]),
+        # Only spglib_types
+        (dict(spglib_types=[1, 2, 3, 2]), None),
+        # Only spglib_types (required)
+        (dict(spglib_types=[1, 2, 3, 2]), ["spglib_types"]),
         # Species with an "X"
         (dict(species=["X", "Fe"]), None),
         # All keys
@@ -78,6 +86,7 @@ def test_validate_atoms_fails(atoms, required_keys, error):
                 names=["Cr1", "Cr2"],
                 species=["Cr", "Cr"],
                 positions=[[0, 0, 0], [0.5, 0.5, 0.5]],
+                spglib_types=[1, 2],
             ),
             None,
         ),
@@ -87,8 +96,9 @@ def test_validate_atoms_fails(atoms, required_keys, error):
                 names=["Cr1", "Cr2"],
                 species=["Cr", "Cr"],
                 positions=[[0, 0, 0], [0.5, 0.5, 0.5]],
+                spglib_types=[1, 2],
             ),
-            ["names", "species", "positions"],
+            ["names", "species", "positions", "spglib_types"],
         ),
         # Extra keys
         (
@@ -98,7 +108,7 @@ def test_validate_atoms_fails(atoms, required_keys, error):
                 positions=[[0, 0, 0], [0.5, 0.5, 0.5]],
                 spins=[3 / 2, 3 / 2],
             ),
-            ["names", "species", "positions"],
+            None,
         ),
         # Extra keys (required)
         (
@@ -108,7 +118,7 @@ def test_validate_atoms_fails(atoms, required_keys, error):
                 positions=[[0, 0, 0], [0.5, 0.5, 0.5]],
                 spins=[3 / 2, 3 / 2],
             ),
-            ["names", "species", "positions", "spins"],
+            ["spins"],
         ),
     ],
 )

@@ -52,6 +52,10 @@ def validate_atoms(atoms, required_keys=None, raise_errors=True):
 
         Checks that the ``atoms["positions"]`` has the shape (N, 3)
 
+    *   "spglib_types"
+
+        Check that each element is an integer, that is ``>= 1``.
+
     For all other keys the only check on their values is that they all have the same length.
 
     Parameters
@@ -175,6 +179,27 @@ def validate_atoms(atoms, required_keys=None, raise_errors=True):
                     raise ValueError(
                         f'Element #{index} of atoms["species"] is not a valid species nor "X":\n  '
                         f'atoms["species"][{index}] -> {element}'
+                    )
+                else:
+                    return False
+
+    # Check spglib_types
+    if "spglib_types" in atoms:
+        for index, element in enumerate(atoms["spglib_types"]):
+            if not isinstance(element, int):
+                if raise_errors:
+                    raise ValueError(
+                        f'Element #{index} of atoms["spglib_types"] is not an integer:\n  '
+                        f'atoms["spglib_types"][{index}] -> {element}'
+                    )
+                else:
+                    return False
+
+            if element < 1:
+                if raise_errors:
+                    raise ValueError(
+                        f'Element #{index} of atoms["spglib_types"] is less than 1:\n  '
+                        f'atoms["spglib_types"][{index}] -> {element}'
                     )
                 else:
                     return False
