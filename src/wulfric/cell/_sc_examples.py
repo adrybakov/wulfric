@@ -69,8 +69,8 @@ def CUB_SC(a: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.CUB_SC(a=2)
+        >>> import wulfric
+        >>> wulfric.cell.CUB_SC(a=2)
         array([[2, 0, 0],
                [0, 2, 0],
                [0, 0, 2]])
@@ -114,8 +114,8 @@ def FCC_SC(a: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.FCC_SC(a=2)
+        >>> import wulfric
+        >>> wulfric.cell.FCC_SC(a=2)
         array([[0., 1., 1.],
                [1., 0., 1.],
                [1., 1., 0.]])
@@ -159,8 +159,8 @@ def BCC_SC(a: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.BCC_SC(a=2)
+        >>> import wulfric
+        >>> wulfric.cell.BCC_SC(a=2)
         array([[-1.,  1.,  1.],
                [ 1., -1.,  1.],
                [ 1.,  1., -1.]])
@@ -208,8 +208,8 @@ def TET_SC(a: float, c: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.TET_SC(a=2, c=5)
+        >>> import wulfric
+        >>> wulfric.cell.TET_SC(a=2, c=5)
         array([[2, 0, 0],
                [0, 2, 0],
                [0, 0, 5]])
@@ -255,8 +255,8 @@ def BCT_SC(a: float, c: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.BCT_SC(a=2, c=5)
+        >>> import wulfric
+        >>> wulfric.cell.BCT_SC(a=2, c=5)
         array([[-1. ,  1. ,  2.5],
                [ 1. , -1. ,  2.5],
                [ 1. ,  1. , -2.5]])
@@ -309,8 +309,8 @@ def ORC_SC(a: float, b: float, c: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.ORC_SC(a=3, b=5, c=7)
+        >>> import wulfric
+        >>> wulfric.cell.ORC_SC(a=3, b=5, c=7)
         array([[3, 0, 0],
                [0, 5, 0],
                [0, 0, 7]])
@@ -361,8 +361,8 @@ def ORCF_SC(a: float, b: float, c: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.ORCF_SC(a=3, b=5, c=7)
+        >>> import wulfric
+        >>> wulfric.cell.ORCF_SC(a=3, b=5, c=7)
         array([[0. , 2.5, 3.5],
                [1.5, 0. , 3.5],
                [1.5, 2.5, 0. ]])
@@ -413,8 +413,8 @@ def ORCI_SC(a: float, b: float, c: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.ORCI_SC(a=3, b=5, c=7)
+        >>> import wulfric
+        >>> wulfric.cell.ORCI_SC(a=3, b=5, c=7)
         array([[-1.5,  2.5,  3.5],
                [ 1.5, -2.5,  3.5],
                [ 1.5,  2.5, -3.5]])
@@ -467,8 +467,8 @@ def ORCC_SC(a: float, b: float, c: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.ORCC_SC(a=3, b=5, c=7)
+        >>> import wulfric
+        >>> wulfric.cell.ORCC_SC(a=3, b=5, c=7)
         array([[ 1.5, -2.5,  0. ],
                [ 1.5,  2.5,  0. ],
                [ 0. ,  0. ,  7. ]])
@@ -514,8 +514,8 @@ def HEX_SC(a: float, c: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.HEX_SC(a=3, c=5)
+        >>> import wulfric
+        >>> wulfric.cell.HEX_SC(a=3, c=5)
         array([[ 1.5       , -2.59807621,  0.        ],
                [ 1.5       ,  2.59807621,  0.        ],
                [ 0.        ,  0.        ,  5.        ]])
@@ -567,8 +567,8 @@ def RHL_SC(a: float, alpha: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.RHL_SC(a=3, alpha=40)
+        >>> import wulfric
+        >>> wulfric.cell.RHL_SC(a=3, alpha=40)
         array([[ 2.81907786, -1.02606043,  0.        ],
                [ 2.81907786,  1.02606043,  0.        ],
                [ 2.44562241,  0.        ,  1.73750713]])
@@ -634,8 +634,8 @@ def MCL_SC(a: float, b: float, c: float, alpha: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.MCL_SC(a=3, b=5, c=7, alpha=45)
+        >>> import wulfric
+        >>> wulfric.cell.MCL_SC(a=3, b=5, c=7, alpha=45)
         array([[3.        , 0.        , 0.        ],
                [0.        , 5.        , 0.        ],
                [0.        , 4.94974747, 4.94974747]])
@@ -692,8 +692,8 @@ def MCLC_SC(a: float, b: float, c: float, alpha: float):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.MCLC_SC(a=3, b=5, c=7, alpha=45)
+        >>> import wulfric
+        >>> wulfric.cell.MCLC_SC(a=3, b=5, c=7, alpha=45)
         array([[ 1.5       ,  2.5       ,  0.        ],
                [-1.5       ,  2.5       ,  0.        ],
                [ 0.        ,  4.94974747,  4.94974747]])
@@ -767,8 +767,8 @@ def TRI_SC(
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.TRI_SC(a=3, b=5, c=7, alpha=45, beta=33, gamma=21)
+        >>> import wulfric
+        >>> wulfric.cell.TRI_SC(a=3, b=5, c=7, alpha=45, beta=33, gamma=21)
         array([[ 3.        ,  0.        ,  0.        ],
                [ 4.66790213,  1.79183975,  0.        ],
                [ 5.87069398, -1.48176621,  3.51273699]])
@@ -816,12 +816,12 @@ def get_example_cell_SC(lattice_variation: str = None):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.get_example_cell_SC("cub")
+        >>> import wulfric
+        >>> wulfric.cell.get_example_cell_SC("cub")
         array([[3.14159265, 0.        , 0.        ],
                [0.        , 3.14159265, 0.        ],
                [0.        , 0.        , 3.14159265]])
-        >>> wulf.cell.get_example_cell_SC("ORCF3")
+        >>> wulfric.cell.get_example_cell_SC("ORCF3")
         array([[0.        , 1.96349541, 2.61799388],
                [1.57079633, 0.        , 2.61799388],
                [1.57079633, 1.96349541, 0.        ]])

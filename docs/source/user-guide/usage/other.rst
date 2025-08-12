@@ -12,7 +12,7 @@ In the examples of this page we assume that wulfric is imported as
 
 .. doctest::
 
-  >>> import wulfric as wulf
+  >>> import wulfric
 
 
 Comparing of numbers
@@ -27,15 +27,15 @@ wulfric
 
 .. doctest::
 
-    >>> wulf.compare_numerically(1.0000000001, "==", 1.0000000002, eps=1e-9)
+    >>> wulfric.compare_numerically(1.0000000001, "==", 1.0000000002, eps=1e-9)
     True
-    >>> wulf.compare_numerically(1.0000000001, "==", 1.0000000002, eps=1e-11)
+    >>> wulfric.compare_numerically(1.0000000001, "==", 1.0000000002, eps=1e-11)
     False
-    >>> wulf.compare_numerically(1.02, "<", 1.03, eps=0.001)
+    >>> wulfric.compare_numerically(1.02, "<", 1.03, eps=0.001)
     True
-    >>> wulf.compare_numerically(1.02, "<", 1.03, eps=0.1)
+    >>> wulfric.compare_numerically(1.02, "<", 1.03, eps=0.1)
     False
-    >>> wulf.compare_numerically(1.02, "<=", 1.03, eps=0.1)
+    >>> wulfric.compare_numerically(1.02, "<=", 1.03, eps=0.1)
     True
 
 This function return boolean value and support python's comparison operators.
@@ -55,9 +55,9 @@ function to check if the set of parameters is correct
     >>> alpha = 90
     >>> beta = 90
     >>> gamma = 90
-    >>> wulf.geometry.parallelepiped_check(a, b, c, alpha, beta, gamma)
+    >>> wulfric.geometry.parallelepiped_check(a, b, c, alpha, beta, gamma)
     True
-    >>> wulf.geometry.parallelepiped_check(a, b, c, alpha, beta, 181)
+    >>> wulfric.geometry.parallelepiped_check(a, b, c, alpha, beta, 181)
     False
 
 
@@ -74,13 +74,13 @@ To compute an angle between two vectors use
     >>> a = [1, 0, 0]
     >>> b = [0, 1, 0]
     >>> # In degrees by default
-    >>> wulf.geometry.get_angle(a, b)
+    >>> wulfric.geometry.get_angle(a, b)
     90.0
     >>> # In radians
-    >>> round(wulf.geometry.get_angle(a, b, radians=True), 4)
+    >>> round(wulfric.geometry.get_angle(a, b, radians=True), 4)
     1.5708
     >>> # For the zero vector the angle is not defined
-    >>> wulf.geometry.get_angle(a, [0, 0, 0])
+    >>> wulfric.geometry.get_angle(a, [0, 0, 0])
     Traceback (most recent call last):
     ...
     ValueError: Angle is ill defined (zero vector).
@@ -94,7 +94,7 @@ For the volume wulfric accepts three types of inputs:
   .. doctest::
 
       >>> cell = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
-      >>> wulf.geometry.get_volume(cell)
+      >>> wulfric.geometry.get_volume(cell)
       1.0
 
 * Three vectors
@@ -104,7 +104,7 @@ For the volume wulfric accepts three types of inputs:
       >>> a = [1, 0, 0]
       >>> b = [0, 1, 0]
       >>> c = [0, 0, 1]
-      >>> wulf.geometry.get_volume(a, b, c)
+      >>> wulfric.geometry.get_volume(a, b, c)
       1.0
 
 * Six cell parameters
@@ -117,7 +117,7 @@ For the volume wulfric accepts three types of inputs:
       >>> alpha = 90
       >>> beta = 90
       >>> gamma = 90
-      >>> wulf.geometry.get_volume(a, b, c, alpha, beta, gamma)
+      >>> wulfric.geometry.get_volume(a, b, c, alpha, beta, gamma)
       1.0
 
 Spherical coordinates
@@ -125,20 +125,20 @@ Spherical coordinates
 
 .. doctest::
 
-    >>> import wulfric as wulf
-    >>> wulf.geometry.get_spherical([1, 0, 0])
+    >>> import wulfric
+    >>> wulfric.geometry.get_spherical([1, 0, 0])
     (1.0, 90.0, 0.0)
-    >>> wulf.geometry.get_spherical([-1, 0, 0])
+    >>> wulfric.geometry.get_spherical([-1, 0, 0])
     (1.0, 90.0, 180.0)
-    >>> wulf.geometry.get_spherical([0, 1, 0])
+    >>> wulfric.geometry.get_spherical([0, 1, 0])
     (1.0, 90.0, 90.0)
-    >>> wulf.geometry.get_spherical([0, -1, 0])
+    >>> wulfric.geometry.get_spherical([0, -1, 0])
     (1.0, 90.0, 270.0)
-    >>> wulf.geometry.get_spherical([0, 0, 1])
+    >>> wulfric.geometry.get_spherical([0, 0, 1])
     (1.0, 0.0, 0.0)
-    >>> wulf.geometry.get_spherical([0, 0, -1])
+    >>> wulfric.geometry.get_spherical([0, 0, -1])
     (1.0, 180.0, 180.0)
-    >>> wulf.geometry.get_spherical([1, 0, 0], polar_axis = [1, 0, 0])
+    >>> wulfric.geometry.get_spherical([1, 0, 0], polar_axis = [1, 0, 0])
     (1.0, 0.0, 0.0)
 
 

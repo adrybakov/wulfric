@@ -59,9 +59,9 @@ def get_reciprocal(cell):
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> cell = [[1, 1, 0], [0, 1, 0], [0, 0, 1]]
-        >>> wulf.cell.get_reciprocal(cell)
+        >>> wulfric.cell.get_reciprocal(cell)
         array([[ 6.28318531,  0.        ,  0.        ],
                [-6.28318531,  6.28318531,  0.        ],
                [ 0.        ,  0.        ,  6.28318531]])
@@ -132,16 +132,16 @@ def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> import numpy as np
-        >>> np.around(wulf.cell.from_params(1, 2, 3, 90, 90, 60), 6)
+        >>> np.around(wulfric.cell.from_params(1, 2, 3, 90, 90, 60), 6)
         array([[1.      , 0.      , 0.      ],
                [1.      , 1.732051, 0.      ],
                [0.      , 0.      , 3.      ]])
 
     .. doctest::
 
-        >>> wulf.cell.from_params(1, 2, 3, 60, 60, 130)
+        >>> wulfric.cell.from_params(1, 2, 3, 60, 60, 130)
         Traceback (most recent call last):
         ...
         ValueError: Parameters could not form a parallelepiped:
@@ -216,9 +216,9 @@ def get_params(cell):
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> cell = [[1, 0, 0], [0, 2, 0], [0, 0, 3]]
-        >>> wulf.cell.get_params(cell)
+        >>> wulfric.cell.get_params(cell)
         (1.0, 2.0, 3.0, 90.0, 90.0, 90.0)
     """
 
@@ -255,9 +255,9 @@ def get_scalar_products(cell):
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> cell = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
-        >>> wulf.cell.get_scalar_products(cell)
+        >>> wulfric.cell.get_scalar_products(cell)
         (0.0, 0.0, 0.0)
     """
 

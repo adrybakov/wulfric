@@ -317,12 +317,12 @@ def lepage(
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.lepage([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+        >>> import wulfric
+        >>> wulfric.lepage([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
         'CUB'
-        >>> wulf.lepage([[1, 0, 0], [0, 1, 0], [0, 0, 2]])
+        >>> wulfric.lepage([[1, 0, 0], [0, 1, 0], [0, 0, 2]])
         'TET'
-        >>> wulf.lepage([[1, 0, 0], [0, 2, 0], [0, 0, 3]])
+        >>> wulfric.lepage([[1, 0, 0], [0, 2, 0], [0, 0, 3]])
         'ORC'
     """
 

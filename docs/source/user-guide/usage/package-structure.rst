@@ -11,7 +11,7 @@ Firs of all, one need to import the package
 
 .. doctest::
 
-  >>> import wulfric as wulf
+  >>> import wulfric
   >>> # or
   >>> import wulfric
 

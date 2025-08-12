@@ -12,7 +12,7 @@ The main interface to the package should be imported as
 
 .. doctest::
 
-   >>> import wulfric as wulf
+   >>> import wulfric
    >>> # or
    >>> import wulfric
 

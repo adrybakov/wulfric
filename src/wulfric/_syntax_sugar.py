@@ -39,15 +39,15 @@ class _SyntacticSugar(dict):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> atoms = wulf.Atoms()
+        >>> import wulfric
+        >>> atoms = wulfric.Atoms()
         >>> atoms.names = ["Cr1", "Cr2"]
         >>> atoms.positions = [[0, 0, 0], [0.5, 0.5, 0.5]]
         {'names': ['Cr1', 'Cr2'], 'positions': [[0, 0, 0], [0.5, 0.5, 0.5]]}
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> atoms = {}
         >>> atoms["names"] = ["Cr1", "Cr2"]
         >>> atoms["positions"] = [[0, 0, 0], [0.5, 0.5, 0.5]]
@@ -57,8 +57,8 @@ class _SyntacticSugar(dict):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> atoms = wulf.Atoms()
+        >>> import wulfric
+        >>> atoms = wulfric.Atoms()
         >>> atoms.names = ["Cr1", "Cr2"]
         >>> atoms.positions = [[0, 0, 0], [0.5, 0.5, 0.5]]
         {'names': ['Cr1', 'Cr2'], 'positions': [[0, 0, 0], [0.5, 0.5, 0.5]]}
@@ -99,13 +99,13 @@ def add_sugar(dictionary: dict) -> _SyntacticSugar:
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> atoms = {"names": ["Cr1", "Cr2"]}
         >>> atoms.names
         Traceback (most recent call last):
         ...
         AttributeError: 'dict' object has no attribute 'names'
-        >>> atoms = wulf.add_sugar(atoms)
+        >>> atoms = wulfric.add_sugar(atoms)
         >>> atoms.names
         ['Cr1', 'Cr2']
         >>> atoms.positions = [[0, 0, 0], [0.5, 0.5, 0.5]]
@@ -159,13 +159,13 @@ def remove_sugar(candy: dict) -> dict:
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> atoms = {"names": ["Cr1", "Cr2"]}
-        >>> atoms = wulf.add_sugar(atoms)
+        >>> atoms = wulfric.add_sugar(atoms)
         >>> atoms.names
         ['Cr1', 'Cr2']
         >>> atoms.positions = [[0, 0, 0], [0.5, 0.5, 0.5]]
-        >>> atoms = wulf.remove_sugar(atoms)
+        >>> atoms = wulfric.remove_sugar(atoms)
         >>> atoms.names
         Traceback (most recent call last):
         ...

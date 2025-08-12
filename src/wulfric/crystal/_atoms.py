@@ -142,11 +142,11 @@ def populate_atom_species(atoms, raise_on_fail=False) -> None:
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> atoms = {"names": ["Cr1", "cr2", "Br3", "S4", "fe5", "Fe6"]}
         >>> atoms
         {'names': ['Cr1', 'cr2', 'Br3', 'S4', 'fe5', 'Fe6']}
-        >>> wulf.crystal.populate_atom_species(atoms)
+        >>> wulfric.crystal.populate_atom_species(atoms)
         >>> atoms
         {'names': ['Cr1', 'cr2', 'Br3', 'S4', 'fe5', 'Fe6'], 'species': ['Cr', 'Cr', 'Br', 'S', 'Fe', 'Fe']}
 
@@ -262,21 +262,21 @@ def ensure_unique_names(atoms, strategy: str = "all") -> None:
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> atoms = {"names": ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
         >>> # Default strategy is "all"
-        >>> wulf.crystal.ensure_unique_names(atoms)
+        >>> wulfric.crystal.ensure_unique_names(atoms)
         >>> atoms
         {'names': ['Cr11', 'Cr22', 'Br3', 'Br4', 'S5', 'S6']}
         >>> atoms = {"names": ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
-        >>> wulf.crystal.ensure_unique_names(atoms, strategy="repeated-only")
+        >>> wulfric.crystal.ensure_unique_names(atoms, strategy="repeated-only")
         >>> atoms
         {'names': ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']}
         >>> # Nothing happens if atom names are already unique
-        >>> wulf.crystal.ensure_unique_names(atoms)
+        >>> wulfric.crystal.ensure_unique_names(atoms)
         >>> atoms
         {'names': ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']}
-        >>> wulf.crystal.ensure_unique_names(atoms, strategy="repeated-only")
+        >>> wulfric.crystal.ensure_unique_names(atoms, strategy="repeated-only")
         >>> atoms
         {'names': ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']}
 

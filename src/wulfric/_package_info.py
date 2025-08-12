@@ -62,8 +62,8 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> print(wulf.logo(info=[]))  # doctest: +NORMALIZE_WHITESPACE
+        >>> import wulfric
+        >>> print(wulfric.logo(info=[]))  # doctest: +NORMALIZE_WHITESPACE
         ██╗      ██╗ ██╗   ██╗ ██╗      ███████╗ ██████╗  ██╗  ██████╗
         ██║      ██║ ██║   ██║ ██║      ██╔════╝ ██╔══██╗ ██║ ██╔════╝
         ██║  █╗  ██║ ██║   ██║ ██║      █████╗   ██████╔╝ ██║ ██║

@@ -20,7 +20,7 @@
 # ================================ END LICENSE =================================
 import os
 
-import wulfric as wulf
+import wulfric
 
 ROOT_DIR = "."
 OUTPUT_PATH = os.path.join(
@@ -129,7 +129,7 @@ def plot():
     for i, name in enumerate(names):
         print(f"Start to plot {name} ", end="")
         output_subname = (name.translate(str.maketrans("", "", "12345ab"))).lower()
-        cell = wulf.cell.get_cell_example(name)
+        cell = wulfric.cell.get_cell_example(name)
         for j, wtp in enumerate(wtps[name]):
             py_file = open(
                 os.path.join(
@@ -141,13 +141,13 @@ def plot():
             py_file.write(
                 "\n".join(
                     [
-                        "import wulfric as wulf\n",
-                        f'cell = wulf.cell.get_cell_example("{name}")',
-                        "backend = wulf.visualization.PlotlyBackend()\n",
+                        "import wulfric \n",
+                        f'cell = wulfric.cell.get_cell_example("{name}")',
+                        "backend = wulfric.visualization.PlotlyBackend()\n",
                     ]
                 )
             )
-            backend = wulf.visualization.PlotlyBackend()
+            backend = wulfric.visualization.PlotlyBackend()
             for data in wtp:
                 print(data, end=" ", flush=True)
                 if len(wtp) == 1:

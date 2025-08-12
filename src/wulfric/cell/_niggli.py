@@ -310,8 +310,8 @@ def get_N_matrix(cell, eps_relative=1e-5, max_iterations=100000):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.get_N_matrix([[1, -0.5, 0], [-0.5, 1, 0], [0, 0, 1]])
+        >>> import wulfric
+        >>> wulfric.cell.get_N_matrix([[1, -0.5, 0], [-0.5, 1, 0], [0, 0, 1]])
         array([[ 1,  0, -1],
                [ 1,  0,  0],
                [ 0, -1,  0]])
@@ -321,7 +321,7 @@ def get_N_matrix(cell, eps_relative=1e-5, max_iterations=100000):
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> from wulfric.constants import TODEGREES
         >>> from math import sqrt, acos
         >>> a = 3
@@ -330,8 +330,8 @@ def get_N_matrix(cell, eps_relative=1e-5, max_iterations=100000):
         >>> alpha = acos(-5 / 2 / b / c) * TODEGREES
         >>> beta = acos(-4 / 2 / a / c) * TODEGREES
         >>> gamma = acos(-22 / 2 / a / b) * TODEGREES
-        >>> cell = wulf.cell.from_params(a, b, c, alpha, beta, gamma)
-        >>> wulf.cell.get_N_matrix(cell)
+        >>> cell = wulfric.cell.from_params(a, b, c, alpha, beta, gamma)
+        >>> wulfric.cell.get_N_matrix(cell)
         array([[0, 1, 2],
                [0, 0, 1],
                [1, 1, 2]])
@@ -459,8 +459,8 @@ def get_niggli(cell, eps_relative=1e-5, max_iterations=100000):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.cell.get_niggli([[1, -0.5, 0], [-0.5, 1, 0], [0, 0, 1]])
+        >>> import wulfric
+        >>> wulfric.cell.get_niggli([[1, -0.5, 0], [-0.5, 1, 0], [0, 0, 1]])
         array([[ 0.5,  0.5,  0. ],
                [ 0. ,  0. , -1. ],
                [-1. ,  0.5,  0. ]])
@@ -470,7 +470,7 @@ def get_niggli(cell, eps_relative=1e-5, max_iterations=100000):
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> from wulfric.constants import TODEGREES
         >>> from math import sqrt, acos
         >>> a = 3
@@ -479,8 +479,8 @@ def get_niggli(cell, eps_relative=1e-5, max_iterations=100000):
         >>> alpha = acos(-5 / 2 / b / c) * TODEGREES
         >>> beta = acos(-4 / 2 / a / c) * TODEGREES
         >>> gamma = acos(-22 / 2 / a / b) * TODEGREES
-        >>> cell = wulf.cell.from_params(a, b, c, alpha, beta, gamma)
-        >>> niggli_cell = wulf.cell.get_niggli(cell)
+        >>> cell = wulfric.cell.from_params(a, b, c, alpha, beta, gamma)
+        >>> niggli_cell = wulfric.cell.get_niggli(cell)
         >>> niggli_cell @ niggli_cell.T
         array([[4. , 2. , 1.5],
                [2. , 9. , 4.5],

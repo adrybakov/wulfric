@@ -16,7 +16,7 @@ In the examples on this page we assume that wulfric and |NumPy|_ are imported as
 .. doctest::
 
   >>> import numpy as np
-  >>> import wulfric as wulf
+  >>> import wulfric
 
 In the examples we use crystall with six atoms and orthorhombic cell.
 
@@ -48,14 +48,14 @@ valid name. Wulfric can modify names to ensure their uniqueness with
 
 .. doctest::
 
-  >>> import wulfric as wulf
+  >>> import wulfric
   >>> atoms1 = {"names" : ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
   >>> # Default strategy is "all"
-  >>> wulf.crystal.ensure_unique_names(atoms1)
+  >>> wulfric.crystal.ensure_unique_names(atoms1)
   >>> atoms1
   {'names': ['Cr11', 'Cr22', 'Br3', 'Br4', 'S5', 'S6']}
   >>> atoms1 = {"names" : ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
-  >>> wulf.crystal.ensure_unique_names(atoms1, strategy="repeated-only")
+  >>> wulfric.crystal.ensure_unique_names(atoms1, strategy="repeated-only")
   >>> atoms1
   {'names': ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']}
 
@@ -73,7 +73,7 @@ Wulfric implements two functions to automatically guess the atom's species from 
 
 .. doctest::
 
-  >>> wulf.crystal.get_atom_species("Cr1")
+  >>> wulfric.crystal.get_atom_species("Cr1")
   'Cr'
 
 If it is unable to guess the atom species, then it issues a ``RuntimeWarning`` and return
@@ -81,11 +81,11 @@ If it is unable to guess the atom species, then it issues a ``RuntimeWarning`` a
 
 .. doctest::
 
-  >>> wulf.crystal.get_atom_species("124")
+  >>> wulfric.crystal.get_atom_species("124")
   ...
   'X'
   >>> # It is possible to raise an error instead of the warning
-  wulf.crystal.get_atom_species("124", raise_on_fail=True)
+  wulfric.crystal.get_atom_species("124", raise_on_fail=True)
   ...
   wulfric._exceptions.FailedToDeduceAtomSpecies: Tried to deduce name from '124'. Failed.
 
@@ -94,7 +94,7 @@ To guess the names for the dictionary of ``atoms`` use
 .. doctest::
 
   >>> # Note: this function modifies the dictionary on which it is called
-  >>> wulf.crystal.populate_atom_species(atoms)
+  >>> wulfric.crystal.populate_atom_species(atoms)
   >>> atoms["species"]
   ['Cr', 'Br', 'S', 'Cr', 'Br', 'S']
 
@@ -110,9 +110,9 @@ To get the vector from atom 1 to atom 2 and distance between them use
 
 .. doctest::
 
-  >>> wulf.crystal.get_vector(cell, atoms, atom1=0, atom2=0, R=(0,1,0))
+  >>> wulfric.crystal.get_vector(cell, atoms, atom1=0, atom2=0, R=(0,1,0))
   array([3.55335, 0.     , 0.     ])
-  >>> wulf.crystal.get_distance(cell, atoms, atom1=0, atom2=0, R=(0,1,0))
+  >>> wulfric.crystal.get_distance(cell, atoms, atom1=0, atom2=0, R=(0,1,0))
   3.55335
 
 Translation equivalence
@@ -137,7 +137,7 @@ To do so use
   [0.5      0.       0.117618]
   [0.5      0.5      0.322678]
   [0.       0.       0.064679]
-  >>> wulf.crystal.ensure_000(atoms)
+  >>> wulfric.crystal.ensure_000(atoms)
   >>> for p in atoms["positions"]:
   ...     print(p)
   ...

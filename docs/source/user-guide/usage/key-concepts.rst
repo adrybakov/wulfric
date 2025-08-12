@@ -40,8 +40,8 @@ vectors and pair-wise angles between them as
 
 .. doctest::
 
-    >>> import wulfric as wulf
-    >>> wulf.cell.get_params(cell)
+    >>> import wulfric
+    >>> wulfric.cell.get_params(cell)
     (3.55335, 4.744935, 8.760497, 90.0, 90.0, 90.0)
 
 This function returns six numbers ``(a, b, c, alpha, beta, gamma)``.
@@ -50,7 +50,7 @@ Another typical task is to find a reciprocal cell
 
 .. doctest::
 
-    >>> wulf.cell.get_reciprocal(cell)
+    >>> wulfric.cell.get_reciprocal(cell)
     array([[1.76824273, 0.        , 0.        ],
            [0.        , 1.32418786, 0.        ],
            [0.        , 0.        , 0.71721791]])
@@ -114,7 +114,7 @@ the user-defined ones intact.
 
     .. doctest::
 
-        >>> atoms = wulf.add_sugar(atoms)
+        >>> atoms = wulfric.add_sugar(atoms)
         >>> atoms.names
         ['Cr1', 'Br1', 'S1', 'Cr2', 'Br2', 'S2']
 

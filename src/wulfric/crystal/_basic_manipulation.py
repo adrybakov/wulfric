@@ -62,18 +62,18 @@ def shift_atoms(
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> cell = [[2, 0, 0], [0, 2, 0], [0, 0, 2]]
         >>> atoms = {
         ...     "names": ["Cr1", "Cr2"],
         ...     "positions": [[0.0, 0.0, 0.0], [0.5, 0.5, 1.0]],
         ... }
-        >>> wulf.crystal.shift_atoms(atoms=atoms, gravity_point=(0.5, 0.5, 0.5))
+        >>> wulfric.crystal.shift_atoms(atoms=atoms, gravity_point=(0.5, 0.5, 0.5))
         >>> for i in range(len(atoms["names"])):
         ...     print(atoms["names"][i], atoms["positions"][i])
         Cr1 [0.25 0.25 0.  ]
         Cr2 [0.75 0.75 1.  ]
-        >>> wulf.crystal.shift_atoms(
+        >>> wulfric.crystal.shift_atoms(
         ...     atoms, gravity_point=(1, 1, 1), cell=cell, gp_is_relative=False
         ... )
         >>> for i in range(len(atoms["names"])):
@@ -119,13 +119,13 @@ def cure_negative(atoms) -> None:
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> cell = [[2, 0, 0], [0, 2, 0], [0, 0, 2]]
         >>> atoms = {
         ...     "names": ["Cr1", "Cr2"],
         ...     "positions": [[-0.5, 0.5, 0.0], [0.1, 0.5, 0.0]],
         ... }
-        >>> wulf.crystal.cure_negative(atoms)
+        >>> wulfric.crystal.cure_negative(atoms)
         >>> for i in range(len(atoms["names"])):
         ...     print(atoms["names"][i], atoms["positions"][i])
         Cr1 [0.  0.5 0. ]
@@ -161,14 +161,14 @@ def ensure_000(atoms) -> None:
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> atoms = {"positions": [[0, 0.5, 0], [1.25, 0, -0.52], [0.25, -0.65, 2.375]]}
         >>> for p in atoms["positions"]:
         ...     print(p)
         [0, 0.5, 0]
         [1.25, 0, -0.52]
         [0.25, -0.65, 2.375]
-        >>> wulf.crystal.ensure_000(atoms)
+        >>> wulfric.crystal.ensure_000(atoms)
         >>> for p in atoms["positions"]:
         ...     print(p)
         [0, 0.5, 0]
@@ -226,16 +226,16 @@ def get_vector(
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> cell = [[1, 0, 0], [0, 2, 0], [0, 0, 3]]
         >>> atoms = {"positions": [[0.5, 0, 0], [0, 0, 0.5]]}
-        >>> wulf.crystal.get_vector(cell, atoms, atom1=0, atom2=1, R=(0, 0, 0))
+        >>> wulfric.crystal.get_vector(cell, atoms, atom1=0, atom2=1, R=(0, 0, 0))
         array([-0.5,  0. ,  1.5])
-        >>> wulf.crystal.get_vector(cell, atoms, atom1=0, atom2=1, R=(1, 0, 0))
+        >>> wulfric.crystal.get_vector(cell, atoms, atom1=0, atom2=1, R=(1, 0, 0))
         array([0.5, 0. , 1.5])
-        >>> wulf.crystal.get_vector(cell, atoms, atom1=0, atom2=1, R=(1, 0, -3))
+        >>> wulfric.crystal.get_vector(cell, atoms, atom1=0, atom2=1, R=(1, 0, -3))
         array([ 0.5,  0. , -7.5])
-        >>> wulf.crystal.get_vector(
+        >>> wulfric.crystal.get_vector(
         ...     cell, atoms, atom1=0, atom2=1, R=(1, 0, -3), return_relative=True
         ... )
         array([ 0.5,  0. , -2.5])
@@ -283,19 +283,27 @@ def get_distance(cell, atoms, atom1, atom2, R=(0, 0, 0)) -> float:
 
     .. doctest::
 
-        >>> import wulfric as wulf
+        >>> import wulfric
         >>> cell = [[1, 0, 0], [0, 2, 0], [0, 0, 3]]
         >>> atoms = {"positions": [[0.5, 0, 0], [0, 0, 0.5]]}
         >>> round(
-        ...     wulf.crystal.get_distance(cell, atoms, atom1=0, atom2=1, R=(0, 0, 0)), 8
+        ...     wulfric.crystal.get_distance(
+        ...         cell, atoms, atom1=0, atom2=1, R=(0, 0, 0)
+        ...     ),
+        ...     8,
         ... )
         1.58113883
         >>> round(
-        ...     wulf.crystal.get_distance(cell, atoms, atom1=0, atom2=1, R=(1, 0, 0)), 8
+        ...     wulfric.crystal.get_distance(
+        ...         cell, atoms, atom1=0, atom2=1, R=(1, 0, 0)
+        ...     ),
+        ...     8,
         ... )
         1.58113883
         >>> round(
-        ...     wulf.crystal.get_distance(cell, atoms, atom1=0, atom2=1, R=(1, 0, -3)),
+        ...     wulfric.crystal.get_distance(
+        ...         cell, atoms, atom1=0, atom2=1, R=(1, 0, -3)
+        ...     ),
         ...     8,
         ... )
         7.51664819

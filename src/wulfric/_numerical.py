@@ -81,10 +81,10 @@ def compare_numerically(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.compare_numerically(1, "==", 1.0000001, eps=1e-6)
+        >>> import wulfric
+        >>> wulfric.compare_numerically(1, "==", 1.0000001, eps=1e-6)
         True
-        >>> wulf.compare_numerically(1, "==", 1.0000001, eps=1e-8)
+        >>> wulfric.compare_numerically(1, "==", 1.0000001, eps=1e-8)
         False
     """
 

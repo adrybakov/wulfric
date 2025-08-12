@@ -89,12 +89,12 @@ def get_volume(*args):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.geometry.get_volume([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+        >>> import wulfric
+        >>> wulfric.geometry.get_volume([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
         1.0
-        >>> wulf.geometry.get_volume([1, 0, 0], [0, 1, 0], [0, 0, 1])
+        >>> wulfric.geometry.get_volume([1, 0, 0], [0, 1, 0], [0, 0, 1])
         1.0
-        >>> wulf.geometry.get_volume(1, 1, 1, 90, 90, 90)
+        >>> wulfric.geometry.get_volume(1, 1, 1, 90, 90, 90)
         1.0
     """
 
@@ -160,12 +160,12 @@ def get_angle(v1, v2, radians=False):
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.geometry.get_angle([1, 0, 0], [0, 0, 1])
+        >>> import wulfric
+        >>> wulfric.geometry.get_angle([1, 0, 0], [0, 0, 1])
         90.0
-        >>> wulf.geometry.get_angle([1, 0, 0], [1, 0, 0])
+        >>> wulfric.geometry.get_angle([1, 0, 0], [1, 0, 0])
         0.0
-        >>> round(wulf.geometry.get_angle([1, 0, 0], [1, 1, 1]), 4)
+        >>> round(wulfric.geometry.get_angle([1, 0, 0], [1, 1, 1]), 4)
         54.7356
     """
 
@@ -252,16 +252,16 @@ def parallelepiped_check(
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.geometry.parallelepiped_check(1, 1, 1, 90, 90, 90)
+        >>> import wulfric
+        >>> wulfric.geometry.parallelepiped_check(1, 1, 1, 90, 90, 90)
         True
-        >>> wulf.geometry.parallelepiped_check(1, 1, 1, 30, 20, 110)
+        >>> wulfric.geometry.parallelepiped_check(1, 1, 1, 30, 20, 110)
         False
-        >>> wulf.geometry.parallelepiped_check(1, -1, 1, 90, 90, 90)
+        >>> wulfric.geometry.parallelepiped_check(1, -1, 1, 90, 90, 90)
         False
-        >>> wulf.geometry.parallelepiped_check(1, 0, 1, 90, 90, 90)
+        >>> wulfric.geometry.parallelepiped_check(1, 0, 1, 90, 90, 90)
         False
-        >>> wulf.geometry.parallelepiped_check(1, 1, 1, 90, 199, 90)
+        >>> wulfric.geometry.parallelepiped_check(1, 1, 1, 90, 199, 90)
         False
 
     """
@@ -389,20 +389,20 @@ def get_spherical(
 
     .. doctest::
 
-        >>> import wulfric as wulf
-        >>> wulf.geometry.get_spherical([1, 0, 0])
+        >>> import wulfric
+        >>> wulfric.geometry.get_spherical([1, 0, 0])
         (1.0, 90.0, 0.0)
-        >>> wulf.geometry.get_spherical([-1, 0, 0])
+        >>> wulfric.geometry.get_spherical([-1, 0, 0])
         (1.0, 90.0, 180.0)
-        >>> wulf.geometry.get_spherical([0, 1, 0])
+        >>> wulfric.geometry.get_spherical([0, 1, 0])
         (1.0, 90.0, 90.0)
-        >>> wulf.geometry.get_spherical([0, -1, 0])
+        >>> wulfric.geometry.get_spherical([0, -1, 0])
         (1.0, 90.0, 270.0)
-        >>> wulf.geometry.get_spherical([0, 0, 1])
+        >>> wulfric.geometry.get_spherical([0, 0, 1])
         (1.0, 0.0, 0.0)
-        >>> wulf.geometry.get_spherical([0, 0, -1])
+        >>> wulfric.geometry.get_spherical([0, 0, -1])
         (1.0, 180.0, 180.0)
-        >>> wulf.geometry.get_spherical([1, 0, 0], polar_axis=[1, 0, 0])
+        >>> wulfric.geometry.get_spherical([1, 0, 0], polar_axis=[1, 0, 0])
         (1.0, 0.0, 0.0)
 
     """

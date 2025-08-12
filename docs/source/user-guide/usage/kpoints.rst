@@ -13,7 +13,7 @@ In the examples of this page we assume that wulfric is imported as
 
 .. doctest::
 
-  >>> import wulfric as wulf
+  >>> import wulfric
 
 
 K-points data
@@ -24,8 +24,8 @@ use
 
 .. doctest::
 
-    >>> cell = wulf.cell.get_example_cell_SC("BCT")
-    >>> coordinates, names, labels, path = wulf.cell.get_hs_data(cell)
+    >>> cell = wulfric.cell.get_example_cell_SC("BCT")
+    >>> coordinates, names, labels, path = wulfric.cell.get_hs_data(cell)
     >>> path
     'G-X-M-G-Z-P-N-Z1-M|X-P'
     >>> names
@@ -66,8 +66,8 @@ Usually it is created from some ``cell``:
 
 .. doctest::
 
-    >>> cell = wulf.cell.get_example_cell_SC("CUB")
-    >>> kp = wulf.Kpoints.from_cell(cell)
+    >>> cell = wulfric.cell.get_example_cell_SC("CUB")
+    >>> kp = wulfric.Kpoints.from_cell(cell)
     >>> kp.hs_names
     ['G', 'M', 'R', 'X']
 
@@ -79,7 +79,7 @@ However, it could be created explicitly as well:
     >>> names = ["G", "X"]
     >>> coordinates = [[0, 0, 0], [0.5, 0, 0]]
     >>> labels = [R"$\Gamma$", "X"]
-    >>> kp = wulf.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels)
+    >>> kp = wulfric.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels)
     >>> kp.hs_names
     ['G', 'X']
 
@@ -141,7 +141,7 @@ In order to have a summary of the high symmetry pints the predefined method
 
 .. doctest::
 
-    >>> kp = wulf.Kpoints.from_cell(wulf.cell.get_example_cell_SC("FCC"))
+    >>> kp = wulfric.Kpoints.from_cell(wulfric.cell.get_example_cell_SC("FCC"))
     >>> print(kp.hs_table())
     Name       rel_b1      rel_b2      rel_b3          k_x         k_y         k_z
     G      0.00000000  0.00000000  0.00000000   0.00000000  0.00000000  0.00000000
@@ -168,7 +168,7 @@ We use a specific format in the package that is described in
     >>> names = ["G", "K", "X", "R"]
     >>> coordinates = [[0, 0, 0], [0.5, 0.5, 0], [0.5, 0, 0], [0.5, 0.5, 0.5]]
     >>> labels = ["$\Gamma$", "K", "X", "R"]
-    >>> kp = wulf.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels)
+    >>> kp = wulfric.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels)
     >>> # Default path is constructed from the list of high symmetry points
     >>> kp.path
     [['G', 'K', 'X', 'R']]
@@ -234,7 +234,7 @@ the high symmetry points of this section of the path.
     >>> names = ["G", "K", "X"]
     >>> coordinates = [[0, 0, 0], [0.5, 0.5, 0], [0.5, 0, 0]]
     >>> labels = ["$\Gamma$", "K", "X"]
-    >>> kp = wulf.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels, n=4)
+    >>> kp = wulfric.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels, n=4)
     >>> kp.points()
     array([[0. , 0. , 0. ],
            [0.1, 0.1, 0. ],

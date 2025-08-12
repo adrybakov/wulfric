@@ -1,7 +1,7 @@
-import wulfric as wulf
+import wulfric
 
-cell = wulf.cell.get_cell_example("RHL2")
-backend = wulf.visualization.PlotlyBackend()
+cell = wulfric.cell.get_cell_example("RHL2")
+backend = wulfric.visualization.PlotlyBackend()
 backend.plot(cell, kind="brillouin-kpath")
 # Save an image:
 backend.save("rhl2_reciprocal.png")

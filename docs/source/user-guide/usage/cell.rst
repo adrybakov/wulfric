@@ -14,7 +14,7 @@ imports and an example cell of the form
 
 .. doctest::
 
-  >>> import wulfric as wulf
+  >>> import wulfric
   >>> import numpy as np
   >>> cell = [
   ...     [3.553350, 0.000000, 0.000000],
@@ -42,7 +42,7 @@ To compute parameters from the cell use
 
 .. doctest::
 
-  >>> wulf.cell.get_params(cell)
+  >>> wulfric.cell.get_params(cell)
   (3.55335, 4.744935, 8.760497, 90.0, 90.0, 90.0)
 
 Note that when ``cell`` converted to ``params`` the information about its spacial
@@ -53,7 +53,7 @@ To create a cell from parameters use
 .. doctest::
 
   >>> # we use np.round to account for the finite precision of float point arithmetic
-  >>> np.round(wulf.cell.from_params(3.55335, 4.744935, 8.760497, 90.0, 90.0, 90.0), 6)
+  >>> np.round(wulfric.cell.from_params(3.55335, 4.744935, 8.760497, 90.0, 90.0, 90.0), 6)
   array([[3.55335 , 0.      , 0.      ],
          [0.      , 4.744935, 0.      ],
          [0.      , 0.      , 8.760497]])
@@ -62,7 +62,7 @@ The cell is constructed with the first vector oriented along the :math:`x` axis 
 vector in the :math:`xy` plain. The cell can only be constructed from the set of parameters
 that can form parallelepiped (see :py:func:`.geometry.parallelepiped_check`).
 
-Note ``wulf.cell.from_params(wulf.cell.get_params(cell))`` is not guaranteed to recover
+Note ``wulfric.cell.from_params(wulfric.cell.get_params(cell))`` is not guaranteed to recover
 the original ``cell``, as the information about the orientation of lattice vectors in
 Cartesian reference frame is lost after the call of the first function.
 
@@ -75,7 +75,7 @@ reciprocal lattice use
 
 .. doctest::
 
-  >>> rcell = wulf.cell.get_reciprocal(cell)
+  >>> rcell = wulfric.cell.get_reciprocal(cell)
   >>> rcell
   array([[1.76824273, 0.        , 0.        ],
          [0.        , 1.32418786, 0.        ],
@@ -87,7 +87,7 @@ lattice just use the same function again:
 
 .. doctest::
 
-  >>> wulf.cell.get_reciprocal(rcell)
+  >>> wulfric.cell.get_reciprocal(rcell)
   array([[3.55335 , 0.      , 0.      ],
          [0.      , 4.744935, 0.      ],
          [0.      , 0.      , 8.760497]])
@@ -97,11 +97,11 @@ use dedicated functions:
 
 .. doctest::
 
-  >>> wulf.cell.CUB_SC(a=1)
+  >>> wulfric.cell.CUB_SC(a=1)
   array([[1, 0, 0],
          [0, 1, 0],
          [0, 0, 1]])
-  >>> mcl = wulf.cell.MCL_SC(a=1, b=4, c=5, alpha=70)
+  >>> mcl = wulfric.cell.MCL_SC(a=1, b=4, c=5, alpha=70)
   >>> mcl
   array([[1.        , 0.        , 0.        ],
          [0.        , 4.        , 0.        ],
