@@ -18,8 +18,27 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
+
+import sys
+
 old_dir = set(dir())
 old_dir.add("old_dir")
+
+
+def _raise_with_message(e, message):
+    # Python < 3.11
+    if sys.version_info[1] < 11:
+        args = e.args
+        if not args:
+            arg0 = message
+        else:
+            arg0 = f"{args[0]}\n{message}"
+        e.args = (arg0,) + args[1:]
+        raise e
+    # Python >= 3.11
+    else:
+        e.add_note(message)
+        raise e
 
 
 class StandardizationTypeMismatch(Exception):
