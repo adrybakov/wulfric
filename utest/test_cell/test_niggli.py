@@ -73,4 +73,4 @@ def test_get_niggli_example():
 
 def test_get_niggli_cell_volume_error():
     with pytest.raises(ValueError):
-        get_niggli([[0, 0, 0], [0, 1, 0], [0, 0, 1]])
+        get_niggli([[0, 0, 0], [0, 1, 0], [0, 0, 1]], implementation="wulfric")

@@ -18,6 +18,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
+import spglib
 import numpy as np
 
 from wulfric._exceptions import NiggliReductionFailed
@@ -258,14 +259,12 @@ def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix, eps):
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
-def get_N_matrix(cell, eps_relative=1e-5, max_iterations=100000):
+def get_N_matrix(
+    cell, eps_relative=1e-5, implementation="spglib", max_iterations=100000
+):
     r"""
-    Computes the transformation  matrix from the given cell to the corresponding
-    reduced Niggli cell. Implements algorithm from [2]_.
-
-    Details of the implementation are written in :ref:`library_niggli`.
-
-    .. versionadded:: 0.6.0
+    Computes the transformation matrix from the given cell to the corresponding
+    reduced Niggli cell.
 
     Parameters
     ----------
@@ -273,6 +272,16 @@ def get_N_matrix(cell, eps_relative=1e-5, max_iterations=100000):
         Matrix of a cell, rows are interpreted as vectors.
     eps_relative : float, default :math:`10^{-5}`
         Relative epsilon as defined in [2]_.
+    implementation : str, default "spglib"
+        Which implementation of the niggli reduction to use. Supported:
+
+        *   "spglib" (default)
+
+            Implementation of |spglib|_.
+        *   "wulfric"
+
+            Implementation of wulfric of the algorithm from [2]_.
+            Details of the implementation are written in :ref:`library_niggli`.
     max_iterations : int, default 100000
         Maximum number of iterations.
 
@@ -312,15 +321,16 @@ def get_N_matrix(cell, eps_relative=1e-5, max_iterations=100000):
 
         >>> import wulfric
         >>> wulfric.cell.get_N_matrix([[1, -0.5, 0], [-0.5, 1, 0], [0, 0, 1]])
-        array([[ 1,  0, -1],
-               [ 1,  0,  0],
-               [ 0, -1,  0]])
+        array([[ 1.,  0., -1.],
+               [ 1.,  0.,  0.],
+               [ 0., -1.,  0.]])
 
     Example from [1]_ (parameters are reproducing :math:`A=9`, :math:`B=27`, :math:`C=4`,
     :math:`\xi` = -5, :math:`\eta` = -4, :math:`\zeta = -22`):
 
     .. doctest::
 
+        >>> import numpy as np
         >>> import wulfric
         >>> from wulfric.constants import TODEGREES
         >>> from math import sqrt, acos
@@ -331,87 +341,27 @@ def get_N_matrix(cell, eps_relative=1e-5, max_iterations=100000):
         >>> beta = acos(-4 / 2 / a / c) * TODEGREES
         >>> gamma = acos(-22 / 2 / a / b) * TODEGREES
         >>> cell = wulfric.cell.from_params(a, b, c, alpha, beta, gamma)
-        >>> wulfric.cell.get_N_matrix(cell)
-        array([[0, 1, 2],
-               [0, 0, 1],
-               [1, 1, 2]])
+        >>> np.round(wulfric.cell.get_N_matrix(cell), decimals=1)
+        array([[ 0.,  1.,  2.],
+               [-0., -0.,  1.],
+               [ 1.,  1.,  2.]])
 
     """
 
-    volume = get_volume(cell)
-    if volume == 0:
-        raise ValueError("Cell volume is zero")
-
-    eps = eps_relative * volume ** (1 / 3.0)
-
-    # 0
-    metric_tensor = np.matmul(cell, np.transpose(cell))
-
-    params = (
-        metric_tensor[0][0],
-        metric_tensor[1][1],
-        metric_tensor[2][2],
-        2 * metric_tensor[1][2],
-        2 * metric_tensor[0][2],
-        2 * metric_tensor[0][1],
+    niggli_cell = get_niggli(
+        cell=cell,
+        eps_relative=eps_relative,
+        implementation=implementation,
+        max_iterations=max_iterations,
     )
 
-    trans_matrix = np.eye(3, dtype=int)
-
-    iter_count = 0
-    while True:
-        if iter_count > max_iterations:
-            raise NiggliReductionFailed(max_iterations=max_iterations)
-
-        # Note : each iteration changes the transformation matrix
-
-        iter_count += 1
-        # 1
-        condition, params, trans_matrix = _niggli_step_1(*params, trans_matrix, eps=eps)
-
-        # 2
-        condition, params, trans_matrix = _niggli_step_2(*params, trans_matrix, eps=eps)
-        if condition:
-            continue
-
-        # 3
-        condition, params, trans_matrix = _niggli_step_3(*params, trans_matrix, eps=eps)
-
-        # 4
-        condition, params, trans_matrix = _niggli_step_4(*params, trans_matrix, eps=eps)
-
-        # 5
-        condition, params, trans_matrix = _niggli_step_5(*params, trans_matrix, eps=eps)
-        if condition:
-            continue
-
-        # 6
-        condition, params, trans_matrix = _niggli_step_6(*params, trans_matrix, eps=eps)
-        if condition:
-            continue
-
-        # 7
-        condition, params, trans_matrix = _niggli_step_7(*params, trans_matrix, eps=eps)
-        if condition:
-            continue
-
-        # 8
-        condition, params, trans_matrix = _niggli_step_8(*params, trans_matrix, eps=eps)
-        if condition:
-            continue
-
-        break
-
-    return trans_matrix
+    return np.linalg.inv(cell).T @ niggli_cell.T
 
 
-def get_niggli(cell, eps_relative=1e-5, max_iterations=100000):
+def get_niggli(cell, eps_relative=1e-5, implementation="spglib", max_iterations=100000):
     r"""
-    Computes reduced Niggli cell. Implements algorithm from [2]_.
+    Computes reduced Niggli cell.
 
-    Details of the implementation are written in :ref:`library_niggli`.
-
-    .. versionchanged:: 0.6.0 Renamed from ``niggli``
 
     Parameters
     ----------
@@ -419,6 +369,16 @@ def get_niggli(cell, eps_relative=1e-5, max_iterations=100000):
         Matrix of a cell, rows are interpreted as vectors.
     eps_relative : float, default :math:`10^{-5}`
         Relative epsilon as defined in [2]_.
+    implementation : str, default "spglib"
+        Which implementation of the niggli reduction to use. Supported:
+
+        *   "spglib" (default)
+
+            Implementation of |spglib|_.
+        *   "wulfric"
+
+            Implementation of wulfric of the algorithm from [2]_.
+            Details of the implementation are written in :ref:`library_niggli`.
     max_iterations : int, default 100000
         Maximum number of iterations.
 
@@ -487,6 +447,16 @@ def get_niggli(cell, eps_relative=1e-5, max_iterations=100000):
                [1.5, 4.5, 9. ]])
 
     """
+
+    implementation = implementation.lower()
+
+    if implementation == "spglib":
+        return spglib.niggli_reduce(lattice=cell, eps=eps_relative)
+    elif implementation != "wulfric":
+        raise ValueError(
+            f"Implementation {implementation} is not supported. "
+            'Supported are "spglib" and "wulfric".'
+        )
 
     volume = get_volume(cell)
     if volume == 0:
@@ -560,3 +530,45 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
+
+
+if __name__ == "__main__":
+    cell1 = [[1, -0.5, 0], [-0.5, 1, 0], [0, 0, 1]]
+
+    niggli_1_spglib = get_niggli(cell1, implementation="spglib")
+    niggli_1_wulfric = get_niggli(cell1, implementation="wulfric")
+
+    N_1_spglib = get_N_matrix(cell1, implementation="spglib")
+    N_1_wulfric = get_N_matrix(cell1, implementation="wulfric")
+
+    print("N1 match:    ", np.allclose(N_1_spglib, N_1_wulfric))
+
+    print("Cell1 match: ", np.allclose(niggli_1_spglib, niggli_1_wulfric))
+
+    print()
+
+    from wulfric.constants import TODEGREES
+    from wulfric.cell import from_params
+    from math import sqrt, acos
+
+    a = 3
+    b = sqrt(27)
+    c = 2
+    alpha = acos(-5 / 2 / b / c) * TODEGREES
+    beta = acos(-4 / 2 / a / c) * TODEGREES
+    gamma = acos(-22 / 2 / a / b) * TODEGREES
+    cell2 = from_params(a, b, c, alpha, beta, gamma)
+
+    niggli_2_spglib = get_niggli(cell2, implementation="spglib")
+    niggli_2_wulfric = get_niggli(cell2, implementation="wulfric")
+
+    N_2_spglib = get_N_matrix(cell2, implementation="spglib")
+    N_2_wulfric = get_N_matrix(cell2, implementation="wulfric")
+
+    print("N2 match:    ", np.allclose(N_2_spglib, N_2_wulfric))
+
+    print("Cell2 match: ", np.allclose(niggli_2_spglib, niggli_2_wulfric))
+
+    print(niggli_2_spglib @ niggli_2_spglib.T)
+
+    print(np.round(get_N_matrix(cell2), decimals=1))
