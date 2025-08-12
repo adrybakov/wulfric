@@ -21,7 +21,7 @@
 
 # Source 1: https://onlinelibrary.wiley.com/iucr/itc/Ac/ch2o3v0001/ as of 11 August 2025
 # Source 2: http://img.chem.ucl.ac.uk/sgp/large/sgp.htm as of 11 August 2025
-inversion_symmetry = {
+INVERSION_SYMMETRY = {
     1: False,
     2: True,
     3: False,
@@ -255,7 +255,7 @@ inversion_symmetry = {
 }
 
 # Source: https://onlinelibrary.wiley.com/iucr/itc/Ac/ch2o3v0001/ as of 11 August 2025
-crystal_family = {
+CRYSTAL_FAMILY = {
     1: "a",
     2: "a",
     3: "m",
@@ -490,7 +490,7 @@ crystal_family = {
 
 
 # Source: https://onlinelibrary.wiley.com/iucr/itc/Ac/ch2o3v0001/ as of 11 August 2025
-centring_type = {
+CENTRING_TYPE = {
     1: "P",
     2: "P",
     3: "P",

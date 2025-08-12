@@ -39,6 +39,6 @@ Space Groups
 .. autosummary::
     :toctree: generated/
 
-    inversion_symmetry
-    crystal_family
-    centring_type
+    INVERSION_SYMMETRY
+    CRYSTAL_FAMILY
+    CENTRING_TYPE
