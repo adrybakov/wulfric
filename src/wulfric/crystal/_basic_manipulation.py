@@ -339,7 +339,7 @@ def get_spatial_mapping(old_cell, old_positions, new_cell, new_positions):
                 mapping.append(index)
 
         raise UnexpectedError(
-            "get_spatial_mapping(): Mapping from new atoms to old atoms failed."
+            "get_spatial_mapping(): Mapping from new atoms to old atoms failed. "
             "Note: please make sure that the old atoms and new atoms describe the same "
             "crystal in the same orientation."
         )
