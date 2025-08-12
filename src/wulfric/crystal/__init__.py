@@ -20,3 +20,5 @@
 # ================================ END LICENSE =================================
 from ._atoms import *
 from ._basic_manipulation import *
+from ._crystal_transformations import *
+from ._crystal_validation import *
