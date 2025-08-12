@@ -325,8 +325,16 @@ def get_spatial_mapping(old_cell, old_positions, new_cell, new_positions):
     new_positions = np.array(new_positions) @ np.array(new_cell)
     # Get relative positions of the new atoms with respect to the old cell
     new_positions = new_positions @ np.linalg.inv(old_cell)
+
+    # Round the relative coordinates
+    # This step is required to avoid 0.999999 being cast into 1 instead of 0
+    new_positions = np.round(new_positions, decimals=5)
     # Make sure that they lay in the interval [0, 1)
     new_positions = [[pos[0] % 1, pos[1] % 1, pos[2] % 1] for pos in new_positions]
+
+    # Round the relative coordinates
+    # This step is required to avoid 0.999999 being cast into 1 instead of 0
+    old_positions = np.round(old_positions, decimals=5)
 
     # Make sure that old positions lay in the interval [0, 1)
     old_positions = [[pos[0] % 1, pos[1] % 1, pos[2] % 1] for pos in old_positions]
@@ -335,14 +343,16 @@ def get_spatial_mapping(old_cell, old_positions, new_cell, new_positions):
 
     for position in new_positions:
         for index, old_position in enumerate(old_positions):
-            if np.allclose(position, old_position):
+            if np.allclose(position, old_position, atol=1e-5):
                 mapping.append(index)
-
-        raise UnexpectedError(
-            "get_spatial_mapping(): Mapping from new atoms to old atoms failed. "
-            "Note: please make sure that the old atoms and new atoms describe the same "
-            "crystal in the same orientation."
-        )
+                # Take the first atom that is found
+                break
+            elif index == len(old_positions) - 1:
+                raise UnexpectedError(
+                    "get_spatial_mapping(): Mapping from new atoms to old atoms failed. "
+                    "Note: please make sure that the old atoms and new atoms describe the same "
+                    "crystal in the same orientation."
+                )
 
     return mapping
 
@@ -352,3 +362,30 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
+
+
+if __name__ == "__main__":
+    old_cell = [[2.848, 0.0, 0.0], [0.0, 2.848, 0.0], [1.424, 1.424, 1.424]]
+    old_positions = [[0, 0, 0], [0.5, 0.5, 0.5]]
+    new_cell = [
+        [2.84800000e00, -2.84800000e00, 0.00000000e00],
+        [2.35246139e-16, 2.84800000e00, 2.84800000e00],
+        [-1.42400000e00, -1.42400000e00, 1.42400000e00],
+    ]
+    new_positions = [
+        [0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.5],
+        [0.66666667, 0.33333333, 0.33333333],
+        [0.66666667, 0.33333333, 0.83333333],
+        [0.33333333, 0.66666667, 0.66666667],
+        [0.33333333, 0.66666667, 0.16666667],
+    ]
+
+    mapping = get_spatial_mapping(
+        old_cell=old_cell,
+        old_positions=old_positions,
+        new_cell=new_cell,
+        new_positions=new_positions,
+    )
+
+    print(mapping)
