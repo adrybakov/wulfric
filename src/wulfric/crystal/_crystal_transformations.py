@@ -25,7 +25,6 @@ from wulfric.constants._space_groups import CRYSTAL_FAMILY, CENTRING_TYPE
 from wulfric._exceptions import ConventionNotSupported, UnexpectedError
 from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric.crystal._atoms import get_spglib_types
-from wulfric.crystal._basic_manipulation import get_spatial_mapping
 from wulfric.cell._niggli import get_niggli
 from wulfric.cell._basic_manipulation import get_reciprocal, get_params
 
@@ -34,27 +33,23 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def _hpkot_get_conventional_a(spglib_conv_cell, spglib_conv_positions):
+def _hpkot_get_conventional_a(std_lattice):
     r"""
     Special case of hkpot convention and aP lattice
 
     Parameters
     ==========
-    spglib_conv_cell : (3, 3) :numpy:`ndarray`
+    std_lattice : (3, 3) :numpy:`ndarray`
         Conventional cell found by spglib.
-    spglib_conv_positions : (N, 3) :numpy:`ndarray`
-        Relative positions of the atoms in the basis of the ``spglib_conv_cell``.
 
     Returns
     =======
     conv_cell : (3, 3) :numpy:`ndarray`
         Conventional cell as per the convention of HPKOT.
-    conv_positions : (N, 3) :numpy:`ndarray`
-        Relative positions of the atoms in the basis of the new ``conv_cell``.
     """
 
     # Step 1 - get cell that is niggli-reduced in reciprocal space
-    r_cell_step_1 = get_niggli(cell=get_reciprocal(spglib_conv_cell))
+    r_cell_step_1 = get_niggli(cell=get_reciprocal(std_lattice))
     cell_step_1 = get_reciprocal(r_cell_step_1)
 
     # Step 2
@@ -93,41 +88,42 @@ def _hpkot_get_conventional_a(spglib_conv_cell, spglib_conv_positions):
         cell=get_reciprocal(cell=cell_step_2)
     )
 
-    if (r_alpha < 90 and r_beta < 90 and r_gamma < 90) or (
-        r_alpha >= 90 and r_beta >= 90 and r_gamma >= 90
+    if (r_alpha < 90.0 and r_beta < 90.0 and r_gamma < 90.0) or (
+        r_alpha >= 90.0 and r_beta >= 90.0 and r_gamma >= 90.0
     ):
         matrix_to_3 = np.eye(3, dtype=float)
-    elif (r_alpha < 90 and r_beta > 90 and r_gamma > 90) or (
-        r_alpha >= 90 and r_beta <= 90 and r_gamma <= 90
-    ):
-        matrix_to_3 = np.array(
-            [
-                [1, 0, 0],
-                [0, -1, 0],
-                [0, 0, -1],
-            ]
-        )
-
-    elif (r_alpha > 90 and r_beta < 90 and r_gamma > 90) or (
-        r_alpha <= 90 and r_beta >= 90 and r_gamma <= 90
-    ):
-        matrix_to_3 = np.array(
-            [
-                [-1, 0, 0],
-                [0, 1, 0],
-                [0, 0, -1],
-            ]
-        )
-
-    elif (r_alpha > 90 and r_beta > 90 and r_gamma < 90) or (
-        r_alpha <= 90 and r_beta <= 90 and r_gamma >= 90
+    elif (r_alpha > 90.0 and r_beta > 90.0 and r_gamma < 90.0) or (
+        r_alpha <= 90.0 and r_beta <= 90.0 and r_gamma >= 90.0
     ):
         matrix_to_3 = np.array(
             [
                 [-1, 0, 0],
                 [0, -1, 0],
                 [0, 0, 1],
-            ]
+            ],
+            dtype=float,
+        )
+    elif (r_alpha > 90.0 and r_beta < 90.0 and r_gamma > 90.0) or (
+        r_alpha <= 90.0 and r_beta >= 90.0 and r_gamma <= 90.0
+    ):
+        matrix_to_3 = np.array(
+            [
+                [-1, 0, 0],
+                [0, 1, 0],
+                [0, 0, -1],
+            ],
+            dtype=float,
+        )
+    elif (r_alpha < 90.0 and r_beta > 90.0 and r_gamma > 90.0) or (
+        r_alpha >= 90.0 and r_beta <= 90.0 and r_gamma <= 90.0
+    ):
+        matrix_to_3 = np.array(
+            [
+                [1, 0, 0],
+                [0, -1, 0],
+                [0, 0, -1],
+            ],
+            dtype=float,
         )
     else:
         raise UnexpectedError(
@@ -135,16 +131,10 @@ def _hpkot_get_conventional_a(spglib_conv_cell, spglib_conv_positions):
             "fall outside of four cases, which should be impossible."
         )
 
-    cell_step_3 = matrix_to_3.T @ cell_step_2
-
-    conv_cell = cell_step_3
-    # relative spglib -> cartesian -> relative HPKOT
-    conv_positions = spglib_conv_positions @ spglib_conv_cell @ np.linalg.inv(conv_cell)
-
-    return conv_cell, conv_positions
+    return matrix_to_3.T @ cell_step_2
 
 
-def _sc_get_conventional_oPFI(spglib_conv_cell, spglib_conv_positions):
+def _sc_get_conventional_oPFI(std_lattice):
     r"""
     Case of SC convention and oP, oF or oI lattice.
 
@@ -155,20 +145,16 @@ def _sc_get_conventional_oPFI(spglib_conv_cell, spglib_conv_positions):
 
     Parameters
     ==========
-    spglib_conv_cell : (3, 3) :numpy:`ndarray`
+    std_lattice : (3, 3) :numpy:`ndarray`
         Conventional cell found by spglib.
-    spglib_conv_positions : (N, 3) :numpy:`ndarray`
-        Relative positions of the atoms in the basis of the ``spglib_conv_cell``.
 
     Returns
     =======
     conv_cell : (3, 3) :numpy:`ndarray`
         Conventional cell as per the convention of SC.
-    conv_positions : (N, 3) :numpy:`ndarray`
-        Relative positions of the atoms in the basis of the new ``conv_cell``.
     """
 
-    a, b, c, _, _, _ = get_params(cell=spglib_conv_cell)
+    a, b, c, _, _, _ = get_params(cell=std_lattice)
 
     if a < b < c:  # No change
         matrix = np.eye(3, dtype=float)
@@ -223,14 +209,10 @@ def _sc_get_conventional_oPFI(spglib_conv_cell, spglib_conv_positions):
             "outside of six cases, which should be impossible."
         )
 
-    conv_cell = matrix.T @ spglib_conv_cell
-    # relative spglib -> cartesian -> relative SC
-    conv_positions = spglib_conv_positions @ spglib_conv_cell @ np.linalg.inv(conv_cell)
-
-    return conv_cell, conv_positions
+    return matrix.T @ std_lattice
 
 
-def _sc_get_conventional_oC(spglib_conv_cell, spglib_conv_positions):
+def _sc_get_conventional_oC(std_lattice):
     r"""
     Case of SC convention and oC lattice.
 
@@ -241,20 +223,16 @@ def _sc_get_conventional_oC(spglib_conv_cell, spglib_conv_positions):
 
     Parameters
     ==========
-    spglib_conv_cell : (3, 3) :numpy:`ndarray`
+    std_lattice : (3, 3) :numpy:`ndarray`
         Conventional cell found by spglib.
-    spglib_conv_positions : (N, 3) :numpy:`ndarray`
-        Relative positions of the atoms in the basis of the ``spglib_conv_cell``.
 
     Returns
     =======
     conv_cell : (3, 3) :numpy:`ndarray`
         Conventional cell as per the convention of SC.
-    conv_positions : (N, 3) :numpy:`ndarray`
-        Relative positions of the atoms in the basis of the new ``conv_cell``.
     """
 
-    a, b, _, _, _, _ = get_params(cell=spglib_conv_cell)
+    a, b, _, _, _, _ = get_params(cell=std_lattice)
 
     if a < b:  # No change
         matrix = np.eye(3, dtype=float)
@@ -273,9 +251,242 @@ def _sc_get_conventional_oC(spglib_conv_cell, spglib_conv_positions):
             "outside of six cases, which should be impossible."
         )
 
-    conv_cell = matrix.T @ spglib_conv_cell
-    # relative spglib -> cartesian -> relative SC
-    conv_positions = spglib_conv_positions @ spglib_conv_cell @ np.linalg.inv(conv_cell)
+    return matrix.T @ std_lattice
+
+
+def _sc_get_conventional_m(std_lattice):
+    r"""
+    Case of SC convention and m lattice.
+
+    Choose the cell with the lattice parameters that satisfy
+
+    * ``b <= c``
+    * ``alpha < 90``
+
+    Parameters
+    ==========
+    std_lattice : (3, 3) :numpy:`ndarray`
+        Conventional cell found by spglib.
+
+    Returns
+    =======
+    conv_cell : (3, 3) :numpy:`ndarray`
+        Conventional cell as per the convention of SC.
+    """
+
+    # Step 1, make sure that alpha is not a 90 angle
+    _, _, _, alpha, beta, gamma = get_params(cell=std_lattice)
+    if beta == 90.0 and gamma == 90.0:  # No change
+        matrix_to_1 = np.eye(3, dtype=float)
+    elif alpha == 90.0 and beta == 90.0:  # -> a3, a1, a2
+        matrix_to_1 = np.array(
+            [
+                [0, 1, 0],
+                [0, 0, 1],
+                [1, 0, 0],
+            ]
+        )
+    elif alpha == 90.0 and gamma == 90.0:  # -> a2, a3, a1
+        matrix_to_1 = np.array(
+            [
+                [0, 0, 1],
+                [1, 0, 0],
+                [0, 1, 0],
+            ]
+        )
+    else:
+        raise UnexpectedError(
+            '(convention="SC"): m lattice, step 1. Angles fall out of the three cases.'
+        )
+    cell_step_1 = matrix_to_1.T @ std_lattice
+
+    # Step 2, make sure that b <= c
+    _, b, c, _, _, _ = get_params(cell=cell_step_1)
+    if b <= c:
+        matrix_to_2 = np.eye(3, dtype=float)
+    else:  # -> -a1, a3, a2
+        matrix_to_2 = np.array(
+            [
+                [-1, 0, 0],
+                [0, 0, 1],
+                [0, 1, 0],
+            ],
+            dtype=float,
+        )
+    cell_step_2 = matrix_to_2.T @ cell_step_1
+
+    # Step 3, make sure that alpha < 90
+    _, _, _, alpha, _, _ = get_params(cell=cell_step_2)
+    if alpha <= 90.0:  # No change
+        matrix_to_3 = np.eye(3, dtype=float)
+    else:  # -> -a1, -a2, a3
+        matrix_to_3 = np.array(
+            [
+                [-1, 0, 0],
+                [0, -1, 0],
+                [0, 0, 1],
+            ]
+        )
+
+    return matrix_to_3.T @ cell_step_2
+
+
+def _sc_get_conventional_a(std_lattice):
+    r"""
+    Case of SC convention and a lattice.
+
+    Choose the cell with the lattice parameters that satisfy
+
+    * ``b <= c``
+    * ``alpha < 90``
+
+    Parameters
+    ==========
+    std_lattice : (3, 3) :numpy:`ndarray`
+        Conventional cell found by spglib.
+
+    Returns
+    =======
+    conv_cell : (3, 3) :numpy:`ndarray`
+        Conventional cell as per the convention of SC.
+    """
+
+    # Compute reciprocal cell
+    r_cell = get_reciprocal(cell=std_lattice)
+
+    # Step 1
+    _, _, _, r_alpha, r_beta, r_gamma = get_params(cell=r_cell)
+
+    if (r_alpha < 90.0 and r_beta < 90.0 and r_gamma < 90.0) or (
+        r_alpha >= 90.0 and r_beta >= 90.0 and r_gamma >= 90.0
+    ):
+        matrix_to_1 = np.eye(3, dtype=float)
+    elif (r_alpha > 90.0 and r_beta > 90.0 and r_gamma < 90.0) or (
+        r_alpha <= 90.0 and r_beta <= 90.0 and r_gamma >= 90.0
+    ):
+        matrix_to_1 = np.array(
+            [
+                [-1, 0, 0],
+                [0, -1, 0],
+                [0, 0, 1],
+            ],
+            dtype=float,
+        )
+    elif (r_alpha > 90.0 and r_beta < 90.0 and r_gamma > 90.0) or (
+        r_alpha <= 90.0 and r_beta >= 90.0 and r_gamma <= 90.0
+    ):
+        matrix_to_1 = np.array(
+            [
+                [-1, 0, 0],
+                [0, 1, 0],
+                [0, 0, -1],
+            ],
+            dtype=float,
+        )
+    elif (r_alpha < 90.0 and r_beta > 90.0 and r_gamma > 90.0) or (
+        r_alpha >= 90.0 and r_beta <= 90.0 and r_gamma <= 90.0
+    ):
+        matrix_to_1 = np.array(
+            [
+                [1, 0, 0],
+                [0, -1, 0],
+                [0, 0, -1],
+            ],
+            dtype=float,
+        )
+    else:
+        raise UnexpectedError(
+            '(convention="SC"): aP lattice, step 1. Values of the reciprocal angles '
+            "fall outside of four cases, which should be impossible."
+        )
+    r_cell_step_1 = matrix_to_1.T @ r_cell
+
+    # Step 2
+    # Note np.linalg.inv(matrix_to_1) == matrix_to_1.T
+    _, _, _, r_alpha, r_beta, r_gamma = get_params(cell=r_cell_step_1)
+
+    if (
+        r_gamma == min(r_alpha, r_beta, r_gamma)
+        and r_gamma >= 90.0
+        or (r_gamma == max(r_alpha, r_beta, r_gamma) and r_gamma <= 90.0)
+    ):
+        matrix_to_2 = np.eye(3, dtype=float)
+    elif (
+        r_beta == min(r_alpha, r_beta, r_gamma)
+        and r_beta >= 90.0
+        or (r_beta == max(r_alpha, r_beta, r_gamma) and r_beta <= 90.0)
+    ):
+        matrix_to_2 = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]], dtype=float)
+    elif (
+        r_alpha == min(r_alpha, r_beta, r_gamma)
+        and r_alpha >= 90.0
+        or (r_alpha == max(r_alpha, r_beta, r_gamma) and r_alpha <= 90.0)
+    ):
+        matrix_to_2 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
+    else:
+        raise UnexpectedError(
+            '(convention="SC"): aP lattice, step 2. Values of the reciprocal angles '
+            "fall outside of four cases, which should be impossible."
+        )
+
+    return matrix_to_2.T @ get_reciprocal(cell=r_cell_step_1)
+
+
+def _sc_get_conventional_no_hR(
+    std_lattice, std_positions, crystal_family, centring_type
+):
+    r"""
+    Computes conventional lattice for the case of SC.
+
+    Note: do not process hR, as it is treated separately.
+
+    Parameters
+    ==========
+    std_lattice : (3, 3) :numpy:`ndarray`
+        Conventional cell found by spglib.
+
+    Returns
+    =======
+    conv_cell : (3, 3) :numpy:`ndarray`
+        Conventional cell as per the convention of SC.
+    """
+    # Run over possible crystal families but hR
+    if crystal_family in ["c", "t"] or (crystal_family == "h" and centring_type == "P"):
+        pass
+    elif crystal_family == "o":
+        if centring_type in ["P", "F", "I"]:
+            conv_cell = _sc_get_conventional_oPFI(std_lattice=std_lattice)
+        elif centring_type == "C":
+            conv_cell = _sc_get_conventional_oC(std_lattice=std_lattice)
+        elif centring_type == "A":
+            # Make it C-centered
+            # a1, a2, a3 -> a2, a3, a1
+            # and treat like one
+            matrix = np.array(
+                [
+                    [0, 0, 1],
+                    [1, 0, 0],
+                    [0, 1, 0],
+                ]
+            )
+            conv_cell = _sc_get_conventional_oC(std_lattice=matrix.T @ conv_cell)
+        else:
+            raise UnexpectedError(
+                '(convention="sc"): crystal family "o". Unexpected centring type '
+                f'"{centring_type}", which should be impossible.'
+            )
+    elif crystal_family == "m":
+        conv_cell = _sc_get_conventional_m(std_lattice=std_lattice)
+    elif crystal_family == "a":
+        conv_cell = _sc_get_conventional_a(std_lattice=std_lattice)
+    else:
+        raise UnexpectedError(
+            f'(convention="sc"): unexpected crystal family "{crystal_family}", '
+            "which should be impossible."
+        )
+
+    # relative spglib -> Cartesian -> relative SC
+    conv_positions = std_positions @ std_lattice @ np.linalg.inv(conv_cell)
 
     return conv_cell, conv_positions
 
@@ -348,7 +559,15 @@ def get_conventional(
     Notes
     =====
     |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
-    ``types`` see :ref:`wulfric.crystal.get_spglib_types()`.
+    ``types`` for given atoms see :ref:`wulfric.crystal.get_spglib_types()`.
+
+    If two atoms ``i`` and ``j`` have the same spglib_type (i.e.
+    ``atoms["spglib_types"][i] == atoms["spglib_types"][j]``), but they have different
+    property that is stored in ``atoms[key]`` (i.e ``atoms[key][i] != atoms[key][j]``),
+    then those two atoms are considered equal. In the returned ``conventional_atoms``
+    the value of the ``conventional_atoms[key]`` are populated base on the *last* found
+    atom in ``atoms`` with each for spglib_type. This rule do not apply to the "positions"
+    key.
 
 
     References
@@ -364,197 +583,72 @@ def get_conventional(
     # Validate that the atoms dictionary is what expected of it
     validate_atoms(atoms=atoms, required_keys=["positions"], raise_errors=True)
 
+    spglib_types = get_spglib_types(atoms=atoms)
+
     dataset = spglib.get_symmetry_dataset(
-        (cell, atoms["positions"], get_spglib_types(atoms=atoms)),
+        (cell, atoms["positions"], spglib_types),
         symprec=spglib_symprec,
         angle_tolerance=spglib_angle_tolerance,
     )
 
-    spglib_conv_cell = dataset.std_lattice @ dataset.std_rotation_matrix
-    spglib_conv_positions = dataset.std_positions
+    # Rotate back to the orientation of the given cell+atoms
+    std_lattice = dataset.std_lattice @ dataset.std_rotation_matrix
+    std_positions = dataset.std_positions
+    std_types = dataset.std_types
+
     crystal_family = CRYSTAL_FAMILY[dataset.number]
     centring_type = CENTRING_TYPE[dataset.number]
 
     convention = convention.lower()
     if convention == "spglib" or convention == "hpkot":
-        # Note:
-        # dataset.std_types might not distinguish between atoms with different properties
-        # of some atoms[key].
-        # Therefore, wulfric needs to match the cartesian coordinates of the atoms
-        # of the conventional lattice with the cartesian coordinates of the atoms
-        # of the original original lattice.
-        # Even in the case when the results of spglib are returned straight away.
-
         if convention == "hpkot" and crystal_family == "a":
             # Find a conventional cell and update atom positions
-            conv_cell, conv_positions = _hpkot_get_conventional_a(
-                spglib_conv_cell=spglib_conv_cell,
-                spglib_conv_positions=spglib_conv_positions,
-            )
+            conv_cell = _hpkot_get_conventional_a(std_lattice=std_lattice)
+            # Compute relative positions with respect to the new cell
+            # relative spglib -> Cartesian -> relative HPKOT
+            conv_positions = std_positions @ std_lattice @ np.linalg.inv(conv_cell)
         else:
-            conv_cell = spglib_conv_cell
-            conv_positions = spglib_conv_positions
+            conv_cell = std_lattice
+            conv_positions = std_positions
+
+        conv_types = std_types
 
     elif convention == "sc":
-        # Run over possible crystal families
-        if crystal_family in ["c", "t"] or (
-            crystal_family == "h" and centring_type == "P"
-        ):
-            conv_cell = spglib_conv_cell
-            conv_positions = spglib_conv_positions
-        elif crystal_family == "h" and centring_type == "R":
-            raise NotImplementedError
-        elif crystal_family == "o":
-            if centring_type in ["P", "F", "I"]:
-                conv_cell, conv_positions = _sc_get_conventional_oPFI(
-                    spglib_conv_cell=spglib_conv_cell,
-                    spglib_conv_positions=spglib_conv_positions,
-                )
-            elif centring_type == "C":
-                conv_cell, conv_positions = _sc_get_conventional_oC(
-                    spglib_conv_cell=spglib_conv_cell,
-                    spglib_conv_positions=spglib_conv_positions,
-                )
-            elif centring_type == "A":
-                # Make it C-centered
-                # a1, a2, a3 -> a2, a3, a1
-                matrix = np.array(
-                    [
-                        [0, 0, 1],
-                        [1, 0, 0],
-                        [0, 1, 0],
-                    ]
-                )
-                # Transform cell
-                spglib_conv_cell = matrix.T @ spglib_conv_cell
-                # Transform positions
-                # Note that np.linalg.inv(matrix) == matrix.T
-                spglib_conv_positions = spglib_conv_positions @ matrix
-
-                # And treat like one
-                conv_cell, conv_positions = _sc_get_conventional_oC(
-                    spglib_conv_cell=spglib_conv_cell,
-                    spglib_conv_positions=spglib_conv_positions,
-                )
-            else:
-                raise UnexpectedError(
-                    '(convention="sc"): crystal family "o". Unexpected centring type '
-                    f'"{centring_type}", which should be impossible.'
-                )
-        elif crystal_family == "m":
-            raise NotImplementedError
-        elif crystal_family == "a":
-            raise NotImplementedError
-        else:
-            raise UnexpectedError(
-                f'(convention="sc"): unexpected crystal family "{crystal_family}", '
-                "which should be impossible."
+        # Treat hR in a special way, as it changes the volume of the cell
+        if crystal_family == "h" and centring_type == "R":
+            conv_cell, conv_positions, conv_types = spglib.find_primitive(
+                (cell, atoms["positions"], spglib_types),
+                symprec=spglib_symprec,
+                angle_tolerance=spglib_angle_tolerance,
             )
+        else:
+            # The rest do not change the volume of the cell
+            conv_cell, conv_positions = _sc_get_conventional_no_hR(
+                std_lattice=std_lattice,
+                std_positions=std_positions,
+                crystal_family=crystal_family,
+                centring_type=centring_type,
+            )
+            conv_types = std_types
 
     else:
         raise ConventionNotSupported(convention, with_spglib=True)
 
     conv_atoms = dict(positions=conv_positions)
 
-    # Get the mapping from the original atoms
-    #   len(mapping) == len(new_positions)
-    #   mapping[i] is an index of old_positions
-    mapping = get_spatial_mapping(
-        old_cell=cell,
-        old_positions=atoms["positions"],
-        new_cell=spglib_conv_cell,
-        new_positions=spglib_conv_positions,
-    )
+    types_mapping = {
+        index_in_new: index_in_old
+        for index_in_old, index_in_new in enumerate(spglib_types)
+    }
 
     # Populate conv_atoms with all keys that have been defined in the original atoms.
     for key in atoms:
         if key != "positions":
             conv_atoms[key] = []
-            for index in mapping:
-                conv_atoms[key].append(atoms[key][index])
+            for index in conv_types:
+                conv_atoms[key].append(atoms[key][types_mapping[index]])
 
     return conv_cell, conv_atoms
-
-
-def get_primitive(
-    cell,
-    atoms,
-    convention="HPKOT",
-    spglib_symprec=1e-5,
-    spglib_angle_tolerance=-1,
-):
-    r"""
-    Return primitive cell cell associated with the given ``cell``.
-
-    Parameters
-    ==========
-    cell : (3, 3) |array-like|_
-        Matrix of a cell, rows are interpreted as vectors.
-    atoms : dict
-        Dictionary with N atoms. Expected keys:
-
-        *   "positions" : (N, 3) |array-like|_
-            Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
-        *   "names" : (N, ) list of str, optional
-            See Notes
-        *   "species" : (N, ) list of str, optional
-            See Notes
-        *   "spglib_types" (N, ) list of int, optional
-            See Notes
-
-        .. hint::
-            Pass ``atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])`` if you would
-            like to interpret the ``cell`` alone (effectively assuming that the ``cell``
-            is a primitive one).
-
-    convention : str, default "HPKOT"
-        Convention for the definition of the primitive cell. Case-insensitive.
-        Supported:
-
-        * "HPKOT" for [1]_
-        * "SC" for [2]_
-        * "spglib" for |spglib|_
-
-    spglib_symprec : float, default 1e-5
-        Tolerance parameter for the symmetry search, that is passed to |spglib|_. Quote
-        from its documentation: "Symmetry search tolerance in the unit of length".
-    spglib_angle_tolerance : float, default -1
-        Tolerance parameter for the symmetry search, that is passed to |spglib|_. Quote
-        from its documentation: "Symmetry search tolerance in the unit of angle deg.
-        Normally it is not recommended to use this argument. If the value is
-        negative, an internally optimized routine is used to judge symmetry.
-
-    Returns
-    =======
-    primitive_cell : (3, 3) :numpy:`ndarray`
-        Primitive cell.
-    primitive_atoms : dict
-        Dictionary of atoms of the primitive cell. Has all the same keys as the
-        original ``atoms``. The values of each key are updated in such a way that
-        ``primitive_cell`` with ``primitive_atoms`` describe the same crystal (and
-        in the same spatial orientation) as ``cell`` with ``atoms``.
-
-    See Also
-    ========
-    :ref:`user-guide_conventions_which-cell`
-    wulfric.crystal.get_conventional
-
-    Notes
-    =====
-    |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
-    ``types`` see :ref:`wulfric.crystal.get_spglib_types()`.
-
-
-    References
-    ==========
-    .. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
-           Band structure diagram paths based on crystallography.
-           Computational Materials Science, 128, pp.140-184.
-    .. [2] Setyawan, W. and Curtarolo, S., 2010.
-           High-throughput electronic band structure calculations: Challenges and tools.
-           Computational materials science, 49(2), pp. 299-312.
-    """
 
 
 # Populate __all__ with objects defined in this file
