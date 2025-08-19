@@ -24,6 +24,8 @@ import sys
 old_dir = set(dir())
 old_dir.add("old_dir")
 
+_SUPPORT_FOOTER = "\nPlease contact developers of wulfric (see https://docs.wulfric.org/en/latest/support.html)."
+
 
 def _raise_with_message(e, message):
     # Python < 3.11
@@ -103,11 +105,7 @@ class NiggliReductionFailed(Exception):
 
 class UnexpectedError(Exception):
     def __init__(self, error_summary):
-        self.message = (
-            error_summary
-            + "\nPlease contact developers of wulfric "
-            + "(see https://docs.wulfric.org/en/latest/support.html)."
-        )
+        self.message = error_summary + _SUPPORT_FOOTER
 
     def __str__(self):
         return self.message
