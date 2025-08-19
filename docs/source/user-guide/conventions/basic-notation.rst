@@ -235,13 +235,18 @@ while its **relative coordinates** are transformed as
 .. math::
 
     \boldsymbol{\tilde{x}}
-    =
-    \boldsymbol{P}^{-1}\boldsymbol{x}
+    &=
+    \boldsymbol{P}^{-1}\boldsymbol{x} \\
+    \boldsymbol{\tilde{x}}^T
+    &=
+    \boldsymbol{x}^T(\boldsymbol{P}^{-1})^T
 
 .. code-block:: python
 
     import numpy as np
     t_x = np.linalg.inv(P) @ x
+    # or
+    t_x =  x @ np.linalg.inv(P).T
 
 Reciprocal cell is changed by the transformation as
 
