@@ -623,6 +623,8 @@ def get_conventional(
                 symprec=spglib_symprec,
                 angle_tolerance=spglib_angle_tolerance,
             )
+            # Rotate back to the orientation of the given cell+atoms
+            conv_cell = conv_cell @ dataset.std_rotation_matrix
         else:
             # The rest do not change the volume of the cell
             conv_cell, conv_positions = _sc_get_conventional_no_hR(
