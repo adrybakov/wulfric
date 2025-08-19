@@ -163,7 +163,7 @@ def get_conventional(
 
         * "HPKOT" for [1]_
         * "SC" for [2]_
-        * "spglib* for |spglib|_
+        * "spglib" for |spglib|_
 
     spglib_symprec : float, default 1e-5
         Tolerance parameter for the symmetry search, that is passed to |spglib|_. Quote
