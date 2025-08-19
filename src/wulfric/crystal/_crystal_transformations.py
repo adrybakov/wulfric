@@ -34,7 +34,7 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def _hpkot_get_conventional_aP(spglib_conv_cell, spglib_conv_positions):
+def _hpkot_get_conventional_a(spglib_conv_cell, spglib_conv_positions):
     r"""
     Special case of hkpot convention and aP lattice
 
@@ -387,7 +387,7 @@ def get_conventional(
 
         if convention == "hpkot" and crystal_family == "a":
             # Find a conventional cell and update atom positions
-            conv_cell, conv_positions = _hpkot_get_conventional_aP(
+            conv_cell, conv_positions = _hpkot_get_conventional_a(
                 spglib_conv_cell=spglib_conv_cell,
                 spglib_conv_positions=spglib_conv_positions,
             )
