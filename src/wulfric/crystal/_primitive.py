@@ -19,6 +19,10 @@
 #
 # ================================ END LICENSE =================================
 
+import spglib
+from wulfric.crystal._crystal_validation import validate_atoms
+from wulfric._exceptions import ConventionNotSupported
+from wulfric.crystal._atoms import get_spglib_types
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -115,7 +119,38 @@ def get_primitive(
            High-throughput electronic band structure calculations: Challenges and tools.
            Computational materials science, 49(2), pp. 299-312.
     """
-    raise NotImplementedError
+
+    # Validate that the atoms dictionary is what expected of it
+    validate_atoms(atoms=atoms, required_keys=["positions"], raise_errors=True)
+
+    convention = convention.lower()
+    if convention == "hpkot":
+        raise NotImplementedError
+    elif convention == "sc":
+        raise NotImplementedError
+    elif convention == "spglib":
+        spglib_types = get_spglib_types(atoms=atoms)
+
+        dataset = spglib.get_symmetry_dataset(
+            (cell, atoms["positions"], spglib_types),
+            symprec=spglib_symprec,
+            angle_tolerance=spglib_angle_tolerance,
+        )
+
+        primitive_cell, primitive_positions, primitive_types = spglib.find_primitive(
+            (cell, atoms["positions"], spglib_types),
+            symprec=spglib_symprec,
+            angle_tolerance=spglib_angle_tolerance,
+        )
+        # Rotate back to the orientation of the given cell+atoms
+        primitive_cell = primitive_cell @ dataset.std_rotation_matrix
+
+    else:
+        raise ConventionNotSupported(
+            convention, supported_conventions=["HPKOT", "SC", "spglib"]
+        )
+
+    return primitive_cell, primitive_positions, primitive_types
 
 
 # Populate __all__ with objects defined in this file
