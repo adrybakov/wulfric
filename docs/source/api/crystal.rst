@@ -37,3 +37,12 @@ Validation of the data
     :toctree: generated/
 
     validate_atoms
+
+Choice of the cell (or standardization)
+=======================================
+
+.. autosummary::
+    :toctree: generated/
+
+    get_conventional
+    get_primitive

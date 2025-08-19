@@ -499,7 +499,7 @@ def get_conventional(
     spglib_angle_tolerance=-1,
 ):
     r"""
-    Return conventional cell associated with the given ``cell``.
+    Return conventional cell and atoms associated with the given ``cell`` and ``atoms``.
 
     Parameters
     ==========
