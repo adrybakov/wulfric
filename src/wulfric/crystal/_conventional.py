@@ -636,7 +636,9 @@ def get_conventional(
             conv_types = std_types
 
     else:
-        raise ConventionNotSupported(convention, with_spglib=True)
+        raise ConventionNotSupported(
+            convention, supported_conventions=["HPKOT", "SC", "spglib"]
+        )
 
     conv_atoms = dict(positions=conv_positions)
 

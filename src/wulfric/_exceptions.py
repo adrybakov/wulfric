@@ -66,13 +66,10 @@ class ConventionNotSupported(Exception):
     Raised when the convention for the cell/crystall is not one of the supported ones.
     """
 
-    def __init__(self, convention: str, with_spglib=False):
-        self.conventions = ["hpkot", "sc"]
-        if with_spglib:
-            self.conventions += ["spglib"]
+    def __init__(self, convention: str, supported_conventions: list):
         self.message = (
             f'Convention "{convention}" is not supported. Supported conventions are\n  * '
-            + "\n  * ".join(self.conventions)
+            + "\n  * ".join(supported_conventions)
         )
 
     def __str__(self):
