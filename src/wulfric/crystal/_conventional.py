@@ -548,7 +548,9 @@ def get_conventional(
         Dictionary of atoms of the conventional cell. Has all the same keys as the
         original ``atoms``. The values of each key are updated in such a way that
         ``conventional_cell`` with ``conventional_atoms`` describe the same crystal (and
-        in the same spatial orientation) as ``cell`` with ``atoms``.
+        in the same spatial orientation) as ``cell`` with ``atoms``. It has all keys as
+        in ``atoms``. Additional key ``"spglib_types"`` is added if it was not present in
+        ``atoms``.
 
     See Also
     ========
@@ -647,6 +649,11 @@ def get_conventional(
             conv_atoms[key] = []
             for index in conv_types:
                 conv_atoms[key].append(atoms[key][types_mapping[index]])
+
+    # Add spglib_types to new atoms
+
+    if "spglib_types" not in conv_atoms:
+        conv_atoms["spglib_types"] = conv_types
 
     return conv_cell, conv_atoms
 
