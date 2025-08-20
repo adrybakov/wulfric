@@ -74,7 +74,7 @@ BRAVAIS_LATTICE_VARIATIONS = [
     "TRI2b",
 ]
 
-C_MATRICES = {
+CONVENTIONAL_TO_PRIMITIVE = {
     "CUB": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
     "FCC": np.array([[-1.0, 1.0, 1.0], [1.0, -1.0, 1.0], [1.0, 1.0, -1.0]]),
     "BCC": np.array([[0.0, 1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 0.0]]),
