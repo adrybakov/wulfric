@@ -77,7 +77,7 @@ class PlotlyEngine:
             )
 
         if fig is None:
-            fig = go.Figure()
+            fig = go.Figure(layout=go.Layout(scene=dict(aspectmode="data")))
         self.fig = fig
 
         self.fig.update_layout(template="none")
@@ -99,21 +99,15 @@ class PlotlyEngine:
                 xaxis_visible=False, yaxis_visible=False, zaxis_visible=False
             )
 
-        # Set up defaults
-        if "yaxis_scaleanchor" not in kwargs:
-            kwargs["yaxis_scaleanchor"] = "x"
-        if "autosize" not in kwargs:
-            kwargs["autosize"] = False
-
         self.fig.update_layout(**kwargs)
         self.fig.show()
 
     def save(
         self,
         output_name="wulfric-plot.html",
-        kwargs_update_layout=None,
-        kwargs_write_html=None,
         axes_visible=True,
+        kwargs_write_html=None,
+        **kwargs,
     ):
         r"""
         Saves the figure in the html file.
@@ -122,26 +116,23 @@ class PlotlyEngine:
         ----------
         output_name : str, default "lattice_graph.html"
             Name of the file to be saved. With extension.
-        kwargs_update_layout : dict, optional
-            Passed directly to the |plotly-update-layout|_.
-        kwargs_write_html : dict, optional
-            Passed directly to the |plotly-write-html|_.
         axes_visible : bool, default True
             Whether to show axes.
+        kwargs_write_html : dict, optional
+            Passed directly to the |plotly-write-html|_.
+        **kwargs
+            Passed directly to the |plotly-update-layout|_.
         """
 
-        if kwargs_update_layout is None:
-            kwargs_update_layout = {}
         if kwargs_write_html is None:
             kwargs_write_html = {}
 
-        self.fig.update_scenes(aspectmode="data")
         if not axes_visible:
             self.fig.update_scenes(
                 xaxis_visible=False, yaxis_visible=False, zaxis_visible=False
             )
 
-        self.fig.update_layout(**kwargs_update_layout)
+        self.fig.update_layout(**kwargs)
 
         self.fig.write_html(output_name, **kwargs_write_html)
 
@@ -247,9 +238,9 @@ class PlotlyEngine:
                     x=[x[1]],
                     y=[y[1]],
                     z=[z[1]],
-                    u=[0.2 * (x[1] - x[0])],
-                    v=[0.2 * (y[1] - y[0])],
-                    w=[0.2 * (z[1] - z[0])],
+                    u=[0.4 * (x[1] - x[0])],
+                    v=[0.4 * (y[1] - y[0])],
+                    w=[0.4 * (z[1] - z[0])],
                     anchor="tip",
                     colorscale=[[0, color], [1, color]],
                     showscale=False,
@@ -264,9 +255,9 @@ class PlotlyEngine:
                     mode="text",
                     legendgroup=legend_group,
                     showlegend=False,
-                    x=[1.2 * x[1]],
-                    y=[1.2 * y[1]],
-                    z=[1.2 * z[1]],
+                    x=[1.2 * (x[1] - x[0]) + x[0]],
+                    y=[1.2 * (y[1] - y[0]) + y[0]],
+                    z=[1.2 * (z[1] - z[0]) + z[0]],
                     marker=dict(size=0),
                     text=vector_label,
                     textfont=dict(size=12, color=color),
