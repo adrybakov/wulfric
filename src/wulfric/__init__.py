@@ -30,4 +30,4 @@ from ._lepage import *
 from ._numerical import *
 from ._package_info import *
 from ._plotly_engine import *
-from ._syntax_sugar import *
+from ._syntactic_sugar import *

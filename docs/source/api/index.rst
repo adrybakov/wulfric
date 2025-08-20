@@ -35,6 +35,7 @@ Classes
 
     Kpoints
     PlotlyEngine
+    SyntacticSugar
 
 Top-level functions
 ===================

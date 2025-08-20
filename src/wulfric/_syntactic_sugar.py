@@ -18,19 +18,20 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-R"""Syntax sugar"""
+R"""Syntactic sugar"""
 
 # Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-class _SyntacticSugar(dict):
+class SyntacticSugar(dict):
     r"""
     Syntactic sugar for any dictionary.
 
     This class does only one thing. It allows to write
-    ``atoms.names`` instead of ``atoms["names"]``.
+    ``atoms.names`` instead of ``atoms["names"]`` or
+    ``spglib_data.number`` instead of ``spglib_data["number"]``.
 
     Examples
     --------
@@ -40,9 +41,10 @@ class _SyntacticSugar(dict):
     .. doctest::
 
         >>> import wulfric
-        >>> atoms = wulfric.Atoms()
+        >>> atoms = wulfric.SyntacticSugar()
         >>> atoms.names = ["Cr1", "Cr2"]
         >>> atoms.positions = [[0, 0, 0], [0.5, 0.5, 0.5]]
+        >>> atoms
         {'names': ['Cr1', 'Cr2'], 'positions': [[0, 0, 0], [0.5, 0.5, 0.5]]}
 
     .. doctest::
@@ -51,18 +53,8 @@ class _SyntacticSugar(dict):
         >>> atoms = {}
         >>> atoms["names"] = ["Cr1", "Cr2"]
         >>> atoms["positions"] = [[0, 0, 0], [0.5, 0.5, 0.5]]
+        >>> atoms
         {'names': ['Cr1', 'Cr2'], 'positions': [[0, 0, 0], [0.5, 0.5, 0.5]]}
-
-    ``Atom`` class behaves as dictionary
-
-    .. doctest::
-
-        >>> import wulfric
-        >>> atoms = wulfric.Atoms()
-        >>> atoms.names = ["Cr1", "Cr2"]
-        >>> atoms.positions = [[0, 0, 0], [0.5, 0.5, 0.5]]
-        {'names': ['Cr1', 'Cr2'], 'positions': [[0, 0, 0], [0.5, 0.5, 0.5]]}
-
     """
 
     def __getattr__(self, key):
@@ -75,9 +67,9 @@ class _SyntacticSugar(dict):
     __delattr__ = dict.__delitem__
 
 
-def add_sugar(dictionary: dict) -> _SyntacticSugar:
+def add_sugar(dictionary: dict) -> SyntacticSugar:
     r"""
-    Takes any dictionary and add attribute-like access to the key-values to it.
+    Takes any dictionary and add attribute-like access to the key-values.
 
     Parameters
     ----------
@@ -86,13 +78,18 @@ def add_sugar(dictionary: dict) -> _SyntacticSugar:
 
     Returns
     -------
-    candy : :py:class:`._SyntacticSugar`
+    candy : :py:class:`.SyntacticSugar`
         Same dictionary with the easy access to the key-value pairs.
 
     Raises
     ------
     ValueError
         If ``not isinstance(dictionary, dict)``.
+
+    See Also
+    ========
+    remove_sugar
+    SyntacticSugar
 
     Examples
     --------
@@ -124,10 +121,10 @@ def add_sugar(dictionary: dict) -> _SyntacticSugar:
 
     if not isinstance(dictionary, dict):
         raise ValueError(
-            f"dictionary should be an instance of python dict, got {type(dictionary)}."
+            f"Failed to add sugar: Dictionary should be an instance of python dict, got {type(dictionary)}."
         )
 
-    candy = _SyntacticSugar()
+    candy = SyntacticSugar()
 
     for key in dictionary:
         candy[key] = dictionary[key]
@@ -141,8 +138,8 @@ def remove_sugar(candy: dict) -> dict:
 
     Parameters
     ----------
-    candy : dict
-        Dictionary for the addition of the syntax sugar.
+    candy : :py:class:`.SyntacticSugar`
+        An object for the removal of the syntax sugar.
 
     Returns
     -------
@@ -153,6 +150,11 @@ def remove_sugar(candy: dict) -> dict:
     ------
     ValueError
         If ``not isinstance(candy, dict)``.
+
+    See Also
+    ========
+    add_sugar
+    SyntacticSugar
 
     Examples
     --------
@@ -177,7 +179,7 @@ def remove_sugar(candy: dict) -> dict:
 
     if not isinstance(candy, dict):
         raise ValueError(
-            f"candy should be an instance of python dict, got {type(candy)}."
+            f"Failed to remove sugar: candy should be an instance of python dict, got {type(candy)}."
         )
 
     dictionary = {}
