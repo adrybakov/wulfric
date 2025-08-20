@@ -21,6 +21,7 @@
 import numpy as np
 from wulfric._exceptions import _raise_with_message
 from wulfric.constants._atoms import ATOM_SPECIES
+from wulfric.crystal._atoms import get_spglib_types
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -205,6 +206,60 @@ def validate_atoms(atoms, required_keys=None, raise_errors=True):
                     return False
 
     return True
+
+
+def validate_spglib_data(cell, atoms, spglib_data) -> None:
+    r"""
+    Validate that ``cell`` and ``atoms["positions"]`` match the ones on which
+    ``spglib_data`` was created.
+
+    In details, it check that
+
+    * ``cell`` is the same as ``spglib_data.original_cell``
+    * ``atoms["positions"]`` are the same as ``spglib_data.original_positions``
+    * ``wulfric.crystal.get_spglib_types(atoms=atoms)`` is the same as
+      ``spglib_data.original_types``.
+
+    Parameters
+    ==========
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors. In the language of |spglib|_
+        the same concept is usually called "basis vectors" or "lattice".
+    atoms : dict
+        Dictionary with N atoms. Expected keys:
+
+        *   "positions" : (N, 3) |array-like|_
+            Positions of the atoms in the basis of lattice vectors (``cell``). In other
+            words - relative coordinates of atoms.
+        *   "names" : (N, ) list of str, optional
+        *   "species" : (N, ) list of str, optional
+        *   "spglib_types" (N, ) list of int, optional
+    spglib_data : dict
+        A dictionary with the added syntactic sugar (i.e. with the dot access to the keys),
+        that is produced via call to :py:func:`.get_spglib_data`.
+
+    Raises
+    ======
+    ValueError
+        If ``cell`` and ``atoms`` do not match ``spglib_data``.
+    """
+
+    if not np.allclose(cell, spglib_data.original_cell):
+        raise ValueError(
+            "Validation of spglib data against cell and atoms: cell mismatch."
+        )
+
+    if not np.allclose(atoms["positions"], spglib_data.original_positions):
+        raise ValueError(
+            "Validation of spglib data against cell and atoms: atom's positions mismatch."
+        )
+
+    if get_spglib_types(atoms=atoms) != spglib_data.original_types:
+        raise ValueError(
+            "Validation of spglib data against cell and atoms: atom's types mismatch."
+        )
+
+    raise NotImplementedError
 
 
 # Populate __all__ with objects defined in this file

@@ -37,6 +37,7 @@ Validation of the data
     :toctree: generated/
 
     validate_atoms
+    validate_spglib_data
 
 Choice of the cell (or standardization)
 =======================================

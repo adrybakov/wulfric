@@ -19,23 +19,17 @@
 #
 # ================================ END LICENSE =================================
 
-import spglib
-from wulfric.crystal._crystal_validation import validate_atoms
+from wulfric.crystal._crystal_validation import validate_atoms, validate_spglib_data
 from wulfric._exceptions import ConventionNotSupported
-from wulfric.crystal._atoms import get_spglib_types
+from wulfric._spglib_interface import get_spglib_data
+from wulfric._syntactic_sugar import SyntacticSugar
 
 # Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def get_primitive(
-    cell,
-    atoms,
-    convention="HPKOT",
-    spglib_symprec=1e-5,
-    spglib_angle_tolerance=-1,
-):
+def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
     r"""
     Return primitive cell and atoms associated with the given ``cell`` and ``atoms``.
 
@@ -69,14 +63,17 @@ def get_primitive(
         * "SC" for [2]_
         * "spglib" for |spglib|_
 
-    spglib_symprec : float, default 1e-5
-        Tolerance parameter for the symmetry search, that is passed to |spglib|_. Quote
-        from its documentation: "Symmetry search tolerance in the unit of length".
-    spglib_angle_tolerance : float, default -1
-        Tolerance parameter for the symmetry search, that is passed to |spglib|_. Quote
-        from its documentation: "Symmetry search tolerance in the unit of angle deg.
-        Normally it is not recommended to use this argument. If the value is
-        negative, an internally optimized routine is used to judge symmetry.
+    spglib_data : :py:class:`.SyntacticSugar`, optional
+        If you need more control on the parameters passed to the spglib, then
+        you can get ``spglib_data`` manually and pass it to this function.
+        Use wulfric's interface to |spglib|_ as
+
+        .. code-block:: python
+
+            spglib_data = wulfric.get_spglib_data(...)
+
+        using the same ``cell`` and ``atoms["positions"]`` that you are passing to this
+        function.
 
     Returns
     =======
@@ -94,12 +91,13 @@ def get_primitive(
     ========
     :ref:`user-guide_conventions_which-cell`
     wulfric.crystal.get_conventional
+    wulfric.get_spglib_data
 
 
     Notes
     =====
     |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
-    ``types`` for given atoms see :ref:`wulfric.crystal.get_spglib_types()`.
+    ``types`` for given atoms see :py:func:`wulfric.crystal.get_spglib_types`.
 
     If two atoms ``i`` and ``j`` have the same spglib_type (i.e.
     ``atoms["spglib_types"][i] == atoms["spglib_types"][j]``), but they have different
@@ -123,34 +121,38 @@ def get_primitive(
     # Validate that the atoms dictionary is what expected of it
     validate_atoms(atoms=atoms, required_keys=["positions"], raise_errors=True)
 
+    # Call for spglib
+    if spglib_data is None:
+        spglib_data = get_spglib_data(cell=cell, atoms=atoms)
+    # Or check that spglib data were *most likely* produced via wulfric's interface
+    elif not isinstance(spglib_data, SyntacticSugar):
+        raise TypeError(
+            f"Are you sure that spglib_data were produced via wulfric's interface? Expected SyntacticSugar, got {type(spglib_data)}."
+        )
+    # Validate that user-provided spglib_data match user-provided structure
+    else:
+        validate_spglib_data(cell=cell, atoms=atoms, spglib_data=spglib_data)
+
     convention = convention.lower()
-    if convention == "hpkot":
+
+    # Straightforward interface to spglib
+    # Primitive cell is rotated back to the original orientation of the given crystal
+    if convention == "spglib":
+        raise NotImplementedError
+
+    elif convention == "hpkot":
         raise NotImplementedError
     elif convention == "sc":
+        # lattice_type = None
+        # matrix = SC_C_to_P[lattice_type]
+
+        # primitive_cell = matrix.T @ conv_cell
         raise NotImplementedError
-    elif convention == "spglib":
-        spglib_types = get_spglib_types(atoms=atoms)
-
-        dataset = spglib.get_symmetry_dataset(
-            (cell, atoms["positions"], spglib_types),
-            symprec=spglib_symprec,
-            angle_tolerance=spglib_angle_tolerance,
-        )
-
-        primitive_cell, primitive_positions, primitive_types = spglib.find_primitive(
-            (cell, atoms["positions"], spglib_types),
-            symprec=spglib_symprec,
-            angle_tolerance=spglib_angle_tolerance,
-        )
-        # Rotate back to the orientation of the given cell+atoms
-        primitive_cell = primitive_cell @ dataset.std_rotation_matrix
 
     else:
         raise ConventionNotSupported(
             convention, supported_conventions=["HPKOT", "SC", "spglib"]
         )
-
-    return primitive_cell, primitive_positions, primitive_types
 
 
 # Populate __all__ with objects defined in this file

@@ -22,8 +22,7 @@
 import numpy as np
 
 from wulfric._exceptions import ConventionNotSupported, UnexpectedError
-from wulfric.crystal._crystal_validation import validate_atoms
-from wulfric.crystal._atoms import get_spglib_types
+from wulfric.crystal._crystal_validation import validate_atoms, validate_spglib_data
 from wulfric.cell._niggli import get_niggli
 from wulfric.cell._basic_manipulation import get_reciprocal, get_params
 from wulfric._spglib_interface import get_spglib_data
@@ -637,16 +636,15 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
 
     # Call for spglib
     if spglib_data is None:
-        spglib_data = get_spglib_data(
-            cell=cell,
-            atom_positions=atoms["positions"],
-            atom_types=get_spglib_types(atoms=atoms),
-        )
+        spglib_data = get_spglib_data(cell=cell, atoms=atoms)
     # Or check that spglib data were *most likely* produced via wulfric's interface
     elif not isinstance(spglib_data, SyntacticSugar):
         raise TypeError(
             f"Are you sure that spglib_data were produced via wulfric's interface? Expected SyntacticSugar, got {type(spglib_data)}."
         )
+    # Validate that user-provided spglib_data match user-provided structure
+    else:
+        validate_spglib_data(cell=cell, atoms=atoms, spglib_data=spglib_data)
 
     # Define conventional cell, positions and types
     convention = convention.lower()
