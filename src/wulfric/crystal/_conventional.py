@@ -18,28 +18,29 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-import spglib
+
 import numpy as np
 
-from wulfric.constants._space_groups import CRYSTAL_FAMILY, CENTRING_TYPE
 from wulfric._exceptions import ConventionNotSupported, UnexpectedError
 from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric.crystal._atoms import get_spglib_types
 from wulfric.cell._niggli import get_niggli
 from wulfric.cell._basic_manipulation import get_reciprocal, get_params
+from wulfric._spglib_interface import get_spglib_data
+from wulfric._syntactic_sugar import SyntacticSugar
 
 # Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def _hpkot_get_conventional_a(std_lattice):
+def _hpkot_get_conventional_a(spglib_std_lattice):
     r"""
     Special case of hkpot convention and aP lattice
 
     Parameters
     ==========
-    std_lattice : (3, 3) :numpy:`ndarray`
+    spglib_std_lattice : (3, 3) :numpy:`ndarray`
         Conventional cell found by spglib.
 
     Returns
@@ -49,7 +50,7 @@ def _hpkot_get_conventional_a(std_lattice):
     """
 
     # Step 1 - get cell that is niggli-reduced in reciprocal space
-    r_cell_step_1 = get_niggli(cell=get_reciprocal(std_lattice))
+    r_cell_step_1 = get_niggli(cell=get_reciprocal(spglib_std_lattice))
     cell_step_1 = get_reciprocal(r_cell_step_1)
 
     # Step 2
@@ -77,8 +78,7 @@ def _hpkot_get_conventional_a(std_lattice):
         matrix_to_2 = np.eye(3, dtype=float)
     else:
         raise UnexpectedError(
-            '(convention="HPKOT"): aP lattice, step 2. Values of the dot products fall '
-            "outside of three cases, which should be impossible."
+            '(convention="HPKOT"): aP lattice, step 2. Values of the dot products fall outside of three cases, which should be impossible.'
         )
 
     cell_step_2 = matrix_to_2.T @ cell_step_1
@@ -127,14 +127,13 @@ def _hpkot_get_conventional_a(std_lattice):
         )
     else:
         raise UnexpectedError(
-            '(convention="HPKOT"): aP lattice, step 3. Values of the reciprocal angles '
-            "fall outside of four cases, which should be impossible."
+            '(convention="HPKOT"): aP lattice, step 3. Values of the reciprocal angles  fall outside of four cases, which should be impossible.'
         )
 
     return matrix_to_3.T @ cell_step_2
 
 
-def _sc_get_conventional_oPFI(std_lattice):
+def _sc_get_conventional_oPFI(spglib_std_lattice):
     r"""
     Case of SC convention and oP, oF or oI lattice.
 
@@ -145,7 +144,7 @@ def _sc_get_conventional_oPFI(std_lattice):
 
     Parameters
     ==========
-    std_lattice : (3, 3) :numpy:`ndarray`
+    spglib_std_lattice : (3, 3) :numpy:`ndarray`
         Conventional cell found by spglib.
 
     Returns
@@ -154,7 +153,7 @@ def _sc_get_conventional_oPFI(std_lattice):
         Conventional cell as per the convention of SC.
     """
 
-    a, b, c, _, _, _ = get_params(cell=std_lattice)
+    a, b, c, _, _, _ = get_params(cell=spglib_std_lattice)
 
     if a < b < c:  # No change
         matrix = np.eye(3, dtype=float)
@@ -205,14 +204,13 @@ def _sc_get_conventional_oPFI(std_lattice):
         )
     else:
         raise UnexpectedError(
-            '(convention="SC"): oP, oF, oI lattices. Length of the lattice vectors fall '
-            "outside of six cases, which should be impossible."
+            '(convention="SC"): oP, oF, oI lattices. Length of the lattice vectors fall outside of six cases, which should be impossible.'
         )
 
-    return matrix.T @ std_lattice
+    return matrix.T @ spglib_std_lattice
 
 
-def _sc_get_conventional_oC(std_lattice):
+def _sc_get_conventional_oC(spglib_std_lattice):
     r"""
     Case of SC convention and oC lattice.
 
@@ -223,7 +221,7 @@ def _sc_get_conventional_oC(std_lattice):
 
     Parameters
     ==========
-    std_lattice : (3, 3) :numpy:`ndarray`
+    spglib_std_lattice : (3, 3) :numpy:`ndarray`
         Conventional cell found by spglib.
 
     Returns
@@ -232,7 +230,7 @@ def _sc_get_conventional_oC(std_lattice):
         Conventional cell as per the convention of SC.
     """
 
-    a, b, _, _, _, _ = get_params(cell=std_lattice)
+    a, b, _, _, _, _ = get_params(cell=spglib_std_lattice)
 
     if a < b:  # No change
         matrix = np.eye(3, dtype=float)
@@ -247,14 +245,13 @@ def _sc_get_conventional_oC(std_lattice):
         )
     else:
         raise UnexpectedError(
-            '(convention="SC"): oC lattices. Length of the lattice vectors fall '
-            "outside of six cases, which should be impossible."
+            '(convention="SC"): oC lattices. Length of the lattice vectors fall outside of six cases, which should be impossible.'
         )
 
-    return matrix.T @ std_lattice
+    return matrix.T @ spglib_std_lattice
 
 
-def _sc_get_conventional_m(std_lattice):
+def _sc_get_conventional_m(spglib_std_lattice):
     r"""
     Case of SC convention and m lattice.
 
@@ -265,7 +262,7 @@ def _sc_get_conventional_m(std_lattice):
 
     Parameters
     ==========
-    std_lattice : (3, 3) :numpy:`ndarray`
+    spglib_std_lattice : (3, 3) :numpy:`ndarray`
         Conventional cell found by spglib.
 
     Returns
@@ -275,7 +272,7 @@ def _sc_get_conventional_m(std_lattice):
     """
 
     # Step 1, make sure that alpha is not a 90 angle
-    _, _, _, alpha, beta, gamma = get_params(cell=std_lattice)
+    _, _, _, alpha, beta, gamma = get_params(cell=spglib_std_lattice)
     if beta == 90.0 and gamma == 90.0:  # No change
         matrix_to_1 = np.eye(3, dtype=float)
     elif alpha == 90.0 and beta == 90.0:  # -> a3, a1, a2
@@ -298,7 +295,7 @@ def _sc_get_conventional_m(std_lattice):
         raise UnexpectedError(
             '(convention="SC"): m lattice, step 1. Angles fall out of the three cases.'
         )
-    cell_step_1 = matrix_to_1.T @ std_lattice
+    cell_step_1 = matrix_to_1.T @ spglib_std_lattice
 
     # Step 2, make sure that b <= c
     _, b, c, _, _, _ = get_params(cell=cell_step_1)
@@ -331,7 +328,7 @@ def _sc_get_conventional_m(std_lattice):
     return matrix_to_3.T @ cell_step_2
 
 
-def _sc_get_conventional_a(std_lattice):
+def _sc_get_conventional_a(spglib_std_lattice):
     r"""
     Case of SC convention and a lattice.
 
@@ -342,7 +339,7 @@ def _sc_get_conventional_a(std_lattice):
 
     Parameters
     ==========
-    std_lattice : (3, 3) :numpy:`ndarray`
+    spglib_std_lattice : (3, 3) :numpy:`ndarray`
         Conventional cell found by spglib.
 
     Returns
@@ -352,7 +349,7 @@ def _sc_get_conventional_a(std_lattice):
     """
 
     # Compute reciprocal cell
-    r_cell = get_reciprocal(cell=std_lattice)
+    r_cell = get_reciprocal(cell=spglib_std_lattice)
 
     # Step 1
     _, _, _, r_alpha, r_beta, r_gamma = get_params(cell=r_cell)
@@ -396,8 +393,7 @@ def _sc_get_conventional_a(std_lattice):
         )
     else:
         raise UnexpectedError(
-            '(convention="SC"): aP lattice, step 1. Values of the reciprocal angles '
-            "fall outside of four cases, which should be impossible."
+            '(convention="SC"): aP lattice, step 1. Values of the reciprocal angles fall outside of four cases, which should be impossible.'
         )
     r_cell_step_1 = matrix_to_1.T @ r_cell
 
@@ -425,17 +421,13 @@ def _sc_get_conventional_a(std_lattice):
         matrix_to_2 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     else:
         raise UnexpectedError(
-            '(convention="SC"): aP lattice, step 2. Values of the reciprocal angles '
-            "fall outside of four cases, which should be impossible."
+            '(convention="SC"): aP lattice, step 2. Values of the reciprocal angles fall outside of four cases, which should be impossible.'
         )
 
     return matrix_to_2.T @ get_reciprocal(cell=r_cell_step_1)
 
 
-def _sc_get_conventional_hR(
-    primitive_lattice,
-    spglib_symprec=1e-5,
-):
+def _sc_get_conventional_hR(spglib_primitive_cell):
     r"""
     Computes conventional cell for the case of SC and hR lattice.
 
@@ -447,10 +439,8 @@ def _sc_get_conventional_hR(
 
     Parameters
     ==========
-    primitive_lattice : (3, 3) :numpy:`ndarray`
+    spglib_primitive_cell : (3, 3) :numpy:`ndarray`
         Primitive cell found by spglib.
-    spglib_symprec : float, default 1e-5
-        Tolerance parameter for the symmetry search, that was passed to |spglib|_.
 
     Returns
     =======
@@ -458,15 +448,11 @@ def _sc_get_conventional_hR(
         Conventional cell as per the convention of SC.
     """
 
-    a, b, c, alpha, beta, gamma = get_params(cell=primitive_lattice)
+    a, b, c, alpha, beta, gamma = get_params(cell=spglib_primitive_cell)
 
-    if (
-        abs(a - b) > spglib_symprec
-        or abs(a - c) > spglib_symprec
-        or abs(b - c) > spglib_symprec
-    ):
+    if abs(a - b) > 1e-5 or abs(a - c) > 1e-5 or abs(b - c) > 1e-5:
         raise UnexpectedError(
-            f'(convention="SC"): hR lattice. Lattice vectors have different lengths with the precision of {spglib_symprec:.5e}'
+            f'(convention="SC"): hR lattice. Lattice vectors have different lengths with the precision of {1e-5:.5e}'
         )
 
     if alpha == beta == gamma:
@@ -500,12 +486,10 @@ def _sc_get_conventional_hR(
             '(convention="SC"): hR lattice. Angles can not be made equal.'
         )
 
-    return matrix.T @ primitive_lattice
+    return matrix.T @ spglib_primitive_cell
 
 
-def _sc_get_conventional_no_hR(
-    std_lattice, std_positions, crystal_family, centring_type
-):
+def _sc_get_conventional_no_hR(spglib_std_lattice, crystal_family, centring_type):
     r"""
     Computes conventional lattice for the case of SC.
 
@@ -513,8 +497,10 @@ def _sc_get_conventional_no_hR(
 
     Parameters
     ==========
-    std_lattice : (3, 3) :numpy:`ndarray`
+    spglib_std_lattice : (3, 3) :numpy:`ndarray`
         Conventional cell found by spglib.
+    crystal_family : str
+    centring_type : str
 
     Returns
     =======
@@ -523,12 +509,12 @@ def _sc_get_conventional_no_hR(
     """
     # Run over possible crystal families but hR
     if crystal_family in ["c", "t"] or (crystal_family == "h" and centring_type == "P"):
-        pass
+        conv_cell = spglib_std_lattice
     elif crystal_family == "o":
         if centring_type in ["P", "F", "I"]:
-            conv_cell = _sc_get_conventional_oPFI(std_lattice=std_lattice)
+            conv_cell = _sc_get_conventional_oPFI(spglib_std_lattice=spglib_std_lattice)
         elif centring_type == "C":
-            conv_cell = _sc_get_conventional_oC(std_lattice=std_lattice)
+            conv_cell = _sc_get_conventional_oC(spglib_std_lattice=spglib_std_lattice)
         elif centring_type == "A":
             # Make it C-centered
             # a1, a2, a3 -> a2, a3, a1
@@ -540,35 +526,24 @@ def _sc_get_conventional_no_hR(
                     [0, 1, 0],
                 ]
             )
-            conv_cell = _sc_get_conventional_oC(std_lattice=matrix.T @ conv_cell)
+            conv_cell = _sc_get_conventional_oC(spglib_std_lattice=matrix.T @ conv_cell)
         else:
             raise UnexpectedError(
-                '(convention="sc"): crystal family "o". Unexpected centring type '
-                f'"{centring_type}", which should be impossible.'
+                f'(convention="sc"): crystal family "o". Unexpected centring type "{centring_type}", which should be impossible.'
             )
     elif crystal_family == "m":
-        conv_cell = _sc_get_conventional_m(std_lattice=std_lattice)
+        conv_cell = _sc_get_conventional_m(spglib_std_lattice=spglib_std_lattice)
     elif crystal_family == "a":
-        conv_cell = _sc_get_conventional_a(std_lattice=std_lattice)
+        conv_cell = _sc_get_conventional_a(spglib_std_lattice=spglib_std_lattice)
     else:
         raise UnexpectedError(
-            f'(convention="sc"): unexpected crystal family "{crystal_family}", '
-            "which should be impossible."
+            f'(convention="sc"): unexpected crystal family "{crystal_family}", which should be impossible.'
         )
 
-    # relative spglib -> Cartesian -> relative SC
-    conv_positions = std_positions @ std_lattice @ np.linalg.inv(conv_cell)
-
-    return conv_cell, conv_positions
+    return conv_cell
 
 
-def get_conventional(
-    cell,
-    atoms,
-    convention="HPKOT",
-    spglib_symprec=1e-5,
-    spglib_angle_tolerance=-1,
-):
+def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
     r"""
     Return conventional cell and atoms associated with the given ``cell`` and ``atoms``.
 
@@ -602,14 +577,17 @@ def get_conventional(
         * "SC" for [2]_
         * "spglib" for |spglib|_
 
-    spglib_symprec : float, default 1e-5
-        Tolerance parameter for the symmetry search, that is passed to |spglib|_. Quote
-        from its documentation: "Symmetry search tolerance in the unit of length".
-    spglib_angle_tolerance : float, default -1
-        Tolerance parameter for the symmetry search, that is passed to |spglib|_. Quote
-        from its documentation: "Symmetry search tolerance in the unit of angle deg.
-        Normally it is not recommended to use this argument. If the value is
-        negative, an internally optimized routine is used to judge symmetry.
+    spglib_data : :py:class:`.SyntacticSugar`, optional
+        If you need more control on the parameters passed to the spglib, then
+        you can get ``spglib_data`` manually and pass it to this function.
+        Use wulfric's interface to |spglib|_ as
+
+        .. code-block:: python
+
+            spglib_data = wulfric.get_spglib_data(...)
+
+        using the same ``cell`` and ``atoms["positions"]`` that you are passing to this
+        function.
 
     Returns
     =======
@@ -627,12 +605,13 @@ def get_conventional(
     ========
     :ref:`user-guide_conventions_which-cell`
     wulfric.crystal.get_primitive
+    wulfric.get_spglib_data
 
 
     Notes
     =====
     |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
-    ``types`` for given atoms see :ref:`wulfric.crystal.get_spglib_types()`.
+    ``types`` for given atoms see :py:func:`wulfric.crystal.get_spglib_types`.
 
     If two atoms ``i`` and ``j`` have the same spglib_type (i.e.
     ``atoms["spglib_types"][i] == atoms["spglib_types"][j]``), but they have different
@@ -656,92 +635,94 @@ def get_conventional(
     # Validate that the atoms dictionary is what expected of it
     validate_atoms(atoms=atoms, required_keys=["positions"], raise_errors=True)
 
-    spglib_types = get_spglib_types(atoms=atoms)
+    # Call for spglib
+    if spglib_data is None:
+        spglib_data = get_spglib_data(
+            cell=cell,
+            atom_positions=atoms["positions"],
+            atom_types=get_spglib_types(atoms=atoms),
+        )
+    # Or check that spglib data were *most likely* produced via wulfric's interface
+    elif not isinstance(spglib_data, SyntacticSugar):
+        raise TypeError(
+            f"Are you sure that spglib_data were produced via wulfric's interface? Expected SyntacticSugar, got {type(spglib_data)}."
+        )
 
-    dataset = spglib.get_symmetry_dataset(
-        (cell, atoms["positions"], spglib_types),
-        symprec=spglib_symprec,
-        angle_tolerance=spglib_angle_tolerance,
-    )
-
-    # Rotate back to the orientation of the given cell+atoms
-    std_lattice = dataset.std_lattice @ dataset.std_rotation_matrix
-    std_positions = dataset.std_positions
-    std_types = dataset.std_types
-
-    crystal_family = CRYSTAL_FAMILY[dataset.number]
-    centring_type = CENTRING_TYPE[dataset.number]
-
+    # Define conventional cell, positions and types
     convention = convention.lower()
     if convention == "spglib" or convention == "hpkot":
-        if convention == "hpkot" and crystal_family == "a":
+        if convention == "hpkot" and spglib_data.crystal_family == "a":
             # Find a conventional cell and update atom positions
-            conv_cell = _hpkot_get_conventional_a(std_lattice=std_lattice)
+            conv_cell = _hpkot_get_conventional_a(
+                spglib_std_lattice=spglib_data.conventional_cell
+            )
             # Compute relative positions with respect to the new cell
             # relative spglib -> Cartesian -> relative HPKOT
-            conv_positions = std_positions @ std_lattice @ np.linalg.inv(conv_cell)
+            conv_positions = (
+                spglib_data.conventional_positions
+                @ spglib_data.conventional_cell
+                @ np.linalg.inv(conv_cell)
+            )
         else:
-            conv_cell = std_lattice
-            conv_positions = std_positions
+            conv_cell = spglib_data.conventional_cell
+            conv_positions = spglib_data.conventional_positions
 
-        conv_types = std_types
+        conv_types = spglib_data.conventional_types
 
     elif convention == "sc":
         # Treat hR in a special way, as it changes the volume of the cell
-        if crystal_family == "h" and centring_type == "R":
-            primitive_lattce, primitive_positions, primitive_types = (
-                spglib.find_primitive(
-                    (cell, atoms["positions"], spglib_types),
-                    symprec=spglib_symprec,
-                    angle_tolerance=spglib_angle_tolerance,
-                )
-            )
-            # Rotate back to the orientation of the given cell+atoms
-            primitive_lattce = primitive_lattce @ dataset.std_rotation_matrix
-
+        if spglib_data.crystal_family == "h" and spglib_data.centring_type == "R":
             # Fix potential convention mismatch
             conv_cell = _sc_get_conventional_hR(
-                primitive_lattice=primitive_lattce, spglib_symprec=spglib_symprec
+                spglib_primitive_cell=spglib_data.primitive_cell
             )
 
             # Update positions
-            # primitive relative -> Cartesian -> conventional relative
+            # relative spglib -> Cartesian -> relative SC
             conv_positions = (
-                primitive_positions @ primitive_lattce @ np.linalg.inv(conv_cell)
+                spglib_data.primitive_positions
+                @ spglib_data.primitive_cell
+                @ np.linalg.inv(conv_cell)
             )
-            conv_types = primitive_types
+            conv_types = spglib_data.primitive_types
 
+        # The rest do not change the volume of the cell
         else:
-            # The rest do not change the volume of the cell
-            conv_cell, conv_positions = _sc_get_conventional_no_hR(
-                std_lattice=std_lattice,
-                std_positions=std_positions,
-                crystal_family=crystal_family,
-                centring_type=centring_type,
+            conv_cell = _sc_get_conventional_no_hR(
+                spglib_std_lattice=spglib_data.conventional_cell,
+                crystal_family=spglib_data.crystal_family,
+                centring_type=spglib_data.centring_type,
             )
-            conv_types = std_types
+            # relative spglib -> Cartesian -> relative SC
+            conv_positions = (
+                spglib_data.conventional_positions
+                @ spglib_data.conventional_cell
+                @ np.linalg.inv(conv_cell)
+            )
+            conv_types = spglib_data.conventional_types
 
     else:
         raise ConventionNotSupported(
             convention, supported_conventions=["HPKOT", "SC", "spglib"]
         )
 
+    # Create conventional atoms
     conv_atoms = dict(positions=conv_positions)
 
+    # Get mapping from original atoms to conventional ones through types
     types_mapping = {
-        index_in_new: index_in_old
-        for index_in_old, index_in_new in enumerate(spglib_types)
+        type_index: index
+        for index, type_index in enumerate(spglib_data.conventional_types)
     }
 
     # Populate conv_atoms with all keys that have been defined in the original atoms.
     for key in atoms:
         if key != "positions":
             conv_atoms[key] = []
-            for index in conv_types:
-                conv_atoms[key].append(atoms[key][types_mapping[index]])
+            for type_index in conv_types:
+                conv_atoms[key].append(atoms[key][types_mapping[type_index]])
 
-    # Add spglib_types to new atoms
-
+    # Add spglib_types to new atoms if necessary
     if "spglib_types" not in conv_atoms:
         conv_atoms["spglib_types"] = conv_types
 
