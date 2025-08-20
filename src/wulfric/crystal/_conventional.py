@@ -432,6 +432,77 @@ def _sc_get_conventional_a(std_lattice):
     return matrix_to_2.T @ get_reciprocal(cell=r_cell_step_1)
 
 
+def _sc_get_conventional_hR(
+    primitive_lattice,
+    spglib_symprec=1e-5,
+):
+    r"""
+    Computes conventional cell for the case of SC and hR lattice.
+
+    It checks that
+
+    * All three angles between the lattice vectors are equal
+
+    * All lattice vectors have the same length
+
+    Parameters
+    ==========
+    primitive_lattice : (3, 3) :numpy:`ndarray`
+        Primitive cell found by spglib.
+    spglib_symprec : float, default 1e-5
+        Tolerance parameter for the symmetry search, that was passed to |spglib|_.
+
+    Returns
+    =======
+    conv_cell : (3, 3) :numpy:`ndarray`
+        Conventional cell as per the convention of SC.
+    """
+
+    a, b, c, alpha, beta, gamma = get_params(cell=primitive_lattice)
+
+    if (
+        abs(a - b) > spglib_symprec
+        or abs(a - c) > spglib_symprec
+        or abs(b - c) > spglib_symprec
+    ):
+        raise UnexpectedError(
+            f'(convention="SC"): hR lattice. Lattice vectors have different lengths with the precision of {spglib_symprec:.5e}'
+        )
+
+    if alpha == beta == gamma:
+        matrix = np.eye(3, dtype=float)
+    elif 180 - alpha == beta == gamma:  # -> a1, -a2, -a3
+        matrix = np.array(
+            [
+                [1, 0, 0],
+                [0, -1, 0],
+                [0, 0, -1],
+            ]
+        )
+    elif alpha == 180 - beta == gamma:  # -> -a1, a2, -a3
+        matrix = np.array(
+            [
+                [-1, 0, 0],
+                [0, 1, 0],
+                [0, 0, -1],
+            ]
+        )
+    elif alpha == beta == 180 - gamma:  # -> -a1, -a2, a3
+        matrix = np.array(
+            [
+                [-1, 0, 0],
+                [0, -1, 0],
+                [0, 0, 1],
+            ]
+        )
+    else:
+        raise UnexpectedError(
+            '(convention="SC"): hR lattice. Angles can not be made equal.'
+        )
+
+    return matrix.T @ primitive_lattice
+
+
 def _sc_get_conventional_no_hR(
     std_lattice, std_positions, crystal_family, centring_type
 ):
@@ -618,13 +689,28 @@ def get_conventional(
     elif convention == "sc":
         # Treat hR in a special way, as it changes the volume of the cell
         if crystal_family == "h" and centring_type == "R":
-            conv_cell, conv_positions, conv_types = spglib.find_primitive(
-                (cell, atoms["positions"], spglib_types),
-                symprec=spglib_symprec,
-                angle_tolerance=spglib_angle_tolerance,
+            primitive_lattce, primitive_positions, primitive_types = (
+                spglib.find_primitive(
+                    (cell, atoms["positions"], spglib_types),
+                    symprec=spglib_symprec,
+                    angle_tolerance=spglib_angle_tolerance,
+                )
             )
             # Rotate back to the orientation of the given cell+atoms
-            conv_cell = conv_cell @ dataset.std_rotation_matrix
+            primitive_lattce = primitive_lattce @ dataset.std_rotation_matrix
+
+            # Fix potential convention mismatch
+            conv_cell = _sc_get_conventional_hR(
+                primitive_lattice=primitive_lattce, spglib_symprec=spglib_symprec
+            )
+
+            # Update positions
+            # primitive relative -> Cartesian -> conventional relative
+            conv_positions = (
+                primitive_positions @ primitive_lattce @ np.linalg.inv(conv_cell)
+            )
+            conv_types = primitive_types
+
         else:
             # The rest do not change the volume of the cell
             conv_cell, conv_positions = _sc_get_conventional_no_hR(
