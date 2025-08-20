@@ -253,6 +253,7 @@ custom_links = {
         "https://en.wikipedia.org/wiki/Spherical_coordinate_system",
     ),
     "seek-kpath": ("seek-kpath", "https://github.com/giovannipizzi/seekpath/tree/main"),
+    "wulfric-support": ("support", "https://docs.wulfric.org/en/latest/support.html"),
 }
 
 

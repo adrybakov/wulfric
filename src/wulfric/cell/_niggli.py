@@ -379,6 +379,9 @@ def get_niggli(cell, eps_relative=1e-5, implementation="spglib", max_iterations=
 
             Implementation of wulfric of the algorithm from [2]_.
             Details of the implementation are written in :ref:`library_niggli`.
+
+        Ideally, both implementation should give the same result. If you find any
+        differences, please consider contacting developers with you example (|wulfric-support|_).
     max_iterations : int, default 100000
         Maximum number of iterations.
 
