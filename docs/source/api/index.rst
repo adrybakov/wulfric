@@ -48,6 +48,7 @@ Top-level functions
     add_sugar
     remove_sugar
     logo
+    get_spglib_data
 
 Exceptions
 ==========
