@@ -75,7 +75,7 @@ def cells():
     ax.set_ylim(0, 100)
     ax.axis("off")
 
-    filename = os.path.join(ROOT_DIR, "docs", "source", "img", "cell-types.png")
+    filename = os.path.join(ROOT_DIR, "docs", "source", "img", "cell-choices.png")
     plt.savefig(filename, dpi=600, bbox_inches="tight")
     plt.close()
     print(f"File is saved in {os.path.abspath(filename)}")

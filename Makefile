@@ -71,7 +71,7 @@ bravais-pictures:
 
 docs-generate-images:
 	@python3 tools/plot-repositories.py
-	@python3 tools/plot-cell-types.py
+	@python3 tools/plot-cell-choices.py
 	@python3 tools/plot-niggli-step-4.py
 
 .ONESHELL:
