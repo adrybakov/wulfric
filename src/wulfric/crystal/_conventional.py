@@ -21,7 +21,7 @@
 
 import numpy as np
 
-from wulfric._exceptions import ConventionNotSupported, UnexpectedError
+from wulfric._exceptions import ConventionNotSupported, PotentialBugError
 from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric.cell._niggli import get_niggli
 from wulfric.cell._basic_manipulation import get_reciprocal, get_params
@@ -76,7 +76,7 @@ def _hpkot_get_conventional_a(spglib_std_lattice):
     elif dot_ab <= dot_ac and dot_ab <= dot_bc:
         matrix_to_2 = np.eye(3, dtype=float)
     else:
-        raise UnexpectedError(
+        raise PotentialBugError(
             '(convention="HPKOT"): aP lattice, step 2. Values of the dot products fall outside of three cases, which should be impossible.'
         )
 
@@ -125,7 +125,7 @@ def _hpkot_get_conventional_a(spglib_std_lattice):
             dtype=float,
         )
     else:
-        raise UnexpectedError(
+        raise PotentialBugError(
             '(convention="HPKOT"): aP lattice, step 3. Values of the reciprocal angles  fall outside of four cases, which should be impossible.'
         )
 
@@ -202,7 +202,7 @@ def _sc_get_conventional_oPFI(spglib_std_lattice):
             dtype=float,
         )
     else:
-        raise UnexpectedError(
+        raise PotentialBugError(
             '(convention="SC"): oP, oF, oI lattices. Length of the lattice vectors fall outside of six cases, which should be impossible.'
         )
 
@@ -243,7 +243,7 @@ def _sc_get_conventional_oC(spglib_std_lattice):
             dtype=float,
         )
     else:
-        raise UnexpectedError(
+        raise PotentialBugError(
             '(convention="SC"): oC lattices. Length of the lattice vectors fall outside of six cases, which should be impossible.'
         )
 
@@ -291,7 +291,7 @@ def _sc_get_conventional_m(spglib_std_lattice):
             ]
         )
     else:
-        raise UnexpectedError(
+        raise PotentialBugError(
             '(convention="SC"): m lattice, step 1. Angles fall out of the three cases.'
         )
     cell_step_1 = matrix_to_1.T @ spglib_std_lattice
@@ -391,7 +391,7 @@ def _sc_get_conventional_a(spglib_std_lattice):
             dtype=float,
         )
     else:
-        raise UnexpectedError(
+        raise PotentialBugError(
             '(convention="SC"): aP lattice, step 1. Values of the reciprocal angles fall outside of four cases, which should be impossible.'
         )
     r_cell_step_1 = matrix_to_1.T @ r_cell
@@ -419,7 +419,7 @@ def _sc_get_conventional_a(spglib_std_lattice):
     ):
         matrix_to_2 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
     else:
-        raise UnexpectedError(
+        raise PotentialBugError(
             '(convention="SC"): aP lattice, step 2. Values of the reciprocal angles fall outside of four cases, which should be impossible.'
         )
 
@@ -450,7 +450,7 @@ def _sc_get_conventional_hR(spglib_primitive_cell):
     a, b, c, alpha, beta, gamma = get_params(cell=spglib_primitive_cell)
 
     if abs(a - b) > 1e-5 or abs(a - c) > 1e-5 or abs(b - c) > 1e-5:
-        raise UnexpectedError(
+        raise PotentialBugError(
             f'(convention="SC"): hR lattice. Lattice vectors have different lengths with the precision of {1e-5:.5e}'
         )
 
@@ -481,7 +481,7 @@ def _sc_get_conventional_hR(spglib_primitive_cell):
             ]
         )
     else:
-        raise UnexpectedError(
+        raise PotentialBugError(
             '(convention="SC"): hR lattice. Angles can not be made equal.'
         )
 
@@ -527,7 +527,7 @@ def _sc_get_conventional_no_hR(spglib_std_lattice, crystal_family, centring_type
             )
             conv_cell = _sc_get_conventional_oC(spglib_std_lattice=matrix.T @ conv_cell)
         else:
-            raise UnexpectedError(
+            raise PotentialBugError(
                 f'(convention="sc"): crystal family "o". Unexpected centring type "{centring_type}", which should be impossible.'
             )
     elif crystal_family == "m":
@@ -535,7 +535,7 @@ def _sc_get_conventional_no_hR(spglib_std_lattice, crystal_family, centring_type
     elif crystal_family == "a":
         conv_cell = _sc_get_conventional_a(spglib_std_lattice=spglib_std_lattice)
     else:
-        raise UnexpectedError(
+        raise PotentialBugError(
             f'(convention="sc"): unexpected crystal family "{crystal_family}", which should be impossible.'
         )
 

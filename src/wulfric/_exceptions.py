@@ -100,9 +100,13 @@ class NiggliReductionFailed(Exception):
         return self.message
 
 
-class UnexpectedError(Exception):
+class PotentialBugError(Exception):
     def __init__(self, error_summary):
-        self.message = error_summary + _SUPPORT_FOOTER
+        self.message = (
+            error_summary
+            + "\nIf you see this error, than there might be a bug in wulfric."
+            + _SUPPORT_FOOTER
+        )
 
     def __str__(self):
         return self.message

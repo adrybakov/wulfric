@@ -20,7 +20,7 @@
 # ================================ END LICENSE =================================
 import numpy as np
 
-from wulfric._exceptions import UnexpectedError
+from wulfric._exceptions import PotentialBugError
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -379,7 +379,7 @@ def get_spatial_mapping(old_cell, old_positions, new_cell, new_positions):
                 # Take the first atom that is found
                 break
             elif index == len(old_positions) - 1:
-                raise UnexpectedError(
+                raise PotentialBugError(
                     "get_spatial_mapping(): Mapping from new atoms to old atoms failed. "
                     "Note: please make sure that the old atoms and new atoms describe the same "
                     "crystal in the same orientation."
