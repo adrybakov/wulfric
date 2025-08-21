@@ -24,13 +24,128 @@ import numpy as np
 from wulfric._syntactic_sugar import SyntacticSugar, add_sugar
 from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric._exceptions import _raise_with_message, _SUPPORT_FOOTER
-from wulfric.crystal._atoms import get_spglib_types
+from wulfric.crystal._atoms import get_atom_species
 
 from wulfric.constants._space_groups import CRYSTAL_FAMILY, CENTRING_TYPE
 
 # Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
+
+
+def validate_spglib_data(cell, atoms, spglib_data) -> None:
+    r"""
+    Validate that ``cell`` and ``atoms["positions"]`` match the ones on which
+    ``spglib_data`` was created.
+
+    In details, it check that
+
+    * ``cell`` is the same as ``spglib_data.original_cell``
+    * ``atoms["positions"]`` are the same as ``spglib_data.original_positions``
+    * ``wulfric.crystal.get_spglib_types(atoms=atoms)`` is the same as
+      ``spglib_data.original_types``.
+
+    Parameters
+    ==========
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors. In the language of |spglib|_
+        the same concept is usually called "basis vectors" or "lattice".
+    atoms : dict
+        Dictionary with N atoms. Expected keys:
+
+        *   "positions" : (N, 3) |array-like|_
+
+            Positions of the atoms in the basis of lattice vectors (``cell``). In other
+            words - relative coordinates of atoms.
+        *   "names" : (N, ) list of str, optional
+        *   "species" : (N, ) list of str, optional
+        *   "spglib_types" : (N, ) list of int, optional
+    spglib_data : dict
+        A dictionary with the added syntactic sugar (i.e. with the dot access to the keys),
+        that is produced via call to :py:func:`.get_spglib_data`.
+
+    Raises
+    ======
+    ValueError
+        If ``cell`` and ``atoms`` do not match ``spglib_data``.
+    """
+
+    if not np.allclose(cell, spglib_data.original_cell):
+        raise ValueError(
+            "Validation of spglib_data against cell and atoms: cell mismatch."
+        )
+
+    if not np.allclose(atoms["positions"], spglib_data.original_positions):
+        raise ValueError(
+            "Validation of spglib_data against cell and atoms: atom's positions mismatch."
+        )
+
+    if get_spglib_types(atoms=atoms) != spglib_data.original_types:
+        raise ValueError(
+            "Validation of spglib_data against cell and atoms: atom's types mismatch."
+        )
+
+
+def get_spglib_types(atoms):
+    r"""
+    Constructs spglib_types for the given atoms.
+
+    First satisfied rule is applied
+
+    1.  "spglib_types" in atoms
+
+        Return ``atoms["spglib_types"]``.
+
+    2.  "species" in atoms.
+
+        ``spglib_types`` are deduced from ``atoms["species"]``. If two atoms have the same
+        species, then they will have the same integer assigned to them in
+        ``spglib_types``.
+
+    3.  "names" in ``atoms``
+
+        Species are automatically deduced based on atom's names (via
+        :py:func:`wulfric.crystal.get_atom_species`), and then the second rule is
+        applied.
+
+    Parameters
+    ==========
+    atoms : dict
+        Dictionary with N atoms. At least one of the following keys is expected
+
+        *   "names" : (N, ) list of str, optional
+        *   "species" : (N, ) list of str, optional
+        *   "spglib_types" : (N, ) list of int, optional
+
+    Returns
+    =======
+    spglib_types : (N, ) list of int
+        List of integer indices ready to be passed to |spglib|_.
+    """
+
+    validate_atoms(atoms=atoms, raise_errors=True)
+
+    if "spglib_types" in atoms:
+        spglib_types = atoms["spglib_types"]
+    else:
+        if "species" not in atoms and "names" in atoms:
+            species = [
+                get_atom_species(name=name, raise_on_fail=False)
+                for name in atoms["names"]
+            ]
+        elif "species" in atoms:
+            species = atoms["species"]
+        else:
+            raise ValueError(
+                'Expected at least one of "spglib_types", "species" or "names" keys in ""atoms, found none.'
+            )
+
+        mapping = {
+            name: index + 1 for index, name in enumerate(sorted(list(set(species))))
+        }
+        spglib_types = [mapping[name] for name in species]
+
+    return spglib_types
 
 
 def get_spglib_data(

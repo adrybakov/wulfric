@@ -22,10 +22,10 @@
 import numpy as np
 
 from wulfric._exceptions import ConventionNotSupported, UnexpectedError
-from wulfric.crystal._crystal_validation import validate_atoms, validate_spglib_data
+from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric.cell._niggli import get_niggli
 from wulfric.cell._basic_manipulation import get_reciprocal, get_params
-from wulfric._spglib_interface import get_spglib_data
+from wulfric._spglib_interface import get_spglib_data, validate_spglib_data
 from wulfric._syntactic_sugar import SyntacticSugar
 
 # Save local scope at this moment
@@ -554,13 +554,17 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
         Dictionary with N atoms. Expected keys:
 
         *   "positions" : (N, 3) |array-like|_
+
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
             words - relative coordinates of atoms.
         *   "names" : (N, ) list of str, optional
+
             See Notes
         *   "species" : (N, ) list of str, optional
+
             See Notes
-        *   "spglib_types" (N, ) list of int, optional
+        *   "spglib_types" : (N, ) list of int, optional
+
             See Notes
 
         .. hint::
@@ -634,10 +638,10 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
     # Validate that the atoms dictionary is what expected of it
     validate_atoms(atoms=atoms, required_keys=["positions"], raise_errors=True)
 
-    # Call for spglib
+    # Call spglib
     if spglib_data is None:
         spglib_data = get_spglib_data(cell=cell, atoms=atoms)
-    # Or check that spglib data were *most likely* produced via wulfric's interface
+    # Or check that spglib_data were *most likely* produced via wulfric's interface
     elif not isinstance(spglib_data, SyntacticSugar):
         raise TypeError(
             f"Are you sure that spglib_data were produced via wulfric's interface? Expected SyntacticSugar, got {type(spglib_data)}."

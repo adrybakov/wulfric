@@ -19,9 +19,9 @@
 #
 # ================================ END LICENSE =================================
 
-from wulfric.crystal._crystal_validation import validate_atoms, validate_spglib_data
+from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric._exceptions import ConventionNotSupported
-from wulfric._spglib_interface import get_spglib_data
+from wulfric._spglib_interface import get_spglib_data, validate_spglib_data
 from wulfric._syntactic_sugar import SyntacticSugar
 
 # Save local scope at this moment
@@ -41,13 +41,17 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
         Dictionary with N atoms. Expected keys:
 
         *   "positions" : (N, 3) |array-like|_
+
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
             words - relative coordinates of atoms.
         *   "names" : (N, ) list of str, optional
+
             See Notes
         *   "species" : (N, ) list of str, optional
+
             See Notes
-        *   "spglib_types" (N, ) list of int, optional
+        *   "spglib_types" : (N, ) list of int, optional
+
             See Notes
 
         .. hint::
