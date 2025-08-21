@@ -45,3 +45,11 @@ Choice of the cell (or standardization)
 
     get_conventional
     get_primitive
+
+Setyawan and Curtarolo convention
+=================================
+
+.. autosummary::
+    :toctree: generated/
+
+    sc_get_variation

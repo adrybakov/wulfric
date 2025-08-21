@@ -25,28 +25,64 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 ################################################################################
-#                               Bravais lattices                               #
+#                      Setyawan and Curtarolo conventions                      #
 ################################################################################
-STANDARDIZATION_CONVENTIONS = ["sc"]
 
-BRAVAIS_LATTICE_NAMES = {
-    "CUB": "Cubic",
-    "FCC": "Face-centered cubic",
-    "BCC": "Body-centered cubic",
-    "TET": "Tetragonal",
-    "BCT": "Body-centered tetragonal",
-    "ORC": "Orthorhombic",
-    "ORCF": "Face-centered orthorhombic",
-    "ORCI": "Body-centered orthorhombic",
-    "ORCC": "C-centered orthorhombic",
-    "HEX": "Hexagonal",
-    "RHL": "Rhombohedral",
-    "MCL": "Monoclinic",
-    "MCLC": "C-centered monoclinic",
-    "TRI": "Triclinic",
+SC_BRAVAIS_LATTICE_SHORT_NAMES = {
+    "cP": "CUB",
+    "cF": "FCC",
+    "cI": "BCC",
+    "tP": "TET",
+    "tI": "BCT",
+    "oP": "ORC",
+    "oF": "ORCF",
+    "oI": "ORCI",
+    "oA": "ORCC",
+    "oC": "ORCC",
+    "hP": "HEX",
+    "hR": "RHL",
+    "mP": "MCL",
+    "mC": "MCLC",
+    "aP": "TRI",
 }
 
-BRAVAIS_LATTICE_VARIATIONS = [
+SC_BRAVAIS_LATTICE_LONG_NAMES = {
+    "cP": "Cubic",
+    "cF": "Face-centered cubic",
+    "cI": "Body-centered cubic",
+    "tP": "Tetragonal",
+    "tI": "Body-centered tetragonal",
+    "oP": "Orthorhombic",
+    "oF": "Face-centered orthorhombic",
+    "oI": "Body-centered orthorhombic",
+    "oA": "C-centered orthorhombic",
+    "oC": "C-centered orthorhombic",
+    "hP": "Hexagonal",
+    "hR": "Rhombohedral",
+    "mP": "Monoclinic",
+    "mC": "C-centered monoclinic",
+    "aP": "Triclinic",
+}
+
+SC_CONVENTIONAL_TO_PRIMITIVE = {
+    "cP": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
+    "cF": np.array([[-1.0, 1.0, 1.0], [1.0, -1.0, 1.0], [1.0, 1.0, -1.0]]),
+    "cI": np.array([[0.0, 1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 0.0]]),
+    "tP": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
+    "tI": np.array([[0.0, 1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 0.0]]),
+    "oP": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
+    "oF": np.array([[-1.0, 1.0, 1.0], [1.0, -1.0, 1.0], [1.0, 1.0, -1.0]]),
+    "oI": np.array([[0.0, 1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 0.0]]),
+    "oA": np.array([[1.0, -1.0, 0], [1.0, 1.0, 0], [0, 0, 1.0]]),
+    "oC": np.array([[1.0, -1.0, 0], [1.0, 1.0, 0], [0, 0, 1.0]]),
+    "hP": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
+    "hR": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
+    "mP": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
+    "mC": np.array([[1.0, 1.0, 0.0], [-1.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
+    "aP": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
+}
+
+SC_BRAVAIS_LATTICE_VARIATIONS = [
     "CUB",
     "FCC",
     "BCC",
@@ -74,27 +110,7 @@ BRAVAIS_LATTICE_VARIATIONS = [
     "TRI2b",
 ]
 
-CONVENTIONAL_TO_PRIMITIVE = {
-    "CUB": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
-    "FCC": np.array([[-1.0, 1.0, 1.0], [1.0, -1.0, 1.0], [1.0, 1.0, -1.0]]),
-    "BCC": np.array([[0.0, 1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 0.0]]),
-    "TET": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
-    "BCT": np.array([[0.0, 1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 0.0]]),
-    "ORC": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
-    "ORCF": np.array([[-1.0, 1.0, 1.0], [1.0, -1.0, 1.0], [1.0, 1.0, -1.0]]),
-    "ORCI": np.array([[0.0, 1.0, 1.0], [1.0, 0.0, 1.0], [1.0, 1.0, 0.0]]),
-    "ORCC": np.array([[1.0, -1.0, 0], [1.0, 1.0, 0], [0, 0, 1.0]]),
-    "HEX": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
-    "RHL": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
-    "MCL": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
-    "MCLC": np.array([[1.0, 1.0, 0.0], [-1.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
-    "TRI": np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]),
-}
-
-################################################################################
-#                                   K-points                                   #
-################################################################################
-DEFAULT_K_PATHS = {
+SC_DEFAULT_K_PATHS = {
     "CUB": "G-X-M-G-R-X|M-R",
     "FCC": "G-X-W-K-G-L-U-W-L-K|U-X",
     "BCC": "G-H-N-G-P-H|P-N",
