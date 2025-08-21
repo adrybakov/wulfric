@@ -19,14 +19,95 @@
 #
 # ================================ END LICENSE =================================
 
+import numpy as np
 from wulfric.crystal._crystal_validation import validate_atoms
-from wulfric._exceptions import ConventionNotSupported
+from wulfric._exceptions import ConventionNotSupported, PotentialBugError
 from wulfric._spglib_interface import get_spglib_data, validate_spglib_data
 from wulfric._syntactic_sugar import SyntacticSugar
+from wulfric.constants._sc_convention import SC_CONVENTIONAL_TO_PRIMITIVE
+from wulfric.constants._hpkot_convention import HPKOT_CONVENTIONAL_TO_PRIMITIVE
+from wulfric.crystal._conventional import get_conventional
 
 # Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
+
+
+def _get_unique(prim_cell, prim_positions, conv_types, repetition_number):
+    r"""
+    Remove equivalent atoms from the primitive cell if any.
+
+    Parameters
+    ==========
+    prim_cell : (3, 3) :numpy:`ndarray`
+        Matrix of the cell, Rows are interpreted as vectors. Lattice vectors of the
+        primitive cell.
+    prim_positions : (N, 3) : :numpy:`ndarray`
+        Positions of the atoms from the conventional cell in the basis of ``prim_cell``.
+    conv_types : (N, ) list of int
+        Types of atoms used to distinguish between them.
+    repetition_number : int
+        Correct amount of repetitions of each atom type in the conventional cell.
+
+    Returns
+    =======
+    prim_positions : (M, 3) : :numpy:`ndarray`
+        Unique atoms of the primitive cell. ``M = N / repetition_number``.
+    prim_types : (M, ) list of int
+        Types of atoms in the primitive cell.
+    """
+
+    # Move all to 000
+    prim_positions = prim_positions % 1
+
+    # Compute pair-wise distances between atoms
+    distances = np.linalg.norm(
+        prim_positions[:, np.newaxis, :] - prim_positions[np.newaxis, :, :], axis=2
+    )
+
+    # Check if two atoms are the same for each pair
+    same_atoms = np.isclose(distances, np.zeros(distances.shape))
+
+    # Count amount of equivalent atoms
+    n_equiv = np.sum(same_atoms, axis=1)
+
+    # Check that each atom has correct amount of twins
+    if not (n_equiv == repetition_number * np.ones(n_equiv.shape, dtype=int)).all():
+        abs_pos = prim_positions @ prim_cell
+        raise ValueError(
+            f"Some atoms have wrong number of twins. Expected {repetition_number} twins for each, got\n  * "
+            + +"\n  * ".join(
+                [
+                    f"atom at {abs_pos[i][0]:.5f} {abs_pos[i][1]:.5f} {abs_pos[i][2]:.5f} with type {conv_types[i]} has {n_equiv} twins"
+                    for i in range(len(prim_positions))
+                ]
+            )
+        )
+
+    # Find a set of unique atoms
+    N = len(prim_positions)
+    available_atoms = np.ones(N).astype(bool)
+    indices = np.linspace(0, N - 1, N, dtype=int)
+    unique_atoms = np.zeros(N).astype(bool)
+    i = 0
+    while True:
+        # Do not compare with itself
+        available_atoms[i] = False
+        # Remove all the same atoms for the future comparisons
+        for j in indices[available_atoms]:
+            if same_atoms[i][j]:
+                available_atoms[j] = False
+        # Every index that entered in this cycle is the first encountered atom of the equivalent group.
+        unique_atoms[i] = True
+
+        # Move to the next atom, that is not accounted for yet
+        if available_atoms.any():
+            i = indices[available_atoms][0]
+        # Or end the cycle
+        else:
+            break
+
+    return prim_positions[unique_atoms], conv_types[unique_atoms]
 
 
 def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
@@ -60,7 +141,7 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
             is a primitive one).
 
     convention : str, default "HPKOT"
-        Convention for the definition of the conventional cell. Case-insensitive.
+        Convention for the definition of the primitive cell. Case-insensitive.
         Supported:
 
         * "HPKOT" for [1]_
@@ -125,10 +206,10 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
     # Validate that the atoms dictionary is what expected of it
     validate_atoms(atoms=atoms, required_keys=["positions"], raise_errors=True)
 
-    # Call for spglib
+    # Call spglib
     if spglib_data is None:
         spglib_data = get_spglib_data(cell=cell, atoms=atoms)
-    # Or check that spglib data were *most likely* produced via wulfric's interface
+    # Or check that spglib_data were *most likely* produced via wulfric's interface
     elif not isinstance(spglib_data, SyntacticSugar):
         raise TypeError(
             f"Are you sure that spglib_data were produced via wulfric's interface? Expected SyntacticSugar, got {type(spglib_data)}."
@@ -140,23 +221,61 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
     convention = convention.lower()
 
     # Straightforward interface to spglib
-    # Primitive cell is rotated back to the original orientation of the given crystal
     if convention == "spglib":
-        raise NotImplementedError
+        prim_cell = spglib_data.primitive_cell
+        prim_positions = spglib_data.primitive_positions
+        prim_types = spglib_data.primitive_types
+    # Some work needed for other conventions
+    elif convention in ["hpkot", "sc"]:
+        lattice_type = spglib_data.crystal_family + spglib_data.centring_type
+        conv_cell, conv_atoms = get_conventional(
+            cell=cell, atoms=atoms, convention=convention, spglib_data=spglib_data
+        )
 
-    elif convention == "hpkot":
-        raise NotImplementedError
-    elif convention == "sc":
-        # lattice_type = None
-        # matrix = SC_C_to_P[lattice_type]
+        if convention == "hpkot":
+            matrix = HPKOT_CONVENTIONAL_TO_PRIMITIVE[lattice_type]
+        elif convention == "sc":
+            matrix = SC_CONVENTIONAL_TO_PRIMITIVE[lattice_type]
+        else:
+            raise PotentialBugError('get_primitive(convention="HPKOT/SC").')
 
-        # primitive_cell = matrix.T @ conv_cell
-        raise NotImplementedError
+        prim_cell = matrix.T @ conv_cell
 
+        prim_positions = conv_atoms["positions"] @ conv_cell @ np.linalg.inv(prim_cell)
+
+        # Conventional cell may contain more atoms than primitive one, thus one needs to
+        # remove equivalent atoms
+        prim_positions, prim_types = _get_unique(
+            prim_cell=prim_cell,
+            prim_positions=prim_positions,
+            conv_types=conv_atoms["spglib_types"],
+            repetition_number=abs(np.linalg.det(conv_cell) / np.linalg.det(prim_cell)),
+        )
     else:
         raise ConventionNotSupported(
             convention, supported_conventions=["HPKOT", "SC", "spglib"]
         )
+
+    # Create primitive atoms
+    prim_atoms = dict(positions=prim_positions)
+
+    # Get mapping from original atoms to primitive ones through types
+    types_mapping = {
+        type_index: index for index, type_index in enumerate(spglib_data.original_types)
+    }
+
+    # Populate primitive_atoms with all keys that have been defined in the original atoms.
+    for key in atoms:
+        if key != "positions":
+            prim_atoms[key] = []
+            for type_index in prim_types:
+                prim_atoms[key].append(atoms[key][types_mapping[type_index]])
+
+    # Add spglib_types to new atoms if necessary
+    if "spglib_types" not in prim_atoms:
+        prim_atoms["spglib_types"] = prim_types
+
+    return prim_cell, prim_atoms
 
 
 # Populate __all__ with objects defined in this file
