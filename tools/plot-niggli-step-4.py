@@ -23,7 +23,6 @@ import os
 import matplotlib.pyplot as plt
 
 ROOT_DIR = "."
-OUTPUT_PATH = os.path.join(ROOT_DIR, "docs", "source", "img")
 
 
 def plot():
@@ -263,8 +262,10 @@ def plot():
 
                 ax.text(posx, posy, text, ha="center", va="center", fontsize=15)
 
-    plt.savefig(os.path.join(OUTPUT_PATH, "niggli-step-4.png"))
+    filename = os.path.join(ROOT_DIR, "docs", "source", "img", "niggli-step-4.png")
+    plt.savefig(filename, dpi=600, bbox_inches="tight")
     plt.close()
+    print(f"File is saved in {os.path.abspath(filename)}")
 
 
 if __name__ == "__main__":

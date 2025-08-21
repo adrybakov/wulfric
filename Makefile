@@ -21,17 +21,14 @@ help:
 	@echo "    html - build the html docs"
 	@echo "    clean-html - clean all files from docs and build html docs from scrutch"
 	@echo "    html-from-zero - html from absolute zero (replot everything)"
-	@echo "    html-examples - update examples and build html docs"
 	@echo "    doctest - run doctests"
 	@echo "    clean - clean all files from docs and pip routines"
 	@echo "    install - install the package"
 	@echo "    test - execute unit tests"
 	@echo "    test-all - execute full testing suite"
-	@echo "    pip - publish the package to the PyPi index"
 	@echo "    bravais-pictures - update pictures of bravais lattices"
-	@echo "    prepare-release - prepare the package for release"
-	@echo "    docs-pictures - update pictures for the docs"
-	@echo "    venv - create and prepare a virtual environment in .venv folder"
+	@echo "    docs-generate-images - update pictures for the docs"
+	@echo "    requirements - installs all requirements (package + dev + tests + docs)"
 	@echo
 
 # $(O) is meant as a shortcut for $(SPHINXOPTS).
@@ -41,7 +38,7 @@ html:
 clean-html: clean install html
 	@echo "Done"
 
-html-from-zero: clean install bravais-pictures docs-prerequisites html
+html-from-zero: clean install bravais-pictures docs-generate-images html
 	@echo "Done"
 
 doctest:
@@ -69,23 +66,12 @@ test:
 test-all: html-from-zero test doctest
 	@echo "Done"
 
-
-.ONESHELL:
-pip: prepare-release
-	@read -p "Press Enter to publish to PyPI"
-	@git tag -a "v$(VERSION)" -m "Version $(VERSION)"
-	@git push origin "v$(VERSION)"
-
-prepare-release:
-	@python3 -u tools/prepare-release.py -v $(VERSION) -rd $(ROOT_DIR)
-
-
 bravais-pictures:
 	@python3 tools/plot-bravais-lattices.py
 
-docs-prerequisites:
+docs-generate-images:
 	@python3 tools/plot-repositories.py
-	@python3 tools/plot-cell-relations.py
+	@python3 tools/plot-cell-types.py
 	@python3 tools/plot-niggli-step-4.py
 
 .ONESHELL:

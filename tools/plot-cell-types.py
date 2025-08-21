@@ -54,50 +54,13 @@ def quiver(ax, pos, width, height):
 
 def cells():
     fig, ax = plt.subplots(figsize=(10, 6))
-    bbox = dict(
-        boxstyle="round",
-        ec=(64 / 255, 176 / 255, 166 / 255, 1),
-        fc=(64 / 255, 176 / 255, 166 / 255, 0.5),
-    )
 
-    text_style = dict(
-        ha="center",
-        va="center",
-        bbox=bbox,
-        size=25,
-    )
+    ax.text(50, 75, '"The"\ncell', fontsize=30, va="center", ha="center")
 
-    ax.text(
-        40,
-        95,
-        "Primitive cell\n" R"$\boldsymbol{A}$",
-        **text_style,
-    )
-    ax.text(
-        40,
-        40,
-        "Reciprocal cell\n" R"$\boldsymbol{B}$",
-        **text_style,
-    )
-    ax.text(
-        140,
-        95,
-        "Standardized\nprimitive cell\n" R"$\boldsymbol{A^s}$",
-        **text_style,
-    )
-    ax.text(
-        140,
-        30,
-        "Standardized\nconventional cell\n" R"$\boldsymbol{A^{cs}}$",
-        **text_style,
-    )
+    ax.text(25, 25, "Conventional\ncell", fontsize=30, va="center", ha="center")
+    ax.text(75, 25, "Primitive\ncell", fontsize=30, va="center", ha="center")
 
-    ax.text(89, 102, R"$\boldsymbol{S}$", ha="center", va="bottom", size=25)
-    ax.quiver(
-        76,
-        98,
-        26,
-        0,
+    arrow_style = dict(
         angles="xy",
         scale_units="xy",
         scale=1,
@@ -105,65 +68,16 @@ def cells():
         headaxislength=2.7,
         color="#728EFC",
     )
-    ax.text(89, 88, R"$\boldsymbol{S}^{-1}$", ha="center", va="top", size=25)
-    ax.quiver(
-        102,
-        92,
-        -26,
-        0,
-        angles="xy",
-        scale_units="xy",
-        scale=1,
-        headlength=3,
-        headaxislength=2.7,
-        color="#728EFC",
-    )
+    ax.quiver(40, 60, -15, -20, **arrow_style)
+    ax.quiver(60, 60, 15, -20, **arrow_style)
 
-    ax.text(145, 63, R"$\boldsymbol{C}$", ha="left", va="center", size=25)
-    ax.quiver(
-        143,
-        73,
-        0,
-        -20,
-        angles="xy",
-        scale_units="xy",
-        scale=1,
-        headlength=3,
-        headaxislength=2.7,
-        color="#728EFC",
-    )
-    ax.text(135, 63, R"$\boldsymbol{C}^{-1}$", ha="right", va="center", size=25)
-    ax.quiver(
-        137,
-        53,
-        0,
-        20,
-        angles="xy",
-        scale_units="xy",
-        scale=1,
-        headlength=3,
-        headaxislength=2.7,
-        color="#728EFC",
-    )
-    ax.quiver(
-        40,
-        76,
-        0,
-        -16,
-        angles="xy",
-        scale_units="xy",
-        scale=1,
-        headlength=3,
-        headaxislength=2.7,
-        color="#BD2A7B",
-    )
-
-    ax.set_xlim(0, 200)
-    ax.set_ylim(0, 120)
+    ax.set_xlim(0, 100)
+    ax.set_ylim(0, 100)
     ax.axis("off")
 
-    filename = os.path.join(ROOT_DIR, "docs", "source", "img", "cell-relations.png")
+    filename = os.path.join(ROOT_DIR, "docs", "source", "img", "cell-types.png")
     plt.savefig(filename, dpi=600, bbox_inches="tight")
+    plt.close()
     print(f"File is saved in {os.path.abspath(filename)}")
 
 

@@ -159,9 +159,10 @@ def main():
 
     ax.axis("off")
     filename = os.path.join(
-        ROOT_DIR, "docs", "source", "contribute", "img", "origin-upstream-local.png"
+        ROOT_DIR, "docs", "source", "img", "origin-upstream-local.png"
     )
     plt.savefig(filename, dpi=600, bbox_inches="tight")
+    plt.close()
     print(f"File is saved in {os.path.abspath(filename)}")
 
 
