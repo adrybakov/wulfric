@@ -16,25 +16,25 @@ In order to submit a bug report log in to your github account and go to the |rep
 
 Then click on the "Issues" tab.
 
-.. figure:: img/issue-1.png
+.. figure:: ../img/github-screenshots/issue-1.png
     :target: ../_images/issue-1.png
     :align: center
 
 Click on the "New issue" button:
 
-.. figure:: img/issue-2.png
+.. figure:: ../img/github-screenshots/issue-2.png
     :target: ../_images/issue-2.png
     :align: center
 
 You will see two prepared template for the issues. Click on the "Get started" for the
 "Bug report" template:
 
-.. figure:: img/bug-1.png
+.. figure:: ../img/github-screenshots/bug-1.png
     :target: ../_images/bug-1.png
     :align: center
 
 Fill in the template and click on the "Submit new issue" button:
 
-.. figure:: img/bug-2.png
+.. figure:: ../img/github-screenshots/bug-2.png
     :target: ../_images/bug-2.png
     :align: center

@@ -12,25 +12,25 @@ In order to submit a feature request log in to your github account and go to the
 
 Then click on the "Issues" tab.
 
-.. figure:: img/issue-1.png
+.. figure:: ../img/github-screenshots/issue-1.png
     :target: ../_images/issue-1.png
     :align: center
 
 Click on the "New issue" button:
 
-.. figure:: img/issue-2.png
+.. figure:: ../img/github-screenshots/issue-2.png
     :target: ../_images/issue-2.png
     :align: center
 
 You will see two prepared template for the issues. Click on the "Get started" for the
 "Feature request" template:
 
-.. figure:: img/feature-1.png
+.. figure:: ../img/github-screenshots/feature-1.png
     :target: ../_images/feature-1.png
     :align: center
 
 Fill in the template and click on the "Submit new issue" button:
 
-.. figure:: img/feature-2.png
+.. figure:: ../img/github-screenshots/feature-2.png
     :target: ../_images/feature-2.png
     :align: center
