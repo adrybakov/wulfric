@@ -713,8 +713,7 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
 
     # Get mapping from original atoms to conventional ones through types
     types_mapping = {
-        type_index: index
-        for index, type_index in enumerate(spglib_data.conventional_types)
+        type_index: index for index, type_index in enumerate(spglib_data.original_types)
     }
 
     # Populate conv_atoms with all keys that have been defined in the original atoms.
