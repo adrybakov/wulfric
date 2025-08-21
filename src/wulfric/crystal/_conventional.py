@@ -620,7 +620,7 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
     ``atoms["spglib_types"][i] == atoms["spglib_types"][j]``), but they have different
     property that is stored in ``atoms[key]`` (i.e ``atoms[key][i] != atoms[key][j]``),
     then those two atoms are considered equal. In the returned ``conventional_atoms``
-    the value of the ``conventional_atoms[key]`` are populated base on the *last* found
+    the value of the ``conventional_atoms[key]`` are populated based on the *last* found
     atom in ``atoms`` with each for spglib_type. This rule do not apply to the "positions"
     key.
 
