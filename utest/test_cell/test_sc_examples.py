@@ -43,7 +43,7 @@ from wulfric.cell._sc_examples import (
     get_example_cell_SC,
 )
 from wulfric.constants._numerical import TORADIANS
-from wulfric.constants._sc_notation import BRAVAIS_LATTICE_VARIATIONS
+from wulfric.constants._sc_convention import BRAVAIS_LATTICE_VARIATIONS
 
 ANGLE_TOLERANCE = 1e-4
 

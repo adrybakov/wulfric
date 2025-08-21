@@ -26,7 +26,7 @@ import numpy as np
 
 from wulfric.cell._basic_manipulation import from_params, get_reciprocal
 from wulfric.constants._numerical import TORADIANS
-from wulfric.constants._sc_notation import BRAVAIS_LATTICE_VARIATIONS
+from wulfric.constants._sc_convention import BRAVAIS_LATTICE_VARIATIONS
 
 # Save local scope at this moment
 old_dir = set(dir())

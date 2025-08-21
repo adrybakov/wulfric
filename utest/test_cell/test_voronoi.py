@@ -23,7 +23,7 @@ import pytest
 from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._sc_examples import get_example_cell_SC
 from wulfric.cell._voronoi import _get_voronoi_cell
-from wulfric.constants._sc_notation import (
+from wulfric.constants._sc_convention import (
     BRAVAIS_LATTICE_VARIATIONS as lattice_variations,
 )
 

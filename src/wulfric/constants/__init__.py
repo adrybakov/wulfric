@@ -20,5 +20,5 @@
 # ================================ END LICENSE =================================
 from ._atoms import *
 from ._numerical import *
-from ._sc_notation import *
+from ._sc_convention import *
 from ._space_groups import *
