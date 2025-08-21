@@ -21,4 +21,5 @@
 from ._atoms import *
 from ._numerical import *
 from ._sc_convention import *
+from ._hpkot_convention import *
 from ._space_groups import *
