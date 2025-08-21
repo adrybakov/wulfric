@@ -14,14 +14,25 @@ Atoms
 
     ATOM_SPECIES
 
-Bravais Lattices (by SC)
-========================
+Setyawan and Curtarolo convention
+=================================
 
 .. autosummary::
     :toctree: generated/
 
-    BRAVAIS_LATTICE_NAMES
-    BRAVAIS_LATTICE_VARIATIONS
+    SC_BRAVAIS_LATTICE_SHORT_NAMES
+    SC_BRAVAIS_LATTICE_LONG_NAMES
+    SC_CONVENTIONAL_TO_PRIMITIVE
+    SC_BRAVAIS_LATTICE_VARIATIONS
+    SC_DEFAULT_K_PATHS
+
+Hinuma, Pizzi, Kumagai, Oba, Tanaka convention
+==============================================
+
+.. autosummary::
+    :toctree: generated/
+
+    HPKOT_CONVENTIONAL_TO_PRIMITIVE
 
 Angle conversion
 ================

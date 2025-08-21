@@ -22,7 +22,7 @@ import os
 
 import numpy as np
 
-from wulfric.constants import C_MATRICES
+from wulfric.constants import CONVENTIONAL_TO_PRIMITIVE as C_MATRICES
 
 ROOT_DIR = "."
 OUTPUT_PATH = os.path.join(

@@ -26,7 +26,7 @@ import numpy as np
 
 from wulfric.cell._basic_manipulation import from_params, get_reciprocal
 from wulfric.constants._numerical import TORADIANS
-from wulfric.constants._sc_convention import BRAVAIS_LATTICE_VARIATIONS
+from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_VARIATIONS
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -827,11 +827,11 @@ def get_example_cell_SC(lattice_variation: str = None):
                [1.57079633, 1.96349541, 0.        ]])
     """
 
-    correct_inputs = set(map(lambda x: x.lower(), BRAVAIS_LATTICE_VARIATIONS)).union(
+    correct_inputs = set(map(lambda x: x.lower(), SC_BRAVAIS_LATTICE_VARIATIONS)).union(
         set(
             map(
                 lambda x: x.translate(str.maketrans("", "", "12345ab")).lower(),
-                BRAVAIS_LATTICE_VARIATIONS,
+                SC_BRAVAIS_LATTICE_VARIATIONS,
             )
         )
     )
