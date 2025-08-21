@@ -18,7 +18,7 @@ dist
 
 # Docs
 docs/make.bat
-docs/build
+docs/_build
 docs/source/api/generated
 *generated
 

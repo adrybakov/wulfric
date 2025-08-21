@@ -5,7 +5,7 @@
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
-BUILDDIR      = build
+BUILDDIR      = _build
 VERSION="None"
 NAME="None"
 SCRIPT="all"
@@ -48,7 +48,7 @@ doctest:
 	@$(SPHINXBUILD) -b doctest "docs/$(SOURCEDIR)" "docs/$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 clean:
-	-@rm -r docs/build
+	-@rm -r docs/_build
 	-@rm -r docs/source/api/generated
 	-@rm -r docs/source/api/crystal/generated
 	-@rm -r docs/source/api/_autosummary

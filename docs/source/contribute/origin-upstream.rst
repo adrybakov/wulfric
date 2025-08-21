@@ -8,7 +8,7 @@ We use the terminology **Upstream** and **Origin** for the two remote repositori
 are used in the development process. Relationships between them and the local repository
 with the most common command for communication between them is
 
-.. figure:: img/origin-upstream-local.png
+.. figure:: ../img/origin-upstream-local.png
     :target: ../_images/origin-upstream-local.png
     :align: center
 
