@@ -31,7 +31,7 @@ show or save the figure:
 
 .. doctest::
 
-    >>> cell = wulfric.cell.HEX_SC(2, 1)
+    >>> cell = wulfric.cell.SC_HEX(2, 1)
     >>> pe.plot_brillouin(cell,  legend_label="Brillouin zone", color="red") # doctest: +SKIP
     >>> pe.plot_kpath(cell,  legend_label="K-path", color="black") # doctest: +SKIP
     >>> pe.save('hex_cell.html') # doctest: +SKIP

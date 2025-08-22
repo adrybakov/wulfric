@@ -26,20 +26,20 @@ from hypothesis import given
 from hypothesis import strategies as st
 
 from wulfric.cell._sc_examples import (
-    BCC_SC,
-    BCT_SC,
-    CUB_SC,
-    FCC_SC,
-    HEX_SC,
-    MCL_SC,
-    MCLC_SC,
-    ORC_SC,
-    ORCC_SC,
-    ORCF_SC,
-    ORCI_SC,
-    RHL_SC,
-    TET_SC,
-    # TRI_SC,
+    SC_BCC,
+    SC_BCT,
+    SC_CUB,
+    SC_FCC,
+    SC_HEX,
+    SC_MCL,
+    SC_MCLC,
+    SC_ORC,
+    SC_ORCC,
+    SC_ORCF,
+    SC_ORCI,
+    SC_RHL,
+    SC_TET,
+    # SC_TRI,
     get_example_cell_SC,
 )
 from wulfric.constants._numerical import TORADIANS
@@ -49,20 +49,20 @@ ANGLE_TOLERANCE = 1e-4
 
 
 @given(st.floats(min_value=0, allow_infinity=False, allow_nan=False))
-def test_CUB_SC(a):
-    cell = CUB_SC(a)
+def test_SC_CUB(a):
+    cell = SC_CUB(a)
     assert np.allclose(cell, np.eye(3) * a)
 
 
 @given(st.floats(min_value=0, allow_infinity=False, allow_nan=False))
-def test_FCC_SC(a):
-    cell = FCC_SC(a)
+def test_SC_FCC(a):
+    cell = SC_FCC(a)
     assert np.allclose(cell, (np.ones((3, 3)) - np.eye(3)) * a / 2)
 
 
 @given(st.floats(min_value=0, allow_infinity=False, allow_nan=False))
-def test_BCC_SC(a):
-    cell = BCC_SC(a)
+def test_SC_BCC(a):
+    cell = SC_BCC(a)
     assert np.allclose(cell, (np.ones((3, 3)) - 2 * np.eye(3)) * a / 2)
 
 
@@ -70,8 +70,8 @@ def test_BCC_SC(a):
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
 )
-def test_TET_SC(a, c):
-    cell = TET_SC(a, c)
+def test_SC_TET(a, c):
+    cell = SC_TET(a, c)
     assert np.allclose(cell, np.diag([a, a, c]))
 
 
@@ -79,8 +79,8 @@ def test_TET_SC(a, c):
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
 )
-def test_BCT_SC(a, c):
-    cell = BCT_SC(a, c)
+def test_SC_BCT(a, c):
+    cell = SC_BCT(a, c)
     correct_cell = (np.ones((3, 3)) - 2 * np.eye(3)) / 2
     correct_cell[:, :2] *= a
     correct_cell[:, 2] *= c
@@ -92,8 +92,8 @@ def test_BCT_SC(a, c):
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
 )
-def test_ORC_SC(a, b, c):
-    cell = ORC_SC(a, b, c)
+def test_SC_ORC(a, b, c):
+    cell = SC_ORC(a, b, c)
     assert np.allclose(cell, np.diag([a, b, c]))
 
 
@@ -102,8 +102,8 @@ def test_ORC_SC(a, b, c):
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
 )
-def test_ORCF_SC(a, b, c):
-    cell = ORCF_SC(a, b, c)
+def test_SC_ORCF(a, b, c):
+    cell = SC_ORCF(a, b, c)
     correct_cell = (np.ones((3, 3)) - np.eye(3)) / 2
     correct_cell[:, 0] *= a
     correct_cell[:, 1] *= b
@@ -116,8 +116,8 @@ def test_ORCF_SC(a, b, c):
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
 )
-def test_ORCI_SC(a, b, c):
-    cell = ORCI_SC(a, b, c)
+def test_SC_ORCI(a, b, c):
+    cell = SC_ORCI(a, b, c)
     correct_cell = (np.ones((3, 3)) - 2 * np.eye(3)) / 2
     correct_cell[:, 0] *= a
     correct_cell[:, 1] *= b
@@ -130,8 +130,8 @@ def test_ORCI_SC(a, b, c):
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
 )
-def test_ORCC_SC(a, b, c):
-    cell = ORCC_SC(a, b, c)
+def test_SC_ORCC(a, b, c):
+    cell = SC_ORCC(a, b, c)
     correct_cell = np.array([[1, -1, 0], [1, 1, 0], [0, 0, 2]]) / 2
     correct_cell[:, 0] *= a
     correct_cell[:, 1] *= b
@@ -143,8 +143,8 @@ def test_ORCC_SC(a, b, c):
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
 )
-def test_HEX_SC(a, c):
-    cell = HEX_SC(a, c)
+def test_SC_HEX(a, c):
+    cell = SC_HEX(a, c)
     correct_cell = np.array(
         [[a / 2, -a * sqrt(3) / 2, 0], [a / 2, a * sqrt(3) / 2, 0], [0, 0, c]]
     )
@@ -155,8 +155,8 @@ def test_HEX_SC(a, c):
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=ANGLE_TOLERANCE, max_value=120.0 - ANGLE_TOLERANCE),
 )
-def test_RHL_SC(a, alpha):
-    cell = RHL_SC(a, alpha)
+def test_SC_RHL(a, alpha):
+    cell = SC_RHL(a, alpha)
     alpha *= TORADIANS
     correct_cell = np.array(
         [
@@ -178,8 +178,8 @@ def test_RHL_SC(a, alpha):
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=ANGLE_TOLERANCE, max_value=180.0),
 )
-def test_MCL_SC(a, b, c, alpha):
-    cell = MCL_SC(a, b, c, alpha)
+def test_SC_MCL(a, b, c, alpha):
+    cell = SC_MCL(a, b, c, alpha)
 
     alpha *= TORADIANS
     correct_cell = np.array(
@@ -198,8 +198,8 @@ def test_MCL_SC(a, b, c, alpha):
     st.floats(min_value=0, allow_infinity=False, allow_nan=False),
     st.floats(min_value=ANGLE_TOLERANCE, max_value=180.0),
 )
-def test_MCLC_SC(a, b, c, alpha):
-    cell = MCLC_SC(a, b, c, alpha)
+def test_SC_MCLC(a, b, c, alpha):
+    cell = SC_MCLC(a, b, c, alpha)
 
     alpha *= TORADIANS
 

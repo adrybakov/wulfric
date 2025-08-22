@@ -46,20 +46,20 @@ Bravais lattice constructors as per SC [1]_
   :toctree: generated/
 
   get_example_cell_SC
-  CUB_SC
-  FCC_SC
-  BCC_SC
-  TET_SC
-  BCT_SC
-  ORC_SC
-  ORCF_SC
-  ORCI_SC
-  ORCC_SC
-  HEX_SC
-  RHL_SC
-  MCL_SC
-  MCLC_SC
-  TRI_SC
+  SC_CUB
+  SC_FCC
+  SC_BCC
+  SC_TET
+  SC_BCT
+  SC_ORC
+  SC_ORCF
+  SC_ORCI
+  SC_ORCC
+  SC_HEX
+  SC_RHL
+  SC_MCL
+  SC_MCLC
+  SC_TRI
 
 References
 ==========

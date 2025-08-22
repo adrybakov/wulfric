@@ -97,11 +97,11 @@ use dedicated functions:
 
 .. doctest::
 
-  >>> wulfric.cell.CUB_SC(a=1)
+  >>> wulfric.cell.SC_CUB(a=1)
   array([[1, 0, 0],
          [0, 1, 0],
          [0, 0, 1]])
-  >>> mcl = wulfric.cell.MCL_SC(a=1, b=4, c=5, alpha=70)
+  >>> mcl = wulfric.cell.SC_MCL(a=1, b=4, c=5, alpha=70)
   >>> mcl
   array([[1.        , 0.        , 0.        ],
          [0.        , 4.        , 0.        ],

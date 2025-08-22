@@ -34,7 +34,7 @@ old_dir.add("old_dir")
 
 
 # Primitive cell`s construction
-def CUB_SC(a: float):
+def SC_CUB(a: float):
     r"""
     Constructs primitive cubic cell as defined in [1]_.
 
@@ -70,7 +70,7 @@ def CUB_SC(a: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.CUB_SC(a=2)
+        >>> wulfric.cell.SC_CUB(a=2)
         array([[2, 0, 0],
                [0, 2, 0],
                [0, 0, 2]])
@@ -79,7 +79,7 @@ def CUB_SC(a: float):
     return np.array([[a, 0, 0], [0, a, 0], [0, 0, a]])
 
 
-def FCC_SC(a: float):
+def SC_FCC(a: float):
     r"""
     Constructs primitive face-centred cubic cell as defined in [1]_.
 
@@ -115,7 +115,7 @@ def FCC_SC(a: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.FCC_SC(a=2)
+        >>> wulfric.cell.SC_FCC(a=2)
         array([[0., 1., 1.],
                [1., 0., 1.],
                [1., 1., 0.]])
@@ -124,7 +124,7 @@ def FCC_SC(a: float):
     return np.array([[0, a / 2, a / 2], [a / 2, 0, a / 2], [a / 2, a / 2, 0]])
 
 
-def BCC_SC(a: float):
+def SC_BCC(a: float):
     r"""
     Constructs primitive body-centred cubic cell as defined in [1]_.
 
@@ -160,7 +160,7 @@ def BCC_SC(a: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.BCC_SC(a=2)
+        >>> wulfric.cell.SC_BCC(a=2)
         array([[-1.,  1.,  1.],
                [ 1., -1.,  1.],
                [ 1.,  1., -1.]])
@@ -171,7 +171,7 @@ def BCC_SC(a: float):
     )
 
 
-def TET_SC(a: float, c: float):
+def SC_TET(a: float, c: float):
     r"""
     Constructs primitive tetragonal cell as defined in [1]_.
 
@@ -209,7 +209,7 @@ def TET_SC(a: float, c: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.TET_SC(a=2, c=5)
+        >>> wulfric.cell.SC_TET(a=2, c=5)
         array([[2, 0, 0],
                [0, 2, 0],
                [0, 0, 5]])
@@ -218,7 +218,7 @@ def TET_SC(a: float, c: float):
     return np.array([[a, 0, 0], [0, a, 0], [0, 0, c]])
 
 
-def BCT_SC(a: float, c: float):
+def SC_BCT(a: float, c: float):
     r"""
     Constructs primitive body-centred tetragonal cell as defined in [1]_.
 
@@ -256,7 +256,7 @@ def BCT_SC(a: float, c: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.BCT_SC(a=2, c=5)
+        >>> wulfric.cell.SC_BCT(a=2, c=5)
         array([[-1. ,  1. ,  2.5],
                [ 1. , -1. ,  2.5],
                [ 1. ,  1. , -2.5]])
@@ -267,7 +267,7 @@ def BCT_SC(a: float, c: float):
     )
 
 
-def ORC_SC(a: float, b: float, c: float):
+def SC_ORC(a: float, b: float, c: float):
     r"""
     Constructs primitive orthorhombic cell as defined in [1]_.
 
@@ -310,7 +310,7 @@ def ORC_SC(a: float, b: float, c: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.ORC_SC(a=3, b=5, c=7)
+        >>> wulfric.cell.SC_ORC(a=3, b=5, c=7)
         array([[3, 0, 0],
                [0, 5, 0],
                [0, 0, 7]])
@@ -319,7 +319,7 @@ def ORC_SC(a: float, b: float, c: float):
     return np.array([[a, 0, 0], [0, b, 0], [0, 0, c]])
 
 
-def ORCF_SC(a: float, b: float, c: float):
+def SC_ORCF(a: float, b: float, c: float):
     r"""
     Constructs primitive face-centred orthorhombic cell as defined in [1]_.
 
@@ -362,7 +362,7 @@ def ORCF_SC(a: float, b: float, c: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.ORCF_SC(a=3, b=5, c=7)
+        >>> wulfric.cell.SC_ORCF(a=3, b=5, c=7)
         array([[0. , 2.5, 3.5],
                [1.5, 0. , 3.5],
                [1.5, 2.5, 0. ]])
@@ -371,7 +371,7 @@ def ORCF_SC(a: float, b: float, c: float):
     return np.array([[0, b / 2, c / 2], [a / 2, 0, c / 2], [a / 2, b / 2, 0]])
 
 
-def ORCI_SC(a: float, b: float, c: float):
+def SC_ORCI(a: float, b: float, c: float):
     r"""
     Constructs primitive body-centred orthorhombic cell as defined in [1]_.
 
@@ -414,7 +414,7 @@ def ORCI_SC(a: float, b: float, c: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.ORCI_SC(a=3, b=5, c=7)
+        >>> wulfric.cell.SC_ORCI(a=3, b=5, c=7)
         array([[-1.5,  2.5,  3.5],
                [ 1.5, -2.5,  3.5],
                [ 1.5,  2.5, -3.5]])
@@ -425,7 +425,7 @@ def ORCI_SC(a: float, b: float, c: float):
     )
 
 
-def ORCC_SC(a: float, b: float, c: float):
+def SC_ORCC(a: float, b: float, c: float):
     r"""
     Constructs primitive base-centred orthorhombic cell as defined in [1]_.
 
@@ -468,7 +468,7 @@ def ORCC_SC(a: float, b: float, c: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.ORCC_SC(a=3, b=5, c=7)
+        >>> wulfric.cell.SC_ORCC(a=3, b=5, c=7)
         array([[ 1.5, -2.5,  0. ],
                [ 1.5,  2.5,  0. ],
                [ 0. ,  0. ,  7. ]])
@@ -477,7 +477,7 @@ def ORCC_SC(a: float, b: float, c: float):
     return np.array([[a / 2, -b / 2, 0], [a / 2, b / 2, 0], [0, 0, c]])
 
 
-def HEX_SC(a: float, c: float):
+def SC_HEX(a: float, c: float):
     r"""
     Constructs primitive hexagonal cell as defined in [1]_.
 
@@ -515,7 +515,7 @@ def HEX_SC(a: float, c: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.HEX_SC(a=3, c=5)
+        >>> wulfric.cell.SC_HEX(a=3, c=5)
         array([[ 1.5       , -2.59807621,  0.        ],
                [ 1.5       ,  2.59807621,  0.        ],
                [ 0.        ,  0.        ,  5.        ]])
@@ -526,7 +526,7 @@ def HEX_SC(a: float, c: float):
     )
 
 
-def RHL_SC(a: float, alpha: float):
+def SC_RHL(a: float, alpha: float):
     r"""
     Constructs primitive rhombohedral cell as defined in [1]_.
 
@@ -568,7 +568,7 @@ def RHL_SC(a: float, alpha: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.RHL_SC(a=3, alpha=40)
+        >>> wulfric.cell.SC_RHL(a=3, alpha=40)
         array([[ 2.81907786, -1.02606043,  0.        ],
                [ 2.81907786,  1.02606043,  0.        ],
                [ 2.44562241,  0.        ,  1.73750713]])
@@ -588,7 +588,7 @@ def RHL_SC(a: float, alpha: float):
     )
 
 
-def MCL_SC(a: float, b: float, c: float, alpha: float):
+def SC_MCL(a: float, b: float, c: float, alpha: float):
     r"""
     Constructs primitive monoclinic cell as defined in [1]_.
 
@@ -635,7 +635,7 @@ def MCL_SC(a: float, b: float, c: float, alpha: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.MCL_SC(a=3, b=5, c=7, alpha=45)
+        >>> wulfric.cell.SC_MCL(a=3, b=5, c=7, alpha=45)
         array([[3.        , 0.        , 0.        ],
                [0.        , 5.        , 0.        ],
                [0.        , 4.94974747, 4.94974747]])
@@ -645,7 +645,7 @@ def MCL_SC(a: float, b: float, c: float, alpha: float):
     return np.array([[a, 0, 0], [0, b, 0], [0, c * cos(alpha), c * sin(alpha)]])
 
 
-def MCLC_SC(a: float, b: float, c: float, alpha: float):
+def SC_MCLC(a: float, b: float, c: float, alpha: float):
     r"""
     Constructs primitive base-centred monoclinic cell as defined in [1]_.
 
@@ -693,7 +693,7 @@ def MCLC_SC(a: float, b: float, c: float, alpha: float):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.MCLC_SC(a=3, b=5, c=7, alpha=45)
+        >>> wulfric.cell.SC_MCLC(a=3, b=5, c=7, alpha=45)
         array([[ 1.5       ,  2.5       ,  0.        ],
                [-1.5       ,  2.5       ,  0.        ],
                [ 0.        ,  4.94974747,  4.94974747]])
@@ -709,7 +709,7 @@ def MCLC_SC(a: float, b: float, c: float, alpha: float):
     )
 
 
-def TRI_SC(
+def SC_TRI(
     a: float,
     b: float,
     c: float,
@@ -768,7 +768,7 @@ def TRI_SC(
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.TRI_SC(a=3, b=5, c=7, alpha=45, beta=33, gamma=21)
+        >>> wulfric.cell.SC_TRI(a=3, b=5, c=7, alpha=45, beta=33, gamma=21)
         array([[ 3.        ,  0.        ,  0.        ],
                [ 4.66790213,  1.79183975,  0.        ],
                [ 5.87069398, -1.48176621,  3.51273699]])
@@ -851,42 +851,42 @@ def get_example_cell_SC(lattice_variation: str = None):
     lattice_variation = lattice_variation.lower()
 
     if lattice_variation == "cub":
-        cell = CUB_SC(PI)
+        cell = SC_CUB(PI)
     elif lattice_variation == "fcc":
-        cell = FCC_SC(PI)
+        cell = SC_FCC(PI)
     elif lattice_variation == "bcc":
-        cell = BCC_SC(PI)
+        cell = SC_BCC(PI)
     elif lattice_variation == "tet":
-        cell = TET_SC(PI, 1.5 * PI)
+        cell = SC_TET(PI, 1.5 * PI)
     elif lattice_variation in ["bct1", "bct"]:
-        cell = BCT_SC(1.5 * PI, PI)
+        cell = SC_BCT(1.5 * PI, PI)
     elif lattice_variation == "bct2":
-        cell = BCT_SC(PI, 1.5 * PI)
+        cell = SC_BCT(PI, 1.5 * PI)
     elif lattice_variation == "orc":
-        cell = ORC_SC(PI, 1.5 * PI, 2 * PI)
+        cell = SC_ORC(PI, 1.5 * PI, 2 * PI)
     elif lattice_variation in ["orcf1", "orcf"]:
-        cell = ORCF_SC(0.7 * PI, 5 / 4 * PI, 5 / 3 * PI)
+        cell = SC_ORCF(0.7 * PI, 5 / 4 * PI, 5 / 3 * PI)
     elif lattice_variation == "orcf2":
-        cell = ORCF_SC(1.2 * PI, 5 / 4 * PI, 5 / 3 * PI)
+        cell = SC_ORCF(1.2 * PI, 5 / 4 * PI, 5 / 3 * PI)
     elif lattice_variation == "orcf3":
-        cell = ORCF_SC(PI, 5 / 4 * PI, 5 / 3 * PI)
+        cell = SC_ORCF(PI, 5 / 4 * PI, 5 / 3 * PI)
     elif lattice_variation == "orci":
-        return ORCI_SC(PI, 1.3 * PI, 1.7 * PI)
+        return SC_ORCI(PI, 1.3 * PI, 1.7 * PI)
     elif lattice_variation == "orcc":
-        cell = ORCC_SC(PI, 1.3 * PI, 1.7 * PI)
+        cell = SC_ORCC(PI, 1.3 * PI, 1.7 * PI)
     elif lattice_variation == "hex":
-        cell = HEX_SC(PI, 2 * PI)
+        cell = SC_HEX(PI, 2 * PI)
     elif lattice_variation in ["rhl1", "rhl"]:
         # If alpha = 60 it is effectively FCC!
-        cell = RHL_SC(PI, 70)
+        cell = SC_RHL(PI, 70)
     elif lattice_variation == "rhl2":
-        cell = RHL_SC(PI, 110)
+        cell = SC_RHL(PI, 110)
     elif lattice_variation == "mcl":
-        cell = MCL_SC(PI, 1.3 * PI, 1.6 * PI, alpha=75)
+        cell = SC_MCL(PI, 1.3 * PI, 1.6 * PI, alpha=75)
     elif lattice_variation in ["mclc1", "mclc"]:
-        cell = MCLC_SC(PI, 1.4 * PI, 1.7 * PI, 80)
+        cell = SC_MCLC(PI, 1.4 * PI, 1.7 * PI, 80)
     elif lattice_variation == "mclc2":
-        cell = MCLC_SC(1.4 * PI * sin(75 * TORADIANS), 1.4 * PI, 1.7 * PI, 75)
+        cell = SC_MCLC(1.4 * PI * sin(75 * TORADIANS), 1.4 * PI, 1.7 * PI, 75)
     elif lattice_variation == "mclc3":
         b = PI
         x = 1.1
@@ -894,7 +894,7 @@ def get_example_cell_SC(lattice_variation: str = None):
         ralpha = alpha * TORADIANS
         c = b * (x**2) / (x**2 - 1) * cos(ralpha) * 1.8
         a = x * b * sin(ralpha)
-        cell = MCLC_SC(a, b, c, alpha)
+        cell = SC_MCLC(a, b, c, alpha)
     elif lattice_variation == "mclc4":
         b = PI
         x = 1.2
@@ -902,7 +902,7 @@ def get_example_cell_SC(lattice_variation: str = None):
         ralpha = alpha * TORADIANS
         c = b * (x**2) / (x**2 - 1) * cos(ralpha)
         a = x * b * sin(ralpha)
-        cell = MCLC_SC(a, b, c, alpha)
+        cell = SC_MCLC(a, b, c, alpha)
     elif lattice_variation == "mclc5":
         b = PI
         x = 1.4
@@ -910,15 +910,15 @@ def get_example_cell_SC(lattice_variation: str = None):
         ralpha = alpha * TORADIANS
         c = b * (x**2) / (x**2 - 1) * cos(ralpha) * 0.9
         a = x * b * sin(ralpha)
-        cell = MCLC_SC(a, b, c, alpha)
+        cell = SC_MCLC(a, b, c, alpha)
     elif lattice_variation in ["tri1a", "tri1", "tri", "tria"]:
-        cell = TRI_SC(1, 1.5, 2, 120, 110, 100, input_reciprocal=True)
+        cell = SC_TRI(1, 1.5, 2, 120, 110, 100, input_reciprocal=True)
     elif lattice_variation in ["tri2a", "tri2"]:
-        cell = TRI_SC(1, 1.5, 2, 120, 110, 90, input_reciprocal=True)
+        cell = SC_TRI(1, 1.5, 2, 120, 110, 90, input_reciprocal=True)
     elif lattice_variation in ["tri1b", "trib"]:
-        cell = TRI_SC(1, 1.5, 2, 60, 70, 80, input_reciprocal=True)
+        cell = SC_TRI(1, 1.5, 2, 60, 70, 80, input_reciprocal=True)
     elif lattice_variation == "tri2b":
-        cell = TRI_SC(1, 1.5, 2, 60, 70, 90, input_reciprocal=True)
+        cell = SC_TRI(1, 1.5, 2, 60, 70, 90, input_reciprocal=True)
 
     return cell
 

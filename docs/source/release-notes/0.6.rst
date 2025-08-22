@@ -24,20 +24,20 @@ changes are listed explicitly.
   ``wulfric.visualization.PlotlyBackend`` ``wulfric.PlotlyEngine``
   ``wulfric.cell.lepage``                 ``wulfric.lepage``
   ``wulfric.cell.get_cell_example``       ``wulfric.cell.get_example_cell_SC``
-  ``wulfric.cell.CUB``                    ``wulfric.cell.CUB_SC``
-  ``wulfric.cell.FCC``                    ``wulfric.cell.FCC_SC``
-  ``wulfric.cell.BCC``                    ``wulfric.cell.BCC_SC``
-  ``wulfric.cell.TET``                    ``wulfric.cell.TET_SC``
-  ``wulfric.cell.BCT``                    ``wulfric.cell.BCT_SC``
-  ``wulfric.cell.ORC``                    ``wulfric.cell.ORC_SC``
-  ``wulfric.cell.ORCF``                   ``wulfric.cell.ORCF_SC``
-  ``wulfric.cell.ORCI``                   ``wulfric.cell.ORCI_SC``
-  ``wulfric.cell.ORCC``                   ``wulfric.cell.ORCC_SC``
-  ``wulfric.cell.HEX``                    ``wulfric.cell.HEX_SC``
-  ``wulfric.cell.RHL``                    ``wulfric.cell.RHL_SC``
-  ``wulfric.cell.MCL``                    ``wulfric.cell.MCL_SC``
-  ``wulfric.cell.MCLC``                   ``wulfric.cell.MCLC_SC``
-  ``wulfric.cell.TRI``                    ``wulfric.cell.TRI_SC``
+  ``wulfric.cell.CUB``                    ``wulfric.cell.SC_CUB``
+  ``wulfric.cell.FCC``                    ``wulfric.cell.SC_FCC``
+  ``wulfric.cell.BCC``                    ``wulfric.cell.SC_BCC``
+  ``wulfric.cell.TET``                    ``wulfric.cell.SC_TET``
+  ``wulfric.cell.BCT``                    ``wulfric.cell.SC_BCT``
+  ``wulfric.cell.ORC``                    ``wulfric.cell.SC_ORC``
+  ``wulfric.cell.ORCF``                   ``wulfric.cell.SC_ORCF``
+  ``wulfric.cell.ORCI``                   ``wulfric.cell.SC_ORCI``
+  ``wulfric.cell.ORCC``                   ``wulfric.cell.SC_ORCC``
+  ``wulfric.cell.HEX``                    ``wulfric.cell.SC_HEX``
+  ``wulfric.cell.RHL``                    ``wulfric.cell.SC_RHL``
+  ``wulfric.cell.MCL``                    ``wulfric.cell.SC_MCL``
+  ``wulfric.cell.MCLC``                   ``wulfric.cell.SC_MCLC``
+  ``wulfric.cell.TRI``                    ``wulfric.cell.SC_TRI``
   ======================================= =======================================
 
   and a number of the private ones. The renaming is aimed at the unification of the code
