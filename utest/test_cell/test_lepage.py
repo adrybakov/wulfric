@@ -23,14 +23,14 @@ import pytest
 from wulfric._lepage import lepage
 from wulfric.cell._basic_manipulation import from_params
 from wulfric.cell._sc_examples import get_example_cell_SC
-from wulfric.constants._sc_convention import BRAVAIS_LATTICE_VARIATIONS
+from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_VARIATIONS
 
 
 ################################################################################
 #                                     LePage                                   #
 ################################################################################
 @pytest.mark.parametrize(
-    "variation", BRAVAIS_LATTICE_VARIATIONS, ids=BRAVAIS_LATTICE_VARIATIONS
+    "variation", SC_BRAVAIS_LATTICE_VARIATIONS, ids=SC_BRAVAIS_LATTICE_VARIATIONS
 )
 def test_lepage(variation):
     cell = get_example_cell_SC(variation)

@@ -23,7 +23,7 @@ import numpy as np
 from wulfric.cell._voronoi import _get_voronoi_cell
 
 
-def test_voronoi_lattice_points_range():
+def test_voronoi_get_lattice_points_range():
     cell = np.array(
         [
             [2.8480, 0.0000, 0.0000],

@@ -43,7 +43,7 @@ from wulfric.cell._sc_examples import (
     get_example_cell_SC,
 )
 from wulfric.constants._numerical import TORADIANS
-from wulfric.constants._sc_convention import BRAVAIS_LATTICE_VARIATIONS
+from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_VARIATIONS
 
 ANGLE_TOLERANCE = 1e-4
 
@@ -226,7 +226,7 @@ def test_SC_MCLC(a, b, c, alpha):
 @given(st.text())
 def test_lattice_example_error(wrong_name: str):
     if wrong_name.lower() not in list(
-        map(lambda x: x.lower(), BRAVAIS_LATTICE_VARIATIONS)
+        map(lambda x: x.lower(), SC_BRAVAIS_LATTICE_VARIATIONS)
     ):
         with pytest.raises(ValueError):
             get_example_cell_SC(wrong_name)

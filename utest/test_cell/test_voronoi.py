@@ -19,16 +19,226 @@
 #
 # ================================ END LICENSE =================================
 import pytest
+import numpy as np
 
 from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._sc_examples import get_example_cell_SC
-from wulfric.cell._voronoi import _get_voronoi_cell
-from wulfric.constants._sc_convention import (
-    BRAVAIS_LATTICE_VARIATIONS as lattice_variations,
-)
+from wulfric.cell._voronoi import _get_voronoi_cell, get_lattice_points
+from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_VARIATIONS
 
-cells = [get_example_cell_SC(i) for i in lattice_variations]
-n_edges = [
+
+def test_get_lattice_points():
+    cell = np.array([[0.2, 0.5, 0.9], [3, 6, 0], [0.8, 5, 1]])
+
+    lp_reference_relative_not_flat = np.array(
+        [
+            [
+                [
+                    [-1, -2, -3],
+                    [-1, -2, -2],
+                    [-1, -2, -1],
+                    [-1, -2, 0],
+                    [-1, -2, 1],
+                    [-1, -2, 2],
+                    [-1, -2, 3],
+                ],
+                [
+                    [-1, -1, -3],
+                    [-1, -1, -2],
+                    [-1, -1, -1],
+                    [-1, -1, 0],
+                    [-1, -1, 1],
+                    [-1, -1, 2],
+                    [-1, -1, 3],
+                ],
+                [
+                    [-1, 0, -3],
+                    [-1, 0, -2],
+                    [-1, 0, -1],
+                    [-1, 0, 0],
+                    [-1, 0, 1],
+                    [-1, 0, 2],
+                    [-1, 0, 3],
+                ],
+                [
+                    [-1, 1, -3],
+                    [-1, 1, -2],
+                    [-1, 1, -1],
+                    [-1, 1, 0],
+                    [-1, 1, 1],
+                    [-1, 1, 2],
+                    [-1, 1, 3],
+                ],
+                [
+                    [-1, 2, -3],
+                    [-1, 2, -2],
+                    [-1, 2, -1],
+                    [-1, 2, 0],
+                    [-1, 2, 1],
+                    [-1, 2, 2],
+                    [-1, 2, 3],
+                ],
+            ],
+            [
+                [
+                    [0, -2, -3],
+                    [0, -2, -2],
+                    [0, -2, -1],
+                    [0, -2, 0],
+                    [0, -2, 1],
+                    [0, -2, 2],
+                    [0, -2, 3],
+                ],
+                [
+                    [0, -1, -3],
+                    [0, -1, -2],
+                    [0, -1, -1],
+                    [0, -1, 0],
+                    [0, -1, 1],
+                    [0, -1, 2],
+                    [0, -1, 3],
+                ],
+                [
+                    [0, 0, -3],
+                    [0, 0, -2],
+                    [0, 0, -1],
+                    [0, 0, 0],
+                    [0, 0, 1],
+                    [0, 0, 2],
+                    [0, 0, 3],
+                ],
+                [
+                    [0, 1, -3],
+                    [0, 1, -2],
+                    [0, 1, -1],
+                    [0, 1, 0],
+                    [0, 1, 1],
+                    [0, 1, 2],
+                    [0, 1, 3],
+                ],
+                [
+                    [0, 2, -3],
+                    [0, 2, -2],
+                    [0, 2, -1],
+                    [0, 2, 0],
+                    [0, 2, 1],
+                    [0, 2, 2],
+                    [0, 2, 3],
+                ],
+            ],
+            [
+                [
+                    [1, -2, -3],
+                    [1, -2, -2],
+                    [1, -2, -1],
+                    [1, -2, 0],
+                    [1, -2, 1],
+                    [1, -2, 2],
+                    [1, -2, 3],
+                ],
+                [
+                    [1, -1, -3],
+                    [1, -1, -2],
+                    [1, -1, -1],
+                    [1, -1, 0],
+                    [1, -1, 1],
+                    [1, -1, 2],
+                    [1, -1, 3],
+                ],
+                [
+                    [1, 0, -3],
+                    [1, 0, -2],
+                    [1, 0, -1],
+                    [1, 0, 0],
+                    [1, 0, 1],
+                    [1, 0, 2],
+                    [1, 0, 3],
+                ],
+                [
+                    [1, 1, -3],
+                    [1, 1, -2],
+                    [1, 1, -1],
+                    [1, 1, 0],
+                    [1, 1, 1],
+                    [1, 1, 2],
+                    [1, 1, 3],
+                ],
+                [
+                    [1, 2, -3],
+                    [1, 2, -2],
+                    [1, 2, -1],
+                    [1, 2, 0],
+                    [1, 2, 1],
+                    [1, 2, 2],
+                    [1, 2, 3],
+                ],
+            ],
+        ]
+    )
+
+    lp_reference_relative_flat = lp_reference_relative_not_flat.reshape((105, 3))
+
+    lp_reference_absolute_not_flat = lp_reference_relative_not_flat @ cell
+
+    lp_reference_absolute_flat = lp_reference_relative_flat @ cell
+
+    assert np.allclose(
+        get_lattice_points(cell=cell, range=(1, 2, 3), flat=False, relative=True),
+        lp_reference_relative_not_flat,
+    )
+    assert np.allclose(
+        get_lattice_points(cell=cell, range=(1, 2, 3), flat=True, relative=True),
+        lp_reference_relative_flat,
+    )
+    assert np.allclose(
+        get_lattice_points(cell=cell, range=(1, 2, 3), flat=False, relative=False),
+        lp_reference_absolute_not_flat,
+    )
+    assert np.allclose(
+        get_lattice_points(cell=cell, range=(1, 2, 3), flat=True, relative=False),
+        lp_reference_absolute_flat,
+    )
+
+
+def test_get_lattice_points_negative_range():
+    lattice_points = get_lattice_points(cell=np.eye(3), range=(-1, 1, 1), flat=False)
+
+    assert lattice_points.shape == (0, 3, 3, 3)
+
+
+def test_get_lattice_points_zero_range():
+    lattice_points = get_lattice_points(cell=np.eye(3), range=(0, 1, 1), flat=False)
+
+    assert lattice_points.shape == (1, 3, 3, 3)
+
+    assert np.allclose(
+        lattice_points,
+        np.array(
+            [
+                [
+                    [
+                        [0.0, -1.0, -1.0],
+                        [0.0, -1.0, 0.0],
+                        [0.0, -1.0, 1.0],
+                    ],
+                    [
+                        [0.0, 0.0, -1.0],
+                        [0.0, 0.0, 0.0],
+                        [0.0, 0.0, 1.0],
+                    ],
+                    [
+                        [0.0, 1.0, -1.0],
+                        [0.0, 1.0, 0.0],
+                        [0.0, 1.0, 1.0],
+                    ],
+                ]
+            ]
+        ),
+    )
+
+
+CELLS = [get_example_cell_SC(i) for i in SC_BRAVAIS_LATTICE_VARIATIONS]
+N_EDGES = [
     12,
     36,
     24,
@@ -56,7 +266,7 @@ n_edges = [
     28,
 ]
 
-n_vertices = [
+N_VERSTICES = [
     8,
     24,
     14,
@@ -87,8 +297,8 @@ n_vertices = [
 
 @pytest.mark.parametrize(
     "cell, n_edge",
-    list(zip(cells, n_edges)),
-    ids=lattice_variations,
+    list(zip(CELLS, N_EDGES)),
+    ids=SC_BRAVAIS_LATTICE_VARIATIONS,
 )
 def test_edges(cell, n_edge):
     edges, vertices = _get_voronoi_cell(cell=get_reciprocal(cell))
@@ -97,8 +307,8 @@ def test_edges(cell, n_edge):
 
 @pytest.mark.parametrize(
     "cell, n_vertex",
-    list(zip(cells, n_vertices)),
-    ids=lattice_variations,
+    list(zip(CELLS, N_VERSTICES)),
+    ids=SC_BRAVAIS_LATTICE_VARIATIONS,
 )
 def test_vertices(cell, n_vertex):
     edges, vertices = _get_voronoi_cell(cell=get_reciprocal(cell))

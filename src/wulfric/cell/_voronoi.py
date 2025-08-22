@@ -32,35 +32,61 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def _lattice_points(cell, relative=False):
+def get_lattice_points(cell, range=(1, 1, 1), relative=False, flat=True):
     r"""
-    Compute lattice points
+    Compute lattice points for the given cell.
+
+    Assumes that ``cell`` contains one lattice point.
 
     Parameters
     ----------
     cell : (3, 3) |array-like|_
         Matrix of a cell, rows are interpreted as vectors.
+    range : (3, ) list or tuple of int, default (1, 1, 1)
+        How many lattice points to return. All lattice points with relative coordinates
+        ``r_1``, ``r_2``, ``r_3``, that fulfil
+
+        * ``-range[0] <= r_1 <= range[0]``
+        * ``-range[1] <= r_2 <= range[1]``
+        * ``-range[2] <= r_3 <= range[2]``
     relative : bool, default False
         Whether to return relative coordinates.
+    flat : bool, default False
 
     Returns
     -------
-    lattice_points : (N, 3) :numpy:`ndarray`
+    lattice_points : (N1, N2, N3, 3) or (N, 3) :numpy:`ndarray`
         N lattice points. Each element is a vector :math:`v = (v_x, v_y, v_z)`.
+
+        * ``N = N1 * N2 * N3``
+        * ``N1 = 2 * range[0] + 1``
+        * ``N2 = 2 * range[1] + 1``
+        * ``N3 = 2 * range[2] + 1``
+
+        The shape of the returned array is
+
+        * (N, 3) if ``flat=True``
+        * (N1, N2, N3, 3) if ``flat=False``
     """
 
-    n = 10
+    N1 = 2 * range[0] + 1
+    N2 = 2 * range[1] + 1
+    N3 = 2 * range[2] + 1
 
-    lattice_points = np.zeros(((2 * n + 1) ** 3, 3), dtype=float)
-    for i in range(-n, n + 1):
-        for j in range(-n, n + 1):
-            for k in range(-n, n + 1):
-                point = np.array([i, j, k])
-                if not relative:
-                    point = point @ cell
-                lattice_points[
-                    (2 * n + 1) ** 2 * (i + n) + (2 * n + 1) * (j + n) + (k + n)
-                ] = point
+    lp1 = np.arange(-range[0], range[0] + 1)
+    lp2 = np.arange(-range[1], range[1] + 1)
+    lp3 = np.arange(-range[2], range[2] + 1)
+
+    lattice_points = np.array(np.meshgrid(lp1, lp2, lp3, indexing="ij")).transpose(
+        (1, 2, 3, 0)
+    )
+
+    if not relative:
+        lattice_points = lattice_points @ cell
+
+    if flat:
+        lattice_points = np.reshape(lattice_points, shape=(N1 * N2 * N3, 3))
+
     return lattice_points
 
 
@@ -88,18 +114,20 @@ def _get_voronoi_cell(cell):
     """
 
     n = 10
+    index_000 = ((2 * n + 1) ** 3 - 1) // 2
 
     if not SCIPY_AVAILABLE:
         raise ImportError(
             'SciPy is not available. Please install it with "pip install scipy"'
         )
-    voronoi = Voronoi(_lattice_points(cell, relative=False))
+    voronoi = Voronoi(get_lattice_points(cell, relative=False, range=(n, n, n)))
     edges_index = set()
-    # Thanks ASE for the general idea. 62 - is the index of (0,0,0) point.
-    # Note that more than -1 0 1 range is required for the lattice points to correctly
-    # produce the Voronoi decomposition of the lattice
+    # Thanks ASE for the general idea
+    # Note that more than -10 0 10 range is required for the lattice points to correctly
+    # produce the Voronoi decomposition of the lattice in most cases
+    # In general bigger span might be required
     for rv, rp in zip(voronoi.ridge_vertices, voronoi.ridge_points):
-        if -1 not in rv and (((2 * n + 1) ** 3 - 1) // 2) in rp:
+        if -1 not in rv and index_000 in rp:
             for j in range(0, len(rv)):
                 if (rv[j - 1], rv[j]) not in edges_index and (
                     rv[j],

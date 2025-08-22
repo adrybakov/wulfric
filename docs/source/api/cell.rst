@@ -61,6 +61,14 @@ Bravais lattice constructors as per SC [1]_
   SC_MCLC
   SC_TRI
 
+Sort later
+==========
+
+.. autosummary::
+  :toctree: generated/
+
+  get_lattice_poits
+
 References
 ==========
 .. [1] Setyawan, W. and Curtarolo, S., 2010.
