@@ -17,7 +17,6 @@ Basic manipulations
   from_params
   get_reciprocal
   get_scalar_products
-  is_reasonable
 
 Cell reduction
 ==============

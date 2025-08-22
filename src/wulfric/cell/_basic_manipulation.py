@@ -25,7 +25,7 @@ from math import sin, sqrt
 import numpy as np
 
 from wulfric.constants._numerical import TORADIANS
-from wulfric.geometry._geometry import get_angle, get_volume, parallelepiped_check
+from wulfric.geometry._geometry import get_angle, parallelepiped_check
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -266,59 +266,6 @@ def get_scalar_products(cell):
         float(np.dot(cell[0], cell[2])),
         float(np.dot(cell[0], cell[1])),
     )
-
-
-def is_reasonable(cell, eps_lengths=1e-10, eps_volume=1e-5):
-    r"""
-    Check if the cell is *reasonable* (not *degenerate*) as defined in [1]_.
-
-    The sell is *degenerate* if
-
-    (i)   The minimum of the cell lengths divided by the maximum of the cell lengths is
-          smaller than a certain factor :math:`\varepsilon_{lengths}`.
-    (ii)  The unit-cell volume divided by the minimum of the cell
-          lengths is smaller than a certain factor :math:`\varepsilon_{volume}`.
-
-    The cell is *reasonable* if it is *not degenerate*.
-
-    Parameters
-    ----------
-    cell : (3, 3) |array-like|_
-        Matrix of a cell, rows are interpreted as vectors.
-    eps_lengths : float, default 1e-10
-        Default value of :math:`\varepsilon_{lengths}`.
-    eps_volume : float, default 1e-5
-        Default value of :math:`\varepsilon_{volume}`.
-
-    Returns
-    -------
-    reasonable : bool
-        ``True`` if the cell is *reasonable*, ``False`` if cell is *degenerate*.
-
-    References
-    ----------
-    .. [1] Grosse-Kunstleve, R.W., Sauter, N.K. and Adams, P.D., 2004.
-        Numerically stable algorithms for the computation of reduced unit cells.
-        Acta Crystallographica Section A: Foundations of Crystallography,
-        60(1), pp.1-6.
-    """
-
-    cell_volume = get_volume(cell)
-
-    # To guarantee finite max and min lengths
-    if cell_volume == 0.0:
-        return False
-
-    min_length = np.linalg.norm(cell, axis=1).min()
-    max_length = np.linalg.norm(cell, axis=1).max()
-
-    if max_length == 0.0 or min_length / max_length < eps_lengths:
-        return False
-
-    if min_length == 0.0 or cell_volume / min_length < eps_volume:
-        return False
-
-    return True
 
 
 # Populate __all__ with objects defined in this file

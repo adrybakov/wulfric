@@ -27,12 +27,7 @@ from hypothesis import strategies as st
 from hypothesis.extra.numpy import arrays as harrays
 from scipy.spatial.transform import Rotation
 
-from wulfric.cell._basic_manipulation import (
-    from_params,
-    get_params,
-    get_reciprocal,
-    is_reasonable,
-)
+from wulfric.cell._basic_manipulation import from_params, get_params, get_reciprocal
 from wulfric.geometry._geometry import parallelepiped_check
 
 N_ORDER = 5
@@ -112,16 +107,15 @@ def test_get_reciprocal(r1, r2, r3, a, b, c, alpha, beta, gamma, order):
             shuffle(rotate(from_params(a, b, c, alpha, beta, gamma), r1, r2, r3), order)
         )
         # Add this filter if some test fail
-        if is_reasonable(cell):
-            rcell = get_reciprocal(cell)
-            # If the cell is left-handed, then the diagonal will be filled with -2pi,
-            # The minus appears since the cross product is defined in the right-handed system.
-            # If the cell is right-handed, then the diagonal will be filled with 2pi.
-            # To check for both conditions we need to use np.abs().
-            product = np.abs(np.diag(rcell @ cell.T))
-            correct_product = np.ones(3) * 2 * pi
-            # Non  diagonal terms are close to zero.
-            assert np.allclose(product, correct_product, atol=1e-4)
+        rcell = get_reciprocal(cell)
+        # If the cell is left-handed, then the diagonal will be filled with -2pi,
+        # The minus appears since the cross product is defined in the right-handed system.
+        # If the cell is right-handed, then the diagonal will be filled with 2pi.
+        # To check for both conditions we need to use np.abs().
+        product = np.abs(np.diag(rcell @ cell.T))
+        correct_product = np.ones(3) * 2 * pi
+        # Non  diagonal terms are close to zero.
+        assert np.allclose(product, correct_product, atol=1e-4)
 
 
 @pytest.mark.parametrize(
@@ -168,10 +162,9 @@ def test_reciprocal_cell_examples(cell, rec_cell):
 def test_cell_from_param(a, b, c, alpha, beta, gamma):
     if parallelepiped_check(a, b, c, alpha, beta, gamma):
         cell = from_params(a, b, c, alpha, beta, gamma)
-        if is_reasonable(cell, eps_volume=1e-7):
-            ap, bp, cp, alphap, betap, gammap = get_params(cell)
-            assert np.allclose([a, b, c], [ap, bp, cp])
-            assert np.allclose([alpha, beta, gamma], [alphap, betap, gammap])
+        ap, bp, cp, alphap, betap, gammap = get_params(cell)
+        assert np.allclose([a, b, c], [ap, bp, cp])
+        assert np.allclose([alpha, beta, gamma], [alphap, betap, gammap])
     else:
         with pytest.raises(ValueError):
             from_params(a, b, c, alpha, beta, gamma)
@@ -192,5 +185,4 @@ def test_cell_from_params_example(a, b, c, alpha, beta, gamma, cell):
 
 @given(harrays(float, (3, 3), elements=st.floats(min_value=0, max_value=MAX_LENGTH)))
 def test_get_params_from_cell(cell):
-    if is_reasonable(cell):
-        a, b, c, alpha, beta, gamma = get_params(cell)
+    a, b, c, alpha, beta, gamma = get_params(cell)
