@@ -5,7 +5,7 @@ Key concepts
 ************
 
 On this page we list concepts and data structures, that are essential for understanding of
-wulfric's scope, with code examples.
+wulfric's scope. And give some some code examples for each.
 
 .. _user-guide_usage_key-concepts_cell:
 
@@ -19,48 +19,32 @@ coordinates. Here is an example of a simple orthorhombic cell
 .. doctest::
 
     >>> cell = [
-    ...     [3.553350, 0.000000, 0.000000],
-    ...     [0.000000, 4.744935, 0.000000],
-    ...     [0.000000, 0.000000, 8.760497],
+    ... [3.553350, 0.000000, 0.000000],
+    ... [0.000000, 4.744935, 0.000000],
+    ... [0.000000, 0.000000, 8.760497],
     ... ]
 
-The functions of wulfric assume that the cell is |array-like|_, i.e. can be converted to
-the |NumPy|_ array.
+The functions of wulfric assume that the cell is |array-like|_, i. e. that it can be
+converted to the |NumPy|_ array.
 
 .. doctest::
 
     >>> import numpy as np
     >>> cell = np.array(cell, dtype=float)
 
-There is a lot of things that one can do with ``cell``. All functions are implemented
-under :ref:`api_cell`.
-
-For the given cell one can compute a set of lattice parameters: lengths of the lattice
-vectors and pair-wise angles between them as
-
-.. doctest::
-
-    >>> import wulfric
-    >>> wulfric.cell.get_params(cell)
-    (3.55335, 4.744935, 8.760497, 90.0, 90.0, 90.0)
-
-This function returns six numbers ``(a, b, c, alpha, beta, gamma)``.
-
-Another typical task is to find a reciprocal cell
-
-.. doctest::
-
-    >>> wulfric.cell.get_reciprocal(cell)
-    array([[1.76824273, 0.        , 0.        ],
-           [0.        , 1.32418786, 0.        ],
-           [0.        , 0.        , 0.71721791]])
-
-For more examples of what can be done with cell see :ref:`user-guide_usage_cell`.
+There is a lot of things that one can do with ``cell``. All functions that deal with the
+cell alone (i.e. do not require any ``atoms``) are implemented in the :ref:`api_cell`
+submodule. For more detailed examples of what can be done with the cell see
+:ref:`user-guide_usage_cell`.
 
 .. _user-guide_usage_key-concepts_atoms:
 
 Atoms
 =====
+
+Atoms in wulfric are stored as a plain python dictionary. Keys of the ``atoms`` are
+properties of atoms. Values are the lists of :math:`N` elements each, where :math:`N` is
+an amount of atoms.
 
 .. doctest::
 
@@ -77,9 +61,6 @@ Atoms
     ...     ],
     ... }
 
-Atoms in wulfric are stored as a plain python dictionary. Keys of the ``atoms`` are
-properties of atoms. Values are the lists of :math:`N` elements each, where :math:`N` is
-an amount of atoms.
 
 Keys recognized by wulfric:
 
@@ -88,24 +69,18 @@ Keys recognized by wulfric:
 *   "species" :
     ``list`` of ``str``.
 *   "positions" :
-    ``list`` of *relative* coordinates of atoms. Each element is an |array-like|_ of the
+    ``list`` of *relative* positions of atoms. Each element is an |array-like|_ of the
     length :math:`3`.
 *   "spglib_types" :
     ``list`` of ``int``. Each element is ``>=1``.
 
-Wulfric recognizes only a few keys, however, we invite you to extend the ``atoms``
-to your needs. Here is a list a few of the potential keys that are not used by any of
-wulfric's functions, but may be useful or be used by wulfric in the future.
-
-
-* "spin_vectors"
-* "g_factors"
-* "charges"
-* ...
-
-``atoms`` dictionary allows to use wulfric's functions on the user-extendend ``atoms``.
-Functions of wulfric will only modify the key-values that are recognized by it and leave
-the user-defined ones intact.
+Wulfric uses only those four keys, however, we invite you to extend the ``atoms`` to your
+needs and store any properties in the same dictionary. Any function of wulfric that reads
+``atoms`` dictionary and returns ``new_atoms`` dictionary will transfer the values of each
+atom in  ``atoms`` to the corresponding atom of ``new_atoms`` for **every** key, not only
+for ones that wulfric recognizes. ``atoms`` dictionary allows to use wulfric's functions
+on the user-extendend ``atoms``. Functions of wulfric will only ever modify the key-values
+that are recognized by it and leave the user-defined ones intact.
 
 .. hint::
 
@@ -126,10 +101,11 @@ the user-defined ones intact.
 Crystal
 =======
 
-Crystal is simply a pair of ``cell`` and ``atoms``. We do not introduce any new
-structure for the crystal (not even a tuple ``(cell, atoms)``). If necessary the user must
+Crystal is simply a pair of ``cell`` and ``atoms``. There is no dedicated data structure
+for crystal in wulfric (not even a tuple ``(cell, atoms)``). If necessary the user must
 provide two variables: ``cell`` and ``atoms``. ``atoms["positions"]`` are always
-interpreted by wulfric as relative with respect to ``cell``.
+interpreted by wulfric as relative with respect to ``cell``. Therefore, user is
+responsible for providing appropriate ``cell`` for any given ``atoms``.
 
 For example, ``cell`` and ``atoms`` from the above two sections describe a crystal of
 |CrSBr-materials-cloud|_.
@@ -146,16 +122,21 @@ Wulfric understands kpath of the format like "G-K-X|R-S".
   have at least one subpath.
 * ``-`` separates high symmetry points in each subpath.
 
+Almost every function of wulfric expects k-path to be given as a string in that format.
+
 The concept of subpaths allows to "jump" from one k-point to another, without following a
 path in between. For instance, in the path "G-K-X|R-S" for the band structure
 calculation/plots some amount of intermediate points is implied between "G" and "K",
 between "K" and "X" and between "R" and "S". However, there is no intermediate points
 between "X" and "R".
 
-Internally the path is stored as ``list`` of ``list`` of ``str``, i.e. as list of subpaths,
-where each subpath is a list of names of high symmetry points.
+Internally the path is stored as ``list`` of ``list`` of ``str``, i.e. as list of
+subpaths, where each subpath is a list of names of high symmetry points. Functions
+:py:func:`wulfric.kpoints.get_path_as_string` and
+:py:func:`wulfric.kpoints.get_path_as_list` can be used for conversion between
+representations if necessary.
 
-Below we give a table with examples
+Here are some examples
 
 ========= ==================================
 As string As ``list`` of ``list`` of ``str``
