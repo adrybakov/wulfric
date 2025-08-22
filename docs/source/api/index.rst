@@ -12,36 +12,35 @@ The main interface to the package should be imported as
 
 .. doctest::
 
-   >>> import wulfric
-   >>> # or
-   >>> import wulfric
+    >>> import wulfric
 
-Sub-modules
-===========
+
 .. toctree::
+    :caption: Submodules
     :maxdepth: 1
 
     cell
-    constants/index
     crystal
+    kpoints
+    constants/index
     io
     geometry
 
+
 Classes
 =======
-
 .. autosummary::
+    :caption: Classes
     :toctree: generated/
 
     Kpoints
     PlotlyEngine
     SyntacticSugar
 
-Top-level functions
+Top level functions
 ===================
-
-
 .. autosummary::
+    :caption: Top level functions
     :toctree: generated/
 
     compare_numerically
@@ -54,21 +53,18 @@ Top-level functions
 
 Exceptions
 ==========
-
-
 .. autosummary::
+    :caption: Exceptions
     :toctree: generated/
 
     StandardizationTypeMismatch
     FailedToDeduceAtomSpecies
     NiggliReductionFailed
 
-
 Legacy code
 ===========
-
-
 .. autosummary::
-  :toctree: generated/
+    :caption: Legacy code
+    :toctree: generated/
 
-  lepage
+    lepage

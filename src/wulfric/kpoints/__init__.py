@@ -18,17 +18,4 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-__version__ = "0.6.0"
-__doclink__ = "wulfric.org"
-__release_date__ = "Undefined"
-
-
-from . import cell, constants, crystal, geometry, io, kpoints
-from ._exceptions import *
-from ._kpoints_class import *
-from ._lepage import *
-from ._numerical import *
-from ._package_info import *
-from ._plotly_engine import *
-from ._syntactic_sugar import *
-from ._spglib_interface import *
+from ._k_path import *
