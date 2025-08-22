@@ -4,17 +4,16 @@
 Wulfric user guide
 ******************
 
-Installations and version
-=========================
 .. toctree::
+    :caption: Installation and stability
     :maxdepth: 1
 
     installation
     development
 
-Definitions and conventions
-===========================
+
 .. toctree::
+    :caption: Definitions and conventions
     :maxdepth: 1
 
     conventions/basic-notation
@@ -23,12 +22,10 @@ Definitions and conventions
 
 .. _user-guide_fundamentals:
 
-Fundamentals and usage
-======================
 .. toctree::
+    :caption: Fundamentals and usage
     :maxdepth: 2
 
-    usage/package-structure
     usage/key-concepts
     usage/cell
     usage/kpoints
@@ -39,9 +36,8 @@ Fundamentals and usage
 
 .. _user-guide_library:
 
-Methods and algorithms
-======================
 .. toctree::
+    :caption: Methods and algorithms
     :maxdepth: 1
 
     library/niggli

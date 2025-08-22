@@ -115,3 +115,8 @@ html[data-theme=dark] .sd-card .sd-card-footer {
   box-sizing: border-box;
   display: block;
 }
+
+.toctree-wrapper p.caption {
+    font-size: 2.0em;
+    margin-bottom: 0.1em;
+}
