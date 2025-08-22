@@ -255,6 +255,10 @@ custom_links = {
     "seek-kpath": ("seek-kpath", "https://github.com/giovannipizzi/seekpath/tree/main"),
     "wulfric-support": ("support", "https://docs.wulfric.org/en/latest/support.html"),
     "jupyter": ("jupyter lab or notebook", "https://jupyter.org/"),
+    "wigner-seitz": (
+        "Wigner-Seitz",
+        "https://en.wikipedia.org/wiki/Wigner%E2%80%93Seitz_cell",
+    ),
 }
 
 

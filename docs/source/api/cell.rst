@@ -67,7 +67,9 @@ Sort later
 .. autosummary::
   :toctree: generated/
 
-  get_lattice_poits
+  get_lattice_points
+  get_wigner_seitz
+  get_brillouin_zone
 
 References
 ==========

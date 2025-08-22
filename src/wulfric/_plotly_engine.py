@@ -19,14 +19,13 @@
 #
 # ================================ END LICENSE =================================
 from random import choices
-from string import ascii_lowercase
+from string import ascii_lowercase as ASCII_LOWERCASE
 
 import numpy as np
 
 from wulfric._kpoints_class import Kpoints
 from wulfric.cell._basic_manipulation import get_reciprocal
-from wulfric.cell._voronoi import _get_voronoi_cell
-from wulfric.geometry._geometry import get_volume
+from wulfric.cell._voronoi import get_wigner_seitz_cell
 
 try:
     import plotly.graph_objects as go
@@ -38,16 +37,6 @@ except ImportError:
 # Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
-
-
-def _strip_latex_label(label):
-    new_label = ""
-
-    for character in label:
-        if character not in R"\$":
-            new_label += character
-
-    return new_label
 
 
 class PlotlyEngine:
@@ -73,7 +62,7 @@ class PlotlyEngine:
     def __init__(self, fig=None):
         if not PLOTLY_AVAILABLE:
             raise ImportError(
-                'Plotly is not available. Install it with "pip install plotly"'
+                'Plotly is not available. Please install it with "pip install plotly"'
             )
 
         if fig is None:
@@ -163,7 +152,7 @@ class PlotlyEngine:
         """
 
         if legend_group is None:
-            legend_group = "".join(choices(ascii_lowercase, k=10))
+            legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
 
         x, y, z = np.array([start_point, end_point]).T
 
@@ -213,7 +202,7 @@ class PlotlyEngine:
         """
 
         if legend_group is None:
-            legend_group = "".join(choices(ascii_lowercase, k=10))
+            legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
 
         x, y, z = np.array([start_point, end_point]).T
 
@@ -272,8 +261,7 @@ class PlotlyEngine:
         color="#000000",
         plot_vectors=True,
         vector_label="a",
-        normalize=False,
-        origin=(0, 0, 0),
+        shift=(0, 0, 0),
         legend_label=None,
         legend_group=None,
     ):
@@ -290,11 +278,9 @@ class PlotlyEngine:
             Whether to plot lattice vectors.
         vector_label : str, default "a"
             Vector's label, ignored if ``plot_vectors = False``.
-        normalize : bool, default False
-            Whether to normalize volume of the cell to one.
-        origin : (3, ) |array-like|_, default [0, 0, 0]
-            Corner of the cell, from which the three lattice vectors are plotted. Given in
-            relative coordinates to the provided ``cell``.
+        shift : (3, ) |array-like|_, default (0.0, 0.0, 0.0)
+            Absolute coordinates of the corner of the cell, from which the three lattice
+            vectors are plotted.
         legend_label : str, optional
             Label for the legend. Entry in legend only showed if
             ``legend_label is not None``.
@@ -306,19 +292,16 @@ class PlotlyEngine:
         cell = np.array(cell)
 
         if legend_group is None:
-            legend_group = "".join(choices(ascii_lowercase, k=10))
+            legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
 
-        if normalize:
-            cell = cell / abs(get_volume(cell) ** (1 / 3.0))
-
-        origin = np.array(origin) @ cell
+        shift = np.array(shift)
 
         # Plot vectors
         if plot_vectors:
             for i in range(3):
                 self.plot_vector(
-                    start_point=origin,
-                    end_point=origin + cell[i],
+                    start_point=shift,
+                    end_point=shift + cell[i],
                     color=color,
                     vector_label=f"{vector_label}{i + 1}",
                     legend_group=legend_group,
@@ -329,8 +312,8 @@ class PlotlyEngine:
             j = (i + 1) % 3
             k = (i + 2) % 3
             self.plot_line(
-                start_point=origin,
-                end_point=origin + cell[i],
+                start_point=shift,
+                end_point=shift + cell[i],
                 color=color,
                 legend_label=legend_label,
                 legend_group=legend_group,
@@ -338,20 +321,20 @@ class PlotlyEngine:
             if legend_label is not None:
                 legend_label = None
             self.plot_line(
-                start_point=origin + cell[i],
-                end_point=origin + cell[i] + cell[j],
+                start_point=shift + cell[i],
+                end_point=shift + cell[i] + cell[j],
                 color=color,
                 legend_group=legend_group,
             )
             self.plot_line(
-                start_point=origin + cell[i],
-                end_point=origin + cell[i] + cell[k],
+                start_point=shift + cell[i],
+                end_point=shift + cell[i] + cell[k],
                 color=color,
                 legend_group=legend_group,
             )
             self.plot_line(
-                start_point=origin + cell[i] + cell[j],
-                end_point=origin + cell[i] + cell[j] + cell[k],
+                start_point=shift + cell[i] + cell[j],
+                end_point=shift + cell[i] + cell[j] + cell[k],
                 color=color,
                 legend_group=legend_group,
             )
@@ -362,8 +345,7 @@ class PlotlyEngine:
         plot_vectors=True,
         vector_label="a",
         color="#000000",
-        normalize=False,
-        origin=(0.0, 0.0, 0.0),
+        shift=(0.0, 0.0, 0.0),
         legend_label=None,
         legend_group=None,
     ):
@@ -380,11 +362,8 @@ class PlotlyEngine:
             Vector's label, ignored if ``plot_vectors = False``.
         color : str, default "#000000"
             Colour for the cell and labels. Any value that is supported by |plotly|_.
-        normalize : bool, default False
-            Whether to normalize volume of the cell to one.
-        origin : (3, ) |array-like|_, default [0, 0, 0]
-            Center of the Wigner-Seitz cell. Given in relative coordinates to the provided
-            ``cell``.
+        shift : (3, ) |array-like|_, default (0.0, 0.0, 0.0)
+            Absolute coordinates of the center of the Wigner-Seitz cell.
         legend_label : str, optional
             Label for the legend. Entry in legend only showed if
             ``legend_label is not None``.
@@ -396,29 +375,24 @@ class PlotlyEngine:
         cell = np.array(cell)
 
         if legend_group is None:
-            legend_group = "".join(choices(ascii_lowercase, k=10))
-
-        if normalize:
-            cell = cell / abs(get_volume(cell) ** (1 / 3.0))
-
-        origin = np.array(origin) @ cell
+            legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
 
         # Plot vectors
         if plot_vectors:
             for i in range(3):
                 self.plot_vector(
-                    start_point=origin,
-                    end_point=origin + cell[i],
+                    start_point=shift,
+                    end_point=shift + cell[i],
                     color=color,
                     vector_label=f"{vector_label}{i + 1}",
                     legend_group=legend_group,
                 )
 
-        edges, _ = _get_voronoi_cell(cell)
-        for start_point, end_point in edges:
+        vertices, edges = get_wigner_seitz_cell(cell=cell)
+        for start_index, end_index in edges:
             self.plot_line(
-                start_point=origin + start_point,
-                end_point=origin + end_point,
+                start_point=shift + vertices[start_index],
+                end_point=shift + vertices[end_index],
                 color=color,
                 legend_label=legend_label,
                 legend_group=legend_group,
@@ -432,8 +406,7 @@ class PlotlyEngine:
         plot_vectors=True,
         vector_label="b",
         color="#FF4D67",
-        normalize=False,
-        origin=(0.0, 0.0, 0.0),
+        shift=(0.0, 0.0, 0.0),
         legend_label=None,
         legend_group=None,
     ):
@@ -451,11 +424,8 @@ class PlotlyEngine:
             Vector's label, ignored if ``plot_vectors = False``.
         color : str, default "#FF4D67"
             Colour for the Brillouin zone and labels. Any value that is supported by |plotly|_.
-        normalize : bool, default False
-            Whether to normalize volume of the Brillouin zone to one.
-        origin : (3, ) |array-like|_, default [0, 0, 0]
-            Center of the Brillouin zone. Given in relative coordinates to the reciprocal
-            cell of the provided ``cell``.
+        shift : (3, ) |array-like|_, default (0.0, 0.0, 0.0)
+            Absolute coordinates of the center of the Brillouin zone.
         legend_label : str, optional
             Label for the legend. Entry in legend only showed if
             ``legend_label is not None``.
@@ -469,8 +439,7 @@ class PlotlyEngine:
             plot_vectors=plot_vectors,
             vector_label=vector_label,
             color=color,
-            normalize=normalize,
-            origin=origin,
+            shift=shift,
             legend_label=legend_label,
             legend_group=legend_group,
         )
@@ -479,8 +448,7 @@ class PlotlyEngine:
         self,
         cell,
         color="#000000",
-        normalize=False,
-        origin=(0.0, 0.0, 0.0),
+        shift=(0.0, 0.0, 0.0),
         legend_label=None,
         legend_group=None,
     ):
@@ -493,11 +461,8 @@ class PlotlyEngine:
             Matrix of a cell, rows are interpreted as vectors.
         color : str, default "#000000"
             Colour for the plot. Any value that is supported by |plotly|_.
-        normalize : bool, default False
-            Whether to normalize volume of the Brillouin zone to one.
-        origin : (3, ) |array-like|_, default [0, 0, 0]
-            Center of the Brillouin zone. Given in relative coordinates to the reciprocal
-            cell of the provided ``cell``.
+        shift : (3, ) |array-like|_, default (0, 0, 0)
+            Absolute coordinates of the center of the Brillouin zone.
         legend_label : str, optional
             Label for the legend. Entry in legend only showed if
             ``legend_label is not None``.
@@ -507,14 +472,9 @@ class PlotlyEngine:
         """
 
         if legend_group is None:
-            legend_group = "".join(choices(ascii_lowercase, k=10))
+            legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
 
         rcell = get_reciprocal(cell)
-
-        if normalize:
-            rcell = rcell / get_volume(rcell) ** (1 / 3.0)
-
-        origin = np.array(origin) @ rcell
 
         kp = Kpoints.from_cell(cell=cell)
 
@@ -522,7 +482,7 @@ class PlotlyEngine:
         p_rel = []
         labels = []
         for point in kp.hs_names:
-            p_abs.append(origin + tuple(kp.hs_coordinates[point] @ rcell))
+            p_abs.append(shift + tuple(kp.hs_coordinates[point] @ rcell))
             p_rel.append(kp.hs_coordinates[point])
 
             labels.append(point)
@@ -551,7 +511,7 @@ class PlotlyEngine:
         for subpath in kp.path:
             xyz = []
             for i in range(len(subpath)):
-                xyz.append(origin + kp.hs_coordinates[subpath[i]] @ rcell)
+                xyz.append(shift + kp.hs_coordinates[subpath[i]] @ rcell)
 
             xyz = np.array(xyz).T
             self.fig.add_traces(
@@ -573,8 +533,7 @@ class PlotlyEngine:
         cell,
         color="#000000",
         repetitions=(1, 1, 1),
-        normalize=False,
-        origin=(0, 0, 0),
+        shift=(0, 0, 0),
         legend_label=None,
         legend_group=None,
     ):
@@ -596,11 +555,9 @@ class PlotlyEngine:
             * ``-repetitions[2] <= r_3 <= repetitions[2]``
 
             are plotted.
-        normalize : bool, default False
-            Whether to normalize volume of the cell to one.
-        origin : (3, ) |array-like|_, default [0, 0, 0]
-            Corner of the cell, from which the three lattice vectors are plotted. Given in
-            relative coordinates to the provided ``cell``.
+        shift : (3, ) |array-like|_, default (0, 0, 0)
+            Absolute coordinates of the corner of the cell, from which the three lattice
+            vectors are plotted.
         legend_label : str, optional
             Label for the legend. Entry in legend only showed if
             ``legend_label is not None``.
@@ -612,18 +569,13 @@ class PlotlyEngine:
         cell = np.array(cell)
 
         if legend_group is None:
-            legend_group = "".join(choices(ascii_lowercase, k=10))
-
-        if normalize:
-            cell = cell / abs(get_volume(cell) ** (1 / 3.0))
-
-        origin = np.array(origin) @ cell
+            legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
 
         points = []
         for i in range(-repetitions[0], repetitions[0] + 1):
             for j in range(-repetitions[1], repetitions[1] + 1):
                 for k in range(-repetitions[2], repetitions[2] + 1):
-                    points.append(origin + i * cell[0] + j * cell[1] + k * cell[2])
+                    points.append(shift + i * cell[0] + j * cell[1] + k * cell[2])
 
         points = np.array(points).T
         self.fig.add_traces(

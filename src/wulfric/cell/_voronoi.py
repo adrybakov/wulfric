@@ -20,6 +20,8 @@
 # ================================ END LICENSE =================================
 import numpy as np
 
+from wulfric.cell._basic_manipulation import get_reciprocal
+
 try:
     from scipy.spatial import Voronoi
 
@@ -101,16 +103,13 @@ def _get_voronoi_cell(cell):
 
     Returns
     -------
-    edges : (N, 2, 3) :numpy:`ndarray`
-        N edges of the Voronoi cell around (0,0,0) point. Each elements contains two
-        vectors of the points of the voronoi vertices forming an edge.
     vertices : (M, 3) :numpy:`ndarray`
         M vertices of the Voronoi cell around (0,0,0) point. Each element is a vector
         :math:`v = (v_x, v_y, v_z)`.
-
-    Notes
-    -----
-    This function is a part of ``wulfric[visual]``
+    edges : (N, 2) :numpy:`ndarray`
+        N edges of the Voronoi cell around (0,0,0) point. Each elements contains two
+        indices of the ``vertices`` forming an edge. Edge ``i`` is between points
+        ``vertices[edges[i][0]]`` and ``vertices[edges[i][1]]``.
     """
 
     n = 10
@@ -137,9 +136,9 @@ def _get_voronoi_cell(cell):
     edges_index = np.array(list(edges_index))
     edges = np.zeros((edges_index.shape[0], 2, 3), dtype=voronoi.vertices.dtype)
     for i in range(edges_index.shape[0]):
-        edges[i][0] = voronoi.vertices[edges_index[i][0]]
-        edges[i][1] = voronoi.vertices[edges_index[i][1]]
-    return edges, voronoi.vertices[np.unique(edges_index.flatten())]
+        edges[i][0] = edges_index[i][0]
+        edges[i][1] = edges_index[i][1]
+    return voronoi.vertices[np.unique(edges_index.flatten())], edges
 
 
 # Populate __all__ with objects defined in this file
@@ -149,21 +148,51 @@ __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
 
 
-if __name__ == "__main__":
-    import numpy as np
+def get_wigner_seitz_cell(cell):
+    r"""
+    Computes |Wigner-Seitz|_ cell.
 
-    from wulfric.visualization import PlotlyBackend
+    It assumes that given ``cell`` contains one lattice point.
 
-    cell = np.array(
-        [
-            [2.8480, 0.0000, 0.0000],
-            [0.0000, 2.8480, 0.0000],
-            [1.4240, 1.4240, 1.4240],
-        ]
-    )
+    Parameters
+    ----------
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors.
 
-    be = PlotlyBackend()
-    be.plot_lattice(cell, repetitions=(2, 2, 10))
-    be.plot_wigner_seitz(cell)
-    be.plot_brillouin(cell)
-    be.show()
+    Returns
+    -------
+    vertices : (M, 3) :numpy:`ndarray`
+        M vertices of the |Wigner-Seitz|_ cell. Each element is a vector
+        :math:`v = (v_x, v_y, v_z)` in absolute (Cartesian) coordinates.
+    edges : (N, 2) :numpy:`ndarray`
+        N edges of the |Wigner-Seitz|_ cell. Each elements contains two indices of the
+        ``vertices`` forming an edge. Edge ``i`` is between points
+        ``vertices[edges[i][0]]`` and ``vertices[edges[i][1]]``.
+    """
+
+    return _get_voronoi_cell(cell=cell)
+
+
+def get_brillouin_zone(cell):
+    r"""
+    Computes Brillouin_zone.
+
+    It assumes that given ``cell`` contains one lattice point.
+
+    Parameters
+    ----------
+    cell : (3, 3) |array-like|_
+        Matrix of a cell, rows are interpreted as vectors.
+
+    Returns
+    -------
+    vertices : (M, 3) :numpy:`ndarray`
+        M vertices of the Brillouin_zone. Each element is a vector
+        :math:`v = (v_x, v_y, v_z)` in absolute (Cartesian) coordinates.
+    edges : (N, 2) :numpy:`ndarray`
+        N edges of the Brillouin_zone. Each elements contains two indices of the
+        ``vertices`` forming an edge. Edge ``i`` is between points
+        ``vertices[edges[i][0]]`` and ``vertices[edges[i][1]]``.
+    """
+
+    return _get_voronoi_cell(cell=get_reciprocal(cell=cell))
