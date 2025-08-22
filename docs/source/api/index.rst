@@ -22,7 +22,7 @@ Sub-modules
     :maxdepth: 1
 
     cell
-    constants
+    constants/index
     crystal
     io
     geometry
