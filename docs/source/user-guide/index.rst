@@ -27,12 +27,12 @@ Wulfric user guide
     :maxdepth: 2
 
     usage/key-concepts
+    usage/visualization
     usage/cell
     usage/kpoints
     usage/crystal
     usage/other
     usage/io
-    usage/visualization
 
 .. _user-guide_library:
 
