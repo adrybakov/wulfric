@@ -68,7 +68,7 @@ Sort later
   :toctree: generated/
 
   get_lattice_points
-  get_wigner_seitz
+  get_wigner_seitz_cell
   get_brillouin_zone
 
 References

@@ -141,13 +141,6 @@ def _get_voronoi_cell(cell):
     return voronoi.vertices[np.unique(edges_index.flatten())], edges
 
 
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir
-
-
 def get_wigner_seitz_cell(cell):
     r"""
     Computes |Wigner-Seitz|_ cell.
@@ -196,3 +189,10 @@ def get_brillouin_zone(cell):
     """
 
     return _get_voronoi_cell(cell=get_reciprocal(cell=cell))
+
+
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir
