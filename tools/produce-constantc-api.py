@@ -26,6 +26,7 @@ ROOT_DIR = "."
 
 
 SC_REFERENCE = r"""
+
 References
 ==========
 .. [1] Setyawan, W. and Curtarolo, S., 2010.
@@ -33,6 +34,7 @@ References
        Computational materials science, 49(2), pp. 299-312."""
 
 HPKOT_REFERENCE = r"""
+
 References
 ==========
 .. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
@@ -233,9 +235,10 @@ def main():
             VALUE_PROCESSORS[key](
                 name=key, value=wulfric.constants.__getattribute__(key)
             ),
-            "",
-            DESCRIPTIONS[key][2],
         ]
+
+        if len(DESCRIPTIONS[key][2]) > 0:
+            lines.append(DESCRIPTIONS[key][2])
 
         with open(
             os.path.join(
