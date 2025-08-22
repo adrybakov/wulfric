@@ -259,105 +259,6 @@ def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix, eps):
     return condition, (A, B, C, xi, eta, zeta), trans_matrix
 
 
-def get_N_matrix(
-    cell, eps_relative=1e-5, implementation="spglib", max_iterations=100000
-):
-    r"""
-    Computes the transformation matrix from the given cell to the corresponding
-    reduced Niggli cell.
-
-    Parameters
-    ----------
-    cell : (3, 3) |array-like|_
-        Matrix of a cell, rows are interpreted as vectors.
-    eps_relative : float, default :math:`10^{-5}`
-        Relative epsilon as defined in [2]_.
-    implementation : str, default "spglib"
-        Which implementation of the niggli reduction to use. Supported:
-
-        *   "spglib" (default)
-
-            Implementation of |spglib|_.
-        *   "wulfric"
-
-            Implementation of wulfric of the algorithm from [2]_.
-            Details of the implementation are written in :ref:`library_niggli`.
-    max_iterations : int, default 100000
-        Maximum number of iterations.
-
-    Returns
-    -------
-    transformation_matrix : (3, 3) :numpy:`ndarray`
-        Transformation matrix from the given ``cell`` to its corresponding niggli cell.
-
-    Raises
-    ------
-    wulfric.exceptions.NiggliReductionFailed
-        If the niggli cell is not found in ``max_iterations`` iterations.
-    ValueError
-        If the volume of ``cell`` is zero.
-
-    See Also
-    --------
-    get_niggli
-    :ref:`user-guide_conventions_basic-notation_transformation`
-
-    References
-    ----------
-    .. [1] Křivý, I. and Gruber, B., 1976.
-        A unified algorithm for determining the reduced (Niggli) cell.
-        Acta Crystallographica Section A: Crystal Physics, Diffraction,
-        Theoretical and General Crystallography,
-        32(2), pp.297-298.
-    .. [2] Grosse-Kunstleve, R.W., Sauter, N.K. and Adams, P.D., 2004.
-        Numerically stable algorithms for the computation of reduced unit cells.
-        Acta Crystallographica Section A: Foundations of Crystallography,
-        60(1), pp.1-6.
-
-    Examples
-    --------
-
-    .. doctest::
-
-        >>> import wulfric
-        >>> wulfric.cell.get_N_matrix([[1, -0.5, 0], [-0.5, 1, 0], [0, 0, 1]])
-        array([[ 1.,  0., -1.],
-               [ 1.,  0.,  0.],
-               [ 0., -1.,  0.]])
-
-    Example from [1]_ (parameters are reproducing :math:`A=9`, :math:`B=27`, :math:`C=4`,
-    :math:`\xi` = -5, :math:`\eta` = -4, :math:`\zeta = -22`):
-
-    .. doctest::
-
-        >>> import numpy as np
-        >>> import wulfric
-        >>> from wulfric.constants import TODEGREES
-        >>> from math import sqrt, acos
-        >>> a = 3
-        >>> b = sqrt(27)
-        >>> c = 2
-        >>> alpha = acos(-5 / 2 / b / c) * TODEGREES
-        >>> beta = acos(-4 / 2 / a / c) * TODEGREES
-        >>> gamma = acos(-22 / 2 / a / b) * TODEGREES
-        >>> cell = wulfric.cell.from_params(a, b, c, alpha, beta, gamma)
-        >>> np.round(wulfric.cell.get_N_matrix(cell), decimals=1)
-        array([[ 0.,  1.,  2.],
-               [-0., -0.,  1.],
-               [ 1.,  1.,  2.]])
-
-    """
-
-    niggli_cell = get_niggli(
-        cell=cell,
-        eps_relative=eps_relative,
-        implementation=implementation,
-        max_iterations=max_iterations,
-    )
-
-    return np.linalg.inv(cell).T @ niggli_cell.T
-
-
 def get_niggli(cell, eps_relative=1e-5, implementation="spglib", max_iterations=100000):
     r"""
     Computes reduced Niggli cell.
@@ -400,10 +301,6 @@ def get_niggli(cell, eps_relative=1e-5, implementation="spglib", max_iterations=
         If the niggli cell is not found in ``max_iterations`` iterations.
     ValueError
         If the volume of ``cell`` is zero.
-
-    See Also
-    --------
-    get_N_matrix
 
     References
     ----------
@@ -533,45 +430,3 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
-
-
-if __name__ == "__main__":
-    cell1 = [[1, -0.5, 0], [-0.5, 1, 0], [0, 0, 1]]
-
-    niggli_1_spglib = get_niggli(cell1, implementation="spglib")
-    niggli_1_wulfric = get_niggli(cell1, implementation="wulfric")
-
-    N_1_spglib = get_N_matrix(cell1, implementation="spglib")
-    N_1_wulfric = get_N_matrix(cell1, implementation="wulfric")
-
-    print("N1 match:    ", np.allclose(N_1_spglib, N_1_wulfric))
-
-    print("Cell1 match: ", np.allclose(niggli_1_spglib, niggli_1_wulfric))
-
-    print()
-
-    from wulfric.constants import TODEGREES
-    from wulfric.cell import from_params
-    from math import sqrt, acos
-
-    a = 3
-    b = sqrt(27)
-    c = 2
-    alpha = acos(-5 / 2 / b / c) * TODEGREES
-    beta = acos(-4 / 2 / a / c) * TODEGREES
-    gamma = acos(-22 / 2 / a / b) * TODEGREES
-    cell2 = from_params(a, b, c, alpha, beta, gamma)
-
-    niggli_2_spglib = get_niggli(cell2, implementation="spglib")
-    niggli_2_wulfric = get_niggli(cell2, implementation="wulfric")
-
-    N_2_spglib = get_N_matrix(cell2, implementation="spglib")
-    N_2_wulfric = get_N_matrix(cell2, implementation="wulfric")
-
-    print("N2 match:    ", np.allclose(N_2_spglib, N_2_wulfric))
-
-    print("Cell2 match: ", np.allclose(niggli_2_spglib, niggli_2_wulfric))
-
-    print(niggli_2_spglib @ niggli_2_spglib.T)
-
-    print(np.round(get_N_matrix(cell2), decimals=1))

@@ -25,7 +25,6 @@ Cell reduction
 .. autosummary::
   :toctree: generated/
 
-  get_N_matrix
   get_niggli
 
 
