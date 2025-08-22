@@ -54,26 +54,16 @@ changes are listed explicitly.
                                                 and inclusion of new features. As of 0.6
                                                 |plotly|_ is the only visualization engine
                                                 use by wulfric.
-  ``wulfric.cell.get_standardized``             Due to the transition to |seek-kpath|_ and
-                                                |spglib|_.
-  ``wulfric.cell.get_S_matrix``                 Due to the transition to |seek-kpath|_ and
-                                                |spglib|_.
-  ``wulfric.cell.get_C_matrix``                 Due to the transition to |seek-kpath|_ and
-                                                |spglib|_.
-  ``wulfric.cell.get_conventional``             Due to the transition to |seek-kpath|_ and
-                                                |spglib|_.
-  ``wulfric.cell.get_variation``                Due to the transition to |seek-kpath|_ and
-                                                |spglib|_.
-  ``wulfric.cell.get_name``                     Due to the transition to |seek-kpath|_ and
-                                                |spglib|_.
-  ``wulfric.cell.get_centring_type``            Due to the transition to |seek-kpath|_ and
-                                                |spglib|_.
-  ``wulfric.cell.get_crystal_family``           Due to the transition to |seek-kpath|_ and
-                                                |spglib|_.
-  ``wulfric.cell.get_pearson_symbol``           Due to the transition to |seek-kpath|_ and
-                                                |spglib|_.
-  ``wulfric.crystal.standardize``               Due to the transition to |seek-kpath|_ and
-                                                |spglib|_.
+  ``wulfric.cell.get_standardized``             Due to the transition to |spglib|_.
+  ``wulfric.cell.get_S_matrix``                 Due to the transition to |spglib|_.
+  ``wulfric.cell.get_C_matrix``                 Due to the transition to |spglib|_.
+  ``wulfric.cell.get_conventional``             Due to the transition to |spglib|_.
+  ``wulfric.cell.get_variation``                Due to the transition to |spglib|_.
+  ``wulfric.cell.get_name``                     Due to the transition to |spglib|_.
+  ``wulfric.cell.get_centring_type``            Due to the transition to |spglib|_.
+  ``wulfric.cell.get_crystal_family``           Due to the transition to |spglib|_.
+  ``wulfric.cell.get_pearson_symbol``           Due to the transition to |spglib|_.
+  ``wulfric.crystal.standardize``               Due to the transition to |spglib|_.
   ``wulfric.geometry.absolute_to_relative``     Readily accessible with |numpy|_:
                                                 ``r_coords = a_coords @ np.linalg.inv(cell)``
   ============================================= =============================================
