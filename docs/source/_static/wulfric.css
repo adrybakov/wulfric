@@ -137,4 +137,5 @@ html[data-theme=dark] .sd-card .sd-card-footer {
 {
   display: none;
   visibility: hidden;
+  height: 0cm;
 }
