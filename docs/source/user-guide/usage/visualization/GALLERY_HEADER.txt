@@ -1,0 +1,28 @@
+.. _user-guide_usage_visualization:
+
+
+*************
+Visualization
+*************
+
+For the full technical reference see :py:class:`.PlotlyEngine`.
+
+Visualization in wulfric is implemented with |plotly|_.
+
+First, one need to create an instance of the plotting engine as
+
+.. doctest::
+
+    >>> import wulfric
+    >>> pe = wulfric.PlotlyEngine()
+
+The creation of the plotting engine can take one optional argument: ``fig``:
+
+.. doctest::
+
+    >>> from plotly import graph_objects as go
+    >>> fig = go.Figure()
+    >>> pe = PlotlyEngine(fig=fig)
+
+:py:class:`.PlotlyEngine` has a number of methods that can be used to plot cell, atoms,
+lattice and so on. Here is a set of example, that show how to use it

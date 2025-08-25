@@ -25,6 +25,11 @@ from os.path import abspath
 
 from wulfric import __version__ as version, __release_date__ as release_date
 
+# For sphinx gallery
+import plotly.io as pio
+
+pio.renderers.default = "sphinx_gallery"
+
 sys.path.insert(0, abspath(".."))
 
 
@@ -58,7 +63,19 @@ extensions = [
     "sphinx_copybutton",  # Copybutton for the blocks
     "sphinx_design",  # For the design elements on the from page
     "numpydoc",  # For the numpy-style docstrings
+    "sphinx_gallery.gen_gallery",  # For graphical code examples
 ]
+
+##########################################################################################
+##                               Extension's configuration                              ##
+##########################################################################################
+sphinx_gallery_conf = {
+    "examples_dirs": "user-guide/usage/visualization",  # path to your example scripts
+    "gallery_dirs": "user-guide/usage/auto_visualization",  # path to where to save gallery generated output
+    "capture_repr": ("_repr_html_", "__repr__"),  # To capture plotly's figures
+    "remove_config_comments": True,  # To remove configuration comments
+    "thumbnail_size": (800, 560),
+}
 
 
 ##########################################################################################

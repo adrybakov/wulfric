@@ -48,6 +48,9 @@ class PlotlyEngine:
     fig : plotly graph object, optional
         Figure to plot on. If not provided, then a new one is created as
         ``fig = go.Figure()``.
+    _sphinx_gallery_fix : bool, default  False
+        Fixes display issues when building documentation using sphinx gallery.
+        Please, always ignore this argument
 
     Attributes
     ----------
@@ -59,7 +62,7 @@ class PlotlyEngine:
     This class is a part of ``wulfric[visual]``
     """
 
-    def __init__(self, fig=None):
+    def __init__(self, fig=None, _sphinx_gallery_fix=False):
         if not PLOTLY_AVAILABLE:
             raise ImportError(
                 'Plotly is not available. Please install it with "pip install plotly"'
@@ -70,6 +73,8 @@ class PlotlyEngine:
         self.fig = fig
 
         self.fig.update_layout(template="none")
+
+        self._sphinx_gallery_fix = _sphinx_gallery_fix
 
     def show(self, axes_visible=True, **kwargs):
         r"""
@@ -90,6 +95,9 @@ class PlotlyEngine:
 
         self.fig.update_layout(**kwargs)
         self.fig.show()
+
+        if self._sphinx_gallery_fix:
+            return self.fig
 
     def save(
         self,

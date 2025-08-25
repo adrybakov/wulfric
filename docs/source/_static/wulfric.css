@@ -120,3 +120,21 @@ html[data-theme=dark] .sd-card .sd-card-footer {
     font-size: 2.0em;
     margin-bottom: 0.1em;
 }
+
+
+/* Put sphinx gallery links in footer */
+
+.sphx-glr-download-link-note, /* Download link note in header */
+.sphx-glr-download-jupyter,   /* Download Jupyter notebook link in footer */
+.sphx-glr-download-python,    /* Download Python script link in footer */
+.sphx-glr-download-zip        /* Download zipped link in footer */
+{
+  display: none;
+}
+
+/* Hide text output of plotly's html figure */
+.sphx-glr-script-out
+{
+  display: none;
+  visibility: hidden;
+}

@@ -57,6 +57,7 @@ clean:
 	-@rm -r .env*/bin/wulfric*
 	-@rm -r .venv*/lib/python*/site-packages/wulfric*
 	-@rm -r .venv*/bin/wulfric*
+	-@rm -r docs/source/user-guide/usage/auto_*
 
 install:
 	@python3 -m pip install .
