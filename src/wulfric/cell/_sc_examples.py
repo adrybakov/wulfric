@@ -781,7 +781,7 @@ def SC_TRI(
     return cell
 
 
-def get_example_cell_SC(lattice_variation: str = None):
+def sc_get_example_cell(lattice_variation: str = None):
     r"""
     Examples of the Bravais lattices as defined in the paper by Setyawan and Curtarolo [1]_.
 
@@ -817,11 +817,11 @@ def get_example_cell_SC(lattice_variation: str = None):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.get_example_cell_SC("cub")
+        >>> wulfric.cell.sc_get_example_cell("cub")
         array([[3.14159265, 0.        , 0.        ],
                [0.        , 3.14159265, 0.        ],
                [0.        , 0.        , 3.14159265]])
-        >>> wulfric.cell.get_example_cell_SC("ORCF3")
+        >>> wulfric.cell.sc_get_example_cell("ORCF3")
         array([[0.        , 1.96349541, 2.61799388],
                [1.57079633, 0.        , 2.61799388],
                [1.57079633, 1.96349541, 0.        ]])

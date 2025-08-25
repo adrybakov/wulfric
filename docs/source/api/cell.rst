@@ -45,7 +45,7 @@ Bravais lattice constructors as per SC [1]_
 .. autosummary::
     :toctree: generated/
 
-    get_example_cell_SC
+    sc_get_example_cell
     SC_CUB
     SC_FCC
     SC_BCC

@@ -89,6 +89,7 @@ that are recognized by it and leave the user-defined ones intact.
 
     .. doctest::
 
+        >>> import wulfric
         >>> atoms = wulfric.add_sugar(atoms)
         >>> atoms.names
         ['Cr1', 'Br1', 'S1', 'Cr2', 'Br2', 'S2']

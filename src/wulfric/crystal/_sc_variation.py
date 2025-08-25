@@ -382,13 +382,16 @@ def sc_get_variation(
         >>> import wulfric
         >>> # There is no variation of cubic lattice, therefore, just lattice type is
         >>> # returned
-        >>> wulfric.cell.get_variation(
+        >>> wulfric.crystal.sc_get_variation(
         ...     cell=[[1, 0, 0], [0, 1, 0], [0, 0, 1]],
-        ...     atoms=dict(positions=[[0, 0, 0]]),
+        ...     atoms=dict(positions=[[0, 0, 0]], spglib_types=[1]),
         ... )
         'CUB'
-        >>> cell = wulfric.cell.get_example_cell_SC("bct")
-        >>> wulfric.cell.get_variation(cell)
+        >>> cell = wulfric.cell.sc_get_example_cell("bct")
+        >>> wulfric.crystal.sc_get_variation(
+        ...     cell=cell,
+        ...     atoms=dict(positions=[[0, 0, 0]], spglib_types=[1]),
+        ... )
         'BCT1'
 
     """
@@ -413,11 +416,10 @@ def sc_get_variation(
     lattice_type = spglib_data.crystal_family + spglib_data.centring_type
 
     if lattice_type in ["tI", "oF", "hR", "mC"]:
-        conv_a, conv_b, conv_c, conv_alpha, _, _ = get_params(
-            get_conventional(
-                cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
-            )
+        conv_cell, _ = get_conventional(
+            cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
         )
+        conv_a, conv_b, conv_c, conv_alpha, _, _ = get_params(cell=conv_cell)
 
     if lattice_type == "tI":
         return _BCT_variation(conv_a, conv_c)

@@ -57,6 +57,10 @@ def _get_unique(prim_cell, prim_positions, conv_types, repetition_number):
         Types of atoms in the primitive cell.
     """
 
+    repetition_number = int(repetition_number)
+
+    conv_types = np.array(conv_types, dtype=int)
+
     # Move all to 000
     prim_positions = prim_positions % 1
 
@@ -76,7 +80,7 @@ def _get_unique(prim_cell, prim_positions, conv_types, repetition_number):
         abs_pos = prim_positions @ prim_cell
         raise ValueError(
             f"Some atoms have wrong number of twins. Expected {repetition_number} twins for each, got\n  * "
-            + +"\n  * ".join(
+            + "\n  * ".join(
                 [
                     f"atom at {abs_pos[i][0]:.5f} {abs_pos[i][1]:.5f} {abs_pos[i][2]:.5f} with type {conv_types[i]} has {n_equiv} twins"
                     for i in range(len(prim_positions))

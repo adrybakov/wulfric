@@ -22,7 +22,7 @@ The creation of the plotting engine can take one optional argument: ``fig``:
 
     >>> from plotly import graph_objects as go
     >>> fig = go.Figure()
-    >>> pe = PlotlyEngine(fig=fig)
+    >>> pe = wulfric.PlotlyEngine(fig=fig)
 
 After plotting the figure can be either displayed
 

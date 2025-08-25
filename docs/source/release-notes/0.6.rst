@@ -23,7 +23,7 @@ changes are listed explicitly.
   ``wulfric.cell.niggli``                 ``wulfric.cell.get_niggli``
   ``wulfric.visualization.PlotlyBackend`` ``wulfric.PlotlyEngine``
   ``wulfric.cell.lepage``                 ``wulfric.lepage``
-  ``wulfric.cell.get_cell_example``       ``wulfric.cell.get_example_cell_SC``
+  ``wulfric.cell.get_cell_example``       ``wulfric.cell.sc_get_example_cell``
   ``wulfric.cell.CUB``                    ``wulfric.cell.SC_CUB``
   ``wulfric.cell.FCC``                    ``wulfric.cell.SC_FCC``
   ``wulfric.cell.BCC``                    ``wulfric.cell.SC_BCC``

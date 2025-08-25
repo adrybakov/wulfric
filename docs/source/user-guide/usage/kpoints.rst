@@ -9,13 +9,6 @@ high symmetry points for any given cell.
 
 For the full technical reference see :py:class:`.Kpoints` and :ref:`api_cell_kpoints`.
 
-In the examples of this page we assume that wulfric is imported as
-
-.. doctest::
-
-  >>> import wulfric
-
-
 K-points data
 =============
 
@@ -24,24 +17,25 @@ use
 
 .. doctest::
 
-    >>> cell = wulfric.cell.get_example_cell_SC("BCT")
-    >>> coordinates, names, labels, path = wulfric.cell.get_hs_data(cell)
-    >>> path
-    'G-X-M-G-Z-P-N-Z1-M|X-P'
+    >>> import wulfric
+    >>> import numpy as np
+    >>> cell = wulfric.cell.sc_get_example_cell("BCT")
+    >>> atoms = dict(spglib_types=[1], positions=[[0, 0, 0]])
+    >>> coordinates, names, labels = wulfric.kpoints.sc_get_hs_points(cell=cell, atoms=atoms)
     >>> names
     ['G', 'M', 'N', 'P', 'X', 'Z', 'Z1']
     >>> labels
     ['$\\Gamma$', 'M', 'N', 'P', 'X', 'Z', 'Z$_1$']
     >>> for coordinate in coordinates:
-    ...   print(coordinate)
+    ...   print(np.round(coordinate, decimals=4))
     ...
     [0. 0. 0.]
     [-0.5  0.5  0.5]
     [0.  0.5 0. ]
     [0.25 0.25 0.25]
-    [0.  0.  0.5]
-    [ 0.36111111  0.36111111 -0.36111111]
-    [-0.36111111  0.63888889  0.36111111]
+    [-0.   0.   0.5]
+    [ 0.3611  0.3611 -0.3611]
+    [-0.3611  0.6389  0.3611]
 
 This function will return ``names`` and ``labels`` of high symmetry kpoints. Names are used in the
 specification of the ``path``, while labels are better suited for plotting. For instance,
@@ -66,7 +60,7 @@ Usually it is created from some ``cell``:
 
 .. doctest::
 
-    >>> cell = wulfric.cell.get_example_cell_SC("CUB")
+    >>> cell = wulfric.cell.sc_get_example_cell("CUB")
     >>> kp = wulfric.Kpoints.from_cell(cell)
     >>> kp.hs_names
     ['G', 'M', 'R', 'X']
@@ -141,7 +135,7 @@ In order to have a summary of the high symmetry pints the predefined method
 
 .. doctest::
 
-    >>> kp = wulfric.Kpoints.from_cell(wulfric.cell.get_example_cell_SC("FCC"))
+    >>> kp = wulfric.Kpoints.from_cell(wulfric.cell.sc_get_example_cell("FCC"))
     >>> print(kp.hs_table())
     Name       rel_b1      rel_b2      rel_b3          k_x         k_y         k_z
     G      0.00000000  0.00000000  0.00000000   0.00000000  0.00000000  0.00000000

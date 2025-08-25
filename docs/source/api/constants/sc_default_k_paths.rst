@@ -32,10 +32,10 @@ Data are from [1]_
         "MCLC3" : "G-Y-F-H-Z-I-F1|H1-Y1-X-G-N|M-G",
         "MCLC4" : "G-Y-F-H-Z-I|H1-Y1-X-G-N|M-G",
         "MCLC5" : "G-Y-F-L-I|I1-Z-H-F1|H1-Y1-X-G-N|M-G",
-        "TRI1A" : "X-G-Y|L-G-Z|N-G-M|R-G",
-        "TRI1B" : "X-G-Y|L-G-Z|N-G-M|R-G",
-        "TRI2A" : "X-G-Y|L-G-Z|N-G-M|R-G",
-        "TRI2B" : "X-G-Y|L-G-Z|N-G-M|R-G",
+        "TRI1a" : "X-G-Y|L-G-Z|N-G-M|R-G",
+        "TRI1b" : "X-G-Y|L-G-Z|N-G-M|R-G",
+        "TRI2a" : "X-G-Y|L-G-Z|N-G-M|R-G",
+        "TRI2b" : "X-G-Y|L-G-Z|N-G-M|R-G",
     }
 
 

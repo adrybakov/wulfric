@@ -336,6 +336,8 @@ def get_spglib_data(
         spglib_data.primitive_positions = primitive_positions
         spglib_data.primitive_types = primitive_types
 
+        return spglib_data
+
     except Exception as e:
         _raise_with_message(
             e=e,

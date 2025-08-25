@@ -19,3 +19,4 @@
 #
 # ================================ END LICENSE =================================
 from ._k_path import *
+from ._sc_points import *

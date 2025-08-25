@@ -22,7 +22,7 @@ import pytest
 import numpy as np
 
 from wulfric.cell._basic_manipulation import get_reciprocal
-from wulfric.cell._sc_examples import get_example_cell_SC
+from wulfric.cell._sc_examples import sc_get_example_cell
 from wulfric.cell._voronoi import _get_voronoi_cell, get_lattice_points
 from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_VARIATIONS
 
@@ -237,7 +237,7 @@ def test_get_lattice_points_zero_range():
     )
 
 
-CELLS = [get_example_cell_SC(i) for i in SC_BRAVAIS_LATTICE_VARIATIONS]
+CELLS = [sc_get_example_cell(i) for i in SC_BRAVAIS_LATTICE_VARIATIONS]
 N_EDGES = [
     12,
     36,

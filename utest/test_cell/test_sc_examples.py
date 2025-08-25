@@ -40,7 +40,7 @@ from wulfric.cell._sc_examples import (
     SC_RHL,
     SC_TET,
     # SC_TRI,
-    get_example_cell_SC,
+    sc_get_example_cell,
 )
 from wulfric.constants._numerical import TORADIANS
 from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_VARIATIONS
@@ -229,4 +229,4 @@ def test_lattice_example_error(wrong_name: str):
         map(lambda x: x.lower(), SC_BRAVAIS_LATTICE_VARIATIONS)
     ):
         with pytest.raises(ValueError):
-            get_example_cell_SC(wrong_name)
+            sc_get_example_cell(wrong_name)
