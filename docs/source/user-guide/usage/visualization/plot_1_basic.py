@@ -36,7 +36,11 @@ import numpy as np
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 
-pe.plot_points(points=np.random.random((42, 3)))
+colors = np.random.randint(0, 255, (42, 3))
+
+colors = [f"rgb({r},{g},{b})" for r, g, b in colors]
+
+pe.plot_points(points=np.random.random((42, 3)), colors=colors, scale=3)
 
 pe.show()
 

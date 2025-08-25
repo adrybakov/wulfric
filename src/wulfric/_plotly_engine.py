@@ -21,11 +21,14 @@
 from random import choices
 from string import ascii_lowercase as ASCII_LOWERCASE
 
+
 import numpy as np
 
 from wulfric._kpoints_class import Kpoints
 from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._voronoi import get_wigner_seitz_cell, get_lattice_points
+from wulfric.constants import ATOM_COLORS
+from wulfric.crystal._atoms import get_atom_species
 
 try:
     import plotly.graph_objects as go
@@ -37,6 +40,20 @@ except ImportError:
 # Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
+
+
+# Source: https://gamedev.stackexchange.com/questions/38536/given-a-rgb-color-x-how-to-find-the-most-contrasting-color-y
+def _get_good_contrast(hex_color):
+    hex_color = hex_color[1:]
+    R, G, B = [int(hex_color[i : i + 2], 16) / 255 for i in (0, 2, 4)]
+
+    gamma = 2.2
+    L = 0.2126 * R**gamma + 0.7152 * G**gamma + 0.0722 * B**gamma
+
+    if L > 0.5**gamma:
+        return "#000000"
+
+    return "#FFFFFF"
 
 
 class PlotlyEngine:
@@ -136,9 +153,10 @@ class PlotlyEngine:
     def plot_points(
         self,
         points,
-        color="#000000",
+        colors="#000000",
         legend_label=None,
         legend_group=None,
+        scale=1,
     ):
         r"""
         Plots a set of points.
@@ -147,13 +165,15 @@ class PlotlyEngine:
         ----------
         points : (N, 3) |array-like|_
             Coordinates of the points.
-        color : str, default "#000000"
+        colors : str or list of str, default "#000000"
             Color of the line. Any value that is supported by |plotly|_.
         legend_label : str, optional
             Label of the line that is displayed in the figure.
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
             characters.
+        scale : float, default 1
+            Scale for the size of point's markers. Use ``scale>1`` to increase the size.
         """
 
         if legend_group is None:
@@ -171,7 +191,7 @@ class PlotlyEngine:
                 x=points[0],
                 y=points[1],
                 z=points[2],
-                marker=dict(size=2, color=color),
+                marker=dict(size=2 * scale, color=colors),
                 hoverinfo="none",
             ),
         )
@@ -629,9 +649,102 @@ class PlotlyEngine:
 
         self.plot_points(
             points=points,
-            color="#000000",
+            colors="#000000",
             legend_label=legend_label,
             legend_group=legend_group,
+        )
+
+    def plot_atoms(
+        self,
+        cell,
+        atoms,
+        colors=None,
+        legend_label=None,
+        legend_group=None,
+        shift=(0, 0, 0),
+        scale=1,
+    ):
+        r"""
+        Plots a set of atoms.
+
+        Parameters
+        ----------
+        cell : (3, 3) |array-like|_
+            Matrix of a cell, rows are interpreted as vectors.
+        atoms : dict
+            Dictionary with N atoms. Expected keys:
+
+            *   "positions" : (N, 3) |array-like|_
+
+                Positions of the atoms in the basis of lattice vectors (``cell``). In other
+                words - relative coordinates of atoms.
+            *   "names" : (N, ) list of str, optional
+                See Notes
+
+            *   "species" : (N, ) list of str, optional
+                See Notes
+
+        colors : str or list of str, optional
+            Color of the atoms. Any value that is supported by |plotly|_. If ``None``,
+            then color is deduced based on atoms's species.
+        legend_label : str, optional
+            Label of the line that is displayed in the figure.
+        legend_group : str, optional
+            Legend's group. If ``None``, then defaults to the random string of 10
+            characters.
+        scale : float, default 1
+            Scale for the size of atoms's markers and text labels. Use ``scale>1`` to
+            increase the size.
+
+        Notes
+        =====
+        ``atoms["names"]`` is used to deduce atom's species if necessary via
+        :py:func:`wulfric.crystal.get_atom_species`.
+
+        ``atoms["species"] is used to define atom's colors if ``colors is None``
+        """
+        cell = np.array(cell)
+
+        if legend_group is None:
+            legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
+
+        points = atoms["positions"] @ cell + np.array(shift)[np.newaxis, :]
+
+        points = points.T
+
+        if "names" in atoms:
+            names = atoms["names"]
+        else:
+            names = [f"X{i + 1}" for i in range(len(atoms["positions"]))]
+
+        if colors is None:
+            if "species" in atoms:
+                species = atoms["species"]
+            else:
+                species = [
+                    get_atom_species(name=name, raise_on_fail=False) for name in names
+                ]
+
+            colors = [ATOM_COLORS[_] for _ in species]
+
+        text_color = [_get_good_contrast(color) for color in colors]
+
+        self.fig.add_traces(
+            data=dict(
+                type="scatter3d",
+                mode="markers+text",
+                legendgroup=legend_group,
+                name=legend_label,
+                showlegend=legend_label is not None,
+                x=points[0],
+                y=points[1],
+                z=points[2],
+                text=names,
+                marker=dict(size=20 * scale, color=colors),
+                hoverinfo="none",
+                textfont=dict(size=12 * scale, color=text_color),
+                textposition="middle center",
+            ),
         )
 
 
