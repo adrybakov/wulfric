@@ -24,5 +24,17 @@ The creation of the plotting engine can take one optional argument: ``fig``:
     >>> fig = go.Figure()
     >>> pe = PlotlyEngine(fig=fig)
 
+After plotting the figure can be either displayed
+
+.. doctest::
+
+    >>> pe.show(width=1000, height=800) # doctest: +SKIP
+
+or saved as an .html file
+
+.. doctest::
+
+    >>> pe.save(output_name="wulfric-plot.html", width=1000, height=800) # doctest: +SKIP
+
 :py:class:`.PlotlyEngine` has a number of methods that can be used to plot cell, atoms,
-lattice and so on. Here is a set of example, that show how to use it
+lattice and so on. Here is a set of examples, that show how to use it

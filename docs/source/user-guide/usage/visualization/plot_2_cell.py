@@ -25,12 +25,13 @@ Plotting a cell
 
 This page explains how to use :py:func:`wulfric.PlotlyEngine.plot_cell` on the simple
 example of the cubic cell
+
+We use FCC cell as an example.
 """
 
 import wulfric
-import numpy as np
 
-cell = np.eye(3)
+cell = wulfric.cell.SC_FCC(a=3)
 
 
 # %%
@@ -81,8 +82,6 @@ pe.show()
 # =========
 # One can plot any number of cells on one instance of :py:class:`wulfric.PlotlyEngine`.
 # For example, one can plot direct and reciprocal cell together
-
-cell = 3 * np.array([[1, 1, 0], [1, 0, 0], [0, 0.5, 1]])
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 

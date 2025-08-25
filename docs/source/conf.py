@@ -74,7 +74,7 @@ sphinx_gallery_conf = {
     "gallery_dirs": "user-guide/usage/auto_visualization",  # path to where to save gallery generated output
     "capture_repr": ("_repr_html_", "__repr__"),  # To capture plotly's figures
     "remove_config_comments": True,  # To remove configuration comments
-    "thumbnail_size": (800, 560),
+    "within_subsection_order": "FileNameSortKey",  # To sort by the name of the file
 }
 
 

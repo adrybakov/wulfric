@@ -25,7 +25,7 @@ import numpy as np
 
 from wulfric._kpoints_class import Kpoints
 from wulfric.cell._basic_manipulation import get_reciprocal
-from wulfric.cell._voronoi import get_wigner_seitz_cell
+from wulfric.cell._voronoi import get_wigner_seitz_cell, get_lattice_points
 
 try:
     import plotly.graph_objects as go
@@ -132,6 +132,49 @@ class PlotlyEngine:
         self.fig.update_layout(**kwargs)
 
         self.fig.write_html(output_name, **kwargs_write_html)
+
+    def plot_points(
+        self,
+        points,
+        color="#000000",
+        legend_label=None,
+        legend_group=None,
+    ):
+        r"""
+        Plots a set of points.
+
+        Parameters
+        ----------
+        points : (N, 3) |array-like|_
+            Coordinates of the points.
+        color : str, default "#000000"
+            Color of the line. Any value that is supported by |plotly|_.
+        legend_label : str, optional
+            Label of the line that is displayed in the figure.
+        legend_group : str, optional
+            Legend's group. If ``None``, then defaults to the random string of 10
+            characters.
+        """
+
+        if legend_group is None:
+            legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
+
+        points = np.array(points).T
+
+        self.fig.add_traces(
+            data=dict(
+                type="scatter3d",
+                mode="markers",
+                legendgroup=legend_group,
+                name=legend_label,
+                showlegend=legend_label is not None,
+                x=points[0],
+                y=points[1],
+                z=points[2],
+                marker=dict(size=2, color=color),
+                hoverinfo="none",
+            ),
+        )
 
     def plot_line(
         self,
@@ -540,7 +583,7 @@ class PlotlyEngine:
         self,
         cell,
         color="#000000",
-        repetitions=(1, 1, 1),
+        range=(1, 1, 1),
         shift=(0, 0, 0),
         legend_label=None,
         legend_group=None,
@@ -554,13 +597,13 @@ class PlotlyEngine:
             Matrix of a cell, rows are interpreted as vectors.
         color : str, default "#000000"
             Color of the points. Any value that is supported by |plotly|_.
-        repetitions : (3, ) tuple of int, default (1, 1, 1)
+        range : (3, ) tuple of int, default (1, 1, 1)
             How many lattice points to plot. All lattice points with relative coordinates
             ``r_1``, ``r_2``, ``r_3``, that fulfil
 
-            * ``-repetitions[0] <= r_1 <= repetitions[0]``
-            * ``-repetitions[1] <= r_2 <= repetitions[1]``
-            * ``-repetitions[2] <= r_3 <= repetitions[2]``
+            * ``-range[0] <= r_1 <= range[0]``
+            * ``-range[1] <= r_2 <= range[1]``
+            * ``-range[2] <= r_3 <= range[2]``
 
             are plotted.
         shift : (3, ) |array-like|_, default (0, 0, 0)
@@ -579,26 +622,16 @@ class PlotlyEngine:
         if legend_group is None:
             legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
 
-        points = []
-        for i in range(-repetitions[0], repetitions[0] + 1):
-            for j in range(-repetitions[1], repetitions[1] + 1):
-                for k in range(-repetitions[2], repetitions[2] + 1):
-                    points.append(shift + i * cell[0] + j * cell[1] + k * cell[2])
+        points = (
+            get_lattice_points(cell=cell, range=range, relative=False, flat=True)
+            + np.array(shift)[np.newaxis, :]
+        )
 
-        points = np.array(points).T
-        self.fig.add_traces(
-            data=dict(
-                type="scatter3d",
-                mode="markers",
-                legendgroup=legend_group,
-                name=legend_label,
-                showlegend=legend_label is not None,
-                x=points[0],
-                y=points[1],
-                z=points[2],
-                marker=dict(size=2, color=color),
-                hoverinfo="none",
-            ),
+        self.plot_points(
+            points=points,
+            color="#000000",
+            legend_label=legend_label,
+            legend_group=legend_group,
         )
 
 
