@@ -42,6 +42,14 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
+_LEGEND_SETTINGS = {
+    "top": dict(yanchor="bottom", y=1.0, xanchor="center", x=0.5),
+    "bottom": dict(yanchor="top", y=0.0, xanchor="center", x=0.5),
+    "left": dict(yanchor="middle", y=0.5, xanchor="right", x=0.0),
+    "right": dict(yanchor="middle", y=0.5, xanchor="left", x=1.0),
+}
+
+
 # Source: https://gamedev.stackexchange.com/questions/38536/given-a-rgb-color-x-how-to-find-the-most-contrasting-color-y
 def _get_good_contrast(hex_color):
     hex_color = hex_color[1:]
@@ -93,7 +101,7 @@ class PlotlyEngine:
 
         self._sphinx_gallery_fix = _sphinx_gallery_fix
 
-    def show(self, axes_visible=True, **kwargs):
+    def show(self, axes_visible=True, legend_position="top", **kwargs):
         r"""
         Shows the figure in the interactive mode.
 
@@ -101,6 +109,8 @@ class PlotlyEngine:
         ----------
         axes_visible : bool, default True
             Whether to show axes.
+        legend_position : str, default "top"
+            Positions of the legend, case insensitive.
         **kwargs
             Passed directly to the |plotly-update-layout|_.
         """
@@ -110,7 +120,15 @@ class PlotlyEngine:
                 xaxis_visible=False, yaxis_visible=False, zaxis_visible=False
             )
 
-        self.fig.update_layout(**kwargs)
+        legend_position = legend_position.lower()
+
+        if legend_position not in list(_LEGEND_SETTINGS):
+            raise ValueError(
+                f"Supported values for legend_position are {list(_LEGEND_SETTINGS)}, got {legend_position}."
+            )
+        legend = _LEGEND_SETTINGS[legend_position]
+
+        self.fig.update_layout(**kwargs, legend=legend)
         self.fig.show()
 
         if self._sphinx_gallery_fix:
@@ -120,6 +138,7 @@ class PlotlyEngine:
         self,
         output_name="wulfric-plot.html",
         axes_visible=True,
+        legend_position="top",
         kwargs_write_html=None,
         **kwargs,
     ):
@@ -132,6 +151,8 @@ class PlotlyEngine:
             Name of the file to be saved. With extension.
         axes_visible : bool, default True
             Whether to show axes.
+        legend_position : str, default "top"
+            Positions of the legend, case insensitive.
         kwargs_write_html : dict, optional
             Passed directly to the |plotly-write-html|_.
         **kwargs
@@ -146,7 +167,15 @@ class PlotlyEngine:
                 xaxis_visible=False, yaxis_visible=False, zaxis_visible=False
             )
 
-        self.fig.update_layout(**kwargs)
+        legend_position = legend_position.lower()
+
+        if legend_position not in list(_LEGEND_SETTINGS):
+            raise ValueError(
+                f"Supported values for legend_position are {list(_LEGEND_SETTINGS)}, got {legend_position}."
+            )
+        legend = _LEGEND_SETTINGS[legend_position]
+
+        self.fig.update_layout(**kwargs, legend=legend)
 
         self.fig.write_html(output_name, **kwargs_write_html)
 
