@@ -134,11 +134,15 @@ def _get_voronoi_cell(cell):
                 ) not in edges_index:
                     edges_index.add((rv[j - 1], rv[j]))
     edges_index = np.array(list(edges_index))
-    edges = np.zeros((edges_index.shape[0], 2, 3), dtype=voronoi.vertices.dtype)
+    vertices_indices = np.unique(edges_index.flatten())
+    vertices_indices_mapping = {
+        v_index: index for index, v_index in enumerate(vertices_indices)
+    }
+    edges = np.zeros((edges_index.shape[0], 2), dtype=int)
     for i in range(edges_index.shape[0]):
-        edges[i][0] = edges_index[i][0]
-        edges[i][1] = edges_index[i][1]
-    return voronoi.vertices[np.unique(edges_index.flatten())], edges
+        edges[i][0] = vertices_indices_mapping[edges_index[i][0]]
+        edges[i][1] = vertices_indices_mapping[edges_index[i][1]]
+    return voronoi.vertices[vertices_indices], edges
 
 
 def get_wigner_seitz_cell(cell):
@@ -196,3 +200,12 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
+
+
+if __name__ == "__main__":
+    from wulfric.cell import SC_FCC
+
+    cell = SC_FCC(a=3)
+
+    vertices, edges = _get_voronoi_cell(cell=cell)
+    print(vertices, edges, sep="\n")
