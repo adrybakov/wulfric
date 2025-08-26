@@ -54,6 +54,7 @@ SECTIONS = {
         "HPKOT_CONVENTIONAL_TO_PRIMITIVE",
         "HPKOT_DEFAULT_K_PATHS",
     ],
+    "Kpoints": ["HS_PLOT_NAMES"],
     "Angle conversion": ["TODEGREES", "TORADIANS"],
     "Space Groups": ["INVERSION_SYMMETRY", "CRYSTAL_FAMILY", "CENTRING_TYPE"],
 }
@@ -112,6 +113,7 @@ DESCRIPTIONS = {
         "\nSource can be found `here <https://onlinelibrary.wiley.com/iucr/itc/Ac/ch2o3v0001/>`_.",
         "",
     ),
+    "HS_PLOT_NAMES": ("Names of high symmetry k points written in LaTex.", "", ""),
 }
 
 
@@ -181,6 +183,7 @@ VALUE_PROCESSORS = {
     "INVERSION_SYMMETRY": dict_processor_bool,
     "CRYSTAL_FAMILY": dict_processor_str,
     "CENTRING_TYPE": dict_processor_str,
+    "HS_PLOT_NAMES": dict_processor_str,
 }
 
 
