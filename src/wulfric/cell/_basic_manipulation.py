@@ -268,6 +268,30 @@ def get_scalar_products(cell):
     )
 
 
+def get_transformation_matrix(original_cell, transformed_cell):
+    r"""
+    Computed transformation matrix *from* original cell *into* transformed cell.
+
+    Parameters
+    ==========
+    original_cell : (3, 3) |array-like|_
+        Matrix of the original cell, rows are interpreted as vectors.
+    transformed_cell : (3, 3) |array-like|_
+        Matrix of the transformed cell, rows are interpreted as vectors.
+
+    Returns
+    =======
+    transformation_matrix : (3, 3) :numpy:`ndarray`
+        Transformation matrix.
+
+    See Also
+    ========
+    :ref:`user-guide_conventions_basic-notation_transformation`
+    """
+
+    return np.linalg.inv(original_cell).T @ transformed_cell.T
+
+
 # Populate __all__ with objects defined in this file
 __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects

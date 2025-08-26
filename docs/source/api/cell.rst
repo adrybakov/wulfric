@@ -70,6 +70,7 @@ Sort later
     get_lattice_points
     get_wigner_seitz_cell
     get_brillouin_zone
+    get_transformation_matrix
 
 References
 ==========

@@ -361,6 +361,7 @@ k-point is **transformed** as
     tilde_g = g @ P
 
 Transformation matrix itself can be computed from original and transformed direct cells
+(implemented in :py:func:`wulfric.cell.get_transformation_matrix`)
 
 .. math::
 
