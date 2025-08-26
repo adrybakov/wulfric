@@ -184,8 +184,8 @@ def _SC_BCT_hs_points(variation, conv_a, conv_c):
             "G": np.array([0, 0, 0]),
             "N": np.array([0, 1 / 2, 0]),
             "P": np.array([1 / 4, 1 / 4, 1 / 4]),
-            "S": np.array([-eta, eta, eta]),
-            "S1": np.array([eta, 1 - eta, -eta]),
+            "SIGMA": np.array([-eta, eta, eta]),
+            "SIGMA1": np.array([eta, 1 - eta, -eta]),
             "X": np.array([0, 0, 1 / 2]),
             "Y": np.array([-zeta, zeta, 1 / 2]),
             "Y1": np.array([1 / 2, 1 / 2, -zeta]),
@@ -894,14 +894,7 @@ def sc_get_hs_points(
     for point in hs_points:
         names.append(point)
 
-        # Post-process two edge cases
-        if point == "S" and lattice_type == "BCT":
-            labels.append("$\\Sigma$")
-        elif point == "S1" and lattice_type == "BCT":
-            labels.append("$\\Sigma_1$")
-        # General assignment
-        else:
-            labels.append(HS_PLOT_NAMES[point])
+        labels.append(HS_PLOT_NAMES[point])
 
         # Here coordinates are absolute
         coordinates.append(hs_points[point] @ primitive_rcell)

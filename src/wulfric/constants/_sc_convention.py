@@ -206,7 +206,7 @@ SC_DEFAULT_K_PATHS = {
     "BCC": "G-H-N-G-P-H|P-N",
     "TET": "G-X-M-G-Z-R-A-Z|X-R|M-A",
     "BCT1": "G-X-M-G-Z-P-N-Z1-M|X-P",
-    "BCT2": "G-X-Y-S-G-Z-S1-N-P-Y1-Z|X-P",
+    "BCT2": "G-X-Y-SIGMA-G-Z-SIGMA1-N-P-Y1-Z|X-P",
     "ORC": "G-X-S-Y-G-Z-U-R-T-Z|Y-T|U-X|S-R",
     "ORCF1": "G-Y-T-Z-G-X-A1-Y|T-X1|X-A-Z|L-G",
     "ORCF2": "G-Y-C-D-X-G-Z-D1-H-C|C1-Z|X-H1|H-Y|L-G",
@@ -229,7 +229,9 @@ SC_DEFAULT_K_PATHS = {
 }
 
 HS_PLOT_NAMES = {
-    "G": "$\\Gamma$",
+    "G": R"$\Gamma$",
+    "SIGMA": R"$\Sigma$",
+    "SIGMA1": R"$\Sigma_1$",
     "M": "M",
     "R": "R",
     "X": "X",
@@ -245,8 +247,8 @@ HS_PLOT_NAMES = {
     "Z1": "Z$_1$",
     "Y": "Y",
     "Y1": "Y$_1$",
-    "S": "S",  # it is overwritten to sigma if needed.
-    "S1": "S$_1$",  # it is overwritten to sigma if needed.
+    "S": "S",
+    "S1": "S$_1$",
     "T": "T",
     "A1": "A$_1$",
     "X1": "X$_1$",
