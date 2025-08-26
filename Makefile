@@ -33,7 +33,7 @@ help:
 
 # $(O) is meant as a shortcut for $(SPHINXOPTS).
 html:
-	@python tools/produce-constantc-api.py
+	@python tools/produce-constants-api.py
 	@$(SPHINXBUILD) -M html "docs/$(SOURCEDIR)" "docs/$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 clean-html: clean install html
