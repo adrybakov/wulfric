@@ -19,7 +19,6 @@
 #
 # ================================ END LICENSE =================================
 from ._basic_manipulation import *
-from ._kpoints import *
 from ._niggli import *
 from ._sc_examples import *
 from ._voronoi import *

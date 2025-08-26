@@ -24,7 +24,6 @@ from typing import Iterable
 import numpy as np
 
 from wulfric.cell._basic_manipulation import get_reciprocal
-from wulfric.cell._kpoints import get_hs_data
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -132,7 +131,7 @@ class Kpoints:
         kp : :py:class:`.Kpoints`
         """
 
-        coordinates, names, labels, path = get_hs_data(cell)
+        coordinates, names, labels, path = None, None, None, None
 
         return Kpoints(
             get_reciprocal(cell),
