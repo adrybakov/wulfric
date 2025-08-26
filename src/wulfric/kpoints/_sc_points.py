@@ -45,10 +45,8 @@ from wulfric.cell._basic_manipulation import get_params, get_reciprocal
 from wulfric._spglib_interface import get_spglib_data, validate_spglib_data
 from wulfric._syntactic_sugar import SyntacticSugar
 from wulfric.constants._numerical import TORADIANS
-from wulfric.constants._sc_convention import (
-    SC_BRAVAIS_LATTICE_SHORT_NAMES,
-    HS_PLOT_NAMES,
-)
+from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_SHORT_NAMES
+from wulfric.constants._kpoints import HS_PLOT_NAMES
 from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric.crystal._conventional import get_conventional
 from wulfric.crystal._primitive import get_primitive
@@ -72,7 +70,7 @@ def _SC_CUB_hs_points():
     """
 
     return {
-        "G": np.array([0, 0, 0]),
+        "GAMMA": np.array([0.0, 0.0, 0.0]),
         "M": np.array([1 / 2, 1 / 2, 0]),
         "R": np.array([1 / 2, 1 / 2, 1 / 2]),
         "X": np.array([0, 1 / 2, 0]),
@@ -92,7 +90,7 @@ def _SC_FCC_hs_points():
     """
 
     return {
-        "G": np.array([0, 0, 0]),
+        "GAMMA": np.array([0.0, 0.0, 0.0]),
         "K": np.array([3 / 8, 3 / 8, 3 / 4]),
         "L": np.array([1 / 2, 1 / 2, 1 / 2]),
         "U": np.array([5 / 8, 1 / 4, 5 / 8]),
@@ -114,7 +112,7 @@ def _SC_BCC_hs_points():
     """
 
     return {
-        "G": np.array([0, 0, 0]),
+        "GAMMA": np.array([0.0, 0.0, 0.0]),
         "H": np.array([1 / 2, -1 / 2, 1 / 2]),
         "P": np.array([1 / 4, 1 / 4, 1 / 4]),
         "N": np.array([0, 0, 1 / 2]),
@@ -133,7 +131,7 @@ def _SC_TET_hs_points():
         High-symmetry points.
     """
     return {
-        "G": np.array([0, 0, 0]),
+        "GAMMA": np.array([0.0, 0.0, 0.0]),
         "A": np.array([1 / 2, 1 / 2, 1 / 2]),
         "M": np.array([1 / 2, 1 / 2, 0]),
         "R": np.array([0, 1 / 2, 1 / 2]),
@@ -168,7 +166,7 @@ def _SC_BCT_hs_points(variation, conv_a, conv_c):
     if variation == "BCT1":
         eta = (1 + conv_c**2 / conv_a**2) / 4
         kpoints = {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "M": np.array([-1 / 2, 1 / 2, 1 / 2]),
             "N": np.array([0, 1 / 2, 0]),
             "P": np.array([1 / 4, 1 / 4, 1 / 4]),
@@ -181,7 +179,7 @@ def _SC_BCT_hs_points(variation, conv_a, conv_c):
         eta = (1 + conv_a**2 / conv_c**2) / 4
         zeta = conv_a**2 / (2 * conv_c**2)
         kpoints = {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "N": np.array([0, 1 / 2, 0]),
             "P": np.array([1 / 4, 1 / 4, 1 / 4]),
             "SIGMA": np.array([-eta, eta, eta]),
@@ -206,7 +204,7 @@ def _SC_ORC_hs_points():
         High-symmetry points.
     """
     return {
-        "G": np.array([0, 0, 0]),
+        "GAMMA": np.array([0.0, 0.0, 0.0]),
         "R": np.array([1 / 2, 1 / 2, 1 / 2]),
         "S": np.array([1 / 2, 1 / 2, 0]),
         "T": np.array([0, 1 / 2, 1 / 2]),
@@ -247,7 +245,7 @@ def _SC_ORCF_hs_points(variation, conv_a, conv_b, conv_c):
         zeta = (1 + conv_a**2 / conv_b**2 - conv_a**2 / conv_c**2) / 4
 
         kpoints = {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "A": np.array([1 / 2, 1 / 2 + zeta, zeta]),
             "A1": np.array([1 / 2, 1 / 2 - zeta, 1 - zeta]),
             "L": np.array([1 / 2, 1 / 2, 1 / 2]),
@@ -263,7 +261,7 @@ def _SC_ORCF_hs_points(variation, conv_a, conv_b, conv_c):
         phi = (1 + conv_c**2 / conv_b**2 - conv_c**2 / conv_a**2) / 4
 
         kpoints = {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "C": np.array([1 / 2, 1 / 2 - eta, 1 - eta]),
             "C1": np.array([1 / 2, 1 / 2 + eta, eta]),
             "D": np.array([1 / 2 - delta, 1 / 2, 1 - delta]),
@@ -281,7 +279,7 @@ def _SC_ORCF_hs_points(variation, conv_a, conv_b, conv_c):
         zeta = (1 + conv_a**2 / conv_b**2 - conv_a**2 / conv_c**2) / 4
 
         kpoints = {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "A": np.array([1 / 2, 1 / 2 + zeta, zeta]),
             "A1": np.array([1 / 2, 1 / 2 - zeta, 1 - zeta]),
             "L": np.array([1 / 2, 1 / 2, 1 / 2]),
@@ -320,7 +318,7 @@ def _SC_ORCI_hs_points(conv_a, conv_b, conv_c):
     mu = (conv_a**2 + conv_b**2) / (4 * conv_c**2)
 
     return {
-        "G": np.array([0, 0, 0]),
+        "GAMMA": np.array([0.0, 0.0, 0.0]),
         "L": np.array([-mu, mu, 1 / 2 - delta]),
         "L1": np.array([mu, -mu, 1 / 2 + delta]),
         "L2": np.array([1 / 2 - delta, 1 / 2 + delta, -mu]),
@@ -358,7 +356,7 @@ def _SC_ORCC_hs_points(conv_a, conv_b):
     zeta = (1 + conv_a**2 / conv_b**2) / 4
 
     return {
-        "G": np.array([0, 0, 0]),
+        "GAMMA": np.array([0.0, 0.0, 0.0]),
         "A": np.array([zeta, zeta, 1 / 2]),
         "A1": np.array([-zeta, 1 - zeta, 1 / 2]),
         "R": np.array([0, 1 / 2, 1 / 2]),
@@ -384,7 +382,7 @@ def _SC_HEX_hs_points():
     """
 
     return {
-        "G": np.array([0, 0, 0]),
+        "GAMMA": np.array([0.0, 0.0, 0.0]),
         "A": np.array([0, 0, 1 / 2]),
         "H": np.array([1 / 3, 1 / 3, 1 / 2]),
         "K": np.array([1 / 3, 1 / 3, 0]),
@@ -421,7 +419,7 @@ def _SC_RHL_hs_points(variation, conv_alpha):
         nu = 3 / 4 - eta / 2
 
         return {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "B": np.array([eta, 1 / 2, 1 - eta]),
             "B1": np.array([1 / 2, 1 - eta, eta - 1]),
             "F": np.array([1 / 2, 1 / 2, 0]),
@@ -440,7 +438,7 @@ def _SC_RHL_hs_points(variation, conv_alpha):
         nu = 3 / 4 - eta / 2
 
         return {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "F": np.array([1 / 2, -1 / 2, 0]),
             "L": np.array([1 / 2, 0, 0]),
             "P": np.array([1 - nu, -nu, 1 - nu]),
@@ -477,7 +475,7 @@ def _SC_MCL_hs_points(conv_b, conv_c, conv_alpha):
     nu = 1 / 2 - eta * conv_c * cos(conv_alpha) / conv_b
 
     return {
-        "G": np.array([0, 0, 0]),
+        "GAMMA": np.array([0.0, 0.0, 0.0]),
         "A": np.array([1 / 2, 1 / 2, 0]),
         "C": np.array([0, 1 / 2, 1 / 2]),
         "D": np.array([1 / 2, 0, 1 / 2]),
@@ -563,7 +561,7 @@ def _SC_MCLC_hs_points(variation, conv_a, conv_b, conv_c, conv_alpha):
     # Path
     if variation == "MCLC1":
         return {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "N": np.array([1 / 2, 0, 0]),
             "N1": np.array([0, -1 / 2, 0]),
             "F": np.array([1 - zeta, 1 - zeta, 1 - eta]),
@@ -582,7 +580,7 @@ def _SC_MCLC_hs_points(variation, conv_a, conv_b, conv_c, conv_alpha):
         }
     elif variation == "MCLC2":
         return {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "N": np.array([1 / 2, 0, 0]),
             "N1": np.array([0, -1 / 2, 0]),
             "F": np.array([1 - zeta, 1 - zeta, 1 - eta]),
@@ -600,7 +598,7 @@ def _SC_MCLC_hs_points(variation, conv_a, conv_b, conv_c, conv_alpha):
         }
     elif variation == "MCLC3":
         return {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "F": np.array([1 - phi, 1 - phi, 1 - psi]),
             "F1": np.array([phi, phi - 1, psi]),
             "F2": np.array([1 - phi, -phi, 1 - psi]),
@@ -620,7 +618,7 @@ def _SC_MCLC_hs_points(variation, conv_a, conv_b, conv_c, conv_alpha):
         }
     elif variation == "MCLC4":
         return {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "F": np.array([1 - phi, 1 - phi, 1 - psi]),
             "H": np.array([zeta, zeta, eta]),
             "H1": np.array([1 - zeta, -zeta, 1 - eta]),
@@ -638,7 +636,7 @@ def _SC_MCLC_hs_points(variation, conv_a, conv_b, conv_c, conv_alpha):
         }
     elif variation == "MCLC5":
         return {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "F": np.array([nu, nu, omega]),
             "F1": np.array([1 - nu, 1 - nu, 1 - omega]),
             "F2": np.array([nu, nu - 1, omega]),
@@ -681,7 +679,7 @@ def _SC_TRI_hs_points(variation):
 
     if variation in ["TRI1A", "TRI2A"]:
         return {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "L": np.array([1 / 2, 1 / 2, 0]),
             "M": np.array([0, 1 / 2, 1 / 2]),
             "N": np.array([1 / 2, 0, 1 / 2]),
@@ -693,7 +691,7 @@ def _SC_TRI_hs_points(variation):
 
     elif variation in ["TRI1B", "TRI2B"]:
         return {
-            "G": np.array([0, 0, 0]),
+            "GAMMA": np.array([0.0, 0.0, 0.0]),
             "L": np.array([1 / 2, -1 / 2, 0]),
             "M": np.array([0, 0, 1 / 2]),
             "N": np.array([-1 / 2, -1 / 2, 1 / 2]),
