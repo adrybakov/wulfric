@@ -540,7 +540,7 @@ def _hpkot_get_extended_bl_symbol(lattice_type, space_group_number, conventional
             return "hP2"
 
     # Lattice types that require computation of lattice parameters
-    a, b, c, alpha, beta, gamma = get_params(cell=conventional_cell)
+    a, b, c, _, beta, _ = get_params(cell=conventional_cell)
 
     if lattice_type == "tI":
         if c <= a:
@@ -604,6 +604,97 @@ def _hpkot_get_extended_bl_symbol(lattice_type, space_group_number, conventional
     # If lattice type is not one of the expected ones
     raise PotentialBugError(
         f'(convention="HPKOT"), lattice type {lattice_type}, space group {space_group_number}.. Failed to identify lattice type (not one of supported).'
+    )
+
+
+def _hpkot_get_points(conventional_cell, lattice_type, space_group_number):
+    extended_bl_symbol = _hpkot_get_extended_bl_symbol(
+        lattice_type=lattice_type,
+        space_group_number=space_group_number,
+        conventional_cell=conventional_cell,
+    )
+    a, b, c, _, beta, _ = get_params(cell=conventional_cell)
+
+    if extended_bl_symbol in ["cP1", "cP2"]:
+        return _get_points_table_69()
+
+    if extended_bl_symbol in ["cF1", "cF2"]:
+        return _get_points_table_70()
+
+    if extended_bl_symbol == "cI1":
+        return _get_points_table_71()
+
+    if extended_bl_symbol == "tP1":
+        return _get_points_table_72()
+
+    if extended_bl_symbol == "tI1":
+        return _get_points_table_73(a=a, c=c)
+
+    if extended_bl_symbol == "tI2":
+        return _get_points_table_74(a=a, c=c)
+
+    if extended_bl_symbol == "oP1":
+        return _get_points_table_75()
+
+    if extended_bl_symbol == "oF1":
+        return _get_points_table_76(a=a, b=b, c=c)
+
+    if extended_bl_symbol == "oF2":
+        return _get_points_table_77(a=a, b=b, c=c)
+
+    if extended_bl_symbol == "oF3":
+        return _get_points_table_78(a=a, b=b, c=c)
+
+    if extended_bl_symbol == "oI1":
+        return _get_points_table_79(a=a, b=b, c=c)
+
+    if extended_bl_symbol == "oI2":
+        return _get_points_table_80(a=a, b=b, c=c)
+
+    if extended_bl_symbol == "oI3":
+        return _get_points_table_81(a=a, b=b, c=c)
+
+    if extended_bl_symbol == "oC1":
+        return _get_points_table_82(a=a, b=b, c=c, lattice_type=lattice_type)
+
+    if extended_bl_symbol == "oC2":
+        return _get_points_table_83(a=a, b=b, c=c, lattice_type=lattice_type)
+
+    if extended_bl_symbol == "oA1":
+        return _get_points_table_82(a=a, b=b, c=c, lattice_type=lattice_type)
+
+    if extended_bl_symbol == "oA2":
+        return _get_points_table_83(a=a, b=b, c=c, lattice_type=lattice_type)
+
+    if extended_bl_symbol in ["hP1", "hP2"]:
+        return _get_points_table_84()
+
+    if extended_bl_symbol == "hR1":
+        return _get_points_table_85(a=a, c=c)
+
+    if extended_bl_symbol == "hR2":
+        return _get_points_table_86(a=a, c=c)
+
+    if extended_bl_symbol == "mP1":
+        return _get_points_table_87(a=a, c=c, beta=beta)
+
+    if extended_bl_symbol == "mC1":
+        return _get_points_table_88(a=a, b=b, c=c, beta=beta)
+
+    if extended_bl_symbol == "mC2":
+        return _get_points_table_89(a=a, b=b, c=c, beta=beta)
+
+    if extended_bl_symbol == "mC3":
+        return _get_points_table_90(a=a, b=b, c=c, beta=beta)
+
+    if extended_bl_symbol == "aP2":
+        return _get_points_table_91()
+
+    if extended_bl_symbol == "aP3":
+        return _get_points_table_92()
+
+    raise PotentialBugError(
+        error_summary=f'(convention="HPKOT"). Unexpected extended Bravais lattice symbol, got "{extended_bl_symbol}".'
     )
 
 
