@@ -24,9 +24,7 @@ Reading
 .. doctest::
 
   >>> # Load a POSCAR file
-  >>> cell, atoms = wulfric.io.load_poscar('POSCAR') # doctest: +SKIP
-  >>> # It can return the comment from the file as well:
-  >>> cell, atoms, comment = wulfric.io.load_poscar('POSCAR', return_comment=True) # doctest: +SKIP
+  >>> cell, atoms, comment = wulfric.io.load_poscar('POSCAR') # doctest: +SKIP
 
 Writing
 -------

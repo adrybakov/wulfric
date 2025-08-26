@@ -32,7 +32,7 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def load_poscar(file_object=None, return_comment=False):
+def load_poscar(file_object=None):
     r"""
     Reads crystal structure from the |POSCAR|_ file.
 
@@ -45,9 +45,6 @@ def load_poscar(file_object=None, return_comment=False):
 
         * Tries to open the file with the name  ``file_object``.
         * Tries to open the file with the name "POSCAR" in the directory ``file_object``.
-
-    return_comment : bool, default False
-        Whether to return the comment from the first line of the POSCAR file.
 
     Returns
     -------
@@ -63,7 +60,7 @@ def load_poscar(file_object=None, return_comment=False):
         Atoms of the crystal structure.
         Positions are always relative to the cell.
     comment : str
-        Comment from the first line of the file. If ``return_comment`` is ``True``.
+        Comment from the first line of the file.
 
     Examples
     --------
@@ -71,11 +68,7 @@ def load_poscar(file_object=None, return_comment=False):
     .. doctest::
 
         >>> # Load a POSCAR file
-        >>> cell, atoms = wulfric.io.load_poscar("POSCAR")  # doctest: +SKIP
-        >>> # It can return the comment from the file as well:
-        >>> cell, atoms, comment = wulfric.io.load_poscar(
-        ...     "POSCAR", return_comment=True
-        ... )  # doctest: +SKIP
+        >>> cell, atoms, comment = wulfric.io.load_poscar("POSCAR")  # doctest: +SKIP
 
     """
 
@@ -163,9 +156,7 @@ def load_poscar(file_object=None, return_comment=False):
                 atoms["names"].append(species_names[i])
                 atoms["positions"].append(coordinates)
 
-    if return_comment:
-        return cell, atoms, comment
-    return cell, atoms
+    return cell, atoms, comment
 
 
 def dump_poscar(
