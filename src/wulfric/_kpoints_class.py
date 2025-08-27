@@ -38,7 +38,7 @@ old_dir.add("old_dir")
 
 class Kpoints:
     r"""
-    Interface for convenient manipulations with the high symmetry k-points and k-path in
+    Interface for convenient manipulations with the high-symmetry k-points and k-path in
     reciprocal space.
 
     Parameters
@@ -46,14 +46,14 @@ class Kpoints:
     rcell : (3, 3) |array-like|_
         Reciprocal cell. Rows are interpreted as vectors.
     coordinates : list, optional
-        Coordinates of high symmetry points given in relative coordinates in reciprocal
+        Coordinates of high-symmetry points given in relative coordinates in reciprocal
         space (in the basis of ``rcell``).
     names: list, optional
-        Names of the high symmetry points. Used in ``path``. Has to have the same length
+        Names of the high-symmetry points. Used in ``path``. Has to have the same length
         as ``coordinates``. If ``None``, then use "K1", ... "KN", where
         ``N = len(coordinates)``.
     labels : list, optional
-        List of the high symmetry point's labels. Used for plotting. Has to have the same
+        List of the high-symmetry point's labels. Used for plotting. Has to have the same
         length as ``coordinates``. If ``None`` and ``names is None, then use "K$_1$", ...
         "K$_N$", where ``N = len(coordinates)``. If ``None`` but ``names are given, then
         ``labels = names``.
@@ -61,7 +61,7 @@ class Kpoints:
         K-path. Use elements of ``names`` to specify the path. If no names given, then use
         "K1-K2-...-KN", where ``N = len(coordinates)``.
     n : int
-        Number of intermediate points between each pair of the high symmetry points (high
+        Number of intermediate points between each pair of the high-symmetry points (high
         symmetry points excluded).
 
     Attributes
@@ -69,10 +69,10 @@ class Kpoints:
     rcell : (3, 3) :numpy:`ndarray`
         Reciprocal cell. Rows are interpreted as vectors.
     hs_names : list
-        Names of the high symmetry points. Used in k-path and as main identifier of the
+        Names of the high-symmetry points. Used in k-path and as main identifier of the
         point.
     hs_coordinates : dict
-        Dictionary of the high symmetry points coordinates. Coordinates are relative (in
+        Dictionary of the high-symmetry points coordinates. Coordinates are relative (in
         the basis of ``rcell``)
 
         .. code-block:: python
@@ -164,8 +164,8 @@ class Kpoints:
             * "spglib" for |spglib|_
 
         n : int, default 100
-            Number of intermediate points between each pair of the high symmetry points
-            (high symmetry points excluded).
+            Number of intermediate points between each pair of the high-symmetry points
+            (high-symmetry points excluded).
         spglib_data : :py:class:`.SyntacticSugar`, optional
             If you need more control on the parameters passed to the spglib, then
             you can get ``spglib_data`` manually and pass it to this function.
@@ -229,16 +229,16 @@ class Kpoints:
     ################################################################################
     def add_hs_point(self, name, coordinate, label=None, relative=True) -> None:
         r"""
-        Adds high symmetry point.
+        Adds high-symmetry point.
 
         Parameters
         ----------
         name : str
-            Name of the high symmetry point.
+            Name of the high-symmetry point.
         coordinate : (3,) array-like
-            Coordinate of the high symmetry point.
+            Coordinate of the high-symmetry point.
         label : str, optional
-            Label of the high symmetry point, ready to be plotted. If ``None``, then
+            Label of the high-symmetry point, ready to be plotted. If ``None``, then
             ``label = name``.
         relative : bool, optional
             Whether to interpret coordinates as relative or absolute.
@@ -260,12 +260,12 @@ class Kpoints:
 
     def remove_hs_point(self, name) -> None:
         r"""
-        Removes high symmetry point.
+        Removes high-symmetry point.
 
         Parameters
         ----------
         name : str
-            Name of the high symmetry point.
+            Name of the high-symmetry point.
         """
 
         if name in self.hs_names:
@@ -284,7 +284,7 @@ class Kpoints:
         Returns
         -------
         path : list of list of str
-            K points path. Each subpath is a list of the high symmetry points.
+            K points path. Each subpath is a list of the high-symmetry points.
 
             .. code-block:: python
 
@@ -341,8 +341,8 @@ class Kpoints:
     @property
     def n(self) -> int:
         r"""
-        Amount of points between each pair of the high symmetry points
-        (high symmetry points excluded).
+        Amount of points between each pair of the high-symmetry points
+        (high-symmetry points excluded).
 
         Returns
         -------
@@ -365,12 +365,12 @@ class Kpoints:
     @property
     def labels(self) -> list:
         r"""
-        Labels of high symmetry points, ready to be plotted.
+        Labels of high-symmetry points, ready to be plotted.
 
         For example for point "GAMMA" it returns R"$\Gamma$".
 
-        If there are two high symmetry points following one another in the path,
-        it returns "X|Y" where X and Y are the labels of the two high symmetry points.
+        If there are two high-symmetry points following one another in the path,
+        it returns "X|Y" where X and Y are the labels of the two high-symmetry points.
 
         Returns
         -------
@@ -391,7 +391,7 @@ class Kpoints:
 
     def ticks(self, relative=False):
         r"""
-        Tick's positions of the high symmetry points, ready to be plotted.
+        Tick's positions of the high-symmetry points, ready to be plotted.
 
         Same coordinated as in :py:meth:`.flat_points`.
 
@@ -432,7 +432,7 @@ class Kpoints:
     def points(self, relative=False):
         r"""
         Coordinates of all points with n points between each pair of the high
-        symmetry points (high symmetry points excluded).
+        symmetry points (high-symmetry points excluded).
 
         Parameters
         ----------
@@ -471,7 +471,7 @@ class Kpoints:
     def flat_points(self, relative=False):
         r"""
         Flatten coordinates of all points with n points between each pair of the high
-        symmetry points (high symmetry points excluded).
+        symmetry points (high-symmetry points excluded).
 
         Used to plot band structure, dispersion, etc.
 
@@ -534,7 +534,7 @@ class Kpoints:
 
     def hs_table(self, decimals=8) -> str:
         r"""
-        Table of the high symmetry points.
+        Table of the high-symmetry points.
 
         Parameters
         ----------
@@ -544,8 +544,8 @@ class Kpoints:
         Returns
         -------
         table : str
-            String with N+1 lines, where N is the amount of high symmetry points.
-            Each line contains the name of the high symmetry point and its relative and
+            String with N+1 lines, where N is the amount of high-symmetry points.
+            Each line contains the name of the high-symmetry point and its relative and
             absolute coordinates in a reciprocal space, i.e.::
 
                 K1  0.0 0.0 0.0   0.0 0.0 0.0
@@ -556,9 +556,10 @@ class Kpoints:
         """
 
         d = decimals
+        nd = max([len(name) for name in self.hs_names])
         table = [
             (
-                f"{'Name':4}  "
+                f"{'Name':<{nd}}  "
                 + f"{'rel_b1':>{d + 3}} "
                 + f"{'rel_b2':>{d + 3}} "
                 + f"{'rel_b3':>{d + 3}}  "
@@ -576,7 +577,7 @@ class Kpoints:
             k_x = f"{absolute[0]: {d + 3}.{d}f}"
             k_y = f"{absolute[1]: {d + 3}.{d}f}"
             k_z = f"{absolute[2]: {d + 3}.{d}f}"
-            table.append(f"{name:4}  {i} {j} {k}  {k_x} {k_y} {k_z}")
+            table.append(f"{name:<{nd}}  {i} {j} {k}  {k_x} {k_y} {k_z}")
         return "\n".join(table)
 
 

@@ -115,7 +115,7 @@ DESCRIPTIONS = {
         "\nSource can be found `here <https://onlinelibrary.wiley.com/iucr/itc/Ac/ch2o3v0001/>`_.",
         "",
     ),
-    "HS_PLOT_NAMES": ("Names of high symmetry k points written in LaTex.", "", ""),
+    "HS_PLOT_NAMES": ("Names of high-symmetry k points written in LaTex.", "", ""),
 }
 
 

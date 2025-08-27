@@ -21,7 +21,7 @@ underlying lattice and positions of ``atoms`` in the real space are not modified
 K-points are computed for the original (given) unit cell, using the transformation matrix
 :math:`\boldsymbol{S}` from given to standardized cell.
 
-In each individual page, relative positions of the high symmetry k-points are written for
+In each individual page, relative positions of the high-symmetry k-points are written for
 the *standardized primitive* cell in the *default* orientation. The actual relative
 coordinates of the k-points that wulfric computes are specific to the ``cell`` that user
 provides (original cell) and may differ from the ones written in those pages.

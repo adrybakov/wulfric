@@ -84,7 +84,7 @@ def get_path_as_list(path_as_string) -> list:
 
     subpaths_as_str = path_as_string.split("|")
     path_as_list = []
-    for s_i, subpath_as_str in subpaths_as_str:
+    for s_i, subpath_as_str in enumerate(subpaths_as_str):
         subpath_as_list = subpath_as_str.split("-")
         # Each subpath has to contain at least two points.
         # If subpath is empty, then no action required
@@ -95,6 +95,8 @@ def get_path_as_list(path_as_string) -> list:
 
         if len(subpath_as_list) >= 2:
             path_as_list.append(subpath_as_list)
+
+    return path_as_list
 
 
 def get_path_as_string(path_as_list) -> str:
@@ -151,9 +153,9 @@ def get_path_and_points(
     relative=True,
 ):
     r"""
-    Returns recommended k-path and set of high symmetry points.
+    Returns recommended k-path and set of high-symmetry points.
 
-    Note that high symmetry points are the ones of the primitive cell, that is associated
+    Note that high-symmetry points are the ones of the primitive cell, that is associated
     with the given set of ``cell`` and ``atoms``. In other words it respects the symmetry
     of the crystal.
 
@@ -209,7 +211,7 @@ def get_path_and_points(
     Returns
     -------
     recommended_path : str
-        Recommended path in reciprocal space between the high symmetry k points.
+        Recommended path in reciprocal space between the high-symmetry k points.
     hs_points : dict
         High symmetry points.
 
@@ -292,7 +294,6 @@ def get_path_and_points(
             extended_bl_symbol=extended_bl_symbol,
         )
         kpath = HPKOT_DEFAULT_K_PATHS[extended_bl_symbol]
-        raise NotImplementedError
     else:
         raise ConventionNotSupported(convention, supported_conventions=["HPKOT", "SC"])
 

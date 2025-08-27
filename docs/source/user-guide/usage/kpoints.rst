@@ -5,41 +5,57 @@ K points
 ********
 
 On this page we describe one of the main usage of wulfric - automatic generation of
-high symmetry points for any given cell.
+high-symmetry points for any given crystal.
 
 For the full technical reference see :py:class:`.Kpoints` and :ref:`api_kpoints`.
 
-K-points data
-=============
-
-If you only need the simple data about the high symmetry points and nothing else, then
-use
+In the examples below we use crystal with six atoms and orthorhombic cell.
 
 .. doctest::
 
     >>> import wulfric
     >>> import numpy as np
-    >>> cell = wulfric.cell.sc_get_example_cell("BCT")
-    >>> atoms = dict(spglib_types=[1], positions=[[0, 0, 0]])
-    >>> coordinates, names, labels = wulfric.kpoints.sc_get_hs_points(cell=cell, atoms=atoms)
-    >>> names
-    ['G', 'M', 'N', 'P', 'X', 'Z', 'Z1']
-    >>> labels
-    ['$\\Gamma$', 'M', 'N', 'P', 'X', 'Z', 'Z$_1$']
-    >>> for coordinate in coordinates:
-    ...   print(np.round(coordinate, decimals=4))
-    ...
-    [0. 0. 0.]
-    [-0.5  0.5  0.5]
-    [0.  0.5 0. ]
-    [0.25 0.25 0.25]
-    [-0.   0.   0.5]
-    [ 0.3611  0.3611 -0.3611]
-    [-0.3611  0.6389  0.3611]
+    >>> cell = np.array([
+    ...     [0.000000, 4.744935, 0.000000],
+    ...     [3.553350, 0.000000, 0.000000],
+    ...     [0.000000, 0.000000, 8.760497],
+    ... ])
+    >>> atoms = {
+    ...     "names": ["Cr1", "Br1", "S1", "Cr2", "Br2", "S2"],
+    ...     "positions": np.array([
+    ...         [0.000000, -0.500000,  0.882382],
+    ...         [0.000000, 0.000000,  0.677322],
+    ...         [-0.500000, -0.500000,  0.935321],
+    ...         [0.500000, 0.000000,  0.117618],
+    ...         [0.500000, 0.500000,  0.322678],
+    ...         [0.000000, 0.000000,  0.064679],
+    ...     ]),
+    ... }
 
-This function will return ``names`` and ``labels`` of high symmetry kpoints. Names are used in the
-specification of the ``path``, while labels are better suited for plotting. For instance,
-if ``'$\\Gamma$'`` is used with |matplotlib|_, then it produces a nice "Γ" letter.
+Raw data
+========
+
+If you only need the data about the high-symmetry points and path, then use
+:py:func:`wulfric.kpoints.get_path_and_points`
+
+.. doctest::
+
+    # Default convention is "HPKOT"
+    >>> path, points = wulfric.kpoints.get_path_and_points(cell, atoms)
+    >>> path
+    'GAMMA-X-S-Y-GAMMA-Z-U-R-T-Z|X-U|Y-T|S-R'
+    >>> # points is a dictionary {name: coordinates}
+    >>> for name in points:
+    ...     print(f"{name:<5} : {points[name]}")
+    ...
+    GAMMA : [0. 0. 0.]
+    X     : [0.  0.5 0. ]
+    Z     : [0.  0.  0.5]
+    U     : [0.  0.5 0.5]
+    Y     : [0.5 0.  0. ]
+    S     : [0.5 0.5 0. ]
+    T     : [0.5 0.  0.5]
+    R     : [0.5 0.5 0.5]
 
 For the strict definition of how the path is specified see
 :ref:`user-guide_usage_key-concepts_k-path`.
@@ -56,63 +72,63 @@ implemented with the :py:class:`.Kpoints` class.
 Creation
 --------
 
-Usually it is created from some ``cell``:
+Usually it is created from some crystal (``cell`` + ``atoms``) using
+:py:meth:`.Kpoints.from_crystal`
 
 .. doctest::
 
-    >>> cell = wulfric.cell.sc_get_example_cell("CUB")
-    >>> kp = wulfric.Kpoints.from_cell(cell)
+    >>> kp = wulfric.Kpoints.from_crystal(cell, atoms)
     >>> kp.hs_names
-    ['G', 'M', 'R', 'X']
+    ['GAMMA', 'X', 'Z', 'U', 'Y', 'S', 'T', 'R']
 
-However, it could be created explicitly as well:
+However, it could be created manually as well:
 
 .. doctest::
 
     >>> rcell = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
-    >>> names = ["G", "X"]
+    >>> names = ["GAMMA", "X"]
     >>> coordinates = [[0, 0, 0], [0.5, 0, 0]]
     >>> labels = [R"$\Gamma$", "X"]
     >>> kp = wulfric.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels)
     >>> kp.hs_names
-    ['G', 'X']
+    ['GAMMA', 'X']
 
-For the full list of constructor's parameters see :py:class:`.Kpoints`.
+For the full list of available parameters see :py:class:`wulfric.Kpoints`.
 
 High-symmetry points
 --------------------
 
-Information about high symmetry points is accessible through the following properties:
+Information about high-symmetry points is accessible through the following properties
 
-* :py:attr:`.Kpoints.hs_names`
+*   :py:attr:`.Kpoints.hs_names`
 
-List of names of high symmetry points.
+    List of names of high-symmetry points.
 
-.. doctest::
+    .. doctest::
 
-    >>> kp.hs_names
-    ['G', 'X']
+        >>> kp.hs_names
+        ['GAMMA', 'X']
 
-* :py:attr:`.Kpoints.hs_coordinates`
+*   :py:attr:`.Kpoints.hs_coordinates`
 
-Dictionary of coordinates of high symmetry points.
+    Dictionary with coordinates of high-symmetry points.
 
-.. doctest::
+    .. doctest::
 
-    >>> kp.hs_coordinates
-    {'G': array([0, 0, 0]), 'X': array([0.5, 0. , 0. ])}
+        >>> kp.hs_coordinates
+        {'GAMMA': array([0, 0, 0]), 'X': array([0.5, 0. , 0. ])}
 
-* :py:attr:`.Kpoints.hs_labels`
+*   :py:attr:`.Kpoints.hs_labels`
 
-Dictionary of labels of high symmetry points. Usually used for plotting.
+    Dictionary of labels of high-symmetry points. Usually used for plotting.
 
-.. doctest::
+    .. doctest::
 
-    >>> kp.hs_labels
-    {'G': '$\\Gamma$', 'X': 'X'}
+        >>> kp.hs_labels
+        {'GAMMA': '$\\Gamma$', 'X': 'X'}
 
 .. note::
-    Names of high symmetry points have to be unique.
+    Names of high-symmetry points have to be unique.
 
 Adding a point
 --------------
@@ -121,38 +137,39 @@ Adding a point
 
     >>> kp.add_hs_point(name="M", coordinate=[0.5, 0.5, 0], label="M")
     >>> kp.hs_names
-    ['G', 'X', 'M']
+    ['GAMMA', 'X', 'M']
     >>> kp.hs_coordinates
-    {'G': array([0, 0, 0]), 'X': array([0.5, 0. , 0. ]), 'M': array([0.5, 0.5, 0. ])}
+    {'GAMMA': array([0, 0, 0]), 'X': array([0.5, 0. , 0. ]), 'M': array([0.5, 0.5, 0. ])}
     >>> kp.hs_labels
-    {'G': '$\\Gamma$', 'X': 'X', 'M': 'M'}
+    {'GAMMA': '$\\Gamma$', 'X': 'X', 'M': 'M'}
 
 Getting summary of high-symmetry points
 ---------------------------------------
 
-In order to have a summary of the high symmetry points the predefined method
+In order to have a summary of the high-symmetry points the predefined method
 :py:meth:`.Kpoints.hs_table` may be used:
 
 .. doctest::
 
-    >>> kp = wulfric.Kpoints.from_cell(wulfric.cell.sc_get_example_cell("FCC"))
-    >>> print(kp.hs_table())
-    Name       rel_b1      rel_b2      rel_b3          k_x         k_y         k_z
-    G      0.00000000  0.00000000  0.00000000   0.00000000  0.00000000  0.00000000
-    K      0.37500000  0.37500000  0.75000000   1.50000000  1.50000000  0.00000000
-    L      0.50000000  0.50000000  0.50000000   1.00000000  1.00000000  1.00000000
-    U      0.62500000  0.25000000  0.62500000   0.50000000  2.00000000  0.50000000
-    W      0.50000000  0.25000000  0.75000000   1.00000000  2.00000000  0.00000000
-    X      0.50000000  0.00000000  0.50000000   0.00000000  2.00000000  0.00000000
+    >>> kp = wulfric.Kpoints.from_crystal(cell, atoms)
+    >>> print(kp.hs_table(decimals=4))
+    Name    rel_b1  rel_b2  rel_b3      k_x     k_y     k_z
+    GAMMA   0.0000  0.0000  0.0000   0.0000  0.0000  0.0000
+    X       0.0000  0.5000  0.0000   0.8841  0.0000  0.0000
+    Z       0.0000  0.0000  0.5000   0.0000  0.0000  0.3586
+    U       0.0000  0.5000  0.5000   0.8841  0.0000  0.3586
+    Y       0.5000  0.0000  0.0000   0.0000  0.6621  0.0000
+    S       0.5000  0.5000  0.0000   0.8841  0.6621  0.0000
+    T       0.5000  0.0000  0.5000   0.0000  0.6621  0.3586
+    R       0.5000  0.5000  0.5000   0.8841  0.6621  0.3586
 
-.. _user-guide_usage_kpoints-path:
 
-Path
-----
+K-path
+------
 
-The path is the route in the reciprocal space, defined by the high symmetry points.
+The k-path is the route in the reciprocal space, between the high-symmetry points.
 
-We use a specific format in the package that is described in
+Wulfric uses a string of the special format, that is described in
 :ref:`user-guide_usage_key-concepts_k-path`.
 
 .. doctest::
@@ -163,11 +180,11 @@ We use a specific format in the package that is described in
     >>> coordinates = [[0, 0, 0], [0.5, 0.5, 0], [0.5, 0, 0], [0.5, 0.5, 0.5]]
     >>> labels = ["$\Gamma$", "K", "X", "R"]
     >>> kp = wulfric.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels)
-    >>> # Default path is constructed from the list of high symmetry points
+    >>> # Default path is constructed from the list of high-symmetry points
     >>> kp.path
     [['G', 'K', 'X', 'R']]
     >>> # Only the names from Kpoints.hs_names are allowed to be used in the path
-    >>> # Next line causes an ValueError, because high symmetry point "S" is not defined
+    >>> # Next line causes an ValueError, because high-symmetry point "S" is not defined
     >>> kp.path = "G-K-X|R-S"
     Traceback (most recent call last):
     ...
@@ -193,13 +210,13 @@ We use a specific format in the package that is described in
 .. note::
 
     Internally wulfric stores the path as a list of subpaths, where each subpath
-    is a list of high symmetry point's names. This format is also correct for assigning
+    is a list of high-symmetry point's names. This format is also correct for assigning
     the :py:attr:`.Kpoints.path` attribute.
 
 Configuration
 -------------
 
-The amount of kpoints to be generated between each pair of high symmetry points in the path
+The amount of kpoints to be generated between each pair of high-symmetry points in the path
 is controlled by the :py:attr:`.Kpoints.n` property.
 
 .. doctest::
@@ -218,9 +235,9 @@ Calculation
 -----------
 
 There is one method suitable for calculation: :py:meth:`.Kpoints.points`. It is an array
-of all generated kpoints. For each pair of high symmetry points it generates
+of all generated kpoints. For each pair of high-symmetry points it generates
 :py:attr:`.Kpoints.n` points between them. The first and the last points are always
-the high symmetry points of this section of the path.
+the high-symmetry points of this section of the path.
 
 .. doctest::
 
@@ -267,7 +284,7 @@ Plotting
 
 For plotting there is one property :py:attr:`.Kpoints.labels` and two methods
 (:py:meth:`.Kpoints.ticks`, :py:meth:`.Kpoints.flat_points`). Two of them are for the
-high symmetry points and describe the labels and position of ticks on the x-axis:
+high-symmetry points and describe the labels and position of ticks on the x-axis:
 
 .. doctest::
 
@@ -318,4 +335,4 @@ The third property gives the coordinates of the :py:meth:`.Kpoints.points` for t
 .. hint::
 
     Repeated :py:meth:`.Kpoints.points` or :py:meth:`.Kpoints.flat_points` can be used
-    to restore the position of high symmetry points in the path.
+    to restore the position of high-symmetry points in the path.

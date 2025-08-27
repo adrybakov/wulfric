@@ -121,7 +121,7 @@ Wulfric understands kpath of the format like "G-K-X|R-S".
 * K-points are identified by their names. Name can not contain "-".
 * ``|`` separates subpaths. Each subpath has to contain at least two points. Path has to
   have at least one subpath.
-* ``-`` separates high symmetry points in each subpath.
+* ``-`` separates high-symmetry points in each subpath.
 
 Almost every function of wulfric expects k-path to be given as a string in that format.
 
@@ -132,7 +132,7 @@ between "K" and "X" and between "R" and "S". However, there is no intermediate p
 between "X" and "R".
 
 Internally the path is stored as ``list`` of ``list`` of ``str``, i.e. as list of
-subpaths, where each subpath is a list of names of high symmetry points. Functions
+subpaths, where each subpath is a list of names of high-symmetry points. Functions
 :py:func:`wulfric.kpoints.get_path_as_string` and
 :py:func:`wulfric.kpoints.get_path_as_list` can be used for conversion between
 representations if necessary.

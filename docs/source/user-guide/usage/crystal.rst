@@ -12,21 +12,19 @@ On this page we give examples of what can be done with the pair of ``cell`` and 
 define a crystal and reference ``cell``. All functions that deal with atoms or crystal are
 available under ``wulfric.crystal`` submodule.
 
-.. doctest::
-
-    >>> import numpy as np
-    >>> import wulfric
 
 In the examples below we use crystal with six atoms and orthorhombic cell.
 
 .. doctest::
 
-    >>> cell = np.array([
+    >>> import numpy as np
+    >>> import wulfric
+    >>> csb_cell = np.array([
     ...     [0.000000, 4.744935, 0.000000],
     ...     [3.553350, 0.000000, 0.000000],
     ...     [0.000000, 0.000000, 8.760497],
     ... ])
-    >>> atoms = {
+    >>> csb_atoms = {
     ...     "names": ["Cr1", "Br1", "S1", "Cr2", "Br2", "S2"],
     ...     "positions": np.array([
     ...         [0.000000, -0.500000,  0.882382],
@@ -51,7 +49,7 @@ To choose conventional cell use :py:func:`wulfric.crystal.get_conventional`
 .. doctest::
 
     # Default convention is HPKOT
-    >>> conv_cell, conv_atoms = wulfric.crystal.get_conventional(cell, atoms)
+    >>> conv_cell, conv_atoms = wulfric.crystal.get_conventional(csb_cell, csb_atoms)
 
 Note that the first two lattice vectors are changed.
 
@@ -80,7 +78,7 @@ Conventional atoms are either the same ones as in the original crystal ("Br1", "
 
 .. doctest::
 
-    >>> atoms["positions"] @ cell
+    >>> csb_atoms["positions"] @ csb_cell
     array([[-1.776675  ,  0.        ,  7.73010486],
            [ 0.        ,  0.        ,  5.93367735],
            [-1.776675  , -2.3724675 ,  8.19387681],
@@ -108,7 +106,7 @@ To choose primitive cell use :py:func:`wulfric.crystal.get_primitive`.
 
 .. doctest::
 
-    >>> prim_cell, prim_atoms = wulfric.crystal.get_primitive(cell, atoms)
+    >>> prim_cell, prim_atoms = wulfric.crystal.get_primitive(csb_cell, csb_atoms)
 
 
 Atom's names
@@ -132,11 +130,11 @@ of names
 .. doctest::
 
     >>> import wulfric
-    >>> atoms1 = {"names" : ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
+    >>> atoms = {"names" : ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
     >>> # Default strategy is "all"
-    >>> wulfric.crystal.get_unique_names(atoms1)
+    >>> wulfric.crystal.get_unique_names(atoms)
     ['Cr11', 'Cr22', 'Br3', 'Br4', 'S5', 'S6']
-    >>> wulfric.crystal.get_unique_names(atoms1, strategy="repeated-only")
+    >>> wulfric.crystal.get_unique_names(atoms, strategy="repeated-only")
     ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']
 
 Atom's species
@@ -172,7 +170,7 @@ To guess the names for all ``atoms`` at once use :py:func:`wulfric.crystal.get_a
 
 .. doctest::
 
-    >>> wulfric.crystal.get_atoms_species(atoms)
+    >>> wulfric.crystal.get_atoms_species(csb_atoms)
     ['Cr', 'Br', 'S', 'Cr', 'Br', 'S']
 
 Atom's positions
@@ -257,7 +255,7 @@ To get the vector from atom 1 to atom 2 or distance between them use
 
 .. doctest::
 
-    >>> wulfric.crystal.get_vector(cell, atoms, atom1=0, atom2=0, R=(0,1,0))
+    >>> wulfric.crystal.get_vector(csb_cell, csb_atoms, atom1=0, atom2=0, R=(0,1,0))
     array([3.55335, 0.     , 0.     ])
-    >>> wulfric.crystal.get_distance(cell, atoms, atom1=0, atom2=0, R=(0,1,0))
+    >>> wulfric.crystal.get_distance(csb_cell, csb_atoms, atom1=0, atom2=0, R=(0,1,0))
     3.55335

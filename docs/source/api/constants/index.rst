@@ -57,7 +57,7 @@ Kpoints
 =======
 
 ================================== =================================================
-:ref:`api_constants_HS_PLOT_NAMES` Names of high symmetry k points written in LaTex.
+:ref:`api_constants_HS_PLOT_NAMES` Names of high-symmetry k points written in LaTex.
 ================================== =================================================
 
 Angle conversion

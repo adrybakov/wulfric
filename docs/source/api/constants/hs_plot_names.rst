@@ -4,7 +4,7 @@
 wulfric.constants.HS_PLOT_NAMES
 *******************************
 
-Names of high symmetry k points written in LaTex.
+Names of high-symmetry k points written in LaTex.
 
 
 
