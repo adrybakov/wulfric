@@ -43,24 +43,6 @@ def _raise_with_message(e, message):
         raise e
 
 
-class StandardizationTypeMismatch(Exception):
-    r"""
-    Raised if standardization functions is called on the cell that does not match the
-    expected lattice type. It is not guaranteed to be raised if the lattice type is
-    incorrect.
-    """
-
-    def __init__(self, expected_lattice_type, step=None):
-        if step is not None:
-            self.message = f"{step} step of the standardization process fails. "
-        else:
-            self.message = ""
-        self.message += f"Are you sure that the cell is {expected_lattice_type}?"
-
-    def __str__(self):
-        return self.message
-
-
 class ConventionNotSupported(Exception):
     """
     Raised when the convention for the cell/crystall is not one of the supported ones.
