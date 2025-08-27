@@ -266,7 +266,7 @@ Plotting
 --------
 
 For plotting there is one property :py:attr:`.Kpoints.labels` and two methods
-(:py:meth:`.Kpoints.ticks`, :py:meth:`.Kpoints.flatten_points`). Two of them are for the
+(:py:meth:`.Kpoints.ticks`, :py:meth:`.Kpoints.flat_points`). Two of them are for the
 high symmetry points and describe the labels and position of ticks on the x-axis:
 
 .. doctest::
@@ -281,7 +281,7 @@ The third property gives the coordinates of the :py:meth:`.Kpoints.points` for t
 
 .. doctest::
 
-    >>> for point in kp.flatten_points():
+    >>> for point in kp.flat_points():
     ...     print(round(point, 4))
     ...
     0.0
@@ -317,5 +317,5 @@ The third property gives the coordinates of the :py:meth:`.Kpoints.points` for t
 
 .. hint::
 
-    Repeated :py:meth:`.Kpoints.points` or :py:meth:`.Kpoints.flatten_points` can be used
+    Repeated :py:meth:`.Kpoints.points` or :py:meth:`.Kpoints.flat_points` can be used
     to restore the position of high symmetry points in the path.

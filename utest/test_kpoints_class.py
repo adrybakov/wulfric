@@ -206,8 +206,8 @@ def test_points(path, corr_points):
 
 
 @pytest.mark.parametrize("path, corr_flat_points", flat_point_input)
-def test_flatten_points(path, corr_flat_points):
+def test_flat_points(path, corr_flat_points):
     kp = Kpoints(
         rcell, [points[i] for i in points], names=[i for i in points], n=4, path=path
     )
-    assert (np.abs(kp.flatten_points(relative=True) - corr_flat_points) < 1e-5).all()
+    assert (np.abs(kp.flat_points(relative=True) - corr_flat_points) < 1e-5).all()
