@@ -26,7 +26,6 @@ help:
 	@echo "    install - install the package"
 	@echo "    test - execute unit tests"
 	@echo "    test-all - execute full testing suite"
-	@echo "    bravais-pictures - update pictures of bravais lattices"
 	@echo "    docs-generate-images - update pictures for the docs"
 	@echo "    requirements - installs all requirements (package + dev + tests + docs)"
 	@echo
@@ -39,7 +38,7 @@ html:
 clean-html: clean install html
 	@echo "Done"
 
-html-from-zero: clean install bravais-pictures docs-generate-images html
+html-from-zero: clean install docs-generate-images html
 	@echo "Done"
 
 doctest:
@@ -69,8 +68,6 @@ test:
 test-all: html-from-zero test doctest
 	@echo "Done"
 
-bravais-pictures:
-	@python3 tools/plot-bravais-lattices.py
 
 docs-generate-images:
 	@python3 tools/plot-repositories.py
