@@ -44,7 +44,7 @@ See :py:func:`wulfric.compare_numerically` for details.
 
 Parallelepiped
 ==============
-Not any set of six numbers might be used to form a parallelepiped. Wulfric implements a
+Not every set of six numbers might be used to form a parallelepiped. Wulfric implements a
 function to check if the set of parameters is correct
 
 .. doctest::
