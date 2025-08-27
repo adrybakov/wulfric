@@ -553,7 +553,7 @@ class PlotlyEngine:
         legend_group=None,
     ):
         r"""
-        Plots k path in the reciprocal space.
+        Plots k-path in the reciprocal space.
 
         Parameters
         ----------

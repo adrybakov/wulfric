@@ -8,10 +8,9 @@ Version 0.6
 Whats new?
 ----------
 
-Wulfric was redesigned to rely on |seek-kpath|_ for the definition of the recommended
-k-path and on the |spglib|_ for the definition of symmetries. This change invoked a huge
-number of modifications both of the internal structure and public API. Below part of the
-changes are listed explicitly.
+Wulfric was redesigned to rely on on the |spglib|_ for the definition of symmetries. This
+change invoked a huge number of modifications both of the internal structure and public
+API. Below part of the changes are listed explicitly.
 
 
 

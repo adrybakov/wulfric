@@ -42,7 +42,7 @@ specification of the ``path``, while labels are better suited for plotting. For 
 if ``'$\\Gamma$'`` is used with |matplotlib|_, then it produces a nice "Γ" letter.
 
 For the strict definition of how the path is specified see
-:ref:`user-guide_usage_key-concepts_kpath`.
+:ref:`user-guide_usage_key-concepts_k-path`.
 
 By default coordinates are relative to the reciprocal cell, defined by ``cell``. Use
 ``return_relative = False``, to obtain absolute coordinates instead.
@@ -153,7 +153,7 @@ Path
 The path is the route in the reciprocal space, defined by the high symmetry points.
 
 We use a specific format in the package that is described in
-:ref:`user-guide_usage_key-concepts_kpath`.
+:ref:`user-guide_usage_key-concepts_k-path`.
 
 .. doctest::
 

@@ -111,7 +111,7 @@ responsible for providing appropriate ``cell`` for any given ``atoms``.
 For example, ``cell`` and ``atoms`` from the above two sections describe a crystal of
 |CrSBr-materials-cloud|_.
 
-.. _user-guide_usage_key-concepts_kpath:
+.. _user-guide_usage_key-concepts_k-path:
 
 K-path
 ======

@@ -32,7 +32,7 @@ old_dir.add("old_dir")
 
 class Kpoints:
     r"""
-    Interface for convenient manipulation with the high symmetry kpoints and K-path in
+    Interface for convenient manipulations with the high symmetry k-points and k-path in
     reciprocal space.
 
     Parameters

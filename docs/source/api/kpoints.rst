@@ -7,9 +7,6 @@ wulfric.kpoints
 .. currentmodule:: wulfric.kpoints
 
 
-K path
-======
-
 .. autosummary::
     :toctree: generated/
 

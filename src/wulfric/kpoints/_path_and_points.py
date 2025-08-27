@@ -77,7 +77,7 @@ def get_path_as_list(path_as_string) -> list:
 
     See Also
     --------
-    :ref:`user-guide_usage_key-concepts_kpath`
+    :ref:`user-guide_usage_key-concepts_k-path`
     """
     if not isinstance(path_as_string, str):
         raise ValueError(f"path_as_string is not a string: {path_as_string}")
@@ -124,7 +124,7 @@ def get_path_as_string(path_as_list) -> str:
 
     See Also
     --------
-    :ref:`user-guide_usage_key-concepts_kpath`
+    :ref:`user-guide_usage_key-concepts_k-path`
     """
 
     if not isinstance(path_as_list, Iterable):
@@ -151,7 +151,7 @@ def get_path_and_points(
     relative=True,
 ):
     r"""
-    Returns recommended k path and set of high symmetry points.
+    Returns recommended k-path and set of high symmetry points.
 
     Note that high symmetry points are the ones of the primitive cell, that is associated
     with the given set of ``cell`` and ``atoms``. In other words it respects the symmetry
