@@ -24,7 +24,7 @@ import pytest
 
 from wulfric.constants._atoms import ATOM_SPECIES
 from wulfric.crystal._atoms import (
-    ensure_unique_names,
+    get_unique_names,
     get_atom_species,
     get_spglib_types,
 )
@@ -49,11 +49,11 @@ def test_get_atom_species(prefix, suffix):
 
 
 @given(st.lists(elements=st.text()))
-def test_ensure_unique_names(names):
+def test_get_unique_names(names):
     atoms = {"names": names}
-    ensure_unique_names(atoms)
+    unique_names = get_unique_names(atoms)
 
-    assert len(atoms["names"]) == len(set(atoms["names"]))
+    assert len(unique_names) == len(set(unique_names))
 
 
 @pytest.mark.parametrize(
