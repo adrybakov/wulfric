@@ -607,12 +607,7 @@ def _hpkot_get_extended_bl_symbol(lattice_type, space_group_number, conventional
     )
 
 
-def _hpkot_get_points(conventional_cell, lattice_type, space_group_number):
-    extended_bl_symbol = _hpkot_get_extended_bl_symbol(
-        lattice_type=lattice_type,
-        space_group_number=space_group_number,
-        conventional_cell=conventional_cell,
-    )
+def _hpkot_get_points(conventional_cell, lattice_type, extended_bl_symbol):
     a, b, c, _, beta, _ = get_params(cell=conventional_cell)
 
     if extended_bl_symbol in ["cP1", "cP2"]:

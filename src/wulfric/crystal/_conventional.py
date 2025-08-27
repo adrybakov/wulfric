@@ -614,7 +614,7 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
     Notes
     =====
     |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
-    ``types`` for given atoms see :py:func:`wulfric.crystal.get_spglib_types`.
+    ``types`` for given atoms see :py:func:`wulfric.get_spglib_types`.
 
     If two atoms ``i`` and ``j`` have the same spglib_type (i.e.
     ``atoms["spglib_types"][i] == atoms["spglib_types"][j]``), but they have different

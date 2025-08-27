@@ -42,7 +42,7 @@ def validate_spglib_data(cell, atoms, spglib_data) -> None:
 
     * ``cell`` is the same as ``spglib_data.original_cell``
     * ``atoms["positions"]`` are the same as ``spglib_data.original_positions``
-    * ``wulfric.crystal.get_spglib_types(atoms=atoms)`` is the same as
+    * ``wulfric.get_spglib_types(atoms=atoms)`` is the same as
       ``spglib_data.original_types``.
 
     Parameters
@@ -204,7 +204,7 @@ def get_spglib_data(
 
         * ``spglib_data.original_types``
 
-          Same as ``wulfric.crystal.get_spglib_types(atoms=atoms)`` for given ``atoms``.
+          Same as ``wulfric.get_spglib_types(atoms=atoms)`` for given ``atoms``.
 
         * ``spglib_data.space_group_number``
 
@@ -274,7 +274,7 @@ def get_spglib_data(
     Notes
     =====
     |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces
-    ``types`` from given ``atoms`` see :py:func:`wulfric.crystal.get_spglib_types`.
+    ``types`` from given ``atoms`` see :py:func:`wulfric.get_spglib_types`.
     """
 
     try:

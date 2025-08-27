@@ -18,18 +18,30 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
+from typing import Iterable
+
 import numpy as np
 
-from wulfric._exceptions import ConventionNotSupported
 from wulfric.cell._basic_manipulation import get_reciprocal
-from wulfric._spglib_interface import get_spglib_data, validate_spglib_data
-from wulfric._syntactic_sugar import SyntacticSugar
+
+from wulfric.constants._hpkot_convention import HPKOT_DEFAULT_K_PATHS
+from wulfric.constants._sc_convention import SC_DEFAULT_K_PATHS
+
 from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric.crystal._conventional import get_conventional
 from wulfric.crystal._primitive import get_primitive
 from wulfric.crystal._sc_variation import sc_get_variation
+
+from wulfric._exceptions import ConventionNotSupported
+
+from wulfric.kpoints._hpkot_points import (
+    _hpkot_get_points,
+    _hpkot_get_extended_bl_symbol,
+)
 from wulfric.kpoints._sc_points import _sc_get_points
-from wulfric.kpoints._hpkot_points import _hpkot_get_points
+
+from wulfric._spglib_interface import get_spglib_data, validate_spglib_data
+from wulfric._syntactic_sugar import SyntacticSugar
 
 
 # Save local scope at this moment
@@ -37,7 +49,101 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def get_hs_points(
+def get_path_as_list(path_as_string) -> list:
+    r"""
+    Converts k=path from string to list representation.
+
+    .. code-block:: python
+
+        path_as_list = [["G", "X", "Y", "S"], ["G", "Z"]]
+        path_as_string = "G-X-Y-S|G-Z"
+
+    Parameters
+    ----------
+    path_as_string : str
+        K-path as a single string.
+
+    Returns
+    -------
+    path_as_list : list of list of str
+        K-path as list of subpaths, where each subpath is a list of k-points.
+
+    Raises
+    ------
+    ValueError
+        If ``path_as_string`` is not ``str``
+    Valueerror
+        If any subpath contains less than two points.
+
+    See Also
+    --------
+    :ref:`user-guide_usage_key-concepts_kpath`
+    """
+    if not isinstance(path_as_string, str):
+        raise ValueError(f"path_as_string is not a string: {path_as_string}")
+
+    subpaths_as_str = path_as_string.split("|")
+    path_as_list = []
+    for s_i, subpath_as_str in subpaths_as_str:
+        subpath_as_list = subpath_as_str.split("-")
+        # Each subpath has to contain at least two points.
+        # If subpath is empty, then no action required
+        if len(subpath_as_list) == 1:
+            raise ValueError(
+                f"Subpath {s_i + 1} has less than two points: {subpath_as_str}"
+            )
+
+        if len(subpath_as_list) >= 2:
+            path_as_list.append(subpath_as_list)
+
+
+def get_path_as_string(path_as_list) -> str:
+    r"""
+    Converts k=path from list to string representation.
+
+    .. code-block:: python
+
+        path_as_string = "G-X-Y-S|G-Z"
+        path_as_list = [["G", "X", "Y", "S"], ["G", "Z"]]
+
+    Parameters
+    ----------
+    path_as_list : list of list of str
+        K-path as list of subpaths, where each subpath is a list of k-points.
+
+
+    Returns
+    -------
+    path_as_string : str
+        K-path as a single string.
+
+    Raises
+    ------
+    ValueError
+        If ``path_as_list`` is not a ``list`` of ``list``.
+
+    See Also
+    --------
+    :ref:`user-guide_usage_key-concepts_kpath`
+    """
+
+    if not isinstance(path_as_list, Iterable):
+        raise ValueError(
+            f"path_as_list is not Iterable, can not convert to string:\n{path_as_list}"
+        )
+
+    subpaths_as_str = []
+    for s_i, subpath_as_list in enumerate(path_as_list):
+        if not isinstance(subpath_as_list, Iterable):
+            raise ValueError(
+                f"Subpath {s_i + 1} is not Iterable, can not convert to string:\n{subpath_as_list}"
+            )
+        subpaths_as_str.append("-".join(subpath_as_list))
+
+    return "|".join(subpaths_as_str)
+
+
+def get_path_and_points(
     cell,
     atoms,
     spglib_data=None,
@@ -45,7 +151,7 @@ def get_hs_points(
     relative=True,
 ):
     r"""
-    Returns set of high symmetry points as defined in [1]_.
+    Returns recommended k path and set of high symmetry points.
 
     Note that high symmetry points are the ones of the primitive cell, that is associated
     with the given set of ``cell`` and ``atoms``. In other words it respects the symmetry
@@ -102,6 +208,8 @@ def get_hs_points(
 
     Returns
     -------
+    recommended_path : str
+        Recommended path in reciprocal space between the high symmetry k points.
     hs_points : dict
         High symmetry points.
 
@@ -117,7 +225,7 @@ def get_hs_points(
     Notes
     =====
     |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
-    ``types`` for given atoms see :py:func:`wulfric.crystal.get_spglib_types`.
+    ``types`` for given atoms see :py:func:`wulfric.get_spglib_types`.
 
 
     References
@@ -171,12 +279,19 @@ def get_hs_points(
             lattice_type=lattice_type,
             lattice_variation=lattice_variation,
         )
+        kpath = SC_DEFAULT_K_PATHS[lattice_variation]
     elif convention == "hpkot":
+        extended_bl_symbol = _hpkot_get_extended_bl_symbol(
+            lattice_type=lattice_type,
+            space_group_number=spglib_data.space_group_number,
+            conventional_cell=conventional_cell,
+        )
         hs_points = _hpkot_get_points(
             conventional_cell=conventional_cell,
             lattice_type=lattice_type,
-            space_group_number=spglib_data.space_group_number,
+            extended_bl_symbol=extended_bl_symbol,
         )
+        kpath = HPKOT_DEFAULT_K_PATHS[extended_bl_symbol]
         raise NotImplementedError
     else:
         raise ConventionNotSupported(convention, supported_conventions=["HPKOT", "SC"])
@@ -193,7 +308,7 @@ def get_hs_points(
                 get_reciprocal(cell=cell)
             )
 
-    return hs_points
+    return kpath, hs_points
 
 
 # Populate __all__ with objects defined in this file

@@ -366,7 +366,7 @@ def sc_get_variation(
     Notes
     =====
     |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
-    ``types`` for given atoms see :py:func:`wulfric.crystal.get_spglib_types`.
+    ``types`` for given atoms see :py:func:`wulfric.get_spglib_types`.
 
     References
     ----------

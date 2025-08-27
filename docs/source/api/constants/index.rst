@@ -13,12 +13,14 @@ wulfric.constants
     sc_conventional_to_primitive
     sc_bravais_lattice_variations
     sc_default_k_paths
+    hpkot_default_k_paths
     hpkot_conventional_to_primitive
     todegrees
     toradians
     inversion_symmetry
     crystal_family
     centring_type
+    hs_plot_names
 
 
 Atoms
@@ -44,7 +46,15 @@ Hinuma, Pizzi, Kumagai, Oba, Tanaka convention
 
 ==================================================== =================================================================
 :ref:`api_constants_HPKOT_CONVENTIONAL_TO_PRIMITIVE` Transformation matrices from conventional cell to primitive cell.
+:ref:`api_constants_HPKOT_DEFAULT_K_PATHS`           Default k-path for each extended Bravais lattice symbols.
 ==================================================== =================================================================
+
+Kpoints
+=======
+
+================================== =================================================
+:ref:`api_constants_HS_PLOT_NAMES` Names of high symmetry k points written in LaTex.
+================================== =================================================
 
 Angle conversion
 ================

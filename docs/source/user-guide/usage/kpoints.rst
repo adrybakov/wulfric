@@ -7,7 +7,7 @@ K points
 On this page we describe one of the main usage of wulfric - automatic generation of
 high symmetry points for any given cell.
 
-For the full technical reference see :py:class:`.Kpoints` and :ref:`api_cell_kpoints`.
+For the full technical reference see :py:class:`.Kpoints` and :ref:`api_kpoints`.
 
 K-points data
 =============

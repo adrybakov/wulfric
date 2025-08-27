@@ -18,5 +18,4 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-from ._k_path import *
-from ._sc_points import *
+from ._path_and_points import *

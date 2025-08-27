@@ -27,16 +27,6 @@ Cell reduction
     get_niggli
 
 
-.. _api_cell_kpoints:
-
-K points data
-=============
-
-.. autosummary::
-    :toctree: generated/
-
-    get_hs_data
-
 .. _api_cell_bravais-lattice:
 
 Bravais lattice constructors as per SC [1]_
