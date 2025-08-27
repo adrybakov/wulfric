@@ -454,3 +454,10 @@ def sc_get_variation(
         )
 
     return SC_BRAVAIS_LATTICE_SHORT_NAMES[lattice_type]
+
+
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir
