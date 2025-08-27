@@ -70,8 +70,14 @@ extensions = [
 ##                               Extension's configuration                              ##
 ##########################################################################################
 sphinx_gallery_conf = {
-    "examples_dirs": "user-guide/usage/visualization",  # path to your example scripts
-    "gallery_dirs": "user-guide/usage/auto_visualization",  # path to where to save gallery generated output
+    "examples_dirs": [
+        "user-guide/usage/sg-source_visualization",
+        "user-guide/conventions/sg-source_bravais-lattices",
+    ],  # path to your example scripts
+    "gallery_dirs": [
+        "user-guide/usage/visualization",
+        "user-guide/conventions/bravais-lattices",
+    ],  # path to where to save gallery generated output
     "capture_repr": ("_repr_html_", "__repr__"),  # To capture plotly's figures
     "remove_config_comments": True,  # To remove configuration comments
     "within_subsection_order": "FileNameSortKey",  # To sort by the name of the file

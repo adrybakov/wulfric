@@ -57,7 +57,8 @@ clean:
 	-@rm -r .env*/bin/wulfric*
 	-@rm -r .venv*/lib/python*/site-packages/wulfric*
 	-@rm -r .venv*/bin/wulfric*
-	-@rm -r docs/source/user-guide/usage/auto_*
+	-@rm -r docs/source/user-guide/conventions/bravais-lattices
+	-@rm -r docs/source/user-guide/usage/visualization
 
 install:
 	@python3 -m pip install .

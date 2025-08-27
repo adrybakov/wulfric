@@ -27,7 +27,7 @@ Wulfric user guide
     :maxdepth: 2
 
     usage/key-concepts
-    usage/auto_visualization/index
+    usage/visualization/index
     usage/cell
     usage/crystal
     usage/kpoints

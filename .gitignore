@@ -38,4 +38,5 @@ logos
 # Sphinx gallery
 
 docs/source/sg_execution_times.rst
-docs/source/**/auto_*
+docs/source/user-guide/conventions/bravais-lattices
+docs/source/user-guide/usage/visualization
