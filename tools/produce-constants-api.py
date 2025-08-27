@@ -42,7 +42,7 @@ References
        Computational Materials Science, 128, pp.140-184."""
 
 SECTIONS = {
-    "Atoms": ["ATOM_SPECIES"],
+    "Atoms": ["ATOM_SPECIES", "ATOMIC_MASS", "ATOM_COLORS"],
     "Setyawan and Curtarolo convention": [
         "SC_BRAVAIS_LATTICE_SHORT_NAMES",
         "SC_BRAVAIS_LATTICE_LONG_NAMES",
@@ -61,6 +61,8 @@ SECTIONS = {
 
 DESCRIPTIONS = {
     "ATOM_SPECIES": ("All possible atom species.", "", ""),
+    "ATOMIC_MASS": ("Atomic mass", "", ""),
+    "ATOM_COLORS": ("Atom colors that are used by default", "", ""),
     "SC_BRAVAIS_LATTICE_SHORT_NAMES": (
         "Short names of the Bravais lattices.",
         "Data are from [1]_",
@@ -171,6 +173,8 @@ def dict_processor_3x3_array(name, value):
 
 VALUE_PROCESSORS = {
     "ATOM_SPECIES": tuple_processor,
+    "ATOMIC_MASS": dict_processor_str,
+    "ATOM_COLORS": dict_processor_str,
     "SC_BRAVAIS_LATTICE_SHORT_NAMES": dict_processor_str,
     "SC_BRAVAIS_LATTICE_LONG_NAMES": dict_processor_str,
     "SC_CONVENTIONAL_TO_PRIMITIVE": dict_processor_3x3_array,

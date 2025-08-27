@@ -108,5 +108,5 @@ use dedicated functions:
          [0.        , 1.71010072, 4.6984631 ]])
 
 Required lattice parameters are different for each Bravias lattice type. Wulfric has
-functions for all 14 Bravais lattice types, see :ref:`API <api_cell_bravais-lattice>` for
+functions for all 14 Bravais lattice types, see :ref:`API <api_cell_sc-bravais-lattice-examples>` for
 details.

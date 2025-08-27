@@ -7,30 +7,43 @@ wulfric.cell
 .. currentmodule:: wulfric.cell
 
 
-Basic manipulations
-===================
+Lattice and lattice parameters
+==============================
 
 .. autosummary::
     :toctree: generated/
 
     get_params
     from_params
-    get_reciprocal
     get_scalar_products
+    get_lattice_points
 
-Cell reduction
-==============
+
+Cell's derivatives
+==================
 
 .. autosummary::
     :toctree: generated/
 
+    get_reciprocal
+    get_wigner_seitz_cell
+    get_brillouin_zone
     get_niggli
 
 
-.. _api_cell_bravais-lattice:
+Cell'stransformations
+=====================
 
-Bravais lattice constructors as per SC [1]_
-===========================================
+.. autosummary::
+    :toctree: generated/
+
+    get_transformation_matrix
+
+
+.. _api_cell_sc-bravais-lattice-examples:
+
+Bravais lattice examples as per SC [1]_
+=======================================
 
 .. autosummary::
     :toctree: generated/
@@ -51,16 +64,6 @@ Bravais lattice constructors as per SC [1]_
     SC_MCLC
     SC_TRI
 
-Sort later
-==========
-
-.. autosummary::
-    :toctree: generated/
-
-    get_lattice_points
-    get_wigner_seitz_cell
-    get_brillouin_zone
-    get_transformation_matrix
 
 References
 ==========

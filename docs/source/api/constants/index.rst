@@ -8,6 +8,8 @@ wulfric.constants
     :hidden:
 
     atom_species
+    atomic_mass
+    atom_colors
     sc_bravais_lattice_short_names
     sc_bravais_lattice_long_names
     sc_conventional_to_primitive
@@ -26,9 +28,11 @@ wulfric.constants
 Atoms
 =====
 
-================================= ==========================
+================================= ====================================
 :ref:`api_constants_ATOM_SPECIES` All possible atom species.
-================================= ==========================
+:ref:`api_constants_ATOMIC_MASS`  Atomic mass
+:ref:`api_constants_ATOM_COLORS`  Atom colors that are used by default
+================================= ====================================
 
 Setyawan and Curtarolo convention
 =================================

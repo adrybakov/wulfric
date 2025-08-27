@@ -8,7 +8,7 @@ API reference
 
 :Release: |version|
 
-The main interface to the package should be imported as
+Wulfric is usually imported as
 
 .. doctest::
 
@@ -29,6 +29,7 @@ The main interface to the package should be imported as
 
 Classes
 =======
+
 .. autosummary::
     :caption: Classes
     :toctree: generated/
@@ -37,8 +38,10 @@ Classes
     PlotlyEngine
     SyntacticSugar
 
+
 Top level functions
 ===================
+
 .. autosummary::
     :caption: Top level functions
     :toctree: generated/
@@ -47,22 +50,40 @@ Top level functions
     add_sugar
     remove_sugar
     logo
+
+
+Spglib interface
+================
+
+.. autosummary::
+    :caption: Top level functions
+    :toctree: generated/
+
     get_spglib_types
     get_spglib_data
     validate_spglib_data
 
+
 Exceptions
 ==========
+
 .. autosummary::
     :caption: Exceptions
     :toctree: generated/
 
-    StandardizationTypeMismatch
+    ConventionNotSupported
     FailedToDeduceAtomSpecies
     NiggliReductionFailed
+    PotentialBugError
+
 
 Legacy code
 ===========
+
+.. note::
+    Legacy code is not used by wulfric internally. It is completely separated from the
+    package. It will not be supported nor updated. In the future it may be removed.
+
 .. autosummary::
     :caption: Legacy code
     :toctree: generated/
