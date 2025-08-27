@@ -20,6 +20,7 @@
 # ================================ END LICENSE =================================
 from wulfric._exceptions import FailedToDeduceAtomSpecies
 from wulfric.constants._atoms import ATOM_SPECIES
+from wulfric.crystal._crystal_validation import validate_atoms
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -28,9 +29,9 @@ old_dir.add("old_dir")
 
 def get_atom_species(name: str, raise_on_fail=False) -> str:
     r"""
-    Attempts to identify atom's type based on its name (i.e. Cr1 -> Cr, ...).
+    Attempts to identify atom's species based on its name (i.e. Cr1 -> Cr, ...).
 
-    If no type is identified, then return "X".
+    If no species is identified, then return "X".
 
     Parameters
     ----------
@@ -53,6 +54,16 @@ def get_atom_species(name: str, raise_on_fail=False) -> str:
     --------
     If ``raise_on_fail = True`` and automatic species deduction fails, then
     ``RuntimeWarning`` is issued, and atom species is set to "X".
+
+    See Also
+    --------
+    get_atoms_species
+
+
+    Notes
+    -----
+    If ``name`` contains several possible atom species of length 2
+    as substrings, then the species is equal to the first one found.
 
     Examples
     --------
@@ -81,24 +92,20 @@ def get_atom_species(name: str, raise_on_fail=False) -> str:
         >>> get_atom_species("CrSBr")
         'Cr'
 
-    Notes
-    -----
-    If ``name`` contains several possible atom types of length 2
-    as substrings, then the type is equal to the first one found.
     """
 
-    atom_type = "X"
-    for trial_type in ATOM_SPECIES:
-        if trial_type.lower() in name.lower():
-            atom_type = trial_type
-            # Maximum amount of characters in the atom type
-            # Some 1-character types are parts of some 2-character types (i.e. "Se" and "S")
-            # If type of two characters is found then it is unique,
-            # If type of one character is found, then the search must continue
-            if len(atom_type) == 2:
+    atom_species = "X"
+    for trial_species in ATOM_SPECIES:
+        if trial_species.lower() in name.lower():
+            atom_species = trial_species
+            # Maximum amount of characters in the atom species
+            # Some 1-character species are parts of some 2-character species (i.e. "Se" and "S")
+            # If species of two characters is found then it is unique,
+            # If species of one character is found, then the search must continue
+            if len(atom_species) == 2:
                 break
 
-    if atom_type == "X":
+    if atom_species == "X":
         if raise_on_fail:
             raise FailedToDeduceAtomSpecies(name=name)
         else:
@@ -109,13 +116,14 @@ def get_atom_species(name: str, raise_on_fail=False) -> str:
                 RuntimeWarning,
             )
 
-    return atom_type
+    return atom_species
 
 
-def populate_atom_species(atoms, raise_on_fail=False) -> None:
+def get_atoms_species(atoms, raise_on_fail=False) -> str:
     r"""
-    Populate atom species, based on their names.
-    If atom species are already present in the ``atoms``, then they will be overwritten.
+    Attempts to identify atoms species based on their names (i.e. Cr1 -> Cr, ...).
+
+    If no species is identified, then return "X".
 
     Parameters
     ----------
@@ -124,7 +132,12 @@ def populate_atom_species(atoms, raise_on_fail=False) -> None:
 
         *   "names" : (N, ) list of str
     raise_on_fail : bool, default False
-        Whether to raise an error if the atom type can not be deduced based on its name.
+        Whether to raise an exception if automatic species deduction fails.
+
+    Returns
+    -------
+    species : str
+        Species of the atom.
 
     Raises
     ------
@@ -136,36 +149,43 @@ def populate_atom_species(atoms, raise_on_fail=False) -> None:
     If ``raise_on_fail = True`` and automatic species deduction fails, then
     ``RuntimeWarning`` is issued, and atom species is set to "X".
 
+    See Also
+    --------
+    get_atoms_species
+
+    Notes
+    -----
+    If ``atoms["names"][i]`` contains several possible atom species of length 2
+    as substrings, then the species is equal to the first one found.
+
     Examples
     --------
 
     .. doctest::
 
         >>> import wulfric
+        >>> atoms = dict(names=["Fe1", "Fe2", "Cr", "Br3"])
+        >>> wulfric.crystal.get_atoms_species(atoms)
+        ['Fe', 'Fe', 'Cr', 'Br']
         >>> atoms = {"names": ["Cr1", "cr2", "Br3", "S4", "fe5", "Fe6"]}
-        >>> atoms
-        {'names': ['Cr1', 'cr2', 'Br3', 'S4', 'fe5', 'Fe6']}
-        >>> wulfric.crystal.populate_atom_species(atoms)
-        >>> atoms
-        {'names': ['Cr1', 'cr2', 'Br3', 'S4', 'fe5', 'Fe6'], 'species': ['Cr', 'Cr', 'Br', 'S', 'Fe', 'Fe']}
+        >>> wulfric.crystal.get_atoms_species(atoms)
+        ['Cr', 'Cr', 'Br', 'S', 'Fe', 'Fe']
 
     """
 
-    atoms["species"] = []
+    validate_atoms(atoms=atoms, required_keys=["names"], raise_errors=True)
 
-    for i in range(len(atoms["names"])):
-        atoms["species"].append(
-            get_atom_species(atoms["names"][i], raise_on_fail=raise_on_fail)
-        )
+    return [
+        get_atom_species(name=name, raise_on_fail=raise_on_fail)
+        for name in atoms["names"]
+    ]
 
 
-def ensure_unique_names(atoms, strategy: str = "all") -> None:
+def get_unique_names(atoms, strategy: str = "all") -> list:
     r"""
     Ensures that atoms have unique ``"names"``.
 
-    If atom names are already unique, then this function does nothing.
-
-    .. versionadded:: 0.5.1
+    If atom names are already unique, then returns ``atoms["names"]``.
 
     Parameters
     ----------
@@ -183,9 +203,14 @@ def ensure_unique_names(atoms, strategy: str = "all") -> None:
         * "repeated-only"
 
           Add an index only to the repeated names, index starts with 1, independently for
-          each repeated grooup. (See examples)
+          each repeated group. (See examples)
 
         Case-insensitive.
+
+    Returns
+    -------
+    unique_names : list of str
+        Unique names of atoms.
 
     Raises
     ------
@@ -200,22 +225,20 @@ def ensure_unique_names(atoms, strategy: str = "all") -> None:
         >>> import wulfric
         >>> atoms = {"names": ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
         >>> # Default strategy is "all"
-        >>> wulfric.crystal.ensure_unique_names(atoms)
-        >>> atoms
-        {'names': ['Cr11', 'Cr22', 'Br3', 'Br4', 'S5', 'S6']}
+        >>> wulfric.crystal.get_unique_names(atoms)
+        ['Cr11', 'Cr22', 'Br3', 'Br4', 'S5', 'S6']
         >>> atoms = {"names": ["Cr1", "Cr2", "Br", "Br", "S", "S"]}
-        >>> wulfric.crystal.ensure_unique_names(atoms, strategy="repeated-only")
-        >>> atoms
-        {'names': ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']}
+        >>> wulfric.crystal.get_unique_names(atoms, strategy="repeated-only")
+        ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']
         >>> # Nothing happens if atom names are already unique
-        >>> wulfric.crystal.ensure_unique_names(atoms)
-        >>> atoms
-        {'names': ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']}
-        >>> wulfric.crystal.ensure_unique_names(atoms, strategy="repeated-only")
-        >>> atoms
-        {'names': ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']}
+        >>> wulfric.crystal.gte_unique_names(atoms)
+        ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']
+        >>> wulfric.crystal.get_unique_names(atoms, strategy="repeated-only")
+        ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']
 
     """
+
+    validate_atoms(atoms=atoms, required_keys=["names"], raise_errors=True)
 
     SUPPORTED_STRATEGIES = ["all", "repeated-only"]
     strategy = strategy.lower()
@@ -226,26 +249,29 @@ def ensure_unique_names(atoms, strategy: str = "all") -> None:
             + ("\n").join([f"  * {i}" for i in SUPPORTED_STRATEGIES])
         )
 
-    names_unique = len(atoms["names"]) == len(set(atoms["names"]))
+    unique_names = atoms["names"]
 
-    if not names_unique and strategy == "all":
-        for i in range(len(atoms["names"])):
-            atoms["names"][i] += f"{i + 1}"
+    names_are_not_unique = not len(unique_names) == len(set(unique_names))
 
-    if not names_unique and strategy == "repeated-only":
+    if names_are_not_unique and strategy == "all":
+        unique_names = [f"{name}{i + 1}" for i, name in atoms["names"]]
+
+    if names_are_not_unique and strategy == "repeated-only":
         counter = {}
-        for name in atoms["names"]:
+        for name in unique_names:
             if name not in counter:
                 counter[name] = [1, 1]
             else:
                 counter[name][1] += 1
 
-        for i in range(len(atoms["names"])):
-            name = atoms["names"][i]
+        for i in range(len(unique_names)):
+            name = unique_names[i]
             total = counter[name][1]
             if total > 1:
-                atoms["names"][i] += str(counter[name][0])
+                unique_names[i] += str(counter[name][0])
                 counter[name][0] += 1
+
+    return unique_names
 
 
 # Populate __all__ with objects defined in this file
