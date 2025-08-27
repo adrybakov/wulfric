@@ -64,6 +64,9 @@ def _get_unique(prim_cell, prim_positions, conv_types, repetition_number):
     # Move all to 000
     prim_positions = prim_positions % 1
 
+    # Done twice it fixe some problems of finite precision arithmetics
+    prim_positions = prim_positions % 1
+
     # Compute pair-wise distances between atoms
     distances = np.linalg.norm(
         prim_positions[:, np.newaxis, :] - prim_positions[np.newaxis, :, :], axis=2
@@ -287,3 +290,12 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
+
+
+if __name__ == "__main__":
+    import wulfric
+
+    cell = wulfric.cell.sc_get_example_cell("FCC")
+    atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
+
+    prim_cell, prim_atoms = get_primitive(cell=cell, atoms=atoms, convention="SC")

@@ -131,11 +131,3 @@ html[data-theme=dark] .sd-card .sd-card-footer {
 {
   display: none;
 }
-
-/* Hide text output of plotly's html figure */
-.sphx-glr-script-out
-{
-  display: none;
-  visibility: hidden;
-  height: 0cm;
-}

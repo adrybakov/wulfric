@@ -24,7 +24,6 @@ from string import ascii_lowercase as ASCII_LOWERCASE
 
 import numpy as np
 
-from wulfric._kpoints_class import Kpoints
 from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._voronoi import get_wigner_seitz_cell, get_lattice_points
 from wulfric.constants import ATOM_COLORS
@@ -129,10 +128,11 @@ class PlotlyEngine:
         legend = _LEGEND_SETTINGS[legend_position]
 
         self.fig.update_layout(**kwargs, legend=legend)
-        self.fig.show()
 
         if self._sphinx_gallery_fix:
             return self.fig
+
+        self.fig.show()
 
     def save(
         self,
@@ -546,7 +546,7 @@ class PlotlyEngine:
 
     def plot_kpath(
         self,
-        cell,
+        kp,
         color="#000000",
         shift=(0.0, 0.0, 0.0),
         legend_label=None,
@@ -557,12 +557,12 @@ class PlotlyEngine:
 
         Parameters
         ----------
-        cell : (3, 3) |array-like|_
-            Matrix of a cell, rows are interpreted as vectors.
+        kp : :py:class:`.Kpoints`
+            K-points and k-path.
         color : str, default "#000000"
             Colour for the plot. Any value that is supported by |plotly|_.
         shift : (3, ) |array-like|_, default (0, 0, 0)
-            Absolute coordinates of the center of the Brillouin zone.
+            Absolute coordinates of the shift in reciprocal space.
         legend_label : str, optional
             Label for the legend. Entry in legend only showed if
             ``legend_label is not None``.
@@ -571,18 +571,16 @@ class PlotlyEngine:
             characters.
         """
 
+        shift = np.array(shift)
+
         if legend_group is None:
             legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
-
-        rcell = get_reciprocal(cell)
-
-        kp = Kpoints.from_cell(cell=cell)
 
         p_abs = []
         p_rel = []
         labels = []
         for point in kp.hs_names:
-            p_abs.append(shift + tuple(kp.hs_coordinates[point] @ rcell))
+            p_abs.append(shift + kp.hs_coordinates[point] @ kp.rcell)
             p_rel.append(kp.hs_coordinates[point])
 
             labels.append(point)
@@ -611,7 +609,7 @@ class PlotlyEngine:
         for subpath in kp.path:
             xyz = []
             for i in range(len(subpath)):
-                xyz.append(shift + kp.hs_coordinates[subpath[i]] @ rcell)
+                xyz.append(shift + kp.hs_coordinates[subpath[i]] @ kp.rcell)
 
             xyz = np.array(xyz).T
             self.fig.add_traces(

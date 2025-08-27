@@ -1,0 +1,8 @@
+.. _user-guide_conventions_bravais-lattices_sc:
+
+Setyawan and Curtarolo (SC)
+===========================
+
+In the examples of SC convention we use cells as defined in
+:py:func:`wulfric.cell.sc_get_example_cell` with one artificial atom
+``dict(positions=[[0, 0, 0]], spglib_types=[1])``.

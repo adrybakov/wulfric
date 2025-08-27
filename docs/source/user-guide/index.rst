@@ -14,7 +14,7 @@ Wulfric user guide
 
 .. toctree::
     :caption: Definitions and conventions
-    :maxdepth: 1
+    :maxdepth: 2
 
     conventions/basic-notation
     conventions/which-cell

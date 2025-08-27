@@ -38,7 +38,13 @@ def SC_CUB(a: float):
     r"""
     Constructs primitive cubic cell as defined in [1]_.
 
-    See :ref:`guide_cub` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+            \boldsymbol{a}_1 &=& (a, &0, &0)\\
+            \boldsymbol{a}_2 &=& (0, &a, &0)\\
+            \boldsymbol{a}_3 &=& (0, &0, &a)
+        \end{matrix}
 
     Parameters
     ----------
@@ -83,7 +89,13 @@ def SC_FCC(a: float):
     r"""
     Constructs primitive face-centred cubic cell as defined in [1]_.
 
-    See :ref:`guide_fcc` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+        \boldsymbol{a}_1 &=& (0, &a/2, &a/2)\\
+        \boldsymbol{a}_2 &=& (a/2, &0, &a/2)\\
+        \boldsymbol{a}_3 &=& (a/2, &a/2, &0)
+        \end{matrix}
 
     Parameters
     ----------
@@ -128,7 +140,13 @@ def SC_BCC(a: float):
     r"""
     Constructs primitive body-centred cubic cell as defined in [1]_.
 
-    See :ref:`guide_bcc` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+        \boldsymbol{a}_1 &=& (-a/2,& a/2,& a/2)\\
+        \boldsymbol{a}_2 &=& (a/2, &-a/2,& a/2)\\
+        \boldsymbol{a}_3 &=& (a/2, &a/2, &-a/2)
+        \end{matrix}
 
     Parameters
     ----------
@@ -175,7 +193,13 @@ def SC_TET(a: float, c: float):
     r"""
     Constructs primitive tetragonal cell as defined in [1]_.
 
-    See :ref:`guide_tet` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+        \boldsymbol{a}_1 &=& (a, &0, &0)\\
+        \boldsymbol{a}_2 &=& (0, &a, &0)\\
+        \boldsymbol{a}_3 &=& (0, &0, &c)
+        \end{matrix}
 
     Parameters
     ----------
@@ -222,7 +246,13 @@ def SC_BCT(a: float, c: float):
     r"""
     Constructs primitive body-centred tetragonal cell as defined in [1]_.
 
-    See :ref:`guide_bct` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+        \boldsymbol{a}_1 &=& (-a/2, &a/2, &c/2)\\
+        \boldsymbol{a}_2 &=& (a/2, &-a/2, &c/2)\\
+        \boldsymbol{a}_3 &=& (a/2, &a/2, &-c/2)
+        \end{matrix}
 
     Parameters
     ----------
@@ -271,7 +301,13 @@ def SC_ORC(a: float, b: float, c: float):
     r"""
     Constructs primitive orthorhombic cell as defined in [1]_.
 
-    See :ref:`guide_orc` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+            \boldsymbol{a}_1 &=& (a, &0, &0)\\
+            \boldsymbol{a}_2 &=& (0, &b, &0)\\
+            \boldsymbol{a}_3 &=& (0, &0, &c)
+        \end{matrix}
 
     Input values are used as they are, therefore, the cell might not be a standard
     primitive one.

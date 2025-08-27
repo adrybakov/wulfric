@@ -160,9 +160,6 @@ that define the borders of it.
 
 
 
-
-References
-==========
 .. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
     Band structure diagram paths based on crystallography.
     Computational Materials Science, 128, pp.140-184.
