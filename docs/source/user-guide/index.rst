@@ -29,8 +29,8 @@ Wulfric user guide
     usage/key-concepts
     usage/auto_visualization/index
     usage/cell
-    usage/kpoints
     usage/crystal
+    usage/kpoints
     usage/other
     usage/io
 

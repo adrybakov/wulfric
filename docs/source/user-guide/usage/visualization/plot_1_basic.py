@@ -48,7 +48,7 @@ pe.show()
 # Vector
 # ======
 #
-# Vector is defined by its start and end pints
+# Vector is defined by its start and end points
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 

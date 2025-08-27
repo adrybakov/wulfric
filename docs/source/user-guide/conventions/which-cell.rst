@@ -34,18 +34,6 @@ considers. Therefore, the choice of the cell typically involve a set of atoms as
 with the cell and not the cell alone. This is why all functions that compute choices of
 the cell  are located in the :ref:`api_crystal` submodule.
 
-
-
-.. _user-guide_conventions_which-cell_choice_the-cell:
-
-"The" cell
------------
-
-This is the cell that user provides to wulfric. It is not known what kind of cell is it in
-general. For once, it would depend on the atoms that user provides together with the cell.
-Starting from this "given cell" or just "cell", as we call it, wulfric can return a number
-of cell choices, that are summarized in the picture below.
-
 .. figure:: ../../img/cell-choices.png
     :align: center
     :target: ../../_images/cell-choices.png
@@ -59,6 +47,16 @@ of cell choices, that are summarized in the picture below.
     Nevertheless, wulfric can rotate given lattice or crystal if user **explicitly asks**
     for it in some functions.
 
+
+.. _user-guide_conventions_which-cell_choice_the-cell:
+
+"The" cell
+-----------
+
+This is the cell that user provides to wulfric. It is not known what kind of cell is it in
+general. For once, it would depend on the atoms that user provides together with the cell.
+Starting from this "given cell" or just "cell", as we call it, wulfric can return a number
+of cell choices, that are summarized in the picture below.
 
 
 .. _user-guide_conventions_which-cell_choice_conventional-cell:
@@ -81,14 +79,6 @@ Primitive cell
 
 For any given cell and atoms the primitive cell associated with it can be computed by the
 function :py:func:`wulfric.crystal.get_primitive()`
-
-In general the choice of the primitive cell for the given lattice or crystal is not unique
-and depends on adopted convention. Wulfric supports three conventions for the choice of
-the primitive cell
-
-* "HPKOT" as in [1]_
-* "SC" as in [2]_
-* |spglib|_ as in [3]_
 
 Primitive cell contains exactly one lattice point or exactly one copy of each unique atom.
 

@@ -234,7 +234,7 @@ def get_params(cell):
 
 def get_scalar_products(cell):
     r"""
-    Returns pairwise scalar products of the lattice vectors:
+    Returns pairwise scalar products of the lattice vectors.
 
     Parameters
     ----------

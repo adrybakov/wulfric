@@ -5,9 +5,12 @@
 Visualization
 *************
 
-For the full technical reference see :py:class:`.PlotlyEngine`.
+For the full technical reference see :py:class:`wulfric.PlotlyEngine`.
 
 Visualization in wulfric is implemented with |plotly|_.
+
+Visualization backend
+=====================
 
 First, one need to create an instance of the plotting engine as
 
@@ -36,5 +39,8 @@ or saved as an .html file
 
     >>> pe.save(output_name="wulfric-plot.html", width=1000, height=800) # doctest: +SKIP
 
-:py:class:`.PlotlyEngine` has a number of methods that can be used to plot cell, atoms,
-lattice and so on. Here is a set of examples, that show how to use it
+:py:class:`wulfric.PlotlyEngine` has a number of methods that can be used to plot cell, atoms,
+lattice and so on. Check examples to get a feeling on what is implemented
+
+Examples
+========

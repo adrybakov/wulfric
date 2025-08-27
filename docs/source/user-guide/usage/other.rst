@@ -39,7 +39,7 @@ wulfric
     True
 
 This function return boolean value and support python's comparison operators.
-See :py:func:`.compare_numerically` for details.
+See :py:func:`wulfric.compare_numerically` for details.
 
 
 Parallelepiped

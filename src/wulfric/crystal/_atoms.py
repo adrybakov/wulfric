@@ -151,7 +151,7 @@ def get_atoms_species(atoms, raise_on_fail=False) -> str:
 
     See Also
     --------
-    get_atoms_species
+    get_atom_species
 
     Notes
     -----
@@ -231,7 +231,7 @@ def get_unique_names(atoms, strategy: str = "all") -> list:
         >>> wulfric.crystal.get_unique_names(atoms, strategy="repeated-only")
         ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']
         >>> # Nothing happens if atom names are already unique
-        >>> wulfric.crystal.gte_unique_names(atoms)
+        >>> wulfric.crystal.get_unique_names(atoms)
         ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']
         >>> wulfric.crystal.get_unique_names(atoms, strategy="repeated-only")
         ['Cr1', 'Cr2', 'Br1', 'Br2', 'S1', 'S2']
@@ -254,7 +254,7 @@ def get_unique_names(atoms, strategy: str = "all") -> list:
     names_are_not_unique = not len(unique_names) == len(set(unique_names))
 
     if names_are_not_unique and strategy == "all":
-        unique_names = [f"{name}{i + 1}" for i, name in atoms["names"]]
+        unique_names = [f"{name}{i + 1}" for i, name in enumerate(atoms["names"])]
 
     if names_are_not_unique and strategy == "repeated-only":
         counter = {}

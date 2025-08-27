@@ -130,7 +130,7 @@ Adding a point
 Getting summary of high-symmetry points
 ---------------------------------------
 
-In order to have a summary of the high symmetry pints the predefined method
+In order to have a summary of the high symmetry points the predefined method
 :py:meth:`.Kpoints.hs_table` may be used:
 
 .. doctest::

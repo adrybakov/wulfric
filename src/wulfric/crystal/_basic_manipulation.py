@@ -119,7 +119,6 @@ def cure_negative(atoms) -> None:
     .. doctest::
 
         >>> import wulfric
-        >>> cell = [[2, 0, 0], [0, 2, 0], [0, 0, 2]]
         >>> atoms = {
         ...     "names": ["Cr1", "Cr2"],
         ...     "positions": [[-0.5, 0.5, 0.0], [0.1, 0.5, 0.0]],
