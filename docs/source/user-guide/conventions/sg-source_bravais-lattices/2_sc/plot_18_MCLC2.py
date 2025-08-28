@@ -18,24 +18,28 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-"""
-TET
-***
+r"""
+MCLC2
+*****
 
-Tetragonal cell is defined by two parameters :math:`a` and :math:`c`.
+Base-centered monoclinic cell is defined by two parameters by four parameters :math:`a`,
+:math:`b`, :math:`c` and :math:`\alpha` with :math:`b \le c`, :math:`\alpha < 90^{\circ}`.
+
+MCLC lattice has variation MCLC2 if :math:`k_{\gamma} = 90^{\circ}`.
 
 Cell constructor
 ================
 
-To get a primitive tetragonal cell use :py:func:`wulfric.cell.SC_TET`.
+To get a primitive base-centered monoclinic cell use :py:func:`wulfric.cell.SC_MCLC`.
 
-:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = \pi` and
-:math:`c = 1.5\pi`.
+:py:func:`wulfric.cell.get_example_cell` returns an example with
+:math:`a = 1.4\cdot\pi\cdot\sin(75^{\circ})`, :math:`b = 1.4\cdot\pi`,
+:math:`c = 1.7\cdot\pi` and :math:`\alpha=75^{\circ}`.
 """
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("TET")
+cell = wulfric.cell.sc_get_example_cell("MCLC2")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data
@@ -51,6 +55,14 @@ conv_cell, conv_atoms = wulfric.crystal.get_conventional(
 prim_cell, prim_atoms = wulfric.crystal.get_primitive(
     cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
 )
+
+variation = wulfric.crystal.sc_get_variation(
+    cell=cell, atoms=atoms, spglib_data=spglib_data
+)
+
+assert variation == "MCLC2"
+
+print(variation)
 
 # %%
 # K-path
@@ -93,11 +105,4 @@ pe.plot_wigner_seitz_cell(
 
 pe.show(axes_visible=False)
 
-# %%
-# Edge cases
-# ==========
-
-# If :math:`a = c`, then the lattice is
-# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_1_CUB.py`.
-
-# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/TET.png'
+# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/MCLC2.png'

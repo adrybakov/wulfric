@@ -18,23 +18,25 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-"""
-BCC
+r"""
+MCL
 ***
 
-Body-centered cubic cell is defined by single parameter :math:`a`.
+Monoclinic cell is defined by two parameters by four parameters :math:`a`, :math:`b`,
+:math:`c` and :math:`\alpha` with :math:`b \le c`, :math:`\alpha < 90^{\circ}`.
 
 Cell constructor
 ================
 
-To get a primitive body-centered cubic cell use :py:func:`wulfric.cell.SC_BCC`.
+To get a primitive monoclinic cell use :py:func:`wulfric.cell.SC_MCL`.
 
-:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = \pi`.
+:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = \pi`,
+:math:`b = 1.3 \pi` :math:`c = 1.6 \pi` and :math:`\alpha = 75^{\circ}`.
 """
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("BCC")
+cell = wulfric.cell.sc_get_example_cell("MCL")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data
@@ -92,4 +94,32 @@ pe.plot_wigner_seitz_cell(
 
 pe.show(axes_visible=False)
 
-# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/BCC.png'
+# %%
+# If (:math:`\alpha = 60^{\circ}` or :math:`\alpha = 120^{\circ}`) and :math:`b = c`,
+# then the lattice is
+# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_13_HEX.py`.
+#
+# If (:math:`\alpha = 30^{\circ}` or :math:`\alpha = 150^{\circ}`
+# or :math:`\alpha = 45^{\circ}` or :math:`\alpha = 145^{\circ}`) and :math:`b = c`,
+# then the lattice is
+# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_12_ORCC.py`.
+#
+# If (:math:`\alpha = 60^{\circ}` or :math:`\alpha = 120^{\circ}`) and :math:`a \ne b = c/2`,
+# then the lattice is
+# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_07_ORC.py`.
+#
+# If :math:`a \ne b \ne c` and :math:`\alpha = 90^{\circ}`, then the lattice is
+# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_07_ORC.py`.
+#
+# If (:math:`\alpha = 60^{\circ}` or :math:`\alpha = 120^{\circ}`) and :math:`a = b = c/2`,
+# then the lattice is
+# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_04_TET.py`.
+#
+# If (:math:`a = b \ne c` or :math:`a = c \ne b` or :math:`b = c \ne a`) and
+# :math:`\alpha = 90^{\circ}`, then the lattice is
+# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_04_TET.py`.
+#
+# If :math:`a = b = c` and :math:`\alpha = 90^{\circ}`, then the lattice is
+# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_01_CUB.py`.
+
+# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/MCL.png'

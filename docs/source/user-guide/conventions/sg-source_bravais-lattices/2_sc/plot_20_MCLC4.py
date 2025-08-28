@@ -18,27 +18,29 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-"""
-BCT2
-****
+r"""
+MCLC4
+*****
 
-Body-centered tetragonal cell is defined by two parameters :math:`a` and :math:`c`.
+Base-centered monoclinic cell is defined by two parameters by four parameters :math:`a`,
+:math:`b`, :math:`c` and :math:`\alpha` with :math:`b \le c`, :math:`\alpha < 90^{\circ}`.
 
-BCT lattice has variation BCT2 if :math:`c > a`
+MCLC lattice has variation MCLC4 if :math:`k_{\gamma} < 90^{\circ}` and
+:math:`\dfrac{b\cos(\alpha)}{c} + \dfrac{b^2\sin(\alpha)^2}{a^2} = 1`.
 
 Cell constructor
 ================
 
-To get a primitive body-centered tetragonal cell use :py:func:`wulfric.cell.SC_BCT`.
+To get a primitive base-centered monoclinic cell use :py:func:`wulfric.cell.SC_MCLC`.
 
-
-:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = \pi` and
-:math:`c = 1.5\pi`.
+:py:func:`wulfric.cell.get_example_cell` returns an example with
+:math:`a = 1.2\sin(65)\pi`, :math:`b = \pi`,
+:math:`c = 36\cos(65)\pi/11` and :math:`\alpha = 65^{\circ}`
 """
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("BCT2")
+cell = wulfric.cell.sc_get_example_cell("MCLC4")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data
@@ -54,6 +56,14 @@ conv_cell, conv_atoms = wulfric.crystal.get_conventional(
 prim_cell, prim_atoms = wulfric.crystal.get_primitive(
     cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
 )
+
+variation = wulfric.crystal.sc_get_variation(
+    cell=cell, atoms=atoms, spglib_data=spglib_data
+)
+
+assert variation == "MCLC4"
+
+print(variation)
 
 # %%
 # K-path
@@ -96,11 +106,4 @@ pe.plot_wigner_seitz_cell(
 
 pe.show(axes_visible=False)
 
-# %%
-# Edge cases
-# ==========
-
-# If :math:`a = c`, then the lattice is
-# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_1_CUB.py`.
-
-# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/BCT2.png'
+# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/MCLC4.png'

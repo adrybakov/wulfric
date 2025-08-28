@@ -27,17 +27,17 @@ each of the 14 Bravais lattices.
 =============================== ====================== ==============================================================================
 Bravais lattice                 HPKOT                  SC
 =============================== ====================== ==============================================================================
-Cubic (cP)                      cP1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_1_CUB.py`
+Cubic (cP)                      cP1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_01_CUB.py`
                                 cP2
-Face-centered cubic (cF)        cF1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_2_FCC.py`
+Face-centered cubic (cF)        cF1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_02_FCC.py`
                                 cF2
-Body-centered cubic (cI)        cI1                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_3_BCC.py`
-Tetragonal (tP)                 tP1                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_4_TET.py`
-Body-centered tetragonal (tI)   tI1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_5_BCT1.py`,
-                                tI2                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_6_BCT2.py`
-Orthorhombic (oP)               oP1                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_7_ORC.py`
-Face-centered orthorhombic (oF) oF1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_8_ORCF1.py`,
-                                oF2,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_9_ORCF2.py`,
+Body-centered cubic (cI)        cI1                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_03_BCC.py`
+Tetragonal (tP)                 tP1                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_04_TET.py`
+Body-centered tetragonal (tI)   tI1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_05_BCT1.py`,
+                                tI2                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_06_BCT2.py`
+Orthorhombic (oP)               oP1                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_07_ORC.py`
+Face-centered orthorhombic (oF) oF1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_08_ORCF1.py`,
+                                oF2,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_09_ORCF2.py`,
                                 oF3                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_10_ORCF3.py`
 Body-centered orthorhombic (oI) oI1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_11_ORCI.py`
                                 oI2,

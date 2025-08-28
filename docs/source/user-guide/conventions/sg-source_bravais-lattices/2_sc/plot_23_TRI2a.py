@@ -18,27 +18,25 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-"""
-BCT1
-****
+r"""
+TRI2a
+*****
 
-Body-centered tetragonal cell is defined by two parameters :math:`a` and :math:`c`.
+Triclinic cell is defined by two parameters by six parameters :math:`a`, :math:`b`,
+:math:`c` and :math:`\alpha`, :math:`\beta`, :math:`\gamma`.
 
-BCT lattice has variation BCT1 if :math:`c < a`
+TRI lattice has variation TRI2a if
+:math:`k_{\alpha} > 90^{\circ}, k_{\beta} > 90^{\circ}, k_{\gamma} = 90^{\circ}`.
 
 Cell constructor
 ================
 
-To get a primitive body-centered tetragonal cell use :py:func:`wulfric.cell.SC_BCT`.
-
-
-:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = 1.5\pi` and
-:math:`c = \pi`.
+To get a primitive triclinic cell use :py:func:`wulfric.cell.SC_TRI`.
 """
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("BCT1")
+cell = wulfric.cell.sc_get_example_cell("TRI2a")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data
@@ -54,6 +52,14 @@ conv_cell, conv_atoms = wulfric.crystal.get_conventional(
 prim_cell, prim_atoms = wulfric.crystal.get_primitive(
     cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
 )
+
+variation = wulfric.crystal.sc_get_variation(
+    cell=cell, atoms=atoms, spglib_data=spglib_data
+)
+
+assert variation == "TRI2a"
+
+print(variation)
 
 # %%
 # K-path
@@ -99,8 +105,13 @@ pe.show(axes_visible=False)
 # %%
 # Edge cases
 # ==========
+# If :math:`a = b \ne c` or :math:`a = c \ne b` or :math:`b = c \ne a`,
+# then the lattice is
+# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_05_BCT1.py`
+# or
+# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_06_BCT2.py`.
+#
+# If :math:`a = b = c`, then the lattice is
+# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_02_FCC.py`.
 
-# If :math:`a = c`, then the lattice is
-# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_1_CUB.py`.
-
-# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/BCT1.png'
+# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/TRI2a.png'

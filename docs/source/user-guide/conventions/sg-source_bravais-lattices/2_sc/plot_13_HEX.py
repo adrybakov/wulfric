@@ -18,25 +18,24 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-"""
-ORC
+r"""
+HEX
 ***
 
-Orthorhombic cell is defined by two parameters by three parameters :math:`a`, :math:`b`
-and :math:`c` with :math:`a < b < c`.
+Hexagonal cell is defined by two parameters by two parameters :math:`a` and :math:`c`.
 
 Cell constructor
 ================
 
-To get a primitive orthorhombic cell use :py:func:`wulfric.cell.SC_ORC`.
+To get a primitive hexagonal cell use :py:func:`wulfric.cell.SC_HEX`.
 
 :py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = \pi` and
-:math:`c = 1.5\pi` and :math:`c = 2\pi`.
+:math:`c = 2\pi`.
 """
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("ORC")
+cell = wulfric.cell.sc_get_example_cell("HEX")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data
@@ -94,15 +93,4 @@ pe.plot_wigner_seitz_cell(
 
 pe.show(axes_visible=False)
 
-# %%
-# Edge cases
-# ==========
-#
-# If :math:`a = b \ne c` or :math:`a = c \ne b` or :math:`b = c \ne a`,
-# then the lattice is
-# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_1_TET.py`.
-#
-# If :math:`a = b = c`, then the lattice is
-# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_1_CUB.py`.
-
-# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/ORC.png'
+# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/HEX.png'
