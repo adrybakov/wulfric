@@ -131,3 +131,9 @@ html[data-theme=dark] .sd-card .sd-card-footer {
 {
   display: none;
 }
+
+/* Fix math alignment in sphinx-gallery*/
+span.math {
+    display: inline-flex;
+    align-items: baseline;
+}
