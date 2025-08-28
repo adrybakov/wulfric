@@ -359,7 +359,13 @@ def SC_ORCF(a: float, b: float, c: float):
     r"""
     Constructs primitive face-centred orthorhombic cell as defined in [1]_.
 
-    See :ref:`guide_orcf` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+            \boldsymbol{a}_1 &=& (0, &b/2, &c/2)\\
+            \boldsymbol{a}_2 &=& (a/2, &0, &c/2)\\
+            \boldsymbol{a}_3 &=& (a/2, &b/2, &0)
+        \end{matrix}
 
     Input values are used as they are, therefore, the cell might not be a standard
     primitive one.
@@ -411,7 +417,13 @@ def SC_ORCI(a: float, b: float, c: float):
     r"""
     Constructs primitive body-centred orthorhombic cell as defined in [1]_.
 
-    See :ref:`guide_orci` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+            \boldsymbol{a}_1 &=& (-a/2, &b/2, &c/2)\\
+            \boldsymbol{a}_2 &=& (a/2, &-b/2, &c/2)\\
+            \boldsymbol{a}_3 &=& (a/2, &b/2, &-c/2)
+        \end{matrix}
 
     Input values are used as they are, therefore, the cell might not be a standard
     primitive one.
@@ -465,7 +477,13 @@ def SC_ORCC(a: float, b: float, c: float):
     r"""
     Constructs primitive base-centred orthorhombic cell as defined in [1]_.
 
-    See :ref:`guide_orcc` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+            \boldsymbol{a}_1 &=& (a/2, &-b/2, &0)\\
+            \boldsymbol{a}_2 &=& (a/2, &b/2, &0)\\
+            \boldsymbol{a}_3 &=& (0, &0, &c)
+        \end{matrix}
 
     Input values are used as they are, therefore, the cell might not be a standard
     primitive one.
@@ -517,7 +535,13 @@ def SC_HEX(a: float, c: float):
     r"""
     Constructs primitive hexagonal cell as defined in [1]_.
 
-    See :ref:`guide_hex` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+            \boldsymbol{a}_1 &=& (\frac{a}{2}, &\frac{-a\sqrt{3}}{2}, &0)\\
+            \boldsymbol{a}_2 &=& (\frac{a}{2}, &\frac{a\sqrt{3}}{2}, &0)\\
+            \boldsymbol{a}_3 &=& (0, &0, &c)
+        \end{matrix}
 
     Parameters
     ----------
@@ -566,7 +590,14 @@ def SC_RHL(a: float, alpha: float):
     r"""
     Constructs primitive rhombohedral cell as defined in [1]_.
 
-    See :ref:`guide_rhl` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+            \boldsymbol{a}_1 &=& (a\cos(\alpha / 2), &-a\sin(\alpha/2), &0)\\
+            \boldsymbol{a}_2 &=& (a\cos(\alpha / 2), &a\sin(\alpha/2), &0)\\
+            \boldsymbol{a}_3 &=& \left(\dfrac{\cos\alpha}{\cos(\alpha/2)}\right.,
+            &0, &\left.a\sqrt{1 - \dfrac{\cos^2\alpha}{\cos^2(\alpha/2)}}\right)
+        \end{matrix}
 
     Input values are used as they are, therefore, the cell might not be a standard
     primitive one.
@@ -628,7 +659,13 @@ def SC_MCL(a: float, b: float, c: float, alpha: float):
     r"""
     Constructs primitive monoclinic cell as defined in [1]_.
 
-    See :ref:`guide_mcl` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+            \boldsymbol{a}_1 &=& (a, &0, &0)\\
+            \boldsymbol{a}_2 &=& (0, &b, &0)\\
+            \boldsymbol{a}_3 &=& (0, &c\cos\alpha, &c\sin\alpha)
+        \end{matrix}
 
     Input values are used as they are, therefore, the cell might not be a standard
     primitive one.
@@ -685,7 +722,13 @@ def SC_MCLC(a: float, b: float, c: float, alpha: float):
     r"""
     Constructs primitive base-centred monoclinic cell as defined in [1]_.
 
-    See :ref:`guide_mclc` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+            \boldsymbol{a}_1 &=& (a/2, &b/2, &0)\\
+            \boldsymbol{a}_2 &=& (-a/2, &b/2, &0)\\
+            \boldsymbol{a}_3 &=& (0, &c\cos\alpha, &c\sin\alpha)
+        \end{matrix}
 
     Input values are used as they are, therefore, the cell might not be a standard
     primitive one.
@@ -757,7 +800,13 @@ def SC_TRI(
     r"""
     Constructs primitive triclinic cell as defined in [1]_.
 
-    See :ref:`guide_tri` for the definition of primitive and conventional cells.
+    .. math::
+
+        \begin{matrix}
+            \boldsymbol{a}_1 &=& (a, &0, &0)\\
+            \boldsymbol{a}_2 &=& (b\cos\gamma, &b\sin\gamma, &0)\\
+            \boldsymbol{a}_3 &=& (c\cos\beta, &\dfrac{c(\cos\alpha - \cos\beta\cos\gamma)}{\sin\gamma}, &\dfrac{c}{\sin\gamma}\sqrt{\sin^2\gamma - \cos^2\alpha - \cos^2\beta + 2\cos\alpha\cos\beta\cos\gamma})
+        \end{matrix}
 
     Parameters
     ----------
@@ -948,13 +997,13 @@ def sc_get_example_cell(lattice_variation: str = None):
         a = x * b * sin(ralpha)
         cell = SC_MCLC(a, b, c, alpha)
     elif lattice_variation in ["tri1a", "tri1", "tri", "tria"]:
-        cell = SC_TRI(1, 1.5, 2, 120, 110, 100, input_reciprocal=True)
+        cell = SC_TRI(0.5, 0.5, 0.5, 50.0, 60.0, 80.0)
     elif lattice_variation in ["tri2a", "tri2"]:
-        cell = SC_TRI(1, 1.5, 2, 120, 110, 90, input_reciprocal=True)
+        cell = SC_TRI(0.5, 1.0, 1.0, 100.0, 100.0, 140.0)
     elif lattice_variation in ["tri1b", "trib"]:
-        cell = SC_TRI(1, 1.5, 2, 60, 70, 80, input_reciprocal=True)
+        cell = SC_TRI(0.5, 1.0, 1.0, 100.0, 110.0, 60.0)
     elif lattice_variation == "tri2b":
-        cell = SC_TRI(1, 1.5, 2, 60, 70, 90, input_reciprocal=True)
+        cell = SC_TRI(0.5, 1.0, 2.0, 80.0, 100.0, 40.0)
 
     return cell
 
