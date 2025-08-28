@@ -57,9 +57,14 @@ def _get_unique(prim_cell, prim_positions, conv_types, repetition_number):
         Types of atoms in the primitive cell.
     """
 
-    repetition_number = int(repetition_number)
+    # Get closest integer
+    repetition_number = int(round(repetition_number, 0))
 
     conv_types = np.array(conv_types, dtype=int)
+
+    # Deal with finite precision
+    # Temporary solution
+    prim_positions = np.round(prim_positions, decimals=8)
 
     # Move all to 000
     prim_positions = prim_positions % 1
@@ -290,12 +295,3 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
-
-
-if __name__ == "__main__":
-    import wulfric
-
-    cell = wulfric.cell.sc_get_example_cell("FCC")
-    atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
-
-    prim_cell, prim_atoms = get_primitive(cell=cell, atoms=atoms, convention="SC")
