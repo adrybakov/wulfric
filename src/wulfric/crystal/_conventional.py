@@ -284,6 +284,10 @@ def _sc_get_conventional_m(spglib_std_lattice, centring_type):
                 [1, 0, 0],
             ]
         )
+        if centring_type == "C":
+            raise PotentialBugError(
+                '(convention="SC"), MCLC lattice, step 1, case 2. This case should never be tried for MCLC lattice.'
+            )
     # Have to keep a3 in place for MCLC lattices
     elif alpha == 90.0 and gamma == 90.0:  # -> a2, -a1, a3
         matrix_to_1 = np.array(
