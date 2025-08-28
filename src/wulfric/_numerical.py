@@ -22,7 +22,7 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def compare_numerically(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
+def compare_with_tolerance(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
     r"""
     Compares two numbers with given accuracy.
 
@@ -82,9 +82,9 @@ def compare_numerically(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.compare_numerically(1, "==", 1.0000001, eps=1e-6)
+        >>> wulfric.compare_with_tolerance(1, "==", 1.0000001, eps=1e-6)
         True
-        >>> wulfric.compare_numerically(1, "==", 1.0000001, eps=1e-8)
+        >>> wulfric.compare_with_tolerance(1, "==", 1.0000001, eps=1e-8)
         False
     """
 

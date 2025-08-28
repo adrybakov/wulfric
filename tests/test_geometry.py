@@ -26,7 +26,7 @@ from hypothesis import example, given
 from hypothesis import strategies as st
 from hypothesis.extra.numpy import arrays as harrays
 
-from wulfric._numerical import compare_numerically
+from wulfric._numerical import compare_with_tolerance
 from wulfric.constants._numerical import TORADIANS
 from wulfric.geometry._geometry import (
     get_angle,
@@ -145,21 +145,27 @@ def test_get_volume_parameters(a, b, c, alpha, beta, gamma):
 )
 def test_parallelepiped_check(a, b, c, alpha, beta, gamma):
     assert parallelepiped_check(a, b, c, alpha, beta, gamma) == (
-        compare_numerically(a, ">", 0.0, eps=LENGTH_TOLERANCE)
-        and compare_numerically(b, ">", 0.0, eps=LENGTH_TOLERANCE)
-        and compare_numerically(c, ">", 0.0, eps=LENGTH_TOLERANCE)
-        and compare_numerically(alpha, "<", 180.0, eps=ANGLE_TOLERANCE)
-        and compare_numerically(beta, "<", 180.0, eps=ANGLE_TOLERANCE)
-        and compare_numerically(gamma, "<", 180.0, eps=ANGLE_TOLERANCE)
-        and compare_numerically(alpha, ">", 0.0, eps=ANGLE_TOLERANCE)
-        and compare_numerically(beta, ">", 0.0, eps=ANGLE_TOLERANCE)
-        and compare_numerically(gamma, ">", 0.0, eps=ANGLE_TOLERANCE)
-        and compare_numerically(gamma, "<", alpha + beta, eps=ANGLE_TOLERANCE)
-        and compare_numerically(alpha + beta, "<", 360.0 - gamma, eps=ANGLE_TOLERANCE)
-        and compare_numerically(beta, "<", alpha + gamma, eps=ANGLE_TOLERANCE)
-        and compare_numerically(alpha + gamma, "<", 360.0 - beta, eps=ANGLE_TOLERANCE)
-        and compare_numerically(alpha, "<", beta + gamma, eps=ANGLE_TOLERANCE)
-        and compare_numerically(beta + gamma, "<", 360.0 - alpha, eps=ANGLE_TOLERANCE)
+        compare_with_tolerance(a, ">", 0.0, eps=LENGTH_TOLERANCE)
+        and compare_with_tolerance(b, ">", 0.0, eps=LENGTH_TOLERANCE)
+        and compare_with_tolerance(c, ">", 0.0, eps=LENGTH_TOLERANCE)
+        and compare_with_tolerance(alpha, "<", 180.0, eps=ANGLE_TOLERANCE)
+        and compare_with_tolerance(beta, "<", 180.0, eps=ANGLE_TOLERANCE)
+        and compare_with_tolerance(gamma, "<", 180.0, eps=ANGLE_TOLERANCE)
+        and compare_with_tolerance(alpha, ">", 0.0, eps=ANGLE_TOLERANCE)
+        and compare_with_tolerance(beta, ">", 0.0, eps=ANGLE_TOLERANCE)
+        and compare_with_tolerance(gamma, ">", 0.0, eps=ANGLE_TOLERANCE)
+        and compare_with_tolerance(gamma, "<", alpha + beta, eps=ANGLE_TOLERANCE)
+        and compare_with_tolerance(
+            alpha + beta, "<", 360.0 - gamma, eps=ANGLE_TOLERANCE
+        )
+        and compare_with_tolerance(beta, "<", alpha + gamma, eps=ANGLE_TOLERANCE)
+        and compare_with_tolerance(
+            alpha + gamma, "<", 360.0 - beta, eps=ANGLE_TOLERANCE
+        )
+        and compare_with_tolerance(alpha, "<", beta + gamma, eps=ANGLE_TOLERANCE)
+        and compare_with_tolerance(
+            beta + gamma, "<", 360.0 - alpha, eps=ANGLE_TOLERANCE
+        )
     )
 
 
@@ -182,6 +188,6 @@ def test_get_spherical(r, theta, phi):
 
     c_r, c_theta, c_phi = get_spherical(vector, in_degrees=True)
 
-    assert compare_numerically(theta, "==", c_theta, eps=ANGLE_TOLERANCE)
-    assert compare_numerically(phi, "==", c_phi, eps=ANGLE_TOLERANCE)
-    assert compare_numerically(r, "==", c_r, eps=LENGTH_TOLERANCE)
+    assert compare_with_tolerance(theta, "==", c_theta, eps=ANGLE_TOLERANCE)
+    assert compare_with_tolerance(phi, "==", c_phi, eps=ANGLE_TOLERANCE)
+    assert compare_with_tolerance(r, "==", c_r, eps=LENGTH_TOLERANCE)

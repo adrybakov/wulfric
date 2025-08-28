@@ -20,7 +20,7 @@
 # ================================ END LICENSE =================================
 import pytest
 
-from wulfric._numerical import compare_numerically
+from wulfric._numerical import compare_with_tolerance
 
 
 @pytest.mark.parametrize(
@@ -34,5 +34,5 @@ from wulfric._numerical import compare_numerically
         (4.00001, "==", 4.0, True),
     ],
 )
-def test_compare_numerically(x, sign, y, result):
-    assert compare_numerically(x, sign, y) == result
+def test_compare_with_tolerance(x, sign, y, result):
+    assert compare_with_tolerance(x, sign, y) == result

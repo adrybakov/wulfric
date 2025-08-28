@@ -22,7 +22,7 @@ import spglib
 import numpy as np
 
 from wulfric._exceptions import NiggliReductionFailed
-from wulfric._numerical import compare_numerically
+from wulfric._numerical import compare_with_tolerance
 from wulfric.geometry._geometry import get_volume
 
 # Save local scope at this moment
@@ -31,9 +31,9 @@ old_dir.add("old_dir")
 
 
 def _niggli_step_1(A, B, C, xi, eta, zeta, trans_matrix, eps):
-    condition = compare_numerically(A, ">", B, eps=eps) or (
-        compare_numerically(A, "==", B, eps=eps)
-        and compare_numerically(abs(xi), ">", abs(eta), eps=eps)
+    condition = compare_with_tolerance(A, ">", B, eps=eps) or (
+        compare_with_tolerance(A, "==", B, eps=eps)
+        and compare_with_tolerance(abs(xi), ">", abs(eta), eps=eps)
     )
     if condition:
         trans_matrix = trans_matrix @ np.array(
@@ -51,9 +51,9 @@ def _niggli_step_1(A, B, C, xi, eta, zeta, trans_matrix, eps):
 
 
 def _niggli_step_2(A, B, C, xi, eta, zeta, trans_matrix, eps):
-    condition = compare_numerically(B, ">", C, eps=eps) or (
-        compare_numerically(B, "==", C, eps=eps)
-        and compare_numerically(abs(eta), ">", abs(zeta), eps=eps)
+    condition = compare_with_tolerance(B, ">", C, eps=eps) or (
+        compare_with_tolerance(B, "==", C, eps=eps)
+        and compare_with_tolerance(abs(eta), ">", abs(zeta), eps=eps)
     )
     if condition:
         trans_matrix = trans_matrix @ np.array(
@@ -71,19 +71,19 @@ def _niggli_step_2(A, B, C, xi, eta, zeta, trans_matrix, eps):
 
 
 def _niggli_step_3(A, B, C, xi, eta, zeta, trans_matrix, eps):
-    condition = compare_numerically(xi * eta * zeta, ">", 0, eps=eps)
+    condition = compare_with_tolerance(xi * eta * zeta, ">", 0, eps=eps)
     if condition:
-        if compare_numerically(xi, ">", 0, eps=eps):
+        if compare_with_tolerance(xi, ">", 0, eps=eps):
             i = 1
         else:
             i = -1
 
-        if compare_numerically(eta, ">", 0, eps=eps):
+        if compare_with_tolerance(eta, ">", 0, eps=eps):
             j = 1
         else:
             j = -1
 
-        if compare_numerically(zeta, ">", 0, eps=eps):
+        if compare_with_tolerance(zeta, ">", 0, eps=eps):
             k = 1
         else:
             k = -1
@@ -103,28 +103,28 @@ def _niggli_step_3(A, B, C, xi, eta, zeta, trans_matrix, eps):
 
 
 def _niggli_step_4(A, B, C, xi, eta, zeta, trans_matrix, eps):
-    condition = compare_numerically(xi * eta * zeta, "<=", 0, eps=eps)
+    condition = compare_with_tolerance(xi * eta * zeta, "<=", 0, eps=eps)
     if condition:
         # Step 1
         i, j, k = 1, 1, 1
         p = None
 
         # Step 2
-        if compare_numerically(xi, ">", 0):
+        if compare_with_tolerance(xi, ">", 0):
             i = -1
-        elif not compare_numerically(xi, "<", 0):
+        elif not compare_with_tolerance(xi, "<", 0):
             p = "i"
 
         # Step 3
-        if compare_numerically(eta, ">", 0):
+        if compare_with_tolerance(eta, ">", 0):
             j = -1
-        elif not compare_numerically(eta, "<", 0):
+        elif not compare_with_tolerance(eta, "<", 0):
             p = "j"
 
         # Step 4
-        if compare_numerically(zeta, ">", 0):
+        if compare_with_tolerance(zeta, ">", 0):
             k = -1
-        elif not compare_numerically(zeta, "<", 0):
+        elif not compare_with_tolerance(zeta, "<", 0):
             p = "k"
 
         # Step 5
@@ -152,14 +152,14 @@ def _niggli_step_4(A, B, C, xi, eta, zeta, trans_matrix, eps):
 
 def _niggli_step_5(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = (
-        compare_numerically(abs(xi), ">", B, eps=eps)
+        compare_with_tolerance(abs(xi), ">", B, eps=eps)
         or (
-            compare_numerically(xi, "==", B, eps=eps)
-            and compare_numerically(2 * eta, "<", zeta, eps=eps)
+            compare_with_tolerance(xi, "==", B, eps=eps)
+            and compare_with_tolerance(2 * eta, "<", zeta, eps=eps)
         )
         or (
-            compare_numerically(xi, "==", -B, eps=eps)
-            and compare_numerically(zeta, "<", 0, eps=eps)
+            compare_with_tolerance(xi, "==", -B, eps=eps)
+            and compare_with_tolerance(zeta, "<", 0, eps=eps)
         )
     )
     if condition:
@@ -181,14 +181,14 @@ def _niggli_step_5(A, B, C, xi, eta, zeta, trans_matrix, eps):
 
 def _niggli_step_6(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = (
-        compare_numerically(abs(eta), ">", A, eps=eps)
+        compare_with_tolerance(abs(eta), ">", A, eps=eps)
         or (
-            compare_numerically(eta, "==", A, eps=eps)
-            and compare_numerically(2 * xi, "<", zeta, eps=eps)
+            compare_with_tolerance(eta, "==", A, eps=eps)
+            and compare_with_tolerance(2 * xi, "<", zeta, eps=eps)
         )
         or (
-            compare_numerically(eta, "==", -A, eps=eps)
-            and compare_numerically(zeta, "<", 0, eps=eps)
+            compare_with_tolerance(eta, "==", -A, eps=eps)
+            and compare_with_tolerance(zeta, "<", 0, eps=eps)
         )
     )
     if condition:
@@ -210,14 +210,14 @@ def _niggli_step_6(A, B, C, xi, eta, zeta, trans_matrix, eps):
 
 def _niggli_step_7(A, B, C, xi, eta, zeta, trans_matrix, eps):
     condition = (
-        compare_numerically(abs(zeta), ">", A, eps=eps)
+        compare_with_tolerance(abs(zeta), ">", A, eps=eps)
         or (
-            compare_numerically(zeta, "==", A, eps=eps)
-            and compare_numerically(2 * xi, "<", eta, eps=eps)
+            compare_with_tolerance(zeta, "==", A, eps=eps)
+            and compare_with_tolerance(2 * xi, "<", eta, eps=eps)
         )
         or (
-            compare_numerically(zeta, "==", -A, eps=eps)
-            and compare_numerically(eta, "<", 0, eps=eps)
+            compare_with_tolerance(zeta, "==", -A, eps=eps)
+            and compare_with_tolerance(eta, "<", 0, eps=eps)
         )
     )
     if condition:
@@ -238,9 +238,9 @@ def _niggli_step_7(A, B, C, xi, eta, zeta, trans_matrix, eps):
 
 
 def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix, eps):
-    condition = compare_numerically(xi + eta + zeta + A + B, "<", 0, eps=eps) or (
-        compare_numerically(xi + eta + zeta + A + B, "==", 0, eps=eps)
-        and compare_numerically(2 * (A + eta) + zeta, ">", 0, eps=eps)
+    condition = compare_with_tolerance(xi + eta + zeta + A + B, "<", 0, eps=eps) or (
+        compare_with_tolerance(xi + eta + zeta + A + B, "==", 0, eps=eps)
+        and compare_with_tolerance(2 * (A + eta) + zeta, ">", 0, eps=eps)
     )
     if condition:
         trans_matrix = trans_matrix @ np.array(

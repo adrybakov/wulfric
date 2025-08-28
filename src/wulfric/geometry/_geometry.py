@@ -22,7 +22,7 @@ from math import cos, sqrt
 
 import numpy as np
 
-from wulfric._numerical import compare_numerically
+from wulfric._numerical import compare_with_tolerance
 from wulfric.constants._numerical import TODEGREES, TORADIANS
 
 # Save local scope at this moment
@@ -267,67 +267,73 @@ def parallelepiped_check(
     """
 
     result = (
-        compare_numerically(a, ">", 0.0, eps=length_tolerance)
-        and compare_numerically(b, ">", 0.0, eps=length_tolerance)
-        and compare_numerically(c, ">", 0.0, eps=length_tolerance)
-        and compare_numerically(alpha, "<", 180.0, eps=angle_tolerance)
-        and compare_numerically(beta, "<", 180.0, eps=angle_tolerance)
-        and compare_numerically(gamma, "<", 180.0, eps=angle_tolerance)
-        and compare_numerically(alpha, ">", 0.0, eps=angle_tolerance)
-        and compare_numerically(beta, ">", 0.0, eps=angle_tolerance)
-        and compare_numerically(gamma, ">", 0.0, eps=angle_tolerance)
-        and compare_numerically(gamma, "<", alpha + beta, eps=angle_tolerance)
-        and compare_numerically(alpha + beta, "<", 360.0 - gamma, eps=angle_tolerance)
-        and compare_numerically(beta, "<", alpha + gamma, eps=angle_tolerance)
-        and compare_numerically(alpha + gamma, "<", 360.0 - beta, eps=angle_tolerance)
-        and compare_numerically(alpha, "<", beta + gamma, eps=angle_tolerance)
-        and compare_numerically(beta + gamma, "<", 360.0 - alpha, eps=angle_tolerance)
+        compare_with_tolerance(a, ">", 0.0, eps=length_tolerance)
+        and compare_with_tolerance(b, ">", 0.0, eps=length_tolerance)
+        and compare_with_tolerance(c, ">", 0.0, eps=length_tolerance)
+        and compare_with_tolerance(alpha, "<", 180.0, eps=angle_tolerance)
+        and compare_with_tolerance(beta, "<", 180.0, eps=angle_tolerance)
+        and compare_with_tolerance(gamma, "<", 180.0, eps=angle_tolerance)
+        and compare_with_tolerance(alpha, ">", 0.0, eps=angle_tolerance)
+        and compare_with_tolerance(beta, ">", 0.0, eps=angle_tolerance)
+        and compare_with_tolerance(gamma, ">", 0.0, eps=angle_tolerance)
+        and compare_with_tolerance(gamma, "<", alpha + beta, eps=angle_tolerance)
+        and compare_with_tolerance(
+            alpha + beta, "<", 360.0 - gamma, eps=angle_tolerance
+        )
+        and compare_with_tolerance(beta, "<", alpha + gamma, eps=angle_tolerance)
+        and compare_with_tolerance(
+            alpha + gamma, "<", 360.0 - beta, eps=angle_tolerance
+        )
+        and compare_with_tolerance(alpha, "<", beta + gamma, eps=angle_tolerance)
+        and compare_with_tolerance(
+            beta + gamma, "<", 360.0 - alpha, eps=angle_tolerance
+        )
     )
 
     if not result and raise_error:
         message = "Parameters could not form a parallelepiped:\n"
         message += f"a = {a}"
-        if not compare_numerically(a, ">", 0.0, eps=length_tolerance):
+        if not compare_with_tolerance(a, ">", 0.0, eps=length_tolerance):
             message += f" (a <= 0 with numerical tolerance: {length_tolerance})"
         message += "\n"
         message += f"b = {b}"
-        if not compare_numerically(b, ">", 0.0, eps=length_tolerance):
+        if not compare_with_tolerance(b, ">", 0.0, eps=length_tolerance):
             message += f" (b <= 0 with numerical tolerance: {length_tolerance})"
         message += "\n"
         message += f"c = {c}"
-        if not compare_numerically(c, ">", 0.0, eps=length_tolerance):
+        if not compare_with_tolerance(c, ">", 0.0, eps=length_tolerance):
             message += f" (c <= 0 with numerical tolerance: {length_tolerance})"
         message += "\n"
         message += f"alpha = {alpha}\n"
-        if not compare_numerically(alpha, "<", 180.0, eps=angle_tolerance):
+        if not compare_with_tolerance(alpha, "<", 180.0, eps=angle_tolerance):
             message += f"  (alpha >= 180 with numerical tolerance: {angle_tolerance})\n"
-        if not compare_numerically(alpha, ">", 0.0, eps=angle_tolerance):
+        if not compare_with_tolerance(alpha, ">", 0.0, eps=angle_tolerance):
             message += f"  (alpha <= 0 with numerical tolerance: {angle_tolerance})\n"
         message += f"beta = {beta}\n"
-        if not compare_numerically(beta, "<", 180.0, eps=angle_tolerance):
+        if not compare_with_tolerance(beta, "<", 180.0, eps=angle_tolerance):
             message += f"  (beta >= 180 with numerical tolerance: {angle_tolerance})\n"
-        if not compare_numerically(beta, ">", 0.0, eps=angle_tolerance):
+        if not compare_with_tolerance(beta, ">", 0.0, eps=angle_tolerance):
             message += f"  (beta <= 0 with numerical tolerance: {angle_tolerance})\n"
         message += f"gamma = {gamma}\n"
-        if not compare_numerically(gamma, "<", 180.0, eps=angle_tolerance):
+        if not compare_with_tolerance(gamma, "<", 180.0, eps=angle_tolerance):
             message += f"  (gamma >= 180 with numerical tolerance: {angle_tolerance})\n"
-        if not compare_numerically(gamma, ">", 0.0, eps=angle_tolerance):
+        if not compare_with_tolerance(gamma, ">", 0.0, eps=angle_tolerance):
             message += f"  (gamma <= 0 with numerical tolerance: {angle_tolerance})\n"
-        if not compare_numerically(gamma, "<", alpha + beta, eps=angle_tolerance):
+        if not compare_with_tolerance(gamma, "<", alpha + beta, eps=angle_tolerance):
             message += f"Inequality gamma < alpha + beta is not satisfied with numerical tolerance: {angle_tolerance}\n"
-        if not compare_numerically(
+        if not compare_with_tolerance(
             alpha + beta, "<", 360.0 - gamma, eps=angle_tolerance
         ):
             message += f"Inequality alpha + beta < 360 - gamma is not satisfied with numerical tolerance: {angle_tolerance}\n"
-        if not compare_numerically(beta, "<", alpha + gamma, eps=angle_tolerance):
+        if not compare_with_tolerance(beta, "<", alpha + gamma, eps=angle_tolerance):
             message += f"Inequality beta < alpha + gamma is not satisfied with numerical tolerance: {angle_tolerance}\n"
-        if not compare_numerically(
+        if not compare_with_tolerance(
             alpha + gamma, "<", 360.0 - beta, eps=angle_tolerance
         ):
             message += f"Inequality alpha + gamma < 360 - beta is not satisfied with numerical tolerance: {angle_tolerance}\n"
-        if not compare_numerically(alpha, "<", beta + gamma, eps=angle_tolerance):
+        if not compare_with_tolerance(alpha, "<", beta + gamma, eps=angle_tolerance):
             message += f"Inequality alpha < beta + gamma is not satisfied with numerical tolerance: {angle_tolerance}\n"
-        if not compare_numerically(
+        if not compare_with_tolerance(
             beta + gamma, "<", 360.0 - alpha, eps=angle_tolerance
         ):
             message += f"Inequality beta + gamma < 360 - alpha is not satisfied with numerical tolerance: {angle_tolerance}\n"

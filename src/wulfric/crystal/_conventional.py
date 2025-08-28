@@ -27,7 +27,7 @@ from wulfric.cell._niggli import get_niggli
 from wulfric.cell._basic_manipulation import get_reciprocal, get_params
 from wulfric._spglib_interface import get_spglib_data, validate_spglib_data
 from wulfric._syntactic_sugar import SyntacticSugar
-from wulfric._numerical import compare_numerically
+from wulfric._numerical import compare_with_tolerance
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -464,9 +464,9 @@ def _sc_get_conventional_hR(spglib_primitive_cell):
             f'(convention="SC"): hR lattice. Lattice vectors have different lengths with the precision of {1e-5:.5e}'
         )
 
-    if compare_numerically(
+    if compare_with_tolerance(
         alpha, "==", beta, eps=angle_tolerance
-    ) and compare_numerically(alpha, "==", gamma, eps=angle_tolerance):
+    ) and compare_with_tolerance(alpha, "==", gamma, eps=angle_tolerance):
         matrix = np.eye(3, dtype=float)
     elif 180 - alpha == beta == gamma:  # -> a1, -a2, -a3
         matrix = np.array(

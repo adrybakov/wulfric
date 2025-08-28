@@ -46,7 +46,7 @@ Top level functions
     :caption: Top level functions
     :toctree: generated/
 
-    compare_numerically
+    compare_with_tolerance
     add_sugar
     remove_sugar
     logo

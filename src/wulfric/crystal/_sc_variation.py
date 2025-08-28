@@ -22,7 +22,7 @@ from math import cos, sin
 
 import numpy as np
 
-from wulfric._numerical import compare_numerically
+from wulfric._numerical import compare_with_tolerance
 from wulfric.cell._basic_manipulation import get_params, get_reciprocal
 from wulfric.constants._numerical import TORADIANS
 from wulfric.crystal._crystal_validation import validate_atoms
@@ -103,19 +103,19 @@ def _ORCF_variation(conv_a: float, conv_b: float, conv_c: float, length_toleranc
     ValueError
         If :math:`a < b < c` is not satisfied.
     """
-    if compare_numerically(
+    if compare_with_tolerance(
         conv_a, ">=", conv_b, eps=length_tolerance
-    ) or compare_numerically(conv_b, ">=", conv_c, eps=length_tolerance):
+    ) or compare_with_tolerance(conv_b, ">=", conv_c, eps=length_tolerance):
         raise ValueError(
             f'(convention="SC"): ORCF variation. a < b < c is not satisfied with {length_tolerance} tolerance.'
         )
 
     expression = 1 / conv_a**2 - 1 / conv_b**2 - 1 / conv_c**2
-    if compare_numerically(expression, "==", 0, eps=length_tolerance):
+    if compare_with_tolerance(expression, "==", 0, eps=length_tolerance):
         return "ORCF3"
-    elif compare_numerically(expression, ">", 0, eps=length_tolerance):
+    elif compare_with_tolerance(expression, ">", 0, eps=length_tolerance):
         return "ORCF1"
-    elif compare_numerically(expression, "<", 0, eps=length_tolerance):
+    elif compare_with_tolerance(expression, "<", 0, eps=length_tolerance):
         return "ORCF2"
 
 
@@ -148,9 +148,9 @@ def _RHL_variation(conv_alpha: float, angle_tolerance=1e-4):
     ValueError
         If :math:`\alpha == 90^{\circ}` with given tolerance ``eps``.
     """
-    if compare_numerically(conv_alpha, "<", 90, eps=angle_tolerance):
+    if compare_with_tolerance(conv_alpha, "<", 90, eps=angle_tolerance):
         return "RHL1"
-    elif compare_numerically(conv_alpha, ">", 90, eps=angle_tolerance):
+    elif compare_with_tolerance(conv_alpha, ">", 90, eps=angle_tolerance):
         return "RHL2"
     else:
         raise ValueError(
@@ -213,27 +213,27 @@ def _MCLC_variation(
         tolerance ``eps``.
     """
 
-    if compare_numerically(conv_alpha, ">", 90, eps=angle_tolerance):
+    if compare_with_tolerance(conv_alpha, ">", 90, eps=angle_tolerance):
         raise ValueError(
             f'(convention="SC"): MCLC variation. alpha > 90 with {angle_tolerance} or {length_tolerance} tolerance:\n  alpha = {conv_alpha}\n'
         )
 
     conv_alpha *= TORADIANS
 
-    if compare_numerically(prim_k_gamma, "==", 90, eps=angle_tolerance):
+    if compare_with_tolerance(prim_k_gamma, "==", 90, eps=angle_tolerance):
         return "MCLC2"
-    elif compare_numerically(prim_k_gamma, ">", 90, eps=angle_tolerance):
+    elif compare_with_tolerance(prim_k_gamma, ">", 90, eps=angle_tolerance):
         return "MCLC1"
-    elif compare_numerically(prim_k_gamma, "<", 90, eps=angle_tolerance):
+    elif compare_with_tolerance(prim_k_gamma, "<", 90, eps=angle_tolerance):
         expression = (
             conv_b * cos(conv_alpha) / conv_c
             + conv_b**2 * sin(conv_alpha) ** 2 / conv_a**2
         )
-        if compare_numerically(expression, "==", 1, eps=length_tolerance):
+        if compare_with_tolerance(expression, "==", 1, eps=length_tolerance):
             return "MCLC4"
-        elif compare_numerically(expression, "<", 1, eps=length_tolerance):
+        elif compare_with_tolerance(expression, "<", 1, eps=length_tolerance):
             return "MCLC3"
-        elif compare_numerically(expression, ">", 1, eps=length_tolerance):
+        elif compare_with_tolerance(expression, ">", 1, eps=length_tolerance):
             return "MCLC5"
 
 
@@ -277,27 +277,27 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, angle_toleranc
         tolerance ``eps``.
     """
 
-    if compare_numerically(
+    if compare_with_tolerance(
         k_alpha, "==", 90, eps=angle_tolerance
-    ) or compare_numerically(k_beta, "==", 90, eps=angle_tolerance):
+    ) or compare_with_tolerance(k_beta, "==", 90, eps=angle_tolerance):
         raise ValueError(
             f'(convention="SC"): TRI variation. k_alpha == 90 or k_beta == 90 with {angle_tolerance} tolerance.'
         )
 
-    if compare_numerically(k_gamma, "==", 90, eps=angle_tolerance):
-        if compare_numerically(
+    if compare_with_tolerance(k_gamma, "==", 90, eps=angle_tolerance):
+        if compare_with_tolerance(
             k_alpha, ">", 90, eps=angle_tolerance
-        ) and compare_numerically(k_beta, ">", 90, eps=angle_tolerance):
+        ) and compare_with_tolerance(k_beta, ">", 90, eps=angle_tolerance):
             return "TRI2a"
-        elif compare_numerically(
+        elif compare_with_tolerance(
             k_alpha, "<", 90, eps=angle_tolerance
-        ) and compare_numerically(k_beta, "<", 90, eps=angle_tolerance):
+        ) and compare_with_tolerance(k_beta, "<", 90, eps=angle_tolerance):
             return "TRI2b"
-    elif compare_numerically(
+    elif compare_with_tolerance(
         min(k_gamma, k_beta, k_alpha), ">", 90, eps=angle_tolerance
     ):
         return "TRI1a"
-    elif compare_numerically(
+    elif compare_with_tolerance(
         max(k_gamma, k_beta, k_alpha), "<", 90, eps=angle_tolerance
     ):
         return "TRI1b"

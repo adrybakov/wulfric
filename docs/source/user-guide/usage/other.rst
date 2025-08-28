@@ -27,19 +27,19 @@ wulfric
 
 .. doctest::
 
-    >>> wulfric.compare_numerically(1.0000000001, "==", 1.0000000002, eps=1e-9)
+    >>> wulfric.compare_with_tolerance(1.0000000001, "==", 1.0000000002, eps=1e-9)
     True
-    >>> wulfric.compare_numerically(1.0000000001, "==", 1.0000000002, eps=1e-11)
+    >>> wulfric.compare_with_tolerance(1.0000000001, "==", 1.0000000002, eps=1e-11)
     False
-    >>> wulfric.compare_numerically(1.02, "<", 1.03, eps=0.001)
+    >>> wulfric.compare_with_tolerance(1.02, "<", 1.03, eps=0.001)
     True
-    >>> wulfric.compare_numerically(1.02, "<", 1.03, eps=0.1)
+    >>> wulfric.compare_with_tolerance(1.02, "<", 1.03, eps=0.1)
     False
-    >>> wulfric.compare_numerically(1.02, "<=", 1.03, eps=0.1)
+    >>> wulfric.compare_with_tolerance(1.02, "<=", 1.03, eps=0.1)
     True
 
 This function return boolean value and support python's comparison operators.
-See :py:func:`wulfric.compare_numerically` for details.
+See :py:func:`wulfric.compare_with_tolerance` for details.
 
 
 Parallelepiped
