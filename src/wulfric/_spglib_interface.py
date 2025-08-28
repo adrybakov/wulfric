@@ -351,7 +351,7 @@ def get_spglib_data(
     except Exception as e:
         _raise_with_message(
             e=e,
-            message=f"Call to spglib failed with spglib version {spglib.__version__}."
+            message=f"Call to spglib failed. Spglib version {spglib.__version__}."
             + _SUPPORT_FOOTER,
         )
 

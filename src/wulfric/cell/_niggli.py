@@ -261,7 +261,7 @@ def _niggli_step_8(A, B, C, xi, eta, zeta, trans_matrix, eps):
 
 def get_niggli(cell, eps_relative=1e-5, implementation="spglib", max_iterations=100000):
     r"""
-    Computes reduced Niggli cell.
+    Computes Niggli-reduced cell.
 
 
     Parameters

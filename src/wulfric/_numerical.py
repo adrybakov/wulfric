@@ -104,7 +104,9 @@ def compare_with_tolerance(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
     if condition == "!=":
         return x < y - eps or y < x - eps
 
-    raise ValueError('Condition must be one of "<", ">", "<=", ">=", "==", "!=".')
+    raise ValueError(
+        f'Expected one of "<", ">", "<=", ">=", "==", "!=" as condition, got "{condition}".'
+    )
 
 
 # Populate __all__ with objects defined in this file
