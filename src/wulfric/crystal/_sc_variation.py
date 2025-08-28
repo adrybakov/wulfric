@@ -415,7 +415,7 @@ def sc_get_variation(
 
     lattice_type = spglib_data.crystal_family + spglib_data.centring_type
 
-    if lattice_type in ["tI", "oF", "hR", "mC"]:
+    if lattice_type in ["tI", "oF", "hR", "mC", "aP"]:
         conv_cell, _ = get_conventional(
             cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
         )
@@ -433,7 +433,7 @@ def sc_get_variation(
         return _RHL_variation(conv_alpha, angle_tolerance=angle_tolerance)
 
     if lattice_type == "mC":
-        _, _, _, _, _, k_gamma = get_params(get_reciprocal(cell))
+        _, _, _, _, _, k_gamma = get_params(get_reciprocal(cell=conv_cell))
         return _MCLC_variation(
             conv_a,
             conv_b,
@@ -445,7 +445,7 @@ def sc_get_variation(
         )
 
     if lattice_type == "aP":
-        _, _, _, k_alpha, k_beta, k_gamma = get_params(get_reciprocal(cell))
+        _, _, _, k_alpha, k_beta, k_gamma = get_params(get_reciprocal(cell=conv_cell))
         return _TRI_variation(
             k_alpha,
             k_beta,
