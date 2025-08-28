@@ -281,7 +281,7 @@ def lepage(
     ----------
     cell : (3, 3) |array-like|_
         Matrix of a cell, rows are interpreted as vectors.
-    angle_tolerance : float, default 1e-4
+    angle_tolerance : float, default :math:`10^{-4}`
         Angle tolerance for the search of the actual symmetry axes. It is recommended to
         reduce ``angle_tolerance`` to account for the finite precision of the angles of
         the ``cell``. Default value is chosen in the contexts of condense matter physics,

@@ -22,7 +22,7 @@ from math import cos, sin
 
 import numpy as np
 
-from wulfric._numerical import compare_with_tolerance
+from wulfric._numerical import compare_with_tolerance as cwt
 from wulfric.cell._basic_manipulation import get_params, get_reciprocal
 from wulfric.constants._numerical import TORADIANS
 from wulfric.crystal._crystal_validation import validate_atoms
@@ -70,7 +70,9 @@ def _BCT_variation(conv_a: float, conv_c: float):
         raise ValueError('(convention="SC"): BCT variation). a == c')
 
 
-def _ORCF_variation(conv_a: float, conv_b: float, conv_c: float, length_tolerance=1e-8):
+def _ORCF_variation(
+    conv_a: float, conv_b: float, conv_c: float, distance_tolerance=1e-8
+):
     r"""
     Three variations of the ORCF lattice.
 
@@ -88,10 +90,8 @@ def _ORCF_variation(conv_a: float, conv_b: float, conv_c: float, length_toleranc
         Length of the :math:`a_2` vector of the conventional cell.
     conv_c : float
         Length of the :math:`a_3` vector of the conventional cell.
-    length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors). Default value is
-        chosen in the contexts of condense matter physics, assuming that length is given
-        in Angstroms. Please choose appropriate tolerance for your problem.
+    distance_tolerance : float, default :math:`10^{-5}`
+        Tolerance parameter for comparing two linear variables.
 
     Returns
     -------
@@ -103,19 +103,19 @@ def _ORCF_variation(conv_a: float, conv_b: float, conv_c: float, length_toleranc
     ValueError
         If :math:`a < b < c` is not satisfied.
     """
-    if compare_with_tolerance(
-        conv_a, ">=", conv_b, eps=length_tolerance
-    ) or compare_with_tolerance(conv_b, ">=", conv_c, eps=length_tolerance):
+    if cwt(conv_a, ">=", conv_b, eps=distance_tolerance) or cwt(
+        conv_b, ">=", conv_c, eps=distance_tolerance
+    ):
         raise ValueError(
-            f'(convention="SC"): ORCF variation. a < b < c is not satisfied with {length_tolerance} tolerance.'
+            f'(convention="SC"): ORCF variation. a < b < c is not satisfied with {distance_tolerance} tolerance.'
         )
 
     expression = 1 / conv_a**2 - 1 / conv_b**2 - 1 / conv_c**2
-    if compare_with_tolerance(expression, "==", 0, eps=length_tolerance):
+    if cwt(expression, "==", 0, eps=distance_tolerance):
         return "ORCF3"
-    elif compare_with_tolerance(expression, ">", 0, eps=length_tolerance):
+    elif cwt(expression, ">", 0, eps=distance_tolerance):
         return "ORCF1"
-    elif compare_with_tolerance(expression, "<", 0, eps=length_tolerance):
+    elif cwt(expression, "<", 0, eps=distance_tolerance):
         return "ORCF2"
 
 
@@ -134,9 +134,7 @@ def _RHL_variation(conv_alpha: float, angle_tolerance=1e-4):
         Angle between vectors :math:`a_1` and :math:`a_2` of the conventional cell in
         degrees.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Default value is chosen in
-        the contexts of condense matter physics, assuming that angles are in degrees.
-        Please choose appropriate tolerance for your problem.
+        Tolerance parameter for comparing two angles, given in degrees.
 
     Returns
     -------
@@ -148,9 +146,9 @@ def _RHL_variation(conv_alpha: float, angle_tolerance=1e-4):
     ValueError
         If :math:`\alpha == 90^{\circ}` with given tolerance ``eps``.
     """
-    if compare_with_tolerance(conv_alpha, "<", 90, eps=angle_tolerance):
+    if cwt(conv_alpha, "<", 90, eps=angle_tolerance):
         return "RHL1"
-    elif compare_with_tolerance(conv_alpha, ">", 90, eps=angle_tolerance):
+    elif cwt(conv_alpha, ">", 90, eps=angle_tolerance):
         return "RHL2"
     else:
         raise ValueError(
@@ -164,13 +162,13 @@ def _MCLC_variation(
     conv_c: float,
     conv_alpha: float,
     prim_k_gamma: float,
-    length_tolerance=1e-8,
+    distance_tolerance=1e-8,
     angle_tolerance=1e-4,
 ):
     r"""
-    Five variation of the MCLC lattice.
+    Five variations of the MCLC lattice.
 
-    Ordering :math:`a \le c` and :math:`b \le c` and :math:`\alpha < 90^{\circ}` is assumed.
+    :math:`\alpha < 90^{\circ}` is checked.
 
     :math:`\text{MCLC}_1: k_{\gamma} > 90^{\circ}`,
     :math:`\text{MCLC}_2: k_{\gamma} = 90^{\circ}`,
@@ -191,14 +189,10 @@ def _MCLC_variation(
         degrees.
     k_gamma : float
         Angle between reciprocal vectors :math:`b_1` and :math:`b_2`. In degrees.
-    length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors). Default value is
-        chosen in the contexts of condense matter physics, assuming that length is given
-        in Angstroms. Please choose appropriate tolerance for your problem.
+    distance_tolerance : float, default :math:`10^{-5}`
+        Tolerance parameter for comparing two linear variables.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Default value is chosen in
-        the contexts of condense matter physics, assuming that angles are in degrees.
-        Please choose appropriate tolerance for your problem.
+        Tolerance parameter for comparing two angles, given in degrees.
 
     Returns
     -------
@@ -209,31 +203,30 @@ def _MCLC_variation(
     Raises
     ------
     ValueError
-        If :math:`\alpha > 90^{\circ}` or :math:`a > c` or :math:`b > c` with given
-        tolerance ``eps``.
+        If :math:`\alpha > 90^{\circ}` with given tolerance ``angle_tolerance``.
     """
 
-    if compare_with_tolerance(conv_alpha, ">", 90, eps=angle_tolerance):
+    if cwt(conv_alpha, ">", 90, eps=angle_tolerance):
         raise ValueError(
-            f'(convention="SC"): MCLC variation. alpha > 90 with {angle_tolerance} or {length_tolerance} tolerance:\n  alpha = {conv_alpha}\n'
+            f'(convention="SC"): MCLC variation. alpha > 90 with {angle_tolerance} tolerance:\n  alpha = {conv_alpha}\n'
         )
 
     conv_alpha *= TORADIANS
 
-    if compare_with_tolerance(prim_k_gamma, "==", 90, eps=angle_tolerance):
+    if cwt(prim_k_gamma, "==", 90, eps=angle_tolerance):
         return "MCLC2"
-    elif compare_with_tolerance(prim_k_gamma, ">", 90, eps=angle_tolerance):
+    elif cwt(prim_k_gamma, ">", 90, eps=angle_tolerance):
         return "MCLC1"
-    elif compare_with_tolerance(prim_k_gamma, "<", 90, eps=angle_tolerance):
+    elif cwt(prim_k_gamma, "<", 90, eps=angle_tolerance):
         expression = (
             conv_b * cos(conv_alpha) / conv_c
             + conv_b**2 * sin(conv_alpha) ** 2 / conv_a**2
         )
-        if compare_with_tolerance(expression, "==", 1, eps=length_tolerance):
+        if cwt(expression, "==", 1, eps=distance_tolerance):
             return "MCLC4"
-        elif compare_with_tolerance(expression, "<", 1, eps=length_tolerance):
+        elif cwt(expression, "<", 1, eps=distance_tolerance):
             return "MCLC3"
-        elif compare_with_tolerance(expression, ">", 1, eps=length_tolerance):
+        elif cwt(expression, ">", 1, eps=distance_tolerance):
             return "MCLC5"
 
 
@@ -241,7 +234,7 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, angle_toleranc
     r"""
     Four variations of the TRI lattice.
 
-    Conditions :math:`k_{\alpha} \ne 90^{\circ}` and :math:`k_{\beta} \ne 90^{\circ}` are assumed.
+    Conditions :math:`k_{\alpha} \ne 90^{\circ}` and :math:`k_{\beta} \ne 90^{\circ}` are checked.
 
     :math:`\text{TRI}_{1a} k_{\alpha} > 90^{\circ}, k_{\beta} > 90^{\circ}, k_{\gamma} > 90^{\circ}, k_{\gamma} = \min(k_{\alpha}, k_{\beta}, k_{\gamma})`
 
@@ -260,9 +253,7 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, angle_toleranc
     k_gamma : float
         Angle between reciprocal vectors :math:`b_1` and :math:`b_2`. In degrees.
     angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Default value is chosen in
-        the contexts of condense matter physics, assuming that angles are in degrees.
-        Please choose appropriate tolerance for your problem.
+        Tolerance parameter for comparing two angles, given in degrees.
 
     Returns
     -------
@@ -274,40 +265,34 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, angle_toleranc
     ------
     ValueError
         If :math:`k_{\alpha} == 90^{\circ}` or :math:`k_{\beta} == 90^{\circ}` with given
-        tolerance ``eps``.
+        tolerance ``angle_tolerance``.
     """
 
-    if compare_with_tolerance(
-        k_alpha, "==", 90, eps=angle_tolerance
-    ) or compare_with_tolerance(k_beta, "==", 90, eps=angle_tolerance):
+    if cwt(k_alpha, "==", 90, eps=angle_tolerance) or cwt(
+        k_beta, "==", 90, eps=angle_tolerance
+    ):
         raise ValueError(
             f'(convention="SC"): TRI variation. k_alpha == 90 or k_beta == 90 with {angle_tolerance} tolerance.'
         )
 
-    if compare_with_tolerance(k_gamma, "==", 90, eps=angle_tolerance):
-        if compare_with_tolerance(
-            k_alpha, ">", 90, eps=angle_tolerance
-        ) and compare_with_tolerance(k_beta, ">", 90, eps=angle_tolerance):
+    if cwt(k_gamma, "==", 90, eps=angle_tolerance):
+        if cwt(k_alpha, ">", 90, eps=angle_tolerance) and cwt(
+            k_beta, ">", 90, eps=angle_tolerance
+        ):
             return "TRI2a"
-        elif compare_with_tolerance(
-            k_alpha, "<", 90, eps=angle_tolerance
-        ) and compare_with_tolerance(k_beta, "<", 90, eps=angle_tolerance):
+        elif cwt(k_alpha, "<", 90, eps=angle_tolerance) and cwt(
+            k_beta, "<", 90, eps=angle_tolerance
+        ):
             return "TRI2b"
-    elif compare_with_tolerance(
-        min(k_gamma, k_beta, k_alpha), ">", 90, eps=angle_tolerance
-    ):
+    elif cwt(min(k_gamma, k_beta, k_alpha), ">", 90, eps=angle_tolerance):
         return "TRI1a"
-    elif compare_with_tolerance(
-        max(k_gamma, k_beta, k_alpha), "<", 90, eps=angle_tolerance
-    ):
+    elif cwt(max(k_gamma, k_beta, k_alpha), "<", 90, eps=angle_tolerance):
         return "TRI1b"
     else:
         return "TRI"
 
 
-def sc_get_variation(
-    cell, atoms, spglib_data=None, length_tolerance=1e-8, angle_tolerance=1e-4
-):
+def sc_get_variation(cell, atoms, spglib_data=None):
     r"""
     Return variation of the lattice as defined in the paper by Setyawan and Curtarolo [1]_.
 
@@ -348,14 +333,6 @@ def sc_get_variation(
 
         using the same ``cell`` and ``atoms["positions"]`` that you are passing to this
         function.
-    length_tolerance : float, default :math:`10^{-8}`
-        Tolerance for length variables (lengths of the lattice vectors). Default value is
-        chosen in the contexts of condense matter physics, assuming that length is given
-        in Angstroms. Please choose appropriate tolerance for your problem.
-    angle_tolerance : float, default :math:`10^{-4}`
-        Tolerance for angle variables (angles of the lattice). Default value is chosen in
-        the contexts of condense matter physics, assuming that angles are in degrees.
-        Please choose appropriate tolerance for your problem.
 
     Returns
     -------
@@ -414,6 +391,10 @@ def sc_get_variation(
 
     lattice_type = spglib_data.crystal_family + spglib_data.centring_type
 
+    angle_tolerance = (
+        spglib_data.angle_tolerance if spglib_data.angle_tolerance != -1 else 1e-4
+    )
+
     if lattice_type in ["tI", "oF", "hR", "mC", "aP"]:
         conv_cell, _ = get_conventional(
             cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
@@ -425,7 +406,7 @@ def sc_get_variation(
 
     if lattice_type == "oF":
         return _ORCF_variation(
-            conv_a, conv_b, conv_c, length_tolerance=length_tolerance
+            conv_a, conv_b, conv_c, distance_tolerance=spglib_data.symprec
         )
 
     if lattice_type == "hR":
@@ -442,7 +423,7 @@ def sc_get_variation(
             conv_c,
             conv_alpha,
             prim_k_gamma,
-            length_tolerance=length_tolerance,
+            distance_tolerance=spglib_data.symprec,
             angle_tolerance=angle_tolerance,
         )
 

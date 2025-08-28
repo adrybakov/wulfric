@@ -182,7 +182,7 @@ def get_spglib_data(
             Pass ``atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])`` if you would
             like to interpret the ``cell`` alone (effectively assuming that the ``cell``
             is a primitive one).
-    spglib_symprec : float, default 1e-5
+    spglib_symprec : float, default :math:`10^{-5}`
         Directly passed to |spglib|_. Tolerance parameter for the symmetry search.
     spglib_angle_tolerance : float, default -1
         Directly passed to |spglib|_. Tolerance parameter for the symmetry search.

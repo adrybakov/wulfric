@@ -267,7 +267,7 @@ def _sc_get_conventional_m(spglib_std_lattice, centring_type, angle_tolerance=1e
         Conventional cell found by spglib.
     centring_type : str
         CEntring type of the lattice either "P" or "C".
-    angle_tolerance : float, default 1e-4
+    angle_tolerance : float, default :math:`10^{-4}`
         Tolerance parameter for comparing two angles, given in degrees.
 
     Returns
@@ -358,7 +358,7 @@ def _sc_get_conventional_a(spglib_std_lattice, angle_tolerance=1e-4):
     ==========
     spglib_std_lattice : (3, 3) :numpy:`ndarray`
         Conventional cell found by spglib.
-    angle_tolerance : float, default 1e-4
+    angle_tolerance : float, default :math:`10^{-4}`
         Tolerance parameter for comparing two angles, given in degrees.
 
     Returns
@@ -485,9 +485,9 @@ def _sc_get_conventional_hR(
     ==========
     spglib_primitive_cell : (3, 3) :numpy:`ndarray`
         Primitive cell found by spglib.
-    angle_tolerance : float, default 1e-4
+    angle_tolerance : float, default :math:`10^{-4}`
         Tolerance parameter for comparing two angles, given in degrees.
-    distance_tolerance : float, default 1e-5
+    distance_tolerance : float, default :math:`10^{-5}`
         Tolerance parameter for comparing two linear variables.
 
     Returns
@@ -566,7 +566,7 @@ def _sc_get_conventional_no_hR(
         Conventional cell found by spglib.
     crystal_family : str
     centring_type : str
-    angle_tolerance : float, default 1e-4
+    angle_tolerance : float, default :math:`10^{-4}`
         Tolerance parameter for comparing two angles, given in degrees.
 
     Returns

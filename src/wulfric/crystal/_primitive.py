@@ -54,7 +54,7 @@ def _get_unique(
         Types of atoms used to distinguish between them.
     repetition_number : int
         Correct amount of repetitions of each atom type in the conventional cell.
-    distance_tolerance : float, default 1e-5
+    distance_tolerance : float, default :math:`10^{-5}`
         Tolerance parameter for comparing two linear variables.
 
     Returns
