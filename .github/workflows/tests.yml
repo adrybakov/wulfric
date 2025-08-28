@@ -51,9 +51,6 @@ jobs:
     - name: Install the package
       run: pip install .
 
-    - name: Make pictures
-      run: make bravais-pictures
-
     - name: Build documentation
       run: make html
 
