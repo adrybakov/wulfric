@@ -30,6 +30,7 @@ from wulfric._spglib_interface import get_spglib_data, validate_spglib_data
 from wulfric._syntactic_sugar import SyntacticSugar
 from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_SHORT_NAMES
 from wulfric.crystal._conventional import get_conventional
+from wulfric.crystal._primitive import get_primitive
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -162,7 +163,7 @@ def _MCLC_variation(
     conv_b: float,
     conv_c: float,
     conv_alpha: float,
-    k_gamma: float,
+    prim_k_gamma: float,
     length_tolerance=1e-8,
     angle_tolerance=1e-4,
 ):
@@ -212,20 +213,18 @@ def _MCLC_variation(
         tolerance ``eps``.
     """
 
-    if compare_numerically(
-        conv_alpha, ">", 90, eps=angle_tolerance
-    ) or compare_numerically(conv_b, ">", conv_c, eps=length_tolerance):
+    if compare_numerically(conv_alpha, ">", 90, eps=angle_tolerance):
         raise ValueError(
-            f'(convention="SC"): MCLC variation. alpha > 90 or or b > c with {angle_tolerance} or {length_tolerance} tolerance:\n  alpha = {conv_alpha}\n  b = {conv_b}\n  c = {conv_c}'
+            f'(convention="SC"): MCLC variation. alpha > 90 with {angle_tolerance} or {length_tolerance} tolerance:\n  alpha = {conv_alpha}\n'
         )
 
     conv_alpha *= TORADIANS
 
-    if compare_numerically(k_gamma, "==", 90, eps=angle_tolerance):
+    if compare_numerically(prim_k_gamma, "==", 90, eps=angle_tolerance):
         return "MCLC2"
-    elif compare_numerically(k_gamma, ">", 90, eps=angle_tolerance):
+    elif compare_numerically(prim_k_gamma, ">", 90, eps=angle_tolerance):
         return "MCLC1"
-    elif compare_numerically(k_gamma, "<", 90, eps=angle_tolerance):
+    elif compare_numerically(prim_k_gamma, "<", 90, eps=angle_tolerance):
         expression = (
             conv_b * cos(conv_alpha) / conv_c
             + conv_b**2 * sin(conv_alpha) ** 2 / conv_a**2
@@ -433,13 +432,16 @@ def sc_get_variation(
         return _RHL_variation(conv_alpha, angle_tolerance=angle_tolerance)
 
     if lattice_type == "mC":
-        _, _, _, _, _, k_gamma = get_params(get_reciprocal(cell=conv_cell))
+        prim_cell, _ = get_primitive(
+            cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
+        )
+        _, _, _, _, _, prim_k_gamma = get_params(get_reciprocal(cell=prim_cell))
         return _MCLC_variation(
             conv_a,
             conv_b,
             conv_c,
             conv_alpha,
-            k_gamma,
+            prim_k_gamma,
             length_tolerance=length_tolerance,
             angle_tolerance=angle_tolerance,
         )
@@ -461,3 +463,28 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
+
+
+if __name__ == "__main__":
+    import wulfric
+
+    cell = wulfric.cell.sc_get_example_cell("MCLC3")
+    atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
+
+    # To avoid multiple calls to spglib one can do it once and then pass spglib_data
+    # to the functions where it is needed
+    spglib_data = wulfric.get_spglib_data(cell=cell, atoms=atoms)
+
+    kp = wulfric.Kpoints.from_crystal(cell=cell, atoms=atoms, convention="SC")
+
+    conv_cell, conv_atoms = wulfric.crystal.get_conventional(
+        cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
+    )
+
+    prim_cell, prim_atoms = wulfric.crystal.get_primitive(
+        cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
+    )
+
+    variation = sc_get_variation(cell=cell, atoms=atoms, spglib_data=spglib_data)
+
+    print(variation)
