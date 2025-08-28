@@ -27,6 +27,7 @@ from wulfric.cell._niggli import get_niggli
 from wulfric.cell._basic_manipulation import get_reciprocal, get_params
 from wulfric._spglib_interface import get_spglib_data, validate_spglib_data
 from wulfric._syntactic_sugar import SyntacticSugar
+from wulfric._numerical import compare_numerically
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -233,6 +234,7 @@ def _sc_get_conventional_oC(spglib_std_lattice):
 
     if a < b:  # No change
         matrix = np.eye(3, dtype=float)
+    # Have to keep a3 in place
     elif b < a:  # -> a2, -a1, a3
         matrix = np.array(
             [
@@ -250,7 +252,7 @@ def _sc_get_conventional_oC(spglib_std_lattice):
     return matrix.T @ spglib_std_lattice
 
 
-def _sc_get_conventional_m(spglib_std_lattice):
+def _sc_get_conventional_m(spglib_std_lattice, centring_type):
     r"""
     Case of SC convention and m lattice.
 
@@ -282,12 +284,13 @@ def _sc_get_conventional_m(spglib_std_lattice):
                 [1, 0, 0],
             ]
         )
-    elif alpha == 90.0 and gamma == 90.0:  # -> a2, a3, a1
+    # Have to keep a3 in place for MCLC lattices
+    elif alpha == 90.0 and gamma == 90.0:  # -> a2, -a1, a3
         matrix_to_1 = np.array(
             [
-                [0, 0, 1],
+                [0, -1, 0],
                 [1, 0, 0],
-                [0, 1, 0],
+                [0, 0, 1],
             ]
         )
     else:
@@ -296,9 +299,9 @@ def _sc_get_conventional_m(spglib_std_lattice):
         )
     cell_step_1 = matrix_to_1.T @ spglib_std_lattice
 
-    # Step 2, make sure that b <= c
+    # Step 2, make sure that b <= c (only for MCL, not for MCLC)
     _, b, c, _, _, _ = get_params(cell=cell_step_1)
-    if b <= c:
+    if b <= c or centring_type == "C":
         matrix_to_2 = np.eye(3, dtype=float)
     else:  # -> -a1, a3, a2
         matrix_to_2 = np.array(
@@ -315,6 +318,7 @@ def _sc_get_conventional_m(spglib_std_lattice):
     _, _, _, alpha, _, _ = get_params(cell=cell_step_2)
     if alpha <= 90.0:  # No change
         matrix_to_3 = np.eye(3, dtype=float)
+    # Have to keep a3 in place for MCLC lattices
     else:  # -> -a1, -a2, a3
         matrix_to_3 = np.array(
             [
@@ -449,12 +453,16 @@ def _sc_get_conventional_hR(spglib_primitive_cell):
 
     a, b, c, alpha, beta, gamma = get_params(cell=spglib_primitive_cell)
 
+    angle_tolerance = 1e-4
+
     if abs(a - b) > 1e-5 or abs(a - c) > 1e-5 or abs(b - c) > 1e-5:
         raise PotentialBugError(
             f'(convention="SC"): hR lattice. Lattice vectors have different lengths with the precision of {1e-5:.5e}'
         )
 
-    if alpha == beta == gamma:
+    if compare_numerically(
+        alpha, "==", beta, eps=angle_tolerance
+    ) and compare_numerically(alpha, "==", gamma, eps=angle_tolerance):
         matrix = np.eye(3, dtype=float)
     elif 180 - alpha == beta == gamma:  # -> a1, -a2, -a3
         matrix = np.array(
@@ -531,7 +539,9 @@ def _sc_get_conventional_no_hR(spglib_std_lattice, crystal_family, centring_type
                 f'(convention="sc"): crystal family "o". Unexpected centring type "{centring_type}", which should be impossible.'
             )
     elif crystal_family == "m":
-        conv_cell = _sc_get_conventional_m(spglib_std_lattice=spglib_std_lattice)
+        conv_cell = _sc_get_conventional_m(
+            spglib_std_lattice=spglib_std_lattice, centring_type=centring_type
+        )
     elif crystal_family == "a":
         conv_cell = _sc_get_conventional_a(spglib_std_lattice=spglib_std_lattice)
     else:
