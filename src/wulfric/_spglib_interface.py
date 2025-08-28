@@ -262,6 +262,14 @@ def get_spglib_data(
 
           M types of the atoms.
 
+        * ``spglib_data.symprec``angle_tolerance
+
+          Tolerance parameter that was used.
+
+        * ``spglib_data.angle_tolerance``
+
+          Tolerance parameter that was used.
+
     Raises
     ======
     ValueError
@@ -299,6 +307,8 @@ def get_spglib_data(
         spglib_data.original_cell = deepcopy(cell)
         spglib_data.original_positions = deepcopy(atoms["positions"])
         spglib_data.original_types = deepcopy(get_spglib_types(atoms=atoms))
+        spglib_data.symprec = spglib_symprec
+        spglib_data.angle_tolerance = spglib_angle_tolerance
 
         dataset = spglib.get_symmetry_dataset(
             (cell, spglib_data.original_positions, spglib_data.original_types),
