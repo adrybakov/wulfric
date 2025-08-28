@@ -33,7 +33,13 @@ old_dir = set(dir())
 old_dir.add("old_dir")
 
 
-def _get_unique(prim_cell, prim_positions, conv_types, repetition_number):
+def _get_unique(
+    prim_cell,
+    non_unique_positions,
+    non_unique_types,
+    repetition_number,
+    distance_tolerance=1e-5,
+):
     r"""
     Remove equivalent atoms from the primitive cell if any.
 
@@ -42,12 +48,14 @@ def _get_unique(prim_cell, prim_positions, conv_types, repetition_number):
     prim_cell : (3, 3) :numpy:`ndarray`
         Matrix of the cell, Rows are interpreted as vectors. Lattice vectors of the
         primitive cell.
-    prim_positions : (N, 3) : :numpy:`ndarray`
-        Positions of the atoms from the conventional cell in the basis of ``prim_cell``.
-    conv_types : (N, ) list of int
+    non_unique_positions : (N, 3) : :numpy:`ndarray`
+        Positions of the atoms of the conventional cell in the basis of ``prim_cell``.
+    non_unique_types : (N, ) list of int
         Types of atoms used to distinguish between them.
     repetition_number : int
         Correct amount of repetitions of each atom type in the conventional cell.
+    distance_tolerance : float, default 1e-5
+        Tolerance parameter for comparing two linear variables.
 
     Returns
     =======
@@ -60,44 +68,49 @@ def _get_unique(prim_cell, prim_positions, conv_types, repetition_number):
     # Get closest integer
     repetition_number = int(round(repetition_number, 0))
 
-    conv_types = np.array(conv_types, dtype=int)
+    non_unique_types = np.array(non_unique_types, dtype=int)
 
     # Deal with finite precision
     # Temporary solution
-    prim_positions = np.round(prim_positions, decimals=8)
+    non_unique_positions = np.round(non_unique_positions, decimals=8)
 
     # Move all to 000
-    prim_positions = prim_positions % 1
+    non_unique_positions = non_unique_positions % 1
 
-    # Done twice it fixe some problems of finite precision arithmetics
-    prim_positions = prim_positions % 1
+    # Done twice it fixes some problems of finite precision arithmetics
+    non_unique_positions = non_unique_positions % 1
 
     # Compute pair-wise distances between atoms
     distances = np.linalg.norm(
-        prim_positions[:, np.newaxis, :] - prim_positions[np.newaxis, :, :], axis=2
+        non_unique_positions[:, np.newaxis, :] - non_unique_positions[np.newaxis, :, :],
+        axis=2,
     )
 
     # Check if two atoms are the same for each pair
-    same_atoms = np.isclose(distances, np.zeros(distances.shape))
+    same_atoms = np.isclose(
+        distances, np.zeros(distances.shape), atol=distance_tolerance
+    )
 
     # Count amount of equivalent atoms
     n_equiv = np.sum(same_atoms, axis=1)
 
     # Check that each atom has correct amount of twins
     if not (n_equiv == repetition_number * np.ones(n_equiv.shape, dtype=int)).all():
-        abs_pos = prim_positions @ prim_cell
+        abs_pos = non_unique_positions @ prim_cell
         raise ValueError(
             f"Some atoms have wrong number of twins. Expected {repetition_number} twins for each, got\n  * "
             + "\n  * ".join(
                 [
-                    f"atom at {abs_pos[i][0]:.5f} {abs_pos[i][1]:.5f} {abs_pos[i][2]:.5f} with type {conv_types[i]} has {n_equiv} twins"
-                    for i in range(len(prim_positions))
+                    f"atom at {abs_pos[i][0]:.5f} {abs_pos[i][1]:.5f} {abs_pos[i][2]:.5f} "
+                    + f"({non_unique_positions[i][0]:.5f} {non_unique_positions[i][1]:.5f} {non_unique_positions[i][2]:.5f} @ prim_cell) "
+                    + f"with type {non_unique_types[i]} has {n_equiv} twins"
+                    for i in range(len(non_unique_positions))
                 ]
             )
         )
 
     # Find a set of unique atoms
-    N = len(prim_positions)
+    N = len(non_unique_positions)
     available_atoms = np.ones(N).astype(bool)
     indices = np.linspace(0, N - 1, N, dtype=int)
     unique_atoms = np.zeros(N).astype(bool)
@@ -119,7 +132,7 @@ def _get_unique(prim_cell, prim_positions, conv_types, repetition_number):
         else:
             break
 
-    return prim_positions[unique_atoms], conv_types[unique_atoms]
+    return non_unique_positions[unique_atoms], non_unique_types[unique_atoms]
 
 
 def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
@@ -253,15 +266,18 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
 
         prim_cell = matrix.T @ conv_cell
 
-        prim_positions = conv_atoms["positions"] @ conv_cell @ np.linalg.inv(prim_cell)
+        non_unique_positions = (
+            conv_atoms["positions"] @ conv_cell @ np.linalg.inv(prim_cell)
+        )
 
         # Conventional cell may contain more atoms than primitive one, thus one needs to
         # remove equivalent atoms
         prim_positions, prim_types = _get_unique(
             prim_cell=prim_cell,
-            prim_positions=prim_positions,
-            conv_types=conv_atoms["spglib_types"],
+            non_unique_positions=non_unique_positions,
+            non_unique_types=conv_atoms["spglib_types"],
             repetition_number=abs(np.linalg.det(conv_cell) / np.linalg.det(prim_cell)),
+            distance_tolerance=spglib_data.symprec,
         )
     else:
         raise ConventionNotSupported(
