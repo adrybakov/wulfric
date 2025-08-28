@@ -110,6 +110,7 @@ Names of high-symmetry k points written in LaTex.
         "Y0" : "Y$_0$",
         "Y1" : "Y$_1$",
         "Y2" : "Y$_2$",
+        "Y3" : "Y$_3$",
         "Y4" : "Y$_4$",
         "Z" : "Z",
         "Z0" : "Z$_0$",
