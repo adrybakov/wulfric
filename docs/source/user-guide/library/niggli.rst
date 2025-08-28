@@ -276,11 +276,6 @@ If :math:`\xi + \eta + \zeta + A + B < 0` or (:math:`\xi + \eta + \zeta + A + B 
 and go to step 1.
 
 
-Testing procedure
-=================
-
-TODO
-
 References
 ==========
 .. [1] Křivý, I. and Gruber, B., 1976.
