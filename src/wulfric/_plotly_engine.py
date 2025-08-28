@@ -676,7 +676,7 @@ class PlotlyEngine:
 
         self.plot_points(
             points=points,
-            colors="#000000",
+            colors=color,
             legend_label=legend_label,
             legend_group=legend_group,
         )
