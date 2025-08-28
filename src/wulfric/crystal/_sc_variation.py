@@ -463,28 +463,3 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
-
-
-if __name__ == "__main__":
-    import wulfric
-
-    cell = wulfric.cell.sc_get_example_cell("MCLC3")
-    atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
-
-    # To avoid multiple calls to spglib one can do it once and then pass spglib_data
-    # to the functions where it is needed
-    spglib_data = wulfric.get_spglib_data(cell=cell, atoms=atoms)
-
-    kp = wulfric.Kpoints.from_crystal(cell=cell, atoms=atoms, convention="SC")
-
-    conv_cell, conv_atoms = wulfric.crystal.get_conventional(
-        cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
-    )
-
-    prim_cell, prim_atoms = wulfric.crystal.get_primitive(
-        cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
-    )
-
-    variation = sc_get_variation(cell=cell, atoms=atoms, spglib_data=spglib_data)
-
-    print(variation)

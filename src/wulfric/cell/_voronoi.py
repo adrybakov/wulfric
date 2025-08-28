@@ -200,12 +200,3 @@ __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
 __all__ = [i for i in __all__ if not i.startswith("_")]
 del old_dir
-
-
-if __name__ == "__main__":
-    from wulfric.cell import SC_FCC
-
-    cell = SC_FCC(a=3)
-
-    vertices, edges = _get_voronoi_cell(cell=cell)
-    print(vertices, edges, sep="\n")
