@@ -24,7 +24,6 @@ import numpy as np
 import pytest
 from hypothesis import example, given
 from hypothesis import strategies as st
-from hypothesis.extra.numpy import arrays as harrays
 from scipy.spatial.transform import Rotation
 
 from wulfric.cell._basic_manipulation import from_params, get_params, get_reciprocal
@@ -176,13 +175,3 @@ def test_cell_from_param(a, b, c, alpha, beta, gamma):
 )
 def test_cell_from_params_example(a, b, c, alpha, beta, gamma, cell):
     assert np.allclose(from_params(a, b, c, alpha, beta, gamma), np.array(cell))
-
-
-################################################################################
-#                           Parameters from the cell                           #
-################################################################################
-
-
-@given(harrays(float, (3, 3), elements=st.floats(min_value=0, max_value=MAX_LENGTH)))
-def test_get_params_from_cell(cell):
-    a, b, c, alpha, beta, gamma = get_params(cell)

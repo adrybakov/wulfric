@@ -31,6 +31,6 @@ def test_voronoi_get_lattice_points_range():
             [1.4240, 1.4240, 1.4240],
         ]
     )
-    edges, vertices = _get_voronoi_cell(cell)
+    vertices, edges = _get_voronoi_cell(cell)
     assert len(edges) == 36
     assert len(vertices) == 24

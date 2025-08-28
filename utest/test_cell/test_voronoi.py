@@ -301,7 +301,7 @@ N_VERSTICES = [
     ids=SC_BRAVAIS_LATTICE_VARIATIONS,
 )
 def test_edges(cell, n_edge):
-    edges, vertices = _get_voronoi_cell(cell=get_reciprocal(cell))
+    _, edges = _get_voronoi_cell(cell=get_reciprocal(cell))
     assert len(edges) == n_edge
 
 
@@ -311,5 +311,5 @@ def test_edges(cell, n_edge):
     ids=SC_BRAVAIS_LATTICE_VARIATIONS,
 )
 def test_vertices(cell, n_vertex):
-    edges, vertices = _get_voronoi_cell(cell=get_reciprocal(cell))
+    vertices, _ = _get_voronoi_cell(cell=get_reciprocal(cell))
     assert len(vertices) == n_vertex
