@@ -68,7 +68,7 @@ environment is created, you can install requirements:
 
 * Testing tools::
 
-    pip install -r utest/requirements.txt
+    pip install -r tests/requirements.txt
 
 .. note::
   For the linux and OSX systems there is a scenario defined.

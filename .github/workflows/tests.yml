@@ -23,8 +23,8 @@ jobs:
     - name: Install package dependencies
       run: pip install -r requirements.txt
 
-    - name: Install utest dependencies
-      run: pip install -r utest/requirements.txt
+    - name: Install test dependencies
+      run: pip install -r tests/requirements.txt
 
     - name: Install the package
       run: pip install .

@@ -9,12 +9,12 @@ In wulfric we rely on |pytest|_, |hypothesis|_ and |doctest|_ for testing.
 Unit tests
 ==========
 
-All unit tests are located in the "utest" directory.
+All unit tests are located in the "tests" directory.
 To run the tests use (on Linux and MacOS)::
 
     make test
 
-Structure of the "utest" directory loosely follows the structure of the "src/wulfric"
+Structure of the "tests" directory loosely follows the structure of the "src/wulfric"
 directory.
 
 Documentation tests

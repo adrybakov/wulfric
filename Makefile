@@ -80,4 +80,4 @@ requirements:
 	@pip install -r requirements.txt --no-cache
 	@pip install -r requirements-dev.txt --no-cache
 	@pip install -r docs/requirements.txt --no-cache
-	@pip install -r utest/requirements.txt --no-cache
+	@pip install -r tests/requirements.txt --no-cache
