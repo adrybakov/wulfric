@@ -262,7 +262,7 @@ def get_spglib_data(
 
           M types of the atoms.
 
-        * ``spglib_data.symprec``angle_tolerance
+        * ``spglib_data.symprec`` angle_tolerance
 
           Tolerance parameter that was used.
 
