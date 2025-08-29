@@ -265,6 +265,14 @@ custom_links = {
         "https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html",
     ),
     "spglib-niggli": ("Niggli-cell", "https://atztogo.github.io/niggli/"),
+    "spglib-dataset": (
+        "spglib dataset",
+        "https://spglib.readthedocs.io/en/stable/dataset.html",
+    ),
+    "spglib-find-primitive": (
+        "spglib.find_primitive()",
+        "https://spglib.readthedocs.io/en/stable/api/python-api.html#spglib.spglib.find_primitive",
+    ),
     "InTabCrys": ("International Tables for Crystallography", "https://it.iucr.org/"),
     "venv": ("venv", "https://docs.python.org/3/library/venv.html"),
     "Syntactic-sugar": (

@@ -236,39 +236,46 @@ def get_spglib_data(
 
           Conventional cell associated with the given structure in the same spatial
           orientation. In other words, it is a choice of the cell for the same crystal.
-          It can contain more than one lattice point.
+          It can contain more than one lattice point. Same as ``std_lattice`` of
+          |spglib-dataset|_ but rotated back with the ``std_rotation_matrix`` of
+          |spglib-dataset|_.
 
         * ``spglib_data.conventional_positions``
 
           N relative positions of the atoms in the basis of
-          ``spglib_data.conventional_cell``.
+          ``spglib_data.conventional_cell``. Same as ``std_positions`` of
+          |spglib-dataset|_.
 
         * ``spglib_data.conventional_types``
 
-          N types of the atoms.
+          N types of the atoms. Same as ``std_types`` of |spglib-dataset|_.
 
         * ``spglib_data.primitive_cell``
 
           Primitive cell associated with the given structure in the same spatial
           orientation. In other words, it is a choice of the cell for the same crystal.
-          It contains exactly one lattice point.
+          It contains exactly one lattice point. Same as ``primitive_lattice``
+          returned by |spglib-find-primitive|_, but rotated back with the
+          ``std_rotation_matrix`` of |spglib-dataset|_.
 
         * ``spglib_data.primitive_positions``
 
           M relative positions of the atoms in the basis of
-          ``spglib_data.primitive_cell``.
+          ``spglib_data.primitive_cell``. Same as ``primitive_positions``
+          returned by |spglib-find-primitive|_.
 
         * ``spglib_data.primitive_types``
 
-          M types of the atoms.
+          M types of the atoms. Same as ``primitive_types``
+          returned by |spglib-find-primitive|_.
 
         * ``spglib_data.symprec`` angle_tolerance
 
-          Tolerance parameter that was used.
+          Tolerance parameter that was used to call |spglib|_.
 
         * ``spglib_data.angle_tolerance``
 
-          Tolerance parameter that was used.
+          Tolerance parameter that was used to call |spglib|_.
 
     Raises
     ======
