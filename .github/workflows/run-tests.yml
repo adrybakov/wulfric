@@ -34,9 +34,3 @@ jobs:
     uses: adrybakov/wulfric/.github/workflows/tests.yml@main
     with:
       python-version: '3.13'
-
-  test-314:
-    name: (3.14) test
-    uses: adrybakov/wulfric/.github/workflows/tests.yml@main
-    with:
-      python-version: '3.14'
