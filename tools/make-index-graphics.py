@@ -189,7 +189,7 @@ def main():
         color="chocolate",
         row=3,
         col=1,
-        legend_label="Brillouin zone (SC)",
+        legend_label="Brillouin zone of primitive cell (SC)",
         legend_group="BZ SC",
     )
     pe.plot_brillouin_zone(
@@ -197,7 +197,7 @@ def main():
         color="red",
         row=3,
         col=2,
-        legend_label='Brillouin zone (convention="HPKOT")',
+        legend_label="Brillouin zone of primitive cell (HPKOT)",
         legend_group="BZ HPKOT",
     )
 
@@ -207,14 +207,14 @@ def main():
         row=3,
         col=1,
         color="darkslategrey",
-        legend_label='k-path and k-points (convention="SC")',
+        legend_label="k-path and k-points (SC)",
         legend_group="KP SC",
     )
     pe.plot_kpath(
         kp=kp_hpkot,
         row=3,
         col=2,
-        legend_label='k-path and k-points (convention="HPKOT")',
+        legend_label="k-path and k-points (HPKOT)",
         legend_group="KP HPKOT",
     )
 
