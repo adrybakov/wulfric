@@ -26,6 +26,7 @@ help:
 	@echo "    install - install the package"
 	@echo "    test - execute unit tests"
 	@echo "    test-all - execute full testing suite"
+	@echo "    docs-index - Update graphics of the index page"
 	@echo "    docs-generate-images - update pictures for the docs"
 	@echo "    requirements - installs all requirements (package + dev + tests + docs)"
 	@echo
@@ -33,13 +34,12 @@ help:
 # $(O) is meant as a shortcut for $(SPHINXOPTS).
 html:
 	@python tools/produce-constants-api.py
-	@python tools/plot-index-graphics.py
 	@$(SPHINXBUILD) -M html "docs/$(SOURCEDIR)" "docs/$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 clean-html: clean install html
 	@echo "Done"
 
-html-from-zero: clean install docs-generate-images html
+html-from-zero: clean install docs-generate-images docs-index html
 	@echo "Done"
 
 doctest:
@@ -69,6 +69,10 @@ test:
 test-all: html-from-zero test doctest
 	@echo "Done"
 
+
+
+docs-index:
+	@python tools/make-index-graphics.py
 
 docs-generate-images:
 	@python3 tools/plot-repositories.py
