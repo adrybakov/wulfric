@@ -87,7 +87,7 @@ def get_lattice_points(cell, range=(1, 1, 1), relative=False, flat=True):
         lattice_points = lattice_points @ cell
 
     if flat:
-        lattice_points = np.reshape(lattice_points, shape=(N1 * N2 * N3, 3))
+        lattice_points = np.reshape(lattice_points, (N1 * N2 * N3, 3))
 
     return lattice_points
 
