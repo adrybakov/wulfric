@@ -326,6 +326,10 @@ def lepage(
         'ORC'
     """
 
+    import warnings
+
+    warnings.warn("wulfric.lepage() is deprecated.", DeprecationWarning)
+
     # Safeguard to avoid infinite loops
     angle_tolerance = abs(angle_tolerance)
 

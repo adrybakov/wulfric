@@ -441,18 +441,6 @@ def get_spherical(
         return r, polar, azimuthal
 
 
-# Deprecated function
-def absolute_to_relative(vector, basis):
-    import warnings
-
-    warnings.warn(
-        'Function absolute_to_relative will be removed from wulfric, use "vector @ np.linalg.inv(basis)" instead.',
-        DeprecationWarning,
-    )
-
-    return vector @ np.linalg.inv(basis)
-
-
 # Populate __all__ with objects defined in this file
 __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects
