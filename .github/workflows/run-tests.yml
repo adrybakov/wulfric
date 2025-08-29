@@ -11,11 +11,6 @@ on:
 
 jobs:
 
-  test-39:
-    name: (3.9) test
-    uses: adrybakov/wulfric/.github/workflows/tests.yml@main
-    with:
-      python-version: '3.9'
 
   test-310:
     name: (3.10) test
@@ -39,3 +34,9 @@ jobs:
     uses: adrybakov/wulfric/.github/workflows/tests.yml@main
     with:
       python-version: '3.13'
+
+  test-314:
+    name: (3.14) test
+    uses: adrybakov/wulfric/.github/workflows/tests.yml@main
+    with:
+      python-version: '3.14'
