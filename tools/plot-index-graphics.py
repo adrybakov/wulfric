@@ -28,19 +28,27 @@ ROOT_DIR = "."
 def main():
     index_file = os.path.join(ROOT_DIR, "docs", "source", "index.rst")
     lines = []
+    target_line = "Example of some of the wulfric's capabilities"
 
     with open(index_file, "r") as f:
         break_next = False
         for line in f:
             lines.append(line)
-            if "Example of wulfric's visualization" in line:
+            if target_line in line:
                 break_next = True
             elif break_next:
                 break
 
-    lines = "".join(lines).split("\n")
+    lines = "".join(lines)
+    if target_line not in lines:
+        raise ValueError(f'Target line "{target_line}" not in "docs/source/index.rst.')
+
+    lines = lines.split("\n")
 
     lines += [
+        "",
+        ".. hint::",
+        "    Click on the legend to hide the data",
         "",
         """.. raw:: html""",
         "",
@@ -54,28 +62,54 @@ def main():
 
     cell = np.array(
         [
-            [0.000000, 4.744935, 0.000000],
-            [3.553350, 0.000000, 0.000000],
-            [0.000000, 0.000000, 8.760497],
+            [5.64, 0.00, 0.00],
+            [0.00, 5.64, 0.00],
+            [0.00, 0.00, 5.64],
         ]
     )
     atoms = {
-        "names": ["Cr1", "Br1", "S1", "Cr2", "Br2", "S2"],
+        "names": ["Cl1", "Cl2", "Cl3", "Cl4", "Na1", "Na2", "Na3", "Na4"],
         "positions": np.array(
             [
-                [0.000000, -0.500000, 0.882382],
-                [0.000000, 0.000000, 0.677322],
-                [-0.500000, -0.500000, 0.935321],
-                [0.500000, 0.000000, 0.117618],
-                [0.500000, 0.500000, 0.322678],
-                [0.000000, 0.000000, 0.064679],
+                (0, 0, 0),
+                (1 / 2, 1 / 2, 0),
+                (1 / 2, 0, 1 / 2),
+                (0, 1 / 2, 1 / 2),
+                (1 / 2, 1 / 2, 1 / 2),
+                (1 / 2, 0, 0),
+                (0, 1 / 2, 0),
+                (0, 0, 1 / 2),
             ]
         ),
     }
 
-    kp = wulfric.Kpoints.from_crystal(cell, atoms, convention="SC")
-    pe = wulfric.PlotlyEngine(rows=2, cols=2)
+    spglib_data = wulfric.get_spglib_data(cell, atoms)
 
+    prim_cell_sc, prim_atoms_sc = wulfric.crystal.get_primitive(
+        cell, atoms, spglib_data=spglib_data, convention="SC"
+    )
+    prim_cell_hpkot, prim_atoms_hpkot = wulfric.crystal.get_primitive(
+        cell, atoms, spglib_data=spglib_data, convention="HPKOT"
+    )
+
+    conv_cell_sc, conv_atoms_sc = wulfric.crystal.get_conventional(
+        cell, atoms, spglib_data=spglib_data, convention="SC"
+    )
+    conv_cell_hpkot, conv_atoms_hpkot = wulfric.crystal.get_conventional(
+        cell, atoms, spglib_data=spglib_data, convention="HPKOT"
+    )
+
+    kp_sc = wulfric.Kpoints.from_crystal(
+        cell, atoms, convention="SC", spglib_data=spglib_data
+    )
+
+    kp_hpkot = wulfric.Kpoints.from_crystal(
+        cell, atoms, convention="HPKOT", spglib_data=spglib_data
+    )
+
+    pe = wulfric.PlotlyEngine(rows=3, cols=2)
+
+    # Original cell and atoms
     pe.plot_cell(
         cell,
         row=1,
@@ -83,36 +117,157 @@ def main():
         legend_label="Original cell and atoms",
         legend_group="Original cell and atoms",
     )
-    pe.plot_atoms(cell, atoms, row=1, col=1, legend_group="Original cell and atoms")
-
-    pe.plot_brillouin_zone(
-        cell, color="red", row=1, col=2, legend_label="Brillouin zone"
+    pe.plot_atoms(
+        cell, atoms, row=1, col=1, legend_group="Original cell and atoms", scale=0.7
     )
-    pe.plot_kpath(kp=kp, row=1, col=2, legend_label="k-path and k-points")
 
+    # Wigner Seitz cell
     pe.plot_wigner_seitz_cell(
-        cell, color="green", legend_label="Wigner-Seitz cell", row=2, col=1
+        prim_cell_hpkot,
+        color="green",
+        legend_label="Wigner-Seitz cell",
+        legend_group="WS",
+        row=1,
+        col=2,
     )
 
-    pe.plot_lattice(
-        cell,
-        range=(2, 2, 2),
+    # Two conventional cells
+    pe.plot_cell(
+        conv_cell_sc,
+        color="darkslategrey",
+        legend_label="Conventional cell (SC)",
+        legend_group="conv_cell_sc",
         row=2,
-        col=2,
-        legend_group="Lattice",
-        color="blue",
+        col=1,
     )
     pe.plot_cell(
-        cell,
+        conv_cell_hpkot,
+        color="black",
+        legend_label="Conventional cell (HPKOT)",
+        legend_group="conv_cell_hpkot",
         row=2,
         col=2,
-        legend_group="Lattice",
-        color="blue",
-        legend_label="Lattice",
     )
 
+    # Two primitive cells
+    pe.plot_cell(
+        prim_cell_sc,
+        color="darkseagreen",
+        legend_label="Primitive cell and atoms (SC)",
+        legend_group="prim_cell_sc",
+        row=2,
+        col=1,
+    )
+    pe.plot_atoms(
+        prim_cell_sc,
+        prim_atoms_sc,
+        row=2,
+        col=1,
+        legend_group="prim_cell_sc",
+        scale=0.7,
+    )
+    pe.plot_cell(
+        prim_cell_hpkot,
+        color="blue",
+        legend_label="Primitive cell and atoms (HPKOT)",
+        legend_group="prim_cell_hpkot",
+        row=2,
+        col=2,
+    )
+    pe.plot_atoms(
+        prim_cell_hpkot,
+        prim_atoms_hpkot,
+        row=2,
+        col=2,
+        legend_group="prim_cell_hpkot",
+        scale=0.7,
+    )
+
+    # Two Brillouine zones
+    pe.plot_brillouin_zone(
+        prim_cell_sc,
+        color="chocolate",
+        row=3,
+        col=1,
+        legend_label="Brillouin zone (SC)",
+        legend_group="BZ SC",
+    )
+    pe.plot_brillouin_zone(
+        prim_cell_hpkot,
+        color="red",
+        row=3,
+        col=2,
+        legend_label='Brillouin zone (convention="HPKOT")',
+        legend_group="BZ HPKOT",
+    )
+
+    # Two kpaths
+    pe.plot_kpath(
+        kp=kp_sc,
+        row=3,
+        col=1,
+        color="darkslategrey",
+        legend_label='k-path and k-points (convention="SC")',
+        legend_group="KP SC",
+    )
+    pe.plot_kpath(
+        kp=kp_hpkot,
+        row=3,
+        col=2,
+        legend_label='k-path and k-points (convention="HPKOT")',
+        legend_group="KP HPKOT",
+    )
+
+    # Plot lattice
+    pe.plot_lattice(
+        prim_cell_hpkot, range=(2, 2, 2), legend_label="Lattice points", row=1, col=2
+    )
+
+    # Plot complementary cells
+    pe.plot_wigner_seitz_cell(
+        prim_cell_sc,
+        color="green",
+        legend_group="WS",
+        row=1,
+        col=1,
+        plot_vectors=False,
+    )
+    pe.plot_wigner_seitz_cell(
+        prim_cell_sc,
+        color="green",
+        legend_group="WS",
+        row=2,
+        col=1,
+        plot_vectors=False,
+    )
+    pe.plot_wigner_seitz_cell(
+        prim_cell_hpkot,
+        color="green",
+        legend_group="WS",
+        row=2,
+        col=2,
+        plot_vectors=False,
+    )
+
+    pe.plot_cell(
+        cell,
+        row=1,
+        col=2,
+        legend_group="Original cell and atoms",
+    )
+
+    # Save the figure
     pe.fig.update_layout(
-        height=1000, legend=dict(yanchor="bottom", y=1.0, xanchor="center", x=0.5)
+        height=1500,
+        legend=dict(
+            yanchor="bottom",
+            y=1.0,
+            xanchor="center",
+            x=0.5,
+            orientation="h",
+            entrywidthmode="fraction",
+            entrywidth=0.4,
+        ),
     )
 
     graph_text = pe.fig.to_html(full_html=False, include_plotlyjs=False)
