@@ -96,4 +96,4 @@ pe.plot_cell(cell=rcell, legend_label="Reciprocal cell", color="red")
 
 pe.show()
 
-# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/visualization_plot_cell.png'
+# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/visualization/cell.png'

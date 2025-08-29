@@ -97,4 +97,4 @@ pe.plot_line(start_point=(0.3, 1, 0.1), end_point=(3, 1, 2), legend_label="singl
 
 pe.show()
 
-# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/visualization_plot_basic.png'
+# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/visualization/basic.png'

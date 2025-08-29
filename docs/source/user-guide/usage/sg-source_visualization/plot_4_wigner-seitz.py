@@ -99,4 +99,4 @@ pe.plot_brillouin_zone(
 pe.show()
 
 
-# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/visualization_plot_wigner-seitz.png'
+# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/visualization/wigner-seitz.png'

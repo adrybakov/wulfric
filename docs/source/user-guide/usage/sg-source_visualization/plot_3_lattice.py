@@ -44,4 +44,4 @@ pe.plot_lattice(cell=cell, range=(4, 4, 4), legend_label="Associated lattice")
 pe.show()
 
 
-# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/visualization_plot_lattice.png'
+# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/visualization/lattice.png'

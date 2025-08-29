@@ -75,4 +75,4 @@ pe.plot_cell(cell=cell)
 
 pe.show()
 
-# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/visualization_plot_atoms.png'
+# sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/visualization/atoms.png'
