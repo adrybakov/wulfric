@@ -78,6 +78,7 @@ pe.plot_brillouin_zone(
     cell=cell, color="chocolate", legend_label="Brillouin zone of the original cell"
 )
 pe.plot_kpath(kp=kp)
+pe.plot_kpoints(kp=kp, only_from_kpath=True)
 
 pe.show(axes_visible=False)
 

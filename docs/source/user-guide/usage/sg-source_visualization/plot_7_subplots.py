@@ -69,9 +69,7 @@ pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True, rows=1, cols=2)
 #
 # Plot original cell and atoms on the first row an first column
 
-pe.plot_atoms(
-    cell=cell, atoms=atoms, scale=0.7, row=1, col=1, legend_label="original atoms"
-)
+pe.plot_atoms(cell=cell, atoms=atoms, row=1, col=1, legend_label="original atoms")
 pe.plot_cell(cell=cell, row=1, col=1, legend_label="original cell")
 
 # %%
@@ -90,6 +88,7 @@ pe.plot_brillouin_zone(
     col=2,
 )
 pe.plot_kpath(kp=kp, legend_label="K-path", row=1, col=2)
+pe.plot_kpoints(kp=kp, legend_label="K-points", row=1, col=2)
 
 pe.show()
 

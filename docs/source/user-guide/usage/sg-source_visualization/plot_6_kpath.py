@@ -85,6 +85,7 @@ pe.plot_brillouin_zone(
     cell=prim_cell, color="red", legend_label="Brillouin zone of primitive cell"
 )
 pe.plot_kpath(kp=kp, legend_label="K-path")
+pe.plot_kpoints(kp=kp, legend_label="K-points")
 
 
 pe.plot_brillouin_zone(

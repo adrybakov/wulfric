@@ -54,7 +54,7 @@ atoms = {
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 
-pe.plot_atoms(cell=cell, atoms=atoms, scale=0.7)
+pe.plot_atoms(cell=cell, atoms=atoms)
 pe.plot_cell(cell=cell)
 
 pe.show()
@@ -70,7 +70,7 @@ atoms = dict(positions=atoms["positions"])
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 
-pe.plot_atoms(cell=cell, atoms=atoms, scale=0.7)
+pe.plot_atoms(cell=cell, atoms=atoms)
 pe.plot_cell(cell=cell)
 
 pe.show()
