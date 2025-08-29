@@ -275,7 +275,7 @@ custom_links = {
         "spherical coordinates",
         "https://en.wikipedia.org/wiki/Spherical_coordinate_system",
     ),
-    "seek-kpath": ("seek-kpath", "https://github.com/giovannipizzi/seekpath/tree/main"),
+    "seekpath": ("seekpath", "https://github.com/giovannipizzi/seekpath/tree/main"),
     "wulfric-support": ("support", "https://docs.wulfric.org/en/latest/support.html"),
     "jupyter": ("jupyter lab or notebook", "https://jupyter.org/"),
     "wigner-seitz": (

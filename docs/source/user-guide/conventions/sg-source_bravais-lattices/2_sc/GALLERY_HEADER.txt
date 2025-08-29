@@ -1,5 +1,3 @@
-.. _user-guide_conventions_bravais-lattices_sc:
-
 Setyawan and Curtarolo (SC)
 ===========================
 

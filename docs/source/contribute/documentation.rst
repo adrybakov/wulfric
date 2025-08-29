@@ -11,7 +11,7 @@ The documentation of wulfric is build by |sphinx|_.
   The best way to get a feeling about how the documentation of wulfric is structured and
   written is to read its source code in the "docs/source" directory and compare it's
   content and structure with this webpage. If you have any questions we encourage you to
-  :ref:`contact us <support>`.
+  :ref:`contact us <user-support>`.
 
 Documentation structure
 =======================

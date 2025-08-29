@@ -1,6 +1,5 @@
 .. _user-guide_usage_visualization:
 
-
 *************
 Visualization
 *************
@@ -41,6 +40,8 @@ or saved as an .html file
 
 :py:class:`wulfric.PlotlyEngine` has a number of methods that can be used to plot cell, atoms,
 lattice and so on. Check examples to get a feeling on what is implemented
+
+.. _user-guide_usage_visualization_examples:
 
 Examples
 ========

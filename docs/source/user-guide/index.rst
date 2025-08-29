@@ -31,6 +31,7 @@ Wulfric user guide
     usage/cell
     usage/crystal
     usage/kpoints
+    usage/spglib-interface
     usage/other
     usage/io
 

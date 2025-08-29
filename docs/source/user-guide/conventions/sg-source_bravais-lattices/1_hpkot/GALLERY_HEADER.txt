@@ -1,6 +1,4 @@
-.. _user-guide_conventions_bravais-lattices_hpkot:
-
 Hinuma, Pizzi, Kumagai, Oba, Tanaka (HPKOT)
 ===========================================
 
-Coming soon
+Examples are coming soon.
