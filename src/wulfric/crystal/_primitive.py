@@ -171,7 +171,7 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
 
         * "HPKOT" for [1]_
         * "SC" for [2]_
-        * "spglib" for |spglib|_
+        * "spglib" for |spglib|_ [3]_
 
     spglib_data : :py:class:`.SyntacticSugar`, optional
         If you need more control on the parameters passed to the spglib, then
@@ -226,6 +226,9 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
     .. [2] Setyawan, W. and Curtarolo, S., 2010.
            High-throughput electronic band structure calculations: Challenges and tools.
            Computational materials science, 49(2), pp. 299-312.
+    .. [3] Togo, A., Shinohara, K. and Tanaka, I., 2024.
+           Spglib: a software library for crystal symmetry search.
+           Science and Technology of Advanced Materials: Methods, 4(1), p.2384822.
     """
 
     # Validate that the atoms dictionary is what expected of it

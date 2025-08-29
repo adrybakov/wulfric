@@ -17,7 +17,7 @@
 :ref:`Installation <user-guide_start_installation>` |
 `Issue Tracker <https://github.com/adrybakov/wulfric/issues>`_ |
 :ref:`Cite us <wulfric_cite>` |
-:ref:`support`
+:ref:`user-support`
 
 ****************
 What is wulfric?

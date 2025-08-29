@@ -1,8 +1,8 @@
-.. _support:
+.. _user-support:
 
-*******
-Support
-*******
+************
+User support
+************
 
 There are a few ways to ask for help or give feedback:
 
@@ -24,5 +24,5 @@ then consider posting an `issue at github <https://github.com/adrybakov/wulfric/
 * :ref:`contribute_bug`
 * :ref:`contribute_feature`.
 
-If the aforementioned options are not suitable for you,
-than you can always contact the |Author|_ directly.
+If the aforementioned options are not suitable for you, than you can always contact the
+|Author|_ directly.
