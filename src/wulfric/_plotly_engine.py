@@ -212,6 +212,10 @@ class PlotlyEngine:
             characters.
         scale : float, default 1
             Scale for the size of point's markers. Use ``scale>1`` to increase the size.
+        row : int, default 1
+            Row of the subplot.
+        col : int, default 1
+            Column of the subplot.
         """
 
         if legend_group is None:
@@ -262,6 +266,10 @@ class PlotlyEngine:
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
             characters.
+        row : int, default 1
+            Row of the subplot.
+        col : int, default 1
+            Column of the subplot.
         """
 
         if legend_group is None:
@@ -316,6 +324,10 @@ class PlotlyEngine:
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
             characters.
+        row : int, default 1
+            Row of the subplot.
+        col : int, default 1
+            Column of the subplot.
         """
 
         if legend_group is None:
@@ -410,6 +422,10 @@ class PlotlyEngine:
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
             characters.
+        row : int, default 1
+            Row of the subplot.
+        col : int, default 1
+            Column of the subplot.
         """
 
         cell = np.array(cell)
@@ -505,6 +521,10 @@ class PlotlyEngine:
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
             characters.
+        row : int, default 1
+            Row of the subplot.
+        col : int, default 1
+            Column of the subplot.
         """
 
         cell = np.array(cell)
@@ -573,6 +593,10 @@ class PlotlyEngine:
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
             characters.
+        row : int, default 1
+            Row of the subplot.
+        col : int, default 1
+            Column of the subplot.
         """
 
         self.plot_wigner_seitz_cell(
@@ -614,44 +638,16 @@ class PlotlyEngine:
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
             characters.
+        row : int, default 1
+            Row of the subplot.
+        col : int, default 1
+            Column of the subplot.
         """
 
         shift = np.array(shift)
 
         if legend_group is None:
             legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
-
-        p_abs = []
-        p_rel = []
-        labels = []
-        for point in kp.hs_names:
-            p_abs.append(shift + kp.hs_coordinates[point] @ kp.rcell)
-            p_rel.append(kp.hs_coordinates[point])
-
-            labels.append(point)
-
-        p_abs = np.array(p_abs).T
-
-        self.fig.add_traces(
-            data=dict(
-                type="scatter3d",
-                mode="markers+text",
-                legendgroup=legend_group,
-                name=legend_label,
-                showlegend=legend_label is not None,
-                x=p_abs[0],
-                y=p_abs[1],
-                z=p_abs[2],
-                marker=dict(size=6, color=color),
-                text=labels,
-                textposition="top center",
-                textfont=dict(size=16, color=color),
-                hovertext=p_rel,
-                hoverinfo="text",
-            ),
-            rows=row,
-            cols=col,
-        )
 
         for subpath in kp.path:
             xyz = []
@@ -668,12 +664,94 @@ class PlotlyEngine:
                     x=xyz[0],
                     y=xyz[1],
                     z=xyz[2],
-                    line=dict(color=color),
+                    line=dict(width=3, color=color),
                     hoverinfo="none",
                 ),
                 rows=row,
                 cols=col,
             )
+
+    def plot_kpoints(
+        self,
+        kp,
+        color="#000000",
+        shift=(0.0, 0.0, 0.0),
+        legend_label=None,
+        legend_group=None,
+        scale=1,
+        only_from_kpath=False,
+        row=1,
+        col=1,
+    ):
+        r"""
+        Plots high-symmetry k-points in the reciprocal space.
+
+        Parameters
+        ----------
+        kp : :py:class:`.Kpoints`
+            K-points and k-path.
+        color : str, default "#000000"
+            Colour for the plot. Any value that is supported by |plotly|_.
+        shift : (3, ) |array-like|_, default (0, 0, 0)
+            Absolute coordinates of the shift in reciprocal space.
+        legend_label : str, optional
+            Label for the legend. Entry in legend only showed if
+            ``legend_label is not None``.
+        legend_group : str, optional
+            Legend's group. If ``None``, then defaults to the random string of 10
+            characters.
+        scale : float, default 1
+            Scale for the size of point's markers and text labels. Use ``scale>1`` to
+            increase the size.
+        only_from_kpath : bool, default False
+            Whether to plot all pre-defined points or only the ones that included into the
+            predefined k-path.
+        row : int, default 1
+            Row of the subplot.
+        col : int, default 1
+            Column of the subplot.
+        """
+
+        shift = np.array(shift)
+
+        if legend_group is None:
+            legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
+
+        p_abs = []
+        p_rel = []
+        labels = []
+        path_points = []
+        for subpath in kp.path:
+            path_points += subpath
+        for point in kp.hs_names:
+            if not only_from_kpath or point in path_points:
+                p_abs.append(shift + kp.hs_coordinates[point] @ kp.rcell)
+                p_rel.append(kp.hs_coordinates[point])
+
+                labels.append(point)
+
+        p_abs = np.array(p_abs).T
+
+        self.fig.add_traces(
+            data=dict(
+                type="scatter3d",
+                mode="markers+text",
+                legendgroup=legend_group,
+                name=legend_label,
+                showlegend=legend_label is not None,
+                x=p_abs[0],
+                y=p_abs[1],
+                z=p_abs[2],
+                marker=dict(size=5 * scale, color=color),
+                text=labels,
+                textposition="top center",
+                textfont=dict(size=13 * scale, color=color),
+                hovertext=p_rel,
+                hoverinfo="text",
+            ),
+            rows=row,
+            cols=col,
+        )
 
     def plot_lattice(
         self,
@@ -713,6 +791,10 @@ class PlotlyEngine:
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
             characters.
+        row : int, default 1
+            Row of the subplot.
+        col : int, default 1
+            Column of the subplot.
         """
 
         cell = np.array(cell)
@@ -777,6 +859,10 @@ class PlotlyEngine:
         scale : float, default 1
             Scale for the size of atoms's markers and text labels. Use ``scale>1`` to
             increase the size.
+        row : int, default 1
+            Row of the subplot.
+        col : int, default 1
+            Column of the subplot.
 
         Notes
         =====
@@ -822,9 +908,9 @@ class PlotlyEngine:
                 y=points[1],
                 z=points[2],
                 text=names,
-                marker=dict(size=20 * scale, color=colors),
+                marker=dict(size=14 * scale, color=colors),
                 hoverinfo="none",
-                textfont=dict(size=12 * scale, color=text_color),
+                textfont=dict(size=10 * scale, color=text_color),
                 textposition="middle center",
             ),
             rows=row,
