@@ -70,22 +70,28 @@ print(kp.hs_table(decimals=4))
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 
-pe.plot_brillouin_zone(cell=cell, color="red")
+pe.plot_brillouin_zone(
+    cell=prim_cell, color="red", legend_label="Brillouin zone of the primitive cell"
+)
+pe.plot_brillouin_zone(
+    cell=cell, color="chocolate", legend_label="Brillouin zone of the original cell"
+)
 pe.plot_kpath(kp=kp)
 
 pe.show(axes_visible=False)
 
 
 # %%
-# Primitive and Wigner-Seitz cells
-# ================================
+# Cells of real space
+# ===================
 #
 # .. hint
 #     Click on the legend to hide some of the cells
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 
-pe.plot_cell(cell=prim_cell, legend_label="Primitive cell", color="black")
+pe.plot_cell(cell=cell, legend_label="Original cell", color="black")
+pe.plot_cell(cell=prim_cell, legend_label="Primitive cell", color="indigo")
 pe.plot_cell(cell=conv_cell, legend_label="Conventional cell", color="blue")
 pe.plot_wigner_seitz_cell(
     cell=prim_cell, legend_label="Wigner-Seitz cell", color="green"
