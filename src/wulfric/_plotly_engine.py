@@ -31,6 +31,7 @@ from wulfric.crystal._atoms import get_atom_species
 
 try:
     import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
 
     PLOTLY_AVAILABLE = True
 except ImportError:
@@ -86,7 +87,7 @@ class PlotlyEngine:
     This class is a part of ``wulfric[visual]``
     """
 
-    def __init__(self, fig=None, _sphinx_gallery_fix=False):
+    def __init__(self, fig=None, _sphinx_gallery_fix=False, rows=1, cols=1):
         if not PLOTLY_AVAILABLE:
             raise ImportError(
                 'Plotly is not available. Please install it with "pip install plotly"'
@@ -94,6 +95,12 @@ class PlotlyEngine:
 
         if fig is None:
             fig = go.Figure(layout=go.Layout(scene=dict(aspectmode="data")))
+
+            fig = make_subplots(
+                rows=rows,
+                cols=cols,
+                specs=[[{"type": "scene"} for _ in range(cols)] for _ in range(rows)],
+            )
         self.fig = fig
 
         self.fig.update_layout(template="none")
@@ -186,6 +193,8 @@ class PlotlyEngine:
         legend_label=None,
         legend_group=None,
         scale=1,
+        row=1,
+        col=1,
     ):
         r"""
         Plots a set of points.
@@ -223,6 +232,8 @@ class PlotlyEngine:
                 marker=dict(size=2 * scale, color=colors),
                 hoverinfo="none",
             ),
+            rows=row,
+            cols=col,
         )
 
     def plot_line(
@@ -232,6 +243,8 @@ class PlotlyEngine:
         color="#000000",
         legend_label=None,
         legend_group=None,
+        row=1,
+        col=1,
     ):
         r"""
         Plots a single line between ``start_point`` to ``end_point``.
@@ -268,7 +281,9 @@ class PlotlyEngine:
                 z=z,
                 line=dict(color=color),
                 hoverinfo="none",
-            )
+            ),
+            rows=row,
+            cols=col,
         )
 
     def plot_vector(
@@ -279,6 +294,8 @@ class PlotlyEngine:
         vector_label=None,
         legend_label=None,
         legend_group=None,
+        row=1,
+        col=1,
     ):
         r"""
         Plots a single vector pointing from ``start_point`` to ``end_point``.
@@ -335,7 +352,9 @@ class PlotlyEngine:
                     showscale=False,
                     hoverinfo="none",
                 ),
-            ]
+            ],
+            rows=row,
+            cols=col,
         )
         if vector_label is not None:
             self.fig.add_traces(
@@ -352,7 +371,9 @@ class PlotlyEngine:
                     textfont=dict(size=12, color=color),
                     textposition="top center",
                     hoverinfo="none",
-                )
+                ),
+                rows=row,
+                cols=col,
             )
 
     def plot_cell(
@@ -364,6 +385,8 @@ class PlotlyEngine:
         shift=(0, 0, 0),
         legend_label=None,
         legend_group=None,
+        row=1,
+        col=1,
     ):
         r"""
         Plots given ``cell`` as is.
@@ -405,6 +428,8 @@ class PlotlyEngine:
                     color=color,
                     vector_label=f"{vector_label}{i + 1}",
                     legend_group=legend_group,
+                    row=row,
+                    col=col,
                 )
 
         # Plot the cell borders
@@ -417,6 +442,8 @@ class PlotlyEngine:
                 color=color,
                 legend_label=legend_label,
                 legend_group=legend_group,
+                row=row,
+                col=col,
             )
             if legend_label is not None:
                 legend_label = None
@@ -425,18 +452,24 @@ class PlotlyEngine:
                 end_point=shift + cell[i] + cell[j],
                 color=color,
                 legend_group=legend_group,
+                row=row,
+                col=col,
             )
             self.plot_line(
                 start_point=shift + cell[i],
                 end_point=shift + cell[i] + cell[k],
                 color=color,
                 legend_group=legend_group,
+                row=row,
+                col=col,
             )
             self.plot_line(
                 start_point=shift + cell[i] + cell[j],
                 end_point=shift + cell[i] + cell[j] + cell[k],
                 color=color,
                 legend_group=legend_group,
+                row=row,
+                col=col,
             )
 
     def plot_wigner_seitz_cell(
@@ -448,6 +481,8 @@ class PlotlyEngine:
         shift=(0.0, 0.0, 0.0),
         legend_label=None,
         legend_group=None,
+        row=1,
+        col=1,
     ):
         r"""
         Plots Wigner-Seitz cell of the lattice spawned by the given ``cell``.
@@ -486,6 +521,8 @@ class PlotlyEngine:
                     color=color,
                     vector_label=f"{vector_label}{i + 1}",
                     legend_group=legend_group,
+                    row=row,
+                    col=col,
                 )
 
         vertices, edges = get_wigner_seitz_cell(cell=cell)
@@ -496,6 +533,8 @@ class PlotlyEngine:
                 color=color,
                 legend_label=legend_label,
                 legend_group=legend_group,
+                row=row,
+                col=col,
             )
             if legend_label is not None:
                 legend_label = None
@@ -509,6 +548,8 @@ class PlotlyEngine:
         shift=(0.0, 0.0, 0.0),
         legend_label=None,
         legend_group=None,
+        row=1,
+        col=1,
     ):
         r"""
 
@@ -542,6 +583,8 @@ class PlotlyEngine:
             shift=shift,
             legend_label=legend_label,
             legend_group=legend_group,
+            row=row,
+            col=col,
         )
 
     def plot_kpath(
@@ -551,6 +594,8 @@ class PlotlyEngine:
         shift=(0.0, 0.0, 0.0),
         legend_label=None,
         legend_group=None,
+        row=1,
+        col=1,
     ):
         r"""
         Plots k-path in the reciprocal space.
@@ -603,7 +648,9 @@ class PlotlyEngine:
                 textfont=dict(size=16, color=color),
                 hovertext=p_rel,
                 hoverinfo="text",
-            )
+            ),
+            rows=row,
+            cols=col,
         )
 
         for subpath in kp.path:
@@ -624,6 +671,8 @@ class PlotlyEngine:
                     line=dict(color=color),
                     hoverinfo="none",
                 ),
+                rows=row,
+                cols=col,
             )
 
     def plot_lattice(
@@ -634,6 +683,8 @@ class PlotlyEngine:
         shift=(0, 0, 0),
         legend_label=None,
         legend_group=None,
+        row=1,
+        col=1,
     ):
         r"""
         Plots lattice points spawned by the given ``cell``.
@@ -679,6 +730,8 @@ class PlotlyEngine:
             colors=color,
             legend_label=legend_label,
             legend_group=legend_group,
+            row=row,
+            col=col,
         )
 
     def plot_atoms(
@@ -690,6 +743,8 @@ class PlotlyEngine:
         legend_group=None,
         shift=(0, 0, 0),
         scale=1,
+        row=1,
+        col=1,
     ):
         r"""
         Plots a set of atoms.
@@ -772,6 +827,8 @@ class PlotlyEngine:
                 textfont=dict(size=12 * scale, color=text_color),
                 textposition="middle center",
             ),
+            rows=row,
+            cols=col,
         )
 
 
