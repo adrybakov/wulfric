@@ -117,9 +117,7 @@ def main():
         legend_label="Original cell and atoms",
         legend_group="Original cell and atoms",
     )
-    pe.plot_atoms(
-        cell, atoms, row=1, col=1, legend_group="Original cell and atoms", scale=0.7
-    )
+    pe.plot_atoms(cell, atoms, row=1, col=1, legend_group="Original cell and atoms")
 
     # Wigner Seitz cell
     pe.plot_wigner_seitz_cell(
@@ -159,12 +157,7 @@ def main():
         col=1,
     )
     pe.plot_atoms(
-        prim_cell_sc,
-        prim_atoms_sc,
-        row=2,
-        col=1,
-        legend_group="prim_cell_sc",
-        scale=0.7,
+        prim_cell_sc, prim_atoms_sc, row=2, col=1, legend_group="prim_cell_sc"
     )
     pe.plot_cell(
         prim_cell_hpkot,
@@ -175,12 +168,7 @@ def main():
         col=2,
     )
     pe.plot_atoms(
-        prim_cell_hpkot,
-        prim_atoms_hpkot,
-        row=2,
-        col=2,
-        legend_group="prim_cell_hpkot",
-        scale=0.7,
+        prim_cell_hpkot, prim_atoms_hpkot, row=2, col=2, legend_group="prim_cell_hpkot"
     )
 
     # Two Brillouine zones
@@ -210,6 +198,7 @@ def main():
         legend_label="k-path and k-points (SC)",
         legend_group="KP SC",
     )
+    pe.plot_kpoints(kp=kp_sc, row=3, col=1, color="darkslategrey", legend_group="KP SC")
     pe.plot_kpath(
         kp=kp_hpkot,
         row=3,
@@ -217,6 +206,7 @@ def main():
         legend_label="k-path and k-points (HPKOT)",
         legend_group="KP HPKOT",
     )
+    pe.plot_kpoints(kp=kp_hpkot, row=3, col=2, legend_group="KP HPKOT")
 
     # Plot lattice
     pe.plot_lattice(
