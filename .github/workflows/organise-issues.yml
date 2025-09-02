@@ -10,7 +10,7 @@ jobs:
     name: Add an issue
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@RELEASE_VERSION
+      - uses: actions/add-to-project@main
         with:
           project-url: https://github.com/users/adrybakov/projects/4
           github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
