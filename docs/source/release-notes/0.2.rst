@@ -23,15 +23,15 @@ Therefore version 0.2 introduce some breaking changes:
 
 *   :py:class:`.Atom`
 
-    - Spin and magnetic moment are related trough :py:attr:`.Atom.g_factor`.
-    - Spin, magnetic moment now have default values and always return a value
-    (previously if undefined they raised a ``ValueError``).
+    -   Spin and magnetic moment are related trough :py:attr:`.Atom.g_factor`.
+    -   Spin, magnetic moment now have default values and always return a value
+        (previously if undefined they raised a ``ValueError``).
 
 *   :py:class:`.Lattice`
 
     - :py:meth:`.Lattice.type` - add ``delta_max`` parameter.
 
-* Fix issues with the test suite of the lattice standardization.
-* Add :py:meth:`.Kpoints.remove_hs_point` method.
-* Fix bug in the lattice standardization in the context of the :py:class:`.Crystal` class.
-  Atoms were not moved to the standard cell from the given one, now they are placed correctly.
+*   Fix issues with the test suite of the lattice standardization.
+*   Add :py:meth:`.Kpoints.remove_hs_point` method.
+*   Fix bug in the lattice standardization in the context of the :py:class:`.Crystal` class.
+    Atoms were not moved to the standard cell from the given one, now they are placed correctly.
