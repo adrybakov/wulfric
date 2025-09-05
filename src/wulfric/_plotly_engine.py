@@ -30,7 +30,7 @@ from wulfric.constants import ATOM_COLORS
 from wulfric.crystal._atoms import get_atom_species
 
 try:
-    import plotly.graph_objects as go
+    import plotly.graph_objects as go  # noqa: F401
     from plotly.subplots import make_subplots
 
     PLOTLY_AVAILABLE = True
@@ -94,8 +94,6 @@ class PlotlyEngine:
             )
 
         if fig is None:
-            fig = go.Figure(layout=go.Layout(scene=dict(aspectmode="data")))
-
             fig = make_subplots(
                 rows=rows,
                 cols=cols,
@@ -106,6 +104,46 @@ class PlotlyEngine:
         self.fig.update_layout(template="none")
 
         self._sphinx_gallery_fix = _sphinx_gallery_fix
+
+        # Fix for plotly #7143
+        self.x_range = {}
+        self.y_range = {}
+        self.z_range = {}
+
+    # Fix for plotly #7143
+    def _update_range(self, x_min, x_max, y_min, y_max, z_min, z_max, row=1, col=1):
+        if (row, col) not in self.x_range:
+            self.x_range[(row, col)] = np.array([x_min, x_max], dtype=float)
+            self.y_range[(row, col)] = np.array([y_min, y_max], dtype=float)
+            self.z_range[(row, col)] = np.array([z_min, z_max], dtype=float)
+        else:
+            self.x_range[(row, col)][0] = min(self.x_range[(row, col)][0], x_min)
+            self.x_range[(row, col)][1] = max(self.x_range[(row, col)][1], x_max)
+            self.y_range[(row, col)][0] = min(self.y_range[(row, col)][0], y_min)
+            self.y_range[(row, col)][1] = max(self.y_range[(row, col)][1], y_max)
+            self.z_range[(row, col)][0] = min(self.z_range[(row, col)][0], z_min)
+            self.z_range[(row, col)][1] = max(self.z_range[(row, col)][1], z_max)
+
+    # Fix for plotly #7143
+    def _update_fig_aspect_range(self):
+        for row, col in self.x_range:
+            xlim = 1.05 * self.x_range[(row, col)]
+            ylim = 1.05 * self.y_range[(row, col)]
+            zlim = 1.05 * self.z_range[(row, col)]
+
+            self.fig.update_scenes(
+                xaxis=dict(range=xlim),
+                yaxis=dict(range=ylim),
+                zaxis=dict(range=zlim),
+                aspectmode="manual",
+                aspectratio=dict(
+                    x=abs((xlim[1] - xlim[0]) / (zlim[1] - zlim[0])),
+                    y=abs((ylim[1] - ylim[0]) / (zlim[1] - zlim[0])),
+                    z=1,
+                ),
+                row=row,
+                col=col,
+            )
 
     def show(self, axes_visible=True, legend_position="top", **kwargs):
         r"""
@@ -135,6 +173,9 @@ class PlotlyEngine:
         legend = _LEGEND_SETTINGS[legend_position]
 
         self.fig.update_layout(**kwargs, legend=legend)
+
+        # Fix for plotly #7143
+        self._update_fig_aspect_range()
 
         if self._sphinx_gallery_fix:
             return self.fig
@@ -183,6 +224,9 @@ class PlotlyEngine:
         legend = _LEGEND_SETTINGS[legend_position]
 
         self.fig.update_layout(**kwargs, legend=legend)
+
+        # Fix for plotly #7143
+        self._update_fig_aspect_range()
 
         self.fig.write_html(output_name, **kwargs_write_html)
 
@@ -240,6 +284,18 @@ class PlotlyEngine:
             cols=col,
         )
 
+        # Fix for plotly #7143
+        self._update_range(
+            x_min=points[0].min(),
+            x_max=points[0].max(),
+            y_min=points[1].min(),
+            y_max=points[1].max(),
+            z_min=points[2].min(),
+            z_max=points[2].max(),
+            row=row,
+            col=col,
+        )
+
     def plot_line(
         self,
         start_point,
@@ -292,6 +348,18 @@ class PlotlyEngine:
             ),
             rows=row,
             cols=col,
+        )
+
+        # Fix for plotly #7143
+        self._update_range(
+            x_min=x.min(),
+            x_max=x.max(),
+            y_min=y.min(),
+            y_max=y.max(),
+            z_min=z.min(),
+            z_max=z.max(),
+            row=row,
+            col=col,
         )
 
     def plot_vector(
@@ -387,6 +455,30 @@ class PlotlyEngine:
                 rows=row,
                 cols=col,
             )
+
+            # Fix for plotly #7143
+            self._update_range(
+                x_min=1.2 * (x[1] - x[0]) + x[0],
+                x_max=1.2 * (x[1] - x[0]) + x[0],
+                y_min=1.2 * (y[1] - y[0]) + y[0],
+                y_max=1.2 * (y[1] - y[0]) + y[0],
+                z_min=1.2 * (z[1] - z[0]) + z[0],
+                z_max=1.2 * (z[1] - z[0]) + z[0],
+                row=row,
+                col=col,
+            )
+
+        # Fix for plotly #7143
+        self._update_range(
+            x_min=x.min(),
+            x_max=x.max(),
+            y_min=y.min(),
+            y_max=y.max(),
+            z_min=z.min(),
+            z_max=z.max(),
+            row=row,
+            col=col,
+        )
 
     def plot_cell(
         self,
@@ -670,6 +762,17 @@ class PlotlyEngine:
                 rows=row,
                 cols=col,
             )
+        # Fix for plotly #7143
+        self._update_range(
+            x_min=xyz[0].min(),
+            x_max=xyz[0].max(),
+            y_min=xyz[1].min(),
+            y_max=xyz[1].max(),
+            z_min=xyz[2].min(),
+            z_max=xyz[2].max(),
+            row=row,
+            col=col,
+        )
 
     def plot_kpoints(
         self,
@@ -751,6 +854,18 @@ class PlotlyEngine:
             ),
             rows=row,
             cols=col,
+        )
+
+        # Fix for plotly #7143
+        self._update_range(
+            x_min=p_abs[0].min(),
+            x_max=p_abs[0].max(),
+            y_min=p_abs[1].min(),
+            y_max=p_abs[1].max(),
+            z_min=p_abs[2].min(),
+            z_max=p_abs[2].max(),
+            row=row,
+            col=col,
         )
 
     def plot_lattice(
@@ -915,6 +1030,18 @@ class PlotlyEngine:
             ),
             rows=row,
             cols=col,
+        )
+
+        # Fix for plotly #7143
+        self._update_range(
+            x_min=points[0].min(),
+            x_max=points[0].max(),
+            y_min=points[1].min(),
+            y_max=points[1].max(),
+            z_min=points[2].min(),
+            z_max=points[2].max(),
+            row=row,
+            col=col,
         )
 
 
