@@ -86,3 +86,6 @@ requirements:
 	@pip install -r requirements-dev.txt --no-cache
 	@pip install -r docs/requirements.txt --no-cache
 	@pip install -r tests/requirements.txt --no-cache
+
+release-check:
+	@python tools/check-release-metadata.py -rd . -v $(VERSION)

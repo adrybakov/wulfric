@@ -17,7 +17,7 @@ jobs:
     - name: Install dev tools
       run: pip install -r requirements-dev.txt
     - name: Inspect metadata
-      run: python3 -u tools/prepare-release.py -v ${{  github.ref_name }} -rd .
+      run: python3 -u tools/check-release-metadata.py -v ${{  github.ref_name }} -rd .
 
   test:
     name: Test

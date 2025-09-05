@@ -23,7 +23,7 @@ plot-data-structure.py
 
 Plot the data structure of the package.
 
-prepare-release.py
+check-release-metadata.py
 ------------------
 
 Prepare the release of the package. Never release without the successful run of it.
