@@ -91,9 +91,9 @@ pe.show(axes_visible=False)
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 
-pe.plot_cell(cell=cell, legend_label="Original cell", color="black")
-pe.plot_cell(cell=prim_cell, legend_label="Primitive cell", color="indigo")
-pe.plot_cell(cell=conv_cell, legend_label="Conventional cell", color="blue")
+pe.plot_cell(cell=cell, legend_label="Original cell", color="Chocolate")
+pe.plot_cell(cell=prim_cell, legend_label="Primitive cell", color="Black")
+pe.plot_cell(cell=conv_cell, legend_label="Conventional cell", color="Blue")
 pe.plot_wigner_seitz_cell(
     cell=prim_cell, legend_label="Wigner-Seitz cell", color="green"
 )
