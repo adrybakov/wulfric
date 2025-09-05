@@ -5,141 +5,156 @@ Version 0.6
 ***********
 
 
-Whats new?
-----------
+0.6.1
+=====
+
+Bugfix
+------
+
+* Fix :issue:`13`
+
+0.6.0
+=====
 
 Major redesign of wulfric
+
+
+New features
+------------
 
 *   Now wulfric relies on |spglib|_ for the deduction of symmetry.
 *   Convention of HPKOT paper [1]_ was implemented.
 *   Major improvement of plotting engine - focus on |plotly|_ as a backend.
-*   Renamed
 
-    Renamed objects behave in the same way as before.
+===================================================== =======================================
+Name                                                  Comment
+===================================================== =======================================
+``wulfric.cell.get_brillouin_zone``                   -
+``wulfric.cell.get_lattice_points``                   It was present in wulfric before as a
+                                                        semi-private function. In this release
+                                                        it was improved and made public.
+``wulfric.cell.get_transformation_matrix``            -
+``wulfric.cell.get_wigner_seitz_cell``                -
+``wulfric.constants.ATOM_COLORS``                     -
+``wulfric.constants.ATOMIC_MASS``                     -
+``wulfric.constants.CENTRING_TYPE``                   -
+``wulfric.constants.CRYSTAL_FAMILY``                  -
+``wulfric.constants.INVERSION_SYMMETRY``              -
+``wulfric.constants.HPKOT_CONVENTIONAL_TO_PRIMITIVE`` -
+``wulfric.constants.HPKOT_DEFAULT_K_PATHS``           -
+``wulfric.constants.SC_BRAVAIS_LATTICE_SHORT_NAMES``  -
+``wulfric.ConventionNotSupported``                    -
+``wulfric.crystal.get_conventional``                  -
+``wulfric.crystal.get_primitive``                     -
+``wulfric.crystal.validate_atoms``                    -
+``wulfric.get_spglib_data``                           Part of the interface to |spglib|_.
+``wulfric.get_spglib_types``                          Part of the interface to |spglib|_.
+``wulfric.kpoints.get_path_as_list``                  -
+``wulfric.kpoints.get_path_as_string``                -
+``wulfric.PotentialBugError``                         -
+``wulfric.SyntacticSugar``                            It was present in wulfric before as a
+                                                        semi-private class.
+``wulfric.validate_spglib_data``                      Part of the interface to |spglib|_.
+===================================================== =======================================
 
-    ================================================ ===================================================
-    Previous name                                    New name
-    ================================================ ===================================================
-    ``wulfric.cell.CUB``                             ``wulfric.cell.SC_CUB``
-    ``wulfric.cell.FCC``                             ``wulfric.cell.SC_FCC``
-    ``wulfric.cell.BCC``                             ``wulfric.cell.SC_BCC``
-    ``wulfric.cell.TET``                             ``wulfric.cell.SC_TET``
-    ``wulfric.cell.BCT``                             ``wulfric.cell.SC_BCT``
-    ``wulfric.cell.ORC``                             ``wulfric.cell.SC_ORC``
-    ``wulfric.cell.ORCF``                            ``wulfric.cell.SC_ORCF``
-    ``wulfric.cell.ORCI``                            ``wulfric.cell.SC_ORCI``
-    ``wulfric.cell.ORCC``                            ``wulfric.cell.SC_ORCC``
-    ``wulfric.cell.HEX``                             ``wulfric.cell.SC_HEX``
-    ``wulfric.cell.RHL``                             ``wulfric.cell.SC_RHL``
-    ``wulfric.cell.MCL``                             ``wulfric.cell.SC_MCL``
-    ``wulfric.cell.MCLC``                            ``wulfric.cell.SC_MCLC``
-    ``wulfric.cell.TRI``                             ``wulfric.cell.SC_TRI``
-    ``wulfric.cell.lepage``                          It was separated from the rest of the
-                                                     package but left as legacy code.
-                                                     Superseded by dependency on |spglib|_.
-                                                     Renamed to ``wulfric.lepage``.
-    ``wulfric.constants.BRAVAIS_LATTICE_VARIATIONS`` ``wulfric.constants.SC_BRAVAIS_LATTICE_VARIATIONS``
-    ``wulfric.compare_numerically``                  ``wulfric.compare_with_tolerance``
-    ``wulfric.Kpoints.flatten_points``               ``wulfric.Kpoints.flat_points``
-    ================================================ ===================================================
 
-*   Removed
+Renamed
+-------
 
-    ================================================= =======================================================
-    Name                                              Comment
-    ================================================= =======================================================
-    ``wulfric.cell.get_C_matrix``                     Due to the transition to |spglib|_. Use inverse of
-                                                      ``wulfric.constants.SC_CONVENTIONAL_TO_PRIMITIVE``
-                                                      with the correct lattice type instead.
-    ``wulfric.cell.get_centring_type``                Due to the transition to |spglib|_. Use
-                                                      ``spglib_data.centring_type`` instead.
-    ``wulfric.cell.get_conventional``                 Due to the transition to |spglib|_. Use
-                                                      ``wulfric.crystal.get_conventional`` instead.
-    ``wulfric.cell.get_crystal_family``               Due to the transition to |spglib|_. Use
-                                                      ``spglib_data.crystal_family`` instead.
-    ``wulfric.cell.get_name``                         Due to the transition to |spglib|_. Use
-                                                      ``wulfric.constants.SC_BRAVAIS_LATTICE_LONG_NAMES``
-                                                      instead.
-    ``wulfric.cell.get_pearson_symbol``               Due to the transition to |spglib|_. Use
-                                                      ``spglib_data.crystal_family`` and
-                                                      ``spglib_data.centring_type`` instead.
-    ``wulfric.cell.get_S_matrix``                     Due to the transition to |spglib|_. Use
-                                                      ``wulfric.cell.get_transformation_matrix`` on original
-                                                      ``cell`` and ``wulfric.crystal.get_conventional``
-                                                      instead.
-    ``wulfric.cell.get_standardized``                 Due to the transition to |spglib|_. Use
-                                                      ``wulfric.crystal.get_primitive`` instead.
-    ``wulfric.cell.is_reasonable``                    It was unused.
-    ``wulfric.constants.PEARSON_SYMBOLS``             Due to the transition to |spglib|_. Use
-                                                      ``spglib_data.crystal_family`` and
-                                                      ``spglib_data.centring_type`` instead.
-    ``wulfric.constants.STANDARDIZATION_CONVENTIONS`` It was unused.
-    ``wulfric.crystal.standardize``                   Due to the transition to |spglib|_. Use
-                                                      ``wulfric.crystal.get_primitive`` instead.
-    ``wulfric.geometry.absolute_to_relative``         Readily accessible with |numpy|_:
-                                                      ``r_coords = a_coords @ np.linalg.inv(cell)``
-    ``wulfric.print_2d_array``                        It was out of the scope of the project and was not used
-                                                      that much internally.
-    ``wulfric.StandardizationTypeMismatch``           Due to the transition to |spglib|_.
-    ``wulfric.visualization.MatplotlibBackend``       Support of two plotting backends was taking too much
-                                                      effort. More plotting backends might be implemented
-                                                      in the future.
-    ================================================= =======================================================
+Renamed objects behave in the same way as before.
 
-*   Change of behavior
+================================================ ===================================================
+Previous name                                    New name
+================================================ ===================================================
+``wulfric.cell.CUB``                             ``wulfric.cell.SC_CUB``
+``wulfric.cell.FCC``                             ``wulfric.cell.SC_FCC``
+``wulfric.cell.BCC``                             ``wulfric.cell.SC_BCC``
+``wulfric.cell.TET``                             ``wulfric.cell.SC_TET``
+``wulfric.cell.BCT``                             ``wulfric.cell.SC_BCT``
+``wulfric.cell.ORC``                             ``wulfric.cell.SC_ORC``
+``wulfric.cell.ORCF``                            ``wulfric.cell.SC_ORCF``
+``wulfric.cell.ORCI``                            ``wulfric.cell.SC_ORCI``
+``wulfric.cell.ORCC``                            ``wulfric.cell.SC_ORCC``
+``wulfric.cell.HEX``                             ``wulfric.cell.SC_HEX``
+``wulfric.cell.RHL``                             ``wulfric.cell.SC_RHL``
+``wulfric.cell.MCL``                             ``wulfric.cell.SC_MCL``
+``wulfric.cell.MCLC``                            ``wulfric.cell.SC_MCLC``
+``wulfric.cell.TRI``                             ``wulfric.cell.SC_TRI``
+``wulfric.cell.lepage``                          It was separated from the rest of the
+                                                    package but left as legacy code.
+                                                    Superseded by dependency on |spglib|_.
+                                                    Renamed to ``wulfric.lepage``.
+``wulfric.constants.BRAVAIS_LATTICE_VARIATIONS`` ``wulfric.constants.SC_BRAVAIS_LATTICE_VARIATIONS``
+``wulfric.compare_numerically``                  ``wulfric.compare_with_tolerance``
+``wulfric.Kpoints.flatten_points``               ``wulfric.Kpoints.flat_points``
+================================================ ===================================================
 
-    Those objects may or may not be renamed, but their behavior was changed. They still
-    do roughly the same task, but may have additional or less input/output variables or
-    behave different in some edge cases. If you use them a review is required.
+Removed
+-------
 
-    =========================================== ===================================================
-    Previous name                               New name
-    =========================================== ===================================================
-    ``wulfric.cell.get_cell_example``           ``wulfric.cell.sc_get_example_cell``
-    ``wulfric.cell.get_hs_data``                ``wulfric.kpoints.get_path_and_points``
-    ``wulfric.cell.get_variation``              ``wulfric.crystal.sc_get_variation``
-    ``wulfric.cell.niggli``                     ``wulfric.cell.get_niggli``
-    ``wulfric.constants.BRAVAIS_LATTICE_NAMES`` ``wulfric.constants.SC_BRAVAIS_LATTICE_LONG_NAMES``
-    ``wulfric.constants.C_MATRICES``            ``wulfric.constants.SC_CONVENTIONAL_TO_PRIMITIVE``
-    ``wulfric.constants.DEFAULT_K_PATHS``       ``wulfric.constants.SC_DEFAULT_K_PATHS``
-    ``wulfric.constants.HS_PLOT_NAMES``         same
-    ``wulfric.crystal.ensure_unique_names``     ``wulfric.crystal.get_unique_names``
-    ``wulfric.crystal.populate_atom_species``   ``wulfric.crystal.get_atoms_species``
-    ``wulfric.visualization.PlotlyBackend``     ``wulfric.PlotlyEngine``
-    =========================================== ===================================================
+================================================= =======================================================
+Name                                              Comment
+================================================= =======================================================
+``wulfric.cell.get_C_matrix``                     Due to the transition to |spglib|_. Use inverse of
+                                                    ``wulfric.constants.SC_CONVENTIONAL_TO_PRIMITIVE``
+                                                    with the correct lattice type instead.
+``wulfric.cell.get_centring_type``                Due to the transition to |spglib|_. Use
+                                                    ``spglib_data.centring_type`` instead.
+``wulfric.cell.get_conventional``                 Due to the transition to |spglib|_. Use
+                                                    ``wulfric.crystal.get_conventional`` instead.
+``wulfric.cell.get_crystal_family``               Due to the transition to |spglib|_. Use
+                                                    ``spglib_data.crystal_family`` instead.
+``wulfric.cell.get_name``                         Due to the transition to |spglib|_. Use
+                                                    ``wulfric.constants.SC_BRAVAIS_LATTICE_LONG_NAMES``
+                                                    instead.
+``wulfric.cell.get_pearson_symbol``               Due to the transition to |spglib|_. Use
+                                                    ``spglib_data.crystal_family`` and
+                                                    ``spglib_data.centring_type`` instead.
+``wulfric.cell.get_S_matrix``                     Due to the transition to |spglib|_. Use
+                                                    ``wulfric.cell.get_transformation_matrix`` on original
+                                                    ``cell`` and ``wulfric.crystal.get_conventional``
+                                                    instead.
+``wulfric.cell.get_standardized``                 Due to the transition to |spglib|_. Use
+                                                    ``wulfric.crystal.get_primitive`` instead.
+``wulfric.cell.is_reasonable``                    It was unused.
+``wulfric.constants.PEARSON_SYMBOLS``             Due to the transition to |spglib|_. Use
+                                                    ``spglib_data.crystal_family`` and
+                                                    ``spglib_data.centring_type`` instead.
+``wulfric.constants.STANDARDIZATION_CONVENTIONS`` It was unused.
+``wulfric.crystal.standardize``                   Due to the transition to |spglib|_. Use
+                                                    ``wulfric.crystal.get_primitive`` instead.
+``wulfric.geometry.absolute_to_relative``         Readily accessible with |numpy|_:
+                                                    ``r_coords = a_coords @ np.linalg.inv(cell)``
+``wulfric.print_2d_array``                        It was out of the scope of the project and was not used
+                                                    that much internally.
+``wulfric.StandardizationTypeMismatch``           Due to the transition to |spglib|_.
+``wulfric.visualization.MatplotlibBackend``       Support of two plotting backends was taking too much
+                                                    effort. More plotting backends might be implemented
+                                                    in the future.
+================================================= =======================================================
 
-*   New
+Modified
+--------
 
-    ===================================================== =======================================
-    Name                                                  Comment
-    ===================================================== =======================================
-    ``wulfric.cell.get_brillouin_zone``                   -
-    ``wulfric.cell.get_lattice_points``                   It was present in wulfric before as a
-                                                          semi-private function. In this release
-                                                          it was improved and made public.
-    ``wulfric.cell.get_transformation_matrix``            -
-    ``wulfric.cell.get_wigner_seitz_cell``                -
-    ``wulfric.constants.ATOM_COLORS``                     -
-    ``wulfric.constants.ATOMIC_MASS``                     -
-    ``wulfric.constants.CENTRING_TYPE``                   -
-    ``wulfric.constants.CRYSTAL_FAMILY``                  -
-    ``wulfric.constants.INVERSION_SYMMETRY``              -
-    ``wulfric.constants.HPKOT_CONVENTIONAL_TO_PRIMITIVE`` -
-    ``wulfric.constants.HPKOT_DEFAULT_K_PATHS``           -
-    ``wulfric.constants.SC_BRAVAIS_LATTICE_SHORT_NAMES``  -
-    ``wulfric.ConventionNotSupported``                    -
-    ``wulfric.crystal.get_conventional``                  -
-    ``wulfric.crystal.get_primitive``                     -
-    ``wulfric.crystal.validate_atoms``                    -
-    ``wulfric.get_spglib_data``                           Part of the interface to |spglib|_.
-    ``wulfric.get_spglib_types``                          Part of the interface to |spglib|_.
-    ``wulfric.kpoints.get_path_as_list``                  -
-    ``wulfric.kpoints.get_path_as_string``                -
-    ``wulfric.PotentialBugError``                         -
-    ``wulfric.SyntacticSugar``                            It was present in wulfric before as a
-                                                          semi-private class.
-    ``wulfric.validate_spglib_data``                      Part of the interface to |spglib|_.
-    ===================================================== =======================================
+Those objects may or may not be renamed, but their behavior was changed. They still
+do roughly the same task, but may have additional or less input/output variables or
+behave different in some edge cases. If you use them a review is required.
+
+=========================================== ===================================================
+Previous name                               New name
+=========================================== ===================================================
+``wulfric.cell.get_cell_example``           ``wulfric.cell.sc_get_example_cell``
+``wulfric.cell.get_hs_data``                ``wulfric.kpoints.get_path_and_points``
+``wulfric.cell.get_variation``              ``wulfric.crystal.sc_get_variation``
+``wulfric.cell.niggli``                     ``wulfric.cell.get_niggli``
+``wulfric.constants.BRAVAIS_LATTICE_NAMES`` ``wulfric.constants.SC_BRAVAIS_LATTICE_LONG_NAMES``
+``wulfric.constants.C_MATRICES``            ``wulfric.constants.SC_CONVENTIONAL_TO_PRIMITIVE``
+``wulfric.constants.DEFAULT_K_PATHS``       ``wulfric.constants.SC_DEFAULT_K_PATHS``
+``wulfric.constants.HS_PLOT_NAMES``         same
+``wulfric.crystal.ensure_unique_names``     ``wulfric.crystal.get_unique_names``
+``wulfric.crystal.populate_atom_species``   ``wulfric.crystal.get_atoms_species``
+``wulfric.visualization.PlotlyBackend``     ``wulfric.PlotlyEngine``
+=========================================== ===================================================
 
 
 .. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.

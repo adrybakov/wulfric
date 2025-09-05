@@ -6,31 +6,32 @@ Version 0.2
 
 .. warning::
 
-  This version was not well designed, recommended to skip it in favor of :ref:`0.3 <release-notes_0.3>`.
-
-Whats new?
-----------
-Whole wulfric was refactored. Majority of the functionality remained the same,
-however in some parts of the package the interface or the internal organization changed.
-Therefore version 0.2 introduce some breaking changes:
-
-* :py:class:`.Atom`
-
-  - Spin and magnetic moment are related trough :py:attr:`.Atom.g_factor`.
-  - Spin, magnetic moment now have default values and always return a value
-    (previously if undefined they raised a ``ValueError``).
-
-* :py:class:`.Lattice`
-
-  - :py:meth:`.Lattice.type` - add ``delta_max`` parameter.
-
-* Fix issues with the test suite of the lattice standardization.
-* Add :py:meth:`.Kpoints.remove_hs_point` method.
-* Fix bug in the lattice standardization in the context of the :py:class:`.Crystal` class.
-  Atoms were not moved to the standard cell from the given one, now they are placed correctly.
+    This version was not well designed, recommended to skip it in favor of :ref:`0.3 <release-notes_0.3>`.
 
 0.2.1
 =====
 Fix bug with the cell assignment in crystal: Before atoms positions were  pinned in absolute coordinates.
 Now atom's coordinates are pinned in relative coordinates, therefore, if one would scale the cell,
 then atom's positions will scale as well, as expected.
+
+0.2.0
+=====
+
+Whole wulfric was refactored. Majority of the functionality remained the same,
+however in some parts of the package the interface or the internal organization changed.
+Therefore version 0.2 introduce some breaking changes:
+
+*   :py:class:`.Atom`
+
+    - Spin and magnetic moment are related trough :py:attr:`.Atom.g_factor`.
+    - Spin, magnetic moment now have default values and always return a value
+    (previously if undefined they raised a ``ValueError``).
+
+*   :py:class:`.Lattice`
+
+    - :py:meth:`.Lattice.type` - add ``delta_max`` parameter.
+
+* Fix issues with the test suite of the lattice standardization.
+* Add :py:meth:`.Kpoints.remove_hs_point` method.
+* Fix bug in the lattice standardization in the context of the :py:class:`.Crystal` class.
+  Atoms were not moved to the standard cell from the given one, now they are placed correctly.

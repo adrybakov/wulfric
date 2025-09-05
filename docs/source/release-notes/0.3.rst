@@ -4,14 +4,24 @@
 Version 0.3
 ***********
 
+
+0.3.1
+=====
+
+* Add :py:meth:`.Kpoints.hs_table` method, that displays the table with the high-symmetry
+  points.
+
+* Add ``convention`` argument to the :py:func:`.lattice_example` function.
+
+
+0.3.0
+=====
+
 .. warning::
 
   This version introduces some breaking changes. Please read carefully the
   following release notes.
 
-
-Whats new?
-----------
 Whole wulfric was refactored. Majority of the functionality remained the same,
 however in some parts of the package the interface or the internal organization changed.
 Therefore version 0.3 introduce some breaking changes:
@@ -34,11 +44,3 @@ Therefore version 0.3 introduce some breaking changes:
 * Add :py:meth:`.Crystal.shift_atoms` and :py:meth:`.Crystal.cure_negative` methods.
 
 * Add ``delta_max`` parameter to the :py:meth:`.Lattice.type` method.
-
-0.3.1
------
-
-* Add :py:meth:`.Kpoints.hs_table` method, that displays the table with the high-symmetry
-  points.
-
-* Add ``convention`` argument to the :py:func:`.lattice_example` function.

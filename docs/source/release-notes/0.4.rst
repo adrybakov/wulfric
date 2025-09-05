@@ -4,9 +4,9 @@
 Version 0.4
 ***********
 
+0.4.0
+=====
 
-Whats new?
-----------
 Explicit standardization of the cell is no longer required! Previously the user had to
 explicitly standardize the cell of the crystal in order to have access to the high
 symmetry k points. Now the standardization **matrix** is computed and used to map the

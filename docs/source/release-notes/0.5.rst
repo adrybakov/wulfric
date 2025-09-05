@@ -4,9 +4,36 @@
 Version 0.5
 ***********
 
+0.5.4
+=====
 
-Whats new?
-----------
+* Fix a bug with the ``wulfric -v``
+* Refine value of ``_limit`` in :py:func:`.lepage`
+* Fix :issue:`7`
+
+0.5.3
+=====
+
+Add optional :py:func:`wulfric.geometry.get_spherical`.
+
+
+0.5.2
+=====
+
+Add optional |Syntactic-sugar|_ for the dictionaries:
+
+* :py:func:`wulfric.add_sugar`
+* :py:func:`wulfric.remove_sugar`
+
+0.5.1
+=====
+
+Add :py:func:`wulfric.crystal.ensure_unique_names`.
+
+
+0.5.0
+=====
+
 Organization of the package has changed. All implemented logic is rewritten in functions.
 
 The package now consist of several submodules that group the function by the
@@ -55,29 +82,3 @@ A few more improvements have been done
   exploration of the package in the interactive python console.
 - Relax dependency from ``numpy~=1.26`` to ``numpy``. It was initially restricted because
   of problems with doctests. The problems are resolved.
-
-0.5.1
------
-
-Add :py:func:`wulfric.crystal.ensure_unique_names`.
-
-
-0.5.2
------
-
-Add optional |Syntactic-sugar|_ for the dictionaries:
-
-* :py:func:`wulfric.add_sugar`
-* :py:func:`wulfric.remove_sugar`
-
-0.5.3
------
-
-Add optional :py:func:`wulfric.geometry.get_spherical`.
-
-0.5.4
------
-
-* Fix a bug with the ``wulfric -v``
-* Refine value of ``_limit`` in :py:func:`.lepage`
-* Fix :issue:`7`
