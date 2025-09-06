@@ -593,7 +593,9 @@ def _sc_get_conventional_no_hR(
                     [0, 1, 0],
                 ]
             )
-            conv_cell = _sc_get_conventional_oC(spglib_std_lattice=matrix.T @ conv_cell)
+            conv_cell = _sc_get_conventional_oC(
+                spglib_std_lattice=matrix.T @ spglib_std_lattice
+            )
         else:
             raise PotentialBugError(
                 f'(convention="sc"): crystal family "o". Unexpected centring type "{centring_type}".'
