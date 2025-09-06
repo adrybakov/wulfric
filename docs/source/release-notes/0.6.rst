@@ -44,8 +44,8 @@ Name                                                  Comment
 ===================================================== =======================================
 ``wulfric.cell.get_brillouin_zone``                   -
 ``wulfric.cell.get_lattice_points``                   It was present in wulfric before as a
-                                                        semi-private function. In this release
-                                                        it was improved and made public.
+                                                      semi-private function. In this release
+                                                      it was improved and made public.
 ``wulfric.cell.get_transformation_matrix``            -
 ``wulfric.cell.get_wigner_seitz_cell``                -
 ``wulfric.constants.ATOM_COLORS``                     -
@@ -66,7 +66,7 @@ Name                                                  Comment
 ``wulfric.kpoints.get_path_as_string``                -
 ``wulfric.PotentialBugError``                         -
 ``wulfric.SyntacticSugar``                            It was present in wulfric before as a
-                                                        semi-private class.
+                                                      semi-private class.
 ``wulfric.validate_spglib_data``                      Part of the interface to |spglib|_.
 ===================================================== =======================================
 
