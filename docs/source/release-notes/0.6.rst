@@ -94,9 +94,9 @@ Previous name                                    New name
 ``wulfric.cell.MCLC``                            ``wulfric.cell.SC_MCLC``
 ``wulfric.cell.TRI``                             ``wulfric.cell.SC_TRI``
 ``wulfric.cell.lepage``                          It was separated from the rest of the
-                                                    package but left as legacy code.
-                                                    Superseded by dependency on |spglib|_.
-                                                    Renamed to ``wulfric.lepage``.
+                                                 package but left as legacy code.
+                                                 Superseded by dependency on |spglib|_.
+                                                 Renamed to ``wulfric.lepage``.
 ``wulfric.constants.BRAVAIS_LATTICE_VARIATIONS`` ``wulfric.constants.SC_BRAVAIS_LATTICE_VARIATIONS``
 ``wulfric.compare_numerically``                  ``wulfric.compare_with_tolerance``
 ``wulfric.Kpoints.flatten_points``               ``wulfric.Kpoints.flat_points``
@@ -109,41 +109,41 @@ Removed
 Name                                              Comment
 ================================================= =======================================================
 ``wulfric.cell.get_C_matrix``                     Due to the transition to |spglib|_. Use inverse of
-                                                    ``wulfric.constants.SC_CONVENTIONAL_TO_PRIMITIVE``
-                                                    with the correct lattice type instead.
+                                                  ``wulfric.constants.SC_CONVENTIONAL_TO_PRIMITIVE``
+                                                  with the correct lattice type instead.
 ``wulfric.cell.get_centring_type``                Due to the transition to |spglib|_. Use
-                                                    ``spglib_data.centring_type`` instead.
+                                                  ``spglib_data.centring_type`` instead.
 ``wulfric.cell.get_conventional``                 Due to the transition to |spglib|_. Use
-                                                    ``wulfric.crystal.get_conventional`` instead.
+                                                  ``wulfric.crystal.get_conventional`` instead.
 ``wulfric.cell.get_crystal_family``               Due to the transition to |spglib|_. Use
-                                                    ``spglib_data.crystal_family`` instead.
+                                                  ``spglib_data.crystal_family`` instead.
 ``wulfric.cell.get_name``                         Due to the transition to |spglib|_. Use
-                                                    ``wulfric.constants.SC_BRAVAIS_LATTICE_LONG_NAMES``
-                                                    instead.
+                                                  ``wulfric.constants.SC_BRAVAIS_LATTICE_LONG_NAMES``
+                                                  instead.
 ``wulfric.cell.get_pearson_symbol``               Due to the transition to |spglib|_. Use
-                                                    ``spglib_data.crystal_family`` and
-                                                    ``spglib_data.centring_type`` instead.
+                                                  ``spglib_data.crystal_family`` and
+                                                  ``spglib_data.centring_type`` instead.
 ``wulfric.cell.get_S_matrix``                     Due to the transition to |spglib|_. Use
-                                                    ``wulfric.cell.get_transformation_matrix`` on original
-                                                    ``cell`` and ``wulfric.crystal.get_conventional``
-                                                    instead.
+                                                  ``wulfric.cell.get_transformation_matrix`` on original
+                                                  ``cell`` and ``wulfric.crystal.get_conventional``
+                                                  instead.
 ``wulfric.cell.get_standardized``                 Due to the transition to |spglib|_. Use
-                                                    ``wulfric.crystal.get_primitive`` instead.
+                                                  ``wulfric.crystal.get_primitive`` instead.
 ``wulfric.cell.is_reasonable``                    It was unused.
 ``wulfric.constants.PEARSON_SYMBOLS``             Due to the transition to |spglib|_. Use
-                                                    ``spglib_data.crystal_family`` and
-                                                    ``spglib_data.centring_type`` instead.
+                                                  ``spglib_data.crystal_family`` and
+                                                  ``spglib_data.centring_type`` instead.
 ``wulfric.constants.STANDARDIZATION_CONVENTIONS`` It was unused.
 ``wulfric.crystal.standardize``                   Due to the transition to |spglib|_. Use
-                                                    ``wulfric.crystal.get_primitive`` instead.
+                                                  ``wulfric.crystal.get_primitive`` instead.
 ``wulfric.geometry.absolute_to_relative``         Readily accessible with |numpy|_:
-                                                    ``r_coords = a_coords @ np.linalg.inv(cell)``
+                                                  ``r_coords = a_coords @ np.linalg.inv(cell)``
 ``wulfric.print_2d_array``                        It was out of the scope of the project and was not used
-                                                    that much internally.
+                                                  that much internally.
 ``wulfric.StandardizationTypeMismatch``           Due to the transition to |spglib|_.
 ``wulfric.visualization.MatplotlibBackend``       Support of two plotting backends was taking too much
-                                                    effort. More plotting backends might be implemented
-                                                    in the future.
+                                                  effort. More plotting backends might be implemented
+                                                  in the future.
 ================================================= =======================================================
 
 Modified
