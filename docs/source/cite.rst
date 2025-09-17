@@ -1,8 +1,8 @@
 .. _wulfric_cite:
 
-***************
-How to cite us?
-***************
+*************
+Whom to cite?
+*************
 
 If you use wulfric in a your work, please cite it
 
