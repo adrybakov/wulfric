@@ -2,22 +2,21 @@
     :maxdepth: 1
     :hidden:
 
-    user-guide/installation
     User Guide <user-guide/index>
+    support
     api/index
     release-notes/index
     contribute/index
     cite
-    support
 
 :Release: |version|
 :Date: |release_date|
 
 **Useful links**:
 :ref:`Installation <user-guide_start_installation>` |
+:ref:`user-support` |
 `Issue Tracker <https://github.com/adrybakov/wulfric/issues>`_ |
-:ref:`Cite us <wulfric_cite>` |
-:ref:`user-support`
+:ref:`Citation guide <wulfric_cite>`
 
 ****************
 What is wulfric?
