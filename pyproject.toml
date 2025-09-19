@@ -45,6 +45,8 @@ visual = ["plotly", "scipy"]
 [tool.setuptools.dynamic]
 version = { attr = "wulfric.__version__" }
 
+[tool.setuptools.package-data]
+wulfric = ["crystal/_hpkot_examples/POSCAR-files/*/POSCAR_inversion", "crystal/_hpkot_examples/POSCAR-files/*/POSCAR_noinversion"]
 
 
 [tool.ruff]
