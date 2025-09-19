@@ -24,4 +24,5 @@ from ._conventional import *
 from ._primitive import *
 from ._crystal_validation import *
 from ._sc_variation import *
+from ._hpkot_extended_bl_symbol import *
 from ._hpkot_examples import *

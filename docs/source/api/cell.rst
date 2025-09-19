@@ -42,8 +42,8 @@ Cell'stransformations
 
 .. _api_cell_sc-bravais-lattice-examples:
 
-Examples for SC convention [1]_
-===============================
+SC convention [1]_
+==================
 
 .. autosummary::
     :toctree: generated/

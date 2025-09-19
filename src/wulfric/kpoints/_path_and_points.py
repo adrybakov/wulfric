@@ -31,13 +31,11 @@ from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric.crystal._conventional import get_conventional
 from wulfric.crystal._primitive import get_primitive
 from wulfric.crystal._sc_variation import sc_get_variation
+from wulfric.crystal._hpkot_extended_bl_symbol import hpkot_get_extended_bl_symbol
 
 from wulfric._exceptions import ConventionNotSupported
 
-from wulfric.kpoints._hpkot_points import (
-    _hpkot_get_points,
-    _hpkot_get_extended_bl_symbol,
-)
+from wulfric.kpoints._hpkot_points import _hpkot_get_points
 from wulfric.kpoints._sc_points import _sc_get_points
 
 from wulfric._spglib_interface import get_spglib_data, validate_spglib_data
@@ -283,10 +281,8 @@ def get_path_and_points(
         )
         kpath = SC_DEFAULT_K_PATHS[lattice_variation]
     elif convention == "hpkot":
-        extended_bl_symbol = _hpkot_get_extended_bl_symbol(
-            lattice_type=lattice_type,
-            space_group_number=spglib_data.space_group_number,
-            conventional_cell=conventional_cell,
+        extended_bl_symbol = hpkot_get_extended_bl_symbol(
+            cell=cell, atoms=atoms, spglib_data=spglib_data
         )
         hs_points = _hpkot_get_points(
             conventional_cell=conventional_cell,

@@ -13,6 +13,7 @@ New features
 ------------
 
 * ``wulfric.crystal.hpkot_get_example``
+* ``hpkot_get_extended_bl_symbol``
 
 
 Renamed

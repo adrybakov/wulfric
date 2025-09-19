@@ -58,13 +58,14 @@ Choice of the cell
     get_primitive
 
 
-Examples for HPKOT [1]_ convention
-==================================
+HPKOT [1]_ convention
+=====================
 
 .. autosummary::
     :toctree: generated/
 
     hpkot_get_example
+    hpkot_get_extended_bl_symbol
 
 SC convention [2]_
 ==================

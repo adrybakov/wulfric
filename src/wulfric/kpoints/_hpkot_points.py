@@ -20,11 +20,11 @@
 # ================================ END LICENSE =================================
 
 
-from math import cos, sin, sqrt
+from math import cos, sin
 
 import numpy as np
 
-from wulfric.cell._basic_manipulation import get_params, get_reciprocal
+from wulfric.cell._basic_manipulation import get_params
 from wulfric.constants._numerical import TORADIANS
 from wulfric._exceptions import PotentialBugError
 
@@ -480,131 +480,6 @@ def _get_points_table_92():
         "T2": np.array([0, -1 / 2, 1 / 2]),
         "R2": np.array([-1 / 2, -1 / 2, 1 / 2]),
     }
-
-
-def _hpkot_get_extended_bl_symbol(lattice_type, space_group_number, conventional_cell):
-    r"""
-    Computes extended Bravais lattice symbol as in Table 94 of [1]_.
-
-    Parameters
-    ==========
-    lattice_type : str
-         Bravais lattice type.
-    space_group_number : int
-        Number of space group. ``1 <= space_group_number < 230``.
-    conventional_cell : (3, 3) |arrray-like|_
-
-    Returns
-    =======
-    extended_bl_symbol : str
-
-    References
-    ----------
-    .. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
-           Band structure diagram paths based on crystallography.
-           Computational Materials Science, 128, pp.140-184.
-    """
-
-    # Lattice types that do not require computation of lattice parameters
-    if lattice_type in ["cI", "tP", "oP", "mP"]:
-        return f"{lattice_type}1"
-
-    if lattice_type == "cP":
-        if 195 <= space_group_number <= 206:
-            return "cP1"
-        elif 207 <= space_group_number <= 230:
-            return "cP2"
-        else:
-            raise PotentialBugError(
-                error_summary=f'(convention="HPKOT"), lattice type cP, space group {space_group_number}. Failed to define extended Bravais lattice symbol.'
-            )
-
-    if lattice_type == "cF":
-        if 195 <= space_group_number <= 206:
-            return "cF1"
-        elif 207 <= space_group_number <= 230:
-            return "cF2"
-        else:
-            raise PotentialBugError(
-                error_summary=f'(convention="HPKOT"), lattice type cF, space group {space_group_number}. Failed to define extended Bravais lattice symbol.'
-            )
-
-    if lattice_type == "hP":
-        if (
-            143 <= space_group_number <= 149
-            or 159 <= space_group_number <= 163
-            or space_group_number in [151, 153, 157]
-        ):
-            return "hP1"
-        else:
-            return "hP2"
-
-    # Lattice types that require computation of lattice parameters
-    a, b, c, _, beta, _ = get_params(cell=conventional_cell)
-
-    if lattice_type == "tI":
-        if c <= a:
-            return "tI1"
-        else:
-            return "tI2"
-
-    if lattice_type == "oF":
-        if 1 / a**2 > 1 / b**2 + 1 / c**2:
-            return "oF1"
-        elif 1 / c**2 > 1 / a**2 + 1 / b**2:
-            return "oF2"
-        else:
-            return "oF3"
-
-    if lattice_type == "oI":
-        if c >= a and c >= b:
-            return "oI1"
-        if a >= b and a >= c:
-            return "oI2"
-        if b >= a and b >= c:
-            return "oI3"
-
-    if lattice_type == "oC":
-        if a <= b:
-            return "oC1"
-        else:
-            return "oC2"
-
-    if lattice_type == "oA":
-        if b <= c:
-            return "oA1"
-        else:
-            return "oA2"
-
-    if lattice_type == "hR":
-        if sqrt(3) * a <= sqrt(2) * c:
-            return "hR1"
-        else:
-            return "hR2"
-
-    if lattice_type == "mC":
-        if b <= a * sin(beta):
-            return "mC1"
-        else:
-            if -a * cos(beta) / c + ((a * sin(beta)) / b) ** 2 <= 1:
-                return "mC2"
-            else:
-                return "mC3"
-
-    if lattice_type == "aP":
-        _, _, _, r_alpha, r_beta, r_gamma = get_params(
-            cell=get_reciprocal(cell=conventional_cell)
-        )
-
-        if r_alpha >= 90 and r_beta >= 90 and r_gamma >= 90:
-            return "aP2"
-        else:
-            return "aP3"
-
-    # If lattice type is not one of the expected ones
-    raise PotentialBugError(
-        f'(convention="HPKOT"), lattice type {lattice_type}, space group {space_group_number}.. Failed to identify lattice type (not one of supported).'
-    )
 
 
 def _hpkot_get_points(conventional_cell, lattice_type, extended_bl_symbol):
