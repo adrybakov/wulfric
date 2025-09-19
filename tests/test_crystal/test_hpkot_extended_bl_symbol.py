@@ -49,10 +49,19 @@ from wulfric.constants import HPKOT_EXTENDED_BL_SYMBOLS
     ids=HPKOT_EXTENDED_BL_SYMBOLS,
 )
 def test_with_inversion(extended_bl_symbol):
-    cell, atoms = hpkot_get_example(
-        extended_bl_symbol=extended_bl_symbol, with_inversion=True
-    )
-    assert extended_bl_symbol == hpkot_get_extended_bl_symbol(cell=cell, atoms=atoms)
+    # TODO:REMOVE when those are added
+    if extended_bl_symbol in ["oF2", "oI2", "oA1", "oA2"]:
+        with pytest.raises(ValueError):
+            cell, atoms = hpkot_get_example(
+                extended_bl_symbol=extended_bl_symbol, with_inversion=True
+            )
+    else:
+        cell, atoms = hpkot_get_example(
+            extended_bl_symbol=extended_bl_symbol, with_inversion=True
+        )
+        assert extended_bl_symbol == hpkot_get_extended_bl_symbol(
+            cell=cell, atoms=atoms
+        )
 
 
 @pytest.mark.parametrize(

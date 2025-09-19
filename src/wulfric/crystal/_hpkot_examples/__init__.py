@@ -38,6 +38,9 @@ def hpkot_get_example(extended_bl_symbol, with_inversion=False):
     See :ref:`api_constants_HPKOT_EXTENDED_BL_SYMBOLS` for the full list of supported
     symbols.
 
+    .. warning::
+        "oF2", "oI2", "oA1", "oA2" with ``with_inversion=True`` are not supported fo now.
+
 
     Parameters
     ----------
@@ -65,6 +68,11 @@ def hpkot_get_example(extended_bl_symbol, with_inversion=False):
            Band structure diagram paths based on crystallography.
            Computational Materials Science, 128, pp.140-184.
     """
+
+    if extended_bl_symbol in ["oF2", "oI2", "oA1", "oA2"] and with_inversion:
+        raise ValueError(
+            '"oF2", "oI2", "oA1", "oA2" with with_inversion=True currently are not supported.'
+        )
 
     supported_symbols = list(HPKOT_EXTENDED_BL_SYMBOLS)
 
