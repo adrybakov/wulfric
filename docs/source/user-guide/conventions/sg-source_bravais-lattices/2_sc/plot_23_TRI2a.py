@@ -36,7 +36,7 @@ To get a primitive triclinic cell use :py:func:`wulfric.cell.SC_TRI`.
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("TRI2a")
+cell = wulfric.cell.sc_get_example("TRI2a")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data

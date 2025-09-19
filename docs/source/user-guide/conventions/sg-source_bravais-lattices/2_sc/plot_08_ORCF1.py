@@ -39,7 +39,7 @@ To get a primitive face-centered orthorhombic cell use :py:func:`wulfric.cell.SC
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("ORCF1")
+cell = wulfric.cell.sc_get_example("ORCF1")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data

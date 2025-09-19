@@ -36,7 +36,7 @@ To get a primitive monoclinic cell use :py:func:`wulfric.cell.SC_MCL`.
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("MCL")
+cell = wulfric.cell.sc_get_example("MCL")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data

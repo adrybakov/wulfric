@@ -37,7 +37,7 @@ To get a primitive body-centered tetragonal cell use :py:func:`wulfric.cell.SC_B
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("BCT1")
+cell = wulfric.cell.sc_get_example("BCT1")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data

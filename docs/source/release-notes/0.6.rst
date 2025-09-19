@@ -4,6 +4,28 @@
 Version 0.6
 ***********
 
+0.6.3
+=====
+
+**Date** : 19 September 2025
+
+New features
+------------
+
+* ``wulfric.crystal.hpkot_get_example``
+
+
+Renamed
+-------
+
+Renamed objects behave in the same way as before.
+
+==================================== ===============================
+Previous name                        New name
+==================================== ===============================
+``wulfric.cell.sc_get_example_cell`` ``wulfric.cell.sc_get_example``
+==================================== ===============================
+
 0.6.2
 =====
 
@@ -156,7 +178,7 @@ behave different in some edge cases. If you use them a review is required.
 =========================================== ===================================================
 Previous name                               New name
 =========================================== ===================================================
-``wulfric.cell.get_cell_example``           ``wulfric.cell.sc_get_example_cell``
+``wulfric.cell.get_cell_example``           ``wulfric.cell.sc_get_example``
 ``wulfric.cell.get_hs_data``                ``wulfric.kpoints.get_path_and_points``
 ``wulfric.cell.get_variation``              ``wulfric.crystal.sc_get_variation``
 ``wulfric.cell.niggli``                     ``wulfric.cell.get_niggli``

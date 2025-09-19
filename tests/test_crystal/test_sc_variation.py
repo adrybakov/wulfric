@@ -39,7 +39,7 @@
 
 import pytest
 
-from wulfric.cell import sc_get_example_cell
+from wulfric.cell import sc_get_example
 from wulfric.crystal import sc_get_variation
 from wulfric.constants import SC_BRAVAIS_LATTICE_VARIATIONS
 
@@ -50,7 +50,7 @@ from wulfric.constants import SC_BRAVAIS_LATTICE_VARIATIONS
     ids=SC_BRAVAIS_LATTICE_VARIATIONS,
 )
 def test_examples(lattice_variation):
-    cell = sc_get_example_cell(lattice_variation)
+    cell = sc_get_example(lattice_variation)
     variation = sc_get_variation(cell, dict(positions=[[0, 0, 0]], spglib_types=[1]))
 
     assert variation == lattice_variation

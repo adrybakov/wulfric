@@ -36,7 +36,7 @@ TRI2b
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("TRI2b")
+cell = wulfric.cell.sc_get_example("TRI2b")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data

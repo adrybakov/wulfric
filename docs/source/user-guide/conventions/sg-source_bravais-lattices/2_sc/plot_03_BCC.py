@@ -34,7 +34,7 @@ To get a primitive body-centered cubic cell use :py:func:`wulfric.cell.SC_BCC`.
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("BCC")
+cell = wulfric.cell.sc_get_example("BCC")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data

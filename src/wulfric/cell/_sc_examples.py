@@ -866,9 +866,11 @@ def SC_TRI(
     return cell
 
 
-def sc_get_example_cell(lattice_variation: str = None):
+def sc_get_example(lattice_variation: str = None):
     r"""
     Examples of the Bravais lattices as defined in the paper by Setyawan and Curtarolo [1]_.
+
+    .. versionchanged:: 0.6.3 renamed from ``sc_get_example_cell``.
 
     Parameters
     ----------
@@ -902,11 +904,11 @@ def sc_get_example_cell(lattice_variation: str = None):
     .. doctest::
 
         >>> import wulfric
-        >>> wulfric.cell.sc_get_example_cell("cub")
+        >>> wulfric.cell.sc_get_example("cub")
         array([[3.14159265, 0.        , 0.        ],
                [0.        , 3.14159265, 0.        ],
                [0.        , 0.        , 3.14159265]])
-        >>> wulfric.cell.sc_get_example_cell("ORCF3")
+        >>> wulfric.cell.sc_get_example("ORCF3")
         array([[0.        , 1.96349541, 2.61799388],
                [1.57079633, 0.        , 2.61799388],
                [1.57079633, 1.96349541, 0.        ]])
@@ -1006,6 +1008,19 @@ def sc_get_example_cell(lattice_variation: str = None):
         cell = SC_TRI(0.5, 1.0, 2.0, 80.0, 100.0, 40.0)
 
     return cell
+
+
+# Deprecated in 0.6.3
+# TODO:REMOVE in April of 2025
+def sc_get_example_cell(lattice_variation: str = None):
+    import warnings
+
+    warnings.warn(
+        "wulfric.cell.sc_get_example_cell has been renamed to wulfric.cell.sc_get_example in v0.6.3 release. This function with an old name will be removed in April of 2026.",
+        DeprecationWarning,
+    )
+
+    return sc_get_example(lattice_variation=lattice_variation)
 
 
 # Populate __all__ with objects defined in this file

@@ -117,7 +117,7 @@ Or you can get a pre-defined examples with the parameter that are chosen by wulf
 
 .. doctest::
 
-    >>> wulfric.cell.sc_get_example_cell("FCC")
+    >>> wulfric.cell.sc_get_example("FCC")
     array([[0.        , 1.57079633, 1.57079633],
            [1.57079633, 0.        , 1.57079633],
            [1.57079633, 1.57079633, 0.        ]])
@@ -127,11 +127,11 @@ variation as defined in [1]_.
 
 .. doctest::
 
-    >>> wulfric.cell.sc_get_example_cell("BCT1")
+    >>> wulfric.cell.sc_get_example("BCT1")
     array([[-2.35619449,  2.35619449,  1.57079633],
            [ 2.35619449, -2.35619449,  1.57079633],
            [ 2.35619449,  2.35619449, -1.57079633]])
-    >>> wulfric.cell.sc_get_example_cell("BCT2")
+    >>> wulfric.cell.sc_get_example("BCT2")
     array([[-1.57079633,  1.57079633,  2.35619449],
            [ 1.57079633, -1.57079633,  2.35619449],
            [ 1.57079633,  1.57079633, -2.35619449]])

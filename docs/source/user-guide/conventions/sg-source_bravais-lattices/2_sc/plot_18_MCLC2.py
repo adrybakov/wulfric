@@ -39,7 +39,7 @@ To get a primitive base-centered monoclinic cell use :py:func:`wulfric.cell.SC_M
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("MCLC2")
+cell = wulfric.cell.sc_get_example("MCLC2")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data

@@ -34,7 +34,7 @@ To get a primitive face-centered cubic cell use :py:func:`wulfric.cell.SC_FCC`.
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("FCC")
+cell = wulfric.cell.sc_get_example("FCC")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data

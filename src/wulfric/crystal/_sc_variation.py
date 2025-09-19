@@ -363,7 +363,7 @@ def sc_get_variation(cell, atoms, spglib_data=None):
         ...     atoms=dict(positions=[[0, 0, 0]], spglib_types=[1]),
         ... )
         'CUB'
-        >>> cell = wulfric.cell.sc_get_example_cell("bct")
+        >>> cell = wulfric.cell.sc_get_example("bct")
         >>> wulfric.crystal.sc_get_variation(
         ...     cell=cell,
         ...     atoms=dict(positions=[[0, 0, 0]], spglib_types=[1]),

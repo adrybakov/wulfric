@@ -36,7 +36,7 @@ To get a primitive orthorhombic cell use :py:func:`wulfric.cell.SC_ORC`.
 
 import wulfric
 
-cell = wulfric.cell.sc_get_example_cell("ORC")
+cell = wulfric.cell.sc_get_example("ORC")
 atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])
 
 # To avoid multiple calls to spglib one can do it once and then pass spglib_data

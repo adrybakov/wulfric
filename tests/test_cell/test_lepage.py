@@ -22,7 +22,7 @@ import pytest
 
 from wulfric._lepage import lepage
 from wulfric.cell._basic_manipulation import from_params
-from wulfric.cell._sc_examples import sc_get_example_cell
+from wulfric.cell._sc_examples import sc_get_example
 from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_VARIATIONS
 
 
@@ -33,7 +33,7 @@ from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_VARIATIONS
     "variation", SC_BRAVAIS_LATTICE_VARIATIONS, ids=SC_BRAVAIS_LATTICE_VARIATIONS
 )
 def test_lepage(variation):
-    cell = sc_get_example_cell(variation)
+    cell = sc_get_example(variation)
     type_name = variation.translate(str.maketrans("", "", "12345ab"))
     assert lepage(cell) == type_name
 

@@ -48,7 +48,7 @@ Examples for SC convention [1]_
 .. autosummary::
     :toctree: generated/
 
-    sc_get_example_cell
+    sc_get_example
     SC_CUB
     SC_FCC
     SC_BCC
