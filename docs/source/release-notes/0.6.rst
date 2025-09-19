@@ -9,6 +9,13 @@ Version 0.6
 
 **Date** : 19 September 2025
 
+Bugfix
+------
+
+* mC lattices with HPKOT convention had a programming bug. This bug was leading to the
+  wrong definition of the extended Bravais lattice symbol in some cases, which in turn
+  led to the wrong detection of k-points. This bug is fixed now.
+
 New features
 ------------
 

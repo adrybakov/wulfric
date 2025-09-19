@@ -28,6 +28,7 @@ from wulfric._spglib_interface import get_spglib_data, validate_spglib_data
 from wulfric._syntactic_sugar import SyntacticSugar
 from wulfric.crystal._conventional import get_conventional
 from wulfric._exceptions import PotentialBugError
+from wulfric.constants import TORADIANS
 
 # Save local scope at this moment
 old_dir = set(dir())
@@ -209,10 +210,13 @@ def hpkot_get_extended_bl_symbol(cell, atoms, spglib_data=None):
             return "hR2"
 
     if lattice_type == "mC":
-        if b <= a * sin(beta):
+        if b <= a * sin(beta * TORADIANS):
             return "mC1"
         else:
-            if -a * cos(beta) / c + ((a * sin(beta)) / b) ** 2 <= 1:
+            if (
+                -a * cos(beta * TORADIANS) / c + ((a * sin(beta * TORADIANS)) / b) ** 2
+                <= 1
+            ):
                 return "mC2"
             else:
                 return "mC3"
