@@ -20,7 +20,7 @@
 # ================================ END LICENSE =================================
 import os
 from wulfric.io._vasp import load_poscar
-from wulfric.constants._hpkot_convention import HPKOT_DEFAULT_K_PATHS
+from wulfric.constants._hpkot_convention import HPKOT_EXTENDED_BL_SYMBOLS
 
 __all__ = ["hpkot_get_example"]
 
@@ -34,6 +34,10 @@ def hpkot_get_example(extended_bl_symbol, with_inversion=False):
 
     Crystal structures are taken from the |seekpath|_ repository
     with the permission of its authors.
+
+    See :ref:`api_constants_HPKOT_EXTENDED_BL_SYMBOLS` for the full list of supported
+    symbols.
+
 
     Parameters
     ----------
@@ -62,7 +66,7 @@ def hpkot_get_example(extended_bl_symbol, with_inversion=False):
            Computational Materials Science, 128, pp.140-184.
     """
 
-    supported_symbols = list(HPKOT_DEFAULT_K_PATHS)
+    supported_symbols = list(HPKOT_EXTENDED_BL_SYMBOLS)
 
     supported_symbols += list(set([_[:2] for _ in supported_symbols]))
 
