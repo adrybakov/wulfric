@@ -1,4 +1,4 @@
 Hinuma, Pizzi, Kumagai, Oba, Tanaka (HPKOT)
 ===========================================
 
-Examples are coming soon.
+.. include:: ../HPKOT-reference-memo.inc

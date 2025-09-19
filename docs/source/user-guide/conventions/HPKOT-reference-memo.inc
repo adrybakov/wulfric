@@ -1,0 +1,7 @@
+.. admonition:: Reference
+
+    |POSCAR|_ files with the crystal structure for these examples are taken from the
+    |seekpath|_ repository with the permission of its authors. We refer you to
+    |seekpath|_ for the original copies of the files and the license for those. To read
+    more about the extended Bravais lattice symbols, chosen high-symmetry points and
+    k-paths we refer you to the |HPKOT-paper|_.
