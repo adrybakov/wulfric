@@ -39,7 +39,7 @@ html:
 clean-html: clean install html
 	@echo "Done"
 
-html-from-zero: clean install docs-generate-images docs-index html
+html-from-zero: clean install docs-generate-images docs-generate-bl-gallery docs-index html
 	@echo "Done"
 
 doctest:

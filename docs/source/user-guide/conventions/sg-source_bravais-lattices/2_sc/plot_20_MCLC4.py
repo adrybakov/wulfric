@@ -32,7 +32,7 @@ Cell constructor
 To get an example of the cell use :py:func:`wulfric.cell.SC_MCLC`.
 
 :py:func:`wulfric.cell.sc_get_example` returns an example where
-:math:`a = 1.2\sin(65)\pi`, :math:`b = \pi`, :math:`c = 36\cos(65)\pi/11` and :math:`\alpha = 65^{\circ}.
+:math:`a = 1.2\sin(65)\pi`, :math:`b = \pi`, :math:`c = 36\cos(65)\pi/11` and :math:`\alpha = 65^{\circ}`.
 """
 
 import wulfric
