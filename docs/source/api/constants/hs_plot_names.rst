@@ -10,7 +10,7 @@ Names of high-symmetry k points written in LaTex.
 
 .. code-block:: python
 
-    HS_PLOT_NAMES = {,
+    HS_PLOT_NAMES = {
         "A" : "A",
         "A_P" : "A$^{\prime}$",
         "A0" : "A$_0$",
