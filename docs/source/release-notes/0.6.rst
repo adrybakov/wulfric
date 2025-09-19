@@ -15,6 +15,7 @@ Bugfix
 * mC lattices with HPKOT convention had a programming bug. This bug was leading to the
   wrong definition of the extended Bravais lattice symbol in some cases, which in turn
   led to the wrong detection of k-points. This bug is fixed now.
+* Fix :issue:`16`.
 
 New features
 ------------
@@ -23,7 +24,8 @@ New features
 * ``wulfric.crystal.hpkot_get_extended_bl_symbol``
 * ``wulfric.constants.BRAVAIS_LATTICES``
 * ``wulfric.constants.HPKOT_EXTENDED_BL_SYMBOLS``
-* Add ``with_time_reversal`` to ``wulfric.kpoints.get_path_and_points`` and ``wulfric.Kpoints.from_crystal``.
+* Add ``with_time_reversal`` to ``wulfric.kpoints.get_path_and_points`` and
+  ``wulfric.Kpoints.from_crystal``.
 
 
 Renamed

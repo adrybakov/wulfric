@@ -751,8 +751,9 @@ class PlotlyEngine:
                 data=dict(
                     type="scatter3d",
                     mode="lines",
+                    name=legend_label,
                     legendgroup=legend_group,
-                    showlegend=False,
+                    showlegend=legend_label is not None,
                     x=xyz[0],
                     y=xyz[1],
                     z=xyz[2],
@@ -762,6 +763,9 @@ class PlotlyEngine:
                 rows=row,
                 cols=col,
             )
+            if legend_label is not None:
+                legend_label = None
+
         # Fix for plotly #7143
         self._update_range(
             x_min=xyz[0].min(),
