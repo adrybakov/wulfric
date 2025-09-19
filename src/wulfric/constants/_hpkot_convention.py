@@ -169,6 +169,38 @@ HPKOT_DEFAULT_K_PATHS = {
     "aP3": "GAMMA-X|Y-GAMMA-Z|R2-GAMMA-T2|U2-GAMMA-V2",
 }
 
+HPKOT_EXTENDED_BL_SYMBOLS = (
+    "cP1",
+    "cP2",
+    "cF1",
+    "cF2",
+    "cI1",
+    "tP1",
+    "tI1",
+    "tI2",
+    "oP1",
+    "oF1",
+    "oF2",
+    "oF3",
+    "oI1",
+    "oI2",
+    "oI3",
+    "oC1",
+    "oC2",
+    "oA1",
+    "oA2",
+    "hP1",
+    "hP2",
+    "hR1",
+    "hR2",
+    "mP1",
+    "mC1",
+    "mC2",
+    "mC3",
+    "aP2",
+    "aP3",
+)
+
 # Populate __all__ with objects defined in this file
 __all__ = list(set(dir()) - old_dir)
 # Remove all semi-private objects

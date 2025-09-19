@@ -17,6 +17,7 @@ wulfric.constants
     sc_default_k_paths
     hpkot_default_k_paths
     hpkot_conventional_to_primitive
+    hpkot_extended_bl_symbols
     todegrees
     toradians
     inversion_symmetry
@@ -52,6 +53,7 @@ Hinuma, Pizzi, Kumagai, Oba, Tanaka convention
 ==================================================== =================================================================
 :ref:`api_constants_HPKOT_CONVENTIONAL_TO_PRIMITIVE` Transformation matrices from conventional cell to primitive cell.
 :ref:`api_constants_HPKOT_DEFAULT_K_PATHS`           Default k-path for each extended Bravais lattice symbols.
+:ref:`api_constants_HPKOT_EXTENDED_BL_SYMBOLS`       Extended Bravais lattice symbols from [1]_.
 ==================================================== =================================================================
 
 Kpoints

@@ -53,6 +53,7 @@ SECTIONS = {
     "Hinuma, Pizzi, Kumagai, Oba, Tanaka convention": [
         "HPKOT_CONVENTIONAL_TO_PRIMITIVE",
         "HPKOT_DEFAULT_K_PATHS",
+        "HPKOT_EXTENDED_BL_SYMBOLS",
     ],
     "Kpoints": ["HS_PLOT_NAMES"],
     "Angle conversion": ["TODEGREES", "TORADIANS"],
@@ -97,6 +98,11 @@ DESCRIPTIONS = {
     "HPKOT_CONVENTIONAL_TO_PRIMITIVE": (
         "Transformation matrices from conventional cell to primitive cell.",
         "Data are from the Table 3 of [1]_.",
+        HPKOT_REFERENCE,
+    ),
+    "HPKOT_EXTENDED_BL_SYMBOLS": (
+        "Extended Bravais lattice symbols from [1]_.",
+        "",
         HPKOT_REFERENCE,
     ),
     "TODEGREES": ("Constant that converts radians to degrees.", "", ""),
@@ -191,6 +197,7 @@ VALUE_PROCESSORS = {
     "CENTRING_TYPE": dict_processor_str,
     "HS_PLOT_NAMES": dict_processor_str,
     "BRAVAIS_LATTICES": tuple_processor,
+    "HPKOT_EXTENDED_BL_SYMBOLS": tuple_processor,
 }
 
 
