@@ -18,8 +18,26 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-from wulfric.constants._numerical import TODEGREES, TORADIANS
+
+import pytest
+from wulfric.constants import ATOM_SPECIES, ATOMIC_MASS, ATOM_COLORS
 
 
-def test_radians_degrees():
-    assert abs(TODEGREES * TORADIANS - 1) < 1e-8
+def test_atomic_mass():
+    assert list(ATOM_SPECIES) == list(ATOMIC_MASS)
+
+
+def test_atom_colors():
+    assert list(ATOM_SPECIES) + ["X"] == list(ATOM_COLORS)
+
+
+@pytest.mark.parametrize("atom_species", list(ATOM_COLORS))
+def test_atom_colors_values(atom_species):
+    color = ATOM_COLORS[atom_species]
+
+    assert color[0] == "#"
+
+    allowed_letters = "0123456789ABCDEF"
+
+    for letter in color[1:]:
+        assert letter in allowed_letters
