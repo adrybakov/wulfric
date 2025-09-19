@@ -57,6 +57,7 @@ SECTIONS = {
     "Kpoints": ["HS_PLOT_NAMES"],
     "Angle conversion": ["TODEGREES", "TORADIANS"],
     "Space Groups": ["INVERSION_SYMMETRY", "CRYSTAL_FAMILY", "CENTRING_TYPE"],
+    "Bravais lattices": ["BRAVAIS_LATTICES"],
 }
 
 DESCRIPTIONS = {
@@ -116,6 +117,7 @@ DESCRIPTIONS = {
         "",
     ),
     "HS_PLOT_NAMES": ("Names of high-symmetry k points written in LaTex.", "", ""),
+    "BRAVAIS_LATTICES": ("Symbols of Bravais lattices.", "", ""),
 }
 
 
@@ -188,6 +190,7 @@ VALUE_PROCESSORS = {
     "CRYSTAL_FAMILY": dict_processor_str,
     "CENTRING_TYPE": dict_processor_str,
     "HS_PLOT_NAMES": dict_processor_str,
+    "BRAVAIS_LATTICES": tuple_processor,
 }
 
 

@@ -18,10 +18,32 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-from ._atoms import *
-from ._numerical import *
-from ._sc_convention import *
-from ._hpkot_convention import *
-from ._space_groups import *
-from ._kpoints import *
-from ._bravais_lattices import *
+
+# Save local scope at this moment
+old_dir = set(dir())
+old_dir.add("old_dir")
+
+
+BRAVAIS_LATTICES = (
+    "cP",
+    "cF",
+    "cI",
+    "tP",
+    "tI",
+    "oP",
+    "oF",
+    "oI",
+    "oA",
+    "oC",
+    "hP",
+    "hR",
+    "mP",
+    "mC",
+    "aP",
+)
+
+# Populate __all__ with objects defined in this file
+__all__ = list(set(dir()) - old_dir)
+# Remove all semi-private objects
+__all__ = [i for i in __all__ if not i.startswith("_")]
+del old_dir

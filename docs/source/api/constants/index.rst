@@ -23,6 +23,7 @@ wulfric.constants
     crystal_family
     centring_type
     hs_plot_names
+    bravais_lattices
 
 
 Atoms
@@ -76,3 +77,10 @@ Space Groups
 :ref:`api_constants_CRYSTAL_FAMILY`     Crystal family of every space group.
 :ref:`api_constants_CENTRING_TYPE`      Centring type of every space group.
 ======================================= =====================================================================
+
+Bravais lattices
+================
+
+===================================== ============================
+:ref:`api_constants_BRAVAIS_LATTICES` Symbols of Bravais lattices.
+===================================== ============================
