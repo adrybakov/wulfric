@@ -22,17 +22,16 @@ r"""
 TRI1b
 *****
 
-Triclinic cell is defined by two parameters by six parameters :math:`a`, :math:`b`,
-:math:`c` and :math:`\alpha`, :math:`\beta`, :math:`\gamma`.
+Triclinic cell is defined by six parameters :math:`a`, :math:`b`, :math:`c` and :math:`\alpha`, :math:`\beta`, :math:`\gamma`.
 
-TRI lattice has variation TRI1b if
-:math:`k_{\alpha} < 90^{\circ}, k_{\beta} < 90^{\circ}, k_{\gamma} < 90^{\circ}` and
-:math:`k_{\gamma} = \max(k_{\alpha}, k_{\beta}, k_{\gamma})`.
+TRI lattice has variation TRI1b when :math:`k_{\alpha} < 90^{\circ}, k_{\beta} < 90^{\circ}, k_{\gamma} < 90^{\circ}` and :math:`k_{\gamma} = \max(k_{\alpha}, k_{\beta}, k_{\gamma})`.
 
 Cell constructor
 ================
 
-To get a primitive triclinic cell use :py:func:`wulfric.cell.SC_TRI`.
+To get an example of the cell use :py:func:`wulfric.cell.SC_TRI`.
+
+
 """
 
 import wulfric
@@ -110,16 +109,5 @@ pe.plot_wigner_seitz_cell(
 
 pe.show(axes_visible=False)
 
-# %%
-# Edge cases
-# ==========
-# If :math:`a = b \ne c` or :math:`a = c \ne b` or :math:`b = c \ne a`,
-# then the lattice is
-# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_05_BCT1.py`
-# or
-# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_06_BCT2.py`.
-#
-# If :math:`a = b = c`, then the lattice is
-# :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_02_FCC.py`.
 
 # sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/TRI1b.png'

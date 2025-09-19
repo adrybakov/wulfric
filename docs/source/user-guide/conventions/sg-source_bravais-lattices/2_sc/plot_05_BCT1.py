@@ -24,15 +24,15 @@ BCT1
 
 Body-centered tetragonal cell is defined by two parameters :math:`a` and :math:`c`.
 
-BCT lattice has variation BCT1 if :math:`c < a`
+BCT lattice has variation BCT1 when :math:`c < a`.
 
 Cell constructor
 ================
 
-To get a primitive body-centered tetragonal cell use :py:func:`wulfric.cell.SC_BCT`.
+To get an example of the cell use :py:func:`wulfric.cell.SC_BCT`.
 
-:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = 1.5\pi` and
-:math:`c = \pi`.
+:py:func:`wulfric.cell.sc_get_example` returns an example where
+:math:`a = 1.5\pi` and :math:`c = \pi`.
 """
 
 import wulfric

@@ -22,18 +22,17 @@ r"""
 RHL1
 ****
 
-Rhombohedral cell is defined by two parameters by two parameters :math:`a` and
-:math:`\alpha`.
+Rhombohedral cell is defined by two parameters :math:`a` and :math:`\alpha`.
 
-RHL lattice has variation RHL1 if :math:`\alpha < 90^{\circ}`.
+RHL lattice has variation RHL1 when :math:`\alpha < 90^{\circ}`.
 
 Cell constructor
 ================
 
-To get a primitive rhombohedral cell use :py:func:`wulfric.cell.SC_RHL`.
+To get an example of the cell use :py:func:`wulfric.cell.SC_RHL`.
 
-:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = \pi` and
-:math:`\alpha = 70^{\circ}`
+:py:func:`wulfric.cell.sc_get_example` returns an example where
+:math:`a = \pi` and :math:`\alpha = 70^{\circ}`.
 """
 
 import wulfric

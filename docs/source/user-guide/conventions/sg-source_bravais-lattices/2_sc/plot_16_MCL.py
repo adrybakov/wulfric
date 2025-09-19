@@ -22,16 +22,17 @@ r"""
 MCL
 ***
 
-Monoclinic cell is defined by two parameters by four parameters :math:`a`, :math:`b`,
-:math:`c` and :math:`\alpha` with :math:`b \le c`, :math:`\alpha < 90^{\circ}`.
+Monoclinic cell is defined by four parameters :math:`a`, :math:`b`, :math:`c` and :math:`\alpha` with :math:`b \le c`, :math:`\alpha < 90^{\circ}`.
+
+
 
 Cell constructor
 ================
 
-To get a primitive monoclinic cell use :py:func:`wulfric.cell.SC_MCL`.
+To get an example of the cell use :py:func:`wulfric.cell.SC_MCL`.
 
-:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = \pi`,
-:math:`b = 1.3 \pi` :math:`c = 1.6 \pi` and :math:`\alpha = 75^{\circ}`.
+:py:func:`wulfric.cell.sc_get_example` returns an example where
+:math:`a = \pi`, :math:`b = 1.3 \pi` :math:`c = 1.6 \pi` and :math:`\alpha = 75^{\circ}`.
 """
 
 import wulfric
@@ -52,6 +53,7 @@ conv_cell, conv_atoms = wulfric.crystal.get_conventional(
 prim_cell, prim_atoms = wulfric.crystal.get_primitive(
     cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
 )
+
 
 # %%
 # K-path

@@ -84,6 +84,8 @@ docs-generate-images:
 docs-generate-bl-gallery:
 	-@rm docs/source/user-guide/conventions/sg-source_bravais-lattices/1_hpkot/plot_*.py
 	@python tools/generate-bl-hpkot-gallery.py
+	-@rm docs/source/user-guide/conventions/sg-source_bravais-lattices/2_sc/plot_*.py
+	@python tools/generate-bl-sc-gallery.py
 
 .ONESHELL:
 requirements:

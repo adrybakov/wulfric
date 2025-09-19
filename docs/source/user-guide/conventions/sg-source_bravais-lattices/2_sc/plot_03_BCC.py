@@ -24,12 +24,15 @@ BCC
 
 Body-centered cubic cell is defined by single parameter :math:`a`.
 
+
+
 Cell constructor
 ================
 
-To get a primitive body-centered cubic cell use :py:func:`wulfric.cell.SC_BCC`.
+To get an example of the cell use :py:func:`wulfric.cell.SC_BCC`.
 
-:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = \pi`.
+:py:func:`wulfric.cell.sc_get_example` returns an example where
+:math:`a = \pi`.
 """
 
 import wulfric
@@ -50,6 +53,7 @@ conv_cell, conv_atoms = wulfric.crystal.get_conventional(
 prim_cell, prim_atoms = wulfric.crystal.get_primitive(
     cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
 )
+
 
 # %%
 # K-path
@@ -98,5 +102,6 @@ pe.plot_wigner_seitz_cell(
 )
 
 pe.show(axes_visible=False)
+
 
 # sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/BCC.png'

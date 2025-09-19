@@ -22,20 +22,17 @@ r"""
 MCLC5
 *****
 
-Base-centered monoclinic cell is defined by two parameters by four parameters :math:`a`,
-:math:`b`, :math:`c` and :math:`\alpha` with :math:`b \le c`, :math:`\alpha < 90^{\circ}`.
+Base-centered monoclinic cell is defined by four parameters :math:`a`, :math:`b`, :math:`c` and :math:`\alpha` with :math:`b \le c`, :math:`\alpha < 90^{\circ}`.
 
-MCLC lattice has variation MCLC5 if :math:`k_{\gamma} < 90^{\circ}` and
-:math:`\dfrac{b\cos(\alpha)}{c} + \dfrac{b^2\sin(\alpha)^2}{a^2} > 1`.
+MCLC lattice has variation MCLC5 when :math:`k_{\gamma} < 90^{\circ}` and :math:`\dfrac{b\cos(\alpha)}{c} + \dfrac{b^2\sin(\alpha)^2}{a^2} > 1`.
 
 Cell constructor
 ================
 
-To get a primitive base-centered monoclinic cell use :py:func:`wulfric.cell.SC_MCLC`.
+To get an example of the cell use :py:func:`wulfric.cell.SC_MCLC`.
 
-:py:func:`wulfric.cell.get_example_cell` returns an example with
-:math:`a = 1.4\cdot\sin(53)\cdot\pi`, :math:`b = \pi`,
-:math:`c = 0.9\cdot 11\cdot\cos(53)\cdot\pi/6` and :math:`\alpha = 53^{\circ}`
+:py:func:`wulfric.cell.sc_get_example` returns an example where
+:math:`a = 1.4\cdot\sin(53)\cdot\pi`, :math:`b = \pi`, :math:`c = 0.9\cdot 11\cdot\cos(53)\cdot\pi/6` and :math:`\alpha = 53^{\circ}.
 """
 
 import wulfric
@@ -112,5 +109,6 @@ pe.plot_wigner_seitz_cell(
 )
 
 pe.show(axes_visible=False)
+
 
 # sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/MCLC5.png'

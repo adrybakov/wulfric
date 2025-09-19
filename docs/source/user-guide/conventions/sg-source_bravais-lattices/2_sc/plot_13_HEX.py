@@ -22,15 +22,17 @@ r"""
 HEX
 ***
 
-Hexagonal cell is defined by two parameters by two parameters :math:`a` and :math:`c`.
+Hexagonal cell is defined by two parameters :math:`a` and :math:`c`.
+
+
 
 Cell constructor
 ================
 
-To get a primitive hexagonal cell use :py:func:`wulfric.cell.SC_HEX`.
+To get an example of the cell use :py:func:`wulfric.cell.SC_HEX`.
 
-:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = \pi` and
-:math:`c = 2\pi`.
+:py:func:`wulfric.cell.sc_get_example` returns an example where
+:math:`a = \pi` and :math:`c = 2\pi`.
 """
 
 import wulfric
@@ -51,6 +53,7 @@ conv_cell, conv_atoms = wulfric.crystal.get_conventional(
 prim_cell, prim_atoms = wulfric.crystal.get_primitive(
     cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
 )
+
 
 # %%
 # K-path
@@ -99,5 +102,6 @@ pe.plot_wigner_seitz_cell(
 )
 
 pe.show(axes_visible=False)
+
 
 # sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/HEX.png'

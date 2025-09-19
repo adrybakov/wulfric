@@ -22,19 +22,17 @@ r"""
 ORCF1
 *****
 
-Face-centred orthorhombic cell is defined by two parameters by three parameters :math:`a`, :math:`b`
-and :math:`c` with :math:`a < b < c`.
+Face-centred orthorhombic cell is defined by three parameters :math:`a`, :math:`b` and :math:`c` with :math:`a < b < c`.
 
-ORCF lattice has variation ORCF1 if
-:math:`\dfrac{1}{a^2} > \dfrac{1}{b^2} + \dfrac{1}{c^2}`.
+ORCF lattice has variation ORCF1 when :math:`\dfrac{1}{a^2} > \dfrac{1}{b^2} + \dfrac{1}{c^2}`.
 
 Cell constructor
 ================
 
-To get a primitive face-centered orthorhombic cell use :py:func:`wulfric.cell.SC_ORCF`.
+To get an example of the cell use :py:func:`wulfric.cell.SC_ORCF`.
 
-:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = 0.7\pi`,
-:math:`b = 5\pi/4` and :math:`c = 5\pi/3`.
+:py:func:`wulfric.cell.sc_get_example` returns an example where
+:math:`a = 0.7\pi`, :math:`b = 5\pi/4` and :math:`c = 5\pi/3`.
 """
 
 import wulfric

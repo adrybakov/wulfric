@@ -22,18 +22,17 @@ r"""
 MCLC1
 *****
 
-Base-centered monoclinic cell is defined by two parameters by four parameters :math:`a`,
-:math:`b`, :math:`c` and :math:`\alpha` with :math:`b \le c`, :math:`\alpha < 90^{\circ}`.
+Base-centered monoclinic cell is defined by four parameters :math:`a`, :math:`b`, :math:`c` and :math:`\alpha` with :math:`b \le c`, :math:`\alpha < 90^{\circ}`.
 
-MCLC lattice has variation MCLC1 if :math:`k_{\gamma} > 90^{\circ}`.
+MCLC lattice has variation MCLC1 when :math:`k_{\gamma} > 90^{\circ}`.
 
 Cell constructor
 ================
 
-To get a primitive base-centered monoclinic cell use :py:func:`wulfric.cell.SC_MCLC`.
+To get an example of the cell use :py:func:`wulfric.cell.SC_MCLC`.
 
-:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = \pi`,
-:math:`b = 1.4\cdot\pi`, :math:`c = 1.7\cdot\pi` and :math:`\alpha = 80^{\circ}`
+:py:func:`wulfric.cell.sc_get_example` returns an example where
+:math:`a = \pi`, :math:`b = 1.4\cdot\pi`, :math:`c = 1.7\cdot\pi` and :math:`\alpha = 80^{\circ}`.
 """
 
 import wulfric
@@ -110,5 +109,6 @@ pe.plot_wigner_seitz_cell(
 )
 
 pe.show(axes_visible=False)
+
 
 # sphinx_gallery_thumbnail_path = 'img/gallery-thumbnails/bl-sc/MCLC1.png'

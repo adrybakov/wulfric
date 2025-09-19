@@ -22,16 +22,17 @@ r"""
 ORCI
 ****
 
-Body-centered orthorhombic cell is defined by two parameters by three parameters :math:`a`, :math:`b`
-and :math:`c` with :math:`a < b < c`.
+Body-centered orthorhombic cell is defined by three parameters :math:`a`, :math:`b` and :math:`c` with :math:`a < b < c`.
+
+
 
 Cell constructor
 ================
 
-To get a primitive body-centered orthorhombic cell use :py:func:`wulfric.cell.SC_ORCI`.
+To get an example of the cell use :py:func:`wulfric.cell.SC_ORCI`.
 
-:py:func:`wulfric.cell.get_example_cell` returns an example with :math:`a = \pi`,
-:math:`b  = 1.3\pi` and :math:`c = 1.7\pi`.
+:py:func:`wulfric.cell.sc_get_example` returns an example where
+:math:`a = \pi`, :math:`b  = 1.3\pi` and :math:`c = 1.7\pi`.
 """
 
 import wulfric
@@ -52,6 +53,7 @@ conv_cell, conv_atoms = wulfric.crystal.get_conventional(
 prim_cell, prim_atoms = wulfric.crystal.get_primitive(
     cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
 )
+
 
 # %%
 # K-path
