@@ -31,7 +31,7 @@ def template(
         variation_prog_test = ""
     else:
         variation_string = f"{lattice_type} lattice has variation {variation} when {variation_condition}."
-        variation_prog_test = f"""variation = wulfric.crystal.sc_get_variation(
+        variation_prog_test = f"""\nvariation = wulfric.crystal.sc_get_variation(
     cell=cell, atoms=atoms, spglib_data=spglib_data
 )
 
@@ -98,7 +98,6 @@ conv_cell, conv_atoms = wulfric.crystal.get_conventional(
 prim_cell, prim_atoms = wulfric.crystal.get_primitive(
     cell=cell, atoms=atoms, convention="SC", spglib_data=spglib_data
 )
-
 {variation_prog_test}
 
 # %%
