@@ -290,6 +290,10 @@ custom_links = {
         "Wigner-Seitz",
         "https://en.wikipedia.org/wiki/Wigner%E2%80%93Seitz_cell",
     ),
+    "HPKOT-paper": (
+        "HPKOT paper",
+        "https://doi.org/10.1016/j.commatsci.2016.10.015",
+    ),
 }
 
 
