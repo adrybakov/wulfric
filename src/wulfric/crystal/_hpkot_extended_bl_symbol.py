@@ -106,7 +106,7 @@ def hpkot_get_extended_bl_symbol(cell, atoms, spglib_data=None):
         ...     cell=[[1, 0, 0], [0, 1, 0], [0, 0, 1]],
         ...     atoms=dict(positions=[[0, 0, 0]], spglib_types=[1]),
         ... )
-        'cP1'
+        'cP2'
 
     """
 
