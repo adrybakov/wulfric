@@ -33,8 +33,8 @@ Data are from [1]_
         "MCLC4" : "GAMMA-Y-F-H-Z-I|H1-Y1-X-GAMMA-N|M-GAMMA",
         "MCLC5" : "GAMMA-Y-F-L-I|I1-Z-H-F1|H1-Y1-X-GAMMA-N|M-GAMMA",
         "TRI1a" : "X-GAMMA-Y|L-GAMMA-Z|N-GAMMA-M|R-GAMMA",
-        "TRI1b" : "X-GAMMA-Y|L-GAMMA-Z|N-GAMMA-M|R-GAMMA",
         "TRI2a" : "X-GAMMA-Y|L-GAMMA-Z|N-GAMMA-M|R-GAMMA",
+        "TRI1b" : "X-GAMMA-Y|L-GAMMA-Z|N-GAMMA-M|R-GAMMA",
         "TRI2b" : "X-GAMMA-Y|L-GAMMA-Z|N-GAMMA-M|R-GAMMA",
     }
 

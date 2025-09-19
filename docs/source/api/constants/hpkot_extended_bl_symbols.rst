@@ -4,9 +4,9 @@
 wulfric.constants.HPKOT_EXTENDED_BL_SYMBOLS
 *******************************************
 
-Extended Bravais lattice symbols from [1]_.
+Extended Bravais lattice symbols.
 
-
+Details can be found in [1]_.
 
 .. code-block:: python
 

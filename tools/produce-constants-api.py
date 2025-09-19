@@ -101,8 +101,8 @@ DESCRIPTIONS = {
         HPKOT_REFERENCE,
     ),
     "HPKOT_EXTENDED_BL_SYMBOLS": (
-        "Extended Bravais lattice symbols from [1]_.",
-        "",
+        "Extended Bravais lattice symbols.",
+        "Details can be found in [1]_.",
         HPKOT_REFERENCE,
     ),
     "TODEGREES": ("Constant that converts radians to degrees.", "", ""),
