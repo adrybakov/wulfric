@@ -24,43 +24,43 @@ each of the 14 Bravais lattices.
 
 
 
-=============================== ====================== ==============================================================================
-Bravais lattice                 HPKOT                  SC
-=============================== ====================== ==============================================================================
-Cubic (cP)                      cP1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_01_CUB.py`
-                                cP2
-Face-centered cubic (cF)        cF1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_02_FCC.py`
-                                cF2
-Body-centered cubic (cI)        cI1                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_03_BCC.py`
-Tetragonal (tP)                 tP1                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_04_TET.py`
-Body-centered tetragonal (tI)   tI1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_05_BCT1.py`,
-                                tI2                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_06_BCT2.py`
-Orthorhombic (oP)               oP1                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_07_ORC.py`
-Face-centered orthorhombic (oF) oF1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_08_ORCF1.py`,
-                                oF2,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_09_ORCF2.py`,
-                                oF3                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_10_ORCF3.py`
-Body-centered orthorhombic (oI) oI1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_11_ORCI.py`
-                                oI2,
-                                oI3
-Base-centered orthorhombic (oS) oC1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_12_ORCC.py`
-                                oC2,
-                                oA1,
-                                oA2
-Hexagonal (hP)                  hP1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_13_HEX.py`
-                                hP2
-Rhombohedral (hR)               hR1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_14_RHL1.py`,
-                                hR2                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_15_RHL2.py`
-Monoclinic (mP)                 mP                     :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_16_MCL.py`
-Base-centered monoclinic (mS)   mC1,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_17_MCLC1.py`,
-                                mC2,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_18_MCLC2.py`,
-                                mC3                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_19_MCLC3.py`,
-                                                       :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_20_MCLC4.py`,
-                                                       :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_21_MCLC5.py`
-Triclinic (aP)                  aP2,                   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_22_TRI1a.py`,
-                                aP3                    :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_23_TRI2a.py`,
-                                                       :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_24_TRI1b.py`,
-                                                       :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_25_TRI2b.py`,
-=============================== ====================== ==============================================================================
+=============================== =============================================================================== ==============================================================================
+Bravais lattice                 HPKOT                                                                           SC
+=============================== =============================================================================== ==============================================================================
+Cubic (cP)                      :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_01_cP1.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_01_CUB.py`
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_02_cP2.py`
+Face-centered cubic (cF)        :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_03_cF1.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_02_FCC.py`
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_04_cF2.py`
+Body-centered cubic (cI)        :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_05_cI1.py`  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_03_BCC.py`
+Tetragonal (tP)                 :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_06_tP1.py`  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_04_TET.py`
+Body-centered tetragonal (tI)   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_07_tI1.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_05_BCT1.py`,
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_08_tI2.py`  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_06_BCT2.py`
+Orthorhombic (oP)               :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_09_oP1.py`  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_07_ORC.py`
+Face-centered orthorhombic (oF) :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_10_oF1.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_08_ORCF1.py`,
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_11_oF2.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_09_ORCF2.py`,
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_12_oF3.py`  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_10_ORCF3.py`
+Body-centered orthorhombic (oI) :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_13_oI1.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_11_ORCI.py`
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_14_oI2.py`,
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_15_oI3.py`
+Base-centered orthorhombic (oS) :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_16_oC1.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_12_ORCC.py`
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_17_oC2.py`,
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_18_oA1.py`,
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_19_oA2.py`
+Hexagonal (hP)                  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_20_hP1.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_13_HEX.py`
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_21_hP2.py`
+Rhombohedral (hR)               :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_22_hR1.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_14_RHL1.py`,
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_23_hR2.py`  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_15_RHL2.py`
+Monoclinic (mP)                 :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_24_mP1.py`  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_16_MCL.py`
+Base-centered monoclinic (mS)   :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_25_mC1.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_17_MCLC1.py`,
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_26_mC2.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_18_MCLC2.py`,
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_27_mC3.py`  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_19_MCLC3.py`,
+                                                                                                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_20_MCLC4.py`,
+                                                                                                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_21_MCLC5.py`
+Triclinic (aP)                  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_28_aP2.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_22_TRI1a.py`,
+                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_29_aP3.py`  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_23_TRI2a.py`,
+                                                                                                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_24_TRI1b.py`,
+                                                                                                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_25_TRI2b.py`,
+=============================== =============================================================================== ==============================================================================
 
 
 .. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.

@@ -80,6 +80,11 @@ docs-generate-images:
 	@python3 tools/plot-cell-derivatives.py
 	@python3 tools/plot-niggli-step-4.py
 
+
+docs-generate-bl-gallery:
+	-@rm docs/source/user-guide/conventions/sg-source_bravais-lattices/1_hpkot/plot_*.py
+	@python tools/generate-bl-hpkot-gallery.py
+
 .ONESHELL:
 requirements:
 	@pip install -r requirements.txt --no-cache
