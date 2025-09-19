@@ -4,6 +4,10 @@ html[data-theme="light"] {
   --pst-color-inline-code: #506EC3;
   --pst-color-secondary: #506EC3;
   --pst-color-inline-code-links: #506EC3;
+  --pst-font-size-h3: 1.5rem;
+  --pst-font-size-h4: 1.25rem;
+  --pst-font-size-h5: 1rem;
+  --pst-font-size-h6: 0.75rem;
 }
 
 html[data-theme="dark"] {
@@ -11,6 +15,11 @@ html[data-theme="dark"] {
   --pst-color-inline-code: #4A85BE;
   --pst-color-secondary: #4A85BE;
   --pst-color-inline-code-links: #4A85BE;
+  --pst-font-size-h3: 1.5rem;
+  --pst-font-size-h4: 1.25rem;
+  --pst-font-size-h5: 1rem;
+  --pst-font-size-h6: 0.75rem;
+
 }
 
 
