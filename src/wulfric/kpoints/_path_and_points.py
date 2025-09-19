@@ -26,6 +26,7 @@ from wulfric.cell._basic_manipulation import get_reciprocal
 
 from wulfric.constants._hpkot_convention import HPKOT_DEFAULT_K_PATHS
 from wulfric.constants._sc_convention import SC_DEFAULT_K_PATHS
+from wulfric.constants._space_groups import INVERSION_SYMMETRY
 
 from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric.crystal._conventional import get_conventional
@@ -148,6 +149,7 @@ def get_path_and_points(
     atoms,
     spglib_data=None,
     convention="HPKOT",
+    with_time_reversal=True,
     relative=True,
 ):
     r"""
@@ -201,6 +203,15 @@ def get_path_and_points(
 
         * "HPKOT" for [1]_
         * "SC" for [2]_
+
+    with_time_reversal : bool, default True
+        Whether to assume that the system has time reversal symmetry. By default
+        assumes that the system has it. The strategy for extending the path when
+        ``with_time_reversal=False`` for the crystals without inversion symmetry is
+        described in [1]_. For the systems with inversion symmetry this parameter does
+        nothing.
+
+        .. versionadded:: 0.6.3
 
     relative : bool, default True
         Whether to return coordinates as relative to the reciprocal cell or in absolute
@@ -304,6 +315,24 @@ def get_path_and_points(
             hs_points[point] = hs_points[point] @ np.linalg.inv(
                 get_reciprocal(cell=cell)
             )
+
+    if (
+        not INVERSION_SYMMETRY[spglib_data.space_group_number]
+        and not with_time_reversal
+    ):
+        # Extend k-path
+        extra_path = get_path_as_list(path_as_string=kpath)
+        for i in range(len(extra_path)):
+            for j in range(len(extra_path[i])):
+                if extra_path[i][j] != "GAMMA":
+                    extra_path[i][j] = f"{extra_path[i][j]}_P"
+        kpath = f"{kpath}|{get_path_as_string(path_as_list=extra_path)}"
+
+        # Extend high-symmetry points
+        points = list(hs_points)
+        for point in points:
+            if point != "GAMMA":
+                hs_points[f"{point}_P"] = -hs_points[point]
 
     return kpath, hs_points
 

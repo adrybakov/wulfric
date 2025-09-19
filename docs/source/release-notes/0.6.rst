@@ -23,6 +23,7 @@ New features
 * ``wulfric.crystal.hpkot_get_extended_bl_symbol``
 * ``wulfric.constants.BRAVAIS_LATTICES``
 * ``wulfric.constants.HPKOT_EXTENDED_BL_SYMBOLS``
+* Add ``with_time_reversal`` to ``wulfric.kpoints.get_path_and_points`` and ``wulfric.Kpoints.from_crystal``.
 
 
 Renamed

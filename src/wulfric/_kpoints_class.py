@@ -126,7 +126,14 @@ class Kpoints:
         self.path = path
 
     @staticmethod
-    def from_crystal(cell, atoms, convention="HPKOT", n=100, spglib_data=None):
+    def from_crystal(
+        cell,
+        atoms,
+        convention="HPKOT",
+        with_time_reversal=True,
+        n=100,
+        spglib_data=None,
+    ):
         r"""
 
         Parameters
@@ -162,6 +169,15 @@ class Kpoints:
             * "HPKOT" for [1]_
             * "SC" for [2]_
             * "spglib" for |spglib|_
+
+        with_time_reversal : bool, default True
+            Whether to assume that the system has time reversal symmetry. By default
+            assumes that the system has it. The strategy for extending the path when
+            ``with_time_reversal=False`` for the crystals without inversion symmetry is
+            described in [1]_. For the systems with inversion symmetry this parameter does
+            nothing.
+
+            .. versionadded:: 0.6.3
 
         n : int, default 100
             Number of intermediate points between each pair of the high-symmetry points
@@ -208,6 +224,7 @@ class Kpoints:
             atoms=atoms,
             spglib_data=spglib_data,
             convention=convention,
+            with_time_reversal=with_time_reversal,
             relative=True,
         )
 
