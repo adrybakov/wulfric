@@ -58,16 +58,29 @@ Choice of the cell
     get_primitive
 
 
-Setyawan and Curtarolo convention [1]_
-======================================
+Examples for HPKOT [1]_ convention
+==================================
+
+.. autosummary::
+    :toctree: generated/
+
+    hpkot_get_example
+
+SC convention [2]_
+==================
 
 .. autosummary::
     :toctree: generated/
 
     sc_get_variation
 
+
+
 References
 ==========
-.. [1] Setyawan, W. and Curtarolo, S., 2010.
+.. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
+        Band structure diagram paths based on crystallography.
+        Computational Materials Science, 128, pp.140-184.
+.. [2] Setyawan, W. and Curtarolo, S., 2010.
         High-throughput electronic band structure calculations: Challenges and tools.
         Computational materials science, 49(2), pp. 299-312.

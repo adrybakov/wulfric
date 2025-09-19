@@ -22,13 +22,15 @@ import os
 from wulfric.io._vasp import load_poscar
 from wulfric.constants._hpkot_convention import HPKOT_DEFAULT_K_PATHS
 
-__all__ = ["get_hpkot_example"]
+__all__ = ["hpkot_get_example"]
 
 
-def get_hpkot_example(extended_bl_symbol, with_inversion=False):
+def hpkot_get_example(extended_bl_symbol, with_inversion=False):
     r"""
     Returns an example of the crystal structure for each of the
     given extended Bravais lattice symbol as defined in [1]_.
+
+    .. versionadded:: 0.6.3
 
     Crystal structures are taken from the |seekpath|_ repository
     with the permission of its authors.
