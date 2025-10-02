@@ -195,7 +195,7 @@ class PlotlyEngine:
 
         Parameters
         ----------
-        output_name : str, default "lattice_graph.html"
+        output_name : str, default "wulfric-plot.html"
             Name of the file to be saved. With extension.
         axes_visible : bool, default True
             Whether to show axes.
