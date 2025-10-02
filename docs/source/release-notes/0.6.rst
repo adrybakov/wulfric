@@ -4,6 +4,17 @@
 Version 0.6
 ***********
 
+0.6.4
+=====
+
+**Date**: 2 October 2025
+
+Bugfix
+------
+
+* Fix bug in ``wulfric.io.dump_poscar``: only three atom positions were outputted. Now all
+  positions are written.
+
 0.6.3
 =====
 

@@ -282,10 +282,10 @@ def dump_poscar(
 
     file_object.write(mode + "\n")
 
-    for atom_index in range(3):
+    for coordinate in atom_coordinates:
         for component_index in range(3):
             file_object.write(
-                f"{atom_coordinates[atom_index][component_index]:{decimals + 5}.{decimals}f} "
+                f"{coordinate[component_index]:{decimals + 5}.{decimals}f} "
             )
         file_object.write("\n")
 
