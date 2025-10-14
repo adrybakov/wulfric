@@ -63,9 +63,9 @@ How is this documentation structured?
 *   To see examples of what wulfric can visualize see
     :ref:`user-guide_usage_visualization_examples`.
 
-*********************************************
-Example of some of the wulfric's capabilities
-*********************************************
+*********************************
+Example of wulfric's capabilities
+*********************************
 
 
 .. hint::
