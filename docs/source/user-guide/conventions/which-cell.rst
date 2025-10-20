@@ -53,10 +53,10 @@ the cell  are located in the :ref:`api_crystal` submodule.
 "The" cell
 -----------
 
-This is the cell that user provides to wulfric. It is not known what kind of cell is it in
-general. For once, it would depend on the atoms that user provides together with the cell.
+This is the cell that user provides to wulfric. It is not known apriori what kind of cell 
+is it. For once, it would depend on the atoms that user provides together with the cell.
 Starting from this "given cell" or just "cell", as we call it, wulfric can return a number
-of cell choices, that are summarized in the picture below.
+of cell choices, that are summarized in the picture above.
 
 
 .. _user-guide_conventions_which-cell_choice_conventional-cell:
@@ -64,7 +64,7 @@ of cell choices, that are summarized in the picture below.
 Conventional cell
 -----------------
 
-For any given cell and atoms the conventional cell associated with it can be computed by
+For any given cell and atoms conventional cell associated with it can be computed by
 the function :py:func:`wulfric.crystal.get_conventional()`
 
 
@@ -77,7 +77,7 @@ unique atom.
 Primitive cell
 --------------
 
-For any given cell and atoms the primitive cell associated with it can be computed by the
+For any given cell and atoms primitive cell associated with it can be computed by the
 function :py:func:`wulfric.crystal.get_primitive()`
 
 Primitive cell contains exactly one lattice point or exactly one copy of each unique atom.
@@ -89,8 +89,9 @@ Cell's derivatives
 ==================
 
 On contrary to the :ref:`user-guide_conventions_which-cell_choice`, derivatives of any
-cell are unique and, by our choice, do not require knowledge about any atoms. This is why
-all functions that compute derivative are located in the :ref:`api_cell` submodule.
+cell are unique and, by wulfric's design choice, do not require knowledge about any atoms.
+This is why all functions that compute derivatives are located in the :ref:`api_cell`
+submodule.
 
 Wulfric can compute four kind of derivatives, that are summarized in the picture below
 
@@ -122,23 +123,23 @@ Wulfric can compute four kind of derivatives, that are summarized in the picture
 Reciprocal cell
 ---------------
 
-For any choice of the cell the reciprocal cell associated with it can be computed be the
+For any choice of the cell reciprocal cell associated with it can be computed by the
 function :py:func:`wulfric.cell.get_reciprocal`.
 
 Brillouin zone
 --------------
 
-For any choice of the cell the Brillouin zone associated with it can be computed be the
+For any choice of the cell Brillouin zone associated with it can be computed by the
 function :py:func:`wulfric.cell.get_brillouin_zone`.
 
 Brillouin zone differs from all other cells in the way that it can not be described
 with just three vectors in general case. Instead wulfric computed all vertices and edges
-that define the borders of it.
+that define its borders.
 
 Niggli cell
 -----------
 
-For any choice of the cell the niggli cell associated with it can be computed be the
+For any choice of the cell niggli cell associated with it can be computed by the
 function :py:func:`wulfric.cell.get_niggli`.
 
 Wulfric offers two implementations of the same algorithm
@@ -149,16 +150,15 @@ Wulfric offers two implementations of the same algorithm
 Wigner-Seitz cell
 -----------------
 
-For any choice of the cell the Wigner-Seitz cell associated with it can be computed be the
+For any choice of the cell Wigner-Seitz cell associated with it can be computed by the
 function :py:func:`wulfric.cell.get_wigner_seitz`.
 
 Wigner-Seitz cell differs from all other cells in the way that it can not be described
 with just three vectors in general case. Instead wulfric computed all vertices and edges
-that define the borders of it.
+that define its borders.
 
-
-
-
+References
+==========
 
 .. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
     Band structure diagram paths based on crystallography.
