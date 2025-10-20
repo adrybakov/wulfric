@@ -30,7 +30,7 @@ cell
 * |spglib|_ as in [3]_
 
 The choice of the cell depends on the symmetry properties of the system that user
-considers. Therefore, the choice of the cell typically involve a set of atoms associated
+considers. Therefore, the choice of the cell typically involves a set of atoms associated
 with the cell and not the cell alone. This is why all functions that compute choices of
 the cell  are located in the :ref:`api_crystal` submodule.
 
