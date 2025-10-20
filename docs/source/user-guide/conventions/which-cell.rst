@@ -53,7 +53,7 @@ the cell  are located in the :ref:`api_crystal` submodule.
 "The" cell
 -----------
 
-This is the cell that user provides to wulfric. It is not known apriori what kind of cell 
+This is the cell that user provides to wulfric. It is not known apriori what kind of cell
 is it. For once, it would depend on the atoms that user provides together with the cell.
 Starting from this "given cell" or just "cell", as we call it, wulfric can return a number
 of cell choices, that are summarized in the picture above.
