@@ -1,6 +1,6 @@
 # ================================== LICENSE ===================================
 # Wulfric - Cell, Atoms, K-path, visualization.
-# Copyright (C) 2023-2025 Andrey Rybakov
+# Copyright (C) 2023-2026 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
