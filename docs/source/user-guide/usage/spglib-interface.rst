@@ -30,7 +30,7 @@ crystal's (``cell`` + ``atoms``) symmetry.
 As wulfric is primarily designed as a set of well-defined functions, we face the problem
 of multiple calls to |spglib|_, when more than one property is desired by user.
 
-For example, is the user want to know both conventional and primitive cells, they can
+For example, if the user want to know both conventional and primitive cells, they can
 be computed as
 
 .. doctest::
@@ -39,7 +39,7 @@ be computed as
     >>> conv_cell, conv_atoms = wulfric.crystal.get_conventional(cell, atoms)
     >>> prim_cell, prim_atoms = wulfric.crystal.get_primitive(cell, atoms)
 
-But, to know the primitive cell one needs to know the conventional cell, therefore
+However, the conventional cell is required to compute the primitive cell, therefore
 function :py:func:`wulfric.crystal.get_conventional` is called twice - one time by the
 user and one time within the :py:func:`wulfric.crystal.get_primitive`.
 
@@ -60,12 +60,12 @@ In that way |spglib|_ is called only once and the data are re-used.
 All functions that accept ``cell`` and ``atoms`` and rely on |spglib|_ have optional
 argument ``spglib_data`` that can be passed to them.
 
-Moreover, ``spglib_data`` object by itself (which is just a dictionary with dot access)
-can be used by the user for access to additional information derived from spglib:
+Moreover, ``spglib_data`` object by itself (which is just a dictionary with an additional dot access)
+can be used by the user to access additional information derived from spglib:
 
 .. doctest::
 
-    # Fancy dot access
+    # Fancy dot syntax
     >>> spglib_data.space_group_number
     59
     >>> # is actually the same as
