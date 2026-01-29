@@ -28,7 +28,7 @@ crystal's (``cell`` + ``atoms``) symmetry.
     ... }
 
 As wulfric is primarily designed as a set of well-defined functions, we face the problem
-of multiple calls to |spglib|_, when more that one property is desired by user.
+of multiple calls to |spglib|_, when more than one property is desired by user.
 
 For example, is the user want to know both conventional and primitive cells, they can
 be computed as
