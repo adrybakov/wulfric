@@ -58,7 +58,7 @@ To create a cell from parameters use
            [0.      , 4.744935, 0.      ],
            [0.      , 0.      , 8.760497]])
 
-:py:func`wulfric.cell.from_params` constructs the cell with the first vector oriented
+:py:func:`wulfric.cell.from_params` constructs the cell with the first vector oriented
 along the :math:`x` axis and second vector in the :math:`xy` plain. The cell can only be
 constructed from the set of parameters that can form parallelepiped (see
 :py:func:`wulfric.geometry.parallelepiped_check`).
