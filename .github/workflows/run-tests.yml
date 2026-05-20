@@ -11,8 +11,6 @@ on:
 
 jobs:
   python_os_matrix:
-    name: Python ${{ matrix.python_version }} on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
     uses: adrybakov/wulfric/.github/workflows/tests.yml@main
     with:
       python-version: ${{ matrix.python_version }}

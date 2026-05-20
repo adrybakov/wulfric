@@ -17,6 +17,8 @@ on:
 jobs:
   code:
 
+    name: Unit tests on Python ${{ inputs.python-version }} and ${{ inputs.os }}
+
     runs-on: ${{ inputs.os }}
 
     steps:
@@ -38,6 +40,8 @@ jobs:
       run: make test
 
   documentation:
+
+    name: Documentation tests on Python ${{ inputs.python-version }} and ${{ inputs.os }}
 
     runs-on: ${{ inputs.os }}
 
