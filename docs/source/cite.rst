@@ -6,18 +6,19 @@ Whom to cite?
 
 If you use wulfric in a your work, please cite it
 
-.. code-block::
 
-    wulfric v<version>, wulfric.org.
+.. code-block:: text
+
+    A. Rybakov, Wulfric, 2023, [software] https://github.com/adrybakov/wulfric.
 
 .. code-block:: LaTeX
 
-    @online{wulfric,
-        author = {Andrey Rybakov},
-        title  = {wulfric v<version>},
-        year   = {2023},
-        url    = {wulfric.org},
-    }
+    @misc{Rybakov2023Wulfric,
+        author = "Rybakov, A.",
+        title  = "Wulfric",
+        note   = "[software] \url{https://github.com/adrybakov/wulfric}",
+        year   = "2023"}
+
 
 Dependency citations
 ====================

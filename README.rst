@@ -48,7 +48,7 @@ The functionality of Wulfric includes (but not limited to):
 Documentation
 *************
 
-Extensive documentation is available at `wulfric.org <https://wulfric.org>`_. 
+Extensive documentation is available at `wulfric.org <https://wulfric.org>`_.
 
 *   For code examples see `User guide <https://docs.wulfric.org/en/latest/user-guide/index.html>`_.
 *   For full public API see `API <https://docs.wulfric.org/en/latest/api/index.html>`_.
@@ -101,6 +101,5 @@ In addition, if you use Wulfric in the scientific publication, cite the package 
     year   = "2023"}
 
 
-
-
-
+For the detailed guide on how to cite the papers on which Wulfric depends
+see `Citation guide <https://docs.wulfric.org/en/latest/cite.html>`_.
