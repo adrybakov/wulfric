@@ -11,14 +11,13 @@ on:
 
 jobs:
   python_os_matrix:
+    name: Python ${{ matrix.python_version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    uses: adrybakov/wulfric/.github/workflows/tests.yml@main
+    with:
+      python-version: ${{ matrix.python_version }}
+      os: ${{ matrix.os }}
     strategy:
       matrix:
         python_version: ['3.10', '3.11', '3.12', '3.13', '3.14']
         os: [ubuntu-latest, windows-latest, macos-latest]
-    steps:
-      - name: Python ${{ matrix.python_version }} on ${{ matrix.os }}
-        uses: adrybakov/wulfric/.github/workflows/tests.yml@main
-        with:
-          python-version: ${{ matrix.python_version }}
-          os: ${{ matrix.os }}
