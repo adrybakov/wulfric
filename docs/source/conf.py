@@ -19,7 +19,6 @@
 #
 # ================================ END LICENSE =================================
 import sys
-from datetime import datetime
 from os.path import abspath
 
 
@@ -37,7 +36,7 @@ sys.path.insert(0, abspath(".."))
 ##                                   Project metadata                                   ##
 ##########################################################################################
 project = "Wulfric"
-copyright = f"2023-{datetime.now().year}, Andrey Rybakov"
+copyright = "2023, Andrey Rybakov"
 author = "Andrey Rybakov"
 if ".dev" in version:
     switcher_version = "dev"
@@ -223,7 +222,8 @@ custom_links = {
         "Array interface",
         "https://numpy.org/doc/stable/reference/arrays.interface.html#object.__array_interface__",
     ),
-    "repo": ("wulfric repository", "https://github.com/adrybakov/wulfric"),
+    "repo": ("Wulfric's repository", "https://github.com/adrybakov/wulfric"),
+    "LICENSE": ("LICENSE", "https://github.com/adrybakov/wulfric/blob/main/LICENSE"),
     "numpydoc": ("numpydoc", "https://numpydoc.readthedocs.io/en/latest/format.html"),
     "plotly": ("Plotly", "https://plotly.com/python/"),
     "plotly-update-layout": (
