@@ -11,6 +11,7 @@ on:
 
 jobs:
   python_os_matrix:
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         python_version: ['3.10', '3.11', '3.12', '3.13', '3.14']
