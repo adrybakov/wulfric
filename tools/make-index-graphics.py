@@ -26,29 +26,23 @@ ROOT_DIR = "."
 
 
 def main():
-    index_file = os.path.join(ROOT_DIR, "docs", "source", "index.rst")
-    lines = []
-    target_line = "Example of some of the wulfric's capabilities"
+    index_file = os.path.join(
+        ROOT_DIR, "docs", "source", "interactive-capabilities.rst"
+    )
 
-    with open(index_file, "r") as f:
-        break_next = False
-        for line in f:
-            lines.append(line)
-            if target_line in line:
-                break_next = True
-            elif break_next:
-                break
-
-    lines = "".join(lines)
-    if target_line not in lines:
-        raise ValueError(f'Target line "{target_line}" not in "docs/source/index.rst.')
-
-    lines = lines.split("\n")
-
-    lines += [
+    lines = [
+        ".. _interactive-capabilities:",
+        "",
+        "*********************************",
+        "Example of wulfric's capabilities",
+        "*********************************",
+        "",
         "",
         ".. hint::",
-        "    Click on the legend to hide the data",
+        "",
+        "    - Click on the legend to hide the data",
+        "    - Click, hold and drag the figure to rotate the view",
+        "    - Hover over the figure and scroll to zoom in and out",
         "",
         """.. raw:: html""",
         "",
@@ -273,6 +267,7 @@ def main():
         " " * 8 + "</div>",
         " " * 4 + "</div>",
         "",
+        "More visual examples can be found in :ref:`user-guide_usage_visualization` and :ref:`user-guide_conventions_bravais-lattices`.",
     ]
 
     with open(index_file, "w") as f:
