@@ -77,4 +77,4 @@ Example of wulfric's capabilities
 .. image:: img/interactive-capabilities.png
    :align: center
    :alt: Example of wulfric's capabilities
-   :target: ../html/interactive-capabilities.html
+   :target: interactive-capabilities.html
