@@ -6,17 +6,22 @@ on:
       python-version:
         description: 'Python version'
         required: true
-        default: '3.11'
+        default: '3.12'
+        type: string
+      os:
+        description: 'Operating system'
+        required: true
+        default: 'ubuntu-latest'
         type: string
 
 jobs:
   code:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.os }}
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
+    - uses: actions/checkout@v6
+    - uses: actions/setup-python@v6
       with:
         python-version: ${{ inputs.python-version }}
 
@@ -34,11 +39,11 @@ jobs:
 
   documentation:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.os }}
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
+    - uses: actions/checkout@v6
+    - uses: actions/setup-python@v6
       with:
         python-version: ${{ inputs.python-version }}
 

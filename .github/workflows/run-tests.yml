@@ -1,4 +1,4 @@
-name: Test against supported python versions
+name: Test against supported python versions and operating systems
 
 on:
   push:
@@ -7,30 +7,17 @@ on:
     branches:
       - 'main'
   pull_request:
-    branches: [ main]
+    branches: [main]
 
 jobs:
-
-
-  test-310:
-    name: (3.10) test
-    uses: adrybakov/wulfric/.github/workflows/tests.yml@main
-    with:
-      python-version: '3.10'
-
-  test-311:
-    name: (3.11) test
-    uses: adrybakov/wulfric/.github/workflows/tests.yml@main
-    with:
-      python-version: '3.11'
-
-  test-312:
-    name: (3.12) test
-    uses: adrybakov/wulfric/.github/workflows/tests.yml@main
-    with:
-      python-version: '3.12'
-  test-313:
-    name: (3.13) test
-    uses: adrybakov/wulfric/.github/workflows/tests.yml@main
-    with:
-      python-version: '3.13'
+  python_os_matrix:
+    strategy:
+      matrix:
+        python_version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Python ${{ matrix.python_version }} on ${{ matrix.os }}
+        uses: adrybakov/wulfric/.github/workflows/tests.yml@main
+        with:
+          python-version: ${{ matrix.python_version }}
+          os: ${{ matrix.os }}
