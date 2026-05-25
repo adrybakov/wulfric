@@ -1,0 +1,32 @@
+name: Test against a single pair of Python version and operating system
+
+on:
+
+  workflow_dispatch:
+
+  workflow_call:
+
+  push:
+    tags-ignore:
+      - '*'
+    branches:
+      - 'main'
+
+  pull_request:
+    branches: [main]
+
+jobs:
+
+  doc_tests:
+    name: Test documentation
+    uses: adrybakov/wulfric/.github/workflows/doc-tests.yml@main
+    with:
+      python-version: $3.12
+      os: ubuntu-latest
+
+  unit_tests:
+    name: Run unit tests
+    uses: adrybakov/wulfric/.github/workflows/unit-tests.yml@main
+    with:
+      python-version: 3.12
+      os: ubuntu-latest

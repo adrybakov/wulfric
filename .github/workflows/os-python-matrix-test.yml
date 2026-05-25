@@ -1,0 +1,31 @@
+name: Test against matrix of supported Python versions and operating systems
+
+on:
+
+  workflow_dispatch:
+
+  workflow_call:
+
+jobs:
+
+  doc_tests:
+    name: Test documentation
+    uses: adrybakov/wulfric/.github/workflows/doc-tests.yml@main
+    with:
+      python-version: ${{ matrix.python_version }}
+      os: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python_version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+  unit_tests:
+    name: Run unit tests
+    uses: adrybakov/wulfric/.github/workflows/unit-tests.yml@main
+    with:
+      python-version: ${{ matrix.python_version }}
+      os: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python_version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+        os: [ubuntu-latest, windows-latest, macos-latest]

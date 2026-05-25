@@ -1,11 +1,11 @@
 name: Publish Python 🐍 distribution 📦 to PyPI
 
 on:
-  push:
-    tags:
-      - 'v[0-9].*.*'
+  release:
+    types: published
 
 jobs:
+
   check-release-metadata:
     name: Check release metadata
     runs-on: ubuntu-latest
@@ -19,21 +19,16 @@ jobs:
     - name: Inspect metadata
       run: python3 -u tools/check-release-metadata.py -v ${{  github.ref_name }} -rd .
 
+
   test:
-    name: Test
-    needs:
-    - check-release-metadata
-    uses: adrybakov/wulfric/.github/workflows/tests.yml@main
-    with:
-      python-version: "3.x"
-      os: ubuntu-latest
+    name: Run tests
+    needs: check-release-metadata
+    uses: adrybakov/wulfric/.github/workflows/os-python-matrix-test.yml@main
 
   build:
     name: Build distribution 📦
-    needs:
-    - test
+    needs: test
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v6
       with:
@@ -67,7 +62,6 @@ jobs:
       url: https://pypi.org/p/wulfric
     permissions:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
-
     steps:
     - name: Download all the dists
       uses: actions/download-artifact@v8
