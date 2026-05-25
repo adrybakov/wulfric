@@ -825,17 +825,28 @@ class PlotlyEngine:
             legend_group = "".join(choices(ASCII_LOWERCASE, k=10))
 
         p_abs = []
-        p_rel = []
-        labels = []
+        hovertext = []
+        text = []
         path_points = []
+        pos_fmt = ".4f"
         for subpath in kp.path:
             path_points += subpath
         for point in kp.hs_names:
             if not only_from_kpath or point in path_points:
                 p_abs.append(shift + kp.hs_coordinates[point] @ kp.rcell)
-                p_rel.append(kp.hs_coordinates[point])
 
-                labels.append(point)
+                hovertext.append(
+                    "<br>".join(
+                        [
+                            f"Name: {point}",
+                            f"Label: {kp.hs_labels[point]}",
+                            f"Relative: {kp.hs_coordinates[point][0]:{pos_fmt}}, {kp.hs_coordinates[point][1]:{pos_fmt}}, {kp.hs_coordinates[point][2]:{pos_fmt}}",
+                            f"Absolute: {p_abs[-1][0]:{pos_fmt}}, {p_abs[-1][1]:{pos_fmt}}, {p_abs[-1][2]:{pos_fmt}}",
+                        ]
+                    )
+                )
+
+                text.append(point)
 
         p_abs = np.array(p_abs).T
 
@@ -850,10 +861,10 @@ class PlotlyEngine:
                 y=p_abs[1],
                 z=p_abs[2],
                 marker=dict(size=5 * scale, color=color),
-                text=labels,
+                text=text,
                 textposition="top center",
                 textfont=dict(size=13 * scale, color=color),
-                hovertext=p_rel,
+                hovertext=hovertext,
                 hoverinfo="text",
             ),
             rows=row,
@@ -1037,94 +1048,59 @@ class PlotlyEngine:
                         UserWarning,
                         stacklevel=2,
                     )
-            hoverinfo = [f"Atom {index + 1}<br><br>" for index in range(n_atoms)]
+            hovertext = [f"Atom {index + 1}<br><br>" for index in range(n_atoms)]
             pos_fmt = ".4f"
 
             for key in keys:
                 if key == "names":
-                    hoverinfo = [
-                        hoverinfo[_] + f"Name: {atoms[key][_]}<br>"
+                    hovertext = [
+                        hovertext[_] + f"Name: {atoms[key][_]}<br>"
                         for _ in range(n_atoms)
                     ]
                 elif key == "species":
-                    hoverinfo = [
-                        hoverinfo[_] + f"Species: {atoms[key][_]}<br>"
+                    hovertext = [
+                        hovertext[_] + f"Species: {atoms[key][_]}<br>"
                         for _ in range(n_atoms)
                     ]
                 elif key == "positions":
-                    hoverinfo = [
-                        hoverinfo[_]
+                    hovertext = [
+                        hovertext[_]
                         + f"Position (relative): {atoms[key][_][0]:{pos_fmt}} {atoms[key][_][1]:{pos_fmt}} {atoms[key][_][2]:{pos_fmt}}<br>"
                         + f"Position (absolute): {points[0][_]:{pos_fmt}} {points[1][_]:{pos_fmt}} {points[2][_]:{pos_fmt}}<br>"
                         for _ in range(n_atoms)
                     ]
                 elif key == "spglib_types":
-                    hoverinfo = [
-                        hoverinfo[_] + f"Spglib type: {atoms[key][_]}<br>"
+                    hovertext = [
+                        hovertext[_] + f"Spglib type: {atoms[key][_]}<br>"
                         for _ in range(n_atoms)
                     ]
                 else:
-                    hoverinfo = [
-                        hoverinfo[_] + f"{key}: {atoms[key][_]}<br>"
+                    hovertext = [
+                        hovertext[_] + f"{key}: {atoms[key][_]}<br>"
                         for _ in range(n_atoms)
                     ]
-
-            self.fig.add_traces(
-                data=dict(
-                    type="scatter3d",
-                    mode="markers",
-                    legendgroup=legend_group,
-                    name=legend_label,
-                    showlegend=legend_label is not None,
-                    x=points[0],
-                    y=points[1],
-                    z=points[2],
-                    text=hoverinfo,
-                    marker=dict(size=14 * scale, color=colors),
-                    hoverinfo="text",
-                ),
-                rows=row,
-                cols=col,
-            )
-            self.fig.add_traces(
-                data=dict(
-                    type="scatter3d",
-                    mode="text",
-                    legendgroup=legend_group,
-                    name=legend_label,
-                    showlegend=False,
-                    x=points[0],
-                    y=points[1],
-                    z=points[2],
-                    text=names,
-                    hoverinfo="none",
-                    textfont=dict(size=10 * scale, color=text_color),
-                    textposition="middle center",
-                ),
-                rows=row,
-                cols=col,
-            )
-
         else:
-            self.fig.add_traces(
-                data=dict(
-                    type="scatter3d",
-                    mode="markers+text",
-                    legendgroup=legend_group,
-                    name=legend_label,
-                    showlegend=legend_label is not None,
-                    x=points[0],
-                    y=points[1],
-                    z=points[2],
-                    text=names,
-                    marker=dict(size=14 * scale, color=colors),
-                    hoverinfo="none",
-                    textfont=dict(size=10 * scale, color=text_color),
-                    textposition="middle center",
-                ),
-                rows=row,
-                cols=col,
-            )
+            hovertext = "none"
+        self.fig.add_traces(
+            data=dict(
+                type="scatter3d",
+                mode="markers+text",
+                legendgroup=legend_group,
+                name=legend_label,
+                showlegend=legend_label is not None,
+                x=points[0],
+                y=points[1],
+                z=points[2],
+                text=names,
+                marker=dict(size=14 * scale, color=colors),
+                hoverinfo="text" if add_hoverinfo else "none",
+                hovertext=hovertext,
+                textfont=dict(size=10 * scale, color=text_color),
+                textposition="middle center",
+            ),
+            rows=row,
+            cols=col,
+        )
 
         # Fix for plotly #7143
         self._update_range(
