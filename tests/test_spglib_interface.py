@@ -49,6 +49,13 @@ from wulfric._spglib_interface import get_spglib_types
             ),
             [1, 1, 2],
         ),
+        # Names that can not be deduced to species
+        (
+            dict(
+                names=["A_1", "A_2", "A_3"],
+            ),
+            [1, 2, 3],
+        ),
     ],
 )
 def test_get_spglib_types(atoms, expected_types):

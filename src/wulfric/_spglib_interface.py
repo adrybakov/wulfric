@@ -90,6 +90,8 @@ def get_spglib_types(atoms):
     r"""
     Constructs spglib_types for the given atoms.
 
+    .. versionchanged:: 0.6.5 Rule 3 modified to account for failed deduction of species from names.
+
     First satisfied rule is applied
 
     1.  "spglib_types" in atoms
@@ -102,11 +104,16 @@ def get_spglib_types(atoms):
         species, then they will have the same integer assigned to them in
         ``spglib_types``.
 
-    3.  "names" in ``atoms``
+    3.  "names" in ``atoms``.
 
         Species are automatically deduced based on atom's names (via
-        :py:func:`wulfric.crystal.get_atom_species`), and then the second rule is
-        applied.
+        :py:func:`wulfric.crystal.get_atom_species`). Then the new list is constructed as:
+
+        a.  If the deduced species is "X", then the atom's name is used.
+        b.  If the deduced species is not "X", then the deduced species is used.
+
+        If the two atoms have the same entry in that new list, then they have the
+        same integer assigned to them in ``spglib_types``.
 
     Parameters
     ==========
@@ -121,6 +128,11 @@ def get_spglib_types(atoms):
     =======
     spglib_types : (N, ) list of int
         List of integer indices ready to be passed to |spglib|_.
+
+    Raises
+    ======
+    ValueError
+        If neither "spglib_types" nor "species" nor "names" are present in ``atoms``.
     """
 
     validate_atoms(atoms=atoms, raise_errors=True)
@@ -129,21 +141,28 @@ def get_spglib_types(atoms):
         spglib_types = atoms["spglib_types"]
     else:
         if "species" not in atoms and "names" in atoms:
-            species = [
+            # Try to deduce species automatically from names
+            identifiers = [
                 get_atom_species(name=name, raise_on_fail=False)
                 for name in atoms["names"]
             ]
+
+            # When detection fails, fallback to using name as an identifier.
+            identifiers = [
+                atoms["names"][i] if identifier == "X" else identifier
+                for i, identifier in enumerate(identifiers)
+            ]
         elif "species" in atoms:
-            species = atoms["species"]
+            identifiers = atoms["species"]
         else:
             raise ValueError(
-                'Expected at least one of "spglib_types", "species" or "names" keys in ""atoms, found none.'
+                'Expected at least one of "spglib_types", "species" or "names" keys in "atoms", found none.'
             )
 
         mapping = {
-            name: index + 1 for index, name in enumerate(sorted(list(set(species))))
+            name: index + 1 for index, name in enumerate(sorted(list(set(identifiers))))
         }
-        spglib_types = [mapping[name] for name in species]
+        spglib_types = [mapping[name] for name in identifiers]
 
     return spglib_types
 
