@@ -56,11 +56,12 @@ Spglib interface
 ================
 
 .. autosummary::
-    :caption: Top level functions
+    :caption: Spglib interface
     :toctree: generated/
 
-    get_spglib_types
+    SpglibData
     get_spglib_data
+    get_spglib_types
     validate_spglib_data
 
 

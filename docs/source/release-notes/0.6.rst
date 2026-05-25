@@ -4,16 +4,6 @@
 Version 0.6
 ***********
 
-0.6.5
-=====
-**Date**: 25 May 2026
-
-Bugfix
-------
-
-* :py:func:`wulfric.get_spglib_types` did not handle the case of unidentifiable species
-  correctly. See also :issue:`23`.
-
 0.6.4
 =====
 
@@ -83,7 +73,7 @@ Bugfix
 0.6.0
 =====
 
-**Data**: 29 August 2025
+**Date**: 29 August 2025
 
 Major redesign of wulfric
 

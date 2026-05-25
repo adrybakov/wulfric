@@ -18,10 +18,12 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
+from dataclasses import dataclass
+
 import spglib
 from copy import deepcopy
 import numpy as np
-from wulfric._syntactic_sugar import SyntacticSugar, add_sugar
+from wulfric._syntactic_sugar import add_sugar
 from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric._exceptions import _raise_with_message, _SUPPORT_FOOTER
 from wulfric.crystal._atoms import get_atom_species
@@ -31,6 +33,216 @@ from wulfric.constants._space_groups import CRYSTAL_FAMILY, CENTRING_TYPE
 # Save local scope at this moment
 old_dir = set(dir())
 old_dir.add("old_dir")
+
+
+@dataclass(eq=False, frozen=True)
+class SpglibData:
+    r"""
+    Data from spglib.
+
+    Parameters
+    ==========
+    cell : (3, 3) |array-like|_
+        See :py:func:`.get_spglib_data`.
+    atoms : dict
+        See :py:func:`.get_spglib_data`.
+    spglib_symprec : float, default :math:`10^{-5}`
+        See :py:func:`.get_spglib_data`.
+    spglib_angle_tolerance : float, default -1
+        See :py:func:`.get_spglib_data`.
+    """
+
+    def __init__(self, cell, atoms, spglib_symprec=1e-5, spglib_angle_tolerance=-1):
+        try:
+            # Validate input data
+            # # Validate that the atoms dictionary is what expected of it
+            validate_atoms(atoms=atoms, required_keys=["positions"], raise_errors=True)
+
+            # Validate cell TODO: write _cell_validation.py,
+            # perhaps check if it can form a parallelepiped
+            try:
+                cell = np.array(cell, dtype=float)
+            except Exception as e:
+                _raise_with_message(e=e, message=f"cell is not array-like, got\n{cell}")
+
+            if cell.shape != (3, 3):
+                raise ValueError(
+                    f"Expected shape of (3, 3) for cell, got {cell.shape}."
+                )
+
+            # Populate with the input data
+
+            object.__setattr__(self, "original_cell", deepcopy(cell))
+            object.__setattr__(
+                self,
+                "original_positions",
+                np.array(deepcopy(atoms["positions"]), dtype=float),
+            )
+            object.__setattr__(
+                self, "original_types", deepcopy(get_spglib_types(atoms=atoms))
+            )
+            object.__setattr__(self, "symprec", spglib_symprec)
+            object.__setattr__(self, "angle_tolerance", spglib_angle_tolerance)
+
+            # Populate with the version of the spglib
+            object.__setattr__(self, "spglib_version", spglib.__version__)
+
+            dataset = spglib.get_symmetry_dataset(
+                (cell, self.original_positions, self.original_types),
+                symprec=spglib_symprec,
+                angle_tolerance=spglib_angle_tolerance,
+            )
+
+            if dataset is None:
+                raise RuntimeError(
+                    f"spglib failed to detect symmetry for the given structure with spglib_symprec = {spglib_symprec} and spglib_angle_tolerance = {spglib_angle_tolerance}."
+                )
+
+            # For spglib <= 2.4.0
+            if isinstance(dataset, dict):
+                dataset = add_sugar(dataset)
+
+            object.__setattr__(self, "space_group_number", dataset.number)
+            object.__setattr__(self, "crystal_family", CRYSTAL_FAMILY[dataset.number])
+            object.__setattr__(self, "centring_type", CENTRING_TYPE[dataset.number])
+            # Rotate conventional cell back to the orientation of the given cell and atoms
+            object.__setattr__(
+                self,
+                "conventional_cell",
+                dataset.std_lattice @ dataset.std_rotation_matrix,
+            )
+            object.__setattr__(
+                self,
+                "conventional_positions",
+                np.array(dataset.std_positions, dtype=float),
+            )
+            object.__setattr__(self, "conventional_types", dataset.std_types)
+
+            primitive_cell, primitive_positions, primitive_types = (
+                spglib.find_primitive(
+                    (cell, self.original_positions, self.original_types),
+                    symprec=spglib_symprec,
+                    angle_tolerance=spglib_angle_tolerance,
+                )
+            )
+
+            # Rotate primitive cell back to the orientation of the given cell and atoms
+            object.__setattr__(
+                self, "primitive_cell", primitive_cell @ dataset.std_rotation_matrix
+            )
+            object.__setattr__(
+                self, "primitive_positions", np.array(primitive_positions, dtype=float)
+            )
+            object.__setattr__(self, "primitive_types", primitive_types)
+
+        except Exception as e:
+            _raise_with_message(
+                e=e,
+                message=f"Call to spglib failed. Spglib version {spglib.__version__}."
+                + _SUPPORT_FOOTER,
+            )
+
+    original_cell: np.ndarray
+    r"""
+    Same as the given ``cell``.
+    """
+
+    original_positions: np.ndarray
+    r"""
+    Same as the given ``atoms["positions"]``.
+    """
+
+    original_types: list
+    r"""
+    Same as ``wulfric.get_spglib_types(atoms=atoms)`` for given ``atoms``.
+    """
+
+    spglib_version: str
+    r"""
+    Version of spglib that was used to create this dataset.
+    """
+
+    space_group_number: int
+    r"""
+    Number of the space group. ``1 <= spglib_data.space_group_number <= 230``.
+    """
+
+    crystal_family: str
+    r"""
+    Crystal family.
+
+    * "c" for cubic
+    * "h" for hexagonal
+    * "t" for tetragonal
+    * "o" for orhorhombic
+    * "m" for monoclinic
+    * "a" for triclinic
+    """
+
+    centring_type: str
+    r"""
+    Centring type.
+
+    * "P" for primitive
+    * "A" for side centered
+    * "C" for side centered
+    * "I" for body-centered
+    * "R" for rhombohedral centring
+    * "F" for all faces centered
+    """
+
+    conventional_cell: np.ndarray
+    r"""
+    Conventional cell associated with the given structure in the same spatial
+    orientation. In other words, it is a choice of the cell for the same crystal.
+    It can contain more than one lattice point. Same as ``std_lattice`` of
+    |spglib-dataset|_ but rotated back with the ``std_rotation_matrix`` of
+    |spglib-dataset|_.
+    """
+
+    conventional_positions: np.ndarray
+    r"""
+    N relative positions of the atoms in the basis of
+    ``spglib_data.conventional_cell``. Same as ``std_positions`` of
+    |spglib-dataset|_.
+    """
+
+    conventional_types: list
+    r"""
+    N types of the atoms. Same as ``std_types`` of |spglib-dataset|_.
+    """
+
+    primitive_cell: np.ndarray
+    r"""
+    Primitive cell associated with the given structure in the same spatial
+    orientation. In other words, it is a choice of the cell for the same crystal.
+    It contains exactly one lattice point. Same as ``primitive_lattice``
+    returned by |spglib-find-primitive|_, but rotated back with the
+    ``std_rotation_matrix`` of |spglib-dataset|_.
+    """
+
+    primitive_positions: np.ndarray
+    r"""
+    M relative positions of the atoms in the basis of
+    ``spglib_data.primitive_cell``. Same as ``primitive_positions``
+    returned by |spglib-find-primitive|_.
+    """
+
+    primitive_types: list
+    r"""
+    M types of the atoms. Same as ``primitive_types``
+    returned by |spglib-find-primitive|_.
+    """
+
+    symprec: float
+    r"""
+    Tolerance parameter that was used to call |spglib|_.
+    """
+
+    angle_tolerance: float
+    r"""
+    Tolerance parameter that was used to call |spglib|_.
+    """
 
 
 def validate_spglib_data(cell, atoms, spglib_data) -> None:
@@ -198,9 +410,9 @@ def get_spglib_data(
             See Notes
 
         .. hint::
-            Pass ``atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])`` if you would
-            like to interpret the ``cell`` alone (effectively assuming that the ``cell``
-            is a primitive one).
+            Pass ``atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])`` to interpret
+            the ``cell`` alone (effectively assuming that the ``cell`` is a primitive
+            one).
     spglib_symprec : float, default :math:`10^{-5}`
         Directly passed to |spglib|_. Tolerance parameter for the symmetry search.
     spglib_angle_tolerance : float, default -1
@@ -208,93 +420,7 @@ def get_spglib_data(
 
     Returns
     =======
-    spglib_data : dict
-        A dictionary with the added syntactic sugar (i.e. with the dot access to the keys).
-
-        Data that are included:
-
-        * ``spglib_data.original_cell``
-
-          Same as the given ``cell``
-
-        * ``spglib_data.original_positions``
-
-          Same as the given ``atoms["positions"]``
-
-        * ``spglib_data.original_types``
-
-          Same as ``wulfric.get_spglib_types(atoms=atoms)`` for given ``atoms``.
-
-        * ``spglib_data.space_group_number``
-
-          Number of the space group. ``1 <= spglib_data.space_group_number <= 230``.
-
-        * ``spglib_data.crystal_family``
-
-          Crystal family.
-
-          * "c" for cubic
-          * "h" for hexagonal
-          * "t" for tetragonal
-          * "o" for orhorhombic
-          * "m" for monoclinic
-          * "a" for triclinic
-
-        * ``spglib_data.centring_type``
-
-          Centring type.
-
-          * "P" for primitive
-          * "A" for side centered
-          * "C" for side centered
-          * "I" for body-centered
-          * "R" for rhombohedral centring
-          * "F" for all faces centered
-
-        * ``spglib_data.conventional_cell``
-
-          Conventional cell associated with the given structure in the same spatial
-          orientation. In other words, it is a choice of the cell for the same crystal.
-          It can contain more than one lattice point. Same as ``std_lattice`` of
-          |spglib-dataset|_ but rotated back with the ``std_rotation_matrix`` of
-          |spglib-dataset|_.
-
-        * ``spglib_data.conventional_positions``
-
-          N relative positions of the atoms in the basis of
-          ``spglib_data.conventional_cell``. Same as ``std_positions`` of
-          |spglib-dataset|_.
-
-        * ``spglib_data.conventional_types``
-
-          N types of the atoms. Same as ``std_types`` of |spglib-dataset|_.
-
-        * ``spglib_data.primitive_cell``
-
-          Primitive cell associated with the given structure in the same spatial
-          orientation. In other words, it is a choice of the cell for the same crystal.
-          It contains exactly one lattice point. Same as ``primitive_lattice``
-          returned by |spglib-find-primitive|_, but rotated back with the
-          ``std_rotation_matrix`` of |spglib-dataset|_.
-
-        * ``spglib_data.primitive_positions``
-
-          M relative positions of the atoms in the basis of
-          ``spglib_data.primitive_cell``. Same as ``primitive_positions``
-          returned by |spglib-find-primitive|_.
-
-        * ``spglib_data.primitive_types``
-
-          M types of the atoms. Same as ``primitive_types``
-          returned by |spglib-find-primitive|_.
-
-        * ``spglib_data.symprec`` angle_tolerance
-
-          Tolerance parameter that was used to call |spglib|_.
-
-        * ``spglib_data.angle_tolerance``
-
-          Tolerance parameter that was used to call |spglib|_.
+    spglib_data : :py:class:`.SpglibData`
 
     Raises
     ======
@@ -311,75 +437,12 @@ def get_spglib_data(
     ``types`` from given ``atoms`` see :py:func:`wulfric.get_spglib_types`.
     """
 
-    try:
-        # Validate input data
-        # # Validate that the atoms dictionary is what expected of it
-        validate_atoms(atoms=atoms, required_keys=["positions"], raise_errors=True)
-
-        # Validate cell TODO: write _cell_validation.py,
-        # perhaps check if it can form a parallelepiped
-        try:
-            cell = np.array(cell, dtype=float)
-        except Exception as e:
-            _raise_with_message(e=e, message=f"cell is not array-like, got\n{cell}")
-
-        if cell.shape != (3, 3):
-            raise ValueError(f"Expected shape of (3, 3) for cell, got {cell.shape}.")
-
-        # Just a dictionary with dot-like access to its keys
-        spglib_data = SyntacticSugar()
-
-        # Populate with the input data
-        spglib_data.original_cell = deepcopy(cell)
-        spglib_data.original_positions = deepcopy(atoms["positions"])
-        spglib_data.original_types = deepcopy(get_spglib_types(atoms=atoms))
-        spglib_data.symprec = spglib_symprec
-        spglib_data.angle_tolerance = spglib_angle_tolerance
-
-        dataset = spglib.get_symmetry_dataset(
-            (cell, spglib_data.original_positions, spglib_data.original_types),
-            symprec=spglib_symprec,
-            angle_tolerance=spglib_angle_tolerance,
-        )
-
-        if dataset is None:
-            raise RuntimeError(
-                f"spglib failed to detect symmetry for the given structure with spglib_symprec = {spglib_symprec} and spglib_angle_tolerance = {spglib_angle_tolerance}."
-            )
-
-        # For spglib <= 2.4.0
-        if isinstance(dataset, dict):
-            dataset = add_sugar(dataset)
-
-        spglib_data.space_group_number = dataset.number
-        spglib_data.crystal_family = CRYSTAL_FAMILY[dataset.number]
-        spglib_data.centring_type = CENTRING_TYPE[dataset.number]
-        # Rotate conventional cell back to the orientation of the given cell and atoms
-        spglib_data.conventional_cell = (
-            dataset.std_lattice @ dataset.std_rotation_matrix
-        )
-        spglib_data.conventional_positions = dataset.std_positions
-        spglib_data.conventional_types = dataset.std_types
-
-        primitive_cell, primitive_positions, primitive_types = spglib.find_primitive(
-            (cell, spglib_data.original_positions, spglib_data.original_types),
-            symprec=spglib_symprec,
-            angle_tolerance=spglib_angle_tolerance,
-        )
-
-        # Rotate primitive cell back to the orientation of the given cell and atoms
-        spglib_data.primitive_cell = primitive_cell @ dataset.std_rotation_matrix
-        spglib_data.primitive_positions = primitive_positions
-        spglib_data.primitive_types = primitive_types
-
-        return spglib_data
-
-    except Exception as e:
-        _raise_with_message(
-            e=e,
-            message=f"Call to spglib failed. Spglib version {spglib.__version__}."
-            + _SUPPORT_FOOTER,
-        )
+    return SpglibData(
+        cell=cell,
+        atoms=atoms,
+        spglib_symprec=spglib_symprec,
+        spglib_angle_tolerance=spglib_angle_tolerance,
+    )
 
 
 # Populate __all__ with objects defined in this file

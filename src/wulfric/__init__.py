@@ -18,9 +18,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-__version__ = "0.6.5"
+__version__ = "0.7.0"
 __doclink__ = "wulfric.org"
-__release_date__ = "25 May 2026"
+__release_date__ = "26 May 2026"
 
 
 from . import cell, constants, crystal, geometry, io, kpoints

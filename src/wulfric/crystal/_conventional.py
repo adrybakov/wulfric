@@ -25,8 +25,7 @@ from wulfric._exceptions import ConventionNotSupported, PotentialBugError
 from wulfric.crystal._crystal_validation import validate_atoms
 from wulfric.cell._niggli import get_niggli
 from wulfric.cell._basic_manipulation import get_reciprocal, get_params
-from wulfric._spglib_interface import get_spglib_data, validate_spglib_data
-from wulfric._syntactic_sugar import SyntacticSugar
+from wulfric._spglib_interface import get_spglib_data, validate_spglib_data, SpglibData
 from wulfric._numerical import compare_with_tolerance as cwt
 
 # Save local scope at this moment
@@ -656,7 +655,7 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
         * "SC" for [2]_
         * "spglib" for |spglib|_ [3]_
 
-    spglib_data : :py:class:`.SyntacticSugar`, optional
+    spglib_data : :py:class:`.SpglibData`, optional
         If you need more control on the parameters passed to the spglib, then
         you can get ``spglib_data`` manually and pass it to this function.
         Use wulfric's interface to |spglib|_ as
@@ -721,9 +720,9 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
     if spglib_data is None:
         spglib_data = get_spglib_data(cell=cell, atoms=atoms)
     # Or check that spglib_data were *most likely* produced via wulfric's interface
-    elif not isinstance(spglib_data, SyntacticSugar):
+    elif not isinstance(spglib_data, SpglibData):
         raise TypeError(
-            f"Are you sure that spglib_data were produced via wulfric's interface? Expected SyntacticSugar, got {type(spglib_data)}."
+            f"Are you sure that spglib_data were produced via wulfric's interface? Expected SpglibData, got {type(spglib_data)}."
         )
     # Validate that user-provided spglib_data match user-provided structure
     else:

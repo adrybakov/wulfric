@@ -1,0 +1,34 @@
+.. _release-notes_0.7:
+
+***********
+Version 0.7
+***********
+
+0.7.0
+=====
+**Date**: 26 May 2026
+
+Bugfix
+------
+
+* :py:func:`wulfric.get_spglib_types` did not handle the case of unidentifiable species
+  correctly. See also :issue:`23`.
+* :py:func:`wulfric.crystal.get_primitive` did not assign the names to the primitive atoms
+  correctly. Fixed (hopefully).
+
+New features
+------------
+
+* Implement :issue:`22`.
+* Implement :issue:`24`.
+* ``spglib_data.spglib_version``. See :py:meth:`wulfric.SpglibData.spglib_version`.
+
+Breaking changes wrt 0.6
+========================
+
+* ``spglib_data`` is made to be a dataclass and not a dictionary. Thus, the
+  dictionary-like access is no longer functional. If you used attribute access, then
+  your code should work without modification. If you used dictionary-like access,
+  you need to change it to attribute access. For example, if you used
+  ``spglib_data['original_cell']``, you need to change it to
+  ``spglib_data.original_cell``.
