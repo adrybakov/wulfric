@@ -21,7 +21,7 @@ jobs:
     name: Test documentation
     uses: adrybakov/wulfric/.github/workflows/doc-tests.yml@main
     with:
-      python-version: $3.12
+      python-version: 3.12
       os: ubuntu-latest
 
   unit_tests:
