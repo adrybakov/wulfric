@@ -8,21 +8,22 @@ name = "wulfric"
 license = { text = "GPL-3.0 license" }
 dynamic = ["version"]
 description = "Cell, Atoms, K-path."
-dependencies = ["numpy", "spglib>=0.1.15"]
+dependencies = ["numpy>=2", "spglib>=0.1.15"]
 authors = [{ name = "Andrey Rybakov", email = "rybakov.ad@icloud.com" }]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 readme = "README.rst"
 classifiers = [
     'Development Status :: 4 - Beta',
     'Intended Audience :: Science/Research',
+    'Intended Audience :: Education',
     'Intended Audience :: Developers',
     'Programming Language :: Python',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
     'Programming Language :: Python :: 3.12',
     'Programming Language :: Python :: 3.13',
+    'Programming Language :: Python :: 3.14',
     'Programming Language :: Python :: 3 :: Only',
     'Topic :: Software Development',
     'Topic :: Scientific/Engineering',
@@ -84,8 +85,8 @@ exclude = [
 line-length = 88
 indent-width = 4
 
-# Assume Python 3.9
-target-version = "py39"
+# Assume Python 3.10
+target-version = "py310"
 
 [tool.ruff.lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`) codes by default.
