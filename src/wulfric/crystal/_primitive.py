@@ -291,9 +291,10 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
     prim_atoms = dict(positions=prim_positions)
 
     # Get mapping from original atoms to primitive ones through types
-    types_mapping = {
-        type_index: index for index, type_index in enumerate(spglib_data.original_types)
-    }
+    types_mapping = {}
+    for index, type_index in enumerate(spglib_data.original_types):
+        if type_index not in types_mapping:
+            types_mapping[type_index] = index
 
     # Populate primitive_atoms with all keys that have been defined in the original atoms.
     for key in atoms:
