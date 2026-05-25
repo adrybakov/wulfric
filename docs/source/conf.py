@@ -294,6 +294,10 @@ custom_links = {
         "HPKOT paper",
         "https://doi.org/10.1016/j.commatsci.2016.10.015",
     ),
+    "Status-of-Python-versions": (
+        "Status of Python versions",
+        "https://devguide.python.org/versions/",
+    ),
 }
 
 
