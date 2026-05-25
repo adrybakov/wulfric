@@ -944,6 +944,7 @@ class PlotlyEngine:
         legend_group=None,
         shift=(0, 0, 0),
         scale=1,
+        add_hoverinfo=True,
         row=1,
         col=1,
     ):
@@ -978,6 +979,11 @@ class PlotlyEngine:
         scale : float, default 1
             Scale for the size of atoms's markers and text labels. Use ``scale>1`` to
             increase the size.
+        add_hoverinfo : bool, default True
+
+            .. versionadded:: 0.6.5
+
+            Whether to add hover info with atom's properties.
         row : int, default 1
             Row of the subplot.
         col : int, default 1
@@ -1016,25 +1022,109 @@ class PlotlyEngine:
 
         text_color = [_get_good_contrast(color) for color in colors]
 
-        self.fig.add_traces(
-            data=dict(
-                type="scatter3d",
-                mode="markers+text",
-                legendgroup=legend_group,
-                name=legend_label,
-                showlegend=legend_label is not None,
-                x=points[0],
-                y=points[1],
-                z=points[2],
-                text=names,
-                marker=dict(size=14 * scale, color=colors),
-                hoverinfo="none",
-                textfont=dict(size=10 * scale, color=text_color),
-                textposition="middle center",
-            ),
-            rows=row,
-            cols=col,
-        )
+        # Prepare hover info
+        if add_hoverinfo:
+            n_atoms = len(atoms["positions"])
+            keys = []
+            for key in atoms.keys():
+                if len(atoms[key]) == n_atoms:
+                    keys.append(key)
+                else:
+                    import warnings
+
+                    warnings.warn(
+                        f"Length of atoms['{key}'] is not equal to the number of atoms (counted from atoms['positions']): {len(atoms[key])} != {n_atoms}",
+                        UserWarning,
+                        stacklevel=2,
+                    )
+            hoverinfo = [f"Atom {index + 1}<br><br>" for index in range(n_atoms)]
+            pos_fmt = ".4f"
+
+            for key in keys:
+                if key == "names":
+                    hoverinfo = [
+                        hoverinfo[_] + f"Name: {atoms[key][_]}<br>"
+                        for _ in range(n_atoms)
+                    ]
+                elif key == "species":
+                    hoverinfo = [
+                        hoverinfo[_] + f"Species: {atoms[key][_]}<br>"
+                        for _ in range(n_atoms)
+                    ]
+                elif key == "positions":
+                    hoverinfo = [
+                        hoverinfo[_]
+                        + f"Position (relative): {atoms[key][_][0]:{pos_fmt}} {atoms[key][_][1]:{pos_fmt}} {atoms[key][_][2]:{pos_fmt}}<br>"
+                        + f"Position (absolute): {points[0][_]:{pos_fmt}} {points[1][_]:{pos_fmt}} {points[2][_]:{pos_fmt}}<br>"
+                        for _ in range(n_atoms)
+                    ]
+                elif key == "spglib_types":
+                    hoverinfo = [
+                        hoverinfo[_] + f"Spglib type: {atoms[key][_]}<br>"
+                        for _ in range(n_atoms)
+                    ]
+                else:
+                    hoverinfo = [
+                        hoverinfo[_] + f"{key}: {atoms[key][_]}<br>"
+                        for _ in range(n_atoms)
+                    ]
+
+            self.fig.add_traces(
+                data=dict(
+                    type="scatter3d",
+                    mode="markers",
+                    legendgroup=legend_group,
+                    name=legend_label,
+                    showlegend=legend_label is not None,
+                    x=points[0],
+                    y=points[1],
+                    z=points[2],
+                    text=hoverinfo,
+                    marker=dict(size=14 * scale, color=colors),
+                    hoverinfo="text",
+                ),
+                rows=row,
+                cols=col,
+            )
+            self.fig.add_traces(
+                data=dict(
+                    type="scatter3d",
+                    mode="text",
+                    legendgroup=legend_group,
+                    name=legend_label,
+                    showlegend=False,
+                    x=points[0],
+                    y=points[1],
+                    z=points[2],
+                    text=names,
+                    hoverinfo="none",
+                    textfont=dict(size=10 * scale, color=text_color),
+                    textposition="middle center",
+                ),
+                rows=row,
+                cols=col,
+            )
+
+        else:
+            self.fig.add_traces(
+                data=dict(
+                    type="scatter3d",
+                    mode="markers+text",
+                    legendgroup=legend_group,
+                    name=legend_label,
+                    showlegend=legend_label is not None,
+                    x=points[0],
+                    y=points[1],
+                    z=points[2],
+                    text=names,
+                    marker=dict(size=14 * scale, color=colors),
+                    hoverinfo="none",
+                    textfont=dict(size=10 * scale, color=text_color),
+                    textposition="middle center",
+                ),
+                rows=row,
+                cols=col,
+            )
 
         # Fix for plotly #7143
         self._update_range(
