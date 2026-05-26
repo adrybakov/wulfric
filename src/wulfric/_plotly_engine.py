@@ -992,7 +992,7 @@ class PlotlyEngine:
             increase the size.
         add_hoverinfo : bool, default True
 
-            .. versionadded:: 0.6.5
+            .. versionadded:: 0.7.0
 
             Whether to add hover info with atom's properties.
         row : int, default 1

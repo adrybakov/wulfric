@@ -40,6 +40,8 @@ class SpglibData:
     r"""
     Data from spglib.
 
+    .. versionadded:: 0.7.0
+
     Parameters
     ==========
     cell : (3, 3) |array-like|_
@@ -302,7 +304,7 @@ def get_spglib_types(atoms):
     r"""
     Constructs spglib_types for the given atoms.
 
-    .. versionchanged:: 0.6.5 Rule 3 modified to account for failed deduction of species from names.
+    .. versionchanged:: 0.7.0 Rule 3 modified to account for failed deduction of species from names.
 
     First satisfied rule is applied
 
