@@ -39,6 +39,7 @@ def test(no_logo=False):
     Python setup):
 
     .. code-block:: bash
+
         pip install pytest hypothesis
 
     """

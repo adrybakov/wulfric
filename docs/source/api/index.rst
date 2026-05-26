@@ -64,6 +64,15 @@ Spglib interface
     get_spglib_types
     validate_spglib_data
 
+Unit tests
+==========
+
+.. autosummary::
+    :caption: Unit tests
+    :toctree: generated/
+
+    test
+
 
 Exceptions
 ==========
