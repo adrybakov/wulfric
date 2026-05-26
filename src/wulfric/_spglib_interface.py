@@ -30,9 +30,7 @@ from wulfric.crystal._atoms import get_atom_species
 
 from wulfric.constants._space_groups import CRYSTAL_FAMILY, CENTRING_TYPE
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["SpglibData", "validate_spglib_data", "get_spglib_types", "get_spglib_data"]
 
 
 @dataclass(eq=False, frozen=True)
@@ -445,10 +443,3 @@ def get_spglib_data(
         spglib_symprec=spglib_symprec,
         spglib_angle_tolerance=spglib_angle_tolerance,
     )
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

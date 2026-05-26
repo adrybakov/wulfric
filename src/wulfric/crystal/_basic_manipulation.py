@@ -21,9 +21,7 @@
 import numpy as np
 
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["shift_atoms", "cure_negative", "ensure_000", "get_vector", "get_distance"]
 
 
 def shift_atoms(
@@ -319,10 +317,3 @@ def get_distance(cell, atoms, atom1, atom2, R=(0, 0, 0)) -> float:
             )
         )
     )
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

@@ -25,9 +25,7 @@ from wulfric._exceptions import NiggliReductionFailed
 from wulfric._numerical import compare_with_tolerance
 from wulfric.geometry._geometry import get_volume
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["get_niggli"]
 
 
 def _niggli_step_1(A, B, C, xi, eta, zeta, trans_matrix, eps):
@@ -423,10 +421,3 @@ def get_niggli(cell, eps_relative=1e-5, implementation="spglib", max_iterations=
         break
 
     return trans_matrix.T @ cell
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

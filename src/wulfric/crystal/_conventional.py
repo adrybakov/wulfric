@@ -28,9 +28,7 @@ from wulfric.cell._basic_manipulation import get_reciprocal, get_params
 from wulfric._spglib_interface import get_spglib_data, validate_spglib_data, SpglibData
 from wulfric._numerical import compare_with_tolerance as cwt
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["get_conventional"]
 
 
 def _hpkot_get_conventional_a(spglib_std_lattice):
@@ -817,10 +815,3 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
         conv_atoms["spglib_types"] = conv_types
 
     return conv_cell, conv_atoms
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

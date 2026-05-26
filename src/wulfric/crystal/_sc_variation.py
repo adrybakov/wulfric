@@ -31,9 +31,7 @@ from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_SHORT_NAMES
 from wulfric.crystal._conventional import get_conventional
 from wulfric.crystal._primitive import get_primitive
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["sc_get_variation"]
 
 
 def _BCT_variation(conv_a: float, conv_c: float):
@@ -436,10 +434,3 @@ def sc_get_variation(cell, atoms, spglib_data=None):
         )
 
     return SC_BRAVAIS_LATTICE_SHORT_NAMES[lattice_type]
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

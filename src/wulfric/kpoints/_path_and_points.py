@@ -42,9 +42,7 @@ from wulfric.kpoints._sc_points import _sc_get_points
 from wulfric._spglib_interface import get_spglib_data, validate_spglib_data, SpglibData
 
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["get_path_as_list", "get_path_as_string", "get_path_and_points"]
 
 
 def get_path_as_list(path_as_string) -> list:
@@ -334,10 +332,3 @@ def get_path_and_points(
                 hs_points[f"{point}_P"] = -hs_points[point]
 
     return kpath, hs_points
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

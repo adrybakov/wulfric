@@ -27,9 +27,13 @@ import numpy as np
 from wulfric.constants._numerical import TORADIANS
 from wulfric.geometry._geometry import get_angle, parallelepiped_check
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = [
+    "get_reciprocal",
+    "from_params",
+    "get_params",
+    "get_scalar_products",
+    "get_transformation_matrix",
+]
 
 
 def get_reciprocal(cell):
@@ -290,10 +294,3 @@ def get_transformation_matrix(original_cell, transformed_cell):
     """
 
     return np.linalg.inv(original_cell).T @ transformed_cell.T
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

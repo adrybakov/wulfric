@@ -27,9 +27,7 @@ from wulfric.constants._sc_convention import SC_CONVENTIONAL_TO_PRIMITIVE
 from wulfric.constants._hpkot_convention import HPKOT_CONVENTIONAL_TO_PRIMITIVE
 from wulfric.crystal._conventional import get_conventional
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["get_primitive"]
 
 
 def _get_unique(
@@ -307,10 +305,3 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
         prim_atoms["spglib_types"] = prim_types
 
     return prim_cell, prim_atoms
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

@@ -20,9 +20,7 @@
 # ================================ END LICENSE =================================
 R"""Syntactic sugar"""
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["SyntacticSugar", "add_sugar", "remove_sugar"]
 
 
 class SyntacticSugar(dict):
@@ -188,10 +186,3 @@ def remove_sugar(candy: dict) -> dict:
         dictionary[key] = candy[key]
 
     return dictionary
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

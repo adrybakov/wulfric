@@ -18,8 +18,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-old_dir = set(dir())
-old_dir.add("old_dir")
+
+
+__all__ = ["ATOM_SPECIES", "ATOMIC_MASS", "ATOM_COLORS"]
 
 ################################################################################
 #                                  Atoms names                                 #
@@ -391,10 +392,3 @@ ATOM_COLORS = {
     "Og": "#FD00D7",
     "X": "#FD00D7",
 }
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

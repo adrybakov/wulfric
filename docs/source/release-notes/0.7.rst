@@ -32,3 +32,5 @@ Breaking changes wrt 0.6
   you need to change it to attribute access. For example, if you used
   ``spglib_data['original_cell']``, you need to change it to
   ``spglib_data.original_cell``.
+* Previously deprecated function ``wulfric.cell.sc_get_example_cell`` is removed. Use
+  ``wulfric.cell.sc_get_example`` instead.

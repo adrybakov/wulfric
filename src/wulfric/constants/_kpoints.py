@@ -18,9 +18,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+
+
+__all__ = ["HS_PLOT_NAMES"]
 
 
 HS_PLOT_NAMES = {
@@ -235,9 +235,3 @@ HS_PLOT_NAMES = {
     "Z2": "Z$_2$",
     "Z2_P": "Z$_2^{\prime}$",
 }
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

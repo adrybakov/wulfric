@@ -29,9 +29,7 @@ try:
 except ImportError:
     SCIPY_AVAILABLE = False
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["get_lattice_points", "get_wigner_seitz_cell", "get_brillouin_zone"]
 
 
 def get_lattice_points(cell, range=(1, 1, 1), relative=False, flat=True):
@@ -193,10 +191,3 @@ def get_brillouin_zone(cell):
     """
 
     return _get_voronoi_cell(cell=get_reciprocal(cell=cell))
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

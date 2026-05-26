@@ -20,9 +20,7 @@
 # ================================ END LICENSE =================================
 from math import pi
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["TODEGREES", "TORADIANS"]
 
 ################################################################################
 #                               Angle conversion                               #
@@ -31,9 +29,3 @@ TODEGREES = 180.0 / pi
 
 
 TORADIANS = pi / 180.0
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

@@ -29,9 +29,7 @@ from wulfric.crystal._conventional import get_conventional
 from wulfric._exceptions import PotentialBugError
 from wulfric.constants import TORADIANS
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["hpkot_get_extended_bl_symbol"]
 
 
 def hpkot_get_extended_bl_symbol(cell, atoms, spglib_data=None):
@@ -234,10 +232,3 @@ def hpkot_get_extended_bl_symbol(cell, atoms, spglib_data=None):
     raise PotentialBugError(
         f'(convention="HPKOT"), lattice type {lattice_type}, space group {spglib_data.space_group_number}.. Failed to identify lattice type (not one of supported).'
     )
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

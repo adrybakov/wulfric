@@ -18,8 +18,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-old_dir = set(dir())
-old_dir.add("old_dir")
+
+
+__all__ = ["compare_with_tolerance"]
 
 
 def compare_with_tolerance(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
@@ -107,10 +108,3 @@ def compare_with_tolerance(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
     raise ValueError(
         f'Expected one of "<", ">", "<=", ">=", "==", "!=" as condition, got "{condition}".'
     )
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

@@ -25,9 +25,7 @@ import numpy as np
 from wulfric._numerical import compare_with_tolerance
 from wulfric.constants._numerical import TODEGREES, TORADIANS
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["get_volume", "get_angle", "parallelepiped_check", "get_spherical"]
 
 
 def get_volume(*args):
@@ -439,10 +437,3 @@ def get_spherical(
         return r, polar * TODEGREES, azimuthal * TODEGREES
     else:
         return r, polar, azimuthal
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

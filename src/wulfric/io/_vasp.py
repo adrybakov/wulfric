@@ -27,9 +27,7 @@ import numpy as np
 from wulfric.crystal._atoms import get_atom_species
 from wulfric.geometry._geometry import get_volume
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["load_poscar", "dump_poscar"]
 
 
 def load_poscar(file_object=None):
@@ -288,10 +286,3 @@ def dump_poscar(
                 f"{coordinate[component_index]:{decimals + 5}.{decimals}f} "
             )
         file_object.write("\n")
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

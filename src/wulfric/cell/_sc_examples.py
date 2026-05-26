@@ -28,9 +28,23 @@ from wulfric.cell._basic_manipulation import from_params, get_reciprocal
 from wulfric.constants._numerical import TORADIANS
 from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_VARIATIONS
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = [
+    "SC_CUB",
+    "SC_FCC",
+    "SC_BCC",
+    "SC_TET",
+    "SC_BCT",
+    "SC_ORC",
+    "SC_ORCF",
+    "SC_ORCI",
+    "SC_ORCC",
+    "SC_HEX",
+    "SC_RHL",
+    "SC_MCL",
+    "SC_MCLC",
+    "SC_TRI",
+    "sc_get_example",
+]
 
 
 # Primitive cell`s construction
@@ -1008,23 +1022,3 @@ def sc_get_example(lattice_variation: str = None):
         cell = SC_TRI(0.5, 1.0, 2.0, 80.0, 100.0, 40.0)
 
     return cell
-
-
-# Deprecated in 0.6.3
-# TODO:REMOVE in April of 2025
-def sc_get_example_cell(lattice_variation: str = None):
-    import warnings
-
-    warnings.warn(
-        "wulfric.cell.sc_get_example_cell has been renamed to wulfric.cell.sc_get_example in v0.6.3 release. This function with an old name will be removed in April of 2026.",
-        DeprecationWarning,
-    )
-
-    return sc_get_example(lattice_variation=lattice_variation)
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

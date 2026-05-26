@@ -20,9 +20,13 @@
 # ================================ END LICENSE =================================
 import numpy as np
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = [
+    "SC_BRAVAIS_LATTICE_SHORT_NAMES",
+    "SC_BRAVAIS_LATTICE_LONG_NAMES",
+    "SC_CONVENTIONAL_TO_PRIMITIVE",
+    "SC_BRAVAIS_LATTICE_VARIATIONS",
+    "SC_DEFAULT_K_PATHS",
+]
 
 ################################################################################
 #                      Setyawan and Curtarolo conventions                      #
@@ -227,10 +231,3 @@ SC_DEFAULT_K_PATHS = {
     "TRI1b": "X-GAMMA-Y|L-GAMMA-Z|N-GAMMA-M|R-GAMMA",
     "TRI2b": "X-GAMMA-Y|L-GAMMA-Z|N-GAMMA-M|R-GAMMA",
 }
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

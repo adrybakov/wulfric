@@ -31,9 +31,7 @@ from wulfric.kpoints._path_and_points import (
     get_path_and_points,
 )
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["Kpoints"]
 
 
 class Kpoints:
@@ -596,10 +594,3 @@ class Kpoints:
             k_z = f"{absolute[2]: {d + 3}.{d}f}"
             table.append(f"{name:<{nd}}  {i} {j} {k}  {k_x} {k_y} {k_z}")
         return "\n".join(table)
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

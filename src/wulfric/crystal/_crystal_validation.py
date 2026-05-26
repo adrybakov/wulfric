@@ -22,9 +22,7 @@ import numpy as np
 from wulfric._exceptions import _raise_with_message
 from wulfric.constants._atoms import ATOM_SPECIES
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["validate_atoms"]
 
 
 def validate_atoms(atoms, required_keys=None, raise_errors=True):
@@ -205,10 +203,3 @@ def validate_atoms(atoms, required_keys=None, raise_errors=True):
                     return False
 
     return True
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

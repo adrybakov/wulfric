@@ -29,10 +29,6 @@ from wulfric.constants._sc_convention import SC_BRAVAIS_LATTICE_SHORT_NAMES
 from wulfric._exceptions import PotentialBugError
 from wulfric.cell import get_params
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
-
 
 def _get_points_table_2():
     return {
@@ -482,10 +478,3 @@ def _sc_get_points(conventional_cell, lattice_type, lattice_variation):
     raise PotentialBugError(
         error_summary=f'(convention="SC"). Unexpected lattice type, got "{lattice_type}".'
     )
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

@@ -27,9 +27,7 @@ from wulfric.cell._basic_manipulation import get_reciprocal
 from wulfric.cell._niggli import get_niggli
 from wulfric.constants._numerical import TODEGREES
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["lepage"]
 
 
 ################################################################################
@@ -453,10 +451,3 @@ def lepage(
         return results
 
     return result
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

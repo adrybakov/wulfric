@@ -37,9 +37,7 @@ try:
 except ImportError:
     PLOTLY_AVAILABLE = False
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = ["PlotlyEngine"]
 
 
 _LEGEND_SETTINGS = {
@@ -1113,10 +1111,3 @@ class PlotlyEngine:
             row=row,
             col=col,
         )
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

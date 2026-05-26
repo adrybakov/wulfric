@@ -20,9 +20,11 @@
 # ================================ END LICENSE =================================
 import numpy as np
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
+__all__ = [
+    "HPKOT_CONVENTIONAL_TO_PRIMITIVE",
+    "HPKOT_DEFAULT_K_PATHS",
+    "HPKOT_EXTENDED_BL_SYMBOLS",
+]
 
 ################################################################################
 #                Hinuma, Pizzi, Kumagai, Oba, Tanaka convention                #
@@ -200,9 +202,3 @@ HPKOT_EXTENDED_BL_SYMBOLS = (
     "aP2",
     "aP3",
 )
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir

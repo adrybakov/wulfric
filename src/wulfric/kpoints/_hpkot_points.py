@@ -28,10 +28,6 @@ from wulfric.cell._basic_manipulation import get_params
 from wulfric.constants._numerical import TORADIANS
 from wulfric._exceptions import PotentialBugError
 
-# Save local scope at this moment
-old_dir = set(dir())
-old_dir.add("old_dir")
-
 
 def _get_points_table_69():
     return {
@@ -566,10 +562,3 @@ def _hpkot_get_points(conventional_cell, lattice_type, extended_bl_symbol):
     raise PotentialBugError(
         error_summary=f'(convention="HPKOT"). Unexpected extended Bravais lattice symbol, got "{extended_bl_symbol}".'
     )
-
-
-# Populate __all__ with objects defined in this file
-__all__ = list(set(dir()) - old_dir)
-# Remove all semi-private objects
-__all__ = [i for i in __all__ if not i.startswith("_")]
-del old_dir
