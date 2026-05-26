@@ -60,16 +60,14 @@ In that way |spglib|_ is called only once and the data are re-used.
 All functions that accept ``cell`` and ``atoms`` and rely on |spglib|_ have optional
 argument ``spglib_data`` that can be passed to them.
 
-Moreover, ``spglib_data`` object by itself (which is just a dictionary with an additional dot access)
-can be used by the user to access additional information derived from spglib:
+Moreover, ``spglib_data`` object by itself (which is an inventory of data stored as an
+instance of the dataclass :py:class:`wulfric.SpglibData`) can be used by the user to access
+additional information derived from spglib:
 
 .. doctest::
 
     # Fancy dot syntax
     >>> spglib_data.space_group_number
-    59
-    >>> # is actually the same as
-    >>> spglib_data["space_group_number"]
     59
     >>> spglib_data.crystal_family
     'o'
