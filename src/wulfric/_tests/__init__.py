@@ -67,7 +67,19 @@ def test(no_logo=False):
         from wulfric._package_info import logo
 
         print(logo())
-        print("Running tests...\n")
+        print("Running tests...")
+
+    from spglib import __version__ as spglib_version
+    from numpy import __version__ as numpy_version
+
+    print(
+        "\n\n"
+        + "\n".join(
+            [f"spglib version: {spglib_version}", f"numpy version: {numpy_version}"]
+        )
+        + "\n\n"
+    )
+
     pytest.main(
         [
             "--pyargs",
