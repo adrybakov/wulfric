@@ -75,7 +75,7 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
             f"Documentation: {__doclink__}",
             f"Release date: {__release_date__}",
             "Licence: GNU GPLv3",
-            f"Copyright (C) 2023-{datetime.now().year}  Andrey Rybakov",
+            "Copyright (C) 2023 Andrey Rybakov",
         ]
         if date_time:
             cd = datetime.now()
@@ -153,7 +153,7 @@ def _copyright():
     Outputs short license summary for terminal interactions
     """
 
-    return f"""Wulfric Copyright (C) 2023-{datetime.now().year}  Andrey Rybakov
+    return """Wulfric Copyright (C) 2023 Andrey Rybakov
 This program comes with ABSOLUTELY NO WARRANTY; for details type 'wulfric warranty'.
 This is free software, and you are welcome to redistribute it
 under certain conditions; type 'wulfric conditions' for details."""
