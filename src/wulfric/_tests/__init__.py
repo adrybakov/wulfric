@@ -18,17 +18,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-def test(no_logo=False):
+def test():
     r"""
     Runs unit tests for the whole Wulfric package.
 
     .. versionadded:: 0.7.0 Test suite is made part of the installable package.
-
-    Parameters
-    ----------
-    no_logo : bool, default=False
-        If ``False``, the Wulfric logo will be printed before running tests.
-        Set to ``True`` to suppress the logo.
 
     Notes
     -----
@@ -64,19 +58,19 @@ def test(no_logo=False):
         )
         return
 
-    if not no_logo:
-        from wulfric._package_info import logo
-
-        print(logo())
-        print("Running tests...")
-
     from spglib import __version__ as spglib_version
     from numpy import __version__ as numpy_version
+    from wulfric import __version__ as wulfric_version
 
+    print("Running tests...")
     print(
         "\n\n"
         + "\n".join(
-            [f"spglib version: {spglib_version}", f"numpy version: {numpy_version}"]
+            [
+                f"wulfric version : {wulfric_version}",
+                f"spglib version  : {spglib_version}",
+                f"numpy version   : {numpy_version}",
+            ]
         )
         + "\n\n"
     )
