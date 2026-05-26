@@ -6,7 +6,7 @@ Installation
 
 Requirement for wulfric installation are:
 
-* |Python|_ (>=3.9)
+* |Python|_ (3.10 or higher)
 
 And several libraries:
 
@@ -96,6 +96,26 @@ with wulfric as
         %pip install wulfric
 
     within it.
+
+.. _installation-test:
+
+Test installed package
+======================
+
+You can test the installed Wulfric by running
+
+.. code-block:: bash
+
+    wulfric test
+
+command in the terminal.
+
+Alternatively, the tests can be run from the script/python console/jyputer notebook with
+
+.. code-block:: python
+
+    import wulfric
+    wulfric.test()
 
 .. _installation-source:
 

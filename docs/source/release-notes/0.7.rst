@@ -22,6 +22,8 @@ New features
 * Implement :issue:`22`.
 * Implement :issue:`24`.
 * ``spglib_data.spglib_version``. See :py:meth:`wulfric.SpglibData.spglib_version`.
+* Make unit tests a part of the installable package: :py:func:`wulfric.test` in scripts
+  and ``wulfric test`` in the terminal.
 
 Breaking changes wrt 0.6
 ========================

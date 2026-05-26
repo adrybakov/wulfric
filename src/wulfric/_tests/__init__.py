@@ -22,6 +22,8 @@ def test(no_logo=False):
     r"""
     Runs unit tests for the whole Wulfric package.
 
+    .. versionadded:: 0.7.0 Test suite is made part of the installable package.
+
     Parameters
     ----------
     no_logo : bool, default=False
