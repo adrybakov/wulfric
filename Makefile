@@ -24,8 +24,6 @@ help:
 	@echo "    doctest - run doctests"
 	@echo "    clean - clean all files from docs and pip routines"
 	@echo "    install - install the package"
-	@echo "    test - execute unit tests"
-	@echo "    test-all - execute full testing suite"
 	@echo "    docs-index - Update graphics of the index page"
 	@echo "    docs-generate-images - update pictures for the docs"
 	@echo "    requirements - installs all requirements (package + dev + tests + docs)"
@@ -63,14 +61,6 @@ clean:
 install:
 	@python3 -m pip install .
 
-test:
-	@pytest -s
-
-test-all: html-from-zero test doctest
-	@echo "Done"
-
-
-
 docs-index:
 	@python tools/make-index-graphics.py
 
@@ -92,7 +82,7 @@ requirements:
 	@pip install -r requirements.txt --no-cache
 	@pip install -r requirements-dev.txt --no-cache
 	@pip install -r docs/requirements.txt --no-cache
-	@pip install -r tests/requirements.txt --no-cache
+	@pip install -r requirements-tests.txt --no-cache
 
 release-check:
 	@python tools/check-release-metadata.py -rd . -v $(VERSION)

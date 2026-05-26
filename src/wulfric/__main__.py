@@ -23,6 +23,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from wulfric import __version__
 from wulfric._osfix import _winwait
 from wulfric._package_info import _warranty, logo
+from wulfric._tests import test
 
 
 def main():
@@ -34,7 +35,7 @@ def main():
         "command",
         default=None,
         help="Which command to run",
-        choices=["logo", "warranty"],
+        choices=["logo", "warranty", "test"],
         nargs="?",
     )
     parser.add_argument(
@@ -52,6 +53,8 @@ def main():
         print(logo())
     elif args.command == "warranty":
         print("\n" + _warranty() + "\n")
+    elif args.command == "test":
+        test()
     elif args.command is None:
         parser.print_help()
     else:
