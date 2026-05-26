@@ -145,7 +145,7 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
                     )
 
     logo_info = [f"{comment}{x:^{line_length}}\n" for x in logo_info]
-    return "".join(logo_info)[:-1]
+    return "".join(logo_info)[:-1].encode("utf-8").decode("utf-8")
 
 
 def _copyright():
