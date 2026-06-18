@@ -20,7 +20,6 @@
 # ================================ END LICENSE =================================
 from dataclasses import dataclass
 
-import spglib
 from copy import deepcopy
 import numpy as np
 from wulfric._syntactic_sugar import add_sugar
@@ -29,6 +28,11 @@ from wulfric._exceptions import _raise_with_message, _SUPPORT_FOOTER
 from wulfric.crystal._atoms import get_atom_species
 
 from wulfric.constants._space_groups import CRYSTAL_FAMILY, CENTRING_TYPE
+
+try:
+    import spglib
+except ImportError:
+    spglib = None
 
 __all__ = ["SpglibData", "validate_spglib_data", "get_spglib_types", "get_spglib_data"]
 
@@ -53,6 +57,10 @@ class SpglibData:
     """
 
     def __init__(self, cell, atoms, spglib_symprec=1e-5, spglib_angle_tolerance=-1):
+        if spglib is None:
+            raise ImportError(
+                "spglib is not installed. Please install it with `pip install spglib`"
+            )
         try:
             # Validate input data
             # # Validate that the atoms dictionary is what expected of it

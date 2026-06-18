@@ -18,12 +18,16 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-import spglib
 import numpy as np
 
 from wulfric._exceptions import NiggliReductionFailed
 from wulfric._numerical import compare_with_tolerance
 from wulfric.geometry._geometry import get_volume
+
+try:
+    import spglib
+except ImportError:
+    spglib = None
 
 __all__ = ["get_niggli"]
 
@@ -349,6 +353,10 @@ def get_niggli(cell, eps_relative=1e-5, implementation="spglib", max_iterations=
     implementation = implementation.lower()
 
     if implementation == "spglib":
+        if spglib is None:
+            raise ImportError(
+                "spglib is not installed. Please install it with `pip install spglib`"
+            )
         return spglib.niggli_reduce(lattice=cell, eps=eps_relative)
     elif implementation != "wulfric":
         raise ValueError(
