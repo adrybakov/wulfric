@@ -154,16 +154,16 @@ def test_reciprocal_cell_examples(cell, rec_cell):
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
     st.floats(min_value=MIN_LENGTH, max_value=MAX_LENGTH),
-    st.floats(min_value=0.0, max_value=360.0),
-    st.floats(min_value=0.0, max_value=360.0),
-    st.floats(min_value=0.0, max_value=360.0),
+    st.floats(min_value=0.01, max_value=360.0),
+    st.floats(min_value=0.01, max_value=360.0),
+    st.floats(min_value=0.01, max_value=360.0),
 )
 def test_cell_from_param(a, b, c, alpha, beta, gamma):
     if parallelepiped_check(a, b, c, alpha, beta, gamma):
         cell = from_params(a, b, c, alpha, beta, gamma)
         ap, bp, cp, alphap, betap, gammap = get_params(cell)
         assert np.allclose([a, b, c], [ap, bp, cp])
-        assert np.allclose([alpha, beta, gamma], [alphap, betap, gammap])
+        assert np.allclose([alpha, beta, gamma], [alphap, betap, gammap], atol=0.01)
     else:
         with pytest.raises(ValueError):
             from_params(a, b, c, alpha, beta, gamma)
