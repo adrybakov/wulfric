@@ -4,6 +4,14 @@
 Version 0.7
 ***********
 
+0.7.1
+=====
+**Date**: 18 June 2026
+
+Wrap import of spglib into a try-except block to avoid import error when spglib is not
+installed.
+
+
 0.7.0
 =====
 **Date**: 26 May 2026
