@@ -17,6 +17,8 @@ Bugfix
 - Make raw string out of kpoints labels.
 - Fix two missing colors in the standard reference for colors of chemical elements (for 
   Pd and Er).
+- Fix a mismatch of constants type (int -> float) in the list of atomic masses. Cosmetic,
+  shall not affect anything. 
 
 0.7.1
 =====
