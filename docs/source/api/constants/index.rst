@@ -30,11 +30,11 @@ wulfric.constants
 Atoms
 =====
 
-================================= ====================================
+================================= =====================================
 :ref:`api_constants_ATOM_SPECIES` All possible atom species.
-:ref:`api_constants_ATOMIC_MASS`  Atomic mass
-:ref:`api_constants_ATOM_COLORS`  Atom colors that are used by default
-================================= ====================================
+:ref:`api_constants_ATOMIC_MASS`  Atomic mass.
+:ref:`api_constants_ATOM_COLORS`  Atom colors that are used by default.
+================================= =====================================
 
 Setyawan and Curtarolo convention
 =================================
@@ -44,7 +44,7 @@ Setyawan and Curtarolo convention
 :ref:`api_constants_SC_BRAVAIS_LATTICE_LONG_NAMES`  Long names of the Bravais lattices.
 :ref:`api_constants_SC_CONVENTIONAL_TO_PRIMITIVE`   Transformation matrices from conventional cell to primitive cell.
 :ref:`api_constants_SC_BRAVAIS_LATTICE_VARIATIONS`  List of all possible variations of the Bravais lattices.
-:ref:`api_constants_SC_DEFAULT_K_PATHS`             Default k-path for each variation of Bravais lattices.
+:ref:`api_constants_SC_DEFAULT_K_PATHS`             Default k-path for each variation of Bravais lattice.
 =================================================== =================================================================
 
 Hinuma, Pizzi, Kumagai, Oba, Tanaka convention
@@ -52,15 +52,15 @@ Hinuma, Pizzi, Kumagai, Oba, Tanaka convention
 
 ==================================================== =================================================================
 :ref:`api_constants_HPKOT_CONVENTIONAL_TO_PRIMITIVE` Transformation matrices from conventional cell to primitive cell.
-:ref:`api_constants_HPKOT_DEFAULT_K_PATHS`           Default k-path for each extended Bravais lattice symbols.
+:ref:`api_constants_HPKOT_DEFAULT_K_PATHS`           Default k-path for each extended Bravais lattice symbol.
 :ref:`api_constants_HPKOT_EXTENDED_BL_SYMBOLS`       Extended Bravais lattice symbols.
 ==================================================== =================================================================
 
-Kpoints
-=======
+K points
+========
 
 ================================== =================================================
-:ref:`api_constants_HS_PLOT_NAMES` Names of high-symmetry k points written in LaTex.
+:ref:`api_constants_HS_PLOT_NAMES` Names of high-symmetry k points written in LaTeX.
 ================================== =================================================
 
 Angle conversion
@@ -71,7 +71,7 @@ Angle conversion
 :ref:`api_constants_TORADIANS` Constant that converts degrees to radians.
 ============================== ==========================================
 
-Space Groups
+Space groups
 ============
 
 ======================================= =====================================================================

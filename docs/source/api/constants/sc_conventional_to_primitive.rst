@@ -6,7 +6,7 @@ wulfric.constants.SC_CONVENTIONAL_TO_PRIMITIVE
 
 Transformation matrices from conventional cell to primitive cell.
 
-Data are from the Table 2 of [1]_.
+Data are from Table 2 of [1]_.
 
 .. code-block:: python
 
@@ -121,6 +121,6 @@ Data are from the Table 2 of [1]_.
 
 References
 ==========
-.. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
-       Band structure diagram paths based on crystallography.
-       Computational Materials Science, 128, pp.140-184.
+.. [1] Setyawan, W. and Curtarolo, S., 2010.
+       High-throughput electronic band structure calculations: Challenges and tools.
+       Computational materials science, 49(2), pp. 299-312.

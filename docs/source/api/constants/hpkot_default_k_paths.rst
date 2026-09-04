@@ -4,9 +4,9 @@
 wulfric.constants.HPKOT_DEFAULT_K_PATHS
 ***************************************
 
-Default k-path for each extended Bravais lattice symbols.
+Default k-path for each extended Bravais lattice symbol.
 
-Data are from [1]_
+Data are from [1]_.
 
 .. code-block:: python
 

@@ -4,8 +4,7 @@
 wulfric.constants.TODEGREES
 ***************************
 
-Constant that converts radians to degrees.
-
+Conversion constant from radians to degrees.
 
 
 .. code-block:: python

@@ -4,7 +4,7 @@
 wulfric.constants.CENTRING_TYPE
 *******************************
 
-Centring type of every space group.
+Centring type for each space group.
 
 
 Source can be found `here <https://onlinelibrary.wiley.com/iucr/itc/Ac/ch2o3v0001/>`_.

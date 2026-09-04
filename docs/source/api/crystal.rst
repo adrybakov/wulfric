@@ -7,8 +7,8 @@ wulfric.crystal
 .. currentmodule:: wulfric.crystal
 
 
-Atom's modification
-===================
+Modification of atoms
+=====================
 
 .. autosummary::
     :toctree: generated/
@@ -18,8 +18,8 @@ Atom's modification
     cure_negative
 
 
-Atom's properties
-=================
+Properties of atoms
+===================
 
 .. autosummary::
     :toctree: generated/
@@ -67,6 +67,7 @@ HPKOT [1]_ convention
     hpkot_get_example
     hpkot_get_extended_bl_symbol
 
+
 SC convention [2]_
 ==================
 
@@ -76,9 +77,9 @@ SC convention [2]_
     sc_get_variation
 
 
-
 References
 ==========
+
 .. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
         Band structure diagram paths based on crystallography.
         Computational Materials Science, 128, pp.140-184.

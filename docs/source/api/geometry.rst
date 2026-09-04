@@ -7,7 +7,7 @@ wulfric.geometry
 .. currentmodule:: wulfric.geometry
 
 
-Funstions
+Functions
 =========
 
 .. autosummary::

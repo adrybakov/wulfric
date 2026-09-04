@@ -31,8 +31,8 @@ Cell's derivatives
     get_niggli
 
 
-Cell'stransformations
-=====================
+Cell's transformations
+======================
 
 .. autosummary::
     :toctree: generated/

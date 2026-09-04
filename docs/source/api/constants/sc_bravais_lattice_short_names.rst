@@ -6,7 +6,7 @@ wulfric.constants.SC_BRAVAIS_LATTICE_SHORT_NAMES
 
 Short names of the Bravais lattices.
 
-Data are from [1]_
+Data are from [1]_.
 
 .. code-block:: python
 

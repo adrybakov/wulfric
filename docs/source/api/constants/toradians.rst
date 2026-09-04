@@ -4,7 +4,7 @@
 wulfric.constants.TORADIANS
 ***************************
 
-Constant that converts degrees to radians.
+Conversion constant from degrees to radians.
 
 
 

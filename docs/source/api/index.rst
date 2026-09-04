@@ -64,6 +64,7 @@ Spglib interface
     get_spglib_types
     validate_spglib_data
 
+
 Unit tests
 ==========
 
@@ -92,7 +93,7 @@ Legacy code
 
 .. note::
     Legacy code is not used by wulfric internally. It is completely separated from the
-    package. It will not be supported nor updated. In the future it may be removed.
+    package. It will not be supported or updated. It may be removed in the future release.
 
 .. autosummary::
     :caption: Legacy code
