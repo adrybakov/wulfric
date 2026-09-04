@@ -19,6 +19,7 @@ Bugfix
   Pd and Er).
 - Fix a mismatch of constants type (int -> float) in the list of atomic masses. Cosmetic,
   shall not affect anything. 
+- Fix a typo in the display name of high symmetry k-point "F3" and "F3_P".
 
 0.7.1
 =====
