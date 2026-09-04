@@ -74,9 +74,9 @@ def validate_atoms(atoms, required_keys=None, raise_errors=True):
     Raises
     ======
     TypeError
-        If ``atoms[key]`` is not iterable for any ``key`` and ``raise_errors=False``.
+        If ``atoms[key]`` is not iterable for any ``key`` and ``raise_errors=True``.
     ValueError
-        If any check is not passed and ``raise_errors=False``.
+        If any check is not passed and ``raise_errors=True``.
     """
 
     if required_keys is None:
