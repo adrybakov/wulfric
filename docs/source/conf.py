@@ -109,7 +109,7 @@ html_static_path = ["_static"]
 html_css_files = ["wulfric.css"]
 
 html_title = f"{project}"
-html_favicon = "img/favicon.png"
+html_favicon = "_static/favicon.ico"
 
 # Theme specific options
 html_theme_options = {
@@ -123,8 +123,8 @@ html_theme_options = {
     },
     "navbar_align": "left",
     "logo": {
-        "image_light": "_static/logo.jpg",
-        "image_dark": "_static/logo.jpg",
+        "image_light": "_static/wulfric-logo-black.png",
+        "image_dark": "_static/wulfric-logo-white.png",
     },
     "header_links_before_dropdown": 4,
     "icon_links": [

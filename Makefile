@@ -86,3 +86,9 @@ requirements:
 
 release-check:
 	@python tools/check-release-metadata.py -rd . -v $(VERSION)
+
+
+logo:
+	-@ rm docs/source/_static/wulfric-logo-black.png
+	-@ rm docs/source/_static/wulfric-logo-white.png
+	@python tools/generate-logo.py
