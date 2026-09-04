@@ -21,14 +21,16 @@
 
 
 ****************
-What is wulfric?
+What is Wulfric?
 ****************
 
-Wulfric is a python package for the crystal structures. It uses concepts of
-``cell``, ``atoms``, ``k-points`` and provides a simple skeleton for the user to built on
-(see :ref:`user-guide_usage_key-concepts`).
+Wulfric is a Python package for crystal structures: choosing cells, detecting
+symmetry, generating Brillouin zone k-points and k-paths, and visualizing all of
+it. It uses the concepts of ``cell``, ``atoms``, ``k-points`` and provides a
+simple skeleton for the user to build on (see
+:ref:`user-guide_usage_key-concepts`).
 
-The functionality of wulfric includes (but not limited to):
+The main features of Wulfric are
 
 *   Choice of the conventional and primitive cells
     (:ref:`user-guide_conventions_which-cell`).
@@ -37,11 +39,11 @@ The functionality of wulfric includes (but not limited to):
     and k-path for all :ref:`Bravais lattice types <user-guide_conventions_bravais-lattices>`
     and space groups.
 
-*   Full support for :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc` convention.
+*   Full support for the :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc` convention.
 
-*   Full support for :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot` convention.
+*   Full support for the :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot` convention.
 
-*   An interface to a part of |spglib|_. All symmetry-related functions of wulfric
+*   An interface to a part of |spglib|_. All symmetry-related functions of Wulfric
     are powered by |spglib|_. To read more see :ref:`user-guide_usage_spglib-interface`.
 
 *   :ref:`user-guide_usage_visualization` of
@@ -58,28 +60,29 @@ How is this documentation structured?
 *************************************
 
 *   For code examples see :ref:`user-guide`.
-*   For full public API see :ref:`api`.
+*   For the full public API see :ref:`api`.
 *   To get some support and ask questions see :ref:`user-support`.
-*   To understand how wulfric performs transformations and rotations, how it stores cells,
+*   To understand how Wulfric performs transformations and rotations, how it stores cells,
     atom positions and k-points see :ref:`user-guide_conventions_basic-notation` and
     :ref:`user-guide_usage_key-concepts`.
 *   To understand the difference between various cells see
     :ref:`user-guide_conventions_which-cell`.
-*   To see examples of what wulfric can visualize see
+*   To see examples of what Wulfric can visualize see
     :ref:`user-guide_usage_visualization_examples`.
-*   For summary of the releases see :ref:`release-notes`.
+*   For a summary of the releases see :ref:`release-notes`.
 
-*********************************
-Example of wulfric's capabilities
-*********************************
+
+**********************************
+Examples of Wulfric's capabilities
+**********************************
 
 .. hint::
 
-    Click on the image to open its interactive version (opens in the new tab).
+    Click on the image to open its interactive version (opens in a new tab).
 
 .. image:: img/interactive-capabilities.png
    :align: center
-   :alt: Example of wulfric's capabilities
+   :alt: Examples of Wulfric's capabilities
    :target: interactive-capabilities.html
 
 
@@ -87,10 +90,10 @@ Example of wulfric's capabilities
 License
 *******
 
-The source code of Wulfric is licensed under the  GNU General Public
-License (GPL-3.0). See the "|LICENSE|_" file in the |repo|_
+The source code of Wulfric is licensed under the GNU General Public
+License (GPL-3.0). See the "|LICENSE|_" file in the |repo|_.
 
-In addition, if you use Wulfric in the scientific publication, cite the package as
+In addition, if you use Wulfric in a scientific publication, cite the package as
 
 .. code-block:: text
 
