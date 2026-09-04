@@ -8,7 +8,7 @@ Version 0.3
 0.3.1
 =====
 
-* Add :py:meth:`.Kpoints.hs_table` method, that displays the table with the high-symmetry
+* Add :py:meth:`.Kpoints.hs_table` method that displays the table with the high-symmetry
   points.
 
 * Add ``convention`` argument to the :py:func:`.lattice_example` function.
@@ -19,24 +19,27 @@ Version 0.3
 
 .. warning::
 
-  This version introduces some breaking changes. Please read carefully the
+  This version introduces some breaking changes. Please carefully read the
   following release notes.
 
-Whole wulfric was refactored. Majority of the functionality remained the same,
-however in some parts of the package the interface or the internal organization changed.
-Therefore version 0.3 introduce some breaking changes:
+Wulfric was refactored. The majority of the functionality remained the same,
+however in some parts of the package the interface or the internal organization
+changed.  Therefore, version 0.3 introduces some breaking changes:
 
 * :py:class:`.Atom`
 
-  - Spin and magnetic moment are related trough :py:attr:`.Atom.g_factor`.
+  - Spin and magnetic moment are related through :py:attr:`.Atom.g_factor`.
   - Spin, magnetic moment now have default values and always return a value
     (previously if undefined they raised a ``ValueError``).
 
-* Standardization is not silent anymore:
+* Standardization is not silent anymore
 
-  - No automatic standardization is performed when the :py:class:`.Lattice` or :py:class:`.Crystal` is created.
-  - If method or property requires standardization, it will raise a ``ValueError`` if the object is not standardized.
-  - Standardization can be called explicitly via :py:meth:`.Lattice.standardize` and :py:meth:`.Crystal.standardize`
+  - No automatic standardization is performed when the :py:class:`.Lattice` 
+    or :py:class:`.Crystal` is created.
+  - If method or property requires standardization, it will raise a ``ValueError`` 
+    if the object is not standardized.
+  - Standardization can be called explicitly via :py:meth:`.Lattice.standardize` 
+    and :py:meth:`.Crystal.standardize`.
 
 * Add :py:meth:`.Crystal.copy()`, :py:meth:`.Lattice.copy()`,
   :py:meth:`.Atom.copy()` and :py:meth:`.Kpoints.copy()` methods.

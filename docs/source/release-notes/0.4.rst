@@ -7,21 +7,22 @@ Version 0.4
 0.4.0
 =====
 
-Explicit standardization of the cell is no longer required! Previously the user had to
-explicitly standardize the cell of the crystal in order to have access to the high
-symmetry k points. Now the standardization **matrix** is computed and used to map the
-relative coordinates from the standard primitive cell to the actual primitive cell of the
-lattice/crystal.
+Explicit standardization of the cell is no longer required! Previously the user
+had to explicitly standardize the cell of the crystal in order to have access to
+the high-symmetry k-points. Now the standardization **matrix** is computed and
+used to map the relative coordinates from the standard primitive cell to the
+actual primitive cell of the lattice/crystal.
 
-Documentation of the Bravais lattices and on formal notation used in the package was
-drastically improved. Please visit the user guide to see the changes.
+Documentation of the Bravais lattices and the formal notation used in the
+package was drastically improved. Please visit the user guide to see the
+changes.
 
-Support for Python 3.8 was removed. Minimal version of Python used for automatic testing
-is 3.9.
+Support for Python 3.8 was removed. The minimal version of Python used for
+automatic testing is 3.9.
 
 * Add :py:class:`.StandardizationTypeMismatch` exception.
 * Function ``Kpoints.coordinates()`` is removed, use :py:meth:`.Kpoints.ticks()` instead.
 * Setter for the :py:meth:`.Lattice.kpoints` is removed to avoid confusion.
-* Fix the bag with :py:meth:`.Lattice.copy`. ``return`` statement was missing.
+* Fix the bug with :py:meth:`.Lattice.copy`. ``return`` statement was missing.
 * Remove ``TRANSFORM_TO_CONVENTIONAL`` from ``wulfric.constants``. It was substituted by
   ``C_MATRICES``.

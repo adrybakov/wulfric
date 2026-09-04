@@ -12,17 +12,18 @@ Version 0.7
 Bugfix
 ------
 
-- :py:func:`.crystal.validate_atoms` was checking spglib_type for ``int``, now
+- :py:func:`.crystal.validate_atoms` was checking ``spglib_types`` for ``int``, now
   accepts numpy's integer types as well.
-- Make raw string out of kpoints labels.
-- Fix two missing colors in the standard reference for colors of chemical elements (for 
+- Make raw strings out of k-points' labels.
+- Fix two missing colors in the standard reference for colors of chemical elements (for
   Pd and Er).
-- Fix a mismatch of constants type (int -> float) in the list of atomic masses. Cosmetic,
-  shall not affect anything. 
-- Fix a typo in the display name of high symmetry k-point "F3" and "F3_P".
+- Fix a constants' type mismatch (int -> float) in the list of atomic masses. Cosmetic,
+  shall not affect anything.
+- Fix a typo in the display names of high-symmetry k-point "F3" and "F3_P".
 
 0.7.1
 =====
+
 **Date**: 18 June 2026
 
 Wrap import of spglib into a try-except block to avoid import error when spglib is not
@@ -31,6 +32,7 @@ installed.
 
 0.7.0
 =====
+
 **Date**: 26 May 2026
 
 Bugfix

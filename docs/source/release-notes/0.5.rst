@@ -34,9 +34,10 @@ Add :py:func:`wulfric.crystal.ensure_unique_names`.
 0.5.0
 =====
 
-Organization of the package has changed. All implemented logic is rewritten in functions.
+Organization of the package has changed. All implemented logic is rewritten in
+functions.
 
-The package now consist of several submodules that group the function by the
+The package now consists of several submodules that group the functions by
 concept:
 
 - cell
@@ -46,39 +47,41 @@ concept:
 - visualization
 - geometry
 
-The classes that were the central piece of the package prior to the version ``0.5`` are
-removed.
+The classes that were the central piece of the package prior to version ``0.5``
+are removed.
 
-This global change is motivated by the uncalled complexity of code maintenance and
-structure. Prior to version 0.5.0 wulfric was build around Atom, Crystal, Lattice and
-Kpoints classes, therefore to use even some simple function one had to create an instance
-of the class. Moreover, some operations were performed silently inside the classes, that
-may affect the user experience in unexpected way.
+This global change is motivated by the uncalled complexity of code maintenance
+and structure. Prior to version 0.5.0 Wulfric was built around Atom, Crystal,
+Lattice and Kpoints classes, therefore to use even a simple function, one had to
+create an instance of the class. Moreover, some operations were performed
+silently inside the classes, which might affect the user experience in an
+unexpected way.
 
-Starting with 0.5.0 wulfric is build as a set of tools, therefore it is build around
-functions, that performed an isolated task. Only one class is defined at the time of
-release 0.5.0 ``Kpoints``. All other capabilities are implemented in a form of a function.
-Kpoints class is kept as it is proven to be a convenient interface for handling of kpoints.
+Starting with 0.5.0 Wulfric is build as a set of tools, therefore it is built
+around functions that perform an isolated task. Only one class is defined at the
+time of release 0.5.0: ``Kpoints``. All other capabilities are implemented in a
+form of a function.  Kpoints class is kept as it is proven to be a convenient
+interface for handling k-points.
 
-Now wulfric uses well know structure to store data:
+Now Wulfric uses well-know structure to store data
 
 - |array-like|_ to store matrix of a cell
-- Plain python dictionary to store a set of atoms.
+- Plain Python dictionary to store a set of atoms.
 - A pair of cell and atoms constitutes a crystal, no special structure is defined for it.
 
 A few more improvements have been done
 
 - Unified and improved handling of finite precision. Starting from this version there are
   two conceptual tolerance parameters: ``angle_tolerance`` and ``length_tolerance``.
-  The former describe accuracy of angular variables (in degrees), the latter describe
+  The former describes accuracy of angular variables (in degrees), the latter describes
   accuracy for the length variables (length of lattice vectors, for example). Default
-  values are chose in the context of solid state physics with angles in degrees and length
+  values are chosen in the context of solid state physics with angles in degrees and length
   in Angstroms.
-- New function ``ensure_000()`` that change atoms with their translational equivalent
+- New function ``ensure_000()`` that changes atoms with their translational equivalent
   copies to ensure that all atoms of the crystal structure are located within the volume
   of the (0, 0, 0) unit cell.
 - Internal structure of the package is updated. All functions are grouped in modules with
   only a few being available as top-level functions. New structure is clear and allows
-  exploration of the package in the interactive python console.
-- Relax dependency from ``numpy~=1.26`` to ``numpy``. It was initially restricted because
-  of problems with doctests. The problems are resolved.
+  exploration of the package in the interactive Python console.
+- Relax dependency on NumPy from ``numpy~=1.26`` to ``numpy``. It was initially restricted
+  because of problems with doctests. The problems are resolved.
