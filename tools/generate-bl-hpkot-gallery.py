@@ -26,7 +26,7 @@ import os
 def template(bl_symbol):
     return f'''# ================================== LICENSE ===================================
 # Wulfric - Cell, Atoms, K-path, visualization.
-# Copyright (C) 2023-2025 Andrey Rybakov
+# Copyright (C) 2023 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -58,7 +58,7 @@ To get an example crystal use :py:func:`wulfric.crystal.hpkot_get_example`.
 
 import wulfric
 
-# For every extended bravais lattice symbol two examples are defined:
+# For every extended Bravais lattice symbol two examples are defined:
 # with and without inversion symmetry.
 cell, atoms = wulfric.crystal.hpkot_get_example(
     extended_bl_symbol="{bl_symbol}", with_inversion=False
@@ -128,7 +128,7 @@ pe.show(axes_visible=False)
 # Cells of real space
 # ===================
 #
-# .. hint
+# .. hint::
 #     Click on the legend to hide some of the cells
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)

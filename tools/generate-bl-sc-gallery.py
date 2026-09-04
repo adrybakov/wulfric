@@ -46,7 +46,7 @@ print(variation)"""
         example_spec = f":py:func:`wulfric.cell.sc_get_example` returns an example where\n{example_spec}."
     return f'''# ================================== LICENSE ===================================
 # Wulfric - Cell, Atoms, K-path, visualization.
-# Copyright (C) 2023-2025 Andrey Rybakov
+# Copyright (C) 2023 Andrey Rybakov
 #
 # e-mail: anry@uv.es, web: adrybakov.com
 #
@@ -134,8 +134,8 @@ pe.show(axes_visible=False)
 # Cells of real space
 # ===================
 #
-# .. hint
-#     Click on the legend to hide some of the cells
+# .. hint::
+#     Click on the legend to hide some of the cells.
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 
@@ -210,16 +210,16 @@ LATTICE_TYPES = {
 }
 
 HEADERS = {
-    "CUB": R"Cubic cell is defined by single parameter :math:`a`.",
-    "FCC": R"Face-centered cubic cell is defined by single parameter :math:`a`.",
-    "BCC": R"Body-centered cubic cell is defined by single parameter :math:`a`.",
+    "CUB": R"Cubic cell is defined by a single parameter :math:`a`.",
+    "FCC": R"Face-centered cubic cell is defined by a single parameter :math:`a`.",
+    "BCC": R"Body-centered cubic cell is defined by a single parameter :math:`a`.",
     "TET": R"Tetragonal cell is defined by two parameters :math:`a` and :math:`c`.",
     "BCT1": R"Body-centered tetragonal cell is defined by two parameters :math:`a` and :math:`c`.",
     "BCT2": R"Body-centered tetragonal cell is defined by two parameters :math:`a` and :math:`c`.",
     "ORC": R"Orthorhombic cell is defined by three parameters :math:`a`, :math:`b` and :math:`c` with :math:`a < b < c`.",
-    "ORCF1": R"Face-centred orthorhombic cell is defined by three parameters :math:`a`, :math:`b` and :math:`c` with :math:`a < b < c`.",
-    "ORCF2": R"Face-centred orthorhombic cell is defined by three parameters :math:`a`, :math:`b` and :math:`c` with :math:`a < b < c`.",
-    "ORCF3": R"Face-centred orthorhombic cell is defined by three parameters :math:`a`, :math:`b` and :math:`c` with :math:`a < b < c`.",
+    "ORCF1": R"Face-centerd orthorhombic cell is defined by three parameters :math:`a`, :math:`b` and :math:`c` with :math:`a < b < c`.",
+    "ORCF2": R"Face-centerd orthorhombic cell is defined by three parameters :math:`a`, :math:`b` and :math:`c` with :math:`a < b < c`.",
+    "ORCF3": R"Face-centerd orthorhombic cell is defined by three parameters :math:`a`, :math:`b` and :math:`c` with :math:`a < b < c`.",
     "ORCI": R"Body-centered orthorhombic cell is defined by three parameters :math:`a`, :math:`b` and :math:`c` with :math:`a < b < c`.",
     "ORCC": R"Base-centered orthorhombic cell is defined by three parameters :math:`a`, :math:`b` and :math:`c` with :math:`a < b < c`.",
     "HEX": R"Hexagonal cell is defined by two parameters :math:`a` and :math:`c`.",
@@ -272,21 +272,21 @@ EXAMPLE_SPECS = {
     "TET": R":math:`a = \pi` and :math:`c = 1.5\pi`",
     "BCT1": R":math:`a = 1.5\pi` and :math:`c = \pi`",
     "BCT2": R":math:`a = \pi` and :math:`c = 1.5\pi`",
-    "ORC": R":math:`a = \pi` and :math:`c = 1.5\pi` and :math:`c = 2\pi`",
-    "ORCF1": R":math:`a = 0.7\pi`, :math:`b = 5\pi/4` and :math:`c = 5\pi/3`",
-    "ORCF2": R":math:`a = 1.2\pi`, :math:`b = 5\pi/4` and :math:`c = 5\pi/3`",
-    "ORCF3": R":math:`a = \pi`, :math:`b = 5\pi/4` and :math:`c = 5\pi/3`",
-    "ORCI": R":math:`a = \pi`, :math:`b  = 1.3\pi` and :math:`c = 1.7\pi`",
-    "ORCC": R":math:`a = \pi`, :math:`b  = 1.3\pi` and :math:`c = 1.7\pi`",
+    "ORC": R":math:`a = \pi`, :math:`b = 1.5\pi`, and :math:`c = 2\pi`",
+    "ORCF1": R":math:`a = 0.7\pi`, :math:`b = 5\pi/4`,and :math:`c = 5\pi/3`",
+    "ORCF2": R":math:`a = 1.2\pi`, :math:`b = 5\pi/4`,and :math:`c = 5\pi/3`",
+    "ORCF3": R":math:`a = \pi`, :math:`b = 5\pi/4`,and :math:`c = 5\pi/3`",
+    "ORCI": R":math:`a = \pi`, :math:`b  = 1.3\pi`,and :math:`c = 1.7\pi`",
+    "ORCC": R":math:`a = \pi`, :math:`b  = 1.3\pi`,and :math:`c = 1.7\pi`",
     "HEX": R":math:`a = \pi` and :math:`c = 2\pi`",
     "RHL1": R":math:`a = \pi` and :math:`\alpha = 70^{\circ}`",
     "RHL2": R":math:`a = \pi` and :math:`\alpha = 110^{\circ}`",
-    "MCL": R":math:`a = \pi`, :math:`b = 1.3 \pi` :math:`c = 1.6 \pi` and :math:`\alpha = 75^{\circ}`",
-    "MCLC1": R":math:`a = \pi`, :math:`b = 1.4\cdot\pi`, :math:`c = 1.7\cdot\pi` and :math:`\alpha = 80^{\circ}`",
-    "MCLC2": R":math:`a = 1.4\cdot\pi\cdot\sin(75^{\circ})`, :math:`b = 1.4\cdot\pi`, :math:`c = 1.7\cdot\pi` and :math:`\alpha=75^{\circ}`",
-    "MCLC3": R":math:`a = 1.1\cdot\sin(78)\cdot\pi`, :math:`b = \pi`, :math:`c = 1.8\cdot 121\cdot\cos(65)\cdot\pi/21` and :math:`\alpha = 78^{\circ}`",
-    "MCLC4": R":math:`a = 1.2\sin(65)\pi`, :math:`b = \pi`, :math:`c = 36\cos(65)\pi/11` and :math:`\alpha = 65^{\circ}`",
-    "MCLC5": R":math:`a = 1.4\cdot\sin(53)\cdot\pi`, :math:`b = \pi`, :math:`c = 0.9\cdot 11\cdot\cos(53)\cdot\pi/6` and :math:`\alpha = 53^{\circ}`",
+    "MCL": R":math:`a = \pi`, :math:`b = 1.3 \pi`, :math:`c = 1.6 \pi`, and :math:`\alpha = 75^{\circ}`",
+    "MCLC1": R":math:`a = \pi`, :math:`b = 1.4\cdot\pi`, :math:`c = 1.7\cdot\pi`, and :math:`\alpha = 80^{\circ}`",
+    "MCLC2": R":math:`a = 1.4\cdot\pi\cdot\sin(75^{\circ})`, :math:`b = 1.4\cdot\pi`, :math:`c = 1.7\cdot\pi`, and :math:`\alpha=75^{\circ}`",
+    "MCLC3": R":math:`a = 1.1\cdot\sin(78)\cdot\pi`, :math:`b = \pi`, :math:`c = 1.8\cdot 121\cdot\cos(65)\cdot\pi/21`, and :math:`\alpha = 78^{\circ}`",
+    "MCLC4": R":math:`a = 1.2\sin(65)\pi`, :math:`b = \pi`, :math:`c = 36\cos(65)\pi/11`, and :math:`\alpha = 65^{\circ}`",
+    "MCLC5": R":math:`a = 1.4\cdot\sin(53)\cdot\pi`, :math:`b = \pi`, :math:`c = 0.9\cdot 11\cdot\cos(53)\cdot\pi/6`, and :math:`\alpha = 53^{\circ}`",
     "TRI1a": None,
     "TRI2a": None,
     "TRI1b": None,
@@ -420,6 +420,8 @@ FOOTERS = {
 # :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_01_CUB.py`.
 """,
     "MCL": R"""# %%
+# Edge cases
+# ==========
 # If (:math:`\alpha = 60^{\circ}` or :math:`\alpha = 120^{\circ}`) and :math:`b = c`,
 # then the lattice is
 # :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_13_HEX.py`.
