@@ -23,7 +23,7 @@
 K-path and k-points
 *******************
 
-This page explains how to plot a set of atoms.
+This page explains how to display the high-symmetry k-points and k-path.
 
 """
 
@@ -57,7 +57,7 @@ spglib_data = wulfric.get_spglib_data(cell, atoms)
 
 
 # %%
-# Best way to interact with high-symmetry points and k-path is trough the
+# The best way to interact with the high-symmetry points and k-path is through the
 # :py:class:`wulfric.Kpoints`. First, we create one
 
 kp = wulfric.Kpoints.from_crystal(
@@ -65,7 +65,7 @@ kp = wulfric.Kpoints.from_crystal(
 )
 
 # %%
-# Now one can check the recommended k-path and pre-defined high-symmetry points
+# Now one can check the recommended k-path and pre-defined high-symmetry points.
 
 print(kp.path_string)
 
@@ -74,7 +74,7 @@ print(kp.hs_table())
 # %%
 # High-symmetry points are given by relative coordinates with respect to the reciprocal
 # cell of the original cell. However, the points correspond to the Brillouin zone of the
-# **primitive** cell, which may or may not be the one that have k-path and high symmetry
+# **primitive** cell, which may or may not be the one that has k-path and high-symmetry
 # points lying on its edges
 
 prim_cell, _ = wulfric.crystal.get_primitive(cell, atoms, spglib_data=spglib_data)

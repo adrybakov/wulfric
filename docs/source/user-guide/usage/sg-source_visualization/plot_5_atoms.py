@@ -60,9 +60,9 @@ pe.plot_cell(cell=cell)
 pe.show()
 
 # %%
-# Atoms'labels are deduced based on ``atoms["names"]``.
+# Atoms' labels are deduced based on ``atoms["names"]``.
 #
-# Atom's colors are deduced based on atom's species, but can be directly passed to the
+# Atoms' colors are deduced from their species, but can be directly passed to the
 # function as well.
 
 

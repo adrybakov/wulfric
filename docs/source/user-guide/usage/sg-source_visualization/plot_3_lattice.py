@@ -23,10 +23,8 @@
 Lattice points
 **************
 
-This page explains how to display lattice points associated with the given ``cell``.
-
-We use FCC cell as an example.
-"""
+This page explains how to display lattice points associated with the given
+``cell``.  We use an FCC cell as an example.  """
 
 import wulfric
 

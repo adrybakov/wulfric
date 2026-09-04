@@ -55,25 +55,25 @@ atoms = {
 spglib_data = wulfric.get_spglib_data(cell, atoms)
 
 # %% For this example we will plot a figure with two subplots - original cell and atoms on
-# one and brillouin zone and k-path on another.
+# one and Brillouin zone and k-path on another.
 #
-# First difference from usual plot is at the moment of engine creation. One needs to
-# specify the grid of the subplots
+# The first difference from the usual plot is at the moment of engine creation. 
+# One needs to specify the grid of the subplots
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True, rows=1, cols=2)
 
 # %%
-# Second change is at the moment of plotting. Every ``plot_...`` function can take two
+# The second change is at the moment of plotting. Every ``plot_...`` function can take two
 # optional arguments ``row`` and ``col``. They specify on which subplot to plot the data.
-# Both start from ``1``. ``row=1, col=1`` is top left subplot.
+# Both start from ``1``. ``row=1, col=1`` is the top left subplot.
 #
-# Plot original cell and atoms on the first row an first column
+# Plot original cell and atoms on the first row and the first column
 
 pe.plot_atoms(cell=cell, atoms=atoms, row=1, col=1, legend_label="original atoms")
 pe.plot_cell(cell=cell, row=1, col=1, legend_label="original cell")
 
 # %%
-# Then plot brillouin zone, k-path and k-points on the first row and second column
+# Then plot Brillouin zone, k-path and k-points on the first row and the second column
 
 kp = wulfric.Kpoints.from_crystal(
     cell, atoms, spglib_data=spglib_data, convention="HPKOT"

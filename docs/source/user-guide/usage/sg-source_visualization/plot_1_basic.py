@@ -23,7 +23,7 @@
 Basic objects
 *************
 
-This page explains plotting of basic geometric objects with :py:class:`wulfric.PlotlyEngine`.
+This page explains how to plot basic geometric objects with :py:class:`wulfric.PlotlyEngine`.
 """
 
 import wulfric
@@ -48,7 +48,7 @@ pe.show()
 # Vector
 # ======
 #
-# Vector is defined by its start and end points
+# A vector is defined by its start and end points.
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 
@@ -80,7 +80,7 @@ pe.show(axes_visible=False)
 # %%
 # Line
 # ====
-# Line is defined by two points
+# A line is defined by two points.
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 pe.plot_line(

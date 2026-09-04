@@ -23,9 +23,8 @@
 Wigner-Seitz cell
 *****************
 
-This page explains how to plot Wigner-Seitz cell of the direct lattice and Brillouin zone.
-
-We use FCC cell as an example.
+This page explains how to plot the Wigner-Seitz cell of the direct lattice and
+the Brillouin zone. We use an FCC cell as an example.
 """
 
 import wulfric
@@ -49,8 +48,8 @@ pe.show()
 # %%
 # Brillouin zone
 # ==============
-# Brillouin zone is simply a |Wigner-Seitz|_ cell of the reciprocal ``cell``.
-# Therefore, Brillouin zone can be plotted in two equivalent ways.
+# The Brillouin zone is simply a |Wigner-Seitz|_ cell of the reciprocal ``cell``.
+# Therefore, the Brillouin zone can be plotted in two equivalent ways.
 
 rcell = wulfric.cell.get_reciprocal(cell=cell)
 
@@ -73,8 +72,8 @@ pe.show()
 # Other Brillouin zones
 # =====================
 #
-# By default wulfric plots first Brillouin zone. If you need to plot other ones, use
-# ``shift``.
+# By default, Wulfric plots the first Brillouin zone. If you need to plot other ones,
+# use ``shift``.
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 

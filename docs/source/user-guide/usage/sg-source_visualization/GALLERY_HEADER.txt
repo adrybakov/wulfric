@@ -11,14 +11,14 @@ Visualization in wulfric is implemented with |plotly|_.
 Visualization backend
 =====================
 
-First, one need to create an instance of the plotting engine as
+First, one needs to create an instance of the plotting engine as
 
 .. doctest::
 
     >>> import wulfric
     >>> pe = wulfric.PlotlyEngine()
 
-The creation of the plotting engine can take one optional argument: ``fig``:
+The creation of the plotting engine can take one optional argument: ``fig``
 
 .. doctest::
 
@@ -38,8 +38,9 @@ or saved as an .html file
 
     >>> pe.save(output_name="wulfric-plot.html", width=1000, height=800) # doctest: +SKIP
 
-:py:class:`wulfric.PlotlyEngine` has a number of methods that can be used to plot cell, atoms,
-lattice and so on. Check examples to get a feeling on what is implemented
+:py:class:`wulfric.PlotlyEngine` has a number of methods that can be used to
+plot the cell, atoms, lattice, and so on. Check the examples to get a feeling of
+what is implemented.
 
 .. _user-guide_usage_visualization_examples:
 

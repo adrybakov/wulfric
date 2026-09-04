@@ -23,11 +23,8 @@
 Plotting a cell
 ***************
 
-This page explains how to use :py:func:`wulfric.PlotlyEngine.plot_cell` on the simple
-example of the cubic cell
-
-We use FCC cell as an example.
-"""
+This page explains how to use :py:func:`wulfric.PlotlyEngine.plot_cell`.  We
+use an FCC cell as an example.  """
 
 import wulfric
 
@@ -67,7 +64,7 @@ pe.show()
 # Shifting origin point
 # =====================
 #
-# By default lattice vectors are plotted from the :math:`(0, 0, 0)` of the global
+# By default lattice vectors are plotted from the :math:`(0, 0, 0)`
 # of the global reference frame. One can shift this reference point.
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
@@ -81,7 +78,7 @@ pe.show()
 # Two cells
 # =========
 # One can plot any number of cells on one instance of :py:class:`wulfric.PlotlyEngine`.
-# For example, one can plot direct and reciprocal cell together
+# For example, one can plot the direct and reciprocal cell together
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True)
 
