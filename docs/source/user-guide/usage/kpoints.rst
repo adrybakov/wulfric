@@ -4,12 +4,12 @@
 K points
 ********
 
-On this page we describe one of the main usage of wulfric - automatic generation of
+On this page we describe one of the main uses of Wulfric - automatic generation of
 high-symmetry points for any given crystal.
 
 For the full technical reference see :py:class:`.Kpoints` and :ref:`api_kpoints`.
 
-In the examples below we use crystal with six atoms and orthorhombic cell.
+In the examples below we use a crystal with six atoms and an orthorhombic cell.
 
 .. doctest::
 
@@ -60,13 +60,13 @@ If you only need the data about the high-symmetry points and path, then use
 For the strict definition of how the path is specified see
 :ref:`user-guide_usage_key-concepts_k-path`.
 
-By default coordinates are relative to the reciprocal cell, defined by ``cell``. Use
-``return_relative = False``, to obtain absolute coordinates instead.
+By default coordinates are relative to the reciprocal cell defined by ``cell``. Use
+``relative = False`` to obtain absolute coordinates instead.
 
 Kpoints class
 =============
 
-A convenient way to manage kpoints and kpath for calculations or for plotting is
+A convenient way to manage k-points and k-path for calculations or for plotting is
 implemented with the :py:class:`.Kpoints` class.
 
 Creation
@@ -178,13 +178,13 @@ Wulfric uses a string of the special format, that is described in
     >>> rcell = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
     >>> names = ["G", "K", "X", "R"]
     >>> coordinates = [[0, 0, 0], [0.5, 0.5, 0], [0.5, 0, 0], [0.5, 0.5, 0.5]]
-    >>> labels = ["$\Gamma$", "K", "X", "R"]
+    >>> labels = [R"$\Gamma$", "K", "X", "R"]
     >>> kp = wulfric.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels)
     >>> # Default path is constructed from the list of high-symmetry points
     >>> kp.path
     [['G', 'K', 'X', 'R']]
     >>> # Only the names from Kpoints.hs_names are allowed to be used in the path
-    >>> # Next line causes an ValueError, because high-symmetry point "S" is not defined
+    >>> # Next line causes a ValueError, because high-symmetry point "S" is not defined
     >>> kp.path = "G-K-X|R-S"
     Traceback (most recent call last):
     ...
@@ -197,9 +197,9 @@ Wulfric uses a string of the special format, that is described in
     >>> kp.path = "G-K-X|R-G"
     >>> kp.path
     [['G', 'K', 'X'], ['R', 'G']]
-    >>> # We can add a point to de used in the path
+    >>> # We can add a point to be used in the path
     >>> kp.add_hs_point(name="S", coordinate=[0.5, 0.5, 0.5], label="S")
-    >>> # Now it is possible to use "S" it in the path
+    >>> # Now it is possible to use "S" in the path
     >>> kp.path = "G-K-X|R-S"
     >>> kp.path
     [['G', 'K', 'X'], ['R', 'S']]
@@ -244,7 +244,7 @@ the high-symmetry points of this section of the path.
     >>> rcell = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
     >>> names = ["G", "K", "X"]
     >>> coordinates = [[0, 0, 0], [0.5, 0.5, 0], [0.5, 0, 0]]
-    >>> labels = ["$\Gamma$", "K", "X"]
+    >>> labels = [R"$\Gamma$", "K", "X"]
     >>> kp = wulfric.Kpoints(rcell, names=names, coordinates=coordinates, labels=labels, n=4)
     >>> kp.points()
     array([[0. , 0. , 0. ],
@@ -315,7 +315,7 @@ The third property gives the coordinates of the :py:meth:`.Kpoints.points` for t
     1.2071
 
 .. note::
-    Those coordinates are directly corresponds to the k-points from the previous subsection.
+    Those coordinates directly correspond to the k-points from the previous subsection.
 
     .. code-block:: python
 

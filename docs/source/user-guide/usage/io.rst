@@ -7,7 +7,7 @@ Input-output
 
 For the full technical reference see :ref:`api_io`.
 
-In the examples of this page we assume that wulfric is imported as
+In the examples of this page we assume that Wulfric is imported as
 
 .. doctest::
 
@@ -33,9 +33,9 @@ Writing
 
   >>> # Dump a POSCAR file
   >>> wulfric.io.dump_poscar(cell, atoms, 'POSCAR') # doctest: +SKIP
-  >>> # If you want to write a comment as well:
+  >>> # If you want to write a comment as well
   >>> wulfric.io.dump_poscar(cell, atoms, 'POSCAR', comment='This is a comment') # doctest: +SKIP
-  >>> # You can control the amount of decimals in the output:
+  >>> # You can control the number of decimals in the output
   >>> wulfric.io.dump_poscar(cell, atoms, 'POSCAR', decimals=6) # doctest: +SKIP
-  >>> # You can switch the mode of coordinates between 'Cartesian' and 'Direct' (default):
+  >>> # You can switch the mode of coordinates between 'Cartesian' and 'Direct' (default)
   >>> wulfric.io.dump_poscar(cell, atoms, 'POSCAR', mode="Cartesian") # doctest: +SKIP

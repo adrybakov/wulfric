@@ -8,12 +8,12 @@ Manipulations with crystal
 For the full technical reference see :ref:`api_crystal`.
 
 On this page we give examples of what can be done with the pair of ``cell`` and ``atoms``
-(introduced on the :ref:`key concepts <user-guide_usage_key-concepts_cell>` page), that
-define a crystal and reference ``cell``. All functions that deal with atoms or crystal are
-available under ``wulfric.crystal`` submodule.
+(introduced on the :ref:`key concepts <user-guide_usage_key-concepts_cell>` page) that
+defines a crystal. All functions that deal with atoms or crystal are
+available under the ``wulfric.crystal`` submodule.
 
 
-In the examples below we use crystal with six atoms and orthorhombic cell.
+In the examples below we use a crystal with six atoms and an orthorhombic cell.
 
 .. doctest::
 
@@ -44,7 +44,7 @@ Please read :ref:`user-guide_conventions_which-cell_choice` first.
 Conventional cell
 -----------------
 
-To choose conventional cell use :py:func:`wulfric.crystal.get_conventional`
+To choose the conventional cell use :py:func:`wulfric.crystal.get_conventional`
 
 .. doctest::
 
@@ -102,20 +102,20 @@ Conventional atoms are either the same ones as in the original crystal ("Br1", "
 Primitive cell
 --------------
 
-To choose primitive cell use :py:func:`wulfric.crystal.get_primitive`.
+To choose the primitive cell use :py:func:`wulfric.crystal.get_primitive`.
 
 .. doctest::
 
     >>> prim_cell, prim_atoms = wulfric.crystal.get_primitive(csb_cell, csb_atoms)
 
 
-Atom's names
+Atoms' names
 ============
 
-Wulfric does not impose any rule on atom's names. Any non-empty string is a valid name.
+Wulfric does not impose any rule on atoms' names. Any non-empty string is a valid name.
 
 To get a set of unique names for your atoms you can use
-:py:func:`wulfric.crystal.get_unique_names`, that supports two strategies for modification
+:py:func:`wulfric.crystal.get_unique_names` that supports two strategies for modification
 of names
 
 *   (default) "all"
@@ -124,7 +124,7 @@ of names
 
 *   "repeated-only"
 
-    Adds an indices only to the atoms that have the same name. The count is separate for
+    Adds indices only to the atoms that have the same name. The count is separate for
     each group of atoms.
 
 .. doctest::
@@ -140,21 +140,21 @@ of names
 Atom's species
 ==============
 
-Names of atoms are not restricted in any way and user is free to name atoms as they please
-(however, it is a common practice to include atom's species in the name).
+Names of atoms are not restricted in any way and the user is free to name atoms as they please
+(however, it is a common practice to include atoms' species in the name).
 
-On contrary, the "species" are one of the 118 pre-defined strings
+In contrast, the "species" are one of the 118 pre-defined strings
 (see :ref:`api_constants_ATOM_SPECIES`).
 
-Wulfric implements two functions to automatically guess the atom's species from its name
+Wulfric implements two functions to automatically guess the atoms' species from its name
 
 .. doctest::
 
     >>> wulfric.crystal.get_atom_species("Cr1")
     'Cr'
 
-If it is unable to the atom species from its name, then it issues a ``RuntimeWarning``
-and returns ``"X"`` as a species.
+If it is unable to deduce the atom species from its name, then it issues a
+``RuntimeWarning`` and returns ``"X"`` as a species.
 
 .. doctest::
 
@@ -162,7 +162,7 @@ and returns ``"X"`` as a species.
     ...
     'X'
     >>> # You can raise an error instead of the warning
-    wulfric.crystal.get_atom_species("124", raise_on_fail=True)
+    >>> wulfric.crystal.get_atom_species("124", raise_on_fail=True)
     ...
     wulfric._exceptions.FailedToDeduceAtomSpecies: Tried to deduce name from '124'. Failed.
 
@@ -176,7 +176,7 @@ To guess the names for all ``atoms`` at once use :py:func:`wulfric.crystal.get_a
 Atom's positions
 ================
 
-Wulfric implements a couple of routines to perform common operations on atom's positions,
+Wulfric implements a couple of routines to perform common operations on atoms' positions,
 that do not change orientation of the crystal. Those functions return ``None`` and modify
 the same ``atoms``, that was passed to them.
 
@@ -219,7 +219,7 @@ the same ``atoms``, that was passed to them.
 
 *   :py:func:`wulfric.crystal.shift_atoms`
 
-    Shifts al atoms at once in a special way.
+    Shifts all atoms at once in a special way.
 
     .. doctest::
 

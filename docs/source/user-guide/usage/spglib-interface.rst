@@ -5,7 +5,7 @@ Interface to Spglib
 *******************
 
 Wulfric relies on |spglib|_ in all its functions that need any information about
-crystal's (``cell`` + ``atoms``) symmetry.
+the crystal's (``cell`` + ``atoms``) symmetry.
 
 .. doctest::
 
@@ -27,10 +27,11 @@ crystal's (``cell`` + ``atoms``) symmetry.
     ...     ]),
     ... }
 
-As wulfric is primarily designed as a set of well-defined functions, we face the problem
-of multiple calls to |spglib|_, when more than one property is desired by user.
+As Wulfric is primarily designed as a set of well-defined functions, we face the
+problem of multiple calls to |spglib|_, when the user wants more than one
+property.
 
-For example, if the user want to know both conventional and primitive cells, they can
+For example, if the user wants to know both conventional and primitive cells, they can
 be computed as
 
 .. doctest::
@@ -39,12 +40,12 @@ be computed as
     >>> conv_cell, conv_atoms = wulfric.crystal.get_conventional(cell, atoms)
     >>> prim_cell, prim_atoms = wulfric.crystal.get_primitive(cell, atoms)
 
-However, the conventional cell is required to compute the primitive cell, therefore
-function :py:func:`wulfric.crystal.get_conventional` is called twice - one time by the
-user and one time within the :py:func:`wulfric.crystal.get_primitive`.
+However, the conventional cell is required to compute the primitive cell, therefore the
+function :py:func:`wulfric.crystal.get_conventional` is called twice - once by the
+user and once within :py:func:`wulfric.crystal.get_primitive`.
 
 To solve this problem of executing the code twice (or at least of calling |spglib|_ twice,
-which might be expensive), we isolate the interaction of wulfric with |spglib|_ into a
+which might be expensive), we isolate the interaction of Wulfric with |spglib|_ into a
 single function :py:func:`wulfric.get_spglib_data`. Then, the same code as above can be
 rewritten as
 

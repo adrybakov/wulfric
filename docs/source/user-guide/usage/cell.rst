@@ -8,7 +8,7 @@ Manipulations with cell
 For the full technical reference see :ref:`api_cell`.
 
 On this page we give examples of what can be done with the ``cell`` introduced on the
-:ref:`key concepts <user-guide_usage_key-concepts_cell>` page. Cell-related functions,
+:ref:`key concepts <user-guide_usage_key-concepts_cell>` page. Cell-related functions
 that do not require ``atoms`` are available under the ``wulfric.cell`` submodule.
 
 .. doctest::
@@ -31,9 +31,9 @@ A valid cell can be characterized by the set of six parameters
 :math:`a`      Length of the first lattice vector :math:`\boldsymbol{a}_1` (``cell[0]``)
 :math:`b`      Length of the second lattice vector :math:`\boldsymbol{a}_2` (``cell[1]``)
 :math:`c`      Length of the third lattice vector :math:`\boldsymbol{a}_3` (``cell[2]``)
-:math:`\alpha` Angel between :math:`\boldsymbol{a}_2` and :math:`\boldsymbol{a}_3`
-:math:`\beta`  Angel between :math:`\boldsymbol{a}_1` and :math:`\boldsymbol{a}_3`
-:math:`\gamma` Angel between :math:`\boldsymbol{a}_1` and :math:`\boldsymbol{a}_2`
+:math:`\alpha` Angle between :math:`\boldsymbol{a}_2` and :math:`\boldsymbol{a}_3`
+:math:`\beta`  Angle between :math:`\boldsymbol{a}_1` and :math:`\boldsymbol{a}_3`
+:math:`\gamma` Angle between :math:`\boldsymbol{a}_1` and :math:`\boldsymbol{a}_2`
 ============== ==========================================================================
 
 To compute parameters of any cell use :py:func:`wulfric.cell.get_params`
@@ -44,7 +44,7 @@ To compute parameters of any cell use :py:func:`wulfric.cell.get_params`
     (3.55335, 4.744935, 8.760497, 90.0, 90.0, 90.0)
 
 .. note::
-    When ``cell`` converted to ``params`` the information about its spacial orientation is
+    When ``cell`` is converted to ``params`` the information about its spatial orientation is
     lost.
 
 To create a cell from parameters use
@@ -59,8 +59,8 @@ To create a cell from parameters use
            [0.      , 0.      , 8.760497]])
 
 :py:func:`wulfric.cell.from_params` constructs the cell with the first vector oriented
-along the :math:`x` axis and second vector in the :math:`xy` plain. The cell can only be
-constructed from the set of parameters that can form parallelepiped (see
+along the :math:`x` axis and second vector in the :math:`xy` plane. The cell can only be
+constructed from the set of parameters that can form a parallelepiped (see
 :py:func:`wulfric.geometry.parallelepiped_check`).
 
 .. note::
@@ -97,9 +97,9 @@ lattice just use the same function again:
 Examples of Bravais lattices
 ============================
 
-Wulfric implement constructors for the 14 Bravais lattice types as described in [1]_.
+Wulfric implements constructors for the 14 Bravais lattice types as described in [1]_.
 
-You can use one of the 14 functions to construct cell of each Bravais lattice with
+You can use one of the 14 functions to construct the cell of each Bravais lattice with
 user-provided parameters
 
 .. doctest::
@@ -113,7 +113,7 @@ user-provided parameters
            [0.        , 4.        , 0.        ],
            [0.        , 1.71010072, 4.6984631 ]])
 
-Or you can get a pre-defined examples with the parameter that are chosen by wulfric
+Or you can get the pre-defined examples with the parameters that are chosen by Wulfric
 
 .. doctest::
 

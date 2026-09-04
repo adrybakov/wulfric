@@ -4,26 +4,26 @@
 Other functions
 ***************
 
-On this page we describe formally unrelated functions and modules of wulfric that were not
-mentioned in the previous pages. We do not describe all of them. To see full list of
-wulfric capabilities see :ref:`api`.
+On this page we describe otherwise unrelated functions and modules of Wulfric that were not
+mentioned in the previous pages. We do not describe all of them. To see the full list of
+Wulfric's capabilities see :ref:`api`.
 
-In the examples of this page we assume that wulfric is imported as
+In the examples of this page we assume that Wulfric is imported as
 
 .. doctest::
 
   >>> import wulfric
 
 
-Comparing of numbers
-====================
+Comparing numbers
+=================
 
-Due to the limitations of the float point arithmetics or expected inaccuracy of the input
-data two numbers might be considered equal even if they are not exactly equal. For example
+Due to the limitations of the floating-point arithmetic or expected inaccuracy of the input
+data two numbers might be considered equal even if they are not exactly equal. For example,
 ``1.0000000001`` and ``1.0000000002`` are equal with the accuracy ``1e-9``, but different with
 the accuracy of ``1e-11``. Same logic can be applied to other comparison operators. We
-enjoyed the formal definition from [1]_ and implemented it as a standalone function in
-wulfric
+adopted the formal definition from [1]_ and implemented it as a standalone function in
+Wulfric
 
 .. doctest::
 
@@ -38,13 +38,13 @@ wulfric
     >>> wulfric.compare_with_tolerance(1.02, "<=", 1.03, eps=0.1)
     True
 
-This function return boolean value and support python's comparison operators.
+This function returns a boolean value and supports Python's comparison operators.
 See :py:func:`wulfric.compare_with_tolerance` for details.
 
 
 Parallelepiped
 ==============
-Not every set of six numbers might be used to form a parallelepiped. Wulfric implements a
+Not every set of six numbers can be used to form a parallelepiped. Wulfric implements a
 function to check if the set of parameters is correct
 
 .. doctest::
@@ -64,7 +64,7 @@ function to check if the set of parameters is correct
 Volume and angle
 ================
 
-It is often required to compute angle between two vectors or a volume of the cell.
+It is often required to compute the angle between two vectors or a volume of the cell.
 Wulfric implements two functions just for that.
 
 To compute an angle between two vectors use
@@ -85,7 +85,7 @@ To compute an angle between two vectors use
     ...
     ValueError: Angle is ill defined (zero vector).
 
-For the volume wulfric accepts three types of inputs:
+For the volume Wulfric accepts three types of inputs:
 
 * Cell
 
