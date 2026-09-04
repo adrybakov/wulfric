@@ -1,8 +1,8 @@
 .. _interactive-capabilities:
 
-*********************************
-Example of wulfric's capabilities
-*********************************
+**********************************
+Examples of Wulfric's capabilities
+**********************************
 
 
 .. hint::

@@ -4,7 +4,7 @@
 Whom to cite?
 *************
 
-If you use wulfric in a your work, please cite it
+If you use Wulfric in your work, please cite it
 
 
 .. code-block:: text
@@ -23,7 +23,7 @@ If you use wulfric in a your work, please cite it
 Dependency citations
 ====================
 
-Wulfric is using the work of other authors in some of its methods.
+Wulfric uses the work of other authors in some of its methods.
 
 *   If you use functions that depend on |spglib|_, please cite
 
@@ -51,7 +51,7 @@ Wulfric is using the work of other authors in some of its methods.
 
 
 
-*   If you use convention of Setyawan and Curtarolo (``convention="SC"``), please cite:
+*   If you use convention of Setyawan and Curtarolo (``convention="SC"``), please cite
 
     .. code-block::
 
@@ -77,7 +77,7 @@ Wulfric is using the work of other authors in some of its methods.
             pages = {299-312}
         }
 
-*   If you use convention of Hinuma, Pizzi, Kumagai, Oba, Tanaka (``convention="HPKOT"``),
+*   If you use convention of Hinuma, Pizzi, Kumagai, Oba, Tanaka (``convention="HPKOT"``)
     please cite:
 
     .. code-block::
