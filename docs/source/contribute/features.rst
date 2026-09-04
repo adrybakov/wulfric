@@ -4,32 +4,33 @@
 Feature request
 ***************
 
-If you have an idea for the project. You can submit a feature request!
+If you have an idea for the project, you can submit a feature request.
 
-Feature requests are managed as issues on the github repository of the project.
+Feature requests are managed as issues on the GitHub repository of the project.
 
-In order to submit a feature request log in to your github account and go to the |repo|_:
+In order to submit a feature request, log in to your GitHub account and go to
+the |repo|_.
 
-Then click on the "Issues" tab.
+Then click on the "Issues" tab
 
 .. figure:: ../img/github-screenshots/issue-1.png
     :target: ../_images/issue-1.png
     :align: center
 
-Click on the "New issue" button:
+Click on the "New issue" button
 
 .. figure:: ../img/github-screenshots/issue-2.png
     :target: ../_images/issue-2.png
     :align: center
 
-You will see two prepared template for the issues. Click on the "Get started" for the
-"Feature request" template:
+You will see two prepared templates for the issues. Click on the "Get started"
+for the "Feature request" template
 
 .. figure:: ../img/github-screenshots/feature-1.png
     :target: ../_images/feature-1.png
     :align: center
 
-Fill in the template and click on the "Submit new issue" button:
+Fill in the template and click on the "Submit new issue" button
 
 .. figure:: ../img/github-screenshots/feature-2.png
     :target: ../_images/feature-2.png

@@ -5,11 +5,12 @@ Contributors
 
 This package was initiated by `Andrey Rybakov <https://adrybakov.com/>`_.
 
-With time and the help of many contributors, it may evolved into a powerful tool
-for the analysis of the condensed matter systems.
+Wulfric aims to be a powerful tool for the analysis of condensed matter systems.
+It grows and improves with the help of its contributors.
 
-Here's a list of all contributors who shape its evolution:
+Here's a list of all contributors who have shaped its evolution
 
-* You can be the next one!
+* Your name could be first here!
 
-Any contribution is welcomed!
+Any contribution is welcome. You do not need to write code to help:
+documentation fixes, examples, and bug reports are all valuable.
