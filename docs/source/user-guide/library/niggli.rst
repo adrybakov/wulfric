@@ -4,20 +4,20 @@
 Niggli reduction
 ****************
 
-This page describe the algorithm implemented in the :py:func:`wulfric.cell.get_niggli`
+This page describes the algorithm implemented in the :py:func:`wulfric.cell.get_niggli`
 if this function is called with ``implementation="wulfric"``. An implementation directly
-follows the papers [1]_, [2]_. If you use results obtain with this function of wulfric,
+follows the papers [1]_, [2]_. If you use results obtained with this function of Wulfric,
 please acknowledge those papers as the original source of the algorithm.
 
-For an alternative implementation, that was available long before wulfric and is not
-associated with wulfric package or its authors see |spglib-niggli|_.
+For an alternative implementation that was available long before Wulfric and is not
+associated with Wulfric package or its authors see |spglib-niggli|_.
 
-The algorithm is given a cell :math:`\boldsymbol{A}`, that is properly defined in
+The algorithm is given a cell :math:`\boldsymbol{A}` that is properly defined in
 :ref:`user-guide_conventions_basic-notation`.
 
 Niggli reduction algorithm is implemented and tested exactly as in [1]_. On this page we
-recall the algorithm itself and the testing procedure with the notation of wulfric. We
-advise you to read the original papers for better understanding of it. Parameters
+recall the algorithm itself and the testing procedure with the notation of Wulfric. We
+advise you to read the original papers for better understanding of it. The parameters
 
 .. math::
     A & = a^2 \\
@@ -58,7 +58,7 @@ Steps of an algorithm from the paper [1]_ with the transformation matrices from 
 [2]_.
 
 Each step of the algorithm transforms the metric matrix if the condition is met.
-If the algorithm generates :math:`N` trtansformations with the transformation matrices
+If the algorithm generates :math:`N` transformations with the transformation matrices
 :math:`\boldsymbol{P}_1, ..., \boldsymbol{P}_N`, then the full transformation matrix is
 :math:`\boldsymbol{P} = \boldsymbol{P}_1 \cdot ... \cdot \boldsymbol{P}_N`.
 
@@ -171,7 +171,7 @@ where :math:`i,j,k` are defined via an algorithm:
 Below we include a diagram that might help to comprehend how this algorithm works (click
 to enlarge).
 
-Application of transformation matrix to the metric tensor have the general form:
+Application of the transformation matrix to the metric tensor has the general form:
 
 .. math::
 
@@ -180,7 +180,7 @@ Application of transformation matrix to the metric tensor have the general form:
     \begin{pmatrix}
         i^2 A & ij \zeta/2 & ik \eta/2 \\
         ji \zeta/2 & j^2 B & jk \xi/2 \\
-        ki \eta/2 & kj \xi/2 & j^2 C \\
+        ki \eta/2 & kj \xi/2 & k^2 C \\
     \end{pmatrix}
 
 .. figure:: ../../img/niggli-step-4.png

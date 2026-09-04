@@ -4,23 +4,23 @@
 Bravais lattices
 ****************
 
-Wulfric implements two conventions for the definition of the high-symmetry points in
-reciprocal space and recommended k-paths
+Wulfric implements two conventions for the definition of the high-symmetry
+points in reciprocal space and recommended k-paths.
 
-*   "HPKOT" as defined in [1]_
+*   "HPKOT" as defined in [1]_.
 
-    In this work authors defined a set of high-symmetry points in
-    reciprocal space and recommended k-paths for each "extended Bravais lattice symbol".
-    Therefore, we provide in total 29 examples for each extended Bravais lattice symbol.
+    In this work, the authors defined a set of high-symmetry points in
+    reciprocal space and recommended k-paths for each "extended Bravais lattice
+    symbol".  Therefore, we provide in total 29 examples (one per symbol).
 
-*   "SC" as in [2]_
+*   "SC" as in [2]_.
 
-    In this work authors defined a set of high-symmetry points in
-    reciprocal space and recommended k-paths for each variation of Bravais lattice.
-    We provide examples for each of 25 lattice variations.
+    In this work, the authors defined a set of high-symmetry points in
+    reciprocal space and recommended k-paths for each variation of Bravais
+    lattices.  We provide examples for each of 25 lattice variations.
 
-Below is the table that summarizes lattice variations and extended lattice symbols for
-each of the 14 Bravais lattices.
+Below is the table that summarizes lattice variations and extended lattice
+symbols for each of the 14 Bravais lattices.
 
 
 
@@ -59,7 +59,7 @@ Base-centered monoclinic (mS)   :ref:`sphx_glr_user-guide_conventions_bravais-la
 Triclinic (aP)                  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_28_aP2.py`, :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_22_TRI1a.py`,
                                 :ref:`sphx_glr_user-guide_conventions_bravais-lattices_1_hpkot_plot_29_aP3.py`  :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_23_TRI2a.py`,
                                                                                                                 :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_24_TRI1b.py`,
-                                                                                                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_25_TRI2b.py`,
+                                                                                                                :ref:`sphx_glr_user-guide_conventions_bravais-lattices_2_sc_plot_25_TRI2b.py`
 =============================== =============================================================================== ==============================================================================
 
 

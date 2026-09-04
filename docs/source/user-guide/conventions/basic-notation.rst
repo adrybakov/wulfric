@@ -4,11 +4,12 @@
 Basic notation
 **************
 
-On this page we introduce formal definition of the vector and cell and describe how they
-are stored in wulfric.
+On this page we introduce formal definitions of the vector and cell and describe
+how they are stored in Wulfric.
 
-Wulfric stores and manipulates both column vectors and row vectors as (3,) |NumPy|_
-arrays (i. e. the code does not explicitly distinguish the row and column vectors)
+Wulfric stores and manipulates both column vectors and row vectors as (3,)
+|NumPy|_ arrays (i.e. the code does not explicitly distinguish the row and
+column vectors).
 
 .. math::
 
@@ -26,8 +27,8 @@ arrays (i. e. the code does not explicitly distinguish the row and column vector
     vector_column = np.array([vx, vy, vz])
     vector_row = np.array([vx, vy, vz])
 
-When simply the word "vector" is used, we assume a column vector for the mathematical
-formulas.
+When simply the word "vector" is used, we assume a column vector for the
+mathematical formulas.
 
 .. math::
 
@@ -41,9 +42,9 @@ formulas.
     import numpy as np
     vector = np.array([vx, vy, vz])
 
-One-dimensional |NumPy|_ arrays do not distinguish between row and column vectors.
-Therefore, if the code example contains a vector ``r``, it may mean either
-:math:`\boldsymbol{r}` or :math:`\boldsymbol{r}^T`.
+One-dimensional |NumPy|_ arrays do not distinguish between row and column
+vectors.  Therefore, if the code example contains a vector ``r``, it may mean
+either :math:`\boldsymbol{r}` or :math:`\boldsymbol{r}^T`.
 
 .. _user-guide_conventions_basic-notation_cell:
 
@@ -51,8 +52,8 @@ Cell
 ====
 
 Cell is defined by three lattice vectors (or "basis vectors")
-:math:`\boldsymbol{a}_i = (a_i^x, a_i^y, a_i^z)^T`. Wulfric stores those vectors in a form
-of as a :math:`(3\times3)` matrix
+:math:`\boldsymbol{a}_i = (a_i^x, a_i^y, a_i^z)^T`. Wulfric stores those vectors
+as a :math:`(3\times3)` matrix
 
 .. math::
 
@@ -84,14 +85,16 @@ where each vector is a row
 
 .. note::
 
-    Wulfric defines cell as a transpose of the standard definition in |InTabCrys|_ or of
-    |spglib|_ (However, it is the same as in |spglib-python|_).
+    Wulfric defines cell as a transpose of the standard definition in
+    |InTabCrys|_ or of |spglib|_ (However, it is the same as in
+    |spglib-python|_).
 
-    We deliberately choose to define the cell in that way for consistency between the
-    mathematical formulas and python code. Formally one can substitute
-    :math:`\boldsymbol{A} = \boldsymbol{A}^T_{\text{ITA}}` and recover the same formulas
-    as in |InTabCrys|_ for most cases. We try to define the action of the transformation
-    and rotation matrices in the same way as in |InTabCrys|_.
+    We deliberately choose to define the cell in that way for consistency
+    between the mathematical formulas and python code. Formally one can
+    substitute :math:`\boldsymbol{A} = \boldsymbol{A}^T_{\text{ITA}}` and
+    recover the same formulas as in |InTabCrys|_ for most cases. We try to
+    define the action of the transformation and rotation matrices in the same
+    way as in |InTabCrys|_.
 
 .. _user-guide_conventions_basic-notation_position-of-atom:
 
@@ -105,7 +108,7 @@ Atom's position can be stored in two distinct ways
 *   :math:`\boldsymbol{x}` - as relative position with respect to some
     :ref:`user-guide_conventions_basic-notation_cell`
 
-In wulfric atom's position is **always** stored and returned as **relative**.
+In Wulfric, the atom's position is **always** stored and returned as **relative**.
 
 .. math::
 
@@ -141,8 +144,8 @@ calculated as
 
 .. note::
 
-    Remember that one-dimensional |NumPy|_ arrays effectively do not distinguish between
-    row and column vectors in the context of matrix multiplication.
+    Remember that one-dimensional |NumPy|_ arrays effectively do not distinguish
+    between row and column vectors in the context of matrix multiplication.
 
 .. _user-guide_conventions_basic-notation_reciprocal-cell:
 
@@ -150,8 +153,8 @@ Reciprocal cell
 ===============
 
 Reciprocal cell is defined by three reciprocal lattice vectors
-:math:`\boldsymbol{b}_i = (b_i^x, b_i^y, b_i^z)^T`.  Wulfric stores those vectors in a
-form of as a :math:`(3\times3)` matrix
+:math:`\boldsymbol{b}_i = (b_i^x, b_i^y, b_i^z)^T`.  Wulfric stores those
+vectors as a :math:`(3\times3)` matrix
 
 .. math::
 
@@ -190,8 +193,8 @@ Reciprocal cell is connected with the direct cell of the lattice as
 K-points
 ========
 
-Similar to :ref:`user-guide_conventions_basic-notation_position-of-atom`, k-point can
-be stored in two distinct ways
+Similar to :ref:`user-guide_conventions_basic-notation_position-of-atom`,
+k-point can be stored in two distinct ways
 
 *   :math:`\boldsymbol{k}` - as absolute position in the global Cartesian reference
     frame
@@ -225,12 +228,12 @@ be stored in two distinct ways
         import numpy as np
         g = np.array([g1, g2, g3])
 
-In wulfric k-point's storage/return mode can be controlled with the keyword argument
-``relative=True`` or ``relative=False`` in almost all functions and methods. Often
-``relative=True`` by default.
+In Wulfric, the k-point's storage/return mode can be controlled with the keyword
+argument ``relative=True`` or ``relative=False`` in almost all functions and
+methods. The default is often ``relative=True``.
 
-With the known cell :math:`\boldsymbol{B}` change between relative and absolute k point
-position is straightforward
+With the known reciprocal cell :math:`\boldsymbol{B}` the change between
+relative and absolute k-point position is straightforward
 
 *   Relative -> absolute
 
@@ -275,8 +278,8 @@ position is straightforward
 Transformation of the cell
 ==========================
 
-Choice of the cell is not unique for any given lattice. Transformation *from* the
-original cell :math:`\boldsymbol{A}` *to* the transformed cell
+Choice of the cell is not unique for any given lattice. Transformation *from*
+the original cell :math:`\boldsymbol{A}` *to* the transformed cell
 :math:`\boldsymbol{\tilde{A}}` is expressed with the transformation matrix
 :math:`\boldsymbol{P}` as
 
@@ -296,15 +299,18 @@ original cell :math:`\boldsymbol{A}` *to* the transformed cell
 
 
 .. note::
-    We deliberately define action of the  transformation with the transposition sign.
-    When its action is defined in that way matrix :math:`\boldsymbol{P}` is the same as
-    the transformation matrix :math:`\boldsymbol{P}` in |InTabCrys|_ Volume A, Chapter 5.1.
+   
+   We deliberately define action of the transformation with the transposition
+   sign.  When its action is defined in that way matrix :math:`\boldsymbol{P}`
+   is the same as the transformation matrix :math:`\boldsymbol{P}` in
+   |InTabCrys|_ Volume A, Chapter 5.1.
 
-It is important to understand that the transformation of the cell describes the *choice*
-of the cell for the given *lattice* or *crystal*. In other words while the **cell is
-changed**, the **lattice or crystal remains intact**. Consecutively, the **Cartesian**
-position of atom is **not changed** (:math:`\boldsymbol{r} = \boldsymbol{\tilde{r}}`),
-while its **relative** position is **transformed** as
+It is important to understand that the transformation of the cell describes the
+*choice* of the cell for the given *lattice* or *crystal*. In other words while
+the **cell is changed**, the **lattice or crystal remains intact**.
+Consequently, the **Cartesian** position of atom is **not changed**
+(:math:`\boldsymbol{r} = \boldsymbol{\tilde{r}}`), while its **relative**
+position is **transformed** as
 
 .. math::
 
@@ -339,8 +345,8 @@ Reciprocal cell is changed by the transformation as
     tilde_reciprocal_cell = np.linalg.inv(P) @ reciprocal_cell
     reciprocal_cell = P @ tilde_reciprocal_cell
 
-**Cartesian** position of k-point does **not change**, but **relative** position of
-k-point is **transformed** as
+**Cartesian** position of k-point does **not change**, but **relative** position
+of k-point is **transformed** as
 
 .. math::
 
@@ -360,8 +366,8 @@ k-point is **transformed** as
     # or
     tilde_g = g @ P
 
-Transformation matrix itself can be computed from original and transformed direct cells
-(implemented in :py:func:`wulfric.cell.get_transformation_matrix`)
+Transformation matrix itself can be computed from original and transformed
+direct cells (implemented in :py:func:`wulfric.cell.get_transformation_matrix`)
 
 .. math::
 
@@ -387,21 +393,21 @@ or from original and transformed reciprocal cells
 .. code-block:: python
 
     import numpy as np
-    tilde_reciprocal_cell = np.linalg.inv(P) @ reciprocal_cell
-    reciprocal_cell = P @ tilde_reciprocal_cell
+    P = reciprocal_cell @ np.linalg.inv(tilde_reciprocal_cell)
 
 .. _user-guide_conventions_basic-notation_rotation:
 
 Rotation of the cell
 ====================
 
-On contrary to the :ref:`user-guide_conventions_basic-notation_transformation`, rotation
-changes the orientation of  the lattice or crystal, while keeping the same choice of the
-cell.
+In contrast to the :ref:`user-guide_conventions_basic-notation_transformation`,
+rotation changes the orientation of the lattice or crystal, while keeping the
+same choice of the cell.
 
-Rotation of the given cell :math:`\boldsymbol{A}` *from* its original orientation *to* the
-new orientation of the same cell :math:`\boldsymbol{A}_{\text{rotated}}` is expressed with
-the rotation matrix :math:`\boldsymbol{R}` as
+Rotation of the given cell :math:`\boldsymbol{A}` *from* its original
+orientation *to* the new orientation of the same cell
+:math:`\boldsymbol{A}_{\text{rotated}}` is expressed with the rotation matrix
+:math:`\boldsymbol{R}` as
 
 .. math::
 
@@ -418,8 +424,8 @@ the rotation matrix :math:`\boldsymbol{R}` as
     # Note that inverse of rotation matrix is equivalent to its transpose
     cell = rotated_cell @ R
 
-If action of the rotation matrix is defined as above, then it acts on the column vectors
-in the usual way
+If action of the rotation matrix is defined as above, then it acts on the column
+vectors in the usual way
 
 .. math::
 
@@ -440,12 +446,12 @@ in the usual way
 
 .. note::
 
-    Remember that one-dimensional |NumPy|_ arrays effectively do not distinguish between
-    row and column vectors in the context of matrix multiplication.
+    Remember that one-dimensional |NumPy|_ arrays effectively do not distinguish
+    between row and column vectors in the context of matrix multiplication.
 
 **Relative** position of atom is **not changed** by the rotation
-(:math:`\boldsymbol{x} = \boldsymbol{\tilde{x}}`), while its **Cartesian** position is
-**rotated** as
+(:math:`\boldsymbol{x} = \boldsymbol{\tilde{x}}`), while its **Cartesian**
+position is **rotated** as
 
 
 .. math::
@@ -483,8 +489,8 @@ Reciprocal cell is rotated as
     # Note that inverse of rotation matrix is equivalent to its transpose
     reciprocal_cell = reciprocal_cell_rotated @ R
 
-**Relative** position of the k-point do **not change**, but **Cartesian** position of
-k-point is **rotated** as
+**Relative** position of the k-point does **not change**, but **Cartesian**
+position of k-point is **rotated** as
 
 .. math::
 
