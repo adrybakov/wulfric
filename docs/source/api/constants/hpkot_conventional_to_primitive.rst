@@ -6,7 +6,7 @@ wulfric.constants.HPKOT_CONVENTIONAL_TO_PRIMITIVE
 
 Transformation matrices from conventional cell to primitive cell.
 
-Data are from Table 3 of [1]_.
+Data are from the Table 3 of [1]_.
 
 .. code-block:: python
 
