@@ -4,7 +4,7 @@
 Installation
 ************
 
-Requirement for wulfric installation are:
+Requirements for Wulfric installation are
 
 * |Python|_ (3.10 or higher)
 
@@ -24,16 +24,16 @@ Wulfric can be installed with :ref:`pip <installation-pip>` or from
 
         python --version
 
-    to check which version of python is available.
+    to check which version of Python is available.
 
 Do you have Python?
 ===================
 
-Most likely Python is already installed on your machine (if not check these links:
-|Python-installation|_).
+Most likely Python is already installed on your machine (if not, check these
+links |Python-installation|_).
 
-One of the ways to check if you have python installed is to execute the following command
-in your terminal
+One of the ways to check if you have Python installed is to execute the
+following command in your terminal
 
 .. code-block:: bash
 
@@ -49,26 +49,27 @@ If you see something like
 
 then you have it.
 
-In most cases ``python`` command launches python3, however if it launches python2, then
-you may need to use ``python3`` instead (and ``pip3`` instead of ``pip`` in the following).
+In most cases the ``python`` command launches python3, however if it launches
+python2, then you may need to use ``python3`` instead (and ``pip3`` instead of
+``pip`` in the following).
 
 .. hint::
-    Use ``exit()`` or press ``ctrl+D`` to close python console.
+    Use ``exit()`` or press ``Ctrl+D`` to close the Python console.
 
 .. _installation-pip:
 
 Installation with pip
 =====================
 
-To install wulfric use the command (you may need to use ``pip3``)
+To install Wulfric, use the command (you may need to use ``pip3``)
 
 .. code-block:: bash
 
     pip install wulfric
 
-Optionally, if you want to use :ref:`visualization <user-guide_usage_visualization>`
-capabilities of wulfric, you can install |plotly|_ and |scipy|_ manually or install them
-with wulfric as
+Optionally, if you want to use :ref:`visualization
+<user-guide_usage_visualization>` capabilities of Wulfric, you can install
+|plotly|_ and |scipy|_ manually or install them with Wulfric as
 
 .. code-block:: bash
 
@@ -89,9 +90,9 @@ with wulfric as
         pip install "wulfric[visual]"
 
 .. hint::
-    If you are using |jupyter|_, then wulfric can be installed with
+    If you are using |jupyter|_, then Wulfric can be installed with
 
-    .. code-block::
+    .. code-block:: python
 
         %pip install wulfric
 
@@ -110,7 +111,8 @@ You can test the installed Wulfric by running
 
 command in the terminal.
 
-Alternatively, the tests can be run from the script/python console/jyputer notebook with
+Alternatively, the tests can be run from the script, Python console, or Jupyter
+notebook with
 
 .. code-block:: python
 
@@ -140,10 +142,11 @@ Installation from source
 
         pip install -r requirements.txt
 
-    You'll see that all dependencies (both mandatory and optional) are installed. If you
-    prefer to install only mandatory dependencies, then you can do it manually.
+    You'll see that all dependencies (both mandatory and optional) are
+    installed. If you prefer to install only mandatory dependencies, then you
+    can do it manually instead.
 
-*   To install wulfric, run (you may need to use ``pip3``)
+*   To install Wulfric, run (you may need to use ``pip3``)
 
     .. code-block:: bash
 
