@@ -182,9 +182,10 @@ def validate_atoms(atoms, required_keys=None, raise_errors=True):
                     return False
 
     # Check spglib_types
+    _INT_TYPES = (int, np.integer)
     if "spglib_types" in atoms:
         for index, element in enumerate(atoms["spglib_types"]):
-            if not isinstance(element, int):
+            if not isinstance(element, _INT_TYPES):
                 if raise_errors:
                     raise ValueError(
                         f'Element #{index} of atoms["spglib_types"] is not an integer:\n  '
