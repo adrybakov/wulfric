@@ -27,7 +27,7 @@ class SyntacticSugar(dict):
     r"""
     Syntactic sugar for any dictionary.
 
-    This class does only one thing. It allows to write
+    This class does only one thing. It allows writing
     ``atoms.names`` instead of ``atoms["names"]`` or
     ``spglib_data.number`` instead of ``spglib_data["number"]``.
 

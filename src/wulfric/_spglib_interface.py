@@ -45,7 +45,7 @@ class SpglibData:
     .. versionadded:: 0.7.0
 
     Parameters
-    ==========
+    ----------
     cell : (3, 3) |array-like|_
         See :py:func:`.get_spglib_data`.
     atoms : dict
@@ -182,7 +182,7 @@ class SpglibData:
     * "c" for cubic
     * "h" for hexagonal
     * "t" for tetragonal
-    * "o" for orhorhombic
+    * "o" for orthorhombic
     * "m" for monoclinic
     * "a" for triclinic
     """
@@ -194,7 +194,7 @@ class SpglibData:
     * "P" for primitive
     * "A" for side centered
     * "C" for side centered
-    * "I" for body-centered
+    * "I" for body centered
     * "R" for rhombohedral centring
     * "F" for all faces centered
     """
@@ -258,7 +258,7 @@ def validate_spglib_data(cell, atoms, spglib_data) -> None:
     Validate that ``cell`` and ``atoms["positions"]`` match the ones on which
     ``spglib_data`` was created.
 
-    In details, it check that
+    In detail, it check that
 
     * ``cell`` is the same as ``spglib_data.original_cell``
     * ``atoms["positions"]`` are the same as ``spglib_data.original_positions``
@@ -266,7 +266,7 @@ def validate_spglib_data(cell, atoms, spglib_data) -> None:
       ``spglib_data.original_types``.
 
     Parameters
-    ==========
+    ----------
     cell : (3, 3) |array-like|_
         Matrix of a cell, rows are interpreted as vectors. In the language of |spglib|_
         the same concept is usually called "basis vectors" or "lattice".
@@ -276,16 +276,16 @@ def validate_spglib_data(cell, atoms, spglib_data) -> None:
         *   "positions" : (N, 3) |array-like|_
 
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
+            words, relative coordinates of atoms.
         *   "names" : (N, ) list of str, optional
         *   "species" : (N, ) list of str, optional
         *   "spglib_types" : (N, ) list of int, optional
-    spglib_data : dict
-        A dictionary with the added syntactic sugar (i.e. with the dot access to the keys),
+    spglib_data : :py:class:`.SpglibData`
+        A dictionary with the added syntactic sugar (i.e. with the dot access to the keys)
         that is produced via call to :py:func:`.get_spglib_data`.
 
     Raises
-    ======
+    ------
     ValueError
         If ``cell`` and ``atoms`` do not match ``spglib_data``.
     """
@@ -297,12 +297,12 @@ def validate_spglib_data(cell, atoms, spglib_data) -> None:
 
     if not np.allclose(atoms["positions"], spglib_data.original_positions):
         raise ValueError(
-            "Validation of spglib_data against cell and atoms: atom's positions mismatch."
+            "Validation of spglib_data against cell and atoms: atoms' positions mismatch."
         )
 
     if get_spglib_types(atoms=atoms) != spglib_data.original_types:
         raise ValueError(
-            "Validation of spglib_data against cell and atoms: atom's types mismatch."
+            "Validation of spglib_data against cell and atoms: atoms' types mismatch."
         )
 
 
@@ -326,17 +326,17 @@ def get_spglib_types(atoms):
 
     3.  "names" in ``atoms``.
 
-        Species are automatically deduced based on atom's names (via
+        Species are automatically deduced based on atoms' names (via
         :py:func:`wulfric.crystal.get_atom_species`). Then the new list is constructed as:
 
-        a.  If the deduced species is "X", then the atom's name is used.
+        a.  If the deduced species is "X", then the atoms' name is used.
         b.  If the deduced species is not "X", then the deduced species is used.
 
         If the two atoms have the same entry in that new list, then they have the
         same integer assigned to them in ``spglib_types``.
 
     Parameters
-    ==========
+    ----------
     atoms : dict
         Dictionary with N atoms. At least one of the following keys is expected
 
@@ -345,12 +345,12 @@ def get_spglib_types(atoms):
         *   "spglib_types" : (N, ) list of int, optional
 
     Returns
-    =======
+    -------
     spglib_types : (N, ) list of int
         List of integer indices ready to be passed to |spglib|_.
 
     Raises
-    ======
+    ------
     ValueError
         If neither "spglib_types" nor "species" nor "names" are present in ``atoms``.
     """
@@ -400,7 +400,7 @@ def get_spglib_data(
     one can associate a dataset with a given ``cell`` and ``atoms`` and re-use it when necessary.
 
     Parameters
-    ==========
+    ----------
     cell : (3, 3) |array-like|_
         Matrix of a cell, rows are interpreted as vectors. In the language of |spglib|_
         the same concept is usually called "basis vectors" or "lattice".
@@ -409,13 +409,13 @@ def get_spglib_data(
 
         *   "positions" : (N, 3) |array-like|_
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
+            words. relative coordinates of atoms.
         *   "names" : (N, ) list of str, optional
-            See Notes
+            See Notes.
         *   "species" : (N, ) list of str, optional
-            See Notes
-        *   "spglib_types" (N, ) list of int, optional
-            See Notes
+            See Notes.
+        *   "spglib_types" : (N, ) list of int, optional
+            See Notes.
 
         .. hint::
             Pass ``atoms = dict(positions=[[0, 0, 0]], spglib_types=[1])`` to interpret
@@ -427,21 +427,21 @@ def get_spglib_data(
         Directly passed to |spglib|_. Tolerance parameter for the symmetry search.
 
     Returns
-    =======
+    -------
     spglib_data : :py:class:`.SpglibData`
 
     Raises
-    ======
+    ------
     ValueError
         If some input data are not what is expected.
     TypeError
         If some input data are not what is expected.
     RuntimeError
-        If spglib fail to detect symmetry.
+        If spglib fails to detect symmetry.
 
     Notes
-    =====
-    |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces
+    -----
+    |spglib|_ uses ``types`` to distinguish the atoms. To see how Wulfric deduces
     ``types`` from given ``atoms`` see :py:func:`wulfric.get_spglib_types`.
     """
 

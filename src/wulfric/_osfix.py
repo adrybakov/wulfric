@@ -23,10 +23,10 @@ import sys
 
 def _winwait():
     r"""
-    Add "Press Enter to continue" behavior to Windows.
+    Add "Press Enter to continue" behavior on Windows.
 
-    Its a fix for Window`s pop-up terminal, which tends to close immediately
+    It's a fix for Window's pop-up terminal, which tends to close immediately
     after the script is finished.
     """
     if sys.platform == "win32":
-        input("Press Enter to continue")
+        input("Press Enter to continue...")

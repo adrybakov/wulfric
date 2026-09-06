@@ -58,7 +58,7 @@ def main():
     elif args.command is None:
         parser.print_help()
     else:
-        raise ValueError(f"Command {args.command} is not recognized.")
+        raise ValueError(f'Command "{args.command}" is not recognized.')
 
 
 if __name__ == "__main__":

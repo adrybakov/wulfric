@@ -28,7 +28,7 @@ __all__ = [
     "PotentialBugError",
 ]
 
-_SUPPORT_FOOTER = "\nPlease contact developers of wulfric (see https://docs.wulfric.org/en/latest/support.html)."
+_SUPPORT_FOOTER = "\nPlease contact the developers of Wulfric (see https://docs.wulfric.org/en/latest/support.html)."
 
 
 def _raise_with_message(e, message):
@@ -49,7 +49,7 @@ def _raise_with_message(e, message):
 
 class ConventionNotSupported(Exception):
     """
-    Raised when the convention for the cell/crystall is not one of the supported ones.
+    Raised when the convention for the cell/crystal is not one of the supported ones.
     """
 
     def __init__(self, convention: str, supported_conventions: list):
@@ -68,7 +68,7 @@ class FailedToDeduceAtomSpecies(Exception):
     """
 
     def __init__(self, name: str):
-        self.message = f"Tried to deduce name from '{name}'. Failed."
+        self.message = f"Tried to deduce species from '{name}'. Failed."
 
     def __str__(self):
         return self.message
@@ -80,7 +80,7 @@ class NiggliReductionFailed(Exception):
     """
 
     def __init__(self, max_iterations: int):
-        self.message = f"Niggli reduction algorithm reached maximum amount of iterations: {max_iterations}"
+        self.message = f"Niggli reduction algorithm reached maximum number of iterations: {max_iterations}"
 
     def __str__(self):
         return self.message
@@ -90,7 +90,7 @@ class PotentialBugError(Exception):
     def __init__(self, error_summary):
         self.message = (
             error_summary
-            + "\nIf you see this error, than there might be a bug in wulfric."
+            + "\nIf you see this error, then there might be a bug in Wulfric."
             + _SUPPORT_FOOTER
         )
 

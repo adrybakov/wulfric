@@ -52,15 +52,15 @@ class Kpoints:
         ``N = len(coordinates)``.
     labels : list, optional
         List of the high-symmetry point's labels. Used for plotting. Has to have the same
-        length as ``coordinates``. If ``None`` and ``names is None, then use "K$_1$", ...
-        "K$_N$", where ``N = len(coordinates)``. If ``None`` but ``names are given, then
+        length as ``coordinates``. If ``None`` and ``names`` is ``None``, then use "K$_1$", ...
+        "K$_N$", where ``N = len(coordinates)``. If ``None`` but ``names`` are given, then
         ``labels = names``.
     path : str, optional
         K-path. Use elements of ``names`` to specify the path. If no names given, then use
         "K1-K2-...-KN", where ``N = len(coordinates)``.
     n : int
-        Number of intermediate points between each pair of the high-symmetry points (high
-        symmetry points excluded).
+        Number of intermediate points between each pair of the high-symmetry points 
+        (high-symmetry points excluded).
 
     Attributes
     ----------
@@ -71,7 +71,7 @@ class Kpoints:
         point.
     hs_coordinates : dict
         Dictionary of the high-symmetry points coordinates. Coordinates are relative (in
-        the basis of ``rcell``)
+        the basis of ``rcell``).
 
         .. code-block:: python
 
@@ -100,7 +100,7 @@ class Kpoints:
                 labels = [name for name in names]
         elif len(labels) != len(coordinates):
             raise ValueError(
-                f"Amount of labels ({len(labels)}) does not match amount of points ({len(coordinates)})."
+                f"Number of labels ({len(labels)}) does not match number of points ({len(coordinates)})."
             )
 
         if names is None:
@@ -144,7 +144,7 @@ class Kpoints:
             *   "positions" : (N, 3) |array-like|_
 
                 Positions of the atoms in the basis of lattice vectors (``cell``). In other
-                words - relative coordinates of atoms.
+                words, relative coordinates of atoms.
             *   "names" : (N, ) list of str, optional
 
                 See Notes
@@ -183,7 +183,7 @@ class Kpoints:
         spglib_data : :py:class:`.SyntacticSugar`, optional
             If you need more control on the parameters passed to the spglib, then
             you can get ``spglib_data`` manually and pass it to this function.
-            Use wulfric's interface to |spglib|_ as
+            Use Wulfric's interface to |spglib|_ as
 
             .. code-block:: python
 
@@ -195,15 +195,15 @@ class Kpoints:
 
         Notes
         -----
-        |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
+        |spglib|_ uses ``types`` to distinguish the atoms. To see how Wulfric deduces the
         ``types`` for given atoms see :py:func:`wulfric.get_spglib_types`.
 
         If two atoms ``i`` and ``j`` have the same spglib_type (i.e.
         ``atoms["spglib_types"][i] == atoms["spglib_types"][j]``), but they have different
         property that is stored in ``atoms[key]`` (i.e ``atoms[key][i] != atoms[key][j]``),
         then those two atoms are considered equal. In the returned ``conventional_atoms``
-        the value of the ``conventional_atoms[key]`` are populated based on the *last* found
-        atom in ``atoms`` with each for spglib_type. This rule do not apply to the "positions"
+        the value of the ``conventional_atoms[key]`` is populated based on the *last* found
+        atom in ``atoms`` with each spglib_type. This rule does not apply to the "positions"
         key.
 
 
@@ -294,12 +294,12 @@ class Kpoints:
     @property
     def path(self) -> list:
         r"""
-        K points path.
+        K-points path.
 
         Returns
         -------
         path : list of list of str
-            K points path. Each subpath is a list of the high-symmetry points.
+            K-points path. Each subpath is a list of the high-symmetry points.
 
             .. code-block:: python
 
@@ -344,7 +344,7 @@ class Kpoints:
     @property
     def path_string(self) -> str:
         r"""
-        K points path as a string.
+        K-points path as a string.
 
         Returns
         -------
@@ -356,7 +356,7 @@ class Kpoints:
     @property
     def n(self) -> int:
         r"""
-        Amount of points between each pair of the high-symmetry points
+        Number of points between each pair of the high-symmetry points
         (high-symmetry points excluded).
 
         Returns
@@ -382,7 +382,7 @@ class Kpoints:
         r"""
         Labels of high-symmetry points, ready to be plotted.
 
-        For example for point "GAMMA" it returns R"$\Gamma$".
+        For example, for point "GAMMA" it returns "$\Gamma$".
 
         If there are two high-symmetry points following one another in the path,
         it returns "X|Y" where X and Y are the labels of the two high-symmetry points.
@@ -408,7 +408,7 @@ class Kpoints:
         r"""
         Tick's positions of the high-symmetry points, ready to be plotted.
 
-        Same coordinated as in :py:meth:`.flat_points`.
+        Same coordinates as in :py:meth:`.flat_points`.
 
         Parameters
         ----------
@@ -446,8 +446,8 @@ class Kpoints:
     ################################################################################
     def points(self, relative=False):
         r"""
-        Coordinates of all points with n points between each pair of the high
-        symmetry points (high-symmetry points excluded).
+        Coordinates of all points with n points between each pair of the high-symmetry
+        points (high-symmetry points excluded).
 
         Parameters
         ----------
@@ -485,8 +485,8 @@ class Kpoints:
     # because it has to treat "|" as a special case.
     def flat_points(self, relative=False):
         r"""
-        Flatten coordinates of all points with n points between each pair of the high
-        symmetry points (high-symmetry points excluded).
+        Flatten coordinates of all points with n points between each pair of the 
+        high-symmetry points (high-symmetry points excluded).
 
         Used to plot band structure, dispersion, etc.
 
@@ -559,13 +559,17 @@ class Kpoints:
         Returns
         -------
         table : str
-            String with N+1 lines, where N is the amount of high-symmetry points.
+            String with N+1 lines, where N is the number of high-symmetry points.
             Each line contains the name of the high-symmetry point and its relative and
-            absolute coordinates in a reciprocal space, i.e.::
+            absolute coordinates in a reciprocal space, i.e.
+
+            .. code-block:: python
 
                 K1  0.0 0.0 0.0   0.0 0.0 0.0
 
-            First line is a header::
+            First line is a header
+
+            .. code-block:: python
 
                 Name  rel_b1 rel_b2 rel_b3  k_x k_y k_z
         """

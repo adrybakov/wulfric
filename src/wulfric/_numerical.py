@@ -25,7 +25,7 @@ __all__ = ["compare_with_tolerance"]
 
 def compare_with_tolerance(x, condition, y, eps=None, rtol=1e-5, atol=1e-8):
     r"""
-    Compares two numbers with given accuracy.
+    Compares two numbers with the given accuracy.
 
     The formal definition is taken from [1]_:
 

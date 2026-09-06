@@ -20,7 +20,7 @@
 # ================================ END LICENSE =================================
 __version__ = "0.7.2-dev"
 __doclink__ = "wulfric.org"
-__release_date__ = "4 Septembe 2026"
+__release_date__ = "6 September 2026"
 
 
 from . import cell, constants, crystal, geometry, io, kpoints

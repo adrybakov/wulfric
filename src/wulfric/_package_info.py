@@ -45,15 +45,15 @@ BINARY_LOGO  =  [
 
 def logo(info=None, line_length=None, flat=False, date_time=False, comment=None):
     """
-    Generates logo of wulfric with some information about the package
+    Generates the logo of Wulfric with some information about the package
 
     Parameters
     ----------
     info : list of str, optional
-        Information about the package, that is displayed below the logo.
+        Information about the package that is displayed below the logo.
         Each element should not exceed 50 characters.
-        by default it displays the version, release date,
-        git hash and documentation link. You can pass th empty list
+        By default it displays the version, release date,
+        and documentation link. You can pass an empty list
         to display only the logo.
     line_length : int, optional
         Length of the lines to be returned.
@@ -63,7 +63,7 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
     date_time : bool, default False
         Whether to include the date and time to the standard info or not.
     comment : str or bool, optional
-        Whether to use some character at the end of each string. If bool and
+        Whether to prepend a character to each line. If bool and
         True, then "# " is used. If str, then this string is used. If None, then
         no character is used.
 
@@ -91,7 +91,7 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
             f"Version: {__version__}",
             f"Documentation: {__doclink__}",
             f"Release date: {__release_date__}",
-            "Licence: GNU GPLv3",
+            "License: GNU GPLv3",
             "Copyright (C) 2023 Andrey Rybakov",
         ]
         if date_time:
@@ -167,18 +167,18 @@ def logo(info=None, line_length=None, flat=False, date_time=False, comment=None)
 
 def _copyright():
     r"""
-    Outputs short license summary for terminal interactions
+    Outputs a short license summary for terminal interactions
     """
 
     return """Wulfric Copyright (C) 2023 Andrey Rybakov
 This program comes with ABSOLUTELY NO WARRANTY; for details type 'wulfric warranty'.
 This is free software, and you are welcome to redistribute it
-under certain conditions; type 'wulfric conditions' for details."""
+under certain conditions; See the license for details."""
 
 
 def _warranty():
     r"""
-    Output short warranty summary for terminal interactions
+    Outputs a short warranty summary for terminal interactions
     """
 
     return """THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY

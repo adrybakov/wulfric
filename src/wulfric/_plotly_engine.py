@@ -73,7 +73,7 @@ class PlotlyEngine:
         ``fig = go.Figure()``.
     _sphinx_gallery_fix : bool, default  False
         Fixes display issues when building documentation using sphinx gallery.
-        Please, always ignore this argument
+        Please, always ignore this argument.
 
     Attributes
     ----------
@@ -82,7 +82,7 @@ class PlotlyEngine:
 
     Notes
     -----
-    This class is a part of ``wulfric[visual]``
+    This class is part of ``wulfric[visual]``.
     """
 
     def __init__(self, fig=None, _sphinx_gallery_fix=False, rows=1, cols=1):
@@ -152,7 +152,7 @@ class PlotlyEngine:
         axes_visible : bool, default True
             Whether to show axes.
         legend_position : str, default "top"
-            Positions of the legend, case insensitive.
+            Position of the legend, case insensitive.
         **kwargs
             Passed directly to the |plotly-update-layout|_.
         """
@@ -166,7 +166,7 @@ class PlotlyEngine:
 
         if legend_position not in list(_LEGEND_SETTINGS):
             raise ValueError(
-                f"Supported values for legend_position are {list(_LEGEND_SETTINGS)}, got {legend_position}."
+                f'Supported values for legend_position are "{list(_LEGEND_SETTINGS)}", got "{legend_position}".'
             )
         legend = _LEGEND_SETTINGS[legend_position]
 
@@ -198,7 +198,7 @@ class PlotlyEngine:
         axes_visible : bool, default True
             Whether to show axes.
         legend_position : str, default "top"
-            Positions of the legend, case insensitive.
+            Position of the legend, case insensitive.
         kwargs_write_html : dict, optional
             Passed directly to the |plotly-write-html|_.
         **kwargs
@@ -246,7 +246,7 @@ class PlotlyEngine:
         points : (N, 3) |array-like|_
             Coordinates of the points.
         colors : str or list of str, default "#000000"
-            Color of the line. Any value that is supported by |plotly|_.
+            Color of the points. Any value that is supported by |plotly|_.
         legend_label : str, optional
             Label of the line that is displayed in the figure.
         legend_group : str, optional
@@ -305,7 +305,7 @@ class PlotlyEngine:
         col=1,
     ):
         r"""
-        Plots a single line between ``start_point`` to ``end_point``.
+        Plots a single line from ``start_point`` to ``end_point``.
 
         Parameters
         ----------
@@ -385,7 +385,7 @@ class PlotlyEngine:
         vector_label : str, optional
             Label of the vector that is displayed in the figure.
         legend_label : str, optional
-            Label for the legend. Entry in legend only showed if
+            Label for the legend. Entry in legend only shown if
             ``legend_label is not None``.
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
@@ -498,7 +498,7 @@ class PlotlyEngine:
         cell : (3, 3) |array-like|_
             Matrix of a cell, rows are interpreted as vectors.
         color : str, default "#000000"
-            Colour for the cell and the labels. Any value that is supported by |plotly|_.
+            Color for the cell and the labels. Any value that is supported by |plotly|_.
         plot_vectors : bool, default True
             Whether to plot lattice vectors.
         vector_label : str, default "a"
@@ -507,7 +507,7 @@ class PlotlyEngine:
             Absolute coordinates of the corner of the cell, from which the three lattice
             vectors are plotted.
         legend_label : str, optional
-            Label for the legend. Entry in legend only showed if
+            Label for the legend. Entry in legend only shown if
             ``legend_label is not None``.
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
@@ -602,11 +602,11 @@ class PlotlyEngine:
         vector_label : str, default "a"
             Vector's label, ignored if ``plot_vectors = False``.
         color : str, default "#000000"
-            Colour for the cell and labels. Any value that is supported by |plotly|_.
+            Color for the cell and labels. Any value that is supported by |plotly|_.
         shift : (3, ) |array-like|_, default (0.0, 0.0, 0.0)
             Absolute coordinates of the center of the Wigner-Seitz cell.
         legend_label : str, optional
-            Label for the legend. Entry in legend only showed if
+            Label for the legend. Entry in legend only shown if
             ``legend_label is not None``.
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
@@ -662,7 +662,6 @@ class PlotlyEngine:
         col=1,
     ):
         r"""
-
         Plots Brillouin zone.
 
         Parameters
@@ -674,11 +673,11 @@ class PlotlyEngine:
         vector_label : str, default "b"
             Vector's label, ignored if ``plot_vectors = False``.
         color : str, default "#FF4D67"
-            Colour for the Brillouin zone and labels. Any value that is supported by |plotly|_.
+            Color for the Brillouin zone and labels. Any value that is supported by |plotly|_.
         shift : (3, ) |array-like|_, default (0.0, 0.0, 0.0)
             Absolute coordinates of the center of the Brillouin zone.
         legend_label : str, optional
-            Label for the legend. Entry in legend only showed if
+            Label for the legend. Entry in legend only shown if
             ``legend_label is not None``.
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
@@ -719,11 +718,11 @@ class PlotlyEngine:
         kp : :py:class:`.Kpoints`
             K-points and k-path.
         color : str, default "#000000"
-            Colour for the plot. Any value that is supported by |plotly|_.
+            Color for the plot. Any value that is supported by |plotly|_.
         shift : (3, ) |array-like|_, default (0, 0, 0)
             Absolute coordinates of the shift in reciprocal space.
         legend_label : str, optional
-            Label for the legend. Entry in legend only showed if
+            Label for the legend. Entry in legend only shown if
             ``legend_label is not None``.
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
@@ -796,11 +795,11 @@ class PlotlyEngine:
         kp : :py:class:`.Kpoints`
             K-points and k-path.
         color : str, default "#000000"
-            Colour for the plot. Any value that is supported by |plotly|_.
+            Color for the plot. Any value that is supported by |plotly|_.
         shift : (3, ) |array-like|_, default (0, 0, 0)
             Absolute coordinates of the shift in reciprocal space.
         legend_label : str, optional
-            Label for the legend. Entry in legend only showed if
+            Label for the legend. Entry in legend only shown if
             ``legend_label is not None``.
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
@@ -809,8 +808,8 @@ class PlotlyEngine:
             Scale for the size of point's markers and text labels. Use ``scale>1`` to
             increase the size.
         only_from_kpath : bool, default False
-            Whether to plot all pre-defined points or only the ones that included into the
-            predefined k-path.
+            Whether to plot all pre-defined points or only the ones that are included
+            in the predefined k-path.
         row : int, default 1
             Row of the subplot.
         col : int, default 1
@@ -914,7 +913,7 @@ class PlotlyEngine:
             Absolute coordinates of the corner of the cell, from which the three lattice
             vectors are plotted.
         legend_label : str, optional
-            Label for the legend. Entry in legend only showed if
+            Label for the legend. Entry in legend only shown if
             ``legend_label is not None``.
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
@@ -970,40 +969,40 @@ class PlotlyEngine:
             *   "positions" : (N, 3) |array-like|_
 
                 Positions of the atoms in the basis of lattice vectors (``cell``). In other
-                words - relative coordinates of atoms.
+                words, relative coordinates of atoms.
             *   "names" : (N, ) list of str, optional
                 See Notes
 
             *   "species" : (N, ) list of str, optional
-                See Notes
+                See Notes.
 
         colors : str or list of str, optional
             Color of the atoms. Any value that is supported by |plotly|_. If ``None``,
-            then color is deduced based on atoms's species.
+            then color is deduced based on atoms' species.
         legend_label : str, optional
             Label of the line that is displayed in the figure.
         legend_group : str, optional
             Legend's group. If ``None``, then defaults to the random string of 10
             characters.
         scale : float, default 1
-            Scale for the size of atoms's markers and text labels. Use ``scale>1`` to
+            Scale for the size of atoms' markers and text labels. Use ``scale>1`` to
             increase the size.
         add_hoverinfo : bool, default True
 
             .. versionadded:: 0.7.0
 
-            Whether to add hover info with atom's properties.
+            Whether to add hover info with atoms' properties.
         row : int, default 1
             Row of the subplot.
         col : int, default 1
             Column of the subplot.
 
         Notes
-        =====
-        ``atoms["names"]`` is used to deduce atom's species if necessary via
+        -----
+        ``atoms["names"]`` is used to deduce atoms' species if necessary via
         :py:func:`wulfric.crystal.get_atom_species`.
 
-        ``atoms["species"] is used to define atom's colors if ``colors is None``
+        ``atoms["species"]`` is used to define atoms' colors if ``colors is None``.
         """
         cell = np.array(cell)
 

@@ -270,7 +270,7 @@ def lepage(
     Detect Bravais lattice type with the Le Page algorithm [1]_.
 
     .. warning:: This function is left in the package as a legacy function.
-        It is not used in any of the internal routines, it is not used to identify the
+        It is not used in any of the internal routines. It is not used to identify the
         Bravais lattice type. Use with caution. There is no guarantee of the correct
         behavior for this function.
 
@@ -281,8 +281,8 @@ def lepage(
         Matrix of a cell, rows are interpreted as vectors.
     angle_tolerance : float, default :math:`10^{-4}`
         Angle tolerance for the search of the actual symmetry axes. It is recommended to
-        reduce ``angle_tolerance`` to account for the finite precision of the angles of
-        the ``cell``. Default value is chosen in the contexts of condense matter physics,
+        increase ``angle_tolerance`` to account for the finite precision of the angles of
+        the ``cell``. Default value is chosen in the context of condensed matter physics,
         assuming that angles are in degrees. Please choose appropriate tolerance for your
         problem.
     give_all_results : bool, default False
@@ -290,7 +290,7 @@ def lepage(
         process of exclusion of the pseudosymmetry axes. Last element is the computed
         Bravais lattice type.
     no_niggli : bool, default False
-        Whether to skip niggli reduction.
+        Whether to skip Niggli reduction.
     _limit : float, default 2.0
         Tolerance parameter for the construction of the list of potential symmetry axes.
         Given in degrees. Change with caution and only if you understand what this
@@ -339,7 +339,7 @@ def lepage(
             import warnings
 
             warnings.warn(
-                "LePage algorithm: Niggli reduction failed, using input cell",
+                "LePage algorithm: Niggli reduction failed, using input cell.",
                 RuntimeWarning,
             )
 
