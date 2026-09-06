@@ -49,9 +49,11 @@ def get_lattice_points(cell, range=(1, 1, 1), relative=False, flat=True):
         * ``-range[0] <= r_1 <= range[0]``
         * ``-range[1] <= r_2 <= range[1]``
         * ``-range[2] <= r_3 <= range[2]``
+
+        are returned.
     relative : bool, default False
         Whether to return relative coordinates.
-    flat : bool, default False
+    flat : bool, default True
 
     Returns
     -------
@@ -92,7 +94,7 @@ def get_lattice_points(cell, range=(1, 1, 1), relative=False, flat=True):
 
 def _get_voronoi_cell(cell):
     r"""
-    Computes Voronoi edges around (0,0,0) point.
+    Computes Voronoi vertices and edges around the (0,0,0) point.
 
     Parameters
     ----------
@@ -105,7 +107,7 @@ def _get_voronoi_cell(cell):
         M vertices of the Voronoi cell around (0,0,0) point. Each element is a vector
         :math:`v = (v_x, v_y, v_z)`.
     edges : (N, 2) :numpy:`ndarray`
-        N edges of the Voronoi cell around (0,0,0) point. Each elements contains two
+        N edges of the Voronoi cell around (0,0,0) point. Each element contains two
         indices of the ``vertices`` forming an edge. Edge ``i`` is between points
         ``vertices[edges[i][0]]`` and ``vertices[edges[i][1]]``.
     """
@@ -160,7 +162,7 @@ def get_wigner_seitz_cell(cell):
         M vertices of the |Wigner-Seitz|_ cell. Each element is a vector
         :math:`v = (v_x, v_y, v_z)` in absolute (Cartesian) coordinates.
     edges : (N, 2) :numpy:`ndarray`
-        N edges of the |Wigner-Seitz|_ cell. Each elements contains two indices of the
+        N edges of the |Wigner-Seitz|_ cell. Each element contains two indices of the
         ``vertices`` forming an edge. Edge ``i`` is between points
         ``vertices[edges[i][0]]`` and ``vertices[edges[i][1]]``.
     """
@@ -170,7 +172,7 @@ def get_wigner_seitz_cell(cell):
 
 def get_brillouin_zone(cell):
     r"""
-    Computes Brillouin_zone.
+    Computes the Brillouin zone.
 
     It assumes that given ``cell`` contains one lattice point.
 
@@ -182,10 +184,10 @@ def get_brillouin_zone(cell):
     Returns
     -------
     vertices : (M, 3) :numpy:`ndarray`
-        M vertices of the Brillouin_zone. Each element is a vector
+        M vertices of the Brillouin zone. Each element is a vector
         :math:`v = (v_x, v_y, v_z)` in absolute (Cartesian) coordinates.
     edges : (N, 2) :numpy:`ndarray`
-        N edges of the Brillouin_zone. Each elements contains two indices of the
+        N edges of the Brillouin zone. Each element contains two indices of the
         ``vertices`` forming an edge. Edge ``i`` is between points
         ``vertices[edges[i][0]]`` and ``vertices[edges[i][1]]``.
     """

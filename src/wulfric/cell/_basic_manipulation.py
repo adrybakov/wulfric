@@ -82,11 +82,11 @@ def from_params(a=1.0, b=1.0, c=1.0, alpha=90.0, beta=90.0, gamma=90.0):
     The spatial orientation of the cell is decided as
 
     *   Lattice vector :math:`\boldsymbol{a_1}` has the length ``a`` and oriented along
-        :math:`{\cal x}` axis.
+        the :math:`{\cal x}` axis.
     *   Lattice vector :math:`\boldsymbol{a_2}` has the length ``b``, is placed in
-        :math:`{\cal xy}` plane and form an angle ``gamma`` with vector
-        :math:`\boldsymbol{a_1}`, positive in a mathematical sense.
-    *   Lattice vector :math:`\boldsymbol{a_3}` has the length ``c`` and form an angle
+        the :math:`{\cal xy}` plane and forms an angle ``gamma`` with vector
+        :math:`\boldsymbol{a_1}`, positive in a mathematical sense (measured counterclockwise).
+    *   Lattice vector :math:`\boldsymbol{a_3}` has the length ``c`` and forms an angle
         ``alpha`` with the vector :math:`\boldsymbol{a_2}` and an angle ``beta`` with
         the vector :math:`\boldsymbol{a_1}`.
 
@@ -274,22 +274,22 @@ def get_scalar_products(cell):
 
 def get_transformation_matrix(original_cell, transformed_cell):
     r"""
-    Computed transformation matrix *from* original cell *into* transformed cell.
+    Computes transformation matrix *from* the original cell *into* the transformed cell.
 
     Parameters
-    ==========
+    ----------
     original_cell : (3, 3) |array-like|_
         Matrix of the original cell, rows are interpreted as vectors.
     transformed_cell : (3, 3) |array-like|_
         Matrix of the transformed cell, rows are interpreted as vectors.
 
     Returns
-    =======
+    -------
     transformation_matrix : (3, 3) :numpy:`ndarray`
         Transformation matrix.
 
     See Also
-    ========
+    --------
     :ref:`user-guide_conventions_basic-notation_transformation`
     """
 

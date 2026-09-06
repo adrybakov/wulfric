@@ -101,7 +101,7 @@ def SC_CUB(a: float):
 
 def SC_FCC(a: float):
     r"""
-    Constructs primitive face-centred cubic cell as defined in [1]_.
+    Constructs primitive face centered cubic cell as defined in [1]_.
 
     .. math::
 
@@ -152,7 +152,7 @@ def SC_FCC(a: float):
 
 def SC_BCC(a: float):
     r"""
-    Constructs primitive body-centred cubic cell as defined in [1]_.
+    Constructs primitive body centered cubic cell as defined in [1]_.
 
     .. math::
 
@@ -258,7 +258,7 @@ def SC_TET(a: float, c: float):
 
 def SC_BCT(a: float, c: float):
     r"""
-    Constructs primitive body-centred tetragonal cell as defined in [1]_.
+    Constructs primitive body centered tetragonal cell as defined in [1]_.
 
     .. math::
 
@@ -371,7 +371,7 @@ def SC_ORC(a: float, b: float, c: float):
 
 def SC_ORCF(a: float, b: float, c: float):
     r"""
-    Constructs primitive face-centred orthorhombic cell as defined in [1]_.
+    Constructs primitive face centered orthorhombic cell as defined in [1]_.
 
     .. math::
 
@@ -429,7 +429,7 @@ def SC_ORCF(a: float, b: float, c: float):
 
 def SC_ORCI(a: float, b: float, c: float):
     r"""
-    Constructs primitive body-centred orthorhombic cell as defined in [1]_.
+    Constructs primitive body centered orthorhombic cell as defined in [1]_.
 
     .. math::
 
@@ -489,7 +489,7 @@ def SC_ORCI(a: float, b: float, c: float):
 
 def SC_ORCC(a: float, b: float, c: float):
     r"""
-    Constructs primitive base-centred orthorhombic cell as defined in [1]_.
+    Constructs primitive base centered orthorhombic cell as defined in [1]_.
 
     .. math::
 
@@ -689,10 +689,10 @@ def SC_MCL(a: float, b: float, c: float, alpha: float):
     a : float
         Length of the first lattice vector of the conventional cell.
     b : float
-        Length of the second of the two remaining lattice vectors of the conventional
+        Length of the second lattice vector of the conventional
         cell.
     c : float
-        Length of the third of the two remaining lattice vectors of the conventional cell.
+        Length of the third lattice vector of the conventional cell.
     alpha : float
         Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell in
         degrees.
@@ -734,7 +734,7 @@ def SC_MCL(a: float, b: float, c: float, alpha: float):
 
 def SC_MCLC(a: float, b: float, c: float, alpha: float):
     r"""
-    Constructs primitive base-centred monoclinic cell as defined in [1]_.
+    Constructs primitive base centered monoclinic cell as defined in [1]_.
 
     .. math::
 
@@ -752,10 +752,10 @@ def SC_MCLC(a: float, b: float, c: float, alpha: float):
     a : float
         Length of the first lattice vector of the conventional cell.
     b : float
-        Length of the second of the two remaining lattice vectors of the conventional
+        Length of the second lattice vector of the conventional
         cell.
     c : float
-        Length of the third of the two remaining lattice vectors of the conventional
+        Length of the third lattice vector of the conventional
         cell.
     alpha : float
         Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell in
@@ -882,7 +882,7 @@ def SC_TRI(
 
 def sc_get_example(lattice_variation: str = None):
     r"""
-    Examples of the Bravais lattices as defined in the paper by Setyawan and Curtarolo [1]_.
+    Returns examples of the Bravais lattices as defined in the paper by Setyawan and Curtarolo [1]_.
 
     .. versionchanged:: 0.6.3 renamed from ``sc_get_example_cell``.
 
@@ -942,8 +942,8 @@ def sc_get_example(lattice_variation: str = None):
         or lattice_variation.lower() not in correct_inputs
     ):
         message = (
-            f'There is no example of "{lattice_variation}" Bravais lattice. '
-            "Available examples are:\n"
+            f'There is no example of the "{lattice_variation}" Bravais lattice. '
+            "Available examples are\n"
         )
         for name in correct_inputs:
             message += f"  * {name}\n"

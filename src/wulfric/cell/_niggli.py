@@ -265,7 +265,6 @@ def get_niggli(cell, eps_relative=1e-5, implementation="spglib", max_iterations=
     r"""
     Computes Niggli-reduced cell.
 
-
     Parameters
     ----------
     cell : (3, 3) |array-like|_
@@ -273,25 +272,25 @@ def get_niggli(cell, eps_relative=1e-5, implementation="spglib", max_iterations=
     eps_relative : float, default :math:`10^{-5}`
         Relative epsilon as defined in [2]_.
     implementation : str, default "spglib"
-        Which implementation of the niggli reduction to use. Supported:
+        Which implementation of the Niggli reduction to use. Supported values are
 
         *   "spglib" (default)
 
             Implementation of |spglib|_.
         *   "wulfric"
 
-            Implementation of wulfric of the algorithm from [2]_.
+            Wulfric's implementation of the algorithm from [2]_.
             Details of the implementation are written in :ref:`library_niggli`.
 
-        Ideally, both implementation should give the same result. If you find any
-        differences, please consider contacting developers with you example (|wulfric-support|_).
+        Ideally, both implementations should give the same result. If you find any
+        differences, please consider contacting the developers with your example (|wulfric-support|_).
     max_iterations : int, default 100000
         Maximum number of iterations. Ignored if ``implementation="spglib"``.
 
     Returns
     -------
     niggli_cell : (3, 3) :numpy:`ndarray`
-        Matrix of a niggli reduced cell, rows are interpreted as vectors.
+        Matrix of a Niggli reduced cell, rows are interpreted as vectors.
 
         .. code-block:: python
 
@@ -300,7 +299,7 @@ def get_niggli(cell, eps_relative=1e-5, implementation="spglib", max_iterations=
     Raises
     ------
     wulfric.exceptions.NiggliReductionFailed
-        If the niggli cell is not found in ``max_iterations`` iterations.
+        If the Niggli cell is not found in ``max_iterations`` iterations.
     ValueError
         If the volume of ``cell`` is zero.
 
@@ -366,7 +365,7 @@ def get_niggli(cell, eps_relative=1e-5, implementation="spglib", max_iterations=
 
     volume = get_volume(cell)
     if volume == 0:
-        raise ValueError("Cell volume is zero")
+        raise ValueError("Cell volume is zero.")
 
     eps = eps_relative * volume ** (1 / 3.0)
 
