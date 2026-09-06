@@ -18,7 +18,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ================================ END LICENSE =================================
-__version__ = "0.7.2-dev"
+__version__ = "0.7.2"
 __doclink__ = "wulfric.org"
 __release_date__ = "6 September 2026"
 

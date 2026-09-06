@@ -163,6 +163,7 @@ If it is unable to deduce the atom species from its name, then it issues a
     'X'
     >>> # You can raise an error instead of the warning
     >>> wulfric.crystal.get_atom_species("124", raise_on_fail=True)
+    Traceback (most recent call last):
     ...
     wulfric._exceptions.FailedToDeduceAtomSpecies: Tried to deduce name from '124'. Failed.
 
