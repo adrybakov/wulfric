@@ -145,7 +145,7 @@ Or any k-resolved data
 kp = kp_HPKOT
 
 # Predefined high-symmetry points from symmetry
-for name in kp.names:
+for name in kp.hs_names:
     label = kp.hs_labels[name]
     r1, r2, r3 = kp.hs_coordinates[name]
     print(f" {name:<5} {label:<5} at [{r1:>5.2f}, {r2:>5.2f}, {r3:>5.2f}]")
@@ -208,7 +208,7 @@ ax.vlines(
 )
 
 # Automatic correct xlimits
-ax.set_xlim(kp.ticks(relative=False)[0], kp.ticks(relative=False)[-1])
+ax.set_xlim(*kp.xlims(relative=False))
 
 fig.savefig("plot.png", dpi=400, bbox_inches="tight")
 plt.close()
