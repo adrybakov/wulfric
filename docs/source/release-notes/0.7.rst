@@ -4,6 +4,14 @@
 Version 0.7
 ***********
 
+
+0.7.3
+=====
+
+**Date**: 6 September 2026
+
+This release is equivalent to the 0.7.2. It fixes the metadata for PyPI main page.
+
 0.7.2
 =====
 

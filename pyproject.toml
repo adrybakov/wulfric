@@ -11,7 +11,7 @@ description = "Cell, Atoms, K-path."
 dependencies = ["numpy>=2", "spglib>=0.1.15"]
 authors = [{ name = "Andrey Rybakov", email = "rybakov.ad@icloud.com" }]
 requires-python = ">=3.10"
-readme = "README.rst"
+readme = "README.md"
 classifiers = [
     'Development Status :: 4 - Beta',
     'Intended Audience :: Science/Research',
