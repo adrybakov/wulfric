@@ -9,11 +9,10 @@ on:
   push:
     tags-ignore:
       - '*'
-    branches:
-      - 'main'
+    branches: [ main, dev ]
 
   pull_request:
-    branches: [main]
+    branches: [ main, dev ]
 
 jobs:
 
