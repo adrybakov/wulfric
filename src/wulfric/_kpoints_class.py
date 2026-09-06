@@ -59,7 +59,7 @@ class Kpoints:
         K-path. Use elements of ``names`` to specify the path. If no names given, then use
         "K1-K2-...-KN", where ``N = len(coordinates)``.
     n : int
-        Number of intermediate points between each pair of the high-symmetry points 
+        Number of intermediate points between each pair of the high-symmetry points
         (high-symmetry points excluded).
 
     Attributes
@@ -440,11 +440,11 @@ class Kpoints:
                 )
 
         return np.array(ticks)
-    
+
     def xlims(self, relative=False):
         r"""
         Limits of the x axis for the band/dispersion plots.
-        
+
         .. versionadded:: 0.7.2
 
         Parameters
@@ -461,7 +461,7 @@ class Kpoints:
 
         Notes
         -----
-        Equivalent to 
+        Equivalent to
 
         .. code-block:: python
 
@@ -470,15 +470,12 @@ class Kpoints:
         Can be passed to the matplotlib as
 
         .. code-block:: python
-            
+
             ax.set_xlim(*kp.xlims())
         """
 
-
         ticks = self.ticks(relative=relative)
         return float(ticks[0]), float(ticks[-1])
-
-
 
     ################################################################################
     #                   Points of the path with intermediate ones                  #
@@ -524,7 +521,7 @@ class Kpoints:
     # because it has to treat "|" as a special case.
     def flat_points(self, relative=False):
         r"""
-        Flatten coordinates of all points with n points between each pair of the 
+        Flatten coordinates of all points with n points between each pair of the
         high-symmetry points (high-symmetry points excluded).
 
         Used to plot band structure, dispersion, etc.

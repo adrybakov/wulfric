@@ -24,7 +24,7 @@ Plotting a cell
 ***************
 
 This page explains how to use :py:func:`wulfric.PlotlyEngine.plot_cell`.  We
-use an FCC cell as an example.  """
+use an FCC cell as an example."""
 
 import wulfric
 

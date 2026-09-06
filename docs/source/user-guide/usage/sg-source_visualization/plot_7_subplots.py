@@ -57,7 +57,7 @@ spglib_data = wulfric.get_spglib_data(cell, atoms)
 # %% For this example we will plot a figure with two subplots - original cell and atoms on
 # one and Brillouin zone and k-path on another.
 #
-# The first difference from the usual plot is at the moment of engine creation. 
+# The first difference from the usual plot is at the moment of engine creation.
 # One needs to specify the grid of the subplots
 
 pe = wulfric.PlotlyEngine(_sphinx_gallery_fix=True, rows=1, cols=2)

@@ -49,18 +49,18 @@ cell = [
 
 # Create atoms
 atoms = {
-    "names" : ["Cl1", "Cl2", "Cl3", "Cl4", "Na1", "Na2", "Na3", "Na4"],
-    "positions" : [
-        [0.0, 0.0, 0.0], # Cl1
-        [0.5, 0.5, 0.0], # Cl2
-        [0.5, 0.0, 0.5], # Cl3
-        [0.0, 0.5, 0.5], # Cl4
-        [0.5, 0.5, 0.5], # Na1
-        [0.5, 0.0, 0.0], # Na2
-        [0.0, 0.5, 0.0], # Na3
-        [0.0, 0.0, 0.5], # Na4
+    "names": ["Cl1", "Cl2", "Cl3", "Cl4", "Na1", "Na2", "Na3", "Na4"],
+    "positions": [
+        [0.0, 0.0, 0.0],  # Cl1
+        [0.5, 0.5, 0.0],  # Cl2
+        [0.5, 0.0, 0.5],  # Cl3
+        [0.0, 0.5, 0.5],  # Cl4
+        [0.5, 0.5, 0.5],  # Na1
+        [0.5, 0.0, 0.0],  # Na2
+        [0.0, 0.5, 0.0],  # Na3
+        [0.0, 0.0, 0.5],  # Na4
     ],
-    "spglib_types" : [1, 1, 1, 1, 2, 2, 2, 2],
+    "spglib_types": [1, 1, 1, 1, 2, 2, 2, 2],
 }
 
 # (Optional) Call spglib once, to prevent other functions calling it every time
@@ -74,7 +74,7 @@ spglib_data = wulfric.get_spglib_data(cell, atoms)
 prim_cell, prim_atoms = wulfric.crystal.get_primitive(
     cell=cell,
     atoms=atoms,
-    spglib_data=spglib_data, # Optional
+    spglib_data=spglib_data,  # Optional
 )
 
 print(prim_cell)
@@ -95,7 +95,7 @@ print(prim_atoms["names"])
 conv_cell, conv_atoms = wulfric.crystal.get_conventional(
     cell=cell,
     atoms=atoms,
-    spglib_data=spglib_data, # Optional
+    spglib_data=spglib_data,  # Optional
 )
 
 print(conv_cell)
@@ -107,7 +107,7 @@ print(conv_atoms["names"])
 [[5.64 0.   0.  ]
  [0.   5.64 0.  ]
  [0.   0.   5.64]]
-['Cl4', 'Na4', 'Cl4, 'Na4', 'Cl4', 'Na4', 'Cl4, 'Na4']  
+['Cl4', 'Na4', 'Cl4, 'Na4', 'Cl4', 'Na4', 'Cl4, 'Na4']
 ```
 
 ### K-points and K-path choice
@@ -117,14 +117,14 @@ kp_SC = wulfric.Kpoints.from_crystal(
     cell=cell,
     atoms=atoms,
     convention="SC",
-    spglib_data=spglib_data, # Optional
+    spglib_data=spglib_data,  # Optional
 )
 
 kp_HPKOT = wulfric.Kpoints.from_crystal(
     cell=cell,
     atoms=atoms,
     convention="HPKOT",
-    spglib_data=spglib_data, # Optional
+    spglib_data=spglib_data,  # Optional
 )
 
 print(f"K-path (SC): {kp_SC.path}")
@@ -167,7 +167,7 @@ for point in kp.points(relative=False):
 # Or all at once
 bands = compute_all_points(
     # Your data/routine
-    kpoints=kp.points(relative=False) 
+    kpoints=kp.points(relative=False)
 )
 ```
 
@@ -192,7 +192,7 @@ fig, ax = plt.subplots()
 # Assume that bands[i] is a single band
 for band in bands:
     # Automatically convert list of k-points into a flat index
-    plot(kp.flat_points(relative=False), band) 
+    plot(kp.flat_points(relative=False), band)
 
 # Automatic xlabels at high-symmetry points
 ax.set_xticks(kp.ticks(relative=False), kp.labels)

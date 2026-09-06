@@ -299,7 +299,7 @@ the original cell :math:`\boldsymbol{A}` *to* the transformed cell
 
 
 .. note::
-   
+
    We deliberately define action of the transformation with the transposition
    sign.  When its action is defined in that way matrix :math:`\boldsymbol{P}`
    is the same as the transformation matrix :math:`\boldsymbol{P}` in

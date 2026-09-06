@@ -34,11 +34,11 @@ changed.  Therefore, version 0.3 introduces some breaking changes:
 
 * Standardization is not silent anymore
 
-  - No automatic standardization is performed when the :py:class:`.Lattice` 
+  - No automatic standardization is performed when the :py:class:`.Lattice`
     or :py:class:`.Crystal` is created.
-  - If method or property requires standardization, it will raise a ``ValueError`` 
+  - If method or property requires standardization, it will raise a ``ValueError``
     if the object is not standardized.
-  - Standardization can be called explicitly via :py:meth:`.Lattice.standardize` 
+  - Standardization can be called explicitly via :py:meth:`.Lattice.standardize`
     and :py:meth:`.Crystal.standardize`.
 
 * Add :py:meth:`.Crystal.copy()`, :py:meth:`.Lattice.copy()`,
