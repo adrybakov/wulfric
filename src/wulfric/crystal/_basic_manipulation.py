@@ -29,7 +29,7 @@ def shift_atoms(
 ) -> None:
     R"""
     Shifts all atoms with the same vector in a way
-    that the ``gravity_point`` is located in the middle between minimum and maximum
+    that the ``gravity_point`` is located in the midway between minimum and maximum
     relative coordinates of the atoms, individually for each lattice vector.
 
     I.e. if there is one atom in the cell, then it is placed in the center of the cell
@@ -44,7 +44,7 @@ def shift_atoms(
 
         *   "positions" : (N, 3) |array-like|_
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
+            words, relative coordinates of atoms.
 
     gravity_point : (3,) |array-like|_, default (0.5, 0.5, 0.5)
         Relative coordinates of the gravity point.
@@ -81,7 +81,7 @@ def shift_atoms(
 
     if not gp_is_relative:
         if cell is None:
-            raise ValueError("cell is required if gp_is_relative False")
+            raise ValueError("cell is required if gp_is_relative=False")
 
         # Transform from Cartesian coordinates to relative coordinates
         gravity_point = gravity_point @ np.linalg.inv(cell)
@@ -98,7 +98,7 @@ def shift_atoms(
 def cure_negative(atoms) -> None:
     R"""
     Shifts all atoms with the same vector in a way
-    that all relative coordinates becomes non-negative.
+    that all relative coordinates become non-negative.
 
     Modifies given ``atoms`` dictionary.
 
@@ -109,7 +109,7 @@ def cure_negative(atoms) -> None:
 
         *   "positions" : (N, 3) |array-like|_
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
+            words, relative coordinates of atoms.
 
     Examples
     --------
@@ -141,7 +141,7 @@ def ensure_000(atoms) -> None:
     r"""
     Ensures that all atoms are within (0,0,0) unit cell.
 
-    In other word ensures that all relative coordinates of all atoms are :math:`\in [0,1]`.
+    In other words, ensures that all relative coordinates of all atoms are :math:`\in [0,1]`.
 
     Parameters
     ----------
@@ -150,7 +150,7 @@ def ensure_000(atoms) -> None:
 
         *   "positions" : (N, 3) |array-like|_
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
+            words, relative coordinates of atoms.
 
     Examples
     --------
@@ -201,7 +201,7 @@ def get_vector(
 
         *   "positions" : (N, 3) |array-like|_
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
+            words, relative coordinates of atoms.
 
     atom1 : int
         Index of the first atom in ``atoms["positions"]``.
@@ -260,7 +260,7 @@ def get_distance(cell, atoms, atom1, atom2, R=(0, 0, 0)) -> float:
 
         *   "positions" : (N, 3) |array-like|_
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
+            words, relative coordinates of atoms.
 
     atom1 : int
         Index of the first atom in ``atoms["positions"]``.

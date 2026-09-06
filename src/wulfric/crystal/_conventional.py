@@ -33,7 +33,7 @@ __all__ = ["get_conventional"]
 
 def _hpkot_get_conventional_a(spglib_std_lattice):
     r"""
-    Special case of hkpot convention and aP lattice
+    Special case of HPKOT convention and aP lattice
 
     Parameters
     ==========
@@ -201,7 +201,7 @@ def _sc_get_conventional_oPFI(spglib_std_lattice):
         )
     else:
         raise PotentialBugError(
-            '(convention="SC"): oP, oF, oI lattices. Length of the lattice vectors fall outside of six cases.'
+            '(convention="SC"): oP, oF, oI lattices. Length of the lattice vectors falls outside of six cases.'
         )
 
     return matrix.T @ spglib_std_lattice
@@ -243,7 +243,7 @@ def _sc_get_conventional_oC(spglib_std_lattice):
         )
     else:
         raise PotentialBugError(
-            '(convention="SC"): oC lattices. Length of the lattice vectors fall outside of two cases.'
+            '(convention="SC"): oC lattices. Length of the lattice vectors falls outside of two cases.'
         )
 
     return matrix.T @ spglib_std_lattice
@@ -620,7 +620,7 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
     Return conventional cell and atoms associated with the given ``cell`` and ``atoms``.
 
     Parameters
-    ==========
+    ----------
     cell : (3, 3) |array-like|_
         Matrix of a cell, rows are interpreted as vectors.
     atoms : dict
@@ -629,7 +629,7 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
         *   "positions" : (N, 3) |array-like|_
 
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
+            words, relative coordinates of atoms.
         *   "names" : (N, ) list of str, optional
 
             See Notes
@@ -656,7 +656,7 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
     spglib_data : :py:class:`.SpglibData`, optional
         If you need more control on the parameters passed to the spglib, then
         you can get ``spglib_data`` manually and pass it to this function.
-        Use wulfric's interface to |spglib|_ as
+        Use Wulfric's interface to |spglib|_ as
 
         .. code-block:: python
 
@@ -666,7 +666,7 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
         function.
 
     Returns
-    =======
+    -------
     conventional_cell : (3, 3) :numpy:`ndarray`
         Conventional cell.
     conventional_atoms : dict
@@ -678,15 +678,15 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
         ``atoms``.
 
     See Also
-    ========
+    --------
     :ref:`user-guide_conventions_which-cell`
     wulfric.crystal.get_primitive
     wulfric.get_spglib_data
 
 
     Notes
-    =====
-    |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
+    -----
+    |spglib|_ uses ``types`` to distinguish the atoms. To see how Wulfric deduces the
     ``types`` for given atoms see :py:func:`wulfric.get_spglib_types`.
 
     If two atoms ``i`` and ``j`` have the same spglib_type (i.e.
@@ -694,12 +694,12 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
     property that is stored in ``atoms[key]`` (i.e ``atoms[key][i] != atoms[key][j]``),
     then those two atoms are considered equal. In the returned ``conventional_atoms``
     the value of the ``conventional_atoms[key]`` are populated based on the *last* found
-    atom in ``atoms`` with each for spglib_type. This rule do not apply to the "positions"
+    atom in ``atoms`` for each spglib_type. This rule does not apply to the "positions"
     key.
 
 
     References
-    ==========
+    ----------
     .. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
            Band structure diagram paths based on crystallography.
            Computational Materials Science, 128, pp.140-184.
@@ -717,10 +717,10 @@ def get_conventional(cell, atoms, convention="HPKOT", spglib_data=None):
     # Call spglib
     if spglib_data is None:
         spglib_data = get_spglib_data(cell=cell, atoms=atoms)
-    # Or check that spglib_data were *most likely* produced via wulfric's interface
+    # Or check that spglib_data were *most likely* produced via Wulfric's interface
     elif not isinstance(spglib_data, SpglibData):
         raise TypeError(
-            f"Are you sure that spglib_data were produced via wulfric's interface? Expected SpglibData, got {type(spglib_data)}."
+            f"Are you sure that spglib_data were produced via Wulfric's interface? Expected SpglibData, got {type(spglib_data)}."
         )
     # Validate that user-provided spglib_data match user-provided structure
     else:

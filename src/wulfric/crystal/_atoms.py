@@ -50,7 +50,7 @@ def get_atom_species(name: str, raise_on_fail=False) -> str:
 
     Warnings
     --------
-    If ``raise_on_fail = True`` and automatic species deduction fails, then
+    If ``raise_on_fail = False`` and automatic species deduction fails, then
     ``RuntimeWarning`` is issued, and atom species is set to "X".
 
     See Also
@@ -110,7 +110,7 @@ def get_atom_species(name: str, raise_on_fail=False) -> str:
             import warnings
 
             warnings.warn(
-                f"Atom species deduction failed for '{name}'. Set species to 'X'",
+                f"Atom species deduction failed for '{name}'. Set species to 'X'.",
                 RuntimeWarning,
             )
 
@@ -119,7 +119,7 @@ def get_atom_species(name: str, raise_on_fail=False) -> str:
 
 def get_atoms_species(atoms, raise_on_fail=False) -> str:
     r"""
-    Attempts to identify atoms species based on their names (i.e. Cr1 -> Cr, ...).
+    Attempts to identify atoms' species based on their names (i.e. Cr1 -> Cr, ...).
 
     If no species is identified, then return "X".
 
@@ -134,7 +134,7 @@ def get_atoms_species(atoms, raise_on_fail=False) -> str:
 
     Returns
     -------
-    species : str
+    species : list of str
         Species of the atom.
 
     Raises
@@ -197,7 +197,7 @@ def get_unique_names(atoms, strategy: str = "all") -> list:
 
         * "all"
 
-          Add an index to the end of every atom, starting from 1.
+          Add an index to the end of every atom name, starting from 1.
         * "repeated-only"
 
           Add an index only to the repeated names, index starts with 1, independently for

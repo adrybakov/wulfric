@@ -41,7 +41,7 @@ def _get_unique(
     Remove equivalent atoms from the primitive cell if any.
 
     Parameters
-    ==========
+    ----------
     prim_cell : (3, 3) :numpy:`ndarray`
         Matrix of the cell, Rows are interpreted as vectors. Lattice vectors of the
         primitive cell.
@@ -50,12 +50,12 @@ def _get_unique(
     non_unique_types : (N, ) list of int
         Types of atoms used to distinguish between them.
     repetition_number : int
-        Correct amount of repetitions of each atom type in the conventional cell.
+        Correct number of repetitions of each atom type in the conventional cell.
     distance_tolerance : float, default :math:`10^{-5}`
         Tolerance parameter for comparing two linear variables.
 
     Returns
-    =======
+    -------
     prim_positions : (M, 3) : :numpy:`ndarray`
         Unique atoms of the primitive cell. ``M = N / repetition_number``.
     prim_types : (M, ) list of int
@@ -88,10 +88,10 @@ def _get_unique(
         distances, np.zeros(distances.shape), atol=distance_tolerance
     )
 
-    # Count amount of equivalent atoms
+    # Count number of equivalent atoms
     n_equiv = np.sum(same_atoms, axis=1)
 
-    # Check that each atom has correct amount of twins
+    # Check that each atom has correct number of twins
     if not (n_equiv == repetition_number * np.ones(n_equiv.shape, dtype=int)).all():
         abs_pos = non_unique_positions @ prim_cell
         raise ValueError(
@@ -137,7 +137,8 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
     Return primitive cell and atoms associated with the given ``cell`` and ``atoms``.
 
     Parameters
-    ==========
+    ----------
+    rd
     cell : (3, 3) |array-like|_
         Matrix of a cell, rows are interpreted as vectors.
     atoms : dict
@@ -146,7 +147,7 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
         *   "positions" : (N, 3) |array-like|_
 
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
+            words, relative coordinates of atoms.
         *   "names" : (N, ) list of str, optional
 
             See Notes
@@ -173,7 +174,7 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
     spglib_data : :py:class:`.SpglibData`, optional
         If you need more control on the parameters passed to the spglib, then
         you can get ``spglib_data`` manually and pass it to this function.
-        Use wulfric's interface to |spglib|_ as
+        Use Wulfric's interface to |spglib|_ as
 
         .. code-block:: python
 
@@ -183,11 +184,11 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
         function.
 
     Returns
-    =======
+    -------
     primitive_cell : (3, 3) :numpy:`ndarray`
-        Conventional cell.
+        Primitive cell.
     primitive_atoms : dict
-        Dictionary of atoms of the conventional cell. Has all the same keys as the
+        Dictionary of atoms of the primitive cell. Has all the same keys as the
         original ``atoms``. The values of each key are updated in such a way that
         ``primitive_cell`` with ``primitive_atoms`` describe the same crystal (and
         in the same spatial orientation) as ``cell`` with ``atoms``. It has all keys as
@@ -195,28 +196,28 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
         ``atoms``.
 
     See Also
-    ========
+    --------
     :ref:`user-guide_conventions_which-cell`
     wulfric.crystal.get_conventional
     wulfric.get_spglib_data
 
 
     Notes
-    =====
-    |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
+    -----
+    |spglib|_ uses ``types`` to distinguish the atoms. To see how Wulfric deduces the
     ``types`` for given atoms see :py:func:`wulfric.get_spglib_types`.
 
     If two atoms ``i`` and ``j`` have the same spglib_type (i.e.
     ``atoms["spglib_types"][i] == atoms["spglib_types"][j]``), but they have different
     property that is stored in ``atoms[key]`` (i.e ``atoms[key][i] != atoms[key][j]``),
     then those two atoms are considered equal. In the returned ``primitive_atoms``
-    the value of the ``primitive_atoms[key]`` are populated base on the *last* found
-    atom in ``atoms`` with each for spglib_type. This rule do not apply to the "positions"
+    the value of the ``primitive_atoms[key]`` are populated based on the *last* found
+    atom in ``atoms`` for each spglib_type. This rule does not apply to the "positions"
     key.
 
 
     References
-    ==========
+    ----------
     .. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
            Band structure diagram paths based on crystallography.
            Computational Materials Science, 128, pp.140-184.
@@ -234,10 +235,10 @@ def get_primitive(cell, atoms, convention="HPKOT", spglib_data=None):
     # Call spglib
     if spglib_data is None:
         spglib_data = get_spglib_data(cell=cell, atoms=atoms)
-    # Or check that spglib_data were *most likely* produced via wulfric's interface
+    # Or check that spglib_data were *most likely* produced via Wulfric's interface
     elif not isinstance(spglib_data, SpglibData):
         raise TypeError(
-            f"Are you sure that spglib_data were produced via wulfric's interface? Expected SpglibData, got {type(spglib_data)}."
+            f"Are you sure that spglib_data were produced via Wulfric's interface? Expected SpglibData, got {type(spglib_data)}."
         )
     # Validate that user-provided spglib_data match user-provided structure
     else:

@@ -64,7 +64,7 @@ def _BCT_variation(conv_a: float, conv_c: float):
     elif conv_a < conv_c:
         return "BCT2"
     else:
-        raise ValueError('(convention="SC"): BCT variation). a == c')
+        raise ValueError('(convention="SC"): BCT variation. a == c')
 
 
 def _ORCF_variation(
@@ -87,7 +87,7 @@ def _ORCF_variation(
         Length of the :math:`a_2` vector of the conventional cell.
     conv_c : float
         Length of the :math:`a_3` vector of the conventional cell.
-    distance_tolerance : float, default :math:`10^{-5}`
+    distance_tolerance : float, default :math:`10^{-8}`
         Tolerance parameter for comparing two linear variables.
 
     Returns
@@ -184,9 +184,9 @@ def _MCLC_variation(
     conv_alpha : float
         Angle between vectors :math:`a_2` and :math:`a_3` of the conventional cell in
         degrees.
-    k_gamma : float
+    prim_k_gamma : float
         Angle between reciprocal vectors :math:`b_1` and :math:`b_2`. In degrees.
-    distance_tolerance : float, default :math:`10^{-5}`
+    distance_tolerance : float, default :math:`10^{-8}`
         Tolerance parameter for comparing two linear variables.
     angle_tolerance : float, default :math:`10^{-4}`
         Tolerance parameter for comparing two angles, given in degrees.
@@ -256,7 +256,7 @@ def _TRI_variation(k_alpha: float, k_beta: float, k_gamma: float, angle_toleranc
     -------
     variation : str
         Variation of the lattice.
-        Either "TRI1a", "TRI1b", "TRI2a" or "TRI2b".
+        Either "TRI1a", "TRI1b", "TRI2a", "TRI2b" or "TRI".
 
     Raises
     ------
@@ -303,7 +303,7 @@ def sc_get_variation(cell, atoms, spglib_data=None):
         *   "positions" : (N, 3) |array-like|_
 
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
+            words, relative coordinates of atoms.
         *   "names" : (N, ) list of str, optional
 
             See Notes
@@ -322,7 +322,7 @@ def sc_get_variation(cell, atoms, spglib_data=None):
     spglib_data : :py:class:`.SpglibData`, optional
         If you need more control on the parameters passed to the spglib, then
         you can get ``spglib_data`` manually and pass it to this function.
-        Use wulfric's interface to |spglib|_ as
+        Use Wulfric's interface to |spglib|_ as
 
         .. code-block:: python
 
@@ -337,8 +337,8 @@ def sc_get_variation(cell, atoms, spglib_data=None):
         Variation of the lattice defined by the ``cell``.
 
     Notes
-    =====
-    |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
+    -----
+    |spglib|_ uses ``types`` to distinguish the atoms. To see how Wulfric deduces the
     ``types`` for given atoms see :py:func:`wulfric.get_spglib_types`.
 
     References
@@ -375,10 +375,10 @@ def sc_get_variation(cell, atoms, spglib_data=None):
     # Call spglib
     if spglib_data is None:
         spglib_data = get_spglib_data(cell=cell, atoms=atoms)
-    # Or check that spglib_data were *most likely* produced via wulfric's interface
+    # Or check that spglib_data were *most likely* produced via Wulfric's interface
     elif not isinstance(spglib_data, SpglibData):
         raise TypeError(
-            f"Are you sure that spglib_data were produced via wulfric's interface? Expected SpglibData, got {type(spglib_data)}."
+            f"Are you sure that spglib_data were produced via Wulfric's interface? Expected SpglibData, got {type(spglib_data)}."
         )
     # Validate that user-provided spglib_data match user-provided structure
     else:

@@ -27,7 +27,7 @@ __all__ = ["hpkot_get_example"]
 
 def hpkot_get_example(extended_bl_symbol, with_inversion=False):
     r"""
-    Returns an example of the crystal structure for each of the
+    Returns an example of the crystal structure for the
     given extended Bravais lattice symbol as defined in [1]_.
 
     .. versionadded:: 0.6.3
@@ -39,7 +39,7 @@ def hpkot_get_example(extended_bl_symbol, with_inversion=False):
     symbols.
 
     .. warning::
-        "oF2", "oI2", "oA1", "oA2" with ``with_inversion=True`` are not supported fo now.
+        "oF2", "oI2", "oA1", "oA2" with ``with_inversion=True`` are currently not supported.
 
 
     Parameters
@@ -71,7 +71,7 @@ def hpkot_get_example(extended_bl_symbol, with_inversion=False):
 
     if extended_bl_symbol in ["oF2", "oI2", "oA1", "oA2"] and with_inversion:
         raise ValueError(
-            '"oF2", "oI2", "oA1", "oA2" with with_inversion=True currently are not supported.'
+            '"oF2", "oI2", "oA1", "oA2" with with_inversion=True are currently not supported.'
         )
 
     supported_symbols = list(HPKOT_EXTENDED_BL_SYMBOLS)

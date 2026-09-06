@@ -34,7 +34,7 @@ __all__ = ["hpkot_get_extended_bl_symbol"]
 
 def hpkot_get_extended_bl_symbol(cell, atoms, spglib_data=None):
     r"""
-    Returns extended bravais lattice symbol as defined in the paper by Hinuma, Pizzi,
+    Returns the extended Bravais lattice symbol as defined in the paper by Hinuma, Pizzi,
     Kumagai, Oba, and Tanaka [1]_.
 
     .. versionadded:: 0.6.3
@@ -49,7 +49,7 @@ def hpkot_get_extended_bl_symbol(cell, atoms, spglib_data=None):
         *   "positions" : (N, 3) |array-like|_
 
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
+            words, relative coordinates of atoms.
         *   "names" : (N, ) list of str, optional
 
             See Notes
@@ -68,7 +68,7 @@ def hpkot_get_extended_bl_symbol(cell, atoms, spglib_data=None):
     spglib_data : :py:class:`.SpglibData`, optional
         If you need more control on the parameters passed to the spglib, then
         you can get ``spglib_data`` manually and pass it to this function.
-        Use wulfric's interface to |spglib|_ as
+        Use Wulfric's interface to |spglib|_ as
 
         .. code-block:: python
 
@@ -84,7 +84,7 @@ def hpkot_get_extended_bl_symbol(cell, atoms, spglib_data=None):
 
     Notes
     -----
-    |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
+    |spglib|_ uses ``types`` to distinguish the atoms. To see how Wulfric deduces the
     ``types`` for given atoms see :py:func:`wulfric.get_spglib_types`.
 
     References
@@ -113,10 +113,10 @@ def hpkot_get_extended_bl_symbol(cell, atoms, spglib_data=None):
     # Call spglib
     if spglib_data is None:
         spglib_data = get_spglib_data(cell=cell, atoms=atoms)
-    # Or check that spglib_data were *most likely* produced via wulfric's interface
+    # Or check that spglib_data were *most likely* produced via Wulfric's interface
     elif not isinstance(spglib_data, SpglibData):
         raise TypeError(
-            f"Are you sure that spglib_data were produced via wulfric's interface? Expected SpglibData, got {type(spglib_data)}."
+            f"Are you sure that spglib_data were produced via Wulfric's interface? Expected SpglibData, got {type(spglib_data)}."
         )
     # Validate that user-provided spglib_data match user-provided structure
     else:
@@ -230,5 +230,5 @@ def hpkot_get_extended_bl_symbol(cell, atoms, spglib_data=None):
 
     # If lattice type is not one of the expected ones
     raise PotentialBugError(
-        f'(convention="HPKOT"), lattice type {lattice_type}, space group {spglib_data.space_group_number}.. Failed to identify lattice type (not one of supported).'
+        f'(convention="HPKOT"), lattice type "{lattice_type}", space group "{spglib_data.space_group_number}". Failed to identify lattice type (not one of supported).'
     )

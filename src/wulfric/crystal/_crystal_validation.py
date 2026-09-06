@@ -29,7 +29,7 @@ def validate_atoms(atoms, required_keys=None, raise_errors=True):
     r"""
     Validate keys and values of the atoms dictionary.
 
-    Checks that all values in the atom's dictionary have the same amount of elements.
+    Checks that all values in the atom's dictionary have the same number of elements.
     Checks that atoms have required keys with expected shape of their values.
 
     If one of the following keys is in ``atoms``, then an extra check is performed on its
@@ -52,12 +52,12 @@ def validate_atoms(atoms, required_keys=None, raise_errors=True):
 
     *   "spglib_types"
 
-        Checks that the value is a list of N ``int`` and each element is ``>= 1``.
+        Checks that the value is a list of N ``int`` or ``np.integer`` and each element is ``>= 1``.
 
     For all other keys checks that the values are iterables of the N elements each.
 
     Parameters
-    ==========
+    ----------
     atoms : dict
         Dictionary of atoms.
     required_keys : list of str, optional
@@ -67,12 +67,12 @@ def validate_atoms(atoms, required_keys=None, raise_errors=True):
 
 
     Returns
-    =======
+    -------
     check_passed : bool
         ``True`` if all checks passed. ``False`` otherwise.
 
     Raises
-    ======
+    ------
     TypeError
         If ``atoms[key]`` is not iterable for any ``key`` and ``raise_errors=True``.
     ValueError
@@ -101,7 +101,7 @@ def validate_atoms(atoms, required_keys=None, raise_errors=True):
     if len(set(lengths)) not in [0, 1]:
         if raise_errors:
             raise ValueError(
-                "Inconsistent amount of atoms:\n  * "
+                "Inconsistent number of atoms:\n  * "
                 + "\n  * ".join(
                     [
                         f'len(atoms["{key}"]) -> {N}'
