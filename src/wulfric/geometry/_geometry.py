@@ -80,7 +80,7 @@ def get_volume(*args):
     Returns
     -------
     volume : float
-        Volume of corresponding region in space.
+        Volume of the corresponding region in space.
 
     Examples
     --------
@@ -224,25 +224,25 @@ def parallelepiped_check(
     gamma : float
         Angle between vectors :math:`\boldsymbol{v_1}` and :math:`\boldsymbol{v_2}`. In degrees.
     raise_error : bool, default False
-        Whether to raise error if parameters can not form a parallelepiped.
+        Whether to raise an error if parameters cannot form a parallelepiped.
     length_tolerance : float, default :math:`10^{-8}`
         Numerical tolerance for the length variables. Default value is chosen in the
-        contexts of condense matter physics, assuming that length is given in Angstroms.
+        contexts of condensed matter physics, assuming that length is given in Angstroms.
         Please choose appropriate tolerance for your problem.
     angle_tolerance : float, default :math:`10^{-4}`
         Numerical tolerance for the angle variables. Default value is chosen in
-        the contexts of condense matter physics, assuming that angles are in degrees.
+        the contexts of condensed matter physics, assuming that angles are in degrees.
         Please choose appropriate tolerance for your problem.
 
     Returns
     -------
     result: bool
-        Whether the parameters could from a parallelepiped.
+        Whether the parameters could form a parallelepiped.
 
     Raises
     ------
     ValueError
-        If parameters can not form a parallelepiped.
+        If parameters cannot form a parallelepiped.
         Only raised if ``raise_error`` is ``True`` (it is ``False`` by default).
 
     Examples
@@ -376,13 +376,13 @@ def get_spherical(
     ``vector`` with :math:`0 \le \alpha_{polar} \le \pi`.
 
     Azimuthal angle is defined as the angle of the rotation of the radial line around the
-    polar axis. This angle is measured from the ``radial_line_zero`` in accordance to the
+    polar axis. This angle is measured from the ``radial_line_zero`` in accordance with the
     right-hand rule. :math:`0 \le \alpha_{azimuthal} \le 2\pi`.
 
     Radial line is the projection of the ``vector`` on the plane perpendicular to the
     ``polar_axis``.
 
-    If azimuthal angle is ill-defined, then wulfric returns
+    If azimuthal angle is ill-defined, then Wulfric returns
 
     * :math:`0` if polar angle is :math:`0`.
     * :math:`\pi` if polar angle is :math:`\pi`.

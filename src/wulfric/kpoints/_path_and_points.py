@@ -47,7 +47,7 @@ __all__ = ["get_path_as_list", "get_path_as_string", "get_path_and_points"]
 
 def get_path_as_list(path_as_string) -> list:
     r"""
-    Converts k=path from string to list representation.
+    Converts k-path from string to list representation.
 
     .. code-block:: python
 
@@ -68,7 +68,7 @@ def get_path_as_list(path_as_string) -> list:
     ------
     ValueError
         If ``path_as_string`` is not ``str``
-    Valueerror
+    ValueError
         If any subpath contains less than two points.
 
     See Also
@@ -97,7 +97,7 @@ def get_path_as_list(path_as_string) -> list:
 
 def get_path_as_string(path_as_list) -> str:
     r"""
-    Converts k=path from list to string representation.
+    Converts k-path from list to string representation.
 
     .. code-block:: python
 
@@ -153,7 +153,7 @@ def get_path_and_points(
     Returns recommended k-path and set of high-symmetry points.
 
     Note that high-symmetry points are the ones of the primitive cell, that is associated
-    with the given set of ``cell`` and ``atoms``. In other words it respects the symmetry
+    with the given set of ``cell`` and ``atoms``. In other words, it respects the symmetry
     of the crystal.
 
     Parameters
@@ -166,7 +166,7 @@ def get_path_and_points(
         *   "positions" : (N, 3) |array-like|_
 
             Positions of the atoms in the basis of lattice vectors (``cell``). In other
-            words - relative coordinates of atoms.
+            words, relative coordinates of atoms.
         *   "names" : (N, ) list of str, optional
 
             See Notes
@@ -185,7 +185,7 @@ def get_path_and_points(
     spglib_data : :py:class:`.SpglibData`, optional
         If you need more control on the parameters passed to the spglib, then
         you can get ``spglib_data`` manually and pass it to this function.
-        Use wulfric's interface to |spglib|_ as
+        Use Wulfric's interface to |spglib|_ as
 
         .. code-block:: python
 
@@ -217,9 +217,9 @@ def get_path_and_points(
     Returns
     -------
     recommended_path : str
-        Recommended path in reciprocal space between the high-symmetry k points.
+        Recommended path in reciprocal space between the high-symmetry k-points.
     hs_points : dict
-        High symmetry points.
+        High-symmetry k-points.
 
         .. code-block:: python
 
@@ -231,13 +231,13 @@ def get_path_and_points(
         * Absolute in reciprocal space if ``relative=False``.
 
     Notes
-    =====
-    |spglib|_ uses ``types`` to distinguish the atoms. To see how wulfric deduces the
+    -----
+    |spglib|_ uses ``types`` to distinguish the atoms. To see how Wulfric deduces the
     ``types`` for given atoms see :py:func:`wulfric.get_spglib_types`.
 
 
     References
-    ==========
+    ----------
     .. [1] Hinuma, Y., Pizzi, G., Kumagai, Y., Oba, F. and Tanaka, I., 2017.
            Band structure diagram paths based on crystallography.
            Computational Materials Science, 128, pp.140-184.
@@ -259,10 +259,10 @@ def get_path_and_points(
     # Call spglib
     if spglib_data is None:
         spglib_data = get_spglib_data(cell=cell, atoms=atoms)
-    # Or check that spglib_data were *most likely* produced via wulfric's interface
+    # Or check that spglib_data were *most likely* produced via Wulfric's interface
     elif not isinstance(spglib_data, SpglibData):
         raise TypeError(
-            f"Are you sure that spglib_data were produced via wulfric's interface? Expected SpglibData, got {type(spglib_data)}."
+            f"Are you sure that spglib_data were produced via Wulfric's interface? Expected SpglibData, got {type(spglib_data)}."
         )
     # Validate that user-provided spglib_data match user-provided structure
     else:

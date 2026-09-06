@@ -36,13 +36,13 @@ def load_poscar(file_object=None):
 
     Parameters
     ----------
-    file_object : str of file-like object, optional
+    file_object : str or file-like object, optional
         File to be read. If str, then file is opened with the given name.
         Otherwise it has to have ``.readlines()`` method. By default it looks for the
         "POSCAR" file in the current directory. Behaviour for ``str``:
 
-        * Tries to open the file with the name  ``file_object``.
-        * Tries to open the file with the name "POSCAR" in the directory ``file_object``.
+        * First, tries to open the file with the name ``file_object``.
+        * Second, tries to open the file with the name "POSCAR" in the directory ``file_object``.
 
     Returns
     -------
@@ -108,7 +108,7 @@ def load_poscar(file_object=None):
         cell[2] *= scale_factor[2]
     else:
         raise ValueError(
-            "Scale factor has to be a single positive ot negative number or "
+            "Scale factor has to be a single positive or negative number or "
             + f"a list of 3 positive numbers, got: {scale_factor}"
         )
     # Read species name and numbers
@@ -145,7 +145,7 @@ def load_poscar(file_object=None):
             if CARTESIAN:
                 # Both cases (1 or 3 numbers) are covered
                 coordinates *= scale_factor
-                # Transform from Cartesian coordinates to absolute coordinates
+                # Transform from Cartesian coordinates to relative coordinates
                 coordinates = coordinates @ np.linalg.inv(cell)
             if species_names is None:
                 atoms["names"].append(f"X{i + 1}")
@@ -178,7 +178,7 @@ def dump_poscar(
         of length N or ``"species"`` key with value of ``list`` of ``str`` of length N.
         If ``"species"`` key is not present, try to deduce atom's species from
         ``"names"``, raise error on fail.
-    file_object : str of file-like object, optional
+    file_object : str or file-like object, optional
         File to be written. If str, then file is opened with the given name.
         Otherwise it has to have ``.write()`` method.
     comment : str, optional
@@ -200,7 +200,7 @@ def dump_poscar(
         >>> wulfric.io.dump_poscar(
         ...     cell, atoms, "POSCAR", comment="This is a comment"
         ... )  # doctest: +SKIP
-        >>> # You can control the amount of decimals in the output:
+        >>> # You can control the number of decimals in the output:
         >>> wulfric.io.dump_poscar(cell, atoms, "POSCAR", decimals=6)  # doctest: +SKIP
         >>> # You can switch the mode of coordinates between 'Cartesian' and 'Direct' (default):
         >>> wulfric.io.dump_poscar(
@@ -215,7 +215,7 @@ def dump_poscar(
     if comment is None:
         cd = datetime.now()
         comment = (
-            f"Written by wulfric (wulfric.org) "
+            f"Written by Wulfric (wulfric.org) "
             f"on {cd.day} {month_name[cd.month]} {cd.year} "
             f"at {cd.hour}:{cd.minute}:{cd.second}"
         )
@@ -235,7 +235,7 @@ def dump_poscar(
             atom_type = get_atom_species(atoms["names"][i])
             if atom_type == "X":
                 raise ValueError(
-                    f"Can not deduce atom's type from the name '{atoms['name'][i]}', while dumping to POSCAR."
+                    f"Cannot deduce atom's type from the name '{atoms['names'][i]}', while dumping to POSCAR."
                 )
         if mode == "Direct":
             atom_position = atoms["positions"][i]
