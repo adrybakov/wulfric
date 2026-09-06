@@ -59,7 +59,8 @@ atoms = {
         [0.5, 0.0, 0.0], # Na2
         [0.0, 0.5, 0.0], # Na3
         [0.0, 0.0, 0.5], # Na4
-    ]
+    ],
+    "spglib_types" : [1, 1, 1, 1, 2, 2, 2, 2],
 }
 
 # (Optional) Call spglib once, to prevent other functions calling it every time
@@ -80,6 +81,13 @@ print(prim_cell)
 print(prim_atoms["names"])
 ```
 
+```text
+[[0.   2.82 2.82]
+ [2.82 0.   2.82]
+ [2.82 2.82 0.  ]]
+['Cl1', 'Na1']
+```
+
 ### Conventional cell
 
 ```python
@@ -91,7 +99,15 @@ conv_cell, conv_atoms = wulfric.crystal.get_conventional(
 )
 
 print(conv_cell)
+# Note that the atoms of the same type inherited the same name
 print(conv_atoms["names"])
+```
+
+```text
+[[5.64 0.   0.  ]
+ [0.   5.64 0.  ]
+ [0.   0.   5.64]]
+['Cl4', 'Na4', 'Cl4, 'Na4', 'Cl4', 'Na4', 'Cl4, 'Na4']  
 ```
 
 ### K-points and K-path choice
@@ -115,6 +131,11 @@ print(f"K-path (SC): {kp_SC.path}")
 print(f"K-path (HPKOT): {kp_HPKOT.path}")
 ```
 
+```text
+K-path (SC): [['GAMMA', 'X', 'W', 'K', 'GAMMA', 'L', 'U', 'W', 'L', 'K'], ['U', 'X']]
+K-path (HPKOT): [['GAMMA', 'X', 'U'], ['K', 'GAMMA', 'L', 'W', 'X']]
+```
+
 ### Compute dispersion or band structure
 
 Or any k-resolved data
@@ -123,8 +144,14 @@ Or any k-resolved data
 # Pick convention
 kp = kp_HPKOT
 
-# Customize k-path
-...
+# Predefined high-symmetry points from symmetry
+for name in kp.names:
+    label = kp.hs_labels[name]
+    r1, r2, r3 = kp.hs_coordinates[name]
+    print(f" {name:<5} {label:<5} at [{r1:>5.2f}, {r2:>5.2f}, {r3:>5.2f}]")
+
+# Customize k-path using available high-symmetry k-points
+kp.path = "GAMMA-X-W-GAMMA|U-X-L"
 
 # Set amount of intermediate point for each section of the k-path
 kp.n = 50
@@ -137,13 +164,22 @@ for point in kp.points(relative=False):
         compute_single_point(kpoint=point, ...)
     )
 
-
-
 # Or all at once
 bands = compute_all_points(
     # Your data/routine
     kpoints=kp.points(relative=False) 
 )
+```
+
+```text
+# name label          xb1    xb2    xb3
+ GAMMA $\GAMMA$ at [ 0.00,  0.00,  0.00]
+ X     X        at [ 0.00,  1.00,  0.00]
+ L     L        at [ 0.50,  0.50,  0.50]
+ W     W        at [ 0.50,  1.00,  0.00]
+ W2    W$_2$    at [ 0.00,  1.00,  0.50]
+ K     K        at [ 0.75,  0.75,  0.00]
+ U     U        at [ 0.25,  1.00,  0.25]
 ```
 
 

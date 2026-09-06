@@ -21,6 +21,11 @@ Bugfix
   shall not affect anything.
 - Fix a typo in the display names of high-symmetry k-point "F3" and "F3_P".
 
+New features
+------------
+
+- :py:meth:`.Kpoints.xlims`.
+
 0.7.1
 =====
 

@@ -440,6 +440,45 @@ class Kpoints:
                 )
 
         return np.array(ticks)
+    
+    def xlims(self, relative=False):
+        r"""
+        Limits of the x axis for the band/dispersion plots.
+        
+        .. versionadded:: 0.7.2
+
+        Parameters
+        ----------
+        relative : bool, default False
+            Whether to use relative coordinates instead of the absolute ones.
+
+        Returns
+        -------
+        left : float
+            The left xlimit in the ``.Kpoints.flat_points()`` coordinates.
+        right : float
+            The right xlimit in the ``.Kpoints.flat_points()`` coordinates.
+
+        Notes
+        -----
+        Equivalent to 
+
+        .. code-block:: python
+
+            (kp.ticks()[0], kp.ticks()[-1])
+
+        Can be passed to the matplotlib as
+
+        .. code-block:: python
+            
+            ax.set_xlim(*kp.xlims())
+        """
+
+
+        ticks = self.ticks(relative=relative)
+        return float(ticks[0]), float(ticks[-1])
+
+
 
     ################################################################################
     #                   Points of the path with intermediate ones                  #
