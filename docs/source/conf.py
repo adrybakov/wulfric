@@ -190,6 +190,7 @@ extlinks = {
 # https://docutils.sourceforge.io/docs/ref/rst/directives.html#directives-for-substitution-definitions
 # Usage: |Python|_
 custom_links = {
+    "README": ("README", "https://github.com/adrybakov/wulfric#quick-example"),
     "Author": ("author", "https://adrybakov.com"),
     "ANSI": ("ANSI", "https://en.wikipedia.org/wiki/ANSI_escape_code"),
     "projwfc": ("projwfc.x", "https://www.quantum-espresso.org/Doc/INPUT_PROJWFC.html"),

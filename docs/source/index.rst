@@ -59,7 +59,7 @@ The main features of Wulfric are
 How is this documentation structured?
 *************************************
 
-*   For code examples see :ref:`user-guide`.
+*   For code examples see :ref:`user-guide` or |README|_.
 *   For the full public API see :ref:`api`.
 *   To get some support and ask questions see :ref:`user-support`.
 *   To understand how Wulfric performs transformations and rotations, how it stores cells,
